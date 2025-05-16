@@ -23,7 +23,7 @@ math: mathjax
 * diffeomorphic mapping
 
 ## Motivation
-![Overview](https://www.youtube.com/watch?v=9fQkLQZe3u8&ab_channel=SteveBrunton)
+![Overview](https://www.youtube.com/watch?v=7fKLhzgeBac&ab_channel=LASA)
 
 In **trajectory planning** problems, the robot’s objective is to generate smooth, stable, and goal-directed motions that can adapt to changes in the environment or task — beyond simply following a fixed path. This is where **dynamical systems (DS)** offer a powerful framework: instead of relying on time-parameterized trajectories, DS-based approaches define a continuous vector field that governs the robot’s motion toward a target.
 

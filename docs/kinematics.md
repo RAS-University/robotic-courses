@@ -82,7 +82,7 @@ In this chapter, you’ll explore different ways of representing positions and o
 ## 3. Course Content
 
 
-This course closely follows videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) with some additional videos and conceptual and mathematical exercises.
+<!-- This course closely follows videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) with some additional videos and conceptual and mathematical exercises. -->
 
 <!-- 
 This section of the course is primarily based on content shared by **Mohammad Zainullah Khan**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton. You can find more information on his website: [www.zainullah.com](https://www.zainullah.com/).
@@ -230,9 +230,28 @@ For a visual comparison of these two robot types, watch the following short vide
 ---
 
 #### **Drawing kinematic diagrams**
-In robotics, accurately representing the structure of robots through kinematic diagrams is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+In robotics, accurately representing the structure of robots (left image) through **kinematic diagrams** (right image) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_repre.png' }}" width="500px" alt="Kine">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of robots represented in kinematic diagrams</figcaption>
+</figure>
+
 
 By learning how to sketch these diagrams, you will be better prepared to analyze robot motion and systematically compute essential parameters such as mobility and degrees of freedom.
+
+<!-- Step by step -->
+<details markdown="1">
+  <summary>Video Explanation</summary>
+
+Here is a video explaining the step-by-step procedure to draw the kinematic diagram shown above.
+
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+</details>
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
@@ -253,7 +272,7 @@ By learning how to sketch these diagrams, you will be better prepared to analyze
 
 ---
 
-#### **Mobility & Degrees of Freedom (DOF)**
+#### **Degrees of Freedom (DOF) & Mobility**
 - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
@@ -401,6 +420,22 @@ To clearly understand how this formula is applied, check out the following detai
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
+
+**Different type of joints:**
+
+| Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
+|------------------|-------------|-----------------------------------------------------|------------------------------------------------------|
+| Revolute (R)     | 1           | 2                                                   | 5                                                    |
+| Prismatic (P)    | 1           | 2                                                   | 5                                                    |
+| Helical (H)      | 1           | N/A                                                 | 5                                                    |
+| Cylindrical (C)  | 2           | N/A                                                 | 4                                                    |
+| Universal (U)    | 2           | N/A                                                 | 4                                                    |
+| Spherical (S)    | 3           | N/A                                                 | 3                                                    |
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption>
+</figure>
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
@@ -933,6 +968,7 @@ Watch the following video to see this concept illustrated clearly:
 > Here, you will compute a new homogeneous transformation matrix that describes the relationship between two end-effectors, given two separate transformation matrices ($H_1$ and $H_2$). This new matrix will provide the relative distances $d_x$ and $d_y$ between the two end-effectors. When both $d_x$ and $d_y$ become zero, it indicates that the two robots are in collision.
 >
 ><sub> Avoid Collision using Homogeneous Transformations | Robotics 101. YouTube video, 13 July 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=8
+
 ---
 
 ### Chapter 6: Inverse Kinematics of Robots
@@ -1396,6 +1432,10 @@ Once successfully opened, your robot and its environment should appear, as illus
 
 Now, follow the instructions provided on the right side panel within Webots, and complete the code to make your robot do the "**Pick and Place**".
 
+
+> **💡 Helpful Suggestion:**  
+> For detailed explanations of variables, robot schematics, and further clarifications that could greatly assist your understanding and coding, we strongly recommend reviewing the figures and content available on [this page from Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2024/text/index.html).
+
 > *If the Python file isn't open, select your robot in the scene tree (left panel), right-click and choose **Edit controller**, or load it manually via Webots' text editor (right panel) `dobot_2025/controllers/dobot` folder and select your `.py` .*
 
 Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Build" or "Save"(`CTRL+S`) to compile your project, and then start the simulation.
@@ -1471,7 +1511,16 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 ### Exercices 
 
-- Conceptual and mathematical exercises are inspired by **[Mr. Mohamed Bouri](https://people.epfl.ch/mohamed.bour)**, giving the course [Basic of Robotics for Manipulation](https://edu.epfl.ch/coursebook/en/basics-of-robotics-for-manipulation-MICRO-450) at [EPFL](https://www.epfl.ch/fr/). 
+- [IN PROGRESS]
+<!-- - Conceptual and mathematical exercises are inspired by **[Mr. Mohamed Bouri](https://people.epfl.ch/mohamed.bour)**, giving the course [Basic of Robotics for Manipulation](https://edu.epfl.ch/coursebook/en/basics-of-robotics-for-manipulation-MICRO-450) at [EPFL](https://www.epfl.ch/fr/).  -->
+
+### Programming
+
+- Exercises adapted from the course **[Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2022/)** taught by **[Dr. Garth Zeglin](https://www.cs.cmu.edu/~garthz/)**, instructor at [Carnegie Mellon University](https://www.cmu.edu/).  
+  Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 
+
+
+- 
 
 ---
 

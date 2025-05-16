@@ -1434,7 +1434,7 @@ Now, follow the instructions provided on the right side panel within Webots, and
 
 
 > **💡 Helpful Suggestion:**  
-> For detailed explanations of variables, robot schematics, and further clarifications that could greatly assist your understanding and coding, we strongly recommend reviewing the figures and content available on [this page from Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2024/text/index.html).
+> For detailed explanations of variables, robot schematics, and further clarifications that could greatly assist your understanding and coding, we strongly recommend reviewing the figures and content available on [this page from Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2024/text/simulations/dobot.html).
 
 > *If the Python file isn't open, select your robot in the scene tree (left panel), right-click and choose **Edit controller**, or load it manually via Webots' text editor (right panel) `dobot_2025/controllers/dobot` folder and select your `.py` .*
 

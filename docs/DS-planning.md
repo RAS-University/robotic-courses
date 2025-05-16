@@ -49,8 +49,8 @@ This is why, in recent years, dynamical system-based methods have gained promine
     border: 2px dashed #ccc;
     border-radius: 6px;
     padding: 10px;
-    min-height: 175px;
-    width: 45%;
+    min-height: 255px;
+    width: 100%;
     background-color: #f9f9f9;
   }
 
@@ -79,29 +79,23 @@ This is why, in recent years, dynamical system-based methods have gained promine
   
   <!-- Serial Robot Zone -->
   <div class="drop-zone" id="motion-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <h3>Motion Control</h3>
-  </div>
-
-  <!-- Parallel Robot Zone -->
-  <div class="drop-zone" id="force_zone" ondrop="drop(event)" ondragover="allowDrop(event)">
-    <h3> Force Control</h3>
+    <h3>Key features of DS-based Planning</h3>
   </div>
 </div>
 
 <!-- Draggable items -->
 <div class="drag-container" id="drag-items">
-  <div class="drag-item" id="pick_place" draggable="true" ondragstart="drag(event)">Pick-and-place in free space</div>    <div class="drag-item" id="Peg_in_hole" draggable="true" ondragstart="drag(event)">Peg-in-hole assembly</div>
-  <div class="drag-item" id="Wiping" draggable="true" ondragstart="drag(event)">Wiping a window</div>
-  <div class="drag-item" id="3D_print" draggable="true" ondragstart="drag(event)">3D printing</div>
-  <div class="drag-item" id="Drone" draggable="true" ondragstart="drag(event)">Flying a drone for inspection</div>
-  <div class="drag-item" id="Polishing" draggable="true" ondragstart="drag(event)">Surface polishing</div>
-  <div class="drag-item" id="hand_shaking" draggable="true" ondragstart="drag(event)">Human handshaking robot </div>
+  <div class="drag-item" id="Real_Time_Adaptability" draggable="true" ondragstart="drag(event)">Real-Time Adaptability</div>
+  <div class="drag-item" id="Goal_convergence" draggable="true" ondragstart="drag(event)">Goal convergence</div>
+  <div class="drag-item" id="Reactive_to_perturbations" draggable="true" ondragstart="drag(event)">Reactive to perturbations</div>
+  <div class="drag-item" id="Open_loop_execution" draggable="true" ondragstart="drag(event)">Open-loop execution </div>
+  <div class="drag-item" id="Requires_full_trajectory_specification_in_advance" draggable="true" ondragstart="drag(event)">Requires full trajectory specification in advance </div>
+  <div class="drag-item" id="High_reliance_on_precise_timing" draggable="true" ondragstart="drag(event)">High reliance on precise timing </div>
 </div>
 
 <script>
 const correctMapping = {
-  "motion-zone": ["pick_place", "3D_print", "Drone"],
-  "force_zone": ["Peg_in_hole", "Polishing", "hand_shaking", "Wiping"]
+  "motion-zone": ["Real_Time_Adaptability", "Goal_convergence","Reactive_to_perturbations"]
 };
 </script>
 
@@ -110,28 +104,23 @@ const correctMapping = {
 <div class="feedback" id="feedback-drag"></div>
 
 
-<details markdown ="1">
-  <summary><strong>Detailed answer</strong></summary>
-
-  * **Force control :**
-    - Peg-in-hole assembly : without force control, the peg might jam or break if misaligned; force control lets the robot feel contact and adjust insertion force to guide it in. 
-    - Surface polishing : a position-only robot might either press too hard (damaging the surface/tool) or too lightly (ineffective polishing); force control maintains a consistent polishing pressure. 
-    - Human handshaking robot : purely position-controlled handshake could crush the person’s hand or miss it entirely, whereas force control allows gentle, adaptive gripping. 
-    - Wiping a table or window : Maintaining consistent contact pressure across a surface is difficult with pure motion control; uneven force leads to missed spots or excess wear.
-
-  * **Motion control :**
-    - Pick-and-place in free space : If there’s no contact with the environment during transit, motion control ensures fast, smooth, and precise movement.
-    - 3D printing : The tool follows a precisely planned trajectory to deposit material. Contact with the environment is minimal and highly predictable.
-    - Flying a drone for inspection : Drones typically avoid contact; path following through motion control is sufficient for inspection unless manipulation is involved.
-
-  → Force control prevents excessive force and adapts to uncertainties in contact
 
 </details>
 
-</details>
+## Chapter 1 : Dynamical-Systems-based planning overview
 
-## Chapter 1 : Interaction control overview
+## Chapter 2 : Stability-accuracy dilemma
 
+## Chapter 3 : Diffeomorphic mapping
 
+## Chapter 4 : Start-of-art approaches
+
+## Programming exercise
+
+## Want to implement a real project?
+
+## References
+
+# Want to learn more ? --> Free Online Courses
 
 [Back to Top](#start)

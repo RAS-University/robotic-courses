@@ -255,18 +255,61 @@ Here is a video explaining the step-by-step procedure to draw the kinematic diag
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
-  <summary>Mathematical Development Questions</summary>
-[IN PROGRESS]
-<!-- Here are some exercie to learn how to draw the **kinematic representation structures** of the robots. -->
+  <summary>Hands-on exercices </summary>
+
+Here are some exercie to learn how to draw the **kinematic representation structures** of these following robots.
+Give it a try !
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex1.jpg' }}" width="300px" alt="kine_ex1">
+  <!-- <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption> -->
+</figure>
+
+<details markdown="2">
+<summary><strong>Click here for Solution</strong></summary>
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra_1.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</details>
+
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex2.jpg' }}" width="500px" alt="kine_ex2">
+  <!-- <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption> -->
+</figure>
+
+
+<details markdown="2">
+<summary><strong>Click here for Solution</strong></summary>
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra_2.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</details>
+
+
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex3.jpg' }}" width="300px" alt="kine_ex3">
+  <!-- <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption> -->
+</figure>
+
+
+<details markdown="2">
+<summary><strong>Click here for Solution</strong></summary>
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra_3.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</details>
+
+
+
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_1.pdf'}}" width="100%" height="600px"></iframe>  -->
 
-<details markdown="2">
-<summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
-
-<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_1.pdf'}}" width="100%" height="600px"></iframe> -->
-</details>
 
 </details>
 

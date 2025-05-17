@@ -315,24 +315,37 @@ Give it a try !
 
 ---
 
-#### **Degrees of Freedom (DOF) & Mobility**
-- ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+#### **Degrees of Freedom (DOF)**
+<!-- - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
 
-To better understand these concepts, watch the following concise and clear explanation:
+To better understand these concepts, watch the following concise and clear explanation: -->
 ![Degrees of Freedom of a Rigid Body](https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4)
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.1: Degrees of Freedom of a Rigid Body. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
+- ***Configuration of a robot*** is a representation of the positions of all the points of the robot.
+- ***Configuration space (called C-space)*** is the space of all configurations
+- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
+
+General rule which holds for any system, not just rigid bodies: 
+$$
+\boxed{ \text{DoF} = \sum_{}^{} \text{freedoms of } \textbf{points} - \text{number of independent constraints} }
+$$
+
+And since the robots are made of rigid bodies, 
+$$
+\boxed{ \text{DoF} = \sum_{}^{} \text{freedoms of } \textbf{bodies} - \text{number of independent constraints} }
+$$
 
 <!-- Conceputal questions -->
-<details markdown="1">
-  <summary>Conceptual Questions</summary>
+<!-- <details markdown="1">
+  <summary>Conceptual Questions</summary> -->
 
 <!-- First question  -->
-<p><strong>Question : Answer the following questions based on the robot structures shown below:</strong></p>
+<!-- <p><strong>Question : Answer the following questions based on the robot structures shown below:</strong></p>
 ![Robot_Structures]({{ site.baseurl }}/assets/images/kinematics/ex1_1.png)
 
 <p><strong>1. How many motors does each robot have?</strong></p>
@@ -345,7 +358,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q1a-motors" value="6"> 6 motors<br><br>
 
   <button type="button" onclick="checkMCQ('q1a-motors', '6', 
-    'Correct! The Stäubli TX60 has 6 motorized joints (RRR handler + RRR wrist).', 
+    'Correct! Left Robot has 6 motorized joints (RRR handler + RRR wrist).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -361,7 +374,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q1b-motors" value="6"> 6 motors<br><br>
 
   <button type="button" onclick="checkMCQ('q1b-motors', '5', 
-    'Correct! The second robot has 5 motorized joints (RTT handler + RR wrist).', 
+    'Correct! Right Robot has 5 motorized joints (RTT handler + RR wrist).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -413,7 +426,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q3a-dof" value="6"> 6 DOF (3 translations + 3 rotations)<br><br>
 
   <button type="button" onclick="checkMCQ('q3a-dof', '6', 
-    'Correct! Stäubli TX60 has 6 DOF (3 translations + 3 rotations).', 
+    'Correct! Left Robot has 6 DOF (3 translations + 3 rotations).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -429,7 +442,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q3b-dof" value="6"> 6 DOF (3 translations + 3 rotations)<br><br>
 
   <button type="button" onclick="checkMCQ('q3b-dof', '5', 
-    'Correct! The second robot has 5 DOF (3 translations + 2 rotations).', 
+    'Correct! Right Robot has 5 DOF (3 translations + 2 rotations).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -437,7 +450,7 @@ To better understand these concepts, watch the following concise and clear expla
   <p id="q3b-dof-feedback"></p>
 </form> 
 
-</details>
+</details> -->
 
 ---
 
@@ -449,8 +462,8 @@ $$
 
 Where:
 - $m$ is the dimension of the space (e.g., $m = 3$ for planar mechanisms, $m = 6$ for spatial mechanisms).
-- $n$ is the number of links (including the frame).
-- $j$ is the number of joints.
+- $N$ is the number of links (including the frame).
+- $J$ is the number of joints.
 - $f_i$ is the number of degrees of freedom permitted by joint $i$.
 
 
@@ -484,49 +497,109 @@ To clearly understand how this formula is applied, check out the following detai
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Now, try drawing the **kinematic representation structures** of the robots presented in **Exercises 2 and 3** from the set below.
+<!-- Now, try drawing the **kinematic representation structures** of the robots presented in **Exercises 2 and 3** from the set below.
 
 Afterwards, compute the **mobility of the parallel robots**. (Note that, unlike serial robots, computing mobility for parallel robots requires using specific formulas.)
 
-Here are some formulas that could be useful:
+Here are some formulas that could be useful: -->
 
-- **Grübler's Formula**
+<!-- - **Grübler's Formula**
 
 $$
 \boxed{ \text{MO} = 6(n - k - 1) + \sum_{i=1}^{k} \text{MO}_i }
-$$
+$$ -->
 
 
-Where:
+<!-- Where:
 
   - $ n $ is the number of solid bodies (including the fixed base)
   - $ k $ is the number of joints (connections)
-  - $ \text{MO}_i $ is the mobility of each joint:
+  - $ \text{MO}_i $ is the mobility of each joint: -->
 
-| Joint Type              | Mobility (MO) |
+<!-- | Joint Type              | Mobility (MO) |
 |-------------------------|---------------|
 | Pivot (revolute)        | 1             |
 | Cardan (universal)      | 2             |
 | Spherical (ball joint)  | 3             |
-| Prismatic (sliding)     | 1             |
+| Prismatic (sliding)     | 1             | -->
 
-- **Loops formula**
+<!-- - **Loops formula**
 
 $$
 \boxed{ \text{MO} = \sum_{i=1}^{k} \text{MO}_i - 6 \times lo}
 $$
 
-Where, $ lo $ is the number of closed kinematic loops.
+Where, $ lo $ is the number of closed kinematic loops. -->
 
-[IN PROGRESS]
+Let's try to compute the DoF of the robot we have seen before:
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine.png' }}" width="200px" alt="Kine">
+</figure>
+
+<details markdown="1">
+<summary><strong>Click here for Solution</strong></summary>
+Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the following:
+
+- $ N = 3 \times 3 \ (\text{links}) + 1 \ (\text{ground}) + 1 \ (\text{end effector}) = 11 $
+
+- $ J = 3 \ (\text{R joints}) + 4 \times 3 \ (\text{S joints}) = 15 $
+
+- $ \sum f_i = 3 \times 1 \ (\text{R joints}) + 3 \times 12 \ (\text{S joints}) = 39 $
+
+- $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(11 - 1 - 15) + 39 = 9 $
+
+This Delta robot as designed with the parallel bars and spherical joints has **6 supplementary mobilities**.
+These mobilities concern **internal mobilities** not affecting the **pure translation of the mobile plate**. They are actually related to the **rotation of each bar around its principal axis**. 
+
+</details>
+
+--- 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex2.jpg' }}" width="400px" alt="Kine">
+</figure>
+
+<details markdown="1">
+<summary><strong>Click here for Solution</strong></summary>
+Each box can be regarded as a link connected to ground by a 2-dof PP joint. Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the following:
+
+- $ N = 3 \times 2 \ (\text{links}) + 1 \ (\text{ground}) + 1 \ (\text{end effector}) = 8 $
+
+- $ J = 3 \ (\text{R joints}) + 3 \ (\text{S joints}) + 3 \ (\text{2-dof joints}) = 9 $
+
+- $ \sum f_i = 3 \times 1 \ (\text{R joints}) + 3 \times 3 \ (\text{S joints}) + 2 \times 3 \ (\text{2-dof joints}) = 18 $
+
+- $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(8 - 1 - 9) + 18 = 6 $
+</details>
+
+--- 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex3.jpg' }}" width="200px" alt="Kine">
+</figure>
+
+> Here consider that the three prismatic joints and three revolute joints at the base are locked. 
+
+<details markdown="1">
+<summary><strong>Click here for Solution</strong></summary>
+Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the following:
+
+- $ N = 3 \times 2 \ (\text{links}) + 1 \ (\text{ground}) + 1 \ (\text{end effector}) = 8 $
+
+- $ J = 3 \ (\text{S joints}) + 3 \ (\text{P joints}) + 2 \times 3 \ (\text{PR joints}) = 9 $
+
+- $ \sum f_i = 3 \times 3 \ (\text{S joints}) + 1 \times 3 \ (\text{P joints}) + 2 \times 3 \ (\text{PR joints}) = 18 $
+
+- $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(8 - 1 - 9) + 18 = 6 $
+
+Observe that if the three prismatic joints and three revolute joints at the base are locked, then unless if the legs are all parallel, it is impossible for the legs to extend in length, implying that the mechanism becomes a structure in this case. Therefore this mechanism has **six dof.** 
+
+</details>
+
+
+
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_1.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
-<summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
-
-<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_1.pdf'}}" width="100%" height="600px"></iframe> -->
-</details>
 
 </details>
 

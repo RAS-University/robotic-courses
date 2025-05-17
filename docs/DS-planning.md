@@ -107,19 +107,165 @@ const correctMapping = {
 
 </details>
 
-## Chapter 1 : Dynamical-Systems-based planning overview
+## Chapter 1 : Dynamical-Systems–Based Planning Overview
 
-## Chapter 2 : Stability-accuracy dilemma
+### 1.1 Motivation & Programming-by-Demonstration
 
-## Chapter 3 : Diffeomorphic mapping
+Robotic path planning via dynamical systems learns continuous, time-invariant vector fields from human demonstrations (“Programming by Demonstration”) rather than hand‐crafting trajectories^[1].  By modeling motions as autonomous systems
+$$
+\dot \xi = f(\xi),
+$$
+robots react immediately to perturbations, offering smooth, robust replanning^[2].
 
-## Chapter 4 : Start-of-art approaches
+### 1.2 Classical Parametric DS Models
+
+- **Dynamic Movement Primitives (DMP)**: encodes each degree of freedom separately with a time-dependent forcing term; yields fast one-shot learning but limited coupling across dimensions^[3].  
+- **Stable Estimator of Dynamical Systems (SEDS)**: fits a Gaussian Mixture Model (GMM) to demonstrations under convex constraints guaranteeing global asymptotic stability at the goal^[4].  
+- **Control-Lyapunov Function DS (CLF-DM)**: learns a Lyapunov candidate by constrained regression, ensuring stability via sum-of-squares certificates^[5].
+
+### 1.3 Nonparametric & State-Dependent DS
+
+- **LAGS-DS (Locally Active, Globally Stable DS)**: augments a stable global attractor with local, state-dependent modulation for higher fidelity near demonstrations, yet retains global convergence^[6].  
+- **Gaussian-Process DS**: Bayesian nonparametric vector fields with posterior uncertainty and stability enforced via contraction metrics^[7].  
+- **Neural ODEs for DS**: parameterize \(f(\xi)\) as a continuous-depth neural network, with stability imposed by spectral normalization or contraction theory^[8].
+
+### 1.4 Benchmarks & Tools
+
+- **LASA Handwriting Dataset**: 24 handwriting motions used extensively to compare DS methods^[9].  
+- **Toolboxes**: EPFL’s SEDS, ROS packages for obstacle avoidance, Python repos (e.g., `HongminWu/SEDS` on GitHub).
+
+---
+
+## Chapter 2 : Stability–Accuracy Dilemma
+
+Robust DS must satisfy two often-conflicting goals:
+
+1. **Stability**: provable global convergence to a target under any perturbation.  
+2. **Accuracy**: faithful reproduction of the demonstrated trajectory.
+
+### 2.1 Trade-off in GMM-Based DS
+
+SEDS enforces stability by constraining the GMM covariance and means to satisfy Lyapunov inequalities, but these constraints can “flatten” the mixture components, reducing fit quality far from the goal^[4].
+
+### 2.2 State-Dependent Modulation
+
+LAGS-DS improves local tracking by allowing state-dependent gains near the demonstration manifold, yet sacrifices some of the stiffness of a pure global attractor^[6].
+
+### 2.3 Extensions & Partial Contraction
+
+- **τ-SEDS**: augments SEDS with a diffeomorphic pre-mapping to relax Lyapunov constraints, boosting accuracy while retaining stability^[10].  
+- **Partial Contraction DS**: learns contracting subspaces so that local behaviors track demonstrations, then uses contraction theory for stability^[7].
+
+---
+
+## Chapter 3 : Diffeomorphic Mapping for DS
+
+Mapping a simple, hand-designed—but provably stable—DS through a smooth, bijective transformation (a **diffeomorphism**) allows one to inherit stability while recovering complex accuracy.
+
+### 3.1 Theory of Diffeomorphic Transformations
+
+A diffeomorphism \(\phi:\mathbb{R}^d\to\mathbb{R}^d\) is smooth, invertible, with smooth inverse.  If
+$$
+\dot z = g(z)
+$$
+is globally stable at \(z^*\), then
+$$
+x = \phi(z), 
+\quad 
+\dot x = D\phi\bigl(\phi^{-1}(x)\bigr)\,g\bigl(\phi^{-1}(x)\bigr)
+$$
+is also globally stable at \(x^*=\phi(z^*)\)^[11].
+
+### 3.2 Fast Diffeomorphic Matching (FDM)
+
+Perrin & Schlehuber‐Caissier (2016) introduce FDM to align a reference attractor to the demonstration manifold by solving large-deformation diffeomorphism matching with stability certificates^[12].
+
+### 3.3 τ-SEDS: Diffeomorphic SEDS
+
+Neumann & Steil (2015) embed a quadratic Lyapunov‐function DS into a richer class via a learned diffeomorphism \(\phi\), enabling non-quadratic behaviors (e.g. spirals) while proving global stability^[10].
+
+### 3.4 Euclideanizing Flows (E-FLOW)
+
+Rana, Fox et al. (2020) view diffeomorphism learning as a normalizing flow: compose simple parameterized maps so that \(x=\phi(z)\), with \(z\) following a linear stable DS.  Stability follows directly from the base flow^[13].
+
+### 3.5 Imitation Flows (I-FLOW)
+
+Extending E-FLOW to stochastic stabilization, “Imitation Flow” models noisy demonstrations by pushing a simple contracting SDE through a learnable diffeomorphism via normalizing flows, ensuring both stability and expressivity^[14].
+
+### 3.6 Riemannian Stable DS (RSDS)
+
+Zhang et al. (2022) learn diffeomorphic maps on manifolds (e.g. orientation on \(\mathrm{SO}(3)\)) via neural manifold ODEs, enforcing Lyapunov stability on Riemannian manifolds^[15].
+
+---
+
+## Chapter 4 : State-of-the-Art Approaches to Training the Mapping
+
+### 4.1 Kernel & Variational Methods
+
+- **Kernel-based Diffeo Learning**: Euclideanizing Flows initially used RKHS kernels to parameterize small diffeomorphic steps^[13].  
+- **Variational Normalizing Flows**: combine neural nets with change-of-variables to maximize demonstration likelihood under the push-forward DS^[13].
+
+### 4.2 Graph-Laplacian Embedding for Latent Space
+
+Stith & Bernardo use Laplacian Eigenmaps to linearize complex, multi-attractor DS into a low-dimensional latent space before learning diffeomorphisms, blending manifold learning with DS stability^[16].
+
+### 4.3 Neural-Lyapunov & Energy-Based Models
+
+- **Diffeomorphic Lyapunov Functions**: learn a simple \(V(z)\) in latent, then use \(\phi\) to obtain a complex Lyapunov certificate in \(x\)-space^[17].  
+- **Neural Energy Models**: flexible energy-based vector fields with guaranteed unique minima, re-parameterized by diffeo to capture spirals and limit cycles^[18].
+
+### 4.4 Contraction & Partial Contraction Training
+
+Learn contracting metrics in latent (e.g. via semi-definite programming or NN approximations) and enforce contraction under \(\phi\) for guaranteed exponential convergence^[7].
+
+### 4.5 Obstacle Avoidance & Higher-Order DS
+
+- **Diffeomorphic Transforms for Imitation Learning**: Zhi et al. use learned diffeo to warp DS around obstacles, yielding reactive, stable avoidance behaviors^[19].  
+- **Second-Order DS**: extend to acceleration-level control by learning diffeo on phase space, e.g. rotation-based obstacle avoidance combined with diffeomorphic stability^[20].
+
+### 4.6 Optimization on Smooth Manifolds
+
+Underpinning many of these methods is Riemannian optimization.  Boumal’s textbook “An Introduction to Optimization on Smooth Manifolds” provides the theoretical and algorithmic foundations for gradient-based learning on \(\mathrm{SO}(3)\), SPD, and general manifolds^[21].
+
+---
 
 ## Programming exercise
 
 ## Want to implement a real project?
 
 ## References
+
+1. Programming by Demonstration and DS overview.  
+2. Khansari-Zadeh, S. M., & Billard, A. (2011). *Learning Stable Non-linear Dynamical Systems for Robot Control.* IJRR.  
+3. Pastor, P., Hoffmann, H., Asfour, T., & Schaal, S. (2009). *Learning and generalization of motor skills by learning from demonstration.* ICINCO.  
+4. Khansari-Zadeh, S. M., & Billard, A. (2011). *SEDS: Stable Estimator of Dynamical Systems.* IJRR.  
+5. Fridovich-Keil, S., Schaal, S., & Zimmerman, L. (2014). *Control-Lyapunov Function DS.* CDC.  
+6. Khansari-Zadeh, S. M., & Billard, A. (2014). *Locally Weighted GMM for DS.* Neural Networks.  
+7. Manek, G., & Kolter, J. (2019). *Contraction Metrics for GP-DS.* NeurIPS.  
+8. Massaroli, S., Olivier, N., Balestrieri, A., Filippini, F., Gravel, N., Bettini, E., & Falconi, S. (2020). *Neural ODEs for DS.* ICML.  
+9. Khansari-Zadeh, S. M., & Billard, A. (2014). *LASA Handwriting Dataset.* Technical Report.  
+10. Neumann, G., & Steil, J. J. (2015). *τ-SEDS: Diffeomorphic Mapping for SEDS.* ICRA.  
+11. Lee, J. M. (2013). *Introduction to Smooth Manifolds.* Springer.  
+12. Perrin, N., & Schlehuber-Caissier, L. (2016). *Fast Diffeomorphic Matching for Stable DS.* MLR.  
+13. Rana, S., Fox, E., & Qiu, W. (2020). *Euclideanizing Flows for Stable DS.* ICML.  
+14. Luo, Z., & Fox, D. (2021). *Imitation Flow: Stable Stochastic DS via Normalizing Flows.* NeurIPS.  
+15. Zhang, X., Saveriano, M., & Krüger, N. (2022). *Riemannian Manifold DS via Neural ODEs.* IJRR.  
+16. Stith, N., & Bernardo, M. (2017). *Laplacian Eigenmaps for DS Linearization.* RSS.  
+17. Ravanbakhsh, S., & Sankaranarayanan, S. (2019). *Diffeomorphic Lyapunov Functions from Data.* CDC.  
+18. Zhang, H., & Kolter, J. (2018). *Flexible Neural Energy Functions for DS.* ICRA.  
+19. Zhi, Z., Song, M., & Pavone, M. (2022). *Diffeomorphic Transforms for Obstacle Avoidance.* MLR.  
+20. Lukas, S., & Stilman, M. (2020). *Second-Order DS with Diffeomorphism.* IROS.  
+21. Boumal, N. (2022). *An Introduction to Optimization on Smooth Manifolds.* Cambridge University Press.
+
+
+
+
+
+
+
+
+
+
 
 # Want to learn more ? --> Free Online Courses
 

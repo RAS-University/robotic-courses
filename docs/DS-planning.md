@@ -117,23 +117,23 @@ $$
 $$
 robots react immediately to perturbations, offering smooth, robust replanning^[2].
 
-### 1.2 Classical Parametric DS Models
+### 1.2 Classical DS Models
 
 - **Dynamic Movement Primitives (DMP)**: encodes each degree of freedom separately with a time-dependent forcing term; yields fast one-shot learning but limited coupling across dimensions^[3].  
 - **Stable Estimator of Dynamical Systems (SEDS)**: fits a Gaussian Mixture Model (GMM) to demonstrations under convex constraints guaranteeing global asymptotic stability at the goal^[4].  
 - **Control-Lyapunov Function DS (CLF-DM)**: learns a Lyapunov candidate by constrained regression, ensuring stability via sum-of-squares certificates^[5].
 
-### 1.3 Nonparametric & State-Dependent DS
-
 - **LAGS-DS (Locally Active, Globally Stable DS)**: augments a stable global attractor with local, state-dependent modulation for higher fidelity near demonstrations, yet retains global convergence^[6].  
 - **Gaussian-Process DS**: Bayesian nonparametric vector fields with posterior uncertainty and stability enforced via contraction metrics^[7].  
-- **Neural ODEs for DS**: parameterize \(f(\xi)\) as a continuous-depth neural network, with stability imposed by spectral normalization or contraction theory^[8].
+- [TODO] **Neural ODEs for DS**: parameterize \(f(\xi)\) as a continuous-depth neural network, with stability imposed by spectral normalization or contraction theory^[8].
 
-### 1.4 Benchmarks & Tools
+### 1.3 Benchmarks & Tools
 
 - **LASA Handwriting Dataset**: 24 handwriting motions used extensively to compare DS methods^[9].  
-- **Toolboxes**: EPFL’s SEDS, ROS packages for obstacle avoidance, Python repos (e.g., `HongminWu/SEDS` on GitHub).
-
+- **Toolboxes**: 
+  - EPFL-LASA’s SEDS ROS packages (http: [TODO])
+  - EPFL-LASA's LAGSDS ROS package (http: [TODO])
+  - more [TODO]
 ---
 
 ## Chapter 2 : Stability–Accuracy Dilemma
@@ -230,34 +230,34 @@ Underpinning many of these methods is Riemannian optimization.  Boumal’s textb
 ---
 
 ## Programming exercise
+[TODO]
 
 ## Want to implement a real project?
+[TODO]
 
 ## References
 
-1. Programming by Demonstration and DS overview.  
-2. Khansari-Zadeh, S. M., & Billard, A. (2011). *Learning Stable Non-linear Dynamical Systems for Robot Control.* IJRR.  
-3. Pastor, P., Hoffmann, H., Asfour, T., & Schaal, S. (2009). *Learning and generalization of motor skills by learning from demonstration.* ICINCO.  
-4. Khansari-Zadeh, S. M., & Billard, A. (2011). *SEDS: Stable Estimator of Dynamical Systems.* IJRR.  
-5. Fridovich-Keil, S., Schaal, S., & Zimmerman, L. (2014). *Control-Lyapunov Function DS.* CDC.  
-6. Khansari-Zadeh, S. M., & Billard, A. (2014). *Locally Weighted GMM for DS.* Neural Networks.  
-7. Manek, G., & Kolter, J. (2019). *Contraction Metrics for GP-DS.* NeurIPS.  
-8. Massaroli, S., Olivier, N., Balestrieri, A., Filippini, F., Gravel, N., Bettini, E., & Falconi, S. (2020). *Neural ODEs for DS.* ICML.  
-9. Khansari-Zadeh, S. M., & Billard, A. (2014). *LASA Handwriting Dataset.* Technical Report.  
-10. Neumann, G., & Steil, J. J. (2015). *τ-SEDS: Diffeomorphic Mapping for SEDS.* ICRA.  
-11. Lee, J. M. (2013). *Introduction to Smooth Manifolds.* Springer.  
-12. Perrin, N., & Schlehuber-Caissier, L. (2016). *Fast Diffeomorphic Matching for Stable DS.* MLR.  
-13. Rana, S., Fox, E., & Qiu, W. (2020). *Euclideanizing Flows for Stable DS.* ICML.  
-14. Luo, Z., & Fox, D. (2021). *Imitation Flow: Stable Stochastic DS via Normalizing Flows.* NeurIPS.  
-15. Zhang, X., Saveriano, M., & Krüger, N. (2022). *Riemannian Manifold DS via Neural ODEs.* IJRR.  
-16. Stith, N., & Bernardo, M. (2017). *Laplacian Eigenmaps for DS Linearization.* RSS.  
-17. Ravanbakhsh, S., & Sankaranarayanan, S. (2019). *Diffeomorphic Lyapunov Functions from Data.* CDC.  
-18. Zhang, H., & Kolter, J. (2018). *Flexible Neural Energy Functions for DS.* ICRA.  
-19. Zhi, Z., Song, M., & Pavone, M. (2022). *Diffeomorphic Transforms for Obstacle Avoidance.* MLR.  
-20. Lukas, S., & Stilman, M. (2020). *Second-Order DS with Diffeomorphism.* IROS.  
-21. Boumal, N. (2022). *An Introduction to Optimization on Smooth Manifolds.* Cambridge University Press.
-
-
+1. Argall, B. D., Chernova, S., Veloso, M., & Browning, B. (2009). A survey of robot learning from demonstration. Robotics and autonomous systems, 57(5), 469-483.
+2. Khansari-Zadeh, S. M., & Billard, A. (2011). Learning stable nonlinear dynamical systems with gaussian mixture models. IEEE Transactions on Robotics, 27(5), 943-957.
+3. Pastor, P., Hoffmann, H., Asfour, T., & Schaal, S. (2009, May). Learning and generalization of motor skills by learning from demonstration. In 2009 IEEE international conference on robotics and automation (pp. 763-768). IEEE.
+4. Khansari-Zadeh, S. M., & Billard, A. (2014). Learning control Lyapunov function to ensure stability of dynamical system-based robot reaching motions. Robotics and Autonomous Systems, 62(6), 752-765.
+5. Khansari-Zadeh, S. M., & Billard, A. (2012). A dynamical system approach to realtime obstacle avoidance. Autonomous Robots, 32, 433-454.
+6. Kronander, K., Khansari, M., & Billard, A. (2015). Incremental motion learning with locally modulated dynamical systems. Robotics and Autonomous Systems, 70, 52-62.
+7. Kolter, J. Z., & Manek, G. (2019). Learning stable deep dynamics models. Advances in neural information processing systems, 32.
+8. Kang, Q., Song, Y., Ding, Q., & Tay, W. P. (2021). Stable neural ode with lyapunov-stable equilibrium points for defending against adversarial attacks. Advances in Neural Information Processing Systems, 34, 14925-14937.
+9. Khansari-Zadeh, S. M., & Billard, A. (2014). *The LASA handwriting dataset for evaluation of trajectory generation algorithms.* Technical Report, LASA Lab, EPFL.  
+10. Neumann, K., & Steil, J. J. (2015). Learning robot motions with stable dynamical systems under diffeomorphic transformations. Robotics and Autonomous Systems, 70, 1-15.
+11. Lee, J. M., & Lee, J. M. (2003). Smooth manifolds (pp. 1-29). Springer New York.
+12. Perrin, N., & Schlehuber-Caissier, P. (2016). Fast diffeomorphic matching to learn globally asymptotically stable nonlinear dynamical systems. Systems & Control Letters, 96, 51-59.
+13. Rana, M. A., Li, A., Fox, D., Boots, B., Ramos, F., & Ratliff, N. (2020, July). Euclideanizing flows: Diffeomorphic reduction for learning stable dynamical systems. In Learning for Dynamics and Control (pp. 630-639). PMLR.
+14. Urain, J., Ginesi, M., Tateo, D., & Peters, J. (2020, October). Imitationflow: Learning deep stable stochastic dynamic systems by normalizing flows. In 2020 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS) (pp. 5231-5237). IEEE.
+15. Saveriano, M., Abu-Dakka, F. J., & Kyrki, V. (2023). Learning stable robotic skills on Riemannian manifolds. Robotics and Autonomous Systems, 169, 104510.
+16. Gupta, S., Nayak, A., & Billard, A. (2022). Learning high dimensional demonstrations using laplacian eigenmaps. arXiv preprint arXiv:2207.08714.
+17. Ravanbakhsh, H., & Sankaranarayanan, S. (2019). Learning control lyapunov functions from counterexamples and demonstrations. Autonomous Robots, 43, 275-307.
+18. Jin, Z., Si, W., Liu, A., Zhang, W. A., Yu, L., & Yang, C. (2023). Learning a flexible neural energy function with a unique minimum for globally stable and accurate demonstration learning. IEEE Transactions on Robotics, 39(6), 4520-4538.
+19. Zhi, W., Lai, T., Ott, L., & Ramos, F. (2022, May). Diffeomorphic Transforms for Generalised Imitation Learning. In L4DC (pp. 508-519).
+20. Huber, L., Slotine, J. J., & Billard, A. (2023). Avoidance of concave obstacles through rotation of nonlinear dynamics. IEEE Transactions on Robotics, 40, 1983-2002.
+21. Boumal, N. (2023). An introduction to optimization on smooth manifolds. Cambridge University Press.
 
 
 

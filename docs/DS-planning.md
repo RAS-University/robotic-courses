@@ -119,10 +119,27 @@ $$
 
 robots react immediately to perturbations, offering smooth, robust replanning<sup><a href="#ref2">2</a></sup>.
 
+<figure>
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/5953529-fig-15-source-large.gif" alt="Dynamical system example" width="600">
+  <figcaption><center><em>Figure: Dynamical system model embedding different ways of performing a task in one single model. The robot follow an arc, a sine, or a straight line starting from different points in the workspace. </em><br><sub>Shiferaw, T. (2025) Advanced robotic manipulation with impedance control. MathWorks. Available at: https://ch.mathworks.com/company/technical-articles/enhancing-robot-precision-and-safety-with-impedance-control.html</sub></center> </figcaption>
+</figure>
+
+
+
+Nonlinear dynamical systems have recently emerged as a powerful framework for capturing robotic motor skills<sup><a href="#refN1">N1</a>–<a href="#refN3">N3</a></sup>.  In particular, endpoint-to-endpoint behaviors can be encoded directly as time-invariant vector fields, forming reusable “movement primitives” (MPs)<sup><a href="#refN4">N4</a>,<a href="#refN5">N5</a></sup> that drive a wide array of manipulation tasks<sup><a href="#refN6">N6</a></sup>.  Unlike traditional trajectory planners, DS-based methods naturally absorb disturbances by treating the goal as a globally attracting equilibrium, while the precise motion profiles are acquired from demonstration data<sup><a href="#refN7">N7</a>–<a href="#refN10">N10</a></sup>.
+
+
 ### 1.2 Classical DS Models
 
 - **Dynamic Movement Primitives (DMP)**: encodes each degree of freedom separately with a time-dependent forcing term; yields fast one-shot learning but limited coupling across dimensions<sup><a href="#ref3">3</a></sup>.  
-- **Stable Estimator of Dynamical Systems (SEDS)**: fits a Gaussian Mixture Model (GMM) to demonstrations under convex constraints guaranteeing global asymptotic stability at the goal<sup><a href="#ref2">2</a></sup>.  
+DMP formulates motions as a non-autonomous dynamical system. In essence, a DMP augments a simple linear attractor with a learned nonlinear forcing term to reproduce complex trajectories from demonstrations. To guarantee convergence, the nonlinear component is gradually attenuated near the goal by a phase variable, smoothly reverting the system to its stable linear form. However, this external phase-driven modulation can warp the timing of the original motion, limiting DMP’s ability to extrapolate beyond the demonstrated paths<sup><a href="#refN11">N11</a></sup>.
+
+
+
+
+To address this limitation, more recent approaches adopt **time-independent** models that maintain the spatial and temporal structure of demonstrations under perturbations. By decoupling motion generation from an explicit phase, these methods focus on “what to imitate” rather than “when to imitate,” enabling robust generalization to unseen regions of the workspace<sup><a href="#refN12">N12</a>,<a href="#ref2">2</a></sup>.  An appealing alternative is the Stable Estimator of Dynamical Systems (SEDS) <a href="#refN13">N13</a></sup>.
+
+- **Stable Estimator of Dynamical Systems (SEDS)**: fits a Gaussian Mixture Model (GMM) to demonstrations under convex constraints guaranteeing global asymptotic stability at the goal<sup><a href="#ref2">2</a></sup>.  However, its quadratic Lyapunov-function constraint can limit reproduction accuracy when demonstrations violate purely contractive dynamics.  
 - **Control-Lyapunov Function DS (CLF-DM)**: learns a Lyapunov candidate by constrained regression, ensuring stability via sum-of-squares certificates<sup><a href="#ref4">4</a></sup>.  
 - **LAGS-DS (Locally Active, Globally Stable DS)**: augments a stable global attractor with local, state-dependent modulation for higher fidelity near demonstrations, yet retains global convergence<sup><a href="#ref6">6</a></sup>.  
 - **Gaussian-Process DS**: Bayesian nonparametric vector fields with posterior uncertainty and stability enforced via contraction metrics<sup><a href="#ref7">7</a></sup>.  
@@ -144,18 +161,35 @@ Robust DS must satisfy two often-conflicting goals:
 1. **Stability**: provable global convergence to a target under any perturbation.  
 2. **Accuracy**: faithful reproduction of the demonstrated trajectory.
 
-### 2.1 Trade-off in GMM-Based DS
+Khansari-Zadeh et al. first highlighted the stability–accuracy trade-off in SEDS, noting that although their Gaussian-mixture stability constraints guarantee global convergence, “these global stability conditions might be too stringent to accurately model some complex motions”<sup><a href="#ref2">2</a></sup>.  <a href="#fig1">Figure 1</a> illustrates this: the left panel shows C-shaped demonstrations from the LASA dataset<sup><a href="#refN14">N14</a></sup> overlaid on equipotential contours of the quadratic Lyapunov function, while the right panel superimposes the DS flow (blue arrows), original trajectories (black), and reproductions (red), revealing stable yet imprecise tracking.
 
-SEDS enforces stability by constraining the GMM covariance and means to satisfy Lyapunov inequalities, but these constraints can “flatten” the mixture components, reducing fit quality far from the goal<sup><a href="#ref2">2</a></sup>.
+<figure id="fig1">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/lyapunov.png" alt="Dynamical system example" width="600">
+  <figcaption><center><em>Figure: The conflict between demonstration data and a DS constrained by a quadratic Lyapunov function. In the left panel, C-shaped trajectories from the LASA dataset are superimposed on the contour lines of the quadratic Lyapunov candidate, revealing their mismatch. The right panel shows the DS flow and its reproductions, which, although guaranteed stable, diverge noticeably from the original demonstrations. </em><br><sub>Shiferaw, T. (2025) Advanced robotic manipulation with impedance control. MathWorks. Available at: https://ch.mathworks.com/company/technical-articles/enhancing-robot-precision-and-safety-with-impedance-control.html</sub></center>  </figcaption>
+</figure>
 
-### 2.2 State-Dependent Modulation
+### 2.1 State-Dependent Modulation (Lyapunov functions)
 
-LAGS-DS improves local tracking by allowing state-dependent gains near the demonstration manifold, yet sacrifices some of the stiffness of a pure global attractor<sup><a href="#ref6">6</a></sup>.
+To address this, LAGS-DS improves local tracking by allowing state-dependent gains near the demonstration manifold, yet sacrifices some of the stiffness of a pure global attractor<sup><a href="#ref6">6</a></sup>.
 
-### 2.3 Extensions & Partial Contraction
+Reinhart et al. trained two parallel neural networks for the iCub—one for accuracy and one for stability—but this decoupled scheme is complex and lacks formal guarantees<sup><a href="#refN10">N10</a></sup>.  
 
-- **τ-SEDS**: augments SEDS with a diffeomorphic pre-mapping to relax Lyapunov constraints, boosting accuracy while retaining stability<sup><a href="#ref10">10</a></sup>.  
+The CLF-DM approach<sup><a href="#refN15">N15</a>,<a href="#refN16">N16</a></sup> reduces conservatism by learning a control Lyapunov function via weighted asymmetric quadratics, yet it applies runtime corrections that can disrupt the learned DS.  
+
+Although Artstein and Sontag’s theory of control Lyapunov functions<sup><a href="#refN17">N17</a>,<a href="#refN18">N18</a></sup> provides the foundation for stability enforcement, balancing precision and robustness in learned systems remains an open challenge.
+
+Lemme et al.’s Neurally Imprinted Stable Vector Fields (NIVF)<sup><a href="#refN8">N8</a></sup> employ a neurally learned Lyapunov candidate with quadratic programming, achieving high accuracy but only local stability and requiring expensive ex-post verification<sup><a href="#refN19">N19</a></sup>.  
+
+
+### 2.2  contraction theory
 - **Partial Contraction DS**: learns contracting subspaces so that local behaviors track demonstrations, then uses contraction theory for stability<sup><a href="#ref7">7</a></sup>.
+
+
+### 2.3 diffeomorphic mapping
+- **τ-SEDS**: augments SEDS with a diffeomorphic pre-mapping to relax Lyapunov constraints, boosting accuracy while retaining stability<sup><a href="#ref10">10</a></sup>.  This framework overcomes the stability–accuracy dilemma by integrating the Lyapunov candidate into a diffeomorphic transformation, yielding provably globally stable DS that faithfully reproduce demonstrations.  
+
+
+
 
 ---
 
@@ -265,7 +299,7 @@ Underpinning many of these methods is Riemannian optimization. Boumal’s textbo
 19. <a id="ref19"></a>Zhi, W., Lai, T., Ott, L., & Ramos, F. (2022). *Diffeomorphic Transforms for Generalised Imitation Learning.* In Learning for Dynamics and Control, 23, 508–519.  
 20. <a id="ref20"></a>Huber, L., Slotine, J. J., & Billard, A. (2023). *Avoidance of concave obstacles through rotation of nonlinear dynamics.* IEEE Transactions on Robotics, 40, 1983–2002.  
 21. <a id="ref21"></a>Boumal, N. (2023). *An Introduction to Optimization on Smooth Manifolds* (2nd ed.). Cambridge University Press. ISBN 978-1108426292  
-
+22. 
 
 
 

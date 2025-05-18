@@ -137,7 +137,7 @@ DMP formulates motions as a non-autonomous dynamical system. In essence, a DMP a
 
 
 
-To address this limitation, more recent approaches adopt **time-independent** models that maintain the spatial and temporal structure of demonstrations under perturbations. By decoupling motion generation from an explicit phase, these methods focus on “what to imitate” rather than “when to imitate,” enabling robust generalization to unseen regions of the workspace<sup><a href="#refN12">N12</a>,<a href="#ref2">2</a></sup>.  An appealing alternative is the Stable Estimator of Dynamical Systems (SEDS) <a href="#refN13">N13</a></sup>.
+To address this limitation, more recent approaches adopt **time-independent** models that maintain the spatial and temporal structure of demonstrations under perturbations. By decoupling motion generation from an explicit phase, these methods focus on “what to imitate” rather than “when to imitate,” enabling robust generalization to unseen regions of the workspace<sup><a href="#refN12">N12</a>,<a href="#ref2">2</a></sup>.  An appealing alternative is the Stable Estimator of Dynamical Systems (SEDS) <sup><a href="#ref2">2</a></sup>.
 
 - **Stable Estimator of Dynamical Systems (SEDS)**: fits a Gaussian Mixture Model (GMM) to demonstrations under convex constraints guaranteeing global asymptotic stability at the goal<sup><a href="#ref2">2</a></sup>.  However, its quadratic Lyapunov-function constraint can limit reproduction accuracy when demonstrations violate purely contractive dynamics.  
 - **Control-Lyapunov Function DS (CLF-DM)**: learns a Lyapunov candidate by constrained regression, ensuring stability via sum-of-squares certificates<sup><a href="#ref4">4</a></sup>.  

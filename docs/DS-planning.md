@@ -15,12 +15,12 @@ math: mathjax
 
 ### Books
 
-- [Learning for Adaptive and Reactive Robot Control: A Dynamical Systems Approach ](https://www.epfl.ch/labs/lasa/mit-press-book-learning/) (Chapter 9. Obstacle avoidance with Dynamical Systems)
+- [Learning for Adaptive and Reactive Robot Control: A Dynamical Systems Approach](https://www.epfl.ch/labs/lasa/mit-press-book-learning/) (Chapter 9: Obstacle avoidance with Dynamical Systems)
 
 ## Prerequisites
-* Basic knowledge of Dynamical system (DS)
+* Basic knowledge of dynamical systems (DS)
 * Control theory, system stability
-* diffeomorphic mapping
+* Diffeomorphic mapping
 
 ## Motivation
 ![Overview](https://www.youtube.com/watch?v=7fKLhzgeBac&ab_channel=LASA)
@@ -86,11 +86,11 @@ This is why, in recent years, dynamical system-based methods have gained promine
 <!-- Draggable items -->
 <div class="drag-container" id="drag-items">
   <div class="drag-item" id="Real_Time_Adaptability" draggable="true" ondragstart="drag(event)">Real-Time Adaptability</div>
-  <div class="drag-item" id="Goal_convergence" draggable="true" ondragstart="drag(event)">Goal convergence</div>
+  <div class="drag-item" id="Goal_convergence" draggable="true" ondragstart="drag(event)">Goal Convergence</div>
   <div class="drag-item" id="Reactive_to_perturbations" draggable="true" ondragstart="drag(event)">Reactive to perturbations</div>
-  <div class="drag-item" id="Open_loop_execution" draggable="true" ondragstart="drag(event)">Open-loop execution </div>
-  <div class="drag-item" id="Requires_full_trajectory_specification_in_advance" draggable="true" ondragstart="drag(event)">Requires full trajectory specification in advance </div>
-  <div class="drag-item" id="High_reliance_on_precise_timing" draggable="true" ondragstart="drag(event)">High reliance on precise timing </div>
+  <div class="drag-item" id="Open_loop_execution" draggable="true" ondragstart="drag(event)">Open-loop execution</div>
+  <div class="drag-item" id="Requires_full_trajectory_specification_in_advance" draggable="true" ondragstart="drag(event)">Requires full trajectory specification in advance</div>
+  <div class="drag-item" id="High_reliance_on_precise_timing" draggable="true" ondragstart="drag(event)">High reliance on precise timing</div>
 </div>
 
 <script>
@@ -107,7 +107,7 @@ const correctMapping = {
 
 </details>
 
-## Chapter 1 : Dynamical-Systems–Based Planning Overview
+## Chapter 1: Dynamical-Systems–Based Planning Overview
 
 ### 1.1 Motivation & Programming-by-Demonstration
 
@@ -121,23 +121,23 @@ robots react immediately to perturbations, offering smooth, robust replanning<su
 
 <figure>
   <img src="{{ site.baseurl }}/assets/images/DS-based-planning/5953529-fig-15-source-large.gif" alt="Dynamical system example" width="600">
-  <figcaption><center><em>Figure: Dynamical system model embedding different ways of performing a task in one single model. The robot follow an arc, a sine, or a straight line starting from different points in the workspace. </em><br><sub>Shiferaw, T. (2025) Advanced robotic manipulation with impedance control. MathWorks. Available at: https://ch.mathworks.com/company/technical-articles/enhancing-robot-precision-and-safety-with-impedance-control.html</sub></center> </figcaption>
+  <figcaption><center><em>Figure: Dynamical system model embedding different ways of performing a task in one single model. The robot follows an arc, a sine, or a straight line starting from different points in the workspace. </em><br><sub>Shiferaw, T. (2025) Advanced robotic manipulation with impedance control. MathWorks. Available at: https://ch.mathworks.com/company/technical-articles/enhancing-robot-precision-and-safety-with-impedance-control.html</sub></center> </figcaption>
 </figure>
 
 
 
-Nonlinear dynamical systems have recently emerged as a powerful framework for capturing robotic motor skills<sup><a href="#refN1">N1</a>–<a href="#refN3">N3</a></sup>.  In particular, endpoint-to-endpoint behaviors can be encoded directly as time-invariant vector fields, forming reusable “movement primitives” (MPs)<sup><a href="#refN4">N4</a>,<a href="#refN5">N5</a></sup> that drive a wide array of manipulation tasks<sup><a href="#refN6">N6</a></sup>.  Unlike traditional trajectory planners, DS-based methods naturally absorb disturbances by treating the goal as a globally attracting equilibrium, while the precise motion profiles are acquired from demonstration data<sup><a href="#refN7">N7</a>–<a href="#refN10">N10</a></sup>.
+Nonlinear dynamical systems have recently emerged as a powerful framework for capturing robotic motor skills.  In particular, endpoint-to-endpoint behaviors can be encoded directly as time-invariant vector fields, forming reusable “movement primitives” (MPs) that drive a wide array of manipulation tasks.  Unlike traditional trajectory planners, DS-based methods naturally absorb disturbances by treating the goal as a globally attracting equilibrium, while the precise motion profiles are acquired from demonstration data.
+<!-- Nonlinear dynamical systems have recently emerged as a powerful framework for capturing robotic motor skills<sup><a href="#refN1">N1</a>–<a href="#refN3">N3</a></sup>.  In particular, endpoint-to-endpoint behaviors can be encoded directly as time-invariant vector fields, forming reusable “movement primitives” (MPs)<sup><a href="#refN4">N4</a>,<a href="#refN5">N5</a></sup> that drive a wide array of manipulation tasks<sup><a href="#refN6">N6</a></sup>.  Unlike traditional trajectory planners, DS-based methods naturally absorb disturbances by treating the goal as a globally attracting equilibrium, while the precise motion profiles are acquired from demonstration data<sup><a href="#refN7">N7</a>–<a href="#refN10">N10</a></sup>. -->
 
 
 ### 1.2 Classical DS Models
 
 - **Dynamic Movement Primitives (DMP)**: encodes each degree of freedom separately with a time-dependent forcing term; yields fast one-shot learning but limited coupling across dimensions<sup><a href="#ref3">3</a></sup>.  
-DMP formulates motions as a non-autonomous dynamical system. In essence, a DMP augments a simple linear attractor with a learned nonlinear forcing term to reproduce complex trajectories from demonstrations. To guarantee convergence, the nonlinear component is gradually attenuated near the goal by a phase variable, smoothly reverting the system to its stable linear form. However, this external phase-driven modulation can warp the timing of the original motion, limiting DMP’s ability to extrapolate beyond the demonstrated paths<sup><a href="#refN11">N11</a></sup>.
+DMP formulates motions as a non-autonomous dynamical system. In essence, a DMP augments a simple linear attractor with a learned nonlinear forcing term to reproduce complex trajectories from demonstrations. To guarantee convergence, the nonlinear component is gradually attenuated near the goal by a phase variable, smoothly reverting the system to its stable linear form. However, this external phase-driven modulation can warp the timing of the original motion, limiting DMP’s ability to extrapolate beyond the demonstrated paths.
+<!-- DMP formulates motions as a non-autonomous dynamical system. In essence, a DMP augments a simple linear attractor with a learned nonlinear forcing term to reproduce complex trajectories from demonstrations. To guarantee convergence, the nonlinear component is gradually attenuated near the goal by a phase variable, smoothly reverting the system to its stable linear form. However, this external phase-driven modulation can warp the timing of the original motion, limiting DMP’s ability to extrapolate beyond the demonstrated paths<sup><a href="#refN11">N11</a></sup>. -->
 
 
-
-
-To address this limitation, more recent approaches adopt **time-independent** models that maintain the spatial and temporal structure of demonstrations under perturbations. By decoupling motion generation from an explicit phase, these methods focus on “what to imitate” rather than “when to imitate,” enabling robust generalization to unseen regions of the workspace<sup><a href="#refN12">N12</a>,<a href="#ref2">2</a></sup>.  An appealing alternative is the Stable Estimator of Dynamical Systems (SEDS) <sup><a href="#ref2">2</a></sup>.
+To address this limitation, more recent approaches adopt **time-independent** models that maintain the spatial and temporal structure of demonstrations under perturbations. By decoupling motion generation from an explicit phase, these methods focus on “what to imitate” rather than “when to imitate,” enabling robust generalization to unseen regions of the workspace.  An appealing alternative is the Stable Estimator of Dynamical Systems (SEDS) <sup><a href="#ref2">2</a></sup>.
 
 - **Stable Estimator of Dynamical Systems (SEDS)**: fits a Gaussian Mixture Model (GMM) to demonstrations under convex constraints guaranteeing global asymptotic stability at the goal<sup><a href="#ref2">2</a></sup>.  However, its quadratic Lyapunov-function constraint can limit reproduction accuracy when demonstrations violate purely contractive dynamics.  
 - **Control-Lyapunov Function DS (CLF-DM)**: learns a Lyapunov candidate by constrained regression, ensuring stability via sum-of-squares certificates<sup><a href="#ref4">4</a></sup>.  
@@ -154,38 +154,42 @@ To address this limitation, more recent approaches adopt **time-independent** mo
 
 ---
 
-## Chapter 2 : Stability–Accuracy Dilemma
+## Chapter 2: Stability
 
-Robust DS must satisfy two often-conflicting goals:
+Within a dynamical systems (DS) framework, achieving system stability alongside accuracy is essential. As robots learn motor skills via imitation learning (IL), robustness becomes paramount: the controller must generalize reliably and continue to converge on the intended behavior despite disturbances or variations. To reinforce stability in DS, three primary approaches are typically employed: Lyapunov functions (LF), Contraction Theory (CT), and diffeomorphic transformations. Each of these methods strengthens the learning system’s resilience by mitigating deviations and external perturbations. In the following, we examine the fundamental principles of these three techniques and their roles in enhancing DS stability.
 
-1. **Stability**: provable global convergence to a target under any perturbation.  
-2. **Accuracy**: faithful reproduction of the demonstrated trajectory.
+### 2.1 Lyapunov stability
 
-Khansari-Zadeh et al. first highlighted the stability–accuracy trade-off in SEDS, noting that although their Gaussian-mixture stability constraints guarantee global convergence, “these global stability conditions might be too stringent to accurately model some complex motions”<sup><a href="#ref2">2</a></sup>.  <a href="#fig1">Figure 1</a> illustrates this: the left panel shows C-shaped demonstrations from the LASA dataset<sup><a href="#refN14">N14</a></sup> overlaid on equipotential contours of the quadratic Lyapunov function, while the right panel superimposes the DS flow (blue arrows), original trajectories (black), and reproductions (red), revealing stable yet imprecise tracking.
-
-<figure id="fig1">
-  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/lyapunov.png" alt="Dynamical system example" width="600">
-  <figcaption><center><em>Figure: The conflict between demonstration data and a DS constrained by a quadratic Lyapunov function. In the left panel, C-shaped trajectories from the LASA dataset are superimposed on the contour lines of the quadratic Lyapunov candidate, revealing their mismatch. The right panel shows the DS flow and its reproductions, which, although guaranteed stable, diverge noticeably from the original demonstrations. </em><br><sub>Shiferaw, T. (2025) Advanced robotic manipulation with impedance control. MathWorks. Available at: https://ch.mathworks.com/company/technical-articles/enhancing-robot-precision-and-safety-with-impedance-control.html</sub></center>  </figcaption>
-</figure>
-
-### 2.1 State-Dependent Modulation (Lyapunov functions)
+Lyapunov functions (LFs) provide a scalar measure—often thought of as the “energy” or “potential”—of a dynamical system. In control theory, they are indispensable for proving that a system will remain stable and converge to a target behavior. When applied to imitation learning, LF-based methods seek to construct a function that satisfies the usual Lyapunov conditions, then tune it via optimization (e.g., gradient descent, trust-region algorithms or neural-network training). By showing that this function consistently decreases along the system’s trajectories, these approaches guarantee that the learned policy is both stable and convergent.
 
 To address this, LAGS-DS improves local tracking by allowing state-dependent gains near the demonstration manifold, yet sacrifices some of the stiffness of a pure global attractor<sup><a href="#ref6">6</a></sup>.
 
-Reinhart et al. trained two parallel neural networks for the iCub—one for accuracy and one for stability—but this decoupled scheme is complex and lacks formal guarantees<sup><a href="#refN10">N10</a></sup>.  
+<!-- Reinhart et al. trained two parallel neural networks for the iCub—one for accuracy and one for stability—but this decoupled scheme is complex and lacks formal guarantees.   -->
+
+The CLF-DM approach reduces conservatism by learning a control Lyapunov function via weighted asymmetric quadratics, yet it applies runtime corrections that can disrupt the learned DS.  
+
+Although Artstein and Sontag’s theory of control Lyapunov functions provides the foundation for stability enforcement, balancing precision and robustness in learned systems remains an open challenge.
+
+Lemme et al.’s Neurally Imprinted Stable Vector Fields (NIVF) employ a neurally learned Lyapunov candidate with quadratic programming, achieving high accuracy but only local stability and requiring expensive ex-post verification.  
+
+<!-- Reinhart et al. trained two parallel neural networks for the iCub—one for accuracy and one for stability—but this decoupled scheme is complex and lacks formal guarantees<sup><a href="#refN10">N10</a></sup>.  
 
 The CLF-DM approach<sup><a href="#refN15">N15</a>,<a href="#refN16">N16</a></sup> reduces conservatism by learning a control Lyapunov function via weighted asymmetric quadratics, yet it applies runtime corrections that can disrupt the learned DS.  
 
 Although Artstein and Sontag’s theory of control Lyapunov functions<sup><a href="#refN17">N17</a>,<a href="#refN18">N18</a></sup> provides the foundation for stability enforcement, balancing precision and robustness in learned systems remains an open challenge.
 
-Lemme et al.’s Neurally Imprinted Stable Vector Fields (NIVF)<sup><a href="#refN8">N8</a></sup> employ a neurally learned Lyapunov candidate with quadratic programming, achieving high accuracy but only local stability and requiring expensive ex-post verification<sup><a href="#refN19">N19</a></sup>.  
+Lemme et al.’s Neurally Imprinted Stable Vector Fields (NIVF)<sup><a href="#refN8">N8</a></sup> employ a neurally learned Lyapunov candidate with quadratic programming, achieving high accuracy but only local stability and requiring expensive ex-post verification<sup><a href="#refN19">N19</a></sup>.   -->
 
 
-### 2.2  contraction theory
+### 2.2 Contraction theory
+Contraction theory (CT) offers a powerful means to certify stability and robustness in imitation‐learned controllers. Rather than tracking a single nominal trajectory, CT examines how distance between any two trajectories evolves over time. By identifying a metric under which the system’s dynamics cause all trajectories to shrink toward each other—i.e., to “contract”—one can guarantee exponential convergence to the desired behavior, even in the presence of disturbances or modeling errors.
+
 - **Partial Contraction DS**: learns contracting subspaces so that local behaviors track demonstrations, then uses contraction theory for stability<sup><a href="#ref7">7</a></sup>.
 
 
-### 2.3 diffeomorphic mapping
+### 2.3 Diffeomorphic mapping
+Diffeomorphisms, a key concept in differential geometry and topology, are smooth, bijective mappings between differentiable manifolds that preserve differentiability. When you apply a diffeomorphism to the state space of a dynamical system, the resulting transformed system inherits the exact same stability properties as the original. Their power in stability analysis comes from the fact that by reparameterizing the system’s coordinates or state variables, one can often recast a complicated dynamical system into a simpler, hand‐specified stable system (HSDS) whose stability is already established. In this way, picking the right diffeomorphic transformation can greatly simplify the task of proving stability.
+
 - **τ-SEDS**: augments SEDS with a diffeomorphic pre-mapping to relax Lyapunov constraints, boosting accuracy while retaining stability<sup><a href="#ref10">10</a></sup>.  This framework overcomes the stability–accuracy dilemma by integrating the Lyapunov candidate into a diffeomorphic transformation, yielding provably globally stable DS that faithfully reproduce demonstrations.  
 
 
@@ -193,51 +197,130 @@ Lemme et al.’s Neurally Imprinted Stable Vector Fields (NIVF)<sup><a href="#re
 
 ---
 
-## Chapter 3 : Diffeomorphic Mapping for DS
+## Chapter 3: Diffeomorphic Mapping for DS
 
 Mapping a simple, hand-designed—but provably stable—DS through a smooth, bijective transformation (a **diffeomorphism**) allows one to inherit stability while recovering complex accuracy.
 
-### 3.1 Theory of Diffeomorphic Transformations
+### 3.1 Why Diffeomorphic Mapping --- Stability–Accuracy Dilemma
 
-A diffeomorphism $\phi: \mathbb{R}^d \to \mathbb{R}^d$ is smooth, invertible, with smooth inverse. If
+Robust DS must satisfy two often-conflicting goals:
+
+1. **Stability**: provable global convergence to a target under any perturbation.  
+2. **Accuracy**: faithful reproduction of the demonstrated trajectory.
+
+Khansari-Zadeh et al. first highlighted the stability–accuracy trade-off in SEDS, noting that although their Gaussian-mixture stability constraints guarantee global convergence, “these global stability conditions might be too stringent to accurately model some complex motions”<sup><a href="#ref2">2</a></sup>.  <a href="#fig1">Figure 1</a> illustrates this: the left panel shows C-shaped demonstrations from the LASA dataset overlaid on equipotential contours of the quadratic Lyapunov function, while the right panel superimposes the DS flow (blue arrows), original trajectories (black), and reproductions (red), revealing stable yet imprecise tracking.
+
+<!-- Khansari-Zadeh et al. first highlighted the stability–accuracy trade-off in SEDS, noting that although their Gaussian-mixture stability constraints guarantee global convergence, “these global stability conditions might be too stringent to accurately model some complex motions”<sup><a href="#ref2">2</a></sup>.  <a href="#fig1">Figure 1</a> illustrates this: the left panel shows C-shaped demonstrations from the LASA dataset<sup><a href="#refN14">N14</a></sup> overlaid on equipotential contours of the quadratic Lyapunov function, while the right panel superimposes the DS flow (blue arrows), original trajectories (black), and reproductions (red), revealing stable yet imprecise tracking. -->
+
+<figure id="fig1">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/lyapunov.png" alt="Dynamical system example" width="600">
+  <figcaption><center><em>Figure: The conflict between demonstration data and a DS constrained by a quadratic Lyapunov function. In the left panel, C-shaped trajectories from the LASA dataset are superimposed on the contour lines of the quadratic Lyapunov candidate, revealing their mismatch. The right panel shows the DS flow and its reproductions, which, although guaranteed stable, diverge noticeably from the original demonstrations. </em><br><sub>Shiferaw, T. (2025) Advanced robotic manipulation with impedance control. MathWorks. Available at: https://ch.mathworks.com/company/technical-articles/enhancing-robot-precision-and-safety-with-impedance-control.html</sub></center>  </figcaption>
+</figure>
+
+Compared to Lyapunov‐function–based and contraction‐theory–based methods, the diffeomorphic‐mapping–based DS method can handle demonstration data on Riemannian manifolds and, by leveraging the properties of the mapping, guarantee that even complex motion models remain globally stable.
+
+### 3.2 Theory of Diffeomorphic Transformations <sup><a href="#ref22">22</a></sup>
+
+
+A diffeomorphism $\psi\colon \mathcal{Y}\to \mathcal{X}$ is a smooth, bijective map with a smooth inverse, thereby providing a coordinate transformation between two differentiable manifolds $\mathcal{Y}$ and $\mathcal{X}$. According to Lee <sup><a href="#ref11">11</a></sup>, any such diffeomorphism can be realized as a flow generated by an infinitesimal generator $\mathbf{V}$, often represented as a vector field on a smooth manifold. Specifically, let $\mathbf{V}\colon \mathbb{R}^d \to \mathbb{R}^d$ be a time-independent vector field and the flow $\gamma\colon \mathbb{R}\times\mathbb{R}^d\to\mathbb{R}^d$ be defined by
 
 $$
-\dot z = g(z)
+\gamma(t,y) \;=\; y \;+\; \int_{0}^{t} \mathbf{V}\bigl(\gamma(u,y)\bigr)\,du
+\;=\; x.
 $$
 
-is globally stable at $z^*$, then
+This flow $\gamma(t,y)$ provides the position $x$ at time $t$ of a trajectory starting at $y$ when $t=0$. For each fixed time $t$, this flow defines a diffeomorphism $\psi_t\colon \mathcal{Y}\to\mathcal{X}$ by $\psi(y):=\gamma(t,y)$. Therefore, the flow defines an invertible mapping, whose inverse can be computed by reversing the direction of time:
 
 $$
-x = \phi(z), 
+\gamma(-t,x) \;=\; x \;+\; \int_{-t}^{0} \mathbf{V}\bigl(\gamma(u,x)\bigr)\,du
+\;=\; y.
+$$
+
+Note that this flow-based diffeomorphism $\psi(y):=\gamma(t,y)$ maps the initial point $y\in\mathcal{Y}$ to the point $x=\gamma(t,y)\in\mathcal{X}$. Furthermore, given a vector field $f\colon \mathcal{X}\to T\mathcal{X}$, where $f(x)$ assigns a tangent vector in $T_x\mathcal{X}$ to each point $x\in\mathcal{X}$, we can use $\psi$ to pull back $f$ to a vector field on $\mathcal{Y}$. Specifically, let $J_{\psi}$ be the Jacobian of $\psi$, then the pullback of $f$ via $\psi$ is
+
+$$
+\dot y \;=\; J_{\psi}^{-1}\,f\bigl(\psi(y)\bigr),
+$$
+
+thereby transforming tangent vectors on $\mathcal{X}$ to corresponding tangent vectors on $\mathcal{Y}$.
+
+
+
+If the system on the manifold $\mathcal{Y}$,
+
+$$
+\dot y = J_{\psi}^{-1}\,f\bigl(\psi(y)\bigr),
+$$
+
+is globally asymptotically stable at an equilibrium $y^*\in\mathcal{Y}$, then the mapped system on $\mathcal{X}$,
+
+$$
+x = \psi(y), 
 \quad
-\dot x = D\phi\bigl(\phi^{-1}(x)\bigr)\,g\bigl(\phi^{-1}(x)\bigr),
+\dot x = D\psi\bigl(y\bigr)\,\dot y
+           = D\psi\bigl(\psi^{-1}(x)\bigr)\,J_{\psi}^{-1}\,f\bigl(x\bigr),
 $$
 
-is also globally stable at $x^* = \phi(z^*)$<sup><a href="#ref11">11</a></sup>.
+is also globally asymptotically stable at the corresponding equilibrium $x^* = \psi(y^*)\in\mathcal{X}$.  
 
-### 3.2 Fast Diffeomorphic Matching (FDM)
 
-Perrin & Schlehuber-Caissier (2016) introduce FDM to align a reference attractor to the demonstration manifold by solving large-deformation diffeomorphism matching with stability certificates<sup><a href="#ref12">12</a></sup>.
 
-### 3.3 τ-SEDS: Diffeomorphic SEDS
 
-Neumann & Steil (2015) embed a quadratic Lyapunov-function DS into a richer class via a learned diffeomorphism $\phi$, enabling non-quadratic behaviors (e.g. spirals) while proving global stability<sup><a href="#ref10">10</a></sup>.
+### 3.3 How to build a Diffeomorphic Mapping for DS
+Step 1: Build latent space based on data
+In the latent space, we aim for dynamics that are simple and whose stability is easy to prove. Common choices include:
+1. **Linear or Quadratic DS**  
+   - **Linearized demonstrations**: e.g., t-SEDS, Laplacian-based dimensionality reduction that projects high-dimensional trajectories into a low-dimensional linear space.  
+   - **Stochastic linear dynamics**: including FDM, E-Flow, and I-Flow, which approximate demonstrations via linear differential equations with Gaussian models or random terms.
+2. **Stable Neural ODEs**  
+   - Modeling latent-space dynamics with Neural ODEs constrained for global asymptotic stability, combining expressiveness with convergence guarantees.
 
-### 3.4 Euclideanizing Flows (E-FLOW)
+3. **Nonlinear DS and Limit Cycles**  
+   - For cyclic motions (limit cycles), introduce phase-based scaling maps; for surfaces or other manifolds, embed them into the latent space via landmark matching or conformal maps.
 
-Rana, Fox & Qiu (2020) view diffeomorphism learning as a normalizing flow: compose simple parameterized maps so that $x=\phi(z)$, with $z$ following a linear stable DS. Stability follows directly from the base flow<sup><a href="#ref13">13</a></sup>.
+4. When designing the latent space, also consider the latent space’s dimension and order:  
+  - **Non-Euclidean demonstrations** (e.g., finger joints, rotations): express them in the latent space using Riemannian manifolds or Lie group structures.  
+  - **Environmental changes and obstacle avoidance**: incorporate infinitesimal generators of flows, space curvature, or rotational avoidance terms in the latent dynamics.  
+  - **Second-order or dissipative systems**: simulate energy dissipation and inertial effects via phase-based scaling or higher-dimensional Euclidean representations.
 
-### 3.5 Imitation Flows (I-FLOW)
 
-Urain et al. (2020) extend E-FLOW to stochastic stabilization, pushing a simple contracting SDE through a learnable diffeomorphism via normalizing flows, ensuring both stability and expressivity<sup><a href="#ref14">14</a></sup>.
 
-### 3.6 Riemannian Stable DS (RSDS)
 
-Saveriano, Abu-Dakka & Kyrki (2023) learn diffeomorphic maps on manifolds (e.g. orientation on $\mathrm{SO}(3)$) via neural manifold ODEs, enforcing Lyapunov stability on Riemannian manifolds<sup><a href="#ref15">15</a></sup>.
+Step 2: Train mapping between the original space and the latent space
+After constructing the latent-space DS, the key is learning an **invertible mapping** that preserves stability while accurately reproducing demonstration trajectories. Main methods include:
+
+1. **Classical Optimal Methods**  
+   - Large Deformation Diffeomorphic Metric Mapping (LDDMM)  
+   - Optimal Transport–based mapping  
+   - Locally weighted translations with geometric constraints
+
+2. **Geometry/Physics-Constrained Methods**  
+   - Riemannian Gaussian Mixture Models for smooth manifold transformations  
+   - Hamiltonian-based diffeomorphic flows  
+   - Mappings defined on Lie groups
+
+3. **Neural Network Approaches**  
+   - **Normalizing Flows** (invertible neural networks): I-Flow, E-Flow, Jacobian-Constrained Networks, Non-Volume-Preserving flows  
+   - **Diffeomorphic Neural Networks**: using Neural ODE structures to ensure invertibility and diffeomorphic properties  
+   - **Invertible Residual Networks**: approximating invertible mappings with residual structures
+
+
+
+### 3.4 Key Challenges: 
+Although diffeomorphism is theoretically attractive, practical applications must address:
+
+1. **Model Accuracy vs. Dimensionality Curse**  
+   - High accuracy often requires a higher-dimensional latent space, leading to increased training and inference costs.
+
+2. **Approximation Errors**  
+   - Approximating diffeomorphic mappings on Riemannian or non-Euclidean spaces can introduce errors that affect strict stability guarantees.
+
+3. **Practical Deployment**  
+   - How to deploy on real robotic platforms with sufficient speed while handling sensor noise and real-time control requirements.
 
 ---
 
-## Chapter 4 : State-of-the-Art Approaches to Training the Mapping
+## Chapter 4: State-of-the-Art Approaches to Training the Mapping
 
 ### 4.1 Kernel & Variational Methods
 
@@ -255,7 +338,7 @@ Gupta, Nayak & Billard (2022) use Laplacian eigenmaps to linearize complex, mult
 
 ### 4.4 Contraction & Partial Contraction Training
 
-Learn contracting metrics in latent (e.g. via semi-definite programming or NN approximations) and enforce contraction under $\phi$ for guaranteed exponential convergence<sup><a href="#ref7">7</a></sup>.
+Learn contracting metrics in latent (e.g., via semi-definite programming or NN approximations) and enforce contraction under $\phi$ for guaranteed exponential convergence<sup><a href="#ref7">7</a></sup>.
 
 ### 4.5 Obstacle Avoidance & Higher-Order DS
 
@@ -268,9 +351,31 @@ Underpinning many of these methods is Riemannian optimization. Boumal’s textbo
 
 ---
 
-## Programming exercise
+## Programming exercise for classical methods
 
-[TODO]
+We create a code repository where you can test and try different Diffeomorphic mapping methods for DS training.
+
+https://github.com/RLoad/Tutorial_DS_mapping
+
+Here we list the method we used in our code structure, and thank them for their open source code repositories.
+
+### Fast Diffeomorphic Matching (FDM)
+
+Perrin & Schlehuber-Caissier (2016) introduce FDM to align a reference attractor to the demonstration manifold by solving large-deformation diffeomorphism matching with stability certificates<sup><a href="#ref12">12</a></sup>.
+
+### Euclideanizing Flows (E-FLOW)
+
+Rana, Fox & Qiu (2020) view diffeomorphism learning as a normalizing flow: compose simple parameterized maps so that $x=\phi(z)$, with $z$ following a linear stable DS. Stability follows directly from the base flow<sup><a href="#ref13">13</a></sup>.
+
+### Imitation Flows (I-FLOW)
+
+Urain et al. (2020) extend E-FLOW to stochastic stabilization, pushing a simple contracting SDE through a learnable diffeomorphism via normalizing flows, ensuring both stability and expressivity<sup><a href="#ref14">14</a></sup>.
+
+### Riemannian Stable DS (RSDS)
+
+Saveriano, Abu-Dakka & Kyrki (2023) learn diffeomorphic maps on manifolds (e.g. orientation on $\mathrm{SO}(3)$) via neural manifold ODEs, enforcing Lyapunov stability on Riemannian manifolds<sup><a href="#ref15">15</a></sup>.
+
+### More is coming ...
 
 ## Want to implement a real project?
 
@@ -298,11 +403,8 @@ Underpinning many of these methods is Riemannian optimization. Boumal’s textbo
 18. <a id="ref18"></a>Jin, Z., Si, W., Liu, A., Zhang, W. A., Yu, L., & Yang, C. (2023). *Learning a flexible neural energy function with a unique minimum for globally stable and accurate demonstration learning.* IEEE Transactions on Robotics, 39(6), 4520–4538.  
 19. <a id="ref19"></a>Zhi, W., Lai, T., Ott, L., & Ramos, F. (2022). *Diffeomorphic Transforms for Generalised Imitation Learning.* In Learning for Dynamics and Control, 23, 508–519.  
 20. <a id="ref20"></a>Huber, L., Slotine, J. J., & Billard, A. (2023). *Avoidance of concave obstacles through rotation of nonlinear dynamics.* IEEE Transactions on Robotics, 40, 1983–2002.  
-21. <a id="ref21"></a>Boumal, N. (2023). *An Introduction to Optimization on Smooth Manifolds* (2nd ed.). Cambridge University Press. ISBN 978-1108426292  
+21. <a id="ref21"></a>Boumal, N. (2023). *An Introduction to Optimization on Smooth Manifolds* (2nd ed.). Cambridge University Press. ISBN 978-1108426292.
 22. 
-
-
-
 
 # Want to learn more ? --> Free Online Courses
 

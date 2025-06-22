@@ -44,6 +44,7 @@ Explore the structured robotics courses below, designed to guide you from fundam
 -  [Control Variables](Variables) - In progress
 -  [Kinematics](kinematics) - In progress
 -  [Dynamics](dynamics) 
+-  [Proportional Integral Derivative](pid) - In progress
 -  [Force Control](force-control) - In progress
 
 **Chapter 2: Sensing for Robotics**
@@ -90,7 +91,7 @@ Explore the structured robotics courses below, designed to guide you from fundam
 -  [Socially-Aware Control](Social)
 -  [Rehabilitation Devices](Rehabilitation)
 -  [Exoskeletons](Exoskeletons)
--  [Surgical Robots](Surgery)
+-  [Surgical Robots](surgical) - In Progress
 -  [Educational Robotics](Education)
 
 **Chapter 8: Novel Trends in Robotics**

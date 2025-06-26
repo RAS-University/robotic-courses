@@ -62,39 +62,6 @@ Here are somes keywords list to understand **Surgical Approaches & Techniques**:
 | **Hybrid (robot + laparoscope) procedures** | Surgeries that mix robotic assistance for precision tasks with conventional laparoscopic or open steps, blending the strengths of each method. |
 
 
-## 2. General Motivation
-
-![Sony](https://www.youtube.com/watch?v=bgRAkBNFMHk)
-><sub>*Suturing of a corn kernel with tiny suture needles. YouTube video, 9 mai 2024. Available at: https://www.youtube.com/watch?v=bgRAkBNFMHk*</sub>
-
-Maybe you have ever watched this very famous video that showing the suturing of a corn kernel with tiny suture needles called 12-0 using a prototype of microsurgery assistance robot. this driven by the desire to make advanced surgeries more accessible to both those performing treatment and those in need of treatment, is advancing research and development of surgical assistance robot technology.
-
-how does it control, how do they train. 
-
-What kind of surgery, we have been doing in surgical robotic, 
-what it can do, what it doesnt 
-
-what its for ?why is it important 
-
-at what stage we are now in surgical robotic 
-
-what the future might be ?
-
-The small introduction of surgery: 
-1. Open surgery with big incisions --> long recover 
-2. minimal surgery, laparocopic surgery which was small incisions,
-3. Davinci system --> see more durin operation
-
-![Robotic Surgery Unlocks a New Era of Medicine](https://www.youtube.com/watch?v=_aJhNXXWmq0&t=34s)
-><sub>* Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=_aJhNXXWmq0&t=34s*</sub>
-
-
-![Inside the world of a robotic surgeon](https://www.youtube.com/watch?v=8z0oJR9S1Ps)
-><sub>*Interview, talk from Dr. Mary Maish, M.D, talking about her expereince using the surgery robot. Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=8z0oJR9S1Ps*</sub>
-
-
-# Surgical Robotics
-
 ## 1.  Why Care About Surgical Robotics?
 
 Robotic surgery lets surgeons operate through tiny incisions with wrist‑like micro‑instruments, tremor filtration, and immersive 3‑D vision. The viral clip below shows a robot suturing the delicate skin of a corn kernel—an eye‑catching example of the precision that is now possible.
@@ -106,21 +73,43 @@ Robotic surgery lets surgeons operate through tiny incisions with wrist‑like m
 
 ## 2.  How We Got Here – A 30‑Year Timeline
 
-| Era                     | Key Milestones                                                                                                                                                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **1990s – Early 2000s** | Transition from open to laparoscopic (“key‑hole”) surgery. First FDA clearance for *da Vinci* System (2000).                                                                                                                   |
-| **2010s**               | Broader adoption, >1 million robot‑assisted procedures/year worldwide. Multi‑port platforms mature; single‑port systems emerge.                                                                                                |
-| **2020‑2025**           | Competitive landscape grows (*Hugo™*, *Versius*, *Ottava*, etc.). Growth in new specialties (thoracic, colorectal, microsurgery) and geographic expansion. AI‑guided camera control, image fusion and 5G teleoperation pilots. |
+From a voice-controlled camera arm to AI-ready multi-port platforms, here’s the overall journey of surgical robots—one milestone at a time.
+
+| Year       | Robot / Event                                      | Why it matters (plain words)                                           |
+| ---------- | -------------------------------------------------- | ---------------------------------------------------------------------- |
+| **1921**   | Word **“robot”** is created in a Czech play.       | Gave us the name we still use.                                         |
+| **1985**   | **PUMA** robot guides a brain biopsy.              | First time a robot helps a surgeon.                                    |
+| **1992**   | **[ROBODOC](https://americanhistory.si.edu/collections/object/nmah_1842522)** shapes bone for hip parts.             | Shows robots can cut with perfect repeatability.                       |
+| **1994**   | **AESOP** voice-controlled camera arm.             | Surgeon gets a steady “third hand” for the camera.                     |
+| **1998**   | **ZEUS** adds two remote-controlled arms.          | Surgeon now moves tools from a console, not the bedside.               |
+| **2000**   | **da Vinci** wins U.S. approval.                   | Brings 3-D vision and wrist-like instruments to many operations.       |
+| **2001**   | **[Operation Lindbergh](https://en.wikipedia.org/wiki/Lindbergh_operation)** (NY ↔ France).             | Proves long-distance surgery by robot is possible.                     |
+| **2006**   | **da Vinci S** model.                              | Sharper HD picture and easier setup.                                   |
+| **2009**   | **da Vinci Si** adds a second console.             | Expert can teach or assist during the same case.                       |
+| **2014**   | **da Vinci Xi** redesigns arms.                    | Arms swing around the patient so one setup covers the whole belly.     |
+| **2018**   | **Single-Port (SP)** robots.                       | All tools enter through one tiny hole—fewer scars.                     |
+| **2020 s** | New systems (**Versius, Senhance, Hugo, REVO-I**). | More brands mean lower costs and smarter features like haptics and AI. |
 
 ## 3  What Exactly *Is* a Surgical Robot?
 
-Robotic surgery (also called robotic-assisted surgery) is perphapsthe most cutting-edge medical techonology of modern times: the surgeon sits at a console, guiding articulated instruments that pivot around small incisions perfoming minimally invasive surgery technique. Core technologies:
+Robotic surgery (also called robotic-assisted surgery) is perphaps the most cutting-edge medical techonology of modern times. Imagine a super-precise set of mini hands inside the patient, while the surgeon sits a few feet away at a video-game-style console.
+That’s robotic surgery in a sentence. The robot never acts on its own; it simply “shrinks” the surgeon’s hand motions so the work is steadier and the cuts are smaller.
 
-* 3‑D stereoscopic vision (high‑definition or 4K).
-* Wristed end‑effectors with 7+ degrees of freedom.
-* Tremor filtering & motion scaling (e.g. 10 mm hand motion → 1 mm instrument motion).
-* Advanced imaging integration (fluorescence, ultrasound, CT overlay).
-* Cloud‑connected simulators for skills training and credentialing.
+| Features                          | Functionnality                                                                                                                |
+| ------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **3-D HD vision**                     | The surgeon looks through a special viewer that feels like sticking your head inside the body cavity: depth, color, ... |
+| **Wrist-like tips**                   | Each tool bends and rotates far more than normal laparoscopy sticks, so tying knots or sewing tiny vessels is easier.                                |
+| **Tremor filtering + motion scaling** | Shaky fingers? The computer smooths them out. Big hand move? Robot can shrink it almost 10× for fine work.                                                  |
+| **Smart imaging**                     | A foot-tap switches to “night-vision” green (fluorescence) to spot blood flow, or overlays a CT map so the surgeon sees hidden vessels.              |
+| **Built-in simulators**               | Surgeons practise on a video sim—like a flight-sim for pilots—before touching real patients, and hospitals can track their scores.                   |
+
+Here is a short documentary that traces the rise of surgical robots, explains how the technology works, and shows the real-world benefits for patients.
+![Robotic Surgery Unlocks a New Era of Medicine](https://www.youtube.com/watch?v=_aJhNXXWmq0&t=34s)
+><sub>*Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=_aJhNXXWmq0&t=34s*</sub>
+
+Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the cockpit, describing how she drives the robot for lung-cancer operations and why her patients recover faster than with open surgery.
+![Inside the world of a robotic surgeon](https://www.youtube.com/watch?v=8z0oJR9S1Ps)
+><sub>*Interview, talk from Dr. Mary Maish, M.D, talking about her expereince using the surgery robot. Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=8z0oJR9S1Ps*</sub>
 
 ## 4  What Can Surgical Robots Do *Today*? (2025)
 
@@ -344,7 +333,15 @@ This video answers to the questions Why do we need surigcal robots ? What if the
 
 - [How are surgical robots made? Go behind the scenes.](https://www.youtube.com/watch?v=_WsgJznDVIc)
 ><sub>*ow are surgical robots made? Go behind the scenes, Youtube video, 15 September 202. Available at: https://www.youtube.com/watch?v=_WsgJznDVIc*</sub>
-This video present how to make the famous surgical robots, Da Vinci surgical systems, developped by Intuitive Surgical. this video presents from manufacturing to training and tetsing and quality insecption. 
+This video present how to make the famous surgical robots, Da Vinci surgical systems, developped by Intuitive Surgical. this video presents from manufacturing to training and tetsing and quality insecption.
+
+
+Reference:
+
+1. <a id="ref1"></a>Morrell, A. L. G., Morrell-Junior, A. C., Morrell, A. G., Mendes, J. M. F., Tustumi, F., de Oliveira-e-Silva, L. G., & Morrell, A. (2021). *The history of robotic surgery and its evolution: when illusion becomes reality.* Revista do Colégio Brasileiro de Cirurgiões, 48, e20202798. https://doi.org/10.1590/0100-6991e-20202798  
+
+4. <a id="ref2"></a>Pugin, F., Bucher, P., & Morel, P. (2011). *History of robotic surgery: From AESOP® and ZEUS® to da Vinci®.* Journal of Visceral Surgery, 148(6), e3–e9. https://doi.org/10.1016/j.jviscsurg.2011.04.007  
+
 
 Last updated: June 17 2025
 

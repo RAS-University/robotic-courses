@@ -47,18 +47,17 @@ nav_order: 2
 ## Talk also about the market 
 
 ## 1. Prerequisites
-No need any prerequisite, this section is made just to catch your interest, introcuding the coolest part of what robot can do and how this can be useful in the future. 
-just have fun. 
+No need any prerequisite, this section is made just to catch your interest, introcuding one part of what robot can do and how this can be useful in the future. 
 
-Here are somes keywords list to understand **Surgical Approaches & Techniques**:
+But just before we dive in, here are a few key terms you’ll see throughout the chapter, take a quick look at them now and the rest will make a lot more sense!
 
 | Term | Definition |
 |------|------------|
 | **Open surgery** | Traditional approach that uses a large incision to give the surgeon direct, hands-on access to the operative field. |
 | **Minimally invasive surgery (MIS)** | Umbrella term for techniques that operate through small incisions (or none at all) with slender instruments and a camera, reducing trauma, pain, and recovery time. |
-| **Laparoscopic surgery** | A form of MIS in which rigid instruments and a camera (laparoscope) are inserted through several small abdominal ports; the surgeon views the field on a video monitor. |
+| **[Laparoscopic surgery](https://www.youtube.com/watch?v=IB_NMkMF-qU)** | A form of MIS in which rigid instruments and a camera (laparoscope) are inserted through several small abdominal ports; the surgeon views the field on a video monitor. |
 | **Microsurgery** | Procedures carried out under an operating microscope with specialized micro-instruments, enabling work on vessels, nerves, and other tiny structures at sub-millimetre scales. |
-| **Single-port / single-site surgery** | MIS executed through a single multi-channel port—often hidden in the navel—using articulating tools and cameras that fan out inside the body. |
+| **[Single-port](https://www.youtube.com/watch?v=wLuMnNgF8B4&t=23s) / single-site surgery** | MIS executed through a single multi-channel port—often hidden in the navel—using articulating tools and cameras that fan out inside the body. |
 | **Hybrid (robot + laparoscope) procedures** | Surgeries that mix robotic assistance for precision tasks with conventional laparoscopic or open steps, blending the strengths of each method. |
 
 
@@ -111,230 +110,35 @@ Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the coc
 ![Inside the world of a robotic surgeon](https://www.youtube.com/watch?v=8z0oJR9S1Ps)
 ><sub>*Interview, talk from Dr. Mary Maish, M.D, talking about her expereince using the surgery robot. Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=8z0oJR9S1Ps*</sub>
 
-## 4  What Can Surgical Robots Do *Today*? (2025)
+## 4  Where Are We Now? What’s Next?
 
-* **Soft‑tissue procedures** – prostatectomy, hysterectomy, hernia & colorectal resections are routine.
-* **Thoracic & cardiac** – lobectomy, mitral‑valve repair with fewer sternotomies.
-* **Head‑and‑neck & trans‑oral** – tumor resection with better access.
-* **Microsurgery prototypes** – super‑microsurgical lymph‑venous anastomosis at 0.3 mm scale.
+Surgical robotics is racing ahead ([market report](https://www.grandviewresearch.com/industry-analysis/surgical-robot-market)), yet it’s not perfect. Today’s systems are pricey, offer limited “feel” (haptic feedback), and still rely on the surgeon for every move. But as computing power, sensors, and AI improve, expect robots to pick up small autonomous tasks—auto-centering the camera, tracking moving tissue, even handing suture back to the needle. Those small steps free the surgeon to focus on judgement, not joystick work.  
 
-> **Numbers at a glance (2025)**
-> • 1.6 M *da Vinci* procedures in 2024; >8 million cumulative
-> • *Hugo™* in use across 25 + countries, pivotal U.S. urology trial met endpoints
-> • *Versius* surpassed 30 k procedures in 30 countries
-> • First‑in‑human cases with *Ottava* completed April 2025
 
-## 5  Limitations & Challenges
+## 5  News & Emerging Innovations
 
-* Up‑front capital cost (€1–2 M) and disposable instrument pricing.
-* Bulky footprints in tight ORs.
-* Limited haptic feedback (though force‑sensing instruments are under development).
-* Learning curves & credentialing logistics.
-* Reimbursement frameworks still evolving beyond urology & gynecology.
+If you want a real-time pulse on fresh breakthroughs - whether it’s an autonomous-suturing prototype, a first-in-human trial, or a smart new camera-control algorithm - bookmark the [Surgical Robotics Technology](https://www.surgicalroboticstechnology.com/category/news/) news feed. The site provides coverage from companies and research labs pushing the frontiers of microsurgery and robotic surgery.
 
-## 6  Where Are We Now?
-
-2025 marks a transition from **single‑vendor dominance** to a **multi‑platform era**. New entrants focus on modularity, portability, and procedure‑specific robots, while incumbents add AI‑driven assistance (e.g., autonomous suturing algorithms in validation). Regulatory bodies are drafting **IEC 80601‑2‑2xx** standards to cover partial autonomy and cybersecurity.
-
-## 7  What’s Next?
-
-* **Autonomous sub‑tasks** – camera targeting, tissue tracking, knot‑tying.
-* **Augmented reality overlays** – intra‑operative MRI/CT visible in the console.
-* **Miniaturization** – magnetically anchored robots & in‑body ‘robots in a pill’.
-* **Telesurgery** – 5G pilots showing sub‑150 ms latency across continents.
-* **Data‑driven ORs** – intra‑operative analytics feeding back to training simulators.
-
-## 8  Watch & Learn
-
-<figure>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/_aJhNXXWmq0" title="Robotic Surgery Unlocks a New Era of Medicine"></iframe>
-  <figcaption>Short explainer on the benefits of robot‑assisted surgery (Kurzgesagt, 2020).</figcaption>
-</figure>
-
-<figure>
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/8z0oJR9S1Ps" title="Inside the world of a robotic surgeon"></iframe>
-  <figcaption>Interview with Dr Mary Maish on day‑to‑day robotic practice (2020).</figcaption>
-</figure>
-
-## 9  Further Reading & Resources
-
-* **Society of Robotic Surgery (SRS)** – guidelines & conference talks
-* **FDA MAUDE database** – adverse event reports for robotic systems
-* **Intuitive | Clinical Evidence Hub** – peer‑reviewed outcomes data
-* **Medtronic Hugo™ Clinical Evidence**
-* **CMR Surgical Versius®** – modular RAS platform details
-* **IEEE Transactions on Medical Robotics and Bionics** – latest research
-
-## 10  News & Emerging Innovations
-
-If you’d like a real‑time pulse on fresh breakthroughs—whether it’s an autonomous suturing prototype, a first‑in‑human trial, or a clever new camera‑control algorithm—bookmark the Surgical Robotics Technology news feed. Each week they curate announcements from companies and research labs pushing the frontier of microsurgery and robotic surgery.
-
-https://www.surgicalroboticstechnology.com/category/news/
 ---
 
-*Last updated: June 17, 2025*
-
-
-Surgical Robotics 🚀 When Precision Meets Possibility
-
-Table of Contents
-{:toc}
-
-1  Why This Should Blow Your Mind
-
-Picture a robot sewing the fragile skin of a corn kernel with hair‑thin 12‑0 thread—flawless knots, zero tremor. That’s not sci‑fi; it’s 2024 R&D. Surgical robots turn a surgeon’s hands into micron‑level instruments, opening a new chapter where tiny cuts mean giant recoveries.
-
-2  30 Years in 30 Seconds – The Fast‑Forward Timeline
-
-Era
-
-Surgical Reality
-
-Mic‑Drop Moment
-
-1990s
-
-Keyhole laparoscopy replaces 10‑inch incisions.
-
-First FDA nod for da Vinci (2000).
-
-2010s
-
-Robots go mainstream—>1 M cases/yr.
-
-3‑D HD vision & wristed tools rock urology.
-
-2020‑25
-
-Multi‑vendor arms race. AI sneaks into the console.
-
-First autonomous camera steering & 5 G telesurgery pilots.
-
-3  Under the Hood – Anatomy of a Surgical Robot
-
-Master Console – cockpit‑style controls & immersive 4 K 3‑D displays.
-
-Wristed End‑effectors – 7 DoF freedom mimicking the human wrist, scaled down 10:1.
-
-Motion Magic – tremor filtering, haptic mapping, and tissue‑specific force limits.
-
-Imaging Fusion – fluorescence, ultrasound, CT overlays dancing in real time.
-
-Cloud Simulators – VR gyms where rookies level‑up without touching a patient.
-
-4  What Robots Can Do for Patients (2025)
-
-🌟 Soft‑Tissue All‑Stars – prostate, uterus, colon… mini scars, maxi precision.
-
-🫀 Chest‑Cracking? No More – lobectomies & valve repairs through keyholes.
-
-🗣️ Trans‑oral Tumor Takedown – reach the unreachable angles of the throat.
-
-🪡 Super‑Microsurgery – lymph‑venous vessels thinner than a human hair.
-
-Stat Snapshot
-
-1.6 M da Vinci procedures in 2024.
-
-Hugo™ active on 25 + countries; pivotal U.S. trial ✔︎.
-
-Versius® crosses 30 k cases; first FDA gall‑bladder nod.
-
-Ottava first‑in‑human surgery completed (Apr 2025).
-
-5  Dragons Yet to Slay
-
-💰 Price Tag – €1–2 M per system + disposables.
-
-📦 OR Real Estate – big foot‑prints in tiny theatres.
-
-🖐️ Feel vs Steel – limited tactile feedback (but force‑sensing probes are coming).
-
-🎓 Learning Curve – surgeons need practice hours & credentialing pathways.
-
-💼 Reimbursement – beyond urology & gyn, payers still crunch the numbers.
-
-6  The 2025 Landscape – A Multi‑Platform Sprint
-
-Platform
-
-Focus
-
-Cool Factor
-
-da Vinci Xi
-
-Versatile workhorse
-
-4 arms, single‑port variant, AI camera assist.
-
-Hugo™ RAS
-
-Modularity
-
-Cart‑based pods fit tight ORs.
-
-Versius®
-
-Portability
-
-Lightweight arms & open‑console design.
-
-Ottava
-
-In‑ceiling robotics
-
-Clears floor space; first human cases 2025.
-
-Niche bots
-
-Ortho, eye, spinal
-
-Procedure‑specific precision.
-
-7  Glancing at the Horizon
-
-🤖 Autonomous Sub‑tasks – suture, staple, debride while the surgeon supervises.
-
-🕶️ AR Overlays – real‑time CT “X‑ray vision” inside the patient.
-
-🩺 Magnetically‑Anchored Mini‑Bots – swim inside the abdomen, leave no scar.
-
-🌐 5 G Telesurgery – continent‑spanning ORs with <150 ms latency.
-
-📊 OR Analytics – every move logged → smarter training & error prevention.
-
-8  Watch & Learn – Two Must‑See Clips
-
-9  Dive Deeper – Curated Resources
-
-Society of Robotic Surgery – best‑practice guidelines & conferences.
-
-FDA MAUDE – adverse‑event database for transparency.
-
-Intuitive Clinical Hub – peer‑reviewed outcomes.
-
-Medtronic Hugo™ Evidence – ongoing trials & white papers.
-
-CMR Surgical Versius® – modular RAS platform data.
-
-IEEE Trans. Medical Robotics & Bionics – cutting‑edge research.
-
-10  🔥 Fresh Off the Robot Arm
-
-Feel the pulse of progress! The Surgical Robotics Technology news feed drops weekly adrenaline shots: autonomous knot‑tying breakthroughs, first‑in‑human nano‑vascular repairs, fresh regulatory green‑lights, and head‑to‑head platform showdowns.
-
-https://www.surgicalroboticstechnology.com/category/news/
-
-Other interesting videos:
-- [Will robots replace surgeons? | Testing surgical robots | Robots in Japan](https://www.youtube.com/watch?v=OfX6qiJKDMk)
-><sub>*Will robots replace surgeons? | Testing surgical robots | Robots in Japan YouTube video, 14 August 2020. Available at: https://www.youtube.com/watch?v=OfX6qiJKDMk*</sub>
-This video answers to the questions Why do we need surigcal robots ? What if they made mistake ? And could they really replace huan surgeons one day ? To find the answers to thoses questions, in this videos, a specialist in srugical system in tokyo. 
-
-- [How are surgical robots made? Go behind the scenes.](https://www.youtube.com/watch?v=_WsgJznDVIc)
-><sub>*ow are surgical robots made? Go behind the scenes, Youtube video, 15 September 202. Available at: https://www.youtube.com/watch?v=_WsgJznDVIc*</sub>
-This video present how to make the famous surgical robots, Da Vinci surgical systems, developped by Intuitive Surgical. this video presents from manufacturing to training and tetsing and quality insecption.
-
+Other interesting videos
+-----------------------
+
+- [Will robots replace surgeons? | Testing surgical robots | Robots in Japan](https://www.youtube.com/watch?v=OfX6qiJKDMk)  
+  <sub>*YouTube, 14 Aug 2020 – https://www.youtube.com/watch?v=OfX6qiJKDMk*</sub>  
+  *A Tokyo-based surgical-robotics specialist tackles three big questions:*  
+  **Why do we need surgical robots? What happens if one makes a mistake? Could they ever replace human surgeons?**  
+  The clip blends lab footage with expert commentary to give balanced, easy-to-grasp answers.
+
+- [How are surgical robots made? Go behind the scenes](https://www.youtube.com/watch?v=_WsgJznDVIc)  
+  <sub>*YouTube, 15 Sep 2020 – https://www.youtube.com/watch?v=_WsgJznDVIc*</sub>  
+  *Step onto Intuitive Surgical’s factory floor and watch a da Vinci robot come to life—from precision machining and clean-room assembly to surgeon training, stress testing, and final quality inspection.*
+
+- [Can AI make surgery safer?](https://www.youtube.com/watch?v=NEgUaGHYxNg)  
+  <sub>*YouTube, 2024 – https://www.youtube.com/watch?v=NEgUaGHYxNg*</sub>  
+  *Shows how operating-room video and instrument data can be fed to machine-learning models to **score a surgeon’s technique in real time**—turning subjective judgements into objective numbers and actionable feedback.*
+
+-----------------------
 
 Reference:
 
@@ -343,5 +147,5 @@ Reference:
 4. <a id="ref2"></a>Pugin, F., Bucher, P., & Morel, P. (2011). *History of robotic surgery: From AESOP® and ZEUS® to da Vinci®.* Journal of Visceral Surgery, 148(6), e3–e9. https://doi.org/10.1016/j.jviscsurg.2011.04.007  
 
 
-Last updated: June 17 2025
 
+*Last updated: June 26, 2025*

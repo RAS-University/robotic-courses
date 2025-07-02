@@ -49,8 +49,8 @@ Explore the structured robotics courses below, designed to guide you from fundam
 
 **Chapter 2: Sensing for Robotics**
 -  [Vision for Robotics](vision-for-robotics) - In progress
--  [Haptics for Robotics](haptics-for-robotics) - In progress
--  [New Sensors for Robotics](new-sensors-for-robotics)
+-  [Haptics for Robotics](haptics-for-robotics) 
+-  [New Sensors for Robotics](new-sensors-for-robotics) - In progress
 -  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI)
 -  [From Sensing to Perception](sensing-and-perception)
 

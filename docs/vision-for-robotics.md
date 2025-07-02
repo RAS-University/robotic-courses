@@ -9,6 +9,33 @@ layout: default
 
 # Vision for Robotics {#start}
 
+<a name="top"></a>
+
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color:rgb(0, 0, 0); /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  #back-to-top:hover {
+    opacity: 1;
+  }
+</style>
+
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
 ![img-description]({{ site.baseurl }}/assets/images/Vision/banner.png)
 
 - Table of Contents
@@ -105,7 +132,7 @@ Here are 2 introduction videos to help understand the core problem.
 
 </details>
 
-### **Chapter 1: Geometric Vision** {#chapter-1-vision}
+### Chapter 1.1 : Geometric Vision {#chapter-1-vision}
 
 Before we dive into algorithms and code, we first need a picture of how geometry, cameras, and images fit together.
 This chapter lays that foundation. We will
@@ -128,6 +155,7 @@ The short video below previews these ideas visually. The text that follows walks
 ---
 
 #### **Transforming From World Coordinates to Camera Coordinates**
+{: .no_toc }
 
 Suppose there is a point in the real world, denoted as $(X,Y,Z)$. In order to describe how this point appears to a camera, we need to specify its location relative to the camera’s coordinate system. Usually, we place the camera coordinate system at its center of projection (roughly at the camera’s pinhole or main lens center) such that the $Z$-axis goes straight out from the camera (the optical axis).
 
@@ -182,6 +210,7 @@ This transformation says:
 ---
 
 #### **Projection Onto the Image Plane**
+{: .no_toc }
 
 
 In the classical pinhole camera model, we project a 3D point $X_{ci} = (X_{ci}, Y_{ci}, Z_{ci})$ onto a 2D image plane. Typically, we assume the image plane is at $Z_{ci} = 1$. (In reality, camera sensors sit behind the pinhole/center of projection by some distance, but mathematically it is simpler to place a plane in front.)
@@ -212,6 +241,7 @@ The quantities $x_i$ and $y_i$ are often called *normalized coordinates* because
 ---
 
 #### **From Normalized Coordinates to Pixel Coordinates**
+{: .no_toc }
 
 In a real camera, the image you get consists of pixels indexed by $(u_i, v_i)$. To bridge the gap between the continuous $(x_i, y_i)$ and discrete pixel $(u_i, v_i)$, we often use an affine transformation:
 
@@ -267,6 +297,7 @@ These parameters are called the *intrinsic parameters* of the camera. Determinin
 ---
 
 #### **Lens Distortion**
+{: .no_toc }
 
 Many practical camera systems, especially with wide-angle or fisheye lenses, introduce significant *radial distortion*. If you have ever seen lines near the edges of a photo curve outward (*"barrel distortion"*) or inward (*"pincushion distortion"*), that is due to lens imperfections.
 
@@ -321,6 +352,7 @@ The coefficients $k_1, k_2, k_3, \dots$ are additional parameters to be calibrat
 ---
 
 #### **Putting It All Together: Calibrated Systems**
+{: .no_toc }
 
 When we say a system is *calibrated*, it typically means:
 
@@ -411,6 +443,7 @@ As we saw in the previous sections, the pinhole camera model provides a neat mat
 ---
 
 #### **Basic Setup: Intrinsic Calibration**
+{: .no_toc }
 
 When the camera’s internal parameters remain constant (no zooming in/out) and you can take multiple images of a known reference pattern (e.g., a checkerboard), you can use common methods or toolboxes (e.g. the MATLAB Calibration Toolbox, Zhang’s OpenCV calibration functions) to recover the following:
 
@@ -466,6 +499,7 @@ After calibration, the hope is that for any future image, you can “correct” 
 ---
 
 #### **Varying Intrinsics and Self-Calibration**
+{: .no_toc }
 
 Not all systems allow us to fix the camera intrinsics. For example, if the focal length can vary (zoom lenses) or if you cannot practically use a known reference pattern in the field, you might need more advanced methods:
 
@@ -478,6 +512,7 @@ These approaches can be more sensitive to noise or require many stable point cor
 ---
 
 #### **Projection Matrix Form and Depth Elimination**
+{: .no_toc }
 
 Once we include lens distortion (and possibly correct it), the “ideal” pinhole mapping can be summarized in matrix form (assuming we now talk about undistorted, ideal pixel coordinates). Denote:
 
@@ -503,11 +538,8 @@ Because $\lambda_i$ is just a scalar, you can rearrange or eliminate it, leading
 
 ---
 
-#### **Key Takeaway:**
-
-- Once you know $K_i$, $R_i$, and $T_i$, you can project any 3D point in the world straight into the 2D image.
-
-- Calibration is about finding all those parameters so that 2D–3D correspondences match reality.
+#### **Exercises**
+{: .no_toc }
 
 <details markdown="1">
  <summary>Conceptual questions</summary>
@@ -649,6 +681,14 @@ onclick="
 
  </details>
 
+---
+#### **Key Takeaway:**
+{: .no_toc }
+
+- Once you know $K_i$, $R_i$, and $T_i$, you can project any 3D point in the world straight into the 2D image.
+
+- Calibration is about finding all those parameters so that 2D–3D correspondences match reality.
+
 <details markdown="1">
  <summary>Advanced Mathematical Development</summary>
 
@@ -673,6 +713,7 @@ Here is a youtube video giving a short overview of the Pose estimation problem a
 ---
 
 #### **The PnP (Perspective-n-Point) Problem**
+{: .no_toc }
 
 Suppose you have:
 
@@ -709,10 +750,12 @@ where $K$ is the intrinsic matrix and $z_j$​ is the point’s depth along the 
 ---
 
 #### **Minimal Example: 3 Points**
+{: .no_toc }
 
 When only three world points are visible we are in the Perspective‑3‑Point (P3P) setting – the smallest data set that still lets us compute a full camera pose.
 
 ##### **Geometric Setup**
+{: .no_toc }
 
 Define :
 
@@ -738,6 +781,7 @@ There are *three* such equations — one per edge of the landmark triangle — a
 *Fig. 1  The 3-point pose-estimation problem. Unknown camera–point distances $d_1, d_2, d_3$ and known inter-point distances $d_{12}, d_{13}, d_{23}$. The angles $\delta_{ij}$ between bearing rays are measured in the image.*
 
 ##### **Reducing the Unknowns**
+{: .no_toc }
 
 A classical trick (Gröbner-free) is to express two of the depths in terms of the first one:
 
@@ -788,6 +832,7 @@ For every admissible root $v$:
 Because each quadratic step can produce two signs, you obtain at most **8 real pose candidates** – the well-known *P3P eight-fold ambiguity*.
 
 ##### **From Depths to $R$ and $T$**
+{: .no_toc }
 
 Once $\{d_i\}$ are known, the 3-D coordinates of the landmarks **in the camera frame** are
 
@@ -833,7 +878,7 @@ $$
 ### Chapter 1.4 : Triangulation
 
 >**Goal of this section**
->Show how a single 3-D point can be re-built from (at least) two calibrated >images by intersecting the two sight-rays that go through the image measurements.
+>Show how a single 3-D point can be re-built from (at least) two calibrated images by intersecting the two sight-rays that go through the image measurements.
 
 <details markdown="1"><summary>Video explenation</summary>
 
@@ -845,7 +890,8 @@ $$
 
 ---
 
-#### 1 Why one view is never enough   
+#### 1 Why one view is never enough
+{: .no_toc }   
 
 With a single pinhole camera you can only say that the 3-D point lies somewhere on a ray that starts in the camera centre and passes through the pixel $u_1$. Mathematically (homogeneous notation)
 
@@ -864,6 +910,7 @@ depth.
 ---
 
 #### 2 Two eyes give you depth  
+{: .no_toc }
 
 Add a second calibrated view
 
@@ -906,7 +953,8 @@ Here $P_i^{(k)}$ denotes the $k$-th row of $P_i$, and $(x,y)$ are the pixel coor
 
 ---
 
-#### 3 Epipolar sanity check   
+#### 3 Epipolar sanity check 
+{: .no_toc }  
 
 The pair $(u_1,u_2)$ must satisfy the **epipolar constraint**  
 
@@ -919,6 +967,7 @@ with $E$ the essential matrix built from the relative pose $[R\mid T]$ of the tw
 ---
 
 #### 4 Numerical hints   
+{: .no_toc }
 
 - Centre and scale image measurements before forming $A$ (improves conditioning).
 - A point that is very close to both cameras gives a tiny $Z$—beware of dividing by a noisy depth.
@@ -927,6 +976,7 @@ with $E$ the essential matrix built from the relative pose $[R\mid T]$ of the tw
 ---
 
 #### **Exercises**
+{: .no_toc }
 
 <details markdown="1"><summary>Conceptual questions</summary>
 
@@ -1000,6 +1050,7 @@ Build $A$, run SVD $\Rightarrow$ $X\approx(0,0,1.0)$ m in the left-camera frame.
 </details>
 
 #### **Key Takeaway:**
+{: .no_toc }
 
 - Triangulation turns 2-D correspondences into 3-D positions once the two projection matrices are known.
 
@@ -1009,11 +1060,172 @@ Build $A$, run SVD $\Rightarrow$ $X\approx(0,0,1.0)$ m in the left-camera frame.
 
 ---
 
-### Chapter 1.5 : Stereo Camera
+### Chapter 1.5 : Moving Stereo {#chapter-1-moving-stereo}
+>**Goal of this section**
+>A **stereo rig** gives you two eyes on the world.  
+A **moving stereo rig** (left camera $c_\ell$, right camera $c_r$) straps those eyes to a robot that **moves**.  
+This upgrade turns a fixed-baseline depth sensor into a *rolling* 3-D scanner and a *self-motion* estimator – the backbone of many visual-odometry and SLAM systems such as **libviso2** and its successors.
 
-![](https://www.youtube.com/watch?v=dUDMQ6dwWDA&list=PL2zRqk16wsdoCCLpou-dGo7QQNks1Ppzo&index=6)
+<details markdown="1"><summary>Video explenation</summary>
 
-![](https://www.youtube.com/watch?v=v30I-BqGfuI&list=PL2zRqk16wsdoCCLpou-dGo7QQNks1Ppzo&index=7)
+  Here are 2 good youtube videos explaining in a more visual way how **Motion Stereo** works. Note that the notation in this video may not follow the notation of this course but the method is the same.
+
+  ![](https://www.youtube.com/watch?v=dUDMQ6dwWDA&list=PL2zRqk16wsdoCCLpou-dGo7QQNks1Ppzo&index=6)
+
+  ![](https://www.youtube.com/watch?v=v30I-BqGfuI&list=PL2zRqk16wsdoCCLpou-dGo7QQNks1Ppzo&index=7)
+
+</details>
+
+
+
+
+---
+
+#### 1 What exactly is “moving stereo”? 
+{: .no_toc }
+
+At **time $k$** the rig observes some 3-D scene point $X$ in *both* cameras
+
+$$
+\begin{aligned}
+u_{\ell,k} &= P_\ell\,X_k ,\\
+u_{r ,k} &= P_r\,X_k ,
+\end{aligned}
+$$
+
+where $P_\ell,P_r$ are the (known, *calibrated*) projection matrices of the **fixed** left–right pair.
+
+At **time $k+1$** the *whole* rig has moved by the rigid transform $(R_{k+1},T_{k+1})$, so the *same* world point now has **camera-frame** coordinates
+
+$$
+X_{k} \;=\; R_{k+1}\,X_{k+1} + T_{k+1}. \tag{1}
+$$
+
+Once we know pairs $\{X_k,X_{k+1}\}$ we can solve (1) for the unknown pose $(R_{k+1},T_{k+1})$ – i.e.\ the robot’s motion between the two instants.
+
+---
+
+#### 2 Two correspondence problems instead of one 
+{: .no_toc }
+
+To *use* (1) we need each 3-D point **twice**:
+
+1. **Left ↔ Right** at **the same time** → disparity → depth ⇒ $X_k$  (classic stereo triangulation).  
+2. **Left (k) ↔ Left (k+1)** (or right↔right) → optical flow / feature tracking → cross-time matches.
+
+Only then can we plug two *metric* 3-D clouds into (1).
+
+---
+
+#### 3 Estimating the rig motion: Absolute orientation 
+{: .no_toc }
+
+Write the mean-free coordinates of the cross-time matches as
+
+$$
+\bar X_k \;=\; X_k - \frac{1}{n}\sum_{i=1}^{n} X_k^{(i)},\qquad
+\bar X_{k+1} \;=\; X_{k+1} - \frac{1}{n}\sum_{i=1}^{n} X_{k+1}^{(i)}.
+$$
+
+Stack the $n$ pairs into the $n\times3$ matrices $A_k,A_{k+1}$; then minimise the Frobenius norm
+
+$$
+\min_{R\in\mathrm{SO}(3)} \;\bigl\lVert A_{k+1} - R\,A_k \bigr\rVert_F .
+$$
+
+This *Procrustes* problem has the closed-form SVD solution  
+$R = U\,\mathrm{diag}(1,1,\det(UV^\top))\,V^\top$ where $U\Sigma V^\top = A_{k+1}A_k^\top$.  
+The translation follows from the centroids.
+
+In practice we wrap the whole thing in **RANSAC**: draw minimal 3-point samples, compute $(R,T)$, count inliers, repeat.
+
+---
+
+#### 4 Depth-on-frame or depth-once? 
+{: .no_toc }
+
+Triangulating every point at every frame is *expensive*.  
+An alternative is **pose-only refinement**:
+
+* Track 2-D features across time in *one* eye (say the left image).  
+* Triangulate them **once** from the left–right disparity at time $k$.  
+* Estimate $(R,T)$ that aligns those 3-D points with their 2-D re-projections in the *next* left frame (a 3-D ↔ 2-D PnP problem).
+
+Both routes lead to the same cost function in bundle adjustment; the choice is mostly engineering.
+
+---
+
+#### 5 Why moving stereo beats monocular VO 
+{: .no_toc }
+
+* **True scale** – the fixed baseline recovers metric depth ⇒ no scale drift.  
+* **Better convergence** – having depth *before* motion estimation shrinks the search space.  
+* **Robustness** – parallax from the baseline adds “sideways” view change even on straight trajectories.
+
+---
+
+#### 6 Implementation tips 
+{: .no_toc }
+
+| Step                | Practical hint |
+|---------------------|----------------|
+| Feature detection   | FAST + ORB descriptors give many robust matches at real-time rates. |
+| Left-right matching | Slide along the same image row (epipolar line) – rectification makes this 1-D. Reject matches with negative or too-large disparity. |
+| Triangulation       | Use linear DLT, but filter out points with depth $Z<0$ or large condition number. |
+| Temporal tracking   | Bucketing + KLT keeps features evenly spread and cheap to track. |
+| Pose RANSAC         | 3-point Procrustes is the minimal set. Run $\sim$150 iterations per frame pair. |
+| Bundle adjustment   | A sliding window of $5$–$10$ keyframes keeps the problem small yet corrects drift. |
+
+---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+  **True / False**
+
+  <p><strong>Question 1:</strong> A moving-stereo rig can recover <em>metric</em> motion scale <em>without</em> any extra sensors.</p>
+  <form id="ms-tf-1">
+    <input type="radio" name="ms-tf-1" value="True"> True<br>
+    <input type="radio" name="ms-tf-1" value="False"> False<br>
+    <button type="button"
+      onclick="checkTrueFalse('ms-tf-1','True',
+      '✅ Correct – the known baseline gives real-world units.',
+      '❌ Think about what sets the depth scale.')">
+    Check</button>
+    <p id="ms-tf-1-feedback"></p>
+  </form>
+
+  **Multiple choice**
+
+  <p><strong>Question 2:</strong> What is the <em>minimal</em> number of <em>3-D</em> point correspondences required to solve the Procrustes absolute-orientation problem?</p>
+  <form id="ms-mc-1">
+    <input type="radio" name="ms-mc-1" value="2"> 2<br>
+    <input type="radio" name="ms-mc-1" value="3"> 3<br>
+    <input type="radio" name="ms-mc-1" value="4"> 4<br>
+    <input type="radio" name="ms-mc-1" value="6"> 6<br><br>
+    <button type="button"
+      onclick="checkMCQ('ms-mc-1','3',
+        '✅ Three non-collinear points define the motion uniquely.',
+        '❌ Remember you need at least two independent vectors after mean subtraction.')">
+    Check</button>
+    <p id="ms-mc-1-feedback"></p>
+  </form>
+
+  **Fill-in**
+
+</details>
+
+---
+
+#### **Key takeaway** 
+{: .no_toc }
+
+A rigid stereo pair that <em>moves</em> gives you the best of two worlds:
+
+* **Stereo** provides instant depth at each frame.  
+* **Motion** across frames gives you odometry.
+
+By tying them together through **absolute orientation**, a robot can track its 6-D pose and build a consis
 
 
 ### Chapter 1.6 : Structure from Motion

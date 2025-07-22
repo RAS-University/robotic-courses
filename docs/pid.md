@@ -829,7 +829,7 @@ $$ u(t) = K_p e(t) + \frac{K_p}{T_i} \int_{0}^{t} e(\tau)d\tau + K_p T_d \frac{d
 
 <figure>
   <img src="{{ site.baseurl }}/assets/images/pid/PID_controller.png" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
-  <figcaption><center><em>Proportionnal derivative (PD) controller</em><br><sub>Rajashekar, I., Pradeep Ramagiri, and J. Suresh Kumar. 2020. Control Systems: Lecture Notes, B.Tech II Year – II Sem (2020–21). Department of Electronics and Communication Engineering, MRCET. Avaialable at: https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf.</sub></center> </figcaption>
+  <figcaption><center><em>Proportionnal integral derivative (PID) controller</em><br><sub>Rajashekar, I., Pradeep Ramagiri, and J. Suresh Kumar. 2020. Control Systems: Lecture Notes, B.Tech II Year – II Sem (2020–21). Department of Electronics and Communication Engineering, MRCET. Available at: https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf.</sub></center> </figcaption>
 </figure>
 
 Another very intuitive way to perceive the three components involved in a PID controller is presented in the rest of the video

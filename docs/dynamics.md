@@ -193,7 +193,7 @@ Two key modeling approaches are compared:
 
 ---
 
-#### 🌟 The Power of the Lagrangian Approach
+#### The Power of the Lagrangian Approach
 
 In dynamics, we often ask:
 
@@ -224,9 +224,9 @@ Where:
 
 ---
 
-#### 🧠 From Theory to General Dynamic Equation
+#### From Theory to General Dynamic Equation
 
-By applying the Lagrangian method to full robotic systems, we arrive at the general equation of motion for manipulators:
+By applying the Lagrangian method to full robotic systems, we arrive at the **general equation of motion** for manipulators:
 
 $$
 \tau = M(\theta)\ddot{\theta} + c(\theta, \dot{\theta}) + g(\theta)
@@ -240,6 +240,30 @@ Where:
 
 
 This equation is central to **model-based control**, **trajectory planning**, and **robot simulation**. It explains how acceleration, motion-induced forces, and gravity affect the torques at each joint.
+
+
+We can use it in two ways:
+
+#### Forward Dynamics
+**Given**: torques $\tau$  
+**Compute**: joint accelerations $\ddot{\theta}$ (→ then velocities and positions)
+
+This is used in **simulation** to see how a robot will move when forces are applied.
+
+$$
+\ddot{\theta} = M(\theta)^{-1} \left( \tau - c(\theta, \dot{\theta}) - g(\theta) \right)
+$$
+
+#### Inverse Dynamics
+**Given**: desired motion $\theta(t), \dot{\theta}(t), \ddot{\theta}(t)$  
+**Compute**: required joint torques $\tau$
+
+This is used in **control** to determine the torques needed to follow a trajectory.
+
+You can think of forward and inverse dynamics like this:
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/Dynamics/dyna.png' }}" width="200px" alt="dyna">
+</figure>
 
 ---
 
@@ -260,7 +284,7 @@ These examples help you build **intuition** about how joint interactions create 
 
 ---
 
-### ✅ Why the Lagrangian Formulation Matters
+#### Why the Lagrangian Formulation Matters
 
 - It **scales well** for robots with many joints  
 - It avoids repetitive force analysis for each link  
@@ -336,6 +360,147 @@ Using this method, we can model and control:
 - Deriving the mass matrix from kinetic energy  
 - Properties: Symmetry, positive-definiteness, configuration dependence  
 - Example: Two-link planar robot
+
+In this video we focus on better understanding of the mass matrix M of theta
+![Mass Matrix](https://www.youtube.com/watch?v=7PFQou5l9do&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=36)  
+><sub>Modern Robotics, Chapter 8.1: Lagrangian Formulation of Dynamics (Part 1 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=7PFQou5l9do&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=36</sub>
+
+
+In this video, we focus on gaining a deeper **intuition and mathematical understanding of the mass matrix** $M(\theta)$, which appears in the robot’s **kinetic energy expression** and **equations of motion**.
+
+---
+
+#### From Point Mass to Robot Arm
+
+For a point mass:
+
+$$
+K = \frac{1}{2} m v^2
+$$
+
+But for a robot with multiple joints, the **kinetic energy** is expressed in joint coordinates as:
+
+$$
+K = \frac{1}{2} \dot{\theta}^\top M(\theta) \dot{\theta}
+$$
+
+Where:
+- $\dot{\theta}$: Vector of joint velocities  
+- $M(\theta)$: **Mass (inertia) matrix** — maps joint velocities to kinetic energy
+
+---
+
+#### Key Properties of the Mass Matrix
+
+1. **Symmetry**  
+   $$ M(\theta) = M(\theta)^\top $$
+
+2. **Positive Definiteness**  
+   $$ x^\top M(\theta) x > 0 \quad \text{for all } x \neq 0 $$  
+   → This means the kinetic energy is always positive unless the robot is at rest.
+
+3. **Configuration-Dependent**  
+   - $M(\theta)$ depends on the **robot’s joint configuration**  
+   - For example, a stretched-out arm has a different inertia than a folded one.
+
+---
+
+#### Physical Interpretation
+
+- The **effective mass** at the robot’s **end-effector** changes with direction and configuration.  
+- When you push the robot's end-effector by hand, it doesn’t behave like a point mass —  
+  the **force and acceleration directions are not necessarily aligned**.
+- This is because the inertia felt at the end-effector is **anisotropic** (depends on direction) and **configuration-dependent**.
+
+---
+
+#### Final Insight
+
+After this chapter, you should have a solid understanding of the structure of a robot’s dynamic model:
+
+$$
+\tau = M(\theta)\ddot{\theta} + c(\theta, \dot{\theta}) + g(\theta)
+$$
+
+This equation is an extension of Newton’s second law:
+
+> $F = ma$ → but here, $m$ and $a$ both depend on joint configuration and velocities,  
+> plus additional forces are needed to balance gravity and create end-effector wrenches.
+
+---
+
+By understanding the mass matrix $M(\theta)$, you're one step closer to simulating and controlling robot motion with accuracy and intuition.
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: What is the role of the mass matrix $M(\theta)$ in robot dynamics?</strong></p>
+<form id="q2-1">
+  <input type="radio" name="q2-1" value="A"> It determines the robot's position in space<br>
+  <input type="radio" name="q2-1" value="B"> It maps joint torques to joint velocities<br>
+  <input type="radio" name="q2-1" value="C"> It maps joint velocities to kinetic energy and relates torques to accelerations<br>
+  <input type="radio" name="q2-1" value="D"> It compensates for gravity<br>
+  <button type="button"
+    onclick="checkTrueFalse('q2-1', 'C', 
+      'Correct! The mass matrix relates joint velocities to kinetic energy, and is also used in computing accelerations from torques.',
+      'Not quite. Remember, $M(\\theta)$ is all about motion and energy, not just torque or position.')">
+    Check Answer
+  </button>
+  <p id="q2-1-feedback"></p>
+</form>
+
+<!-- Question 2 -->
+<p><strong>Question 2: Which of the following is <em>not</em> a mathematical property of the mass matrix $M(\theta)$?</strong></p>
+<form id="q2-2">
+  <input type="radio" name="q2-2" value="A"> It is symmetric<br>
+  <input type="radio" name="q2-2" value="B"> It is positive definite<br>
+  <input type="radio" name="q2-2" value="C"> It is always constant<br>
+  <input type="radio" name="q2-2" value="D"> It depends on joint configuration<br>
+  <button type="button"
+    onclick="checkTrueFalse('q2-2', 'C', 
+      'Correct! The mass matrix usually varies with the robot configuration — it is not constant.',
+      'Incorrect. The mass matrix is not constant in general.')">
+    Check Answer
+  </button>
+  <p id="q2-2-feedback"></p>
+</form>
+
+<!-- Question 3 -->
+<p><strong>Question 3: Why doesn't a robot's end-effector feel like a point mass when you push it by hand?</strong></p>
+<form id="q2-3">
+  <input type="radio" name="q2-3" value="A"> Robots don’t have mass<br>
+  <input type="radio" name="q2-3" value="B"> Friction at joints causes this<br>
+  <input type="radio" name="q2-3" value="C"> The apparent inertia varies with configuration and direction<br>
+  <input type="radio" name="q2-3" value="D"> End-effectors are programmed to resist force<br>
+  <button type="button"
+    onclick="checkTrueFalse('q2-3', 'C', 
+      'Correct! The robot’s apparent mass depends on its joint configuration and acceleration direction.',
+      'Not quite. This is caused by the configuration-dependent nature of the mass matrix.')">
+    Check Answer
+  </button>
+  <p id="q2-3-feedback"></p>
+</form>
+
+<!-- Question 4 -->
+<p><strong>Question 4: What does this expression represent? <br> $K = \frac{1}{2} \dot{\theta}^\top M(\theta) \dot{\theta}$</strong></p>
+<form id="q2-4">
+  <input type="radio" name="q2-4" value="A"> The robot’s total potential energy<br>
+  <input type="radio" name="q2-4" value="B"> The torque needed to lift the robot<br>
+  <input type="radio" name="q2-4" value="C"> The kinetic energy of the robot<br>
+  <input type="radio" name="q2-4" value="D"> The force applied at the end-effector<br>
+  <button type="button"
+    onclick="checkTrueFalse('q2-4', 'C', 
+      'Correct! This is the kinetic energy of the robot, expressed using joint velocities and the mass matrix.',
+      'Not quite. This is the standard quadratic form for kinetic energy in joint space.')">
+    Check Answer
+  </button>
+  <p id="q2-4-feedback"></p>
+</form>
+
+</details>
+
+
 
 ---
 

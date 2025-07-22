@@ -7,7 +7,7 @@ layout: default
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
 
-# Vision for Robotics {#start}
+# Vision for Robotics [In progress] {#start}
 
 <a name="top"></a>
 

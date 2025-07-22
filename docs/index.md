@@ -43,7 +43,7 @@ Explore the structured robotics courses below, designed to guide you from fundam
 **Chapter 1: Basics of Motion Control**
 -  [Control Variables](Variables) - In progress
 -  [Kinematics](kinematics) - In progress
--  [Dynamics](dynamics) 
+-  [Dynamics](dynamics) - In progress
 -  [Proportional Integral Derivative](pid) - In progress
 -  [Force Control](force-control) - In progress
 

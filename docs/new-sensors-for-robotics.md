@@ -352,7 +352,7 @@ Every sensor output is ultimately expressed in a **physical unit** defined by th
 | Amount of substance | mole (mol) | Gas sensor |
 
 
-##### 1.1.2 Measurement Range
+##### 1.1.2 **Measurement Range**
 {:.no_toc}
 
 *Range* is the interval $$[x_{\min},\,x_{\max}]$$ within which the sensor maintains its specified performance.
@@ -477,7 +477,7 @@ Keep this mental picture handy, later chapters on noise modelling, uncertainty p
 
 ---
 
-#### Chapter 1.2: **Noise models** 
+#### Chapter 1.2: Noise models 
 <!-- ### Chapter 1.2: Noise models 
 *How randomness seeps into every measurement and how to describe it.*
 
@@ -653,11 +653,11 @@ These parameters (white variance, bias instability, correlation time $$\tau$$) f
 
 ---
 
-#### Chapter 1.3: **Uncertainty propagation**
+#### Chapter 1.3: Uncertainty propagation
 
 ---
 
-#### chapter 1.4: **Calibration & validation strategies**
+#### chapter 1.4: Calibration & validation strategies
 
 
 ---

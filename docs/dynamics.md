@@ -193,7 +193,7 @@ Two key modeling approaches are compared:
 
 ---
 
-#### 🌟 The Power of the Lagrangian Approach
+#### The Power of the Lagrangian Approach
 
 In dynamics, we often ask:
 
@@ -224,7 +224,7 @@ Where:
 
 ---
 
-#### 🧠 From Theory to General Dynamic Equation
+#### From Theory to General Dynamic Equation
 
 By applying the Lagrangian method to full robotic systems, we arrive at the **general equation of motion** for manipulators:
 
@@ -244,7 +244,7 @@ This equation is central to **model-based control**, **trajectory planning**, an
 
 We can use it in two ways:
 
-#### 🔹 Forward Dynamics
+#### Forward Dynamics
 **Given**: torques $\tau$  
 **Compute**: joint accelerations $\ddot{\theta}$ (→ then velocities and positions)
 
@@ -254,13 +254,11 @@ $$
 \ddot{\theta} = M(\theta)^{-1} \left( \tau - c(\theta, \dot{\theta}) - g(\theta) \right)
 $$
 
-#### 🔹 Inverse Dynamics
+#### Inverse Dynamics
 **Given**: desired motion $\theta(t), \dot{\theta}(t), \ddot{\theta}(t)$  
 **Compute**: required joint torques $\tau$
 
 This is used in **control** to determine the torques needed to follow a trajectory.
-
----
 
 You can think of forward and inverse dynamics like this:
 <figure style="text-align: center;">
@@ -286,7 +284,7 @@ These examples help you build **intuition** about how joint interactions create 
 
 ---
 
-#### ✅ Why the Lagrangian Formulation Matters
+#### Why the Lagrangian Formulation Matters
 
 - It **scales well** for robots with many joints  
 - It avoids repetitive force analysis for each link  
@@ -372,7 +370,7 @@ In this video, we focus on gaining a deeper **intuition and mathematical underst
 
 ---
 
-#### 🔁 From Point Mass to Robot Arm
+#### From Point Mass to Robot Arm
 
 For a point mass:
 
@@ -392,7 +390,7 @@ Where:
 
 ---
 
-#### 🧠 Key Properties of the Mass Matrix
+#### Key Properties of the Mass Matrix
 
 1. **Symmetry**  
    $$ M(\theta) = M(\theta)^\top $$
@@ -407,7 +405,7 @@ Where:
 
 ---
 
-#### 🤯 Physical Interpretation
+#### Physical Interpretation
 
 - The **effective mass** at the robot’s **end-effector** changes with direction and configuration.  
 - When you push the robot's end-effector by hand, it doesn’t behave like a point mass —  
@@ -416,7 +414,7 @@ Where:
 
 ---
 
-#### 💡 Final Insight
+#### Final Insight
 
 After this chapter, you should have a solid understanding of the structure of a robot’s dynamic model:
 

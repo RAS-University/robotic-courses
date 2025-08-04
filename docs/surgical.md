@@ -37,17 +37,17 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Surgical Robotic 
+# Surgical Robotics 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 0. Keys terms
-No need any prerequisite, this section is made just to catch your interest, introcuding one part of what robot can do and how this can be useful in the future. 
+## 0. Key terms
+No deep prerequisites here, this section is just to spark your curiosity and show what surgical robots can do.
 
-But just before we dive in, here are a few key terms you will see throughout the chapter and videos, take a quick look at them now and the rest will make a lot more sense!
+Before we dive in, have a look at the terms below. You will see them throughout the chapter and videos, and having them fresh in mind will make everything that follows much clearer!
 
 | Term | Definition |
 |------|------------|
@@ -55,12 +55,12 @@ But just before we dive in, here are a few key terms you will see throughout the
 | **Minimally invasive surgery (MIS)** | Techniques that operate through small incisions (or none at all) with slender instruments and a camera, reducing trauma, pain, and recovery time: based on *how you reach the surgical site* |
 | **[Laparoscopic surgery](https://www.youtube.com/watch?v=IB_NMkMF-qU)** | A form of MIS in which rigid instruments and a camera (laparoscope) are inserted through several small abdominal ports; the surgeon views the field on a video monitor. |
 | **Microsurgery** | Procedures carried out under an operating microscope with specialized micro-instruments, enabling work on vessels, nerves, and other tiny structures at sub-millimetre scales (focus is on precision at the tissue level, not incision size): it is about *what you do once you are there*. |
-| **[Single-port](https://www.youtube.com/watch?v=wLuMnNgF8B4&t=23s) / single-site surgery** | MIS executed through a single multi-channel port—often hidden in the navel—using articulating tools and cameras that fan out inside the body. |
+| **[Single-port](https://www.youtube.com/watch?v=wLuMnNgF8B4&t=23s) / single-site surgery** | MIS executed through a single multi-channel port—often hidden in the navel, using articulating tools and cameras that fan out inside the body. |
 | **Hybrid (robot + laparoscope) procedures** | Surgeries that mix robotic assistance for precision tasks with conventional laparoscopic or open steps, blending the strengths of each method. |
 
 ---
 
-## 1. What Exactly *Is* a Surgical Robot?
+## 1. What exactly *is* a Surgical Robot?
 
 Robotic surgery turns a surgeon’s hands into micron-level instruments. While the surgeon sits at a 3-D console, the robot scales big hand moves down to hair-thin motions, filters out tremor, and bends its “wrists” in ways no human wrist can. The payoff: cleaner cuts, steadier sutures, and faster healing for the patient.
 
@@ -76,7 +76,7 @@ To see that precision in action, watch the clip below, a surgical robot neatly s
 ## 2. How Do Surgeons *Drive* the Robot?
 *(The steps below describe a **typical multi-arm, master-slave platform**—think da Vinci, Hugo, Versius, etc.)*
 
-1. **Console in, scalpel out** – The surgeon slips fingers into two pen-like master grips, peers into a magnified 3-D viewer, and rests feet on pedals—no handheld scalpels at the bedside.  
+1. **Console in, scalpel out** – The surgeon slips fingers into two pen-like master grips, peers into a magnified 3-D viewer, and rests feet on pedals, no handheld scalpels at the bedside.  
 2. **Hand to micro-hand translation** – Every twist, pinch, or roll of the grips is mirrored at the instrument tips but motion-scaled (e.g., 10 mm hand move → 1 mm instrument move) and tremor-filtered.  
 3. **Pedals for “extras”** – Left foot cycles camera zoom/focus; right foot fires energy (cautery, stapler) or toggles motion-scaling ratios on the fly.  
 4. **Head-tracking safety** – Lift your head and the image blanks, freezing the arms—an instant pause button built into the viewer.  
@@ -107,7 +107,7 @@ Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the coc
 | **B. Operating-Room (OR) Environment** | Harmonising the robot’s footprint with existing OR traffic, equipment and acoustics. | • Tight layouts and umbilical cables create trip hazards.<br>• Frequent redocking to reach multiple quadrants.<br>• Console placement and ambient noise could affect team communication.<br> <sup>[3]</sup>|
 | **C. Workforce & Training** | Building a uniformly competent team across all roles who interact with the system. | • Inconsistent curricula (formal courses vs. peer shadowing).<br>• Lack of universal, competency-based credentialing.<br>• Novices struggle without tactile cues that open surgery provides. <sup>[3]</sup>|
 | **D. Autonomy & Core Technology** | Moving from teleoperation to context-aware assistance without compromising safety. | • **Decision support**—robot must know *when* and *how* to help.<br>• **Safe navigation** through soft, mobile anatomy.<br>• **Reliable tissue recognition**.<br>• Real-time motion/force control cannot tolerate latency. <sup>[4]</sup>|
-| **E. Cost & Workflow Integration** | Justifying capital outlay while maintaining—or improving—throughput and outcomes. | • High purchase and consumable costs.<br>• Learning-curve case times initially longer than laparoscopy.<br>• Extra storage, maintenance and service contracts. <sup>[5]</sup>|
+| **E. Cost & Workflow Integration** | Justifying capital outlay while maintaining, or improving, throughput and outcomes. | • High purchase and consumable costs.<br>• Learning-curve case times initially longer than laparoscopy.<br>• Extra storage, maintenance and service contracts. <sup>[5]</sup>|
 | **F. Ethics & Regulation** | Defining accountability and patient trust as autonomy increases. | • Ambiguous responsibility for semi- or fully autonomous steps.<br>• Regulatory pathways for AI modules still evolving.<br>• Patient concerns over robotic intervention in critical organs.<br>• Data-privacy issues around OR video and telemetry. <sup>[4]</sup>|
 
 ---

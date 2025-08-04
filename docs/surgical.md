@@ -44,10 +44,10 @@ nav_order: 2
 - Table of Contents
 {:toc}
 
-## 0. Prerequisites
+## 0. Keys terms
 No need any prerequisite, this section is made just to catch your interest, introcuding one part of what robot can do and how this can be useful in the future. 
 
-But just before we dive in, here are a few key terms you’ll see throughout the chapter, take a quick look at them now and the rest will make a lot more sense!
+But just before we dive in, here are a few key terms you will see throughout the chapter and videos, take a quick look at them now and the rest will make a lot more sense!
 
 | Term | Definition |
 |------|------------|
@@ -57,6 +57,8 @@ But just before we dive in, here are a few key terms you’ll see throughout the
 | **Microsurgery** | Procedures carried out under an operating microscope with specialized micro-instruments, enabling work on vessels, nerves, and other tiny structures at sub-millimetre scales (focus is on precision at the tissue level, not incision size): it is about *what you do once you are there*. |
 | **[Single-port](https://www.youtube.com/watch?v=wLuMnNgF8B4&t=23s) / single-site surgery** | MIS executed through a single multi-channel port—often hidden in the navel—using articulating tools and cameras that fan out inside the body. |
 | **Hybrid (robot + laparoscope) procedures** | Surgeries that mix robotic assistance for precision tasks with conventional laparoscopic or open steps, blending the strengths of each method. |
+
+---
 
 ## 1. What Exactly *Is* a Surgical Robot?
 
@@ -68,6 +70,8 @@ To see that precision in action, watch the clip below, a surgical robot neatly s
   <iframe width="560" height="315" src="https://www.youtube.com/embed/bgRAkBNFMHk" title="Microsurgical suturing of a corn kernel"></iframe>
   <figcaption>Suturing a corn kernel with 12‑0 suture (Sony R&D Center, 2024).</figcaption>
 </figure>
+
+---
 
 ## 2. How Do Surgeons *Drive* the Robot?
 *(The steps below describe a **typical multi-arm, master-slave platform**—think da Vinci, Hugo, Versius, etc.)*
@@ -89,19 +93,24 @@ Here is a short documentary that traces the rise of surgical robots, explains ho
 ><sub>*Robotic Surgery Unlocks a New Era of Medicine, 5-minute mini-doc tracing the rise of surgical robots, how the da Vinci works, and how this is benefit for patients, Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=_aJhNXXWmq0&t=34s*</sub>
 
 Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the cockpit, describing how she drives the robot for lung-cancer operations and why her patients recover faster than with open surgery.
+
 ![Inside the world of a robotic surgeon](https://www.youtube.com/watch?v=8z0oJR9S1Ps)
 ><sub>*Interview, talk from Dr. Mary Maish, M.D, talking about her expereince using the surgery robot. Youtube video, 1 july 2020. Available at:https://www.youtube.com/watch?v=8z0oJR9S1Ps*</sub>
+
+---
 
 ## 3. Challenges of robotic-assisted surgery (RAS) adoption
 
 | **Challenge Zone** | **Operational Impact** | **Representative Limitations** |
 |------------|------------------------|--------------------------------|
-| **A. Human–Robot Fit** | Ensuring the console, instruments, and feedback feel intuitive and non-fatiguing for the surgeon. | • Limited instrument DOF can force awkward wrist/arm postures.<br>• Long sessions in a closed console may strain neck and back.<br>• Haptic cues remain sparse or lagging.<br>• Camera/tool motion may not match individual surgeon style. <sup>[3]</sup> |
+| **A. Human–Robot Fit** | Ensuring the console, instruments, and feedback feel intuitive and non-fatiguing for the surgeon. | • Limited instrument DOF can force awkward wrist/arm postures.<br>• Long sessions in a closed console may strain neck and back.<br>• Haptic feeback cues remain sparse or lagging.<br>• Camera/tool motion may not match individual surgeon style. <sup>[3]</sup> |
 | **B. Operating-Room (OR) Environment** | Harmonising the robot’s footprint with existing OR traffic, equipment and acoustics. | • Tight layouts and umbilical cables create trip hazards.<br>• Frequent redocking to reach multiple quadrants.<br>• Console placement and ambient noise could affect team communication.<br> <sup>[3]</sup>|
 | **C. Workforce & Training** | Building a uniformly competent team across all roles who interact with the system. | • Inconsistent curricula (formal courses vs. peer shadowing).<br>• Lack of universal, competency-based credentialing.<br>• Novices struggle without tactile cues that open surgery provides. <sup>[3]</sup>|
 | **D. Autonomy & Core Technology** | Moving from teleoperation to context-aware assistance without compromising safety. | • **Decision support**—robot must know *when* and *how* to help.<br>• **Safe navigation** through soft, mobile anatomy.<br>• **Reliable tissue recognition**.<br>• Real-time motion/force control cannot tolerate latency. <sup>[4]</sup>|
 | **E. Cost & Workflow Integration** | Justifying capital outlay while maintaining—or improving—throughput and outcomes. | • High purchase and consumable costs.<br>• Learning-curve case times initially longer than laparoscopy.<br>• Extra storage, maintenance and service contracts. <sup>[5]</sup>|
 | **F. Ethics & Regulation** | Defining accountability and patient trust as autonomy increases. | • Ambiguous responsibility for semi- or fully autonomous steps.<br>• Regulatory pathways for AI modules still evolving.<br>• Patient concerns over robotic intervention in critical organs.<br>• Data-privacy issues around OR video and telemetry. <sup>[4]</sup>|
+
+---
 
 ## 4 Types of Surgical-Robot 
 
@@ -127,46 +136,42 @@ If you want to explore more examples, head over to **[robots.sfits.ch](https://r
 * **Filter** systems by access route, end-effector motion type, degree of autonomy, specialty and more.  
 * Open each robot’s profile for a concise tech overview **plus the latest manufacturer news & milestones**.
 
+---
+
 ## 5 News & Emerging Innovations
 
 ### 5.1 Humans-in-the-Loop — For Now  
 Focus-group interviews suggest that clinicians are **eager for “light” autonomy** but demand an instant-override option:
-
-* **Limited exposure** – most nurses and scrub techs have *heard* of automated suturing or self-aiming cameras; hands-on use is still rare.   
+  
 * **Assist, don’t replace** – surgeons are happy to let the robot hold tissue tension or re-centre the scope **as long as they remain in charge**.  
 * **Full autonomy = mixed feelings** – enthusiasm is tempered by worries over edge cases and liability.
 
-Result: current R-and-D focuses on **decision-support or task-support modules** rather than “driver-less” surgery (cf. Fiorini 2022; Reddy 2023).
+Result: current Research and Development focuses on **decision-support or task-support modules** rather than “driver-less” surgery.
 
----
+### 5.2 Stay on the Cutting Edge  
+For real-time breakthroughs—autonomous suturing prototypes, first-in-human trials, clever camera algorithms—bookmark **[Surgical Robotics Technology › News](https://www.surgicalroboticstechnology.com/category/news/)**, this provides the latest news, events, products, technology and jobs from the Surgical Robotics industry.
 
-### 5.2 Haptics — The Missing Sense  
-Vision and motion control race ahead, but **tactile feedback still lags**:
 
-* Today’s systems provide little or “rubber-band” force feedback; surgeons must *infer* tissue tension visually.  
-* Start-ups are testing MEMS jaw sensors, fingertip thimbles, and AI-generated *virtual haptics*, yet nothing is plug-and-play in the OR— *yet*.  
-* Next-gen upgrades will pair **high-bandwidth haptic channels** with sub-millimetre motion control, narrowing the gap between robot-mediated touch and natural feel.
+### 5.3 Spotlight Videos 
 
----
+- [Will robots replace surgeons? Testing surgical robots, Robots in Japan](https://www.youtube.com/watch?v=OfX6qiJKDMk)  
+  <sub>*YouTube, 14 Aug 2020 – https://www.youtube.com/watch?v=OfX6qiJKDMk*</sub>  
+  *A Tokyo-based surgical-robotics specialist tackles three big questions:*  
+  **Why do we need surgical robots? What happens if one makes a mistake? Could they ever replace human surgeons?**  
+  The clip blends lab footage with expert commentary to give balanced, easy-to-grasp answers.
 
-### 5.3 Stay on the Cutting Edge  
-For real-time breakthroughs—autonomous suturing prototypes, first-in-human trials, clever camera algorithms—bookmark **[Surgical Robotics Technology › News](https://www.surgicalroboticstechnology.com/category/news/)**.
+- [How are surgical robots made? Go behind the scenes](https://www.youtube.com/watch?v=_WsgJznDVIc)  
+  <sub>*YouTube, 15 Sep 2020 – https://www.youtube.com/watch?v=_WsgJznDVIc*</sub>  
+  *Step onto Intuitive Surgical’s factory floor and watch a da Vinci robot come to life—from precision machining and clean-room assembly to surgeon training, stress testing, and final quality inspection.*
 
-* Filter stories by **patient-access route, end-effector motion, degree of autonomy, or specialty**.  
-* Each robot profile includes a concise spec sheet **plus the manufacturer’s latest updates**.
+- [Can AI make surgery safer?](https://www.youtube.com/watch?v=NEgUaGHYxNg)  
+  <sub>*YouTube, 2024 – https://www.youtube.com/watch?v=NEgUaGHYxNg*</sub>  
+  *Shows how operating-room video and instrument data can be fed to machine-learning models to **score a surgeon’s technique in real time**—turning subjective judgements into objective numbers and actionable feedback.*
 
----
+> Innovation is sprinting ahead, but **trust, tactile realism, and transparent AI oversight** must grow just as fast—winners will be helpers that *earn* surgeon confidence, not “black-box” pilots.
 
-### 5.4 Spotlight Video — *Can AI Make Surgery Safer?*  
-[![Can AI Make Surgery Safer?](https://img.youtube.com/vi/NEgUaGHYxNg/0.jpg)](https://www.youtube.com/watch?v=NEgUaGHYxNg)  
-*YouTube · 2024 · 5 min*
 
-Operating-room video and instrument telemetry feed a neural network that **scores a surgeon’s technique in real time**, turning subjective mentorship into objective dashboards and instant feedback loops.
-
----
-
-> **Bottom line:** innovation is sprinting ahead, but **trust, tactile realism, and transparent AI oversight** must grow just as fast—winners will be helpers that *earn* surgeon confidence, not “black-box” pilots.
-
+<!-- 
 ## 5. News & Emerging Innovations
 *(synthesised from Fuller et al., 2025 Applied Ergonomics)*
 A lag in the amount of trust in automation integrated in surgery and 
@@ -192,7 +197,6 @@ If you want a real-time pulse on fresh breakthroughs - whether it’s an autonom
 - [Can AI make surgery safer?](https://www.youtube.com/watch?v=NEgUaGHYxNg)  
   <sub>*YouTube, 2024 – https://www.youtube.com/watch?v=NEgUaGHYxNg*</sub>  
   *Shows how operating-room video and instrument data can be fed to machine-learning models to **score a surgeon’s technique in real time**—turning subjective judgements into objective numbers and actionable feedback.*
-
 
 ## Old version 
 
@@ -271,7 +275,7 @@ Other interesting videos
 
 - [Can AI make surgery safer?](https://www.youtube.com/watch?v=NEgUaGHYxNg)  
   <sub>*YouTube, 2024 – https://www.youtube.com/watch?v=NEgUaGHYxNg*</sub>  
-  *Shows how operating-room video and instrument data can be fed to machine-learning models to **score a surgeon’s technique in real time**—turning subjective judgements into objective numbers and actionable feedback.*
+  *Shows how operating-room video and instrument data can be fed to machine-learning models to **score a surgeon’s technique in real time**—turning subjective judgements into objective numbers and actionable feedback.* -->
 
 -----------------------
 

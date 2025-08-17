@@ -62,6 +62,10 @@ Explore the structured robotics courses below, designed to guide you from fundam
 -  [Geometric-Methods for Planing](geometry-planning) 
 -  [Simultaneous Localization and Mapping](SLAM)
 
+**Chapter 3: Manipulation**
+-  [Grasping](grasping) - In progress
+
+
 **Chapter 4: Robot Learning**
 -  [Learning from Demonstration](LfD) - In progress
 -  [Reinforcement Learning](RL)

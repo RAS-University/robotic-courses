@@ -32,19 +32,22 @@ nav_order: 1
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# 🚀 Welcome to the Free Robotics Course!
+# 🚀 Welcome to the IEEE Robotics and Autonomation University (RAS-U)
 
-This website provides a structured and comprehensive robotics course for self-learners. The course covers fundamental and advanced topics in robotics.
+The RAS-U provides a structured and comprehensive robotics course for self-learners. The course covers fundamental and advanced topics and applications in robotics.
 
-Dive into a structured and comprehensive robotics course designed specifically for self-learners. Whether you're new to robotics or aiming to enhance your expertise, our content covers everything from foundational concepts to advanced applications.
+RAS-U is funded by the <a href="https://www.ieee-ras.org/">IEEE Robotics and Automation Society</a>
 
-# 📚 Fundamental Robotics [Course Topics](docs/index)
+# 📚 [Course Topics](docs/index)
+
+RAS-U is composed of modules, each of which covers a robotics topic. 
 
 Each module provides:
 
-- ✅ Clear theoretical explanations
-- 🛠️ Practical implementation guides
-- 🌐 Real-world applications and case studies using Webots
+- Theoretical explanations delivered through short-videos and text.
+- Conceptual, mathematical and programming exercises 
+- Examples of real-world applications 
+- Link to additional resources  
 
 ---
 
@@ -52,7 +55,7 @@ Each module provides:
 
 Follow these simple steps to begin your robotics journey:
 
-1. **Select a Topic** from the list above.
+1. **Select a Topic** from the list above.(docs/index)
 2. **Engage with Lessons and Exercises** designed for practical learning.
 3. **Experiment** with hands-on robotics projects to solidify your knowledge.
 

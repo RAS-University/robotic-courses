@@ -104,6 +104,41 @@ function checkMCQ(questionName, correctAnswer, correctMessage, incorrectMessage)
   #back-to-top:hover {
     opacity: 1;
   }
+
+  .pid-simulator-container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #f0f2f5;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  .pid-controls {
+      display: grid;
+      grid-template-columns: 100px 1fr 50px;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 20px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  input[type="range"] {
+      width: 100%;
+  }
+  .slider-value {
+      text-align: center;
+      font-weight: bold;
+  }
+  .pid-chart-container {
+      position: relative;
+      height: 500px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
 </style>
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
@@ -473,10 +508,10 @@ const correctMappingControlTypes = {
 
 Feedback control is indispensable for achieving high-performance and reliable system operation. Several key requirements underscore its importance:
 
-* **Stability**: A stable control system is one that, after being disturbed, either returns to its original equilibrium or reaches a new, desired equilibrium without exhibiting unbounded oscillations or runaway behavior. Without appropriate feedback, systems can become unstable, leading to erratic or potentially damaging operation.
+* **Stability:** A stable control system is one that, after being disturbed, either returns to its original equilibrium or reaches a new, desired equilibrium without exhibiting unbounded oscillations or runaway behavior. Without appropriate feedback, systems can become unstable, leading to erratic or potentially damaging operation. In more precise terms, internal stability is achieved if for all initial conditions and all bounded signals injected at any place in the system all states remain also bounded.
   <details markdown="1">
   <summary><strong>Stability: basic reminder</strong></summary>
-    If you are open this tab, it may mean that you are not very familiar with basic control theory. In this case, these videos can help you grasp the most important concepts: 
+    If you have opened this tab, it may mean that you are not very familiar with basic control theory. In this case, these videos can help you grasp the most important concepts: 
     
     * [Control systems review: LTI systems](https://www.youtube.com/watch?v=tK6HpTX61BI&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=1)
     * [Control systems review: Impulse response](https://www.youtube.com/watch?v=S8XJjHf6xeg&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=2)
@@ -493,9 +528,9 @@ Feedback control is indispensable for achieving high-performance and reliable sy
       <figcaption><center><em>Closed-loop control system</em><br><sub>Rajashekar, I., Pradeep Ramagiri, and J. Suresh Kumar. 2020. Control Systems: Lecture Notes, B.Tech II Year – II Sem (2020–21). Department of Electronics and Communication Engineering, MRCET. Avaialable at: https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf.</sub></center> </figcaption>
     </figure>
 
-    A simple When we use transfer functions like this $T(s) = \frac{G(s)}{1 + G(s)K(s)}$
+    A simple closed-loop system can be represented using a transfer function like this:  $T(s) = \frac{G(s)}{1 + G(s)K(s)}$
 
-    Stability is determined by the **poles** of this function which correspond to the **zeros** of $1 + G(s)K(s)$. What matters is where they lie in the complex plane:
+    Stability is determined by the **poles** of this function which, **if no zero and pole are cancelled when forming $G(s)K(s)$**, correspond to the **zeros** of $1 + G(s)K(s)$. What matters is where they lie in the complex plane:
 
     - **Stable system**: All poles are in the **left-hand side** of the complex plane (LHP).
     - **Unstable system**: Any pole in the **right-hand side** (RHP) causes runaway behavior.
@@ -505,7 +540,7 @@ Feedback control is indispensable for achieving high-performance and reliable sy
       <img src="{{ site.baseurl }}/assets/images/pid/stability.png" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
       <figcaption><em>CAPTION and CORRECT THE SOURCE<em><br><sub>Ruderman, Michael. 2023. Feedback Control Systems for Mechatronics and Robotics. December. University of Agder. Available at: https://home.uia.no/michaeru/Course_slides_feedback_control_systems_for%20mechatronics_and_robotics.pdf</sub> </figcaption>
     </figure>
-    
+
 
     <details markdown = "1">
     <summary><strong>Mathematical exercise</strong></summary>
@@ -514,7 +549,7 @@ Feedback control is indispensable for achieving high-performance and reliable sy
     <form id="q-stability-1">
       <input type="radio" name="q-stability-1" value="a">Yes<br>
       <input type="radio" name="q-stability-1" value="b">No<br><br>
-      <button type="button" onclick="checkMCQ('q-stability-1', 'b', 
+      <button type="button" onclick="checkMCQ('q-stability-1', 'a', 
         'Correct! The closed-loop system is not internally stable with $K(s) = 1$.', 
         'Incorrect. Try again!')">
         Check Answer
@@ -525,9 +560,9 @@ Feedback control is indispensable for achieving high-performance and reliable sy
 
     <p>Is the closed-loop system internally stable with $K(s) = \dfrac{4s + 2}{2s - 1}$?</strong></p>
     <form id="q-stability-2">
-      <input type="radio" name="q-stability-1" value="a">Yes<br>
-      <input type="radio" name="q-stability-1" value="b">No<br><br>
-      <button type="button" onclick="checkMCQ('q-stability-1', 'a', 
+      <input type="radio" name="q-stability-2" value="a">Yes<br>
+      <input type="radio" name="q-stability-2" value="b">No<br><br>
+      <button type="button" onclick="checkMCQ('q-stability-2', 'b', 
         'Correct! The closed-loop system is not internally stable with $K(s) = \dfrac{4s + 2}{2s - 1}$.', 
         'Incorrect. Try again!')">
         Check Answer
@@ -535,25 +570,136 @@ Feedback control is indispensable for achieving high-performance and reliable sy
       <p id="q-stability-2-feedback"></p>
     </form>
     <br>
+
     <details markdown="1">
     <summary><strong>Solution</strong></summary>
-    WRITE SOLUTION !!!!!!!!!!!!
-    </details>
+    - **Exercise 1: $K(s) = 1$**
+    First, compute the closed-loop transfer function:
+    $$
+    T(s) = \frac{G(s)}{1 + G(s)K(s)} = \frac{\left(\frac{2s - 1}{s^2 + 2}\right)(1)}{1 + \left(\frac{2s - 1}{s^2 + 2}\right)(1)}
+    $$
+    Then, find the characteristic equation by setting the denominator to zero:
+    $$
+    1 + \frac{2s - 1}{s^2 + 2} = 0 \implies \frac{(s^2 + 2) + (2s - 1)}{s^2 + 2} = 0 \implies s^2 + 2s + 1 = 0
+    $$
+    The characteristic equation factors to $(s + 1)^2 = 0$. The closed-loop poles are at $s = -1$, which are in the **Left-Hand Plane (LHP)**. Therefore, it is stable.
+
+    - **Answer:** **Yes**
+    <br>
+
+    - **Exercise 2: $K(s) = \frac{4s + 2}{2s - 1}$**
+    First, compute the closed-loop transfer function:
+    $$
+    T(s) = \frac{G(s)}{1 + G(s)K(s)} = \frac{\frac{2s - 1}{s^2 + 2}}{1 + \left(\frac{2s - 1}{s^2 + 2}\right)\left(\frac{4s + 2}{2s - 1}\right)}
+    $$
+    Then, observe the pole-zero cancellation $(2s-1)$. Therefore, we cannot directly take the zeros of $1 + G(s)K(s)$ because if simplfied there will still be a pole left in the nominator $(2s-1)$. In this case, the poles of the closed loop transfer function $T(s)$ are the union of the zeros of $1 + G(s)K(s)$ and the poles of $G(s)$ being the nominator of $T(s)$.
+
+    $$
+    1 + G(s)K(s) = 0 \implies 1 + \frac{4s + 2}{s^2 + 2} = 0 \implies \frac{(s^2 + 2) + (4s + 2)}{s^2 + 2} = 0 \implies s^2 + 4s + 4 = 0 \implies s=-2 \in LHP
+    $$
+
+    The denominator of $G(s)$ being ${2s-1}$, its pole is $s=\frac{1}{2} \in$ **RHP**. Therefore, it is not stable
+
+    - **Answer:** **No**
+    </details> 
+      </details>
 
     </details>
+
+* **Tracking:** This refers to the system's ability to accurately follow a desired input or reference signal over time **in the absence of disturbance**. In robotics, excellent tracking means a manipulator's end-effector precisely adheres to a predefined trajectory, which is critical for tasks like welding or painting.
+* **Regulation:** This is the system's capacity to maintain its output at a desired constant value despite the **presence of external disturbances**. For a robotic system, this could entail holding a specific joint position even when subjected to varying loads or unexpected forces.
+* **Steady-state error:** In many control systems, there can be a persistent, non-zero difference between the desired output and the actual output once all transient behaviors have subsided. This difference is known as the **steady-state error** and ideally it should be driven to zero.
+<details markdown="1">
+<summary><strong>How to calculate steady-state error?</strong></summary>
+To better understand how a control system performs in steady state, an important theorem should be introduced first.
+
+{: #final-value-theorem}
+
+<div style="border: 2px solid #3498db; background-color: #ebf3fd; padding: 15px; border-radius: 8px; margin: 20px 0;">
+<h4 style="margin-top: 0; color: #2980b9;">Final Value Theorem (FVT)</h4>
+<p>For a <strong>stable</strong> LTI system that produces <em>x(t)</em>,</p>
+<p style="text-align: center; font-size: 1.2em; margin: 15px 0;">
+\[\lim_{t\to\infty} x(t) \;=\; \lim_{s\to 0} s\,X(s).\]
+</p>
+</div>
+
+
+The system **must be stable**; otherwise the FVT gives the wrong answer.
+
+  <details markdown="1">  
+  <summary><em>Proof sketch of the Final value theorem</em></summary>  
     
-  </details>
+  1) Start from the Laplace transform of the derivative and integrate by parts:
 
+  $$ \mathcal{L}{ \frac{dx}{dt}}= \int_{0}^{\infty} \frac{dx}{dt} e^{-st} \, dt  = [x(t)e^{-st}]^{\infty} - \int_{0}^{\infty}x(t)(-s)e^{-st} \, dt = -x(0) + s \int_{0}^{\infty} x(t) e^{-st} \, dt = -x(0) + sX(s) $$
 
-* **Tracking**: This refers to the system's ability to accurately follow a desired input or reference signal over time. In robotics, excellent tracking means a manipulator's end-effector precisely adheres to a predefined trajectory, which is critical for tasks like welding or painting.
-* **Regulation**: This is the system's capacity to maintain its output at a desired constant value despite the presence of external disturbances. For a robotic system, this could entail holding a specific joint position even when subjected to varying loads or unexpected forces.
-* **Steady-State Error**: In many control systems, there can be a persistent, non-zero difference between the desired output and the actual output once all transient behaviors have subsided. This difference is known as the **steady-state error** and ideally it should be driven to zero.
-  <details markdown="1">
-  <summary><strong>How to calculate steady state error ?</strong></summary>
-  KARIMI !!!!!!!!!
+  2) Let $s \to 0^+$ and use the identity:
+
+  $$
+  \int_{0}^{\infty} \frac{dx}{dt} \, dt
+  = \lim_{t \to \infty} x(t) - x(0)
+  $$
+
+  Then:
+
+  $$
+  \lim_{s \to 0} \int_{0}^{\infty} \frac{dx}{dt} \, e^{-st} \, dt
+  = -x(0) + \lim_{s \to 0} sX(s)
+  = \lim_{t \to \infty} x(t) - x(0)
+  $$
+
+  Rearranging gives:
+
+  $$
+  \lim_{t \to \infty} x(t) = \lim_{s \to 0} sX(s)
+  $$
+
+  which is the final value theorem.  
   </details>
-* **Disturbance Rejection**: This is the ability of the control system to minimize the adverse impact of unwanted external inputs (disturbances) on the system's output. For example, a robotic system should maintain its path despite unexpected air currents or minor collisions.
-* **Sensitivity**: This measures how much the system's performance changes in response to variations in its own internal parameters (e.g., changes in motor efficiency due to temperature fluctuations, or wear and tear). Feedback generally reduces sensitivity to such internal variations, making the system more robust.
+  
+  The steady-state error is the difference between the reference input and the actual output once the system has settled — in other words, the error that remains as time goes to infinity. To compute this, it's much more convenient to work in the Laplace domain using transfer functions rather than dealing with time-domain differential equations. This is where the Final value theorem becomes very useful. It allows us to compute the value of a signal at infinity using its Laplace transform. So to calculate the steady-state error, we simply use:
+ $$
+  e_{ss} = \lim_{t \to \infty} e(t) = \lim_{s \to 0} sE(s)
+  $$
+
+<!--
+### Tracking error (no disturbance, $w=0$)
+With controller $D_c(s)$ and plant $G(s)$ the **error transfer** for tracking is
+$$
+E(s)=\frac{1}{1+G(s)D_c(s)}\,R(s).
+$$
+For a step reference $R(s)=\bar r/s$,
+$$
+e_{\mathrm{ss}}
+=\lim_{s\to 0} sE(s)
+=\bar r\,\lim_{s\to 0}\frac{1}{\,1+G(s)D_c(s)\,}.
+$$
+
+**System type for tracking:** the number of poles of $L(s)=G(s)D_c(s)$ at the origin (the number of **integrators**).  
+More integrators $\Rightarrow$ better tracking steady-state performance (e.g., type-1 $\Rightarrow$ zero step error).
+
+---
+
+### Regulation error (disturbance rejection, $r=0$)
+With an input disturbance $W(s)$, the **error transfer** for regulation is
+$$
+E(s)= -\,\frac{G(s)}{1+G(s)D_c(s)}\,W(s).
+$$
+For a step disturbance $W(s)=\bar w/s$,
+$$
+e_{\mathrm{ss}}
+=\lim_{s\to 0} sE(s)
+= -\,\bar w\,\lim_{s\to 0}\frac{G(s)}{\,1+G(s)D_c(s)\,}.
+$$
+
+**Controller integrators matter here:** the number of poles of $D_c(s)$ at the origin (integrators in the **controller**) is key for regulation steady-state performance.
+-->
+</details>
+
+* **Disturbance rejection:** This is the ability of the control system to minimize the adverse impact of unwanted external inputs (disturbances) on the system's output. For example, a robotic system should maintain its path despite unexpected air currents or minor collisions.
+* **Sensitivity:** This measures how much the system's performance changes in response to variations in its own internal parameters (e.g., changes in motor efficiency due to temperature fluctuations, or wear and tear). Feedback generally reduces sensitivity to such internal variations, making the system more robust.
+* **Fast transient response:** This refers to the system’s ability to react quickly and effectively to changes in the input or disturbances. A fast transient response means the system can reach its desired operating point in a short amount of time without excessive overshoot or oscillations. In practical terms, this is related to having a sufficiently large control bandwidth. For example, in robotics, a manipulator arm should rapidly adjust its position after receiving a new command so that it operates smoothly and efficiently in real-time tasks.
+* **Robustness:** It is the system’s ability to maintain acceptable performance even when there are uncertainties in parameters or unmodeled dynamics. Real-world systems often face variations due to aging components, environmental changes, or simplifications in the mathematical model. A robust control system continues to function reliably despite these uncertainties.
 
 <!--
 **Common Signals in Control Systems:**
@@ -589,7 +735,7 @@ Where:
 - $e(t) = y_{sp}(t) - y(t)$ is the error between the desired setpoint $y_{sp}$ and the actual system output $y$.
 - $K_p, K_i, K_d$ are the proportional, integral, and derivative gains respectively.
 
-This equation might look intimidating at first, but its concept is quite straightforward. The total control signal \( u(t) \) is the **sum of three components**:
+This equation might look intimidating at first, but its concept is quite straightforward. The total control signal $ u(t) $ is the **sum of three components**:
 - A **P-term**, proportional to the current error,
 - An **I-term**, proportional to the cumulative (integrated) error over time,
 - A **D-term**, proportional to the predicted future error (via its rate of change).
@@ -621,41 +767,63 @@ Where:
 * $u_b$: A bias or reset term. When the error is zero, the control variable takes this value. It can sometimes be manually adjusted to achieve zero steady-state error at a specific operating point.
 
 ### Hands-on Exercise: Exploring proportional control
-Let's use an interactive simulation to understand the behavior and limitations of proportional control.
+Let's use an interactive simulation to understand the behavior and limitations of proportional control. It shows a typical second-order system with a pure delay of 1 step driven by a PID controller.
+  * The blue dashed line represents the **desired value** (setpoint).
+  * The purple line represents the **plant’s position/output** that we are getting from the sensors. The desired behavior is to have it lined up with the desired value. 
+  * The yellow line represents the **control signal** $u(t)$ that drives the plant (e.g. actuator force). It is plotted on the right y-axis. A big, spiky yellow curve means high actuator demand.
 
-1. Access the Simulator: Open the <a href="https://www.luisllamas.es/en/pid-controller-simulator/" target="_blank">PID Simulator</a> in a new tab.
-  * The pink line represents the current value we are getting from the sensors (for example: room temperature).
-  * The blue dashed line represents the desired value.
-  * The green line represents the output of the controller.
-2. Initial Setup:
-  * Set the integral gain (Ki) to 0.
-  * Set the derivative gain (Kd) to 0.
-3. Play with the value of the proportional gain (Kp). What do you observe in terms of:
-  * **Response speed and oscillations**: What happens to the speed at which the output approaches the setpoint (rise time) as you increase Kp? What happens to the oscillations?
-  * **Steady-state error:** Does the output ever perfectly match the setpoint, or is there always a small, persistent difference (an "offset")? This persistent difference is called the steady-state error. Can you reduce it to zero by only adjusting Kp?
+Your task is to play with the value of the proportional gain (Kp). What do you observe in terms of:
+  * **Response speed and oscillations**: What happens to the speed at which the output approaches the setpoint (**rise time**) as you increase Kp? What happens to the oscillations ?
+  * **Steady-state error:** Does the output ever perfectly match the setpoint, or is there always a small, persistent difference (**offset**)? This persistent difference is called the steady-state error. Can you reduce it to zero by only adjusting Kp ?
+
+  <div id="pid-simulator-1" class="pid-simulator-container">
+      <h2>P-controller simulation</h2>
+      <div class="pid-controls">
+          <label>Kp:</label>
+          <input type="range" class="kp-slider" min="0" max="40" step="0.1" value="0">
+          <span class="kp-value slider-value"></span>
+          <label>Ki:</label>
+          <input type="range" class="ki-slider" min="0" max="10" step="0.02" value="0">
+          <span class="ki-value slider-value"></span>
+          <label>Kd:</label>
+          <input type="range" class="kd-slider" min="0" max="40" step="0.§1" value="0">
+          <span class="kd-value slider-value"></span>
+      </div>
+      <div class="pid-chart-container">
+          <canvas class="pid-chart"></canvas>
+      </div>
+      <div class="pid-buttons">
+          <button class="ziegler-nichols-button">Ziegler-Nichols</button>
+          <button class="reset-button">Reset</button>
+      </div>
+  </div>
+
 
 <details markdown="1">
-  <summary>What you should obtain</summary>
+  <summary><strong>What you should obtain ?</strong></summary>
   <figure>
-    <img src="{{ site.baseurl }}/assets/images/pid/P_controller_sim.png" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
+    <img src="{{ site.baseurl }}/assets/images/pid/P_controller_sim.png" >
     </figure>
 
-  > *TEXT to describe !!!!* 
+  > The system output initially overshoots the setpoint, then enters a damped oscillatory phase before stabilizing at a steady-state value below the reference. The control signal exhibits similar transient behavior with high initial amplitude, followed by decaying oscillations, and finally settles at a constant value. Both curves show that the system reaches a stable state with steady-state error and nonzero actuator effort. If you further increase $K_p$, the system destabilizes.
+
 </details>
 
-### Conclusions from the Exercise:
+### Conclusions from the Exercise
 
-Based on your observations from the simulation, you should have identified the great influence of the proportional gain ($Kd$) as well as the following properties and limitations of proportional control:
+Based on your observations from the simulation, you should have identified the great influence of the proportional gain $K_p$ as well as the following properties and limitations of proportional control:
 
-* **Faster response:** Increasing the proportional gain (K_p) generally leads to a faster initial response, reducing the time it takes for the system output to approach the setpoint (i.e., faster rise time). If we have a small K_p, the system will take a long time to reach the setpoint, because we are giving "little power" to the actuator. If we increase it, we manage to decrease the response time.
+* **Faster response:** Increasing the proportional gain $K_p$ generally leads to a faster initial response, reducing the time it takes for the system output to approach the setpoint (i.e., faster rise time). If we have a small $K_p$, the system will take a long time to reach the setpoint, because we are giving "little power" to the actuator. If we increase it, we manage to decrease the response time.
 
-  * Intuitive example: Small K_p: Imagine controlling the temperature of a room where your setpoint is 20°C, and the current temperature is 18°C. With a small K_p, you turn on the heater a little. The temperature slowly rises to 19°C, then to 19.5°C. It takes a long time to get close to 20°C.
+  * Intuitive example: Small $K_p$: Imagine controlling the temperature of a room where your setpoint is 20°C, and the current temperature is 18°C. With a small $K_p$, you turn on the heater a little. The temperature slowly rises to 19°C, then to 19.5°C. It takes a long time to get close to 20°C.
 
-* **Increased oscillations and potential instability:** While a higher K_p speeds up the response, it also tends to increase oscillations and overshoot. However, if we increase K_p too much, we may exceed the setpoint, oscillate, or even oscillate and mess everything up. If K_p is too high, the system can become unstable, continuously oscillating or even becoming unbounded.
+* **Increased oscillations and potential instability:** While a higher $K_p$ speeds up the response, it also tends to increase oscillations and overshoot. However, if we increase $K_p$ too much, we may exceed the setpoint, oscillate, or even oscillate and mess everything up. If $K_p$ is too high, the system can become unstable, continuously oscillating or even becoming unbounded.
 
-  * Intuitive example: Medium K_p: You turn on the heater more strongly. When you see 18°C, you apply significant heat, and the next measurement might be 21°C. You've gone too far! You lower the heat, and the temperature drops to 19°C. You raise it again to 20.5°C. You've achieved a stable temperature, but you might have overshot the target and then undershot it a few times before settling.
+  * Intuitive example: Medium $K_p$: You turn on the heater more strongly. When you see 18°C, you apply significant heat, and the next measurement might be 21°C. You've gone too far! You lower the heat, and the temperature drops to 19°C. You raise it again to 20.5°C. You've achieved a stable temperature, but you might have overshot the target and then undershot it a few times before settling.
 
-  * Intuitive example: Large K_p: When you see 18°C, you turn the heater on full blast. The next measurement might be 32°C! This is a huge overshoot. So, you quickly turn off the heater, and perhaps even turn on the air conditioning. The temperature plummets to 14°C. You react again, blasting the heat, and it shoots up to 45°C. This cycle of extreme overshoots and undershoots means your system is oscillating wildly and has become unstable. This demonstrates that an overly large K_p leads to instability and excessive oscillations.
+  * Intuitive example: Large $K_p$: When you see 18°C, you turn the heater on full blast. The next measurement might be 32°C! This is a huge overshoot. So, you quickly turn off the heater, and perhaps even turn on the air conditioning. The temperature plummets to 14°C. You react again, blasting the heat, and it shoots up to 45°C. This cycle of extreme overshoots and undershoots means your system is oscillating wildly and has become unstable. This demonstrates that an overly large $K_p$ leads to instability and excessive oscillations.
+
+* **Higher control effort required**: A higher $K_p$ also means a stronger control action is applied for the same amount of error. This can demand more from the actuators, potentially leading to wear or limitations if the actuator cannot respond fast or strongly enough. This effect is visible in the simulation as a larger controller output when $K_p$ increases.
 
 * **Persistent steady-state error**: A significant limitation of pure proportional control is the presence of a steady-state error. The output will often settle at a value slightly different from the desired setpoint. Increasing K_p can reduce this error, but typically cannot eliminate it entirely without causing excessive oscillations or instability. This persistent error exists because a non-zero error is often required for the proportional controller to generate the necessary control effort to maintain the output at a certain level against external forces or biases.
 
@@ -671,9 +839,130 @@ From such analysis, several key properties emerge:
 * **Steady-State Error**: A significant limitation of pure proportional control is the presence of a **steady-state error**. Unless the bias $u_b$ is perfectly tailored for a specific operating condition, a persistent error is often required to generate the necessary control effort to maintain the output at a desired level. The error will only be zero if $u(t) = u_b$ in steady state, which is rarely the case if the load or setpoint changes.
 -->
 
+<details markdown="1">
+<summary><strong>Mathematical exercise</strong></summary>
+
+Consider the proportional controller shown below:
+<figure>
+  <img src="{{ site.baseurl }}/assets/images/pid/proportional_controller_karimi.png" alt="Cours karimi">
+  <figcaption><center><em>Proportionnal controller</em></center> </figcaption>
+</figure>
+$$
+u(t) = K_p e(t), \quad U(s) = K_p E(s)
+$$
+
+where the plant is $G(s)$.
+
+**(a)** Derive the transfer function between the error signal $E(s)$ and the reference signal $R(s)$ considering no disturbance $w(t)=0$.
+<form id="q-prop-control"> 
+  <input type="radio" name="q-prop-control" value="a"> $\; \dfrac{E(s)}{R(s)} = \dfrac{K_p G(s)}{1 + K_p G(s)}$ <br>
+  <input type="radio" name="q-prop-control" value="b"> $\; \dfrac{E(s)}{R(s)} = \dfrac{K_p}{1 + K_p G(s)}$ <br>
+  <input type="radio" name="q-prop-control" value="c"> $\; \dfrac{E(s)}{R(s)} = \dfrac{1}{K_p G(s)}$ <br>
+  <input type="radio" name="q-prop-control" value="d"> $\; \dfrac{E(s)}{R(s)} = \dfrac{1}{1 + K_p G(s)}$ <br><br>
+
+
+  <button type="button" onclick="checkMCQ('q-prop-control', 'd', 
+    'Correct! Well done, that is the right transfer function.', 
+    'Incorrect. Try again!')">
+    Check Answer
+  </button>
+
+  <p id="q-prop-control-feedback"></p>
+</form>
+
+**(b)** Assume the reference input is a unit step:
+$$
+r(t) = 1, \quad R(s) = \frac{1}{s}.
+$$
+Compute the steady-state error using the [final value theorem](#final-value-theorem).
+
+<form id="q-prop-control-b"> 
+  <input type="radio" name="q-prop-control-b" value="a"> $0$ <br><br>
+  <input type="radio" name="q-prop-control-b" value="b"> $\dfrac{k_P G(0)}{1 + K_p G(0)}$ <br><br>
+  <input type="radio" name="q-prop-control-b" value="c"> $\dfrac{1}{1 + K_p G(0)}$ <br><br>
+  <input type="radio" name="q-prop-control-b" value="d"> $\dfrac{K_p}{K_p G(0)}$ <br><br>
+
+  <button type="button" onclick="checkMCQ('q-prop-control-b', 'c', 
+    'Correct! The proportional controller did not eliminate the steady-state errors.', 
+    'Incorrect. Try again!')">
+    Check Answer
+  </button>
+
+  <p id="q-prop-control-b-feedback"></p>
+</form>
+
+<details markdown="1">
+<summary><strong>Solution</strong></summary>
+
+**(a) Derive the transfer function $E(s)/R(s)$:**
+
+From the closed-loop structure:
+
+$$
+E(s) = R(s) - Y(s), \qquad Y(s) = G(s)\,U(s) = G(s)\,k_P\,E(s).
+$$
+
+So:
+
+$$
+E(s) = R(s) - k_P G(s) E(s).
+$$
+
+Rearrange:
+
+$$
+E(s)\big(1 + k_P G(s)\big) = R(s).
+$$
+
+Thus:
+
+$$
+\frac{E(s)}{R(s)} = \frac{1}{1 + k_P G(s)}.
+$$
+
+
+**(b) Apply the final value theorem to compute the steady-state error for a unit step input:**
+
+The [final value theorem](#final-value-theorem) gives:
+
+$$
+e_{\text{ss}} = \lim_{t \to \infty} e(t) = \lim_{s \to 0} s E(s).
+$$
+
+Since
+
+$$
+E(s) = \frac{1}{1 + k_P G(s)} \cdot \frac{1}{s},
+$$
+
+we have
+
+$$
+e_{\text{ss}} = \lim_{s \to 0} s \cdot \frac{1}{1 + k_P G(s)} \cdot \frac{1}{s}.
+$$
+
+Simplify:
+
+$$
+e_{\text{ss}} = \frac{1}{1 + k_P G(0)}.
+$$
+
+</details>
+</details>
+
+
+<details markdown="1">
+<summary><strong>Proportional control :  DC motor as a practical example</strong></summary>
+{: #video-proportional-control}
+
+![Proportional control — DC motor](https://www.youtube.com/watch?v=WRmJ_pm53PA&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=34)  
+> <sub>*Jones, C. (2020) Proportional control. YouTube video, 9 September. Available at: https://www.youtube.com/watch?v=WRmJ_pm53PA*</sub>  
+>
+> *This short video introduces proportional control on a **DC motor**. It sets up the motor model, closes the loop with $K_p$, and shows how changing $K_p$ affects the response (speed, overshoot) and the steady-state offset.*
+</details>
+
 
 ## Chapter 2.2: Integral (I) action
-
 ![Integral control (10 min)](https://www.youtube.com/watch?v=_VzHpLjKeZ8&start=903&end=1470)  
 > <sub>*Lum, C. (2023) Control Theory: Proportional Integral Derivative (PID) Control. YouTube video, May. Available at: https://www.youtube.com/watch?v=_VzHpLjKeZ8&t=903s*</sub>  
 >
@@ -703,38 +992,209 @@ Conceptually, integral action can be viewed as an automatic mechanism that conti
 -->
 
 ### Hands-on Exercise: Exploring integral control
-Let's use again use the interactive simulation to understand the behavior and limitations of integral control
+Let's use again the interactive simulation to understand the behavior and limitations of integral control. 
 
-1. Access the Simulator: Ensure the <a href="https://www.luisllamas.es/en/pid-controller-simulator/" target="_blank">PID Simulator</a> is still open.
-2. Initial Setup:
-  * Set the proportional gain (Kp) to 2.5 which is a value as we have seen before that ensures stability but cannot remove the steady state error.
-  * Set the derivative gain (Kd) to 0.
-  * Set the integral gain (Ki) to 0 initially.
+It shows a typical second-order system with a pure delay of 1 step driven by a PID controller.
+  * The blue dashed line represents the **desired value** (setpoint).
+  * The purple line represents the **plant’s position/output** that we are getting from the sensors. The desired behavior is to have it lined up with the desired value. 
+  * The yellow line represents the **control signal** $u(t)$ that drives the plant (e.g. actuator force). It is plotted on the right y-axis. A big, spiky yellow curve means high actuator demand.
 
-3. Gradually increase the value of the integral gain (Ki). What do you observe in terms of:
+Your task is to gradually increase the value of the integral gain $K_i$ while keeping the proportional gain $k_p$ you found in the previous hands-on-exercise (e.g. 3). What do you observe in terms of:
   * **Steady-state error:** What happens to the steady-state error as you increase Ki? Does the output eventually reach the setpoint precisely?
   * **Impact on oscillations**: How does a very large Ki affect the system's oscillations and overall stability? Can too much integral action lead to new problems?
 
+  <div id="pid-simulator-2" class="pid-simulator-container">
+      <h2>PI-controller simulation</h2>
+      <div class="pid-controls">
+          <label>Kp:</label>
+          <input type="range" class="kp-slider" min="0" max="40" step="0.1" value="3">
+          <span class="kp-value slider-value"></span>
+          <label>Ki:</label>
+          <input type="range" class="ki-slider" min="0" max="10" step="0.02" value="0">
+          <span class="ki-value slider-value"></span>
+          <label>Kd:</label>
+          <input type="range" class="kd-slider" min="0" max="40" step="0.1" value="0">
+          <span class="kd-value slider-value"></span>
+      </div>
+      <div class="pid-chart-container">
+          <canvas class="pid-chart"></canvas>
+      </div>
+      <div class="pid-buttons">
+          <button class="ziegler-nichols-button">Ziegler-Nichols</button>
+          <button class="reset-button">Reset</button>
+      </div>
+  </div>
+
 <details markdown="1">
-  <summary>What you should obtain</summary>
+  <summary><strong>What you should obtain</strong></summary>
   <figure>
-    <img src="{{ site.baseurl }}/assets/images/pid/PI_controller_sim.png" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
+    <img src="{{ site.baseurl }}/assets/images/pid/PI_controller_sim.png">
     </figure>
 
-  > *TEXT to describe !!!!* 
+  > The system output quickly rises, overshoots the setpoint, and goes through a damped oscillatory phase before settling exactly at the reference with no steady-state error. Compared to the P controller, the addition of the integral term eliminates the offset. The control signal starts with high amplitude, oscillates similarly to the output, and eventually stabilizes at a higher constant value than in the P case, reflecting the accumulated integral action needed to maintain zero error. 
 </details>
-### Conclusions from the Exercise:
+
+### Conclusions from the Exercise
 Based on your observations from the simulation, and consistent with the principles of integral action, you should have identified the following:
 
-* **Elimination of steady-state error:** The primary and most significant role of integral action is to eliminate steady-state error. If a steady-state error e_0 exists (i.e., $e_0 \neq 0$), the integral term $\int e(\tau)d\tau$ will continuously accumulate this error. This accumulation will cause the control signal u(t) to continuously increase (if $e_0 > 0$) or decrease (if $e\_0 \< 0$). This adjustment continues until the error itself becomes zero. As long as there is any persistent error, the integral term will keep pushing the control signal, thereby ensuring that the system eventually settles precisely at the setpoint with no offset. Conceptually, integral action can be viewed as an automatic mechanism that reacts to the memory of past errors by continuously adjusting the bias term u_b of a proportional controller until the error is nulled.
+* **Elimination of steady-state error:** The primary and most significant role of integral action is to eliminate steady-state error. If a steady-state error $e_0$ exists (i.e., $e_0 \neq 0$), the integral term $\int e(\tau)d\tau$ will continuously accumulate this error. This accumulation will cause the control signal u(t) to continuously increase (if $e_0 > 0$) or decrease (if $e\_0 \< 0$). This adjustment continues until the error itself becomes zero. As long as there is any persistent error, the integral term will keep pushing the control signal, thereby ensuring that the system eventually settles precisely at the setpoint with no offset. Conceptually, integral action can be viewed as an automatic mechanism that reacts to the memory of past errors by continuously adjusting the bias term u_b of a proportional controller until the error is nulled.
+  *Please note, however, that this is only valid in the case of a constant desired value. A more complex desired form would require adding more integrators.* 
 
 * **Increased oscillations and overshoot:**  While integral action is essential for eliminating steady-state error, an overly aggressive integral action (a very large K_i) can introduce undesirable oscillations, increase overshoot, and potentially make the system respond sluggishly or even become unstable due to the accumulated past errors. Therefore, a careful balance is required when tuning K_i.
 
 
 This exercise highlights that integral control effectively solves the steady-state error problem of proportional-only control but must be tuned carefully to avoid introducing excessive oscillations.
 
-## Chapter 2.3: Derivative (D) Control
+<details markdown="1">
+<summary><strong> Going Deeper: Mathematical Analysis of a PI Controller</strong></summary>
 
+![PI Control](https://www.youtube.com/watch?v=dxp6vNJrQcA&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=6)  
+> <sub>*Jones, C. (2020) PI Control. YouTube video, 23 August. Available at: https://www.youtube.com/watch?v=dxp6vNJrQcA*</sub>  
+>
+> *This video provides a mathematical explanation of PI control, focusing on how the integral term eliminates steady-state error. It derives the closed-loop transfer function in the Laplace domain and shows, step by step, why a properly tuned PI controller drives the output exactly to the reference under step inputs. This complements the intuitive discussion given above with a more formal, equation-based perspective.*  
+
+In this section, the calculations made in the video above are reproduced with the goal to derive the steady-state behavior of a simple system under PI control, showing mathematically why the integral term can eliminate steady-state error and when it might not.
+
+We consider a simple plant (typical DC motor) whose dynamics are described in the Laplace domain by:
+
+$$
+\dot{\omega} + \alpha \, \omega = \beta \, u
+$$
+$$
+s\Omega(s) + \alpha \, \Omega(s) = \beta \, U(s)
+$$
+
+*NB: To understand in more details how this expression was derived, please refer to [this video](#video-proportional-control)*
+
+
+The PI controller has the form:
+
+$$
+u(t) = K_p e(t) + K_i \int_0^t e(\tau)\, d\tau = K_p \left[e(t) + \frac{1}{T_i} \int_0^t e(\tau) \, d\tau \right]
+$$
+$$
+U(s) = K_p \left[ E(s) + \frac{1}{T_i s} E(s) \right] = K_p \left( 1 + \frac{1}{T_i s} \right) E(s)
+$$
+
+with $e(t) = \omega_c(t) - \omega(t) $ and $ \Omega_c(s) $ the reference and $T_i$ begin identified by $K_i=\frac{K_d}{T_i}$.
+
+**Step 1: Closed-loop equation in Laplace domain**
+
+Substituting $U(s)$ into the plant equation:
+
+$$
+(s + \alpha) \, \Omega(s) = \beta K_p \left( 1 + \frac{1}{T_i s} \right) \big[ \Omega_c(s) - \Omega(s) \big]
+$$
+
+Multiply both sides by $T_i s$:
+
+$$
+(T_i s^2 + \alpha T_i s) \, \Omega(s) = \beta K_p (T_i s + 1) \, \Omega_c(s) - \beta K_p (T_i s + 1) \, \Omega(s)
+$$
+
+**Step 2: Gathering terms**
+
+$$
+\big[ T_i s^2 + (\alpha T_i + \beta K_p T_i) s + \beta K_p \big] \Omega(s) = \beta K_p (T_i s + 1) \, \Omega_c(s)
+$$
+
+The closed-loop transfer function from $\Omega_c$ to $\Omega$ is:
+
+$$
+\frac{\Omega(s)}{\Omega_c(s)} =
+\frac{\beta K_p (T_i s + 1)}{T_i s^2 + (\alpha T_i + \beta K_p T_i) s + \beta K_p}
+$$
+
+
+**Step 3: Steady-state analysis (Final Value Theorem)**
+
+For a **step input** $\omega_c(t) = \bar{\omega}_c$, we have:
+
+$$
+\Omega_c(s) = \frac{\bar{\omega}_c}{s}
+$$
+
+Applying the final value theorem:
+
+$$
+\lim_{t \to \infty} \omega(t) = \lim_{s \to 0} s \, \Omega(s)
+$$
+
+$$
+= \lim_{s \to 0} s \cdot \frac{\beta K_p (T_i s + 1)}{T_i s^2 + (\alpha T_i + \beta K_p T_i) s + \beta K_p} \cdot \frac{\bar{\omega}_c}{s}
+$$
+
+The $s$ terms cancel, and as $s \to 0$:
+- Numerator $\to \beta K_p$  
+- Denominator $\to \beta K_p$  
+
+Thus:
+$$
+\lim_{t \to \infty} \omega(t) = \frac{\beta K_p}{\beta K_p} \, \bar{\omega}_c = \bar{\omega}_c
+$$
+
+**Conclusion:** The output exactly matches the step reference in steady state guaranteeing, therefore, a **zero steady-state error** thanks to the integral term in the controller.
+
+<div style="border-left: 4px solid #e17055; background-color: #fdf2e9; padding: 15px; margin: 20px 0;">
+
+<span style="font-size: 1.25em; font-weight: bold;">Be careful: "Integral ≠ magic"</span>
+<br>
+
+The above proof holds <strong>only</strong> under certain conditions:
+
+<ol>
+<li><strong>Closed-loop stability:</strong><br>
+   If the PI gains make the system unstable, the output will never settle, and steady-state error becomes meaningless.</li>
+
+<li><strong>Type of input and system order:</strong><br>
+   <ul>
+   <li>A <strong>type-1 system</strong> (one integrator in open loop) achieves zero error for <strong>step</strong> inputs, but not for ramps.</li>
+   <li>A <strong>type-2 system</strong> is needed for zero ramp error.</li>
+   <li>For higher-order references (e.g., parabolic), even more integrators are required.</li>
+   </ul>
+</li>
+
+<li><strong>Actuator and system limits:</strong><br>
+   If the actuator saturates or physical limits are reached, the integrator may "wind up" — error remains even if the math predicts zero.</li>
+</ol>
+
+<strong>In short:</strong> the integral term eliminates steady-state error <em>only</em> if the loop is stable, the input type matches the system's type, and no hard constraints prevent the output from reaching the target.
+</div>
+
+---
+
+<span style="font-size: 1.25em; font-weight: bold;">Extension: Transient Response with PI Control </span>
+
+The same closed-loop transfer function can be compared with the standard second-order denominator:
+
+$$
+s^2 + 2\zeta \omega_n s + \omega_n^2.
+$$  
+
+By inspection:
+
+- **Natural frequency:**  
+  $$
+  \omega_n = \sqrt{\tfrac{\beta K_p}{T_i}}
+  $$  
+
+- **Damping relation:**  
+  $$
+  2\zeta \omega_n = \alpha + \beta K_p
+  \quad \Longrightarrow \quad 
+  \zeta = \frac{\alpha + \beta K_p}{2\sqrt{\beta K_p / T_i}}
+  $$  
+
+**Conclusions:**
+
+- Increasing **$K_i = \tfrac{K_p}{T_i}$** → raises the natural frequency $\omega_n$ leading, therefore, to a faster and more agressive response but reduces $\zeta$ making the system more oscillatory.  making the system more oscillatory. The combined effect is that increasing $K_i$ does not always lead to a faster overall response, since the added oscillations can increase the settling time
+- Increasing **$K_p$** with a fixed **$K_i$** → directly increases damping $\zeta$, reducing oscillations.  
+
+
+</details>
+
+
+## Chapter 2.3: Derivative (D) action
 
 ![Derivative control (6 min)](https://www.youtube.com/watch?v=_VzHpLjKeZ8&start=1489&end=1841)  
 > <sub>*Lum, C. (2023) Control Theory: Proportional Integral Derivative (PID) Control. YouTube video, May. Available at: https://www.youtube.com/watch?v=_VzHpLjKeZ8&t=1489s*</sub>  
@@ -764,38 +1224,61 @@ Derivative action can be intuitively understood as a form of "predictive control
 
 As demonstrated in simulations, incorporating derivative action adds significant damping to the system, which helps reduce oscillations and minimize overshoot. However, a critical consideration is that derivative action is highly sensitive to noise present in the error signal or sensor measurements. Differentiating noisy signals amplifies the noise, which can lead to erratic and chattering control actions, increased wear on actuators, and potentially instability. Consequently, derivative action is almost universally implemented in conjunction with a low-pass filter to smooth out these high-frequency components.
 -->
-<details markdown="1">
-  <summary>What you should obtain</summary>
-  <figure>
-    <img src="{{ site.baseurl }}/assets/images/pid/PD_controller_sim.png" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
-    </figure>
 
-  > *TEXT to describe !!!!* 
-</details>
 
 ### Hands-on Exercise: Exploring derivative control
-Let's use again use the interactive simulation to understand the behavior and limitations of derivative control
+Let's use again the interactive simulation to understand the behavior and limitations of derivative control.
+It shows a typical second-order system with a pure delay of 1 step driven by a PID controller.
+  * The blue dashed line represents the **desired value** (setpoint).
+  * The purple line represents the **plant’s position/output** that we are getting from the sensors. The desired behavior is to have it lined up with the desired value. 
+  * The yellow line represents the **control signal** $u(t)$ that drives the plant (e.g. actuator force). It is plotted on the right y-axis. A big, spiky yellow curve means high actuator demand.
 
-1. Access the Simulator: Ensure the <a href="https://www.luisllamas.es/en/pid-controller-simulator/" target="_blank">PID Simulator</a> is still open.
-2. Initial Setup:
-  * Set the proportional gain (Kp) to 3 which is a value that creates some oscillations and overshoot.
-  * Set the integral gain (Ki) to 0.
-  * Set the derivative gain (Kd) to 0 initially.
-
-3. Gradually increase the value of the integral gain (Ki). What do you observe in terms of:
+Your task is to gradually increase the value of the derivative gain $K_d$ while keeping the proportional gain $K_p$ you found in the first hands-on-exercise (e.g. 3). What do you observe in terms of:
   * **Oscillations and overshoot:** What happens to the oscillations and overshoot as you increase Kd? Does the system become more stable and settle faster?
   * **Sensitivity to noise and rough Behavior:**: Does the output (in green) become rough or erratic? How might this relate to measurement noise in a real system? (Note: Try extreme values of Kd. Furthermore, The simulator does not perfectly show noise, but consider the theoretical implications.)
 
-### Conclusions from the Exercise:
+  <div id="pid-simulator-3" class="pid-simulator-container">
+      <h2>PD-controller simulation</h2>
+      <div class="pid-controls">
+          <label>Kp:</label>
+          <input type="range" class="kp-slider" min="0" max="40" step="0.1" value="3">
+          <span class="kp-value slider-value"></span>
+          <label>Ki:</label>
+          <input type="range" class="ki-slider" min="0" max="10" step="0.02" value="0">
+          <span class="ki-value slider-value"></span>
+          <label>Kd:</label>
+          <input type="range" class="kd-slider" min="0" max="40" step="0.1" value="0">
+          <span class="kd-value slider-value"></span>
+      </div>
+      <div class="pid-chart-container">
+          <canvas class="pid-chart"></canvas>
+      </div>
+      <div class="pid-buttons">
+          <button class="noise-toggle-button">Toggle Noise</button>
+          <button class="ziegler-nichols-button">Ziegler-Nichols</button>
+          <button class="reset-button">Reset</button>
+      </div>
+  </div>
+
+
+<details markdown="1">
+  <summary><strong>What you should obtain?</strong></summary>
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/pid/PD_controller_sim.png">
+    </figure>
+
+  > The output rises quickly and overshoots slightly, but settles much faster than in the P or PI cases, with reduced oscillations. However, it does not reach the setpoint, there's still steady-state error. The control signal shows a sharp peak at the beginning, reflecting the derivative action responding to the rapid change in error, then decays smoothly and stabilizes.
+</details>
+
+### Conclusions from the Exercise
 Based on your observations from the simulation, and consistent with the principles of derivative action, you should have identified the following:
-* **Improvement in stability and damping:** Derivative action effectively improves the closed-loop stability and enhances the speed of response by anticipating future errors. It achieves this by acting based on the rate of change of the error signal. Derivative action can be intuitively understood as a form of "predictive control." By sensing how quickly the error is changing, the controller can predict what the error will be in the near future (e.g., through linear extrapolation of the error curve, as shown below). This anticipation allows the controller to apply a corrective control action even before the full magnitude of the error manifests. This predictive capability helps to effectively damp oscillations, reduce overshoot, and improve the overall transient response, thereby significantly enhancing system stability. As demonstrated in simulations, incorporating derivative action adds significant damping to the system, which helps reduce oscillations and minimize overshoot. The derivative component improves the overall response of many systems for moderate values of K_d.
+* **Improvement in stability and damping:** Derivative action effectively improves the closed-loop stability and enhances the speed of response by anticipating future errors. It achieves this by acting based on the rate of change of the error signal. Derivative action can be intuitively understood as a form of "predictive control." By sensing how quickly the error is changing, the controller can predict what the error will be in the near future (e.g., through linear extrapolation of the error curve, as shown below). This anticipation allows the controller to apply a corrective control action even before the full magnitude of the error manifests. This predictive capability helps to effectively damp oscillations, reduce overshoot, and improve the overall transient response, thereby significantly enhancing system stability. As demonstrated in simulations, incorporating derivative action adds significant damping to the system, which helps reduce oscillations and minimize overshoot. The derivative component improves the overall response of many systems for moderate values of $K_d$.
   <figure>
     <img src="{{ site.baseurl }}/assets/images/pid/derivative_error.png" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
-    <figcaption><center><em> Interpretation of derivative action as predictive control, where the prediction
- is obtained by linear extrapolation</em><br><sub>Rajashekar, I., Pradeep Ramagiri, and J. Suresh Kumar. 2020. Control Systems: Lecture Notes, B.Tech II Year – II Sem (2020–21). Department of Electronics and Communication Engineering, MRCET. Avaialable at: https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf.</sub></center> </figcaption>
+    <figcaption><center><sub>Rajashekar, I., Pradeep Ramagiri, and J. Suresh Kumar. 2020. Control Systems: Lecture Notes, B.Tech II Year – II Sem (2020–21). Department of Electronics and Communication Engineering, MRCET. Avaialable at: https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf.</sub></center> </figcaption>
   </figure>
 
-* **Rough behavior and actuator demands:** If we go overboard with K_d, we will see a lack of smoothness in the response, and other weird behaviors. The derivative component is sometimes a little rough because it demands very large actions. Imagine, for example, an instantaneous change in the setpoint. The derivative component would demand an infinite action that the actuator cannot satisfy. Since the actuator cannot provide the action requested by the controller, we would have deviations from what was calculated, or we could even damage the actuator. Consequently, derivative action is almost universally implemented in conjunction with a low-pass filter to smooth out these high-frequency components.
+* **Rough behavior and actuator demands:** If we go overboard with $K_d$, we will see a lack of smoothness in the response, and other weird behaviors. The derivative component is sometimes a little rough because it demands very large actions. Imagine, for example, an instantaneous change in the setpoint. The derivative component would demand an infinite action that the actuator cannot satisfy. Since the actuator cannot provide the action requested by the controller, we would have deviations from what was calculated, or we could even damage the actuator. Consequently, derivative action is almost universally implemented in conjunction with a low-pass filter to smooth out these high-frequency components.
 
 * **Sensitivity to noise:** A critical consideration is that derivative action is highly sensitive to noise present in the error signal or sensor measurements. Noise, a high-frequency variation, means very rapid variations, even if they are of small amplitude. These variations are amplified by the derivative component. Differentiating noisy signals amplifies the noise, which can lead to erratic and chattering control actions, increased wear on actuators, and potentially instability.
 
@@ -808,6 +1291,91 @@ Historically, derivative action, like integral action, was often implemented usi
   <figcaption><center><em>A block diagram illustrating a classical implementation of derivative action. (Similar to Figure 3.7 in "3.PID Control.pdf", page 69)</em></center></figcaption>
 </figure>
 -->
+
+<details markdown="1">
+<summary><strong>Going Deeper: Mathematical Analysis of a PD Controller</strong></summary>
+
+![PD Control (6 min)](https://www.youtube.com/watch?v=6pL_VPJEuHc&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=7)  
+> <sub>*Jones, C. (2020) PD Control. YouTube video, 25 August. Available at: https://www.youtube.com/watch?v=6pL_VPJEuHc*</sub>
+>
+> *This video gives a clear math view of PD control. It derives the closed-loop transfer function for a classical example of a simple DC motor and shows, step by step, how the derivative time $T_d$ shows up in the damping term. It also explains how the derivative is done in practice and why this matters for noise. This complements the intuitive notes above with an equation-based perspective.*
+
+### How does the derivative action introduce damping ?
+As before we consider a simple plant (typical DC motor) whose dynamics are described in the Laplace domain by:
+$$
+\dot{\omega}+\alpha\,\omega=\beta\,u,\qquad \dot{\theta}=\omega
+\;\Rightarrow\;
+\ddot{\theta}+\alpha\,\dot{\theta}=\beta\,u .
+$$
+
+with $e(t) = \omega_c(t) - \omega(t) $ and $ \Omega_c(s) $ the reference.
+
+The PD controller has the form:
+$$
+u(t)=K_p\left(e(t)+T_d\,\frac{de}{dt}(t)\right)
+     =K_p\left(\theta_c-\theta + T_d\,\dot{\theta_c}- T_d\,\dot{\theta}\right),\quad K_d:=K_pT_d .
+$$
+
+However, as explained in the video, keeping $\dot{\theta_c}$ in the equation leads to instabilities in the usual case of abrupt changes in the reference (derivative going towards infinity). Therefore, it's usually omitted in the equation. Therefore:
+$$
+u(t)=K_p\left(\theta_c-\theta - T_d\,\dot{\theta}\right),\quad K_d:=K_pT_d .
+$$
+
+Laplace and substitute:
+$$
+(s^2+\alpha s)\,\Theta(s)=\beta K_p\Big(\Theta_c(s)-\Theta(s)-T_d s\,\Theta(s)\Big).
+$$
+
+Collect terms:
+$$
+\left[s^2+s\big(\alpha+\beta K_pT_d\big)+\beta K_p\right]\Theta(s)=\beta K_p\,\Theta_c(s)
+$$
+
+Closed-loop transfer:
+$$
+\frac{\Theta(s)}{\Theta_c(s)}=\frac{\beta K_p}{s^2+s(\alpha+\beta K_pT_d)+\beta K_p}.
+$$
+
+This is a standard format of a second order system $(s^2+2\zeta\omega_n s+\omega_n^2)$ characterized by a natural frequency $\omega_n$ and a damping ratio $\zeta$:
+$$
+\omega_n=\sqrt{\beta K_p},\qquad
+\boxed{\;\zeta=\dfrac{\alpha+\beta K_pT_d}{2\sqrt{\beta K_p}}\;}
+$$
+
+**Result:** The term $K_pT_d = K_d$ sits in the damping ratio $\zeta$⇒ $K_d$ directly **adds damping** showing the stabilizing effect of $K_d$. Note also that the natural frequency is proportional to $K_p$, meaning that a bigger $K_p$ leads to a faster response.
+
+<!--
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!!!!!!!!! NOT SURE !!!!!!!!!!!!!!!!!!!!!!!!!!
+### How the derivative is implemented ?
+
+**(a) “Look-ahead” view (why PD feels predictive)**  
+Using a first-order Taylor expansion,
+$$
+e(t+T_d) \approx e(t) + T_d\,\frac{de}{dt}(t)
+\;\Rightarrow\;
+u(t) = K_p\,e(t+T_d).
+$$
+So a PD controller is like proportional control on a short **extrapolation** of the error $T_d$ seconds ahead. This is why it damps oscillations: it reacts to where the error is heading.
+
+**(b) Finite-difference derivative (what you actually compute)**
+$$
+\frac{de}{dt}(t_k) \approx \frac{e(t_k) - e(t_{k-1})}{\Delta}
+\quad\Rightarrow\quad
+u_k \approx K_p\,e_k \;+\; K_p T_d\,\frac{e_k - e_{k-1}}{\Delta}.
+$$
+Simple and effective, but it **amplifies high-frequency noise** (the difference is divided by the small sampling time $\Delta$). That is why, the derivation action is highly sensitive to noise.
+
+**(c) Low-pass filter (the standard fix)**  
+To avoid blowing up noise, use a one-pole low-pass in the D path:
+$$
+T_d s \;\longrightarrow\; \frac{T_d s}{\tfrac{T_d}{N}s + 1}, \qquad N \gg 1.
+$$
+At low frequency it behaves like a derivative; at high frequency the gain **saturates** (≈ $N$), which keeps the command smooth and protects actuators.
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+-->
+
+</details>
 
 
 ## Chapter 2.4: The Full PID Controller
@@ -843,7 +1411,7 @@ Another very intuitive way to perceive the three components involved in a PID co
 > * The integral (I) component is harder to visualize but it is vaguely analogized to a inertia/momentum. It accumulates past error, steadily increasing its pull or push to eliminate any persistent offset, much like accumulated momentum continues to move an object even when the initial force is removed. This persistent action ensures that the system eventually settles precisely at the setpoint, taking over the control authority once the error becomes zero.
 
 ### Hands-on Exercise: Exploring PID controller
-Now that you full understand the individual effects of each component of the PID controller, go back to the simulation and tune the different gains. Try to identify the values that achieve the best performance in terms of:
+Now that you fully understand the individual effects of each component of the PID controller, let's go back to the simulation and tune the different gains. Try to identify the values that achieve the best performance in terms of:
 
 * **Rise Time**: The output should reach the vicinity of the setpoint as quickly as possible.
 * **Overshoot**: The output should exceed as less as possible the setpoint before settling.
@@ -852,6 +1420,39 @@ Now that you full understand the individual effects of each component of the PID
 * **Stability**: The system's output should remains bounded or not behave erraticly.
 
 *(Note that is is harder than before because, apart from the individual effects, you are also observing the combined effect of the different changes)*
+
+  <div id="pid-simulator-4" class="pid-simulator-container">
+      <h2>PID-controller simulation</h2>
+      <div class="pid-controls">
+          <label>Kp:</label>
+          <input type="range" class="kp-slider" min="0" max="40" step="0.1" value="0">
+          <span class="kp-value slider-value"></span>
+          <label>Ki:</label>
+          <input type="range" class="ki-slider" min="0" max="10" step="0.02" value="0">
+          <span class="ki-value slider-value"></span>
+          <label>Kd:</label>
+          <input type="range" class="kd-slider" min="0" max="40" step="0.1" value="0">
+          <span class="kd-value slider-value"></span>
+      </div>
+      <div class="pid-chart-container">
+          <canvas class="pid-chart"></canvas>
+      </div>
+      <div class="pid-buttons">
+          <button class="ziegler-nichols-button">Ziegler-Nichols</button>
+          <button class="reset-button">Reset</button>
+      </div>
+  </div>
+
+
+<details markdown="1">
+  <summary><strong>What you should obtain?</strong></summary>
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/pid/PID_controller_sim.png">
+    </figure>
+
+  > The system reaches the setpoint quickly with minimal overshoot and a fast settling time. The oscillations die out smoothly, and the output stabilizes exactly at the desired value without steady-state error. Throughout the response, the system remains stable and well-behaved, showing no signs of erratic or unbounded behavior. The control signal shows a strong initial response that quickly stabilizes, combining contributions from all three terms to achieve fast, accurate, and stable behavior.
+</details>
+
 
 <details markdown="1">
 <summary><strong>Conceptual Exercise</strong></summary>
@@ -1029,7 +1630,7 @@ function checkDropdownPID() {
   }
   ``` 
   <details markdown="1">
-  <summary><strong>Do you want to make it better</strong></summary>
+  <summary><strong>Do you want to make it better ?</strong></summary>
     ![kevin_lynch](https://www.youtube.com/watch?v=La9vll93h44)
   </details>
 
@@ -1039,32 +1640,198 @@ function checkDropdownPID() {
 Despite its popularity, we must say that currently the PID is not the best controller available. But in most cases, it is more than enough. On the other hand, many of the “most modern” controllers are nothing more than improved versions of a PID, such as the different families based on PID with adaptive parameters.
 
 
+
+4 types of PID !!!!!!!!!!!!
+
 # Chapter 3: Practical Implementation Considerations for PID Control
+
 
 Effectively implementing PID controllers in real-world systems goes beyond theoretical understanding and requires careful consideration of several practical aspects.
 
 ## Chapter 3.1: PID Gain Tuning
-![tuning](https://www.youtube.com/watch?v=uXnDwojRb1g)
-![Tuning](https://www.youtube.com/watch?v=sFOEsA0Irjs&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y&index=4)
+As you have already experienced in the simulations, obtaining the desired response from a PID controller is not a trivial task. Even if the simulated system is simple, with no measurement noise and only a pure time delay, finding a set of parameters that yield a satisfactory response requires careful effort. It is therefore natural to expect that, in real applications, the problem becomes even more complex.  
 
-Each component has a parameter Kp, Ki, and Kd, respectively. These parameters indicate the weighting (or “strength”) in the final result. For the PID response to be good, broken things, death, destruction, and dismissal, reside in the correct adjustment of these three parameters.
+The difficulty lies in the fact that the three parameters of the controller, $K_p$, $K_i$, and $K_d$, do not act independently. Instead, they strongly influence one another, and the overall response is always the result of their combined effect. For example, increasing the proportional gain may improve the speed of the response but also amplify oscillations, which then require an adjustment of the derivative gain for damping, while the integral gain might simultaneously introduce long-term stability issues. Thus, it is not sufficient to adjust each of them in isolation. Rather, there exists a certain zone within the three-dimensional parameter space where the behavior of the controller is acceptable, and navigating towards this zone is the main challenge of tuning.  
 
-And here comes the “funny” part of the PID. In the three parameters, if you put a very low value, the effect of the component on the output will not be noticed. And if you put it too high… well, that’s it, death, destruction, broken things, etc.
+From an implementation point of view, writing a PID controller is easy. A few lines of code suffice to compute the three terms and combine them into the control action. The real difficulty, and the essence of PID control engineering, is to determine appropriate values for the gains. Tuning is therefore the step where most of the intellectual and experimental effort is required.
 
-Furthermore, in the overall response of the controller, the three components work together and influence each other, so it is not enough to adjust each of the parameters independently. There is a certain “zone” within the three parameters, where the behavior is more or less good.
+![Understanding PID Control, Part 4: Tuning Overview](https://www.youtube.com/watch?v=sFOEsA0Irjs)  
+> <sub>"Douglas, B. (2018) PID Tuning Guide | Understanding PID Control, Part 4. YouTube video, 3 July. Available at: https://www.youtube.com/watch?v=sFOEsA0Irjs"</sub>
+>
+>*This video introduces the main families of PID tuning methods and highlights when each of them is most appropriate.*  
 
-Logically, it is clear that the difficulty (which is not that much) of a PID is to adjust the parameters K, Ki, and Kd, so that the behavior is good. And that’s what we’ll dedicate the next post to.
+In practice, there are three main approaches to tuning PID controllers. 
+* **manual tuning:** It relies on the engineer’s knowledge of control theory and on systematic trial-and-error adjustments. 
+* **rule-based tuning:** It consists in applying heuristic procedures that have been established and tested by experts, such as the well-known Ziegler–Nichols method. 
+* **model-based tuning:** It builds upon an explicit model of the plant and uses analytical or computational tools to calculate the controller parameters. 
+* **Software-Based Auto-tuning**: Many modern industrial controllers and advanced simulation environments offer auto-tuning functionalities. These tools can automatically determine suitable PID gains by analyzing the system's step response or by running automated tests. 
 
-The performance of a PID controller is critically dependent on the proper selection and tuning of its $K_p$, $T_i$, and $T_d$ gains. Tuning is the process of finding the optimal values for these gains to meet specific performance objectives—such as fast response, minimal overshoot, zero steady-state error, and robust disturbance rejection—for a given system. There is no single "best" set of gains for all systems; effective tuning is highly context-dependent, based on the specific plant, task, and environment.
+Manual and rule-based approaches are often simple to apply and can provide useful first estimates, but they also have limitations. They may not work well for plants with significant delays, for high-order dynamics, or for systems that are unstable in open loop. In contrast, model-based methods are systematic and powerful, since they rely on the mathematical description of the plant. They allow one to tune the controller to meet specified performance objectives, such as overshoot, settling time, or robustness margins. However, they require either a physical model of the plant or experimental identification of a suitable approximation.  
 
-Common and widely used tuning techniques include:
-* **Trial and Error (Manual Tuning)**: This method involves adjusting the gains manually while observing the system's response. A common approach is to:
-    1.  Start by increasing $K_p$ until the system responds quickly but without excessive oscillations.
-    2.  Introduce and adjust $T_d$ to damp out any oscillations and reduce overshoot.
-    3.  Finally, introduce and adjust $T_i$ to eliminate any remaining steady-state error. This method requires experience and careful observation.
-* **Ziegler-Nichols Method**: A classic empirical tuning method, it involves finding the "ultimate gain" ($K_u$) at which the system oscillates continuously (sustained oscillations) and the "ultimate period" ($P_u$) of these oscillations. These values are then used with specific formulas to calculate initial PID gains. While providing a good starting point, Ziegler-Nichols often results in aggressive responses that may need further fine-tuning.
-* **Software-Based Auto-tuning**: Many modern industrial controllers and advanced simulation environments offer auto-tuning functionalities. These tools can automatically determine suitable PID gains by analyzing the system's step response or by running automated tests.
-* **Model-Based Tuning**: If a precise mathematical model (e.g., a transfer function or state-space model) of the plant is available, analytical methods can be used to calculate optimal gains. Techniques include pole placement, frequency response analysis, or optimization algorithms that minimize a specific performance index.
+In the following sections, we will only examine the empirical tuning methods (manual and heuristic) in more detail. The model-based tuning requires a level of understanding in control that is too difficult for this course. However, you can find an introduction to it in the following hidden section.
+
+<details markdown="1">
+<summary><strong>Introduction to model-based tuning</strong></summary>
+<h3>Building a model of the plant</h3>
+
+![3 Ways to Build a Model for Control System Design](https://www.youtube.com/watch?v=qhIjIu-Zk10) 
+> <sub>"Douglas, B. (2018) 3 Ways to Build a Model for Control System Design | Understanding PID Control, Part 5. YouTube video, 10 July. Available at: https://www.youtube.com/watch?v=qhIjIu-Zk10"</sub>
+> 
+>*This video illustrates three complementary ways to obtain a usable model: from first principles, from input–output experiments, or from frequency response measurements.*
+
+The starting point of any model-based method is to obtain a mathematical description of the plant. This model does not need to capture every physical detail; rather, it must approximate the plant’s behavior well enough around the operating point where control is required. There are three practical strategies.  
+
+* The first is to derive the model from **first principles**, using the physics of the system. This is possible, for instance, when the relevant parameters such as mass, damping, stiffness, or motor constants are known or can be measured.  
+
+* The second strategy is **system identification in the time domain**. In this case, one applies a small test input to the plant, such as a step change, records the output, and then fits a simple model such as a first-order-plus-dead-time (FOPDT) or second-order-plus-dead-time (SOPDT) system. These approximations are sufficient for many controller design tasks.  
+
+* Finally, one can use **frequency response identification**. Here, sinusoidal signals of different frequencies are injected into the plant, and the resulting output is measured. The ratio of input and output amplitudes and phases across frequencies gives a Bode diagram, from which a transfer function model can be fitted.  
+
+Regardless of the method, the essential goal is to obtain a control-oriented model that is simple enough for analysis yet sufficiently accurate to predict the closed-loop dynamics under PID control.
+
+<h3>From requirements to controller design</h3>
+![Manual and Automatic PID Tuning Methods](https://www.youtube.com/watch?v=qj8vTO1eIHo)  
+<sub>*This video explains two equivalent perspectives for model-based PID design: tuning the gains directly, or considering the placement of the controller zeros relative to the plant poles.*</sub>  
+
+Once a model is available, the next step is to translate performance requirements into specifications for the closed-loop system. These requirements may be expressed in the time domain, such as desired settling time, overshoot, or steady-state error, or in the frequency domain, such as crossover frequency and phase margin.  
+
+From the frequency perspective, the PID controller introduces two zeros through its integral and derivative terms. By carefully placing these zeros relative to the plant poles, one can increase phase margin, improve stability, and adjust the bandwidth of the closed loop. The proportional gain then scales the response to achieve the desired crossover frequency.  
+
+Alternatively, from the gains perspective, one begins by increasing the proportional gain until the response is acceptably fast, then adds integral action to eliminate steady-state error, and finally introduces derivative action to reduce overshoot and oscillations. Although this procedure appears sequential, in reality the three actions interact, so multiple iterations are typically needed.  
+
+These two viewpoints are equivalent and complementary. The choice between them depends on the tools at hand and on the familiarity of the engineer with time- or frequency-domain reasoning.
+</details>
+
+### Chapter 3.1.1: Manual tuning
+
+![Empirical PID Gain Tuning](https://www.youtube.com/watch?v=uXnDwojRb1g)  
+<sub>*This video demonstrates a hands-on procedure for adjusting the three gains step by step, while observing the effect on the system’s response.*</sub>  
+
+When no model is available, or when a quick adjustment is required, manual tuning can be applied. The procedure is conceptually simple. One begins with a controller that contains only proportional action, with integral and derivative gains set to zero. The proportional gain is then increased gradually until the system responds quickly but remains stable. At this stage, some overshoot is usually present.  
+
+Next, integral action is introduced to eliminate steady-state error. The integral gain is increased carefully, since excessive integral action can make the response sluggish or even destabilize the system through oscillations.  
+
+Finally, derivative action is added to provide damping. This reduces overshoot and oscillations but must be used with caution, because high derivative gains amplify measurement noise and delays. If the response becomes noisy, the derivative gain should be reduced or filtered as will be presented in a next section.  
+
+This is the method that you most probably have implemented when doing the simulation exercise. Though iterative, it is straightforward and builds valuable intuition. However, it may take considerable time to converge to acceptable performance, and if applied carelessly on hardware, it can stress the actuators or destabilize the system.
+
+### Chapter 3.1.2: Rule-based techniques  
+
+Although manual tuning provides an intuitive understanding of how each term of the PID controller affects the response, it is neither efficient nor reliable in many practical situations. The iterative trial-and-error process may require significant time, and the final result often depends on the skill and experience of the engineer. Moreover, manual tuning may lead to aggressive parameter values that cause actuator saturation or unstable oscillations. To overcome these limitations, **rule-based tuning methods** have been developed. These methods are based on systematic procedures derived from empirical observations and experimental studies, and they provide reproducible results with less effort.  
+
+<h3> (a) Closed-loop Ziegler–Nichols method  </h3>
+![Designing a PID Controller Using the Ziegler–Nichols Method](https://www.youtube.com/watch?v=n829SwSUZ_c)  
+>
+>*This video illustrates the closed-loop Ziegler–Nichols method, from the ultimate gain test to the calculation of controller parameters.*
+
+The most well-known procedure is the **closed-loop Ziegler–Nichols method** (ultimate gain test). Its principle is to experimentally determine the *ultimate gain* $K_u$ and the *ultimate period* $P_u$, and then compute the PID parameters through simple formulas.  
+
+Steps:  
+1. Disable integral and derivative actions.  
+2. Increase the proportional gain $K_p$ until the system oscillates with constant amplitude.  
+3. Record the gain value $K_u$ (ultimate gain) and the oscillation period $P_u$ (ultimate period).  
+4. Use the Ziegler–Nichols table to calculate controller gains:  
+
+| Controller | $K_p$        | $T_i = \frac{K_p}{K_i}$      | $T_d = \frac{K_d}{K_p}$      |  
+|------------|----------------|--------------|--------------|  
+| P          | $0.5 K_u$    | –            | –            |  
+| PI         | $0.45 K_u$   | $P_u / 1.2$| –            |  
+| PID        | $0.6 K_u$    | $0.5 P_u$  | $0.125 P_u$|  
+{: #closed-Ziegler}
+
+
+This method is simple and systematic, but it has drawbacks: the sustained oscillations can be unsafe for sensitive plants, and the resulting tuning often yields aggressive responses with overshoot. Thus, the results are usually used as starting points.  
+
+
+<h3> (b) Open-loop Ziegler–Nichols method (reaction curve)  </h3>
+
+The **open-loop Ziegler–Nichols method** is based on the **open-loop step response** of the plant. It is particularly useful when closed-loop experiments are not possible or would endanger the system.  
+
+The procedure is as follows:  
+1. Apply a unit step input to the plant in open-loop.  
+2. Record the output response and approximate it by a first-order-plus-dead-time (FOPDT) model $ G(s) \approx \frac{K}{T s + 1} e^{-Ls}$  where $K$ is the process gain, $L$ is the apparent dead time, $T$ is the process time constant. **In practice**, $L$ and the slope $R$ of the **tangent** at the inflection point are measured from the step response curve.  
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/pid/ZN_1.jpg" alt="Step response of a 4th order system">
+    <figcaption><center><em>Step response of a 4th order system $G(s)=\frac{1}{(s+1)^4}$</em></center></figcaption>
+  </figure>
+3. Use the Ziegler–Nichols open-loop tuning rules (depending on controller type):  
+
+| Controller | $K_p$         | $T_i$   | $T_d$   |  
+|------------|-----------------|-----------|-----------|  
+| P          | $\frac{1}{R L}$     | –         | –         |  
+| PI         | $\frac{0.9}{R L}$   | $L/0.3$ | –         |  
+| PID        | $\frac{1.2}{R L}$   | $2L$    | $0.5L$  |  
+{: #open-Ziegler}
+
+This method is safer because it avoids driving the system to instability. However, its accuracy depends on how well the process can be approximated by the FOPDT model. Moreover, like the closed-loop version, it tends to produce aggressive tuning and may require refinement.  
+
+In summary, both Ziegler–Nichols methods provide systematic, quick rules for tuning. The closed-loop test is often more direct but riskier, while the open-loop method is safer but relies on model approximation. In both cases, the obtained controller should be viewed as an initial design, to be further refined for robustness and performance.  
+
+
+<details markdown="1">
+<summary><strong>Mathematical exercise</strong></summary>
+
+The unit-step response of a paper machine is shown in Fig. X(a) where the input into the system is stock flow onto the wire and the output is basis weight (thickness). The time delay $L$ and slope $R$ of the transient response may be determined from the figure.  
+
+**(a)** Find the proportional, PI, and PID-controller parameters using the Ziegler–Nichols transient-response method.  
+
+**(b)** Using proportional feedback control, control designers have obtained a closed-loop system with the unit impulse response shown in Fig. X(b). When the gain $K_u = 8.556$, the system is on the verge of instability. Determine the proportional, PI, and PID-controller parameters according to the Ziegler–Nichols ultimate sensitivity method.  
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/images/pid/ZN_exercise.jpg" alt="Karimi">
+</figure>
+<br>
+
+<details markdown="1">
+<summary><strong>Solution</strong></summary>
+
+**How to obtain $L$ and $R$ from the step response**
+
+1. Locate the **inflection point** of the step response.
+2. Draw the **tangent line** at that point.
+3. **$L$** is the time where this tangent intersects the axis $y=0$ (time axis) which corresponds to the delay time in this particular example.
+4. **$R$** is the slope of the tangent. For example, you can read two points on the tangent and compute $R=\dfrac{\Delta y}{\Delta t}$.
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/images/pid/ZN_exercise_1.png" alt="Karimi">
+</figure>
+
+Therefore, $L \approx 0.65 sec$ and $R=\frac{0.2}{1.25 - 065}=0.3$
+
+From the [open-loop Ziegler Nichols table](#open-Ziegler) :
+- **P:**   $  K = \frac{1}{RL} = 4.62 $
+
+- **PI:**  $  K = \frac{0.9}{RL} = 4.15, \quad T_I = \frac{L}{0.3} = 2.17 $
+
+- **PID:**  $  K = \frac{1.2}{RL} = 5.54, \quad T_I = 2L = 1.30, \quad T_D = 0.5L = 0.33 $
+  
+
+
+**(b) From impulse response:**  
+
+<figure>
+  <img src="{{ site.baseurl }}/assets/images/pid/ZN_exercise_2.png" alt="Kariimi">
+</figure>
+
+From the oscillation we find:  
+- $P_u \approx 2.33 \,\text{s}$  
+- $K_u = 8.556$  
+
+From the [closed-loop Ziegler Nichols table](#closed-Ziegler) :
+
+- **P:**  $ K = 0.5 K_u = 4.28 $
+
+- **PI:**  $ K = 0.45 K_u = 3.85, \quad T_I = \frac{P_u}{1.2} = 1.86$
+
+- **PID:**    $  K = 0.6 K_u = 5.13, \quad T_I = \frac{P_u}{2} = 1.12, \quad T_D = \frac{P_u}{8} = 0.28$
+
+</details>
+</details>
+
+
+
+Other classical rule-based tuning methods also exist. **Cohen–Coon**, for instance, offers more nuanced formulas that account for the ratio of dead time to time constant, making it better suited for systems where the delay is a significant fraction of the dynamics. You can explore these methods in depth in this excellent resource: [PID Tuning via Classical Methods](https://eng.libretexts.org/Bookshelves/Industrial_and_Systems_Engineering/Chemical_Process_Dynamics_and_Controls_(Woolf)/09%3A_Proportional-Integral-Derivative_(PID)_Control/9.03%3A_PID_Tuning_via_Classical_Methods)  
+
 
 ## Chapter 3.2: Anti-Windup
 
@@ -1081,8 +1848,45 @@ To mitigate the detrimental effects of integral windup, various **anti-windup** 
 * **Conditional Integration**: In this approach, the integral term only updates when the control signal is within the actuator's non-saturated operating limits.
 * **Back-calculation**: This method uses the difference between the saturated control signal (what was actually applied) and the unsaturated control signal (what the controller calculated) to "reset" or adjust the integral term, preventing it from accumulating excessively.
 
-## Chapter 3.3: Noise Filtering for Derivative Action
+Anti-windup mechanisms may seem like a secondary detail compared to the design of controller gains, but in practice they are crucial for stability and performance. Even a well-tuned PID controller can fail dramatically if integral windup is not managed, especially in systems where actuators frequently reach their limits. Therefore, implementing an anti-windup scheme is a standard step in professional control engineering practice.  
 
+
+
+## Chapter 3.3: Noise filtering for derivative action  
+
+![Video](https://www.youtube.com/watch?v=7dUVdrs1e18&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y&index=3)  
+> <sub>“Douglas, B. (2018) Filtering Derivative Action | Understanding PID Control, Part 3. YouTube video, 12 June. Available at: https://www.youtube.com/watch?v=7dUVdrs1e18”</sub>  
+>
+> *This short video explains why the derivative term amplifies high-frequency noise and shows how a low-pass filter on the D path mitigates the problem without sacrificing the useful damping of derivative action.*
+
+
+One of the main limitations of the derivative term in PID controllers is its high sensitivity to measurement noise. The derivative is, by definition, the slope of the error signal; small high-frequency fluctuations are therefore magnified in the control output, which can lead to “chattering” commands, unnecessary actuator wear, and even loss of closed-loop stability.
+
+To see where this sensitivity arises in practice, recall that the derivative is commonly computed in discrete time with a finite difference:
+$$
+\frac{de}{dt}(t_k)\;\approx\;\frac{e(t_k)-e(t_{k-1})}{\Delta t}.
+$$
+When $\Delta t$ is small, even tiny sensor variations yield large derivative estimates. The controller reacts not only to the true dynamics but also to spurious noise.
+
+The standard solution is to **filter the derivative action** so that it responds to genuine trends in the error while attenuating high-frequency components. This is implemented by inserting a first-order low-pass filter in the D path. A widely used form is
+$$
+G_D(s)\;=\;\frac{T_d\,s}{1+\tfrac{T_d}{N}\,s},\qquad N\gg 1,
+$$
+where $T_d$ is the derivative time constant and $N$ is the derivative filter coefficient. At low frequencies (where the plant dynamics lie), à $G_D(s)\approx T_d s$ and the controller behaves like an ideal derivative, providing phase lead and damping. At high frequencies (where noise dominates), the gain approaches a finite value $\approx N$, preventing uncontrolled amplification and keeping the commanded input smooth.
+
+This filtered derivative also has a clear intuitive interpretation. Using a first-order Taylor expansion,
+$$
+e(t+T_d)\;\approx\;e(t)+T_d\,\frac{de}{dt}(t),
+$$
+a PD controller can be viewed as proportional control applied to a short **extrapolation** of the error $T_d$ seconds into the future:
+$$
+u(t) = K_p e(t+T_d).
+$$
+Filtering preserves this predictive quality while ensuring that rapid, high-frequency fluctuations (typical of sensor noise) do not dominate the control effort.
+
+In practice, almost every industrial PID implementation includes this modification by default. The parameter $N$ must be tuned: **larger $N$** (smaller effective filter time constant) yields a more responsive derivative but passes more noise; **smaller $N$** provides stronger smoothing at the cost of added lag. Selecting $N$ is therefore a compromise between responsiveness and robustness and should be treated as an essential part of PID tuning.
+
+<!--
 As previously discussed, the derivative term of a PID controller is highly sensitive to and amplifies high-frequency noise present in the error signal or the sensor measurements. This amplification can result in erratic, "chattering" control actions, increased wear and tear on actuators, and potentially destabilize the system. To address this issue, a low-pass filter is almost universally applied to the derivative term.
 
 A common implementation involves using a first-order low-pass filter. The derivative action is then calculated either from a filtered version of the error or directly from the filtered error signal itself. This is often represented as:
@@ -1095,6 +1899,7 @@ Where $\alpha$ (a small constant, typically 0.05 to 0.2) or $T_f$ (filter time c
   <img src="https://i.imgur.com/example_deriv_filter_diagram.png" alt="Block diagram of a PID controller with a filter on the derivative term">
   <figcaption><center><em>A block diagram of a PID controller incorporating a low-pass filter on the derivative term to reduce noise amplification.</em></center></figcaption>
 </figure>
+-->
 
 <!--#### 5.4 Cascaded Control Loops (Optional)
 
@@ -1150,11 +1955,14 @@ Practical implementation :
  Anti windup
  noise filtering
 -->
+
+
+<!--
 This can be useful for PID tuning + code + critically damped
 https://www.youtube.com/watch?v=tFVAaUcOm4I
 
 https://www.youtube.com/watch?v=wkfEZmsQqiA&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y
-
+-->
 
 # Want to tune using a precise simulation ?
 https://sparshg.dev/pid-balancer/
@@ -1163,3 +1971,30 @@ https://sparshg.dev/pid-balancer/
   <img src="{{ site.baseurl }}/assets/images/pid/cartpole.jpg" alt="https://mrcet.com/downloads/digital_notes/ECE/II%20Year/Control%20Systems.pdf">
   <figcaption><center><em>!!!!</em><br><sub>https://github.com/sparshg/pid-balancer/.</sub></center> </figcaption>
 </figure>
+
+# Want to implement a real project ?
+![PID Control Explained: The Ultimate Guide from Basics to Implementation](https://www.youtube.com/watch?v=osd7jbJpGLA)  
+> <sub>*Circuit Helper (2024). PID Control Explained: The Ultimate Guide from Basics to Implementation. YouTube video, Dec. Available at: https://www.youtube.com/watch?v=osd7jbJpGLA*</sub>  
+>
+> *This project demonstrates how to implement a practical PID controller using a Raspberry Pi Pico, a resistive heater, and a thermocouple. By tuning the constants `Kp`, `Ki`, and `Kd`, you can directly observe overdamped, underdamped, and critically damped system responses.*  
+
+Having completed this course, you now have all the foundations needed to bring PID control to life in a real system. This project is the perfect way to put your knowledge into practice: you will see the theory from the lectures applied directly to hardware, and experience how tuning the controller affects the behavior of a real process.  
+
+The setup requires only simple and affordable components such as a **Raspberry Pi Pico (or ESP32 alternatives), a resistive heater, and a thermocouple sensor**, along with basic prototyping gear like a breadboard and jumper wires. If you’d like to find direct links to these components, check the [description of the video](https://www.youtube.com/watch?v=osd7jbJpGLA).  
+
+This is your opportunity to take the concepts you’ve mastered and transform them into hands-on skills. Try it out, experiment with the tuning, and experience PID in action for yourself!  
+
+
+http://www.scholarpedia.org/article/Encyclopedia:Dynamical_systems
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="pid_simulator.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        initializePIDSimulator('pid-simulator-1');
+        initializePIDSimulator('pid-simulator-2');
+        initializePIDSimulator('pid-simulator-3');
+        initializePIDSimulator('pid-simulator-4');
+    });
+</script>

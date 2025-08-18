@@ -63,6 +63,7 @@ While you don’t need to be an expert in any one of these areas, having a comfo
 ## 2. General Motivation
 
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
+><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
 
 Have you ever watched a precision robot—like the Delta robot in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
 
@@ -74,14 +75,14 @@ Kinematics, often referred to as the “**geometry of movement**,” is the stud
 
 - ***Streamline Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions.
 
-In this chapter, you’ll explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic joints, and learn a systematic way to map your robot’s geometry into the equations that bring the entire mechanism to life. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**, unlocking a world of innovative possibilities.
+In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic joints, and learn a systematic way to map your robot’s geometry into the equations that bring the entire mechanism to life. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**, unlocking a world of innovative possibilities.
 
 ---
 
 ## 3. Course Content
 
 
-This course closely follows videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) with some additional videos and conceptual and mathematical exercises.
+<!-- This course closely follows videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) with some additional videos and conceptual and mathematical exercises. -->
 
 <!-- 
 This section of the course is primarily based on content shared by **Mohammad Zainullah Khan**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton. You can find more information on his website: [www.zainullah.com](https://www.zainullah.com/).
@@ -107,7 +108,8 @@ Among the various configurations in which mechanical components can be arranged,
 
 For a visual comparison of these two robot types, watch the following short video:
 ![serial_parallel](https://www.youtube.com/watch?v=3fbmguBgVPA)
-> In this video, the left side demonstrates a parallel robot, while the right side shows a serial robot.
+><sub>*Video showing the differnece between Parallel (left) and Serial (right) robot. YouTube video, 13 juin 2019. Available at: https://www.youtube.com/watch?v=3fbmguBgVPA*</sub>
+>
 
 <!-- Conceputal questions -->
 <details markdown="1">
@@ -158,13 +160,13 @@ For a visual comparison of these two robot types, watch the following short vide
   <!-- Serial Robot Zone -->
   <div class="drop-zone" id="serial-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
     <h3>Serial Robot</h3>
-    <img src="{{ site.baseurl }}/assets/images/kinematics/serial_robot_2.png" alt="Serial Robot" width="100%" style="max-width:90px; margin-bottom:10px;">
+    <img src="{{ site.baseurl }}/assets/images/kinematics/serial.jpg" alt="Serial Robot" width="100%" style="max-width:90px; margin-bottom:10px;">
   </div>
 
   <!-- Parallel Robot Zone -->
   <div class="drop-zone" id="parallel-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
     <h3> Parallel Robot</h3>
-    <img src="{{ site.baseurl }}/assets/images/kinematics/parallel_robot_2.png" alt="Parallel Robot" width="100%" style="max-width:200px; margin-bottom:10px;">
+    <img src="{{ site.baseurl }}/assets/images/kinematics/parallel.jpg" alt="Parallel Robot" width="100%" style="max-width:200px; margin-bottom:10px;">
   </div>
 
 </div>
@@ -228,40 +230,122 @@ For a visual comparison of these two robot types, watch the following short vide
 ---
 
 #### **Drawing kinematic diagrams**
-In robotics, accurately representing the structure of robots through kinematic diagrams is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+In robotics, accurately representing the structure of robots (left image) through **kinematic diagrams** (right image) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_repre.png' }}" width="500px" alt="Kine">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of robots represented in kinematic diagrams</figcaption>
+</figure>
+
 
 By learning how to sketch these diagrams, you will be better prepared to analyze robot motion and systematically compute essential parameters such as mobility and degrees of freedom.
 
+<!-- Step by step -->
+<details markdown="1">
+  <summary>Video Explanation</summary>
+
+Here is a video explaining the step-by-step procedure to draw the kinematic diagram shown above.
+
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+</details>
+
 <!-- Mathematical Development Questions -->
 <details markdown="1">
-  <summary>Mathematical Development Questions</summary>
+  <summary>Hands-on exercices </summary>
 
-Here are some exercie to learn how to draw the **kinematic representation structures** of the robots.
+Here are some exercie to learn how to draw the **kinematic representation structures** of these following robots.
+Give it a try !
 
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_1.pdf'}}" width="100%" height="600px"></iframe>
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex1.jpg' }}" width="300px" alt="kine_ex1">
+  <!-- <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption> -->
+</figure>
 
 <details markdown="2">
-<summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_1.pdf'}}" width="100%" height="600px"></iframe>
+<summary><strong>Click here for Solution</strong></summary>
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra_1.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 </details>
+
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex2.jpg' }}" width="500px" alt="kine_ex2">
+  <!-- <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption> -->
+</figure>
+
+
+<details markdown="2">
+<summary><strong>Click here for Solution</strong></summary>
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra_2.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</details>
+
+
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex3.jpg' }}" width="300px" alt="kine_ex3">
+  <!-- <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption> -->
+</figure>
+
+
+<details markdown="2">
+<summary><strong>Click here for Solution</strong></summary>
+<video width="640" height="360" controls>
+  <source src="{{ '/assets/videos/kinematics/kine_diagra_3.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+</details>
+
+
+
+
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_1.pdf'}}" width="100%" height="600px"></iframe>  -->
+
 
 </details>
 
-#### **Mobility & Degrees of Freedom (DOF)**
-- ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+---
+
+#### **Degrees of Freedom (DOF)**
+<!-- - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
 
-To better understand these concepts, watch the following concise and clear explanation:
+To better understand these concepts, watch the following concise and clear explanation: -->
 ![Degrees of Freedom of a Rigid Body](https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4)
-> Introduction to Degrees of Freedom (DOF) for rigid bodies.
+><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.1: Degrees of Freedom of a Rigid Body. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
+>
+><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
+
+- ***Configuration of a robot*** is a representation of the positions of all the points of the robot.
+- ***Configuration space (called C-space)*** is the space of all configurations
+- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
+
+General rule which holds for any system, not just rigid bodies: 
+$$
+\boxed{ \text{DoF} = \sum_{}^{} \text{freedoms of } \textbf{points} - \text{number of independent constraints} }
+$$
+
+And since the robots are made of rigid bodies, 
+$$
+\boxed{ \text{DoF} = \sum_{}^{} \text{freedoms of } \textbf{bodies} - \text{number of independent constraints} }
+$$
 
 <!-- Conceputal questions -->
-<details markdown="1">
-  <summary>Conceptual Questions</summary>
+<!-- <details markdown="1">
+  <summary>Conceptual Questions</summary> -->
 
 <!-- First question  -->
-<p><strong>Question : Answer the following questions based on the robot structures shown below:</strong></p>
+<!-- <p><strong>Question : Answer the following questions based on the robot structures shown below:</strong></p>
 ![Robot_Structures]({{ site.baseurl }}/assets/images/kinematics/ex1_1.png)
 
 <p><strong>1. How many motors does each robot have?</strong></p>
@@ -274,7 +358,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q1a-motors" value="6"> 6 motors<br><br>
 
   <button type="button" onclick="checkMCQ('q1a-motors', '6', 
-    'Correct! The Stäubli TX60 has 6 motorized joints (RRR handler + RRR wrist).', 
+    'Correct! Left Robot has 6 motorized joints (RRR handler + RRR wrist).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -290,7 +374,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q1b-motors" value="6"> 6 motors<br><br>
 
   <button type="button" onclick="checkMCQ('q1b-motors', '5', 
-    'Correct! The second robot has 5 motorized joints (RTT handler + RR wrist).', 
+    'Correct! Right Robot has 5 motorized joints (RTT handler + RR wrist).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -342,7 +426,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q3a-dof" value="6"> 6 DOF (3 translations + 3 rotations)<br><br>
 
   <button type="button" onclick="checkMCQ('q3a-dof', '6', 
-    'Correct! Stäubli TX60 has 6 DOF (3 translations + 3 rotations).', 
+    'Correct! Left Robot has 6 DOF (3 translations + 3 rotations).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -358,7 +442,7 @@ To better understand these concepts, watch the following concise and clear expla
   <input type="radio" name="q3b-dof" value="6"> 6 DOF (3 translations + 3 rotations)<br><br>
 
   <button type="button" onclick="checkMCQ('q3b-dof', '5', 
-    'Correct! The second robot has 5 DOF (3 translations + 2 rotations).', 
+    'Correct! Right Robot has 5 DOF (3 translations + 2 rotations).', 
     'Incorrect. Try again!')">
     Check Answer
   </button>
@@ -366,7 +450,7 @@ To better understand these concepts, watch the following concise and clear expla
   <p id="q3b-dof-feedback"></p>
 </form> 
 
-</details>
+</details> -->
 
 ---
 
@@ -378,8 +462,8 @@ $$
 
 Where:
 - $m$ is the dimension of the space (e.g., $m = 3$ for planar mechanisms, $m = 6$ for spatial mechanisms).
-- $n$ is the number of links (including the frame).
-- $j$ is the number of joints.
+- $N$ is the number of links (including the frame).
+- $J$ is the number of joints.
 - $f_i$ is the number of degrees of freedom permitted by joint $i$.
 
 
@@ -387,53 +471,135 @@ To clearly understand how this formula is applied, check out the following detai
 
 ![Degrees of Freedom of a Robot](https://www.youtube.com/watch?v=zI64DyaRUvQ&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=5)
 >  Detailed explanation of Grübler’s formula and practical examples of its application.
+>
+><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.2: Degrees of Freedom of a Robot. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
+>
+><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
+
+**Different type of joints:**
+
+| Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
+|------------------|-------------|-----------------------------------------------------|------------------------------------------------------|
+| Revolute (R)     | 1           | 2                                                   | 5                                                    |
+| Prismatic (P)    | 1           | 2                                                   | 5                                                    |
+| Helical (H)      | 1           | N/A                                                 | 5                                                    |
+| Cylindrical (C)  | 2           | N/A                                                 | 4                                                    |
+| Universal (U)    | 2           | N/A                                                 | 4                                                    |
+| Spherical (S)    | 3           | N/A                                                 | 3                                                    |
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption>
+</figure>
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Now, try drawing the **kinematic representation structures** of the robots presented in **Exercises 2 and 3** from the set below.
+<!-- Now, try drawing the **kinematic representation structures** of the robots presented in **Exercises 2 and 3** from the set below.
 
 Afterwards, compute the **mobility of the parallel robots**. (Note that, unlike serial robots, computing mobility for parallel robots requires using specific formulas.)
 
-Here are some formulas that could be useful:
+Here are some formulas that could be useful: -->
 
-- **Grübler's Formula**
+<!-- - **Grübler's Formula**
 
 $$
 \boxed{ \text{MO} = 6(n - k - 1) + \sum_{i=1}^{k} \text{MO}_i }
-$$
+$$ -->
 
 
-Where:
+<!-- Where:
 
   - $ n $ is the number of solid bodies (including the fixed base)
   - $ k $ is the number of joints (connections)
-  - $ \text{MO}_i $ is the mobility of each joint:
+  - $ \text{MO}_i $ is the mobility of each joint: -->
 
-| Joint Type              | Mobility (MO) |
+<!-- | Joint Type              | Mobility (MO) |
 |-------------------------|---------------|
 | Pivot (revolute)        | 1             |
 | Cardan (universal)      | 2             |
 | Spherical (ball joint)  | 3             |
-| Prismatic (sliding)     | 1             |
+| Prismatic (sliding)     | 1             | -->
 
-- **Loops formula**
+<!-- - **Loops formula**
 
 $$
 \boxed{ \text{MO} = \sum_{i=1}^{k} \text{MO}_i - 6 \times lo}
 $$
 
-Where, $ lo $ is the number of closed kinematic loops.
+Where, $ lo $ is the number of closed kinematic loops. -->
 
+Let's try to compute the DoF of the robot we have seen before:
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine.png' }}" width="200px" alt="Kine">
+</figure>
 
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_1.pdf'}}" width="100%" height="600px"></iframe>
+<details markdown="1">
+<summary><strong>Click here for Solution</strong></summary>
+Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the following:
 
-<details markdown="2">
-<summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_1.pdf'}}" width="100%" height="600px"></iframe>
+- $ N = 3 \times 3 \ (\text{links}) + 1 \ (\text{ground}) + 1 \ (\text{end effector}) = 11 $
+
+- $ J = 3 \ (\text{R joints}) + 4 \times 3 \ (\text{S joints}) = 15 $
+
+- $ \sum f_i = 3 \times 1 \ (\text{R joints}) + 3 \times 12 \ (\text{S joints}) = 39 $
+
+- $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(11 - 1 - 15) + 39 = 9 $
+
+This Delta robot as designed with the parallel bars and spherical joints has **6 supplementary mobilities**.
+These mobilities concern **internal mobilities** not affecting the **pure translation of the mobile plate**. They are actually related to the **rotation of each bar around its principal axis**. 
+
 </details>
+
+--- 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex2.jpg' }}" width="400px" alt="Kine">
+</figure>
+
+<details markdown="1">
+<summary><strong>Click here for Solution</strong></summary>
+Each box can be regarded as a link connected to ground by a 2-dof PP joint. Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the following:
+
+- $ N = 3 \times 2 \ (\text{links}) + 1 \ (\text{ground}) + 1 \ (\text{end effector}) = 8 $
+
+- $ J = 3 \ (\text{R joints}) + 3 \ (\text{S joints}) + 3 \ (\text{2-dof joints}) = 9 $
+
+- $ \sum f_i = 3 \times 1 \ (\text{R joints}) + 3 \times 3 \ (\text{S joints}) + 2 \times 3 \ (\text{2-dof joints}) = 18 $
+
+- $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(8 - 1 - 9) + 18 = 6 $
+</details>
+
+--- 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_ex3.jpg' }}" width="200px" alt="Kine">
+</figure>
+
+> Here consider that the three prismatic joints and three revolute joints at the base are locked. 
+
+<details markdown="1">
+<summary><strong>Click here for Solution</strong></summary>
+Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the following:
+
+- $ N = 3 \times 2 \ (\text{links}) + 1 \ (\text{ground}) + 1 \ (\text{end effector}) = 8 $
+
+- $ J = 3 \ (\text{S joints}) + 3 \ (\text{P joints}) + 2 \times 3 \ (\text{PR joints}) = 9 $
+
+- $ \sum f_i = 3 \times 3 \ (\text{S joints}) + 1 \times 3 \ (\text{P joints}) + 2 \times 3 \ (\text{PR joints}) = 18 $
+
+- $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(8 - 1 - 9) + 18 = 6 $
+
+Observe that if the three prismatic joints and three revolute joints at the base are locked, then unless if the legs are all parallel, it is impossible for the legs to extend in length, implying that the mechanism becomes a structure in this case. Therefore this mechanism has **six dof.** 
+
+</details>
+
+
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_1.pdf'}}" width="100%" height="600px"></iframe> -->
+
 
 </details>
 
@@ -445,6 +611,9 @@ Now that we have seen some basics notions, foundational concepts, proceed to the
 
 ![Robotics 101: Full course for beginners](https://www.youtube.com/watch?v=K_xIJBlbjg4&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA)
 > This video gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.
+> 
+><sub> Introduction to Robotics 101 tutorial series (2022) Kinematics and modeling of 2D & 3D robots. YouTube video, 22 May 2022. Available at: https://www.youtube.com/watch?v=K_xIJBlbjg4&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&t=1s
+
 
 <!-- keys words on videos: forward kine, inv kine, gimbal rocks  -->
 
@@ -478,14 +647,23 @@ Now that we have seen some basics notions, foundational concepts, proceed to the
 In this chapter, we focus on 2D coordinate transformations—specifically, **pure translations** and **pure rotations** for planar (serial) robots.
 
 ![Coordinate Transformations in 2D : Mapping Part 1](https://www.youtube.com/watch?v=H_94DTWd8ck&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=2)
-> An introduction to 2D translations and rotations
+> This video gives you an introduction to 2D translations and rotations.
+>
+><sub> Coordinate Transformations in 2D (Part 1)| Mapping | Robotics 101. YouTube video, 22 May 2022. Available at: https://www.youtube.com/watch?v=K_xIJBlbjg4&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&t=1s
 
 
 ![Coordinate Transformations in 2D : Mapping Part 2](https://www.youtube.com/watch?v=TWTMoFvcBFc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=3)
 > Explains how translations and rotations combine simultaneously
+>
+><sub> Coordinate Transformations in 2D (Part 2)| Mapping | Robotics 101. YouTube video, 27 May 2022. Available at: https://www.youtube.com/watch?v=TWTMoFvcBFc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=3
+
+
 
 ![Coordinate Transformations in 2D : Mapping Part 3](https://www.youtube.com/watch?v=R_hxO5xBYfI&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=4)
 > Discusses how to handle successive coordinate transformations step by step
+>
+><sub> Coordinate Transformations in 2D (Part 3)| Mapping | Robotics 101. YouTube video, 27 May 2022. Available at: https://www.youtube.com/watch?v=R_hxO5xBYfI&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=4
+
 
 As you've seen, a **general motion in the plane** can be described by a combination of translations and rotations around the origin. A sequence of translations and rotations comes up against the fact that the translation is a vector addition while the rotation a matrix multiplication.
 
@@ -612,13 +790,17 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Practice what you've learned with Exercises **1**,**2**,**3** and **4**.
+[IN PROGRESS]
 
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_2.pdf'}}" width="100%" height="600px"></iframe>
+<!-- Practice what you've learned with Exercises **1**,**2**,**3** and **4**. -->
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_2.pdf'}}" width="100%" height="600px"></iframe> -->
 
 <details markdown="2">
 <summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_2.pdf'}}" width="100%" height="600px"></iframe>
+[IN PROGRESS]
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_2.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
@@ -630,7 +812,12 @@ Practice what you've learned with Exercises **1**,**2**,**3** and **4**.
 
 For further understanding of the definition of **Homogeneous Transformation Matrices**, the following concise and informative video is recommended:
 
-[Homogeneous Transformation Matrices (Prof. Kevin Lynch)](https://www.youtube.com/watch?v=vlb3P7arbkU&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=16)
+![Homogeneous Transformation Matrices (Prof. Kevin Lynch)](https://www.youtube.com/watch?v=vlb3P7arbkU&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=16)
+><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 3.3.1: Homogeneous Transformation Matrices. YouTube video, 27 August 2017. Available at: https://www.youtube.com/watch?v=vlb3P7arbkU&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=16*</sub>
+>
+><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
+
+
 
 </details>
 
@@ -645,6 +832,8 @@ Watch the following video for an intuitive overview of **forward kinematics** be
 
 ![Forward Kinematics of robots](https://www.youtube.com/watch?v=svyhLDAoyKc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=5)
 > In this chapter, we'll dive into **forward kinematics** (also called Direct Geometric Model, DGM), a fundamental method that allows us to calculate exactly where a robot’s end-effector (such as a gripper or tool) ends up in space based on its joint configurations (for example its position (x,y) and orientation(θ) in 2D). We'll start by exploring simple planar 2D robots, laying a clear foundation for mastering more complex robotic systems.
+>
+><sub> Forward Kinematics of robots | Planar 2D robots | Robotics 101. YouTube video, 12 June 2022. Available at: https://www.youtube.com/watch?v=svyhLDAoyKc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=5
 
 ---
 
@@ -654,9 +843,13 @@ Here you will see some examples of how to find this end effector positions in 2D
 
 ![examples](https://www.youtube.com/watch?v=mO7JJxaVtkE&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=6)
 > First solved example of how to find this end effector positions in 2D using homogeneous transforms
+>
+><sub> Homogeneous Transformations (example 1) | Robotics 101. YouTube video, 12 June 2022. Available at: https://www.youtube.com/watch?v=mO7JJxaVtkE&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=6
 
 ![examples2](https://www.youtube.com/watch?v=zg5sS9LZGAM&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=7)
 > Second solved example of how to find this end effector positions in 2D using homogeneous transforms
+>
+><sub> Homogeneous Transformations (example 1) | Robotics 101. YouTube video, 12 June 2022. Available at: https://www.youtube.com/watch?v=zg5sS9LZGAM&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=7
 
 Now that we've seen how to compute forward kinematics using homogeneous transformations, let's explore **another insightful way** to approach planar rotations. Sometimes, it's more intuitive or practical to represent motion as rotation around an **arbitrary point \( p \)** rather than just around the origin.
 
@@ -700,14 +893,18 @@ Let's get familiriar with this type of method doing similar exercise:
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Practice what you've learned with Exercises **1**,**2** and **3**.
+[IN PROGRESS]
+
+<!-- Practice what you've learned with Exercises **1**,**2** and **3**. -->
 
 
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe>
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe> -->
 
 <details markdown="2">
 <summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe>
+[IN PROGRESS]
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
@@ -729,9 +926,13 @@ For an intuitive, visual understanding of quaternions, it is recommended to watc
 
 ![Visualizing quaternions (4D numbers)](https://www.youtube.com/watch?v=d4EgbgTm0Bg)
 > Definition about **Quaternions**
+>
+><sub> Visualizing quaternions (4D numbers) with stereographic projection. YouTube video, 6 September 2018. Available at: https://www.youtube.com/watch?v=d4EgbgTm0Bg
 
 ![Quaternions and 3D rotation, explained interactively](https://www.youtube.com/watch?v=zjMuIxRvygQ)
 > With some reminder about euler angles and complex number, this video will introduce you how to describe 3D rotation using quaternions from *3:58*
+>
+><sub> Quaternions and 3D rotation, explained interactively. YouTube video, 26 October 2018. Available at: https://www.youtube.com/watch?v=zjMuIxRvygQ
 
 As you have understood in these previous videos (if not we suggest you to re-watch from *17:25* on the [first video](https://www.youtube.com/watch?v=d4EgbgTm0Bg)), **Quaternions** are a generalization of complex numbers containing:
 - **a real scalar part** $ \lambda_0 $
@@ -854,7 +1055,9 @@ For each of these sequences:
 
 <details markdown="2">
 <summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_5.pdf'}}" width="100%" height="600px"></iframe>
+[IN PROGRESS]
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_5.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
@@ -863,7 +1066,7 @@ For each of these sequences:
 <details markdown="1">
   <summary>Additional Content</summary>
 
-For further understanding of the definition of **Quaternions**, the following concise and informative site is recommended for **interactive version of these visuals**:
+For further understanding of the definition of **Quaternions**, the following concise and **informative site** is recommended for **interactive version of these visuals**:
 
 [Visualization Quaternions](https://eater.net/quaternions)
 
@@ -879,6 +1082,8 @@ Watch the following video to see this concept illustrated clearly:
 
 ![Homogeneous Transforms](https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=8)
 > Here, you will compute a new homogeneous transformation matrix that describes the relationship between two end-effectors, given two separate transformation matrices ($H_1$ and $H_2$). This new matrix will provide the relative distances $d_x$ and $d_y$ between the two end-effectors. When both $d_x$ and $d_y$ become zero, it indicates that the two robots are in collision.
+>
+><sub> Avoid Collision using Homogeneous Transformations | Robotics 101. YouTube video, 13 July 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=8
 
 ---
 
@@ -897,9 +1102,13 @@ Watch the following video for a clear introduction to inverse kinematics:
 
 ![Inverse Kinematics of Robots](https://www.youtube.com/watch?v=1-FJhmey7vk&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=9)
 > In this video, you will explore another example of inverse kinematics using a planar robot. Interestingly, this robot features both revolute and prismatic joints, making its parameters a combination of joint angles and link lengths. This type of robot is specifically known as an **'RRP' robot**.
+>
+><sub> Inverse Kinematics of Robots | Robotics 101. YouTube video, 23 July 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=9
 
 ![example_inverse_kinematics](https://www.youtube.com/watch?v=EzZDRwmk8Nw&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=10)
 > Solved example of Inverse Kinematics with a planar robot
+>
+><sub> Inverse Kinematics of Robots (with solved example) | Robotics 101. YouTube video, 31 July 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=9
 
 <!-- Conceptual Questions -->
 <details markdown="1">
@@ -946,12 +1155,14 @@ and cosine of the sum of two angles, as well as the
 one of the sum of squares of sine and cosine.
 </p>
 
-![examples]({{ site.baseurl }}/assets/images/kinematics/inv.png)
+<img src="{{ site.baseurl }}/assets/images/kinematics/inv.png" alt="examples" width="200" />
 
 
 <details markdown="2">
 <summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_3.pdf'}}" width="100%" height="600px"></iframe>
+[IN PROGRESS]
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_3.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
@@ -967,11 +1178,16 @@ Ever wondered how quickly and smoothly a robot's gripper moves in space? Here yo
 Watch the following video to get an understanding of velocity kinematics and the powerful Jacobian matrix:
 
 ![Velocity Kinematics & Jacobian Matrix](https://www.youtube.com/watch?v=Wud3aCXiSm8&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=11)
+>
+><sub> Velocity Kinematics & Jacobian Matrix | Robotics 101. YouTube video, 21 August 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=11
 
 And there's even more! Discover how the Jacobian connects to the fascinating world of **Manipulability Ellipsoids**, showing you visually how robots move, avoid obstacles, and perform complex tasks efficiently.
 
 Check it this video here:
 ![Velocity Kinematics & Manipulability Ellipsoids](https://www.youtube.com/watch?v=gdSTcJwf3L0&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=12)
+>
+><sub> Velocity Kinematics & Manipulability Ellipsoids | Robotics 101. YouTube video, 3 September 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=12
+
 
 <!-- Conceptual Questions -->
 <details markdown="1">
@@ -1037,20 +1253,27 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 
 ![how to find Jacobian Matrix](https://www.youtube.com/watch?v=EdvAHmIONMs&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=13)
 > Detailed example of how to solve jacobian Matrix
+>
+><sub> Jacobian | Robotics 101. YouTube video, 16 September 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=13
+
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Practice what you've learned with Exercises **1** and **2** below.
-*(Note: Exercise 2.8 on finding singularities will be introduced in the next video.)*
+[IN PROGRESS]
+
+<!-- Practice what you've learned with Exercises **1** and **2** below.
+*(Note: Exercise 2.8 on finding singularities will be introduced in the next video.)* -->
 
 
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_5.pdf'}}" width="100%" height="600px"></iframe>
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_5.pdf'}}" width="100%" height="600px"></iframe> -->
 
 <details markdown="2">
 <summary><strong>Click here for Solutions</strong></summary>
-<iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_5.pdf'}}" width="100%" height="600px"></iframe>
+[IN PROGRESS]
+
+<!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_5.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
@@ -1064,6 +1287,8 @@ Singularities occur when a robot configuration causes it to lose the ability to 
 
 ![Robot Singularities & how to find them](https://www.youtube.com/watch?v=WXEOr7X2bPE&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=14)
 > Definition of robot singularities are and how you can find them
+>
+><sub> Singularities | Robotics 101. YouTube video, 17 October 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=13
 
 For *serial manipulators*, the singular positions result from the **loss of degrees of freedom** while in a *parallel manipulator*, they result of the **gain of one or more degrees of freedom**. Most of the time, passing through a singularity causes **over constraint**, to then inducing the loss of control of one or more degrees of freedom. Which means, not controllable, which is not good. 
 
@@ -1127,8 +1352,9 @@ Which of the following diagrams represent singularities of this Delta robot? *(M
 <!-- Mathematical Development Questions -->
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
+[IN PROGRESS]
 
-Now, you can apply what you've learned by solving **Exercise 2.8** from the previous exercise set !
+<!-- Now, you can apply what you've learned by solving **Exercise 2.8** from the previous exercise set ! -->
 
 </details>
 
@@ -1139,7 +1365,7 @@ Now, you can apply what you've learned by solving **Exercise 2.8** from the prev
 
 For further understanding of the definition of **Singularities**, the following concise and informative video is recommended:
 
-[Singularities (Prof. Kevin Lynch)](https://www.youtube.com/watch?v=vjJgTvnQpBs&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=28)
+![Singularities (Prof. Kevin Lynch)](https://www.youtube.com/watch?v=vjJgTvnQpBs&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=28)
 
 </details>
 
@@ -1303,36 +1529,71 @@ Let's move on to maybe the most exciting part: applying the kinematics concepts 
 *(Please refer to the **Install Webots** section if you haven't installed it yet.)*
 
 
+## **Exercise 1: Dobot Pick-and-Place (Forward Kinematics)** Level: **
+
 ### Step 1: Setup your environment
 
-1. 📁 [Download the `irb` folder]({{ site.baseurl }}/assets/downloads/kinematics/irb_2025.zip)
+1. 📁 [Download the `dobot` folder]({{ site.baseurl }}/assets/downloads/kinematics/dobot_2025.zip)
 2. Extract the downloaded `.zip` file.
 3. Launch Webots. From the top-left corner select **File → Open World**.
-4. Navigate to the extracted `irb/worlds` folder and select your `.wbt` file.
-
+4. Navigate to the extracted `dobot_2025/world` folder and select your `.wbt` file.
 
 
 ### Step 2: Let's start coding!
 
 Once successfully opened, your robot and its environment should appear, as illustrated in the screenshot below:
 
-<img src="{{ site.baseurl }}{{ '/assets/images/kinematics/webot_kin.png' }}" width="500px" alt="Kinematics Image">
+<img src="{{ site.baseurl }}{{ '/assets/images/kinematics/dobot.png' }}" width="500px" alt="Kinematics Image">
 
 
-Now, follow the instructions provided on the right side panel within Webots, and complete the code to make your robot move.
+Now, follow the instructions provided on the right side panel within Webots, and complete the code to make your robot do the "**Pick and Place**".
+
+
+> **💡 Helpful Suggestion:**  
+> For detailed explanations of variables, robot schematics, and further clarifications that could greatly assist your understanding and coding, we strongly recommend reviewing the figures and content available on [this page from Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2024/text/simulations/dobot.html).
+
+> *If the Python file isn't open, select your robot in the scene tree (left panel), right-click and choose **Edit controller**, or load it manually via Webots' text editor (right panel) `dobot_2025/controllers/dobot` folder and select your `.py` .*
 
 Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Build" or "Save"(`CTRL+S`) to compile your project, and then start the simulation.
 
 **Good luck and have fun!**
 
-### Step 3: Understanding the Process (Feedback)
+<details markdown="1">
+  <summary>Answer</summary>
+
+After you've attempted the exercise and want to verify your solution, you can download this file to check your answers and compare values:
+
+📁 [Answers_Dobot]({{ site.baseurl }}/assets/downloads/kinematics/dobot.py)
+
+</details>
+
+---
+
+## **Exercise 2: IRB Robot Inverse Kinematics (Using IKPy)** Level: *
+
+### Step 1: Coding 
+
+1. 📁 [Download the `irb` folder]({{ site.baseurl }}/assets/downloads/kinematics/irb_2025.zip) (follow the same step as before).
+2. Extract the folder, open Webots, and load the `.wbt` file from the extracted `irb/worlds` folder.
+3. Follow the on-screen instructions in Webots, filling in sections marked `"COMPLETE THIS LINE OF CODE"`.
+
+<details markdown="1">
+  <summary>Answer</summary>
+
+After you've attempted the exercise and want to verify your solution, you can download this file to check your answers and compare values:
+
+📁 [Answers_irl]({{ site.baseurl }}/assets/downloads/kinematics/inverse_kinematics.py)
+
+</details>
+
+### Step 2: Understanding the Process (Feedback)
 As you've probably noticed by completing the coding exercise, manually programming inverse kinematics can become quite complex, especially for practical robotics applications. Usually, in real-world scenarios, specialized software or libraries are utilized to handle these calculations efficiently, rather than implementing all functions by hand. So you are very lucky for this chapter, you only need to understand how to use it !
 
 In this example with your robot, a Python library called `ikpy` is used. This library provides convenient functions for computing inverse kinematics: you simply input the desired position (x, y, z), and the current joint positions, and `ikpy` performs all the necessary calculations.
 
 If you're curious about how these calculations are done internally or if you'd like to learn more about this library, you can explore the official documentation [here](https://ikpy.readthedocs.io/en/latest/ikpy.html).
 
-### Step 4: Observation 
+### Step 3: Observation 
 You can also have some fun by clicking on the yellow-black sphere and translating or rotating it.
 If your code is correct, the robot arm will continuously attempt to reach the sphere, as long as it remains within its workspace.
 
@@ -1344,17 +1605,6 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
   <source src="{{ '/assets/videos/kinematics/inv_kinematics.mp4' | relative_url }}" type="video/mp4">
   Your browser does not support the video tag.
 </video>
-
-<!-- 
-<video width="640" height="360" controls>
-  <source src="{{ site.baseurl }}{{ '/assets/videos/kinematics/inv_kinematics.mp4' | relative_url }}" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<video width="640" height="360" controls>
-  <source src="/assets/videos/kinematics/inv_kinematics.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video> -->
 
 ---
 
@@ -1377,7 +1627,16 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 ### Exercices 
 
-- Conceptual and mathematical exercises are inspired by **[Mr. Mohamed Bouri](https://people.epfl.ch/mohamed.bour)**, giving the course [Basic of Robotics for Manipulation](https://edu.epfl.ch/coursebook/en/basics-of-robotics-for-manipulation-MICRO-450) at [EPFL](https://www.epfl.ch/fr/). 
+- [IN PROGRESS]
+<!-- - Conceptual and mathematical exercises are inspired by **[Mr. Mohamed Bouri](https://people.epfl.ch/mohamed.bour)**, giving the course [Basic of Robotics for Manipulation](https://edu.epfl.ch/coursebook/en/basics-of-robotics-for-manipulation-MICRO-450) at [EPFL](https://www.epfl.ch/fr/).  -->
+
+### Programming
+
+- Exercises adapted from the course **[Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2022/)** taught by **[Dr. Garth Zeglin](https://www.cs.cmu.edu/~garthz/)**, instructor at [Carnegie Mellon University](https://www.cmu.edu/).  
+  Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 
+
+
+- 
 
 ---
 

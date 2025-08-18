@@ -1,5 +1,5 @@
 ---
-title: Diffeomorphism
+title: geometry-planning
 parent: Courses
 layout: default
 math: mathjax
@@ -18,9 +18,6 @@ math: mathjax
 
 - [Springer Handbook of Robotics ](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_9) (Chapter 9. Force Control)
 
-- [Robotic Manipulation](https://manipulation.csail.mit.edu/force.html) (Chapter 8. Manipulator Control)
-
-- [OpenTextBooks](https://opentextbooks.clemson.edu/me8930/chapter/force-control-of-a-manipulator/)
 
 ## Prerequisites
 * Basic knowledge of robotics kinematics and dynamics
@@ -30,13 +27,6 @@ math: mathjax
 ![Overview](https://youtu.be/mGuDXlZEoSc)
 
 In **motion control** problems, the robot's objective is to follow a predefined trajectory as accurately as possible — regardless of contact with the environment. This is suitable for free-space movements where external forces are negligible or undesirable. While the premise of motion control might be basic in nature, it is a fundamental part of any higher-level robot manipulation. 
-
-However, motion control alone is not sufficient when a robot physically interacts with its environment. Indeed unregulated contact can cause slippage, loss of contact, damage and excessive force.  This is where **force control** becomes essential: it ensures that the robot applies and regulates the desired amount of force during contact, making the interaction both safe and effective. A force control strategy modifies the robot's joint positions or torques to account for interaction forces at the end-effector.
-
-This is why, in the past decade, research in robot force control has increased significantly, with applications across medical, industrial and service robotics. In industrial robotics, typical tasks that involves robot interaction with an environment such as polishing, cutting, scraping, pick-and-place, welding, etc. can benefit from the use of different methods of force control strategies. 
-Another particularly impactful area is physical human-robot interaction, where the robot must respond to human-applied forces and work in synchrony. In these scenarios, force control enables safe, adaptive and cooperative behavior in shared tasks.
-
-
 
 
 <details markdown="1">

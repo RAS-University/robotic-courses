@@ -3,8 +3,11 @@ title: Control Systems and PID
 parent: Courses
 layout: default
 math: mathjax
+author: Salim Boussofara (salim.boussofara@epfl.ch)
 ---
 <script src="questions.js"></script>
+
+{% include author.html %}
 
 <!--
 <script>
@@ -1454,6 +1457,220 @@ Now that you fully understand the individual effects of each component of the PI
 </details>
 
 
+### Summary exercise
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PID Tuning Effects – Dropdown Table</title>
+  <style>
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    th { background-color: #eee; }
+    select { width: 100%; padding: 6px; }
+    .correct { outline: 2px solid #4caf50; }
+    .incorrect { outline: 2px solid #f44336; }
+  </style>
+</head>
+<body>
+
+<p>Select the correct qualitative effect of <em>increasing</em> each PID parameter independently, then click <strong>Check answers</strong>.</p>
+
+<div id="pid-exercise">
+<table>
+  <thead>
+    <tr>
+      <th>Parameter ↑</th>
+      <th>Rise time</th>
+      <th>Overshoot</th>
+      <th>Settling time</th>
+      <th>Steady-state error</th>
+      <th>Stability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- kP row -->
+    <tr>
+      <td><strong>k<sub>P</sub></strong></td>
+      <td>
+        <select class="answer" data-answer="Decrease">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Increase">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+          <option>No effect</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Minor">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Decrease">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>No effect</option>
+          <option>Eliminate</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Degrade">
+          <option value="">-- Select --</option>
+          <option>Improve (for small kD)</option>
+          <option>Degrade</option>
+          <option>No effect</option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- kI row -->
+    <tr>
+      <td><strong>k<sub>I</sub></strong></td>
+      <td>
+        <select class="answer" data-answer="Decrease">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Increase">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+          <option>No effect</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Increase">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Eliminate">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>No effect</option>
+          <option>Eliminate</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Degrade">
+          <option value="">-- Select --</option>
+          <option>Improve (for small kD)</option>
+          <option>Degrade</option>
+          <option>No effect</option>
+        </select>
+      </td>
+    </tr>
+
+    <!-- kD row -->
+    <tr>
+      <td><strong>k<sub>D</sub></strong></td>
+      <td>
+        <select class="answer" data-answer="Minor">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Decrease">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+          <option>No effect</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Decrease">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>Minor</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="No effect">
+          <option value="">-- Select --</option>
+          <option>Decrease</option>
+          <option>Increase</option>
+          <option>No effect</option>
+          <option>Eliminate</option>
+        </select>
+      </td>
+      <td>
+        <select class="answer" data-answer="Improve (for small kD)">
+          <option value="">-- Select --</option>
+          <option>Improve (for small kD)</option>
+          <option>Degrade</option>
+          <option>No effect</option>
+        </select>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<button onclick="checkDropdownAnswers('#pid-exercise','dropdown-feedback')">Check answers</button>
+<p id="dropdown-feedback" style="font-weight: bold; margin-top: 10px;"></p>
+
+<script>
+  function checkDropdownAnswers(containerSelector, feedbackId) {
+    const container = document.querySelector(containerSelector);
+    const selects = container.querySelectorAll('select.answer'); // only inside container
+    let correctCount = 0;
+
+    selects.forEach(sel => {
+      sel.classList.remove('correct', 'incorrect');
+      const correct = sel.dataset.answer;
+      const user = sel.value;
+      if (user === correct) {
+        sel.classList.add('correct');
+        correctCount++;
+      } else {
+        sel.classList.add('incorrect');
+      }
+    });
+
+    const el = document.getElementById(feedbackId);
+    if (!el) return;
+    if (correctCount === selects.length) {
+      el.textContent = 'Perfect! All answers are correct.';
+      el.style.color = '#2e7d32';
+    } else {
+      el.textContent = `${correctCount}/${selects.length} correct. Cells in red need revision.`;
+      el.style.color = '#c62828';
+    }
+  }
+</script>
+
+</body>
+</html>
+
+
+
+<!--
 <details markdown="1">
 <summary><strong>Conceptual Exercise</strong></summary>
 
@@ -1522,6 +1739,7 @@ function checkMultipleMCQs() {
 </details>
 
 </details>
+-->
 
 <details markdown="1">
 <summary><strong>Programming Exercise: Implementing a PID Control Loop</strong></summary>
@@ -1637,11 +1855,29 @@ function checkDropdownPID() {
   </details>
 </details>
 
-Despite its popularity, we must say that currently the PID is not the best controller available. But in most cases, it is more than enough. On the other hand, many of the “most modern” controllers are nothing more than improved versions of a PID, such as the different families based on PID with adaptive parameters.
+Despite its popularity, we must say that currently the PID is not the best controller available. But in most cases, it is more than enough. On the other hand, many of the “most modern” controllers are nothing more than improved versions of a PID, such as the different families based on PID with adaptive parameters. Also, one should mention that, in this course, the focus was put on explaining the traditional PID structure, the **parallel structure**. For the sake of completion, here are the other 3 main PID controller structures:
+* **Derivative in feedback:** $$U(s) = \left(k_P + \frac{k_I}{s}\right)E(s) - k_D s \, Y(s)$$
+  - The derivative term is applied to the **output** rather than the error.  
+  - This prevents amplification of step changes in the reference signal and reduces noise sensitivity.  
+
+* **Mixed structure:**  $$U(s) = K_p \left(1 + \frac{1}{T_i s} + T_d s \right) E(s)$$   with: $$  K_p = k_P, \quad T_i = \frac{k_P}{k_I}, \quad T_d = \frac{k_D}{k_P}  $$
+  - The most common structure used in **industrial applications**.  
+  - Here, the three actions (P, I, D) are combined into a single transfer function with parameters expressed in terms of time constants.  
+  - Offers a good balance between **tuning simplicity** and **implementation practicality**.  
+
+* **Series structure:** $$D_c(s) = K_p \left(1 + \frac{1}{T_i s}\right)(1 + T_d s)$$
+  - The PID actions are implemented in **cascade form**, multiplying three transfer functions.  
+  - Provides flexibility for tuning but is less common than the mixed structure in practice. 
+
+    REFAIRE LES IMAGES !!!!!!!!!!!
+    <figure>
+    <img src="{{ site.baseurl }}/assets/images/pid/structure.jpg" alt="Step response of a 4th order system">
+    <figcaption><center><em>Structure</em></center></figcaption>
+  </figure>
 
 
 
-4 types of PID !!!!!!!!!!!!
+
 
 # Chapter 3: Practical Implementation Considerations for PID Control
 
@@ -1653,22 +1889,22 @@ As you have already experienced in the simulations, obtaining the desired respon
 
 The difficulty lies in the fact that the three parameters of the controller, $K_p$, $K_i$, and $K_d$, do not act independently. Instead, they strongly influence one another, and the overall response is always the result of their combined effect. For example, increasing the proportional gain may improve the speed of the response but also amplify oscillations, which then require an adjustment of the derivative gain for damping, while the integral gain might simultaneously introduce long-term stability issues. Thus, it is not sufficient to adjust each of them in isolation. Rather, there exists a certain zone within the three-dimensional parameter space where the behavior of the controller is acceptable, and navigating towards this zone is the main challenge of tuning.  
 
-From an implementation point of view, writing a PID controller is easy. A few lines of code suffice to compute the three terms and combine them into the control action. The real difficulty, and the essence of PID control engineering, is to determine appropriate values for the gains. Tuning is therefore the step where most of the intellectual and experimental effort is required.
+From an implementation point of view, writing a PID controller is easy. A few lines of code suffice to compute the three terms and combine them into the control action. The real difficulty, and the essence of PID control engineering, is to determine appropriate values for the gains. Tuning is, therefore, the step where most of the intellectual and experimental effort is required.
 
 ![Understanding PID Control, Part 4: Tuning Overview](https://www.youtube.com/watch?v=sFOEsA0Irjs)  
-> <sub>"Douglas, B. (2018) PID Tuning Guide | Understanding PID Control, Part 4. YouTube video, 3 July. Available at: https://www.youtube.com/watch?v=sFOEsA0Irjs"</sub>
+> <sub>Douglas, B. (2018) PID Tuning Guide | Understanding PID Control, Part 4. YouTube video, 3 July. Available at: https://www.youtube.com/watch?v=sFOEsA0Irjs</sub>
 >
 >*This video introduces the main families of PID tuning methods and highlights when each of them is most appropriate.*  
 
 In practice, there are three main approaches to tuning PID controllers. 
-* **manual tuning:** It relies on the engineer’s knowledge of control theory and on systematic trial-and-error adjustments. 
+* **empirical tuning:** It relies on the engineer’s knowledge of control theory and on systematic trial-and-error adjustments. 
 * **rule-based tuning:** It consists in applying heuristic procedures that have been established and tested by experts, such as the well-known Ziegler–Nichols method. 
 * **model-based tuning:** It builds upon an explicit model of the plant and uses analytical or computational tools to calculate the controller parameters. 
 * **Software-Based Auto-tuning**: Many modern industrial controllers and advanced simulation environments offer auto-tuning functionalities. These tools can automatically determine suitable PID gains by analyzing the system's step response or by running automated tests. 
 
-Manual and rule-based approaches are often simple to apply and can provide useful first estimates, but they also have limitations. They may not work well for plants with significant delays, for high-order dynamics, or for systems that are unstable in open loop. In contrast, model-based methods are systematic and powerful, since they rely on the mathematical description of the plant. They allow one to tune the controller to meet specified performance objectives, such as overshoot, settling time, or robustness margins. However, they require either a physical model of the plant or experimental identification of a suitable approximation.  
+Empirical and rule-based approaches are often simple to apply and can provide useful first estimates, but they also have limitations. They may not work well for plants with significant delays, for high-order dynamics, or for systems that are unstable in open loop. In contrast, model-based methods are systematic and powerful, since they rely on the mathematical description of the plant. They allow one to tune the controller to meet specified performance objectives, such as overshoot, settling time, or robustness margins. However, they require either a physical model of the plant or experimental identification of a suitable approximation.  
 
-In the following sections, we will only examine the empirical tuning methods (manual and heuristic) in more detail. The model-based tuning requires a level of understanding in control that is too difficult for this course. However, you can find an introduction to it in the following hidden section.
+In the following sections, we will only examine the empirical tuning and rule-based tuning in more detail. The model-based tuning requires a level of understanding in control that is too difficult for this course. However, you can find an introduction to it in the following hidden section.
 
 <details markdown="1">
 <summary><strong>Introduction to model-based tuning</strong></summary>
@@ -1702,12 +1938,12 @@ Alternatively, from the gains perspective, one begins by increasing the proporti
 These two viewpoints are equivalent and complementary. The choice between them depends on the tools at hand and on the familiarity of the engineer with time- or frequency-domain reasoning.
 </details>
 
-### Chapter 3.1.1: Manual tuning
+### Chapter 3.1.1: Empirical tuning
 
 ![Empirical PID Gain Tuning](https://www.youtube.com/watch?v=uXnDwojRb1g)  
 <sub>*This video demonstrates a hands-on procedure for adjusting the three gains step by step, while observing the effect on the system’s response.*</sub>  
 
-When no model is available, or when a quick adjustment is required, manual tuning can be applied. The procedure is conceptually simple. One begins with a controller that contains only proportional action, with integral and derivative gains set to zero. The proportional gain is then increased gradually until the system responds quickly but remains stable. At this stage, some overshoot is usually present.  
+When no model is available, or when a quick adjustment is required, empirical tuning can be applied. The procedure is conceptually simple. One begins with a controller that contains only proportional action, with integral and derivative gains set to zero. The proportional gain is then increased gradually until the system responds quickly but remains stable. At this stage, some overshoot is usually present.  
 
 Next, integral action is introduced to eliminate steady-state error. The integral gain is increased carefully, since excessive integral action can make the response sluggish or even destabilize the system through oscillations.  
 
@@ -1717,7 +1953,7 @@ This is the method that you most probably have implemented when doing the simula
 
 ### Chapter 3.1.2: Rule-based techniques  
 
-Although manual tuning provides an intuitive understanding of how each term of the PID controller affects the response, it is neither efficient nor reliable in many practical situations. The iterative trial-and-error process may require significant time, and the final result often depends on the skill and experience of the engineer. Moreover, manual tuning may lead to aggressive parameter values that cause actuator saturation or unstable oscillations. To overcome these limitations, **rule-based tuning methods** have been developed. These methods are based on systematic procedures derived from empirical observations and experimental studies, and they provide reproducible results with less effort.  
+Although empirical tuning provides an intuitive understanding of how each term of the PID controller affects the response, it is neither efficient nor reliable in many practical situations. The iterative trial-and-error process may require significant time, and the final result often depends on the skill and experience of the engineer. Moreover, manual tuning may lead to aggressive parameter values that cause actuator saturation or unstable oscillations. To overcome these limitations, **rule-based tuning methods** have been developed. These methods are based on systematic procedures derived from empirical observations and experimental studies, and they provide reproducible results with less effort.  
 
 <h3> (a) Closed-loop Ziegler–Nichols method  </h3>
 ![Designing a PID Controller Using the Ziegler–Nichols Method](https://www.youtube.com/watch?v=n829SwSUZ_c)  
@@ -1743,9 +1979,21 @@ Steps:
 This method is simple and systematic, but it has drawbacks: the sustained oscillations can be unsafe for sensitive plants, and the resulting tuning often yields aggressive responses with overshoot. Thus, the results are usually used as starting points.  
 
 
-<h3> (b) Open-loop Ziegler–Nichols method (reaction curve)  </h3>
+<h3> (b) Open-loop Ziegler–Nichols method  </h3>
 
 The **open-loop Ziegler–Nichols method** is based on the **open-loop step response** of the plant. It is particularly useful when closed-loop experiments are not possible or would endanger the system.  
+<!--
+<details markdown="1">
+<summary><strong>But what is step response ?</strong></summary>
+
+  ![Video](https://www.youtube.com/watch?v=pKjR0h3jWvY)  
+  > <sub>"Douglas, B. (2020) La réponse indicielle | Les systèmes de contrôle en pratique. YouTube video, 26 June. Available at: https://www.youtube.com/watch?v=pKjR0h3jWvY"</sub>  
+  >
+  > *This great video introduces the concept of the step response in control systems. It can, also, be useful to understand concepts that were brought up before like rise time, overshoot, settling time and steady-state error*
+
+</details>
+-->
+
 
 The procedure is as follows:  
 1. Apply a unit step input to the plant in open-loop.  
@@ -1785,7 +2033,7 @@ The unit-step response of a paper machine is shown in Fig. X(a) where the input 
 <details markdown="1">
 <summary><strong>Solution</strong></summary>
 
-**How to obtain $L$ and $R$ from the step response**
+**How to obtain $L$ and $R$ from the step response ?**
 
 1. Locate the **inflection point** of the step response.
 2. Draw the **tangent line** at that point.
@@ -1827,8 +2075,6 @@ From the [closed-loop Ziegler Nichols table](#closed-Ziegler) :
 
 </details>
 </details>
-
-
 
 Other classical rule-based tuning methods also exist. **Cohen–Coon**, for instance, offers more nuanced formulas that account for the ratio of dead time to time constant, making it better suited for systems where the delay is a significant fraction of the dynamics. You can explore these methods in depth in this excellent resource: [PID Tuning via Classical Methods](https://eng.libretexts.org/Bookshelves/Industrial_and_Systems_Engineering/Chemical_Process_Dynamics_and_Controls_(Woolf)/09%3A_Proportional-Integral-Derivative_(PID)_Control/9.03%3A_PID_Tuning_via_Classical_Methods)  
 

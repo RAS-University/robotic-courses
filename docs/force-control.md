@@ -3,10 +3,12 @@ title: Force control
 parent: Courses
 layout: default
 math: mathjax
+author: Salim Boussofara (salim.boussofara@epfl.ch)
 ---
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
 
+{% include author.html %}
 
 <a name="top"></a>
 

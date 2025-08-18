@@ -2,10 +2,10 @@ title: RAS University
 description: A free Robotics University
 theme: just-the-docs
 
-url: https://tlucking.github.io/RAS-University/
+url: https://ras-university.github.io/robotic-courses/
 
 aux_links:
-  Template Repository: https://github.com/TLucking/RAS-University
+  Template Repository: https://github.com/RAS-University/robotic-courses
 
 plugins:
   - jekyll-spaceship

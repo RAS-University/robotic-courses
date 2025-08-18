@@ -3,11 +3,12 @@ title: Force control
 parent: Courses
 layout: default
 math: mathjax
+author: Salim Boussofara (salim.boussofara@epfl.ch)
 ---
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
 
-# Force control {#start}
+{% include author.html %}
 
 <a name="top"></a>
 
@@ -40,7 +41,7 @@ math: mathjax
 - Table of Contents
 {:toc}
 
-## Prerequisites
+# Prerequisites
 * Linear Algebra and multivariable calculus
 * Classical mechanics
 * Control theory:
@@ -164,7 +165,7 @@ const correctMapping = {
 # Chapter 1 : Interaction control overview
 While motion control focuses on following a desired trajectory regardless of external contact, force control aims to regulate how much force is exchanged between the robot and its environment. This raises a fundamental question: how does the robot respond to forces during contact? There are two broad paradigms for addressing this:
 
-* **Passive interaction control**: The trajectory of the end-effector is driven by the interaction forces due to the inherent nature or compliance of the robot (i.e., internally, such as joints, servo, joints, etc.). In passive control, the end-effector’s motion naturally deflects under force, as in soft robots. But, this lacks flexibility (every specific task might require a special end-effector to be designed and it can also have position and orientation deviations)​ and high contact forces could occur because there is no force measurement. 
+* **Passive interaction control:** The trajectory of the end-effector is driven by the interaction forces due to the inherent nature or compliance of the robot (i.e., internally, such as joints, servo, joints, etc.). In passive control, the end-effector’s motion naturally deflects under force, as in soft robots. But, this lacks flexibility (every specific task might require a special end-effector to be designed and it can also have position and orientation deviations)​ and high contact forces could occur because there is no force measurement. 
 <details markdown="1">
 <summary><strong>Illustrative example</strong></summary>
 
@@ -175,7 +176,7 @@ While motion control focuses on following a desired trajectory regardless of ext
 > *This video, starting from 47s, clearly presents how the robot’s end-effector deflects naturally in response to external forces, showcasing the principle of passive interaction control, where the robot's compliance governs its motion without active force regulation.*
 </details>
 
-* **Active interaction control**: It relies on sensors (e.g., force/torque sensors) and/or feedback controllers to measure interaction forces and adjust the robot’s commands accordingly—whether by modifying its trajectory or the way it manipulates objects. This approach enables real-time reactions to contact, offering high flexibility and accuracy. However, it comes with added complexity and limitations in speed. To achieve effective task execution and robust disturbance rejection, active control is typically combined with some degree of passive compliance. Active strategies can be futer divided into indirect methods (such as admittance and impedance control) and direct force control techniques (such as hybrid force/motion control).
+* **Active interaction control:** It relies on sensors (e.g., force/torque sensors) and/or feedback controllers to measure interaction forces and adjust the robot’s commands accordingly—whether by modifying its trajectory or the way it manipulates objects. This approach enables real-time reactions to contact, offering high flexibility and accuracy. However, it comes with added complexity and limitations in speed. To achieve effective task execution and robust disturbance rejection, active control is typically combined with some degree of passive compliance. Active strategies can be futer divided into indirect methods (such as admittance and impedance control) and direct force control techniques (such as hybrid force/motion control).
 
 <details markdown="1">
 <summary><strong>Illustrative example</strong></summary>  
@@ -1119,7 +1120,6 @@ This structure allows the robot to behave appropriately in tasks with partial co
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 11.6: Hybrid Motion-Force Control. YouTube video, 16 March. Available at: https://www.youtube.com/watch?v=UR0GpaaBVKk.*</sub>
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
- --> A short video explaining in more mathematical terms what was presented in this section
 >
 >*This short video provides a mathematical explanation of hybrid force/motion control, expanding on the concepts introduced in this section. It details how task space is split into force- and motion-controlled directions using a selection matrix, and presents the hybrid control law in formal terms. This video offers a more theoretical perspective, complementing the intuitive examples and experiments discussed earlier.*
 
@@ -1737,7 +1737,7 @@ self.leg_actuator.setForce(impedance_force)
 
 # Want to implement a real project ?
 <figure style="text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/Force/github.jpg" alt="https://courses.ideate.cmu.edu/16-375/f2024/text/simulations/boom-monopod.html">
+  <img src="{{ site.baseurl }}/assets/images/Force/github.jpg" alt="https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master">
   <figcaption><em>Robotic Arm Hybrid Position Force Control<br><sub>Chen, S. (n.d.) 2-Linkages Robotic Arm Hybrid Position/Force Control. GitHub repository. Available at: https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control</sub></em></figcaption>
 </figure>
 

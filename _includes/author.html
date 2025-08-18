@@ -1,0 +1,4 @@
+{% assign author_name = page.author | default: site.author %}
+{% if author_name %}
+  <p class="author">By {{ author_name }}</p>
+{% endif %}

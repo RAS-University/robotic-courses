@@ -43,23 +43,28 @@ Explore the structured robotics courses below, designed to guide you from fundam
 **Chapter 1: Basics of Motion Control**
 -  [Control Variables](Variables) - In progress
 -  [Kinematics](kinematics) - In progress
--  [Dynamics](dynamics) 
+-  [Dynamics](dynamics) - In progress
+-  [Proportional Integral Derivative](pid) - In progress
 -  [Force Control](force-control) - In progress
 
 **Chapter 2: Sensing for Robotics**
 -  [Vision for Robotics](vision-for-robotics) - In progress
--  [Haptics for Robotics](haptics-for-robotics)
--  [New Sensors for Robotics](new-sensors-for-robotics)
+-  [Haptics for Robotics](haptics-for-robotics) 
+-  [New Sensors for Robotics](new-sensors-for-robotics) - In progress
 -  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI)
 -  [From Sensing to Perception](sensing-and-perception)
 
 **Chapter 3: Motion Control and Planning**
--  [Singularities in Motion Planning](Singularities)
+-  [Advanced Kinematics for Motion Planning](singularities) - In progress
 -  [Operational Space and Null Space Control](Null-Space)
 -  [Sampling Based Planning](sampling-planning)
 -  [Dynamical-Systems-Based Planning](DS-planning) - In progress
 -  [Geometric-Methods for Planing](geometry-planning) 
 -  [Simultaneous Localization and Mapping](SLAM)
+
+**Chapter 3: Manipulation**
+-  [Grasping](grasping) - In progress
+
 
 **Chapter 4: Robot Learning**
 -  [Learning from Demonstration](LfD) - In progress
@@ -90,7 +95,7 @@ Explore the structured robotics courses below, designed to guide you from fundam
 -  [Socially-Aware Control](Social)
 -  [Rehabilitation Devices](Rehabilitation)
 -  [Exoskeletons](Exoskeletons)
--  [Surgical Robots](Surgery)
+-  [Surgical Robots](surgical) - In Progress
 -  [Educational Robotics](Education)
 
 **Chapter 8: Novel Trends in Robotics**

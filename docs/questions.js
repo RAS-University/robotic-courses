@@ -27,6 +27,44 @@ function checkTrueFalse(questionId, correctAnswer, correctMessage, incorrectMess
     }
   }
 
+  // with MathJax support
+function checkTrueFalse2(questionId, correctAnswer, correctMessage, incorrectMessage) {
+  const options = document.getElementsByName(questionId);
+  let selectedValue = null;
+
+  for (let i = 0; i < options.length; i++) {
+    if (options[i].checked) { selectedValue = options[i].value; break; }
+  }
+
+  const feedback = document.getElementById(questionId + '-feedback');
+
+  if (!selectedValue) {
+    feedback.textContent = "Please select an option.";
+    feedback.style.color = "red";
+    return;
+  }
+
+  const ok = (selectedValue === correctAnswer);
+  feedback.innerHTML = ok ? correctMessage : incorrectMessage;  // <-- use innerHTML
+  feedback.style.color = ok ? "green" : "red";
+
+  // Re-typeset just this feedback node (MathJax v3)
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([feedback]);
+  }
+  // Or, if using KaTeX auto-render:
+  else if (window.renderMathInElement) {
+    renderMathInElement(feedback, {
+      delimiters: [
+        {left: "$$", right: "$$", display: true},
+        {left: "\\(", right: "\\)", display: false},
+        {left: "$",  right: "$",  display: false}
+      ],
+      throwOnError: false
+    });
+  }
+}
+
 
 // Generalized MCQ checking function
 function checkMCQ(questionId, correctAnswer, correctMessage, incorrectMessage) {

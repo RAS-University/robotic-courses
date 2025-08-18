@@ -38,5 +38,9 @@ bundle install
 ### 4. Serve the Site Locally
    
 ```bash
-bundle exec jekyll serve
+bundle exec jekyll serve 
+```
+if get error like: "Address already in use - bind(2) for 127.0.0.1:4000 (Errno::EADDRINUSE)"
+```bash
+bundle exec jekyll serve --port 4004
 ```

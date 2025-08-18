@@ -88,6 +88,10 @@ If you want to make robots that **move like athletes**, **adapt like animals**, 
 ![Boston Dynamics](https://www.youtube.com/watch?v=I44_zbEwz_w)
 ><sub>Boston Dynamics Atlas crawling, running, and balancing. YouTube video, April 2025. Available at: https://www.youtube.com/watch?v=I44_zbEwz_w</sub>
 
+Similar robotic models are available in *Webots*, where you can explore and analyze their implementations. These can be accessed via  
+**File → Open Sample Robot → robots\boston_dynamics**.  
+By interacting with the provided code, it is possible to experiment with control strategies and observe the resulting behaviors in simulation.
+
 ---
 
 ## 3. Course Content

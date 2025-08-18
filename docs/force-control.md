@@ -3,10 +3,12 @@ title: Force control
 parent: Courses
 layout: default
 math: mathjax
+author: Salim Boussofara (salim.boussofara@epfl.ch)
 ---
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
 
+{% include author.html %}
 
 <a name="top"></a>
 
@@ -1118,7 +1120,6 @@ This structure allows the robot to behave appropriately in tasks with partial co
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 11.6: Hybrid Motion-Force Control. YouTube video, 16 March. Available at: https://www.youtube.com/watch?v=UR0GpaaBVKk.*</sub>
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
- --> A short video explaining in more mathematical terms what was presented in this section
 >
 >*This short video provides a mathematical explanation of hybrid force/motion control, expanding on the concepts introduced in this section. It details how task space is split into force- and motion-controlled directions using a selection matrix, and presents the hybrid control law in formal terms. This video offers a more theoretical perspective, complementing the intuitive examples and experiments discussed earlier.*
 
@@ -1736,7 +1737,7 @@ self.leg_actuator.setForce(impedance_force)
 
 # Want to implement a real project ?
 <figure style="text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/Force/github.jpg" alt="https://courses.ideate.cmu.edu/16-375/f2024/text/simulations/boom-monopod.html">
+  <img src="{{ site.baseurl }}/assets/images/Force/github.jpg" alt="https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master">
   <figcaption><em>Robotic Arm Hybrid Position Force Control<br><sub>Chen, S. (n.d.) 2-Linkages Robotic Arm Hybrid Position/Force Control. GitHub repository. Available at: https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control</sub></em></figcaption>
 </figure>
 

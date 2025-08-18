@@ -1855,7 +1855,10 @@ function checkDropdownPID() {
   </details>
 </details>
 
-Despite its popularity, we must say that currently the PID is not the best controller available. But in most cases, it is more than enough. On the other hand, many of the “most modern” controllers are nothing more than improved versions of a PID, such as the different families based on PID with adaptive parameters. Also, one should mention that, in this course, the focus was put on explaining the traditional PID structure, the **parallel structure**. For the sake of completion, here are the other 3 main PID controller structures:
+Despite its popularity, we must say that currently the PID is not the best controller available. But in most cases, it is more than enough. On the other hand, many of the “most modern” controllers are nothing more than improved versions of a PID, such as the different families based on PID with adaptive parameters. 
+Also, one should mention that, in this course, the focus was put on explaining the traditional PID structure, the **parallel structure**. 
+<details markdown="1">
+<summary>For the sake of completion, you can find below the other 3 main PID controller structures:</summary>
 * **Derivative in feedback:** $$U(s) = \left(k_P + \frac{k_I}{s}\right)E(s) - k_D s \, Y(s)$$
   - The derivative term is applied to the **output** rather than the error.  
   - This prevents amplification of step changes in the reference signal and reduces noise sensitivity.  
@@ -1875,6 +1878,7 @@ Despite its popularity, we must say that currently the PID is not the best contr
     <figcaption><center><em>Structure</em></center></figcaption>
   </figure>
 
+</details>
 
 
 

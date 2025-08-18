@@ -55,12 +55,16 @@ Explore the structured robotics courses below, designed to guide you from fundam
 -  [From Sensing to Perception](sensing-and-perception)
 
 **Chapter 3: Motion Control and Planning**
--  [Singularities in Motion Planning](Singularities)
+-  [Advanced Kinematics for Motion Planning](singularities) - In progress
 -  [Operational Space and Null Space Control](Null-Space)
 -  [Sampling Based Planning](sampling-planning)
 -  [Dynamical-Systems-Based Planning](DS-planning) - In progress
 -  [Geometric-Methods for Planing](geometry-planning) 
 -  [Simultaneous Localization and Mapping](SLAM)
+
+**Chapter 3: Manipulation**
+-  [Grasping](grasping) - In progress
+
 
 **Chapter 4: Robot Learning**
 -  [Learning from Demonstration](LfD) - In progress

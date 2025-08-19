@@ -88,9 +88,9 @@ If you want to make robots that **move like athletes**, **adapt like animals**, 
 ![Boston Dynamics](https://www.youtube.com/watch?v=I44_zbEwz_w)
 ><sub>Boston Dynamics Atlas crawling, running, and balancing. YouTube video, April 2025. Available at: https://www.youtube.com/watch?v=I44_zbEwz_w</sub>
 
-Similar robotic models are available in *Webots*, where you can explore and analyze their implementations. These can be accessed via  
-**File → Open Sample Robot → robots\boston_dynamics**.  
-By interacting with the provided code, it is possible to experiment with control strategies and observe the resulting behaviors in simulation.
+> Similar robotic models are available in *Webots*, where you can explore and analyze their implementations. These can be accessed via  
+> **File → Open Sample Robot → robots\boston_dynamics**.  
+> By interacting with the provided code, it is possible to experiment with control strategies and observe the resulting behaviors in simulation.
 
 ---
 
@@ -319,7 +319,6 @@ You can think of forward and inverse dynamics like this:
 
 </details>
 
-
 ---
 
 ### Chapter 1 (Part2): The Lagrangian Formulation of Dynamics 
@@ -524,38 +523,237 @@ Understanding these terms is essential for **accurate simulation, control, and p
 
 </details>
 
-<!-- 
-In this follow-up video, the focus is on the **velocity-product term** $c(\theta, \dot{\theta})$, which captures how motion affects internal forces.
+<details markdown = "1">
+<summary>Mathematical exercises</summary>
 
-Key insights:
-- $c(\theta, \dot{\theta})$ includes both **Coriolis** and **centrifugal** effects.
-- The term is derived and visualized using a **2R planar robot arm**.
-- The video explains how $c(\theta, \dot{\theta})$ changes depending on the motion state:
-  - If both joints are moving  
-  - If only one joint moves  
-  - If both joints are stationary
+> *From Practice Exercise 8.1, MODERN ROBOTICS, Practice Exercices*
 
-These examples help you build **intuition** about how joint interactions create complex dynamic behavior — especially important in fast or heavy motion.
+**EXERCISE 1:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.1.png" width="450" height="auto" alt="Fig 8.1">
+  <figcaption>
+    <strong>Figure 8.1.</strong> RP robot moving in a vertical plane. 
+  </figcaption>
+</figure>
+
+Figure 8.1 illustrates an RP robot moving in a vertical plane. The mass of link 1 is $m_1$ and the center of mass is a distance $L_1$ from joint 1. The scalar inertia of link 1 about an axis through the center of mass and out of the plane is $I_1$. The mass of link 2 is $m_2$, the center of mass is a distance $\theta_{2}$ from joint 1, and the scalar inertia of link 2 about its center of mass is $I_2$. Gravity g acts downward on the page.
+
+
+**(a)**
+Let the location of the CoM of link $i$ be $(x_i, y_i)$ for $i=1,2$.
+Find $(x_i(\theta), y_i(\theta))$ and their time derivatives $(\dot{x}_i, \dot{y}_i)$.
+
+**(b)**
+Write the potential energy of each link, $P_1$ and $P_2$, using the joint variables $\theta$.
+
+**(c)**
+Write the kinetic energy of each link, $K_1$ and $K_2$.
+Use the planar rigid–body formula
+
+$$
+K \;=\; \tfrac{1}{2}\,m\,v^2 \;+\; \tfrac{1}{2}\,I\,\omega^2,
+$$
+
+where $m$ is the mass, $v$ is the scalar linear velocity at the CoM, $\omega$ is the scalar angular velocity, and $I$ is the scalar inertia of the rigid body about its CoM.
+
+**(d)**
+What is the Lagrangian in terms of $K_1$, $K_2$, $P_1$ and $P_2$ ?
+
+**(e)**
+One of the terms in the Lagrangian can be expressed as 
+
+$$
+\frac{1}{2}\,m_2\,\theta_2^{\,2}\,\dot{\theta}_1^{\,2}.
+$$
+
+If this were the complete Lagrangian, what would the equations of motion be? Derive these by hand (no symbolic math software assistance). Indicate which of the terms in your equations are a function of $\ddot{\theta}$ , which are Coriolis terms, which are centripetal terms, and which are gravity terms, if any.
+
+**(f)** 
+Now derive the equations of motion (either by hand or using symbolic
+math software for assistance) for the full Lagrangian and put them in the form
+$$
+\tau \;=\; M(\theta)\,\ddot{\theta} \;+\; c(\theta,\dot{\theta}) \;+\; g(\theta)
+$$
+
+Identify which of the terms in $c(\theta,\dot{theta})$ are Coriolis and whihc are centripetal. Explain as if to someone who is unfamiliar with dynamics why these terms contribute to the joint forces and torques.
+
+---
+> *From Practice Exercise 8.3, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 2:**
+
+The equations of motion for a particular 2R robot arm can be written $M(\theta)\,\ddot{\theta} + c(\theta,\dot{\theta}) + g(\theta) = \tau$. The Lagrangian $ \mathcal{L}(\theta,\dot{\theta}) $ for the robot can be written in components as
+$$
+L(\theta,\dot{\theta}) = L^{1}(\theta,\dot{\theta}) + \mathcal{L}^{2}(\theta,\dot{\theta}) + \mathcal{L}^{3}(\theta,\dot{\theta}) + \cdots
+$$
+
+One of these components is $\mathcal{L}^{1} = m\,\dot{\theta}_1\,\dot{\theta}_2\,\cos\theta_2$
+
+**(a)** Find the joint torques $ \tau_1 $ and $ \tau_2 $ corresponding to the component $ \mathcal{L}^{1} $.
+
+**(b)** (See Chapter 2 if necessary) Write the $2\times2$ mass matrix $M^{1}(\theta)$, the velocity-product vector $c^{1}(\theta,\dot{\theta})$, and the gravity vector $g^{1}(\theta)$ corresponding to $\mathcal{L}^{1}$.
+(Notice that $M = M^{1} + M^{2} + M^{3} + \cdots$, $c = c^{1} + c^{2} + c^{3} + \cdots$, and $g = g^{1} + g^{2} + g^{3} + \cdots$.)
+
+<details markdown="1">
+<summary><strong>Solutions</strong></summary>
+
+**EXERCISE 1:**
+
+**(a) Centers of mass and their time derivatives**
+
+Positions:
+
+$$
+x_1 = L_1\cos\theta_1,\qquad y_1 = L_1\sin\theta_1
+$$
+
+$$
+x_2 = \theta_2\cos\theta_1,\qquad y_2 = \theta_2\sin\theta_1
+$$
+
+Velocities:
+
+$$
+\dot x_1 = -L_1\dot\theta_1\sin\theta_1,\qquad
+\dot y_1 = \;\;L_1\dot\theta_1\cos\theta_1
+$$
+
+$$
+\dot x_2 = \dot\theta_2\cos\theta_1-\theta_2\dot\theta_1\sin\theta_1,\qquad
+\dot y_2 = \dot\theta_2\sin\theta_1+\theta_2\dot\theta_1\cos\theta_1
+$$
 
 ---
 
-#### Why the Lagrangian Formulation Matters
+**(b) Potential energies**
 
-- It **scales well** for robots with many joints  
-- It avoids repetitive force analysis for each link  
-- It automatically produces structured outputs:  
-  - The **mass matrix** $M(\theta)$  
-  - The **Coriolis/centrifugal** term $c(\theta, \dot{\theta})$  
-  - The **gravity term** $g(\theta)$
+$$
+\mathcal P_1 = m_1 g y_1 = m_1 g L_1 \sin\theta_1,
+\qquad
+\mathcal P_2 = m_2 g y_2 = m_2 g \theta_2 \sin\theta_1.
+$$
 
-Using this method, we can model and control:
-- Simple pendulums  
-- Multi-link robotic arms  
-- Complex manipulators in 2D or 3D space
+---
 
-🔧 In this chapter, you will learn how to derive these equations step by step — starting with single-link systems and building up to complete open-chain robots. 
+**(c) Kinetic energies**
 
-</details> -->
+Link 1:
+
+$$
+\mathcal K_1
+= \tfrac12 m_1(\dot x_1^2+\dot y_1^2) + \tfrac12 I_1 \dot\theta_1^{\,2}
+= \tfrac12 (I_1+m_1L_1^{\,2})\,\dot\theta_1^{\,2}.
+$$
+
+Link 2:
+
+$$
+\mathcal K_2
+= \tfrac12 m_2(\dot x_2^2+\dot y_2^2) + \tfrac12 I_2 \dot\theta_1^{\,2}
+= \tfrac12\left( (I_2+m_2\theta_2^{\,2})\,\dot\theta_1^{\,2} + m_2\dot\theta_2^{\,2} \right).
+$$
+
+---
+
+**(d) Lagrangian**
+
+$$
+\mathcal L = \mathcal K_1 + \mathcal K_2 - \mathcal P_1 - \mathcal P_2.
+$$
+
+---
+
+**(e) Equations of motion**
+
+$$
+\tau_1 = 2 m_2 \theta_2 \dot\theta_1 \dot\theta_2 \;+\; m_2 \theta_2^{\,2}\ddot\theta_1,
+\qquad
+\tau_2 = -\,m_2 \theta_2\,\dot\theta_1^{\,2}.
+$$
+
+* In \$\tau\_1\$, the first term is **Coriolis**; the second multiplies \$\ddot\theta\_1\$ (a **mass-matrix** term).
+* \$\tau\_2\$ is a **centripetal** term.
+
+---
+
+**(f) Full equations in standard form**
+
+$$
+\tau = M(\theta)\,\ddot\theta + c(\theta,\dot\theta) + g(\theta),
+\qquad
+\theta=\begin{bmatrix}\theta_1\\ \theta_2\end{bmatrix}.
+$$
+
+Mass matrix:
+
+$$
+M(\theta)=
+\begin{bmatrix}
+I_1 + I_2 + m_1L_1^{\,2} + m_2\theta_2^{\,2} & 0 \cr
+0 & m_2
+\end{bmatrix}.
+$$
+
+Velocity-product (Coriolis/centripetal) vector:
+
+$$
+c(\theta,\dot{\theta})=
+\begin{bmatrix}
+2 m_2 \theta_2 \dot\theta_1 \dot\theta_2 \cr
+-m_2 \theta_2 \dot\theta_1^{\,2}
+\end{bmatrix}.
+$$
+
+Gravity vector:
+
+$$
+g(\theta)=
+\begin{bmatrix}
+(m_1 L_1 + m_2 \theta_2)\, g \cos\theta_1 \cr
+m_2 g \sin\theta_1
+\end{bmatrix}.
+$$
+
+---
+
+**EXERCISE 2:**
+
+**(a)**
+$$
+\tau_1 = \frac{d}{dt}\left(\frac{\partial \mathcal{L}^{1}}{\partial \dot{\theta}_1}\right) - \frac{\partial \mathcal{L}^{1}}{\partial \theta_1} = \frac{d}{dt}\big(m\,\dot{\theta}_2 \cos\theta_2\big) - 0 = m\,\ddot{\theta}_2 \cos\theta_2 - m\,\dot{\theta}_2^{\,2}\sin\theta_2 .
+$$
+
+$$
+\tau_2 = \frac{d}{dt}\left(\frac{\partial \mathcal{L}^{1}}{\partial \dot{\theta}_2}\right) - \frac{\partial \mathcal{L}^{1}}{\partial \theta_2}
+= \frac{d}{dt}\big(m\,\dot{\theta}_1 \cos\theta_2\big) + m\,\dot{\theta}_1 \dot{\theta}_2 \sin\theta_2 = m\,\ddot{\theta}_1 \cos\theta_2 .
+$$
+
+**(b)**
+$$
+M^{1}(\theta) =
+\begin{bmatrix}
+0 & m\cos\theta_{2} \cr
+m\cos\theta_{2} & 0
+\end{bmatrix},
+\qquad
+c^{1}(\theta,\dot{\theta}) =
+\begin{bmatrix}
+-m \dot\theta_{2}^{2} \sin\theta_{2} \cr
+0
+\end{bmatrix},
+\qquad
+g^{1}(\theta) =
+\begin{bmatrix}
+0 \cr
+0
+\end{bmatrix}.
+$$
+
+
+</details>
+
+</details>
 
 ---
 
@@ -703,7 +901,117 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
 
 </details>
 
+<details markdown = "1">
+<summary>Mathematical exercises</summary>
 
+> *From Practice Exercise 8.2, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 3:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.2.png" width="450" height="auto" alt="Fig 8.2">
+  <figcaption>
+    <strong>Figure 8.2.</strong> A 2R robot with all mass concentrated at the ends of the links 
+  </figcaption>
+</figure>
+
+The mass matrix of the 2R robot of Figure 8.2 is
+
+$$
+M(\theta)=
+\begin{bmatrix}
+m_1 L_1^{2} + m_2\left(L_1^{2} + 2 L_1 L_2 \cos \theta_2 + L_2^{2}\right) &
+m_2\left(L_1 L_2 \cos \theta_2 + L_2^{2}\right) \cr 
+m_2\left(L_1 L_2 \cos \theta_2 + L_2^{2}\right) &
+m_2 L_2^{2}
+\end{bmatrix},
+$$
+
+where each link is modeled as a point mass at the end of the link.
+Explain in text and/or figures why each of the entries makes sense, for example using the joint accelerations \$\ddot{\theta}=(1,0)\$ and \$(0,1)\$.
+
+---
+> *From Practice Exercise 8.4, MODERN ROBOTICS, Practice Exercices*
+
+**Exercise 4:**
+
+For a given configuration $\theta$ of a two-joint robot, the mass matrix is 
+$$
+M(\theta)=
+\begin{bmatrix}
+3 & a \cr 
+b & 2
+\end{bmatrix},
+$$
+which has a determinant of $6-ab$ and eigenvalues $\frac{1}{2}\left(5 \pm \sqrt{1 + 4ab}\right)$. What constraints must $a$ and $b$ satisfy for this to be a valid mass matrix?
+
+---
+> *From Practice Exercise 8.1, MODERN ROBOTICS, Practice Exercices*
+
+**Exercise 5:** *(this exercise is a continuation of exercise 1)*
+
+Consider the configuration-dependent mass matrix \$M(\theta)\$ from your previous answer. When the robot is at rest (and ignoring gravity), the mass matrix can be visualized as the ellipse of joint forces/torques that are required to generate the unit circle of joint accelerations in \$\ddot{\theta}\$ space. As \$\theta\_2\$ increases, how does this ellipse change? Describe it in text and provide a drawing.
+
+
+
+<details markdown="1">
+<summary><strong>Solutions</strong></summary>
+
+**Exercise 3:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.9.png" width="450" height="auto" alt="Fig 8.9">
+  <figcaption>
+    <strong>Figure 8.9.</strong>  The linear accelerations of the point masses of the 2R arm for joint accelerations (1,0) and (0,1).
+  </figcaption>
+</figure>
+
+Let
+$$
+M =
+\begin{bmatrix}
+M_{11} & M_{12} \cr
+M_{21} & M_{22}
+\end{bmatrix},
+$$
+where
+$$M_{11}=m_1 L_1^{2}+m_2(L_1^{2}+2L_1L_2\cos\theta_2+L_2^{2})$$
+$$M_{12}=M_{21}=m_2(L_1L_2\cos\theta_2+L_2^{2})$$
+$$M_{22}=m_2 L_2^{2}$$
+
+Figure 8.9 shows the linear accelerations of the masses $m_1$ and $m_2$ for joint accelerations $(1,0)$ and $(0,1)$.
+
+The terms $M_{11}$ and $M_{22}$ are relatively easy to understand.
+The term $M_{11}$ is the inertia of the robot about joint 1 if joint 2 is locked.
+The inertia contribution due to $m_1$ is $m_1 L_1^{2}$.
+The distance of $m_2$ from joint 1 is $d_2=\sqrt{L_1^{2}+2L_1L_2\cos\theta_2+L_2^{2}}$ (by the law of cosines), and the inertia contribution due to $m_2$ is $m_2 d_2^{2}$.
+
+The term $M_{22}$ is the inertia about joint 2 due to the mass $m_2$ a distance $L_2$ from the joint.
+
+The off-diagonal term is harder to understand. But we know that if joint 1 accelerates, joint 2 has to apply a torque to keep joint 2 locked. And if joint 2 accelerates, joint 1 has to apply a torque to remain locked; otherwise, conservation of angular momentum about joint 1 would cause it to begin to rotate in a direction opposite joint 2. Using Figure 8.9 and some geometry, you could calculate the joint torque $\tau_2$ required to keep joint 2 stationary when $\dot{\theta}_1=1$, based on the moment about joint 2 generated by the line of force required to accelerate $m_2$.
+
+---
+
+**EXERCISE 4:**
+
+$M(\theta)$ must be positive definite (and therefore symmetric), so $a=b$ and the eigenvalues must be positive, so $\lvert a \rvert = \lvert b \rvert < \sqrt{6}$. (The determinant $\det(M)=6-a^2$ must be positive, which gives the same condition on $\lvert a \rvert$.)
+
+---
+
+**Exercise 5:** *(this exercise is a continuation of exercise 1)*
+
+The mass matrix \$M(\theta)\$ is diagonal, so the principal axes of the ellipse \$M(\theta),\ddot{\theta}\$ (for all \$\ddot{\theta}\$ satisfying \$\lvert\dot{\theta}\rvert = 1\$) are aligned with the \$\tau\_1\$ and \$\tau\_2\$ axes, and the lengths of those principal axes (the eigenvalues of \$M\$) are just the entries along the diagonal. As \$\theta\_2\$ gets larger, the top-left component of \$M\$ gets larger. This means that larger torques at joint 1 are required to generate accelerations in the \$\ddot{\theta}\_1\$ direction, due to the increased inertia of the robot about joint 1. Hence the ellipse gets wider in the \$\tau\_1\$ direction. See Figure 8.7.
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.7.png" width="450" height="auto" alt="Fig 8.7">
+  <figcaption>
+    <strong>Figure 8.7.</strong> The mass matrix $M(\theta)$ represented as the ellipse of joint forces and torques corresponding to a unit circle of joint accelerations $\ddot{\theta}$ (when gravity and the joint velocities are zero).
+  </figcaption>
+</figure>
+
+</details>
+
+</details>
 
 ---
 
@@ -1126,6 +1434,98 @@ $$
 </details>
 
 
+<details markdown = "1">
+<summary>Mathematical exercises</summary>
+
+> *From Practice Exercise 8.6, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 6:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.3.png" width="200" height="auto" alt="Fig 8.3">
+  <figcaption>
+    <strong>Figure 8.3.</strong> A ring of radius 3.
+  </figcaption>
+</figure>
+
+Figure 8.3 shows a ring in the $\hat{y}\_b\$–\$\hat{z}\_b$ plane (the $\hat{x}\_b$ coordinate of each point on the ring is zero). The radius of the ring is $3$ (all mass is a distance \$3\$ from the $\hat{x}\_b$-axis). The mass of the ring is $10$, and the mass is uniformly distributed around the ring. Write the spatial inertia matrix $G\_b$. All entries should be numerical, no symbols or math.
+
+---
+
+> *From Practice Exercise 8.10, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 7:**
+Consider the object in Figure 8.5 that consists of a cube and sphere that are rigidly attached. The \${c}\$ and \${s}\$ frames of each component are aligned with the principal axes and located at the center of mass. The \$z\$-axes of both frames are colinear. Given that the body inertia of a sphere is
+$I_s=\left(\frac{2mr^2}{5}\right) I_{3\times3},$
+the body inertia of a cube is
+$I_c=\left(\frac{ml^2}{6}\right) I_{3\times3},$
+\$r=1\$, \$l=2\$, the cube has mass \$2\$, and the sphere has mass \$1\$, solve for the spatial inertia matrix \$G\_b\$ for the object.
+
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.5.png" width="250" height="auto" alt="Fig 8.5">
+  <figcaption>
+    <strong>Figure 8.5.</strong> Rigid object consisting of a sphere and cube.
+  </figcaption>
+</figure>
+
+<details markdown="1">
+<summary><strong>Solution</strong></summary>
+
+**EXERCISE 6:**
+
+$$
+G_b \;=\;
+\begin{bmatrix}
+90 & 0 & 0 & 0 & 0 & 0 \cr
+0 & 45 & 0 & 0 & 0 & 0 \cr
+0 & 0 & 45 & 0 & 0 & 0 \cr
+0 & 0 & 0 & 10 & 0 & 0 \cr
+0 & 0 & 0 & 0 & 10 & 0 \cr
+0 & 0 & 0 & 0 & 0 & 10
+\end{bmatrix},
+$$
+
+where the inertia about the $\hat{x}\_b$-axis is $mR^2 = 90$ since $m = 10$ and $R = 3$. The inertia about the $\hat{y}\_b$ and $\hat{z}\_b$ axes is $\tfrac{1}{2} m R^2$ (derive this formula from the integral or look it up online).
+
+---
+
+**EXERCISE 7:**
+
+$$
+COM_s = (0,0,3), \quad COM_c = (0,0,1).
+$$
+
+$$
+COM_b = \frac{COM_s\,m_s + COM_c\,m_c}{2}.
+$$
+
+$$
+q_c = COM_b - COM_c
+\quad,\quad
+q_s = COM_b - COM_s
+$$
+
+$$
+I_1 = I_c + m_c \left(q_c^{T} q_c\, I - q_c q_c^{T}\right)
+$$
+
+$$
+I_2 = I_s + m_s \left(q_s^{T} q_s\, I - q_s q_s^{T}\right)
+$$
+
+$$
+I_b = I_1 + I_2 = \operatorname{diag}(6.48,\, 6.48,\, 1.73)
+$$
+
+$$
+G_b = \operatorname{diag}(6.48,\, 6.48,\, 1.73,\, 3,\, 3,\, 3)
+$$
+
+</details>
+
+</details>
+
 ---
 
 ### Chapter 4: Inverse Dynamics with Newton-Euler
@@ -1300,6 +1700,237 @@ After forward and backward passes, we obtain:
 
 </details>
 
+
+<details markdown = "1">
+<summary>Mathematical exercises</summary>
+
+> *From Practice Exercise 8.5, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 8:**
+
+Link $i$ of an open-chain robot has two frames attached to it, a frame ${b}$ at its center of mass and a frame ${a}$ on the axis of joint $i$, a revolute joint, that drives the link. In the frame ${a}$, the screw axis of the revolute joint is expressed as $S$. In the backward iterations of Newton–Euler inverse dynamics, it was determined that the wrench $F\_b$ (expressed in ${b}$) must be applied to the link. What joint torque $\tau\_i$ must be applied at joint $i$, in terms of $F\_b$, $S$, and the frames ${a}$ and ${b}$?
+
+---
+
+> *From Practice Exercise 8.11, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 9:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.6.png" width="450" height="auto" alt="Fig 8.6">
+  <figcaption>
+    <strong>Figure 8.6.</strong> 2D quadcopter and attached pendulum
+  </figcaption>
+</figure>
+
+You are teaching **Newton–Euler inverse dynamics**, and you are using the **2R robot** from the beginning of Chapter 8 (see also **Figure 8.6**) as an example. Each link has length $L_i$ and the mass of each link is $m_i$, concentrated at a point at the end of the link. You already know the correct dynamics from the Lagrangian derivation. Now you will show how to arrive at the same answer using Newton–Euler. Go through the method step by step, showing intermediate results if it is helpful.
+
+**(a)** Give $M_i$, $M_{i-1,i}$, $A_i$, $S_i$, $g$, $\mathcal{G}_i$, $\mathcal{V}_0$, $\dot{\mathcal{V}}_0$. 
+> *You can assume the frame ${3}$ is coincident with ${2}$ and $\mathcal{F}_{\text{tip}}$ is zero.*
+
+**(b)** *Forward iteration:* First calculate the transformation, twist, and twist derivative for link 1, then calculate them for link 2.
+
+**(c)** *Backward iteration:* First calculate $\mathcal{F}_2$ and $\tau_2$, then calculate $\mathcal{F}_1$ and $\tau_1$. Confirm that your final result agrees with the result in the notes.
+
+
+
+
+<details markdown="1">
+<summary><strong>Solutions</strong></summary>
+
+**EXERCISE 8:**
+
+Take the dot product of the wrench with the screw axis after they’ve been expressed in the same frame; e.g., in the frame ${b}$:
+
+$$
+\tau_i = F_b^{\top} \mathrm{Ad}_{T_ba} S .
+$$
+
+---
+
+**Exercise 9:**
+
+**(a)** Observe the drawing. Find the transformation matrix $\mathcal{M}_i \in SE(3)$ for each link. $\mathcal{M}_i$ is the transformation from the base frame $\{0\}$ to the frame $\{i\}$, which is attached to the center of mass of the $i$-th link, when the robot is in its home configuration.
+
+$$
+\mathcal{M}_{1} =
+\begin{bmatrix}
+1 & 0 & 0 & L_1 \cr
+0 & 1 & 0 & 0 \cr
+0 & 0 & 1 & 0 \cr
+0 & 0 & 0 & 1
+\end{bmatrix},
+\qquad
+\mathcal{M}_{{12}} =
+\begin{bmatrix}
+1 & 0 & 0 & L_1 + L_2 \cr
+0 & 1 & 0 & 0 \cr
+0 & 0 & 1 & 0 \cr
+0 & 0 & 0 & 1
+\end{bmatrix}.
+$$
+
+
+
+$\mathcal{M}_{12} \in SE(3)$ is the transformation matrix from the frame ${1}$ (attached to center of mass of link 1) to the frame ${2}$ (attached to the center of mass of link 2), when the arm is in its home configuration. 
+
+Find $\mathcal{M}_{2}$ by observing the drawing or by using the equation:
+
+$$\mathcal{M}_{12}=\mathcal{M}_1^{-1}\mathcal{M}_2$$.
+
+$$
+\mathcal{M}_{2} =
+\begin{bmatrix}
+1 & 0 & 0 & L_2 \cr
+0 & 1 & 0 & 0 \cr
+0 & 0 & 1 & 0 \cr
+0 & 0 & 0 & 1
+\end{bmatrix}.
+$$
+
+From observing the drawing, obtain the screw-axis $S_i$ for each joint, expressed in the space-frame:
+
+$$
+S_1 = [\,0,\;0,\;1,\;0,\;0,\;0\,]^\top,\qquad
+S_2 = [\,0,\;0,\;1,\;0,\;-L_1,\;0\,]^\top .
+$$
+
+$A_i$ is the twist-vector for joint $i$ expressed in the frame $\{i\}$ when the arm is in its home configuration ($\theta_i=0$). For a simple 2R arm it can be obtained by observing the spatial velocity of frame $\{i\}$ when rotating about joint $i$ from the home configuration. Alternatively one may use the equation
+
+$$
+A_i = \mathrm{Ad}_{\mathcal{M}_i^{-1}}\,S_i .
+$$
+
+$$
+A_1 = [\,0,\;0,\;1,\;0,\;L_1,\;0\,]^\top,\qquad
+A_2 = [\,0,\;0,\;1,\;0,\;L_2,\;0\,]^\top .
+$$
+
+Define the gravity vector $g=[\,0,\;g,\;0\,]^\top$ with $g<0$. Define the spatial inertia matrix $G_i$ for each link $i$, expressed in the frame $\{i\}$. In this case we assume the mass is concentrated as a point mass:
+
+$$
+G_1=
+\begin{bmatrix}
+0&0&0&0&0&0\cr
+0&0&0&0&0&0\cr
+0&0&0&0&0&0\cr
+0&0&0&m_1&0&0\cr
+0&0&0&0&m_1&0\cr
+0&0&0&0&0&m_1
+\end{bmatrix},
+\qquad
+G_2=
+\begin{bmatrix}
+0&0&0&0&0&0\cr
+0&0&0&0&0&0\cr
+0&0&0&0&0&0\cr
+0&0&0&m_2&0&0\cr
+0&0&0&0&m_2&0\cr
+0&0&0&0&0&m_2
+\end{bmatrix}.
+$$
+
+The base is fixed to the ground. It therefore has no velocity. It is however subject to gravity. The gravity vector $g$ needs to be incorporated in $\dot{\mathcal{V}}_0$.
+
+$$
+\mathcal{V}_0=[\,0,\;0,\;0,\;0,\;0,\;0\,]^\top,\qquad
+\dot{\mathcal{V}}_0=[\,0,\;0,\;0,\;0,\;g,\;0\,]^\top .
+$$
+
+---
+
+**(b)** During the forward iteration of Newton–Euler inverse dynamics, we obtain the states and accelerations of the frames attached to each link. Because the velocity and acceleration of each link is influenced by those of its predecessors, we start our calculations at the base and incrementally move out-board until the states and accelerations for each link have been obtained. As a convention we will express velocities $\mathcal{V}_i$ and accelerations $\dot{\mathcal{V}}_i$ for each link $i$ in the frame $\{i\}$, which is attached to the center of mass of the respective link.
+
+**Link 1 states and acceleration:**
+
+We now calculate the transformation $T_{01}$ from link 1’s predecessor (frame $\{0\}$) to itself (frame $\{1\}$). The equation $T_{01}=\mathcal{M}_1 e^{[A_1]\theta_1}$ takes $\mathcal{M}_1$ (the transformation from the base frame $\{0\}$ to the frame $\{1\}$ when the robot is in its home configuration $\theta_1=\theta_2=0$) as a reference point, and incorporates twists (exponential coordinates $A_1\theta_1$) about joint 1 to find the transformation from frame $\{0\}$ to frame $\{1\}$ for any given $\theta_1$.
+
+$$
+T_{01}=
+\begin{bmatrix}
+\cos\theta_1 & -\sin\theta_1 & 0 & L_1\cos\theta_1\cr
+\sin\theta_1 & \phantom{-}\cos\theta_1 & 0 & L_1\sin\theta_1\cr
+0&0&1&0\cr
+0&0&0&1
+\end{bmatrix}.
+$$
+
+Calculate the absolute velocity $\mathcal{V}_1$ of the frame $\{1\}$ expressed in frame $\{1\}$.
+
+<!-- *Detail*: $\mathcal{V}_1$ is composed of two terms:
+
+$$
+\mathcal{V}_1 \;=\; \Ad_{T_{1}}\,\mathcal{V}_0 \;+\; A_1\,\dot{\theta}_1 .
+$$
+
+First term: If joint 1 had a constant angle $\theta_1$, then the base, together with the first link, could be regarded as a single rigid body. Using the Adjoint of a transformation matrix $T_{10}$ (between two frames $\{1\}$ and $\{0\}$, that are assumed to be fixed to a rigid body), a spacial velocity of one point (i.e. frame $\{1\}$) can be expressed in terms of the spacial velocity of another point (i.e. frame $\{0\}$). The first term considers the portion of $\mathcal{V}_1$, as a result of being attached to a previous dynamic body. In this particular case the base body is stationary, $\mathcal{V}_0$ is zero and therefore the first term of the equation is also 0.
+
+Second term: The joint angle $\theta_1$ of joint 1 is generally not constant and the joint-angle velocity $\dot{\theta}_1$ is not 0. The second term of the equation for $\mathcal{V}_1$ incorporates the additional velocity of the frame $\{1\}$ caused by rotating about joint 1. -->
+
+$$
+\mathcal{V}_1=[\,0,\;0,\;\dot{\theta}_1,\;0,\;L_1\dot{\theta}_1,\;0\,]^\top .
+$$
+
+Calculate the absolute acceleration $\dot{\mathcal{V}}_1$ of the frame $\{1\}$ expressed in frame $\{1\}$.
+
+<!-- *Detail*: 
+
+$$
+\dot{\mathcal{V}}_1 = \mathrm{Ad}_{T_{10}} \dot{\mathcal{V}}_0 + [\mathcal{V}_1,A_1] \dot{\theta}_1 + A_1 \ddot{\theta}_1
+$$ 
+
+where $[\mathcal{V}_1,A_1]$ indicates the Lie-Bracket operation of $\mathcal{V}_1$ and $A_1$. 
+
+* The first term considers the acceleration of the previous rigid body, i.e. the acceleration of the base frame $\{0\}$. 
+* The second term considers the coriolis and centripetal accelerations.
+* The third term considers accelerations of frame $\{1\}$, due to joint-angle accelerations $\ddot{\theta}_1$. -->
+
+$$
+\dot{\mathcal{V}}_1=[\,0,\;0,\;\dot{\theta}_1,\;g\sin(\theta_1),\;g\cos(\theta_1)+L_1\dot{\theta}_1,\;0\,]^\top .
+$$
+
+**Link 2 states and acceleration:**
+
+We now calculate the transformation $T_{12}$ from link $\{2\}$’s predecessor (frame $\{1\}$) to itself (frame $\{2\}$). 
+
+The equation:
+
+$$
+T_{12}=\mathcal{M}_{12} e^{[A_2]\theta_2}
+$$ 
+
+takes $\mathcal{M}_{12}$ (the transformation from frame $\{1\}$ to frame $\{2\}$ when the robot is in its home configuration $\theta_1=\theta_2=0$) as a reference point, and incorporates twists (exponential coordinates $A_2\theta_2$) about joint 2 to find the transformation from frame $\{1\}$ to frame $\{2\}$ for any given $\theta_2$.
+
+$$
+T_{12}=
+\begin{bmatrix}
+\cos\theta_2 & -\sin\theta_2 & 0 & L_2\cos\theta_2 \cr
+\sin\theta_2 & \phantom{-}\cos\theta_2 & 0 & L_2\sin\theta_2 \cr
+0&0&1&0 \cr
+0&0&0&1
+\end{bmatrix}.
+$$
+
+Calculate the absolute velocity $\mathcal{V}_2$ of the frame $\{2\}$ expressed in frame $\{2\}$.
+
+<!-- *Detail:* $\mathcal{V}_2$ is composed of two terms:
+
+$$
+\mathcal{V}_2=\mathrm{Ad}_{T_{21}}\,\mathcal{V}_1 + A_2\dot{\theta}_2 .
+$$
+
+$$
+\mathcal{V}_2 \;=\; \mathrm{Ad}_{T_{21}}\,\mathcal{V}_1 \;+\; A_2\,\dot{\theta}_2 .
+$$
+
+First term: If joint 2 had a constant angle $\theta_2$, then link 1, together with link 2, could be regarded as a single rigid body. Using the Adjoint of a transformation matrix $T_{21}$ (between two frames $\{2\}$ and $\{1\}$, that are assumed to be fixed to a rigid body) a spacial velocity of one point (i.e. frame $\{2\}$) can be expressed in terms of the spacial velocity of another point (i.e. frame $\{1\}$). The first term considers the portion of $\mathcal{V}_2$, as a result of being attached to a previous dynamic body.
+
+Second term: The joint angle $\theta_2$ of joint 2 is generally not constant and the joint-angle velocity $\dot{\theta}_2$ is not 0. The second term of the equation for $\mathcal{V}_2$ incorporates the additional velocity of the frame $\{2\}$ expressed by rotating about joint 2.
+ -->
+
+</details>
+
+</details>
 
 ---
 
@@ -1610,6 +2241,127 @@ $F_{\text{ee}} = \Lambda(\theta)\dot{V} + \eta(\theta,V) + F_{\text{tip}}$?</str
   </button>
   <p id="q6-5-feedback"></p>
 </form>
+
+</details>
+
+
+<details markdown = "1">
+<summary>Mathematical exercises</summary>
+
+> *From Practice Exercise 8.1.(h), MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 10:** *(this exercise is a continuation of exercise 1)*
+
+**(h)** Now visualize the configuration-dependent end-effector mass matrix \$\Lambda(\theta)\$, where the “end-effector” is considered to be at the point \$(x\_2, y\_2)\$, the location of the center of mass of the second link. For a unit circle of accelerations \$(\ddot{x}\_2,\ddot{y}\_2)\$, consider the ellipse of linear forces that are required to be applied at the end-effector to realize these accelerations. How does the orientation of this ellipse change as \$\theta\_1\$ changes? How does the shape change as \$\theta\_2\$ increases from zero to infinity when \$\theta\_1=0\$? Provide a drawing for the case \$\theta\_1=0\$. If you have access to symbolic computation software (e.g., Mathematica), you can use the Jacobian \$J(\theta)\$ satisfying
+
+$$
+\begin{bmatrix}
+\dot{x}_2 \cr
+\dot{y}_2
+\end{bmatrix}
+=
+J(\theta)\,\dot{\theta}\, .
+$$
+
+to calculate \$\Lambda(\theta) = J^{-T}(\theta),M(\theta),J^{-1}(\theta)\$ for the case \$\theta\_1 = 0\$. If you do not have access to symbolic computation software, you can plug in numerical values for \$I\_1\$, \$I\_2\$, \$m\_1\$, \$m\_2\$, and \$L\_1\$ (make them all equal to \$1\$, for example) to say something about how \$\Lambda\$ changes (and therefore how the ellipse changes) as \$\theta\_2\$ goes from zero to infinity while \$\theta\_1 = 0\$.
+
+---
+
+> *From Practice Exercise 8.8, MODERN ROBOTICS, Practice Exercices*
+
+**EXERCISE 11:** 
+ 
+Consider the four equivalent forms of dynamics shown below:
+
+$$
+\tau \;=\; M(\theta)\,\ddot{\theta} \;+\; h(\theta,\dot{\theta}) \;+\; J^{T}(\theta)\,F_{\text{tip}}
+\tag{8.1}
+$$
+
+$$
+\tau \;=\; M(\theta)\,\ddot{\theta} \;+\; c(\theta,\dot{\theta}) \;+\; g(\theta) \;+\; J^{T}(\theta)\,F_{\text{tip}}
+\tag{8.2}
+$$
+
+$$
+\tau \;=\; M(\theta)\,\ddot{\theta} \;+\; C(\theta,\dot{\theta})\,\dot{\theta} \;+\; g(\theta) \;+\; J^{T}(\theta)\,F_{\text{tip}}
+\tag{8.3}
+$$
+
+$$
+\tau \;=\; M(\theta)\,\ddot{\theta} \;+\; \dot{\theta}^{T}\Gamma(\theta)\dot{\theta} \;+\; g(\theta) \;+\; J^{T}(\theta)\,F_{\text{tip}}
+\tag{8.4}
+$$
+
+**(a)** List the variables common to all of the equations, what they represent, their dimension, how they are derived, and any constraints they must always follow or properties they must satisfy.
+
+**(b)** For the unique variables in each of the equations, describe what they represent and provide the dimension.
+
+
+<details markdown="1">
+<summary><strong>Solutions</strong></summary>
+
+**EXERCISE 8:** *(this exercise is a continuation of exercise 1)*
+
+The Jacobian relating joint velocities $\dot{\theta}$ to the velocity of the end-effector $(\dot{x}_2,\dot{y}_2)$ is
+$$
+J(\theta)=
+\begin{bmatrix}
+-\theta_2 \sin\theta_1 & \ \cos\theta_1 \cr
+\ \theta_2 \cos\theta_1 & \ \sin\theta_1
+\end{bmatrix}.
+$$
+
+and the end-effector mass matrix is
+$$
+\Lambda(\theta)=J^{-T} M J^{-1}.
+$$
+
+We are interested in the ellipse $\Lambda(\theta)[\ddot{x}_2\ \ddot{y}_2]^T$ (in the $(f_x,f_y)$ space) when the end-effector acceleration is a unit vector.  
+The orientation of this ellipse rotates with $\theta_1$, so we can just consider the case for a particular constant $\theta_1$, i.e., $\theta_1=0$ (the end-effector is at $(x_2,y_2)=(\theta_2,0)$). In this case, a force applied to the end-effector in the $f_x$ direction acts to extend or retract joint 2 while a force in the $f_y$ direction acts to rotate the robot about joint 1.
+
+Evaluating $\Lambda(\theta)$ with $\theta_1=0$, we get the diagonal matrix
+$$
+\begin{bmatrix}
+m_2 & 0\cr
+0 & \dfrac{(I_1+I_2+m_1 L_1^{2}+m_2 \theta_2^{2})}{\theta_2^{2}}
+\end{bmatrix}
+\;=\;
+\begin{bmatrix}
+m_2 & 0\cr
+0 & \dfrac{(k+m_2 \theta_2^{2})}{\theta_2^{2}}
+\end{bmatrix},
+$$
+where $k$ is a positive constant. Since the matrix is diagonal, the principal axes of the ellipse $\Lambda(\theta)[\ddot{x}_2\ \ddot{y}_2]^T$ (where the end-effector acceleration is a unit vector) are aligned with the $f_x$ and $f_y$ axes and the lengths of the principal components are the entries along the diagonal.
+
+The apparent mass at the end-effector in the radial ($x$) direction is $m_2$, i.e., it is independent of $\theta_2$. The apparent mass in the tangential ($y$) direction depends on $\theta_2$, however. As $\theta_2$ approaches zero from above, the bottom-right component of $\Lambda$ approaches infinity. This means large $f_y$ forces are needed to accelerate the tip in the $y$ direction. This is because the torque about joint 1 provided by a force $f_y$ through the end-effector tends to zero as the end-effector approaches joint 1, and therefore $f_y$ must become large to generate the angular acceleration of the inertia about joint 1 needed to generate a modest $\ddot{y}_2$ acceleration. Accordingly, the principal axis of the end-effector mass ellipse in the $f_y$ direction becomes large (Figure 8.8). As $\theta_2$ approaches infinity, the bottom-right element of $\Lambda$ drops to $m_2$, and the end-effector mass matrix ellipse approaches a circle: the end-effector feels like a mass $m_2$ in every direction.
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/Dynamics/8.8.png" width="450" height="auto" alt="Fig 8.8">
+  <figcaption>
+    <strong>Figure 8.8.</strong>The end-effector mass matrix $\Lambda(\theta)$ represented as the ellipse of forces that must be applied to the end-effector to create a circle of accelerations $(\ddot{x}_2,\ \ddot{y}_2)$. As $\theta_2$ goes to infinity, the magnitude of the force required to generate a unit acceleration $(0,\ \ddot{y}_2)$ approaches $m_2$, i.e., the robot feels like a point mass with mass $m_2$.
+  </figcaption>
+</figure>
+
+---
+
+**EXERCISE 9:** 
+
+**(a)**
+* \$\tau\$: the torque or force at each of the joints represented by the generalized coordinates. Dimensions are \$n \times 1\$ array.
+* \$M(\theta)\$: the configuration dependent mass matrix. Dimensions are \$n \times n\$ matrix. \$M\$ must be symmetric and positive definite.
+* \$\theta\$: The generalized coordinates for the joints. Dimensions are \$n \times 1\$ array.
+* \$\ddot{\theta}\$: The acceleration of the joints represented by the generalized coordinates. Dimensions are \$n \times 1\$ array.
+* \$J(\theta)\$: The Jacobian (depends on configuration \$\theta\$). Dimensions are \$n \times n\$ matrix.
+* \$\mathbf{F}\_{\text{tip}}\$: The force applied at the tip of the robot. Dimensions are \$n \times 1\$ array.
+
+**(b)**
+* **8.1:** The most general representation, and \$h(\theta,\dot{\theta})\$ is an \$n \times 1\$ array that contains the centripetal, coriolis, and gravity terms.
+* **8.2:** \$c(\theta,\dot{\theta})\$ is an \$n \times 1\$ array that contains the centripetal and coriolis terms, and \$g(\theta)\$ is an \$n \times 1\$ array that contains the gravity terms.
+* **8.3:** \$C(\theta,\dot{\theta})\$ is the \$n \times n\$ Coriolis matrix.
+* **8.4:** \$\Gamma(\theta)\$ is the \$n \times n \times n\$ Christoffel matrix. Emphasizes that the Coriolis and centripetal (velocity product) terms are quadratic in the velocity and that \$\Gamma\$ depends only on \$\theta\$.
+
+</details>
 
 </details>
 
@@ -1949,64 +2701,39 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 
 ## Mathematical Development Questions
 
+Here’s a polished version of your text with corrected grammar and style:
+
+---
+
+## Mathematical Development Questions
+
 For additional practice and deeper derivations, see the **PDF:** [Modern Robotics – Practice Exercises](https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf). The **dynamics problems begin on page 55**, and the **solutions are on page 62**.
+
+Other exam-level exercises and their solutions are also available here:
+
+* [SNU 2017 Exams](https://hades.mech.northwestern.edu/images/2/28/SNU-2017-exams.pdf)
+* [SNU 2018 Exams](https://hades.mech.northwestern.edu/images/5/56/SNU-2018-exams.pdf)
+* [SNU 2019 Exams](https://hades.mech.northwestern.edu/images/0/0d/SNU-2019-exams.pdf)
+* [SNU 2020 Exams](https://hades.mech.northwestern.edu/images/2/23/SNU-2020-exams.pdf)
 
 ---
 
 ## Resources
 
 ### Books
-- [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.
+- <a id="ref1"></a> [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.
 
-- [Springer Handbook of Robotics ](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_3) (Chapter 3. Dynamics)
+- <a id="ref2"></a> [Springer Handbook of Robotics ](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_3) (Chapter 3. Dynamics)
 
 ### Videos
 
-- Contents shared by **[Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html)**, Professor of Mechanical Engineering at [Northwestern University](https://www.northwestern.edu/).
+- <a id="ref3"></a> Contents shared by **[Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html)**, Professor of Mechanical Engineering at [Northwestern University](https://www.northwestern.edu/).
 
 ### Exercices 
 
-- **Modern Robotics — Practice Exercises (PDF)** (Dec 6, 2018).  
+- <a id="ref4"></a> **Modern Robotics — Practice Exercises (PDF)** (Dec 6, 2018).  
   *Supplemental to* **Modern Robotics: Mechanics, Planning, and Control** (Cambridge University Press, 2017).  
   Contributions: Tito Fernandez, Kevin M. Lynch, Huan Weng, Zack Woodruff.  
   Dynamics exercises start on **p. 55**; solutions on **p. 62**.  
   [https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf](https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf)
 
-
-<!-- 
-Let us start by introducing the projection of the world to an image plane. Assume that a point in the world $(X, Y, Z)$ has coordinates $(X_{ci}, Y_{ci}, Z_{ci})$ with respect to the coordinate system of a camera $c_i$, related to each other by the following transformation:
-
-$$\begin{pmatrix} X_{ci} \\ Y_{ci} \\ Z_{ci} \end{pmatrix} = R_i \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix} + T_i$$
-
-where $R_i$ is a rotation matrix whose columns are the world axes with respect to the camera. The translation vector $T_i$ is starting from the origin of the camera and ending at the origin of the world coordinate system.
-
-The rotation matrix is orthogonal, $R^T R = I\$, with determinant one. We assume that the center of projection is the origin of the coordinate system and that the optical axis is the $Z_{ci}$ axis of the camera. If we assume that the image plane is the plane $Z_{ci} = 1$, then the image coordinates $(x_i, y_i)$ are given by:
-
-$$
-x_i = \frac{X_{ci}}{Z_{ci}}, \quad y_i = \frac{Y_{ci}}{Z_{ci}} \tag{32.2}
-$$
-
-In practice, what we measure are the pixel coordinates $(u_i, v_i)$ in the image, which are related to the image coordinates $(x_i, y_i)$ with the affine transformation:
-
-$$
-u_i = f (\alpha x_i + \beta y_i + c_u), \quad v_i = f(y_i + c_v) \tag{32.3}
-$$
-
-where $f$ is the distance of the image plane to the projection center measured in pixels. It is also called the focal length, because they are considered approximately equal. The aspect ratio $\alpha$ is a scaling induced by nonsquare sensor cells or different sampling rates horizontally and vertically. The skew factor $\beta$ accounts for a shearing induced by a nonperfectly frontal image plane. The image center $(c_u, c_v)$ is the point of intersection of the image plane with the optical axis, called the image center. These five parameters are called intrinsic parameters, and the process of recovering them is called intrinsic calibration. Upon recovering them, we can talk about a calibrated system, and we can work with the image coordinates $(x_i, y_i)$ instead of the pixel coordinates $(u_i, v_i)$.
-
-In many vision systems, particularly on mobile robots, wide-angle lenses introduce a radial distortion around the image center, which can be modeled polynomially:
-
-$$
-x_{dist} = x_i \left(1 + k_1 r + k_2 r^2 + k_3 r^3 + \dots \right)
-$$
-
-$$
-y_{dist} = y_i \left(1 + k_1 r + k_2 r^2 + k_3 r^3 + \dots \right)
-$$
-
-$$
-r^2 = x_i^2 + y_i^2
-$$
-
-We temporarily assume that the image center is at $(0,0)$. The image coordinates $(x_i, y_i)$ in equation (32.3) should be replaced with the distorted coordinates $(x_{dist}, y_{dist})$.
- -->

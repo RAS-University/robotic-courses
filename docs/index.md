@@ -41,32 +41,35 @@ Explore the structured robotics courses below, designed to guide you from fundam
 **Chapter 0:** [Mathematical Foundation](mathematical-foundation) - In progress
 
 **Chapter 1: Basics of Motion Control**
--  [Control Variables](Variables) - In progress
 -  [Kinematics](kinematics) - In progress
 -  [Dynamics](dynamics) - In progress
+-  [Close-loop Control](closeloop) 
 -  [Proportional Integral Derivative](pid) - In progress
 -  [Force Control](force-control) - In progress
 
-**Chapter 2: Sensing for Robotics**
+**Chapter 2: Sensing in Robotics**
+-  [Sensors](new-sensors-for-robotics) - In progress
 -  [Vision for Robotics](vision-for-robotics) - In progress
--  [Haptics for Robotics](haptics-for-robotics) 
--  [New Sensors for Robotics](new-sensors-for-robotics) - In progress
--  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI)
--  [From Sensing to Perception](sensing-and-perception)
+-  [Haptics for Robotics](haptics-for-robotics) - In progress
 
-**Chapter 3: Motion Control and Planning**
--  [Advanced Kinematics for Motion Planning](singularities) - In progress
--  [Operational Space and Null Space Control](Null-Space)
--  [Sampling Based Planning](sampling-planning)
--  [Dynamical-Systems-Based Planning](DS-planning) - In progress
+**Chapter 4: Motion Planning and Navigation**
+-  [Sampling-Based Planning](sampling-planning) 
 -  [Geometric-Methods for Planing](geometry-planning) 
+-  [Dynamical-Systems-Based Planning](DS-planning) - In progress
 -  [Simultaneous Localization and Mapping](SLAM)
 
-**Chapter 3: Manipulation**
--  [Grasping](grasping) - In progress
+**Chapter 5: Manipulation**
+-  [Singularities and Advanced Kinematics Analysis](singularities) - In progress
+-  [Operational Space and Null Space Control](Null-Space) 
+-  [Grasping](grasping)  - In progress
+-  [Dexterous Manipulation](dexterousmanipulation) 
 
+**Chapter 6: Locomotion**
+-  [Central Pattern Generator](wholebody)
+-  [Stability](wholebody)
+-  [Whole-Body Control](wholebody)
 
-**Chapter 4: Robot Learning**
+**Chapter 7: Robot Learning**
 -  [Learning from Demonstration](LfD) - In progress
 -  [Reinforcement Learning](RL)
 -  [End-to-End Learning](End-to-End)
@@ -75,33 +78,31 @@ Explore the structured robotics courses below, designed to guide you from fundam
 -  [Constraint Learning](Constraint)
 -  [Transfer Learning](Transfer) - In progress
 
-**Chapter 5: Robot Design and Control**
--  [Aerial Robotics](Drones) - In progress
--  [Legged Robots](Legged)
--  [Whole-Body Control - Humanoids](Humanoids)
--  [Underwater Robotics](Underwater)
--  [Space Exploration](Space)
--  [Micro-Robotics](Microrobots)
+**Chapter 10: Human-Robot Interaction**
+-  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI) - In progress
+-  [Safety in Design and Control](Safety)
+-  [Shared-Control](Shared-Control)
+-  [Cognitive Robotics](Social)
 
-**Chapter 6: Soft Robotics**
+**Chapter 9: Soft Robotics**
 -  [Materials](Materials)
 -  [Design and Fabrication](Fabrication)
 -  [Modeling and Control](Mod-Control)
 -  [Hybrid Design](Hybrid)
   
-**Chapter 7: Robots for Humans**
--  [Safety in Design and Control](Safety)
--  [Shared-Control](Shared-Control)
--  [Socially-Aware Control](Social)
--  [Rehabilitation Devices](Rehabilitation)
+**Chapter 10: Robot Applications**
+-  [Aerial Robotics](Drones) - In progress
+-  [Humanoids](Humanoids)
+-  [Underwater Robotics](Underwater)
+-  [Space Exploration](Space)
+-  [Micro-Robotics](Microrobots)
 -  [Exoskeletons](Exoskeletons)
--  [Surgical Robots](surgical) - In Progress
 -  [Educational Robotics](Education)
+-  [Surgical Robotics](surgical) - In Progress
 
-**Chapter 8: Novel Trends in Robotics**
+**Chapter 11: Novel Trends in Robotics**
 -  [Supernumerary Limbs](Supernumerary)
--  [Biocompatible Design](Biocompatible)
--  [Sustainable Design of Robots](Sustainable) - In Progress
+-  [Sustainable Robotics](Sustainable) - In Progress
 -  [Robotics and Arts](Arts)
 
 Choose a topic to start your journey, and progressively build your robotics expertise!

@@ -38,7 +38,7 @@ The RAS-U provides a structured and comprehensive robotics course for self-learn
 
 RAS-U is funded by the <a href="https://www.ieee-ras.org/">IEEE Robotics and Automation Society</a>.
 
-# 📚 [Courses](docs/index)
+# 📚 [Robotics Courses](docs/index)
 
 RAS-U is composed of modules, each of which covers a robotics topic. 
 

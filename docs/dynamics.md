@@ -901,8 +901,6 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
 
 </details>
 
-## QUESTION TOOO EASY, make them harder for appropriate level: student interested in robotic, second year in undergraduate in engeneering school who has the base on kinematics, physics, linear algebra and analysis
-
 <details markdown = "1">
 <summary>Mathematical exercises</summary>
 

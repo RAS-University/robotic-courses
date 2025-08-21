@@ -88,8 +88,8 @@ If you want to make robots that **move like athletes**, **adapt like animals**, 
 ![Boston Dynamics](https://www.youtube.com/watch?v=I44_zbEwz_w)
 ><sub>Boston Dynamics Atlas crawling, running, and balancing. YouTube video, April 2025. Available at: https://www.youtube.com/watch?v=I44_zbEwz_w</sub>
 
-> Similar robotic models are available in *Webots*, where you can explore and analyze their implementations. These can be accessed via  
-> **File → Open Sample Robot → robots\boston_dynamics**.  
+> Similar robotic models are available in ***Webots***, where you can explore and analyze their implementations. These can be accessed via  
+> ***File → Open Sample Robot → robots\boston_dynamics***.  
 > By interacting with the provided code, it is possible to experiment with control strategies and observe the resulting behaviors in simulation.
 
 ---
@@ -121,14 +121,13 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
   <summary>Conceptual Questions</summary>
 
 <!-- Question 1 -->
-<p><strong>Question 1: Which of the following best describes the difference between kinematics and dynamics?</strong></p>
+<p><strong>Question 1: Which statement correctly distinguishes kinematics from dynamics?</strong></p>
 <form id="q0-1">
-  <input type="radio" name="q0-1" value="A"> Kinematics and dynamics both describe forces<br>
-  <input type="radio" name="q0-1" value="B"> Kinematics is about motion caused by forces, while dynamics is only about geometry<br>
-  <input type="radio" name="q0-1" value="C"> Kinematics describes motion without forces, dynamics includes forces and torques<br>
-  <input type="radio" name="q0-1" value="D"> They are the same thing<br>
+  <input type="radio" name="q0-1" value="A"> Kinematics is about motion caused by forces, while dynamics is only about geometry<br>
+  <input type="radio" name="q0-1" value="B"> Kinematics describes motion without forces, dynamics includes forces and torques<br>
+  <input type="radio" name="q0-1" value="C"> There is no real difference; the terms are interchangeable.<br>
   <button type="button"
-    onclick="checkTrueFalse('q0-1', 'C', 
+    onclick="checkTrueFalse('q0-1', 'B', 
       'Correct! Kinematics deals with geometry and motion; dynamics includes forces and torques.',
       'Not quite. Think about what causes motion, not just how it happens.')">
     Check Answer
@@ -245,7 +244,8 @@ This equation is central to **model-based control**, **trajectory planning**, an
 
 
 We can use it in two ways:
-***Forward Dynamics::***
+
+* ***Forward Dynamics::***
 **Given**: torques $\tau$  
 **Compute**: joint accelerations $\ddot{\theta}$ (→ then velocities and positions)
 
@@ -255,7 +255,7 @@ $$
 \ddot{\theta} = M(\theta)^{-1} \left( \tau - c(\theta, \dot{\theta}) - g(\theta) \right)
 $$
 
-***Inverse Dynamics::***
+* ***Inverse Dynamics::***
 **Given**: desired motion $\theta(t), \dot{\theta}(t), \ddot{\theta}(t)$  
 **Compute**: required joint torques $\tau$
 
@@ -288,13 +288,13 @@ You can think of forward and inverse dynamics like this:
 <!-- Question 2 -->
 <p><strong>Question 2: What is the advantage of using the Lagrangian method for robots with many joints?</strong></p>
 <form id="lag-q2">
-  <input type="radio" name="lag-q2" value="A"> It avoids dealing directly with vector calculus<br>
-  <input type="radio" name="lag-q2" value="B"> It automatically provides equations using a scalar function<br>
-  <input type="radio" name="lag-q2" value="C"> It only works for static robots<br>
+  <input type="radio" name="lag-q2" value="A"> It does not require any mass or inertia parameters.<br>
+  <input type="radio" name="lag-q2" value="B"> It scales well: derive dynamics from energies to get the structured form $M(\theta)\ddot{\theta} + c(\theta, \dot{\theta}) + g(\theta)$ without summing forces link-by-link.<br>
+  <input type="radio" name="lag-q2" value="C"> It eliminates Coriolis and centrifugal terms from the equations.<br>
   <input type="radio" name="lag-q2" value="D"> It ignores external forces<br>
   <button type="button"
-    onclick="checkTrueFalse('lag-q2', 'B', 
-      'Correct! The Lagrangian method uses energy to generate motion equations, very useful for multi-joint systems.',
+    onclick="checkTrueFalse2('lag-q2', 'B', 
+      'Correct! The energy-based approach yields compact, scalable equations for many-DOF robots.',
       'Not quite. Think about what makes it easier to apply to multiple joints.')">
     Check Answer
   </button>
@@ -302,7 +302,7 @@ You can think of forward and inverse dynamics like this:
 </form>
 
 <!-- Question 3 -->
-<p><strong>Question 3: Which of the following could be a "generalized coordinate" in robotics?</strong></p>
+<!-- <p><strong>Question 3: Which of the following could be a "generalized coordinate" in robotics?</strong></p>
 <form id="lag-q3">
   <input type="radio" name="lag-q3" value="A"> Joint angle<br>
   <input type="radio" name="lag-q3" value="B"> Position of the center of mass<br>
@@ -315,7 +315,7 @@ You can think of forward and inverse dynamics like this:
     Check Answer
   </button>
   <p id="lag-q3-feedback"></p>
-</form>
+</form>  -->
 
 </details>
 
@@ -326,7 +326,7 @@ You can think of forward and inverse dynamics like this:
 ><sub>Modern Robotics, Chapter 8.1: Lagrangian Formulation of Dynamics (Part 2 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=BjD-pL819LA</sub>
 
 
-In this video, we take a deeper look at the **velocity-product terms** in the dynamic equations of motion:
+In this video, we take a deeper look at the **velocity-product terms $c(\theta, \dot{\theta})$** in the dynamic equations of motion:
 
 $$
 \tau = M(\theta)\ddot{\theta} + c(\theta, \dot{\theta}) + g(\theta)
@@ -483,7 +483,7 @@ Understanding these terms is essential for **accurate simulation, control, and p
   <button type="button"
     onclick="checkTrueFalse2('q3b-3', 'C',
       'Correct! Christoffel symbols are computed from derivatives of $M(\\theta)$ and define how velocities interact.',
-      'Incorrect. They’re derived from how the mass matrix changes with configuration.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q3b-3-feedback"></p>
@@ -515,7 +515,7 @@ Understanding these terms is essential for **accurate simulation, control, and p
   <button type="button"
     onclick="checkTrueFalse2('q3b-5', 'C',
       'Correct! $c(\\theta, \\dot{\\theta})$ is quadratic in $\\dot{\\theta}$, which is why we can write it in this form.',
-      'Not quite. The form $\\dot{\\theta}^T \\Gamma \\dot{\\theta}$ shows that $c$ is quadratic in velocity.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q3b-5-feedback"></p>
@@ -861,7 +861,7 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
   <button type="button"
     onclick="checkTrueFalse2('q2-2', 'C', 
       'Correct! The mass matrix usually varies with the robot configuration, it is not constant.',
-      'Incorrect. The mass matrix is not constant in general.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q2-2-feedback"></p>
@@ -870,14 +870,14 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
 <!-- Question 3 -->
 <p><strong>Question 3: Why doesn't a robot's end-effector feel like a point mass when you push it by hand?</strong></p>
 <form id="q2-3">
-  <input type="radio" name="q2-3" value="A"> Robots don’t have mass<br>
+  <input type="radio" name="q2-3" value="A"> Because the end-effector is rigidly fixed and cannot move independently of the robot’s structure.<br>
   <input type="radio" name="q2-3" value="B"> Friction at joints causes this<br>
   <input type="radio" name="q2-3" value="C"> The apparent inertia varies with configuration and direction<br>
   <input type="radio" name="q2-3" value="D"> End-effectors are programmed to resist force<br>
   <button type="button"
     onclick="checkTrueFalse('q2-3', 'C', 
       'Correct! The robot’s apparent mass depends on its joint configuration and acceleration direction.',
-      'Not quite. This is caused by the configuration-dependent nature of the mass matrix.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q2-3-feedback"></p>
@@ -893,13 +893,15 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
   <button type="button"
     onclick="checkTrueFalse('q2-4', 'C', 
       'Correct! This is the kinetic energy of the robot, expressed using joint velocities and the mass matrix.',
-      'Not quite. This is the standard quadratic form for kinetic energy in joint space.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q2-4-feedback"></p>
 </form>
 
 </details>
+
+## QUESTION TOOO EASY, make them harder for appropriate level: student interested in robotic, second year in undergraduate in engeneering school who has the base on kinematics, physics, linear algebra and analysis
 
 <details markdown = "1">
 <summary>Mathematical exercises</summary>
@@ -1183,7 +1185,7 @@ These equations form the **building blocks** for modeling full robot dynamics us
   <button type="button"
     onclick="checkTrueFalse2('q3-2', 'C', 
       'Correct! The twist includes both linear velocity $v_b$ and angular velocity $\\omega_b$.',
-      'Incorrect. The twist captures both types of motion — rotation and translation.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q3-2-feedback"></p>
@@ -1199,7 +1201,7 @@ These equations form the **building blocks** for modeling full robot dynamics us
   <button type="button"
     onclick="checkTrueFalse2('q3-3', 'B', 
       'Correct! $I_b$ is symmetric and positive definite by definition.',
-      'Incorrect. Only answer B reflects the general mathematical properties of inertia matrices.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q3-3-feedback"></p>
@@ -1215,7 +1217,7 @@ These equations form the **building blocks** for modeling full robot dynamics us
   <button type="button"
     onclick="checkTrueFalse('q3-4', 'C', 
       'Correct! Aligning the frame with principal axes diagonalizes the inertia matrix.',
-      'Incorrect. The goal is simplification, especially making the inertia matrix diagonal.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q3-4-feedback"></p>
@@ -1226,12 +1228,12 @@ These equations form the **building blocks** for modeling full robot dynamics us
 <form id="q3-5">
   <input type="radio" name="q3-5" value="A"> Only linear velocity terms<br>
   <input type="radio" name="q3-5" value="B"> Only constant coefficients<br>
-  <input type="radio" name="q3-5" value="C"> Velocity-product (nonlinear) terms<br>
-  <input type="radio" name="q3-5" value="D"> Only time-invariant matrices<br>
+  <input type="radio" name="q3-5" value="C"> Only time-invariant matrices<br>
+  <input type="radio" name="q3-5" value="D"> Velocity-product (nonlinear) terms<br>
   <button type="button"
-    onclick="checkTrueFalse2('q3-5', 'C', 
+    onclick="checkTrueFalse2('q3-5', 'D', 
       'Correct! The cross-product term $\\omega_b \\times (I_b \\omega_b)$ is a nonlinear velocity-product term.',
-      'Incorrect. This equation includes angular velocity multiplied by itself — that’s a velocity-product term.')">
+      'Incorrect. Try again.')">
     Check Answer
   </button>
   <p id="q3-5-feedback"></p>
@@ -1370,14 +1372,14 @@ $$
 <!-- Question 2 -->
 <p><strong>Question 1: Why is the spatial inertia matrix $G_b$ a 6×6 matrix?</strong></p>
 <form id="q3-2-2">
-  <input type="radio" name="q3-2-2" value="A"> It includes both linear and angular mass properties<br>
+  <input type="radio" name="q3-2-2" value="A"> It defines a 3D transformation<br>
   <input type="radio" name="q3-2-2" value="B"> It represents a block diagonal rotation matrix<br>
   <input type="radio" name="q3-2-2" value="C"> It tracks six different link positions<br>
-  <input type="radio" name="q3-2-2" value="D"> It defines a 3D transformation<br>
+  <input type="radio" name="q3-2-2" value="D"> It includes both linear and angular mass properties<br>
   <button type="button"
-    onclick="checkTrueFalse('q3-2-2', 'A', 
+    onclick="checkTrueFalse('q3-2-2', 'D', 
       'Correct! The 6x6 matrix captures both linear and rotational inertia.',
-      'Try again. Think about how spatial inertia extends beyond rotation.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q3-2-2-feedback"></p>
@@ -1393,7 +1395,7 @@ $$
   <button type="button"
     onclick="checkTrueFalse('q3-2-3', 'B', 
       'Correct! The Lie bracket captures the change in motion due to interacting twists.',
-      'Not quite. Consider what happens when multiple motions interact.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q3-2-3-feedback"></p>
@@ -1409,7 +1411,7 @@ $$
   <button type="button"
     onclick="checkTrueFalse('q3-2-4', 'B', 
       'Correct! Principal axes simplify the matrix, making computations more efficient.',
-      'Think again. What happens to the inertia matrix when the off-diagonal terms vanish?')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q3-2-4-feedback"></p>
@@ -1424,8 +1426,8 @@ $$
   <input type="radio" name="q3-2-5" value="D"> A linear projection of angular velocity<br>
   <button type="button"
     onclick="checkTrueFalse('q3-2-5', 'C', 
-      'Correct! This term captures Coriolis and centrifugal forces due to motion.',
-      'Try again. This term accounts for motion-induced forces, not static ones.')">
+      'Correct! This term captures Coriolis and centrifugal forces due to motion (velocity-product term).',
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q3-2-5-feedback"></p>
@@ -1628,7 +1630,7 @@ After forward and backward passes, we obtain:
   <button type="button"
     onclick="checkTrueFalse('q4-1', 'B', 
       'Correct! The Newton-Euler inverse dynamics algorithm computes the required joint torques.',
-      'Not quite. The goal is to compute torques given joint positions, velocities, and accelerations.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q4-1-feedback"></p>
@@ -1639,12 +1641,12 @@ After forward and backward passes, we obtain:
 <form id="q4-2">
   <input type="radio" name="q4-2" value="A"> End-effector position only<br>
   <input type="radio" name="q4-2" value="B"> Joint torques<br>
-  <input type="radio" name="q4-2" value="C"> Twists and accelerations of each link<br>
-  <input type="radio" name="q4-2" value="D"> Inertia matrices<br>
+  <input type="radio" name="q4-2" value="C"> Inertia matrices<br>
+  <input type="radio" name="q4-2" value="D"> Twists and accelerations of each link<br>
   <button type="button"
-    onclick="checkTrueFalse('q4-2', 'C', 
+    onclick="checkTrueFalse('q4-2', 'D', 
       'Correct! The forward pass computes configuration, twist, and acceleration for each link.',
-      'Not quite. The forward iteration is about computing each link’s twist and acceleration.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q4-2-feedback"></p>
@@ -1660,14 +1662,14 @@ After forward and backward passes, we obtain:
   <button type="button"
     onclick="checkTrueFalse('q4-3', 'B', 
       'Correct! Only the component of the wrench along the screw axis needs to be applied by the actuator.',
-      'Not quite. The torque is the projection of the wrench onto the screw axis.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q4-3-feedback"></p>
 </form>
 
 <!-- Question 4 -->
-<p><strong>Question 4: What role does the Lie bracket term $\text{ad}_{A_i \dot{\theta}_i} V_i$ play in the algorithm?</strong></p>
+<!-- <p><strong>Question 4: What role does the Lie bracket term $\text{ad}_{A_i \dot{\theta}_i} V_i$ play in the algorithm?</strong></p>
 <form id="q4-4">
   <input type="radio" name="q4-4" value="A"> It accounts for gravitational acceleration<br>
   <input type="radio" name="q4-4" value="B"> It modifies the screw axis orientation<br>
@@ -1680,10 +1682,10 @@ After forward and backward passes, we obtain:
     Check Answer
   </button>
   <p id="q4-4-feedback"></p>
-</form>
+</form> -->
 
 <!-- Question 5 -->
-<p><strong>Question 5: Why is the Newton-Euler algorithm considered efficient?</strong></p>
+<p><strong>Question 4: Why is the Newton-Euler algorithm considered efficient?</strong></p>
 <form id="q4-5">
   <input type="radio" name="q4-5" value="A"> It uses symbolic computation<br>
   <input type="radio" name="q4-5" value="B"> It ignores velocity and acceleration<br>
@@ -1692,7 +1694,7 @@ After forward and backward passes, we obtain:
   <button type="button"
     onclick="checkTrueFalse('q4-5', 'C', 
       'Correct! Its recursive structure eliminates the need for differentiation, making it fast and scalable.',
-      'Not quite. The algorithm’s efficiency comes from being recursive and avoiding differentiation.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q4-5-feedback"></p>
@@ -1968,11 +1970,7 @@ It complements the Newton–Euler **inverse-dynamics** algorithm derived in the 
    Call inverse dynamics **n times** (one per joint):  
    * For call $i$, set $\ddot{\theta}$ = 1, all other $\ddot{\theta}$ = 0 , and set gravity, $F_{\text{tip}}$, and $\dot{\theta}$ to zero.  
 
-   * The returned torque vector is **column $i$** of the mass matrix  
-
-     $$
-     M(\theta)
-     $$  
+   * The returned torque vector is **column $i$** of the mass matrix $M(\theta)$  
 
    * After n calls, assemble all columns to obtain the full symmetric matrix $M(\theta)$.
 
@@ -2015,39 +2013,39 @@ With no friction, total mechanical **energy** (kinetic + potential) should remai
   <summary>Conceptual Questions</summary>
 
 <!-- Question 1 -->
-<p><strong>Question&nbsp;1: What is the primary purpose of the forward-dynamics algorithm for an open-chain robot?</strong></p>
+<p><strong>Question 1: What is the primary purpose of the forward-dynamics algorithm for an open-chain robot?</strong></p>
 <form id="q5-1">
   <input type="radio" name="q5-1" value="A"> To compute joint torques from desired accelerations<br>
-  <input type="radio" name="q5-1" value="B"> To determine joint accelerations&nbsp;$(\ddot{\theta})$ given torques, positions, and velocities<br>
+  <input type="radio" name="q5-1" value="B"> To measure joint friction experimentally<br>
   <input type="radio" name="q5-1" value="C"> To generate 3-D graphics of robot motion<br>
-  <input type="radio" name="q5-1" value="D"> To measure joint friction experimentally<br>
+  <input type="radio" name="q5-1" value="D"> To determine joint accelerations $(\ddot{\theta})$ given torques, positions, and velocities<br>
   <button type="button"
-    onclick="checkTrueFalse('q5-1','B',
+    onclick="checkTrueFalse('q5-1','D',
       'Correct! Forward dynamics maps applied torques to resulting accelerations.',
-      'Not quite. Forward dynamics solves for accelerations, not torques.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q5-1-feedback"></p>
 </form>
 
 <!-- Question 2 -->
-<p><strong>Question&nbsp;2: How many inverse-dynamics calls are required to build the mass matrix $M(\theta)$ for an n-DOF robot?</strong></p>
+<p><strong>Question 2: How many inverse-dynamics calls are required to build the mass matrix $M(\theta)$ for an n-DOF robot?</strong></p>
 <form id="q5-2">
   <input type="radio" name="q5-2" value="A"> 1<br>
   <input type="radio" name="q5-2" value="B"> n<br>
-  <input type="radio" name="q5-2" value="C"> n&nbsp;+&nbsp;1<br>
+  <input type="radio" name="q5-2" value="C"> n + 1<br>
   <input type="radio" name="q5-2" value="D"> 2n<br>
   <button type="button"
     onclick="checkTrueFalse2('q5-2','B',
-      'Correct! One inverse-dynamics call per joint (with unit acceleration) yields each column of $M$.',
-      'Try again. It takes one call per column of the mass matrix, i.e., n calls.')">
+      'Correct! One inverse-dynamics call per joint (with unit acceleration) yields each column of $M$, i.e., n calls',
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q5-2-feedback"></p>
 </form>
 
 <!-- Question 3 -->
-<p><strong>Question&nbsp;3: The “bias torque” $\tau_{\text{bias}}$ (obtained with all $\ddot{\theta}=0$) contains which terms?</strong></p>
+<p><strong>Question 3: The “bias torque” $\tau_{\text{bias}}$ (obtained with all $\ddot{\theta}=0$) contains which terms?</strong></p>
 <form id="q5-3">
   <input type="radio" name="q5-3" value="A"> Only gravity<br>
   <input type="radio" name="q5-3" value="B"> Coriolis + gravity + end-effector wrench<br>
@@ -2056,39 +2054,39 @@ With no friction, total mechanical **energy** (kinetic + potential) should remai
   <button type="button"
     onclick="checkTrueFalse2('q5-3','B',
       'Correct! With zero accelerations, the inverse-dynamics output equals Coriolis, gravity, and any $J^T F_{tip}$ terms.',
-      'Not quite. Remember the bias call captures Coriolis, gravity, and external wrench effects.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q5-3-feedback"></p>
 </form>
 
 <!-- Question 4 -->
-<p><strong>Question&nbsp;4: When constructing column <i>i</i> of $M(\theta)$, which quantity is set to 1 while others are zero?</strong></p>
+<p><strong>Question 4: When constructing column <i>i</i> of $M(\theta)$, which quantity is set to 1 while others are zero?</strong></p>
 <form id="q5-4">
-  <input type="radio" name="q5-4" value="A"> Joint&nbsp;i velocity $\dot{\theta}_i$<br>
-  <input type="radio" name="q5-4" value="B"> Joint&nbsp;i acceleration $\ddot{\theta}_i$<br>
+  <input type="radio" name="q5-4" value="A"> Joint i velocity $\dot{\theta}_i$<br>
+  <input type="radio" name="q5-4" value="B"> Joint i acceleration $\ddot{\theta}_i$<br>
   <input type="radio" name="q5-4" value="C"> Gravity vector<br>
   <input type="radio" name="q5-4" value="D"> End-effector force magnitude<br>
   <button type="button"
     onclick="checkTrueFalse2('q5-4','B',
       'Correct! We set $\\ddot{\\theta}_i = 1$ (all others 0) to obtain column <i>i</i> of $M$.',
-      'Not quite. Only the chosen joint acceleration is set to one while all else is zero.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q5-4-feedback"></p>
 </form>
 
 <!-- Question 5 -->
-<p><strong>Question&nbsp;5: In a simulation with zero torques and zero friction, why should the robot’s total mechanical energy remain nearly constant?</strong></p>
+<p><strong>Question 5: In a simulation with zero torques and zero friction, why should the robot’s total mechanical energy remain nearly constant?</strong></p>
 <form id="q5-5">
   <input type="radio" name="q5-5" value="A"> Numerical damping removes energy<br>
-  <input type="radio" name="q5-5" value="B"> No external work or dissipation, so kinetic + potential energy is conserved<br>
+  <input type="radio" name="q5-5" value="B"> Because mass matrix is diagonal<br>
   <input type="radio" name="q5-5" value="C"> Gravity continuously adds energy<br>
-  <input type="radio" name="q5-5" value="D"> Because mass matrix is diagonal<br>
+  <input type="radio" name="q5-5" value="D"> No external work or dissipation, so kinetic + potential energy is conserved<br>
   <button type="button"
-    onclick="checkTrueFalse('q5-5','B',
+    onclick="checkTrueFalse('q5-5','D',
       'Correct! Without friction or input power, energy is conserved, giving a good validation check.',
-      'Not quite. Energy conservation holds when there is no dissipation and no external work.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q5-5-feedback"></p>
@@ -2098,6 +2096,7 @@ With no friction, total mechanical **energy** (kinetic + potential) should remai
 
 
 ### Chapter 6: Task-Space Dynamics
+
 > - Mapping dynamics from joint space to end-effector (operational) space  
 > - Operational space inertia matrix  
 > - Force control and impedance concepts
@@ -2162,7 +2161,7 @@ Task-space dynamics provides a powerful framework for advanced control strategie
   <summary>Conceptual Questions</summary>
 
 <!-- Question 1 -->
-<p><strong>Question&nbsp;1: In task-space dynamics, what does the matrix&nbsp;$\Lambda(\theta)$ represent?</strong></p>
+<p><strong>Question 1: In task-space dynamics, what does the matrix $\Lambda(\theta)$ represent?</strong></p>
 <form id="q6-1">
   <input type="radio" name="q6-1" value="A"> The Jacobian transpose<br>
   <input type="radio" name="q6-1" value="B"> The task-space mass matrix (apparent inertia at the end-effector)<br>
@@ -2171,14 +2170,14 @@ Task-space dynamics provides a powerful framework for advanced control strategie
   <button type="button"
     onclick="checkTrueFalse2('q6-1', 'B',
       'Correct!  $\\Lambda(\\theta)$ is the mass matrix expressed in task space.', 
-      'Not quite.  $\\Lambda(\\theta)$ is the apparent inertia felt at the end-effector.')">
+      'Not quite.  Try again.')">
     Check Answer
   </button>
   <p id="q6-1-feedback"></p>
 </form>
 
 <!-- Question 2 -->
-<p><strong>Question&nbsp;2: Which term appear on the right-hand side of the task-space equation
+<p><strong>Question 2: Which term appear on the right-hand side (total force balance needed to achieve the motion in task space) of the task-space equation
 $F_{\text{ee}} = \Lambda(\theta)\dot{V} + \eta(\theta,V) + F_{\text{tip}}$?</strong></p>
 <form id="q6-2">
   <input type="radio" name="q6-2" value="A"> Only inertial (mass) forces<br>
@@ -2188,30 +2187,30 @@ $F_{\text{ee}} = \Lambda(\theta)\dot{V} + \eta(\theta,V) + F_{\text{tip}}$?</str
   <button type="button"
     onclick="checkTrueFalse2('q6-2', 'B',
       'Correct!  The total wrench is inertia ($\\Lambda\\dot{V}$) plus bias ($\\eta$) plus any applied wrench $F_{tip}$.',
-      'Not quite.  Remember the equation includes both inertia and bias terms.')">
+      'Not quite. Try again')">
     Check Answer
   </button>
   <p id="q6-2-feedback"></p>
 </form>
 
 <!-- Question 3 -->
-<p><strong>Question&nbsp;3: Why are $\Lambda$ and $\eta$ expressed as functions of joint positions $\theta$ rather than the end-effector pose&nbsp;$X$?</strong></p>
+<p><strong>Question 3: Why are $\Lambda$ and $\eta$ expressed as functions of joint positions $\theta$ rather than the end-effector pose $X$?</strong></p>
 <form id="q6-3">
   <input type="radio" name="q6-3" value="A"> Because $X$ is always identical to $\theta$<br>
-  <input type="radio" name="q6-3" value="B"> Because multiple joint configurations can result in the same end-effector pose<br>
-  <input type="radio" name="q6-3" value="C"> Because the Jacobian is always the identity matrix<br>
+  <input type="radio" name="q6-3" value="B"> Because the Jacobian is always the identity matrix<br>
+  <input type="radio" name="q6-3" value="C"> Because multiple joint configurations can result in the same end-effector pose<br>
   <input type="radio" name="q6-3" value="D"> For numerical convenience only<br>
   <button type="button"
-    onclick="checkTrueFalse2('q6-3', 'B',
+    onclick="checkTrueFalse2('q6-3', 'C',
       'Correct!  A given pose $X$ may correspond to several joint solutions, so the dynamics depend on the specific $\\theta$.',
-      'Not quite.  The mapping from joint space to task space is generally many-to-one.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q6-3-feedback"></p>
 </form>
 
 <!-- Question 4 -->
-<p><strong>Question&nbsp;4: Which condition must hold to express $\dot{V}$ directly in terms of $\ddot{\theta}$ and $\theta$?</strong></p>
+<p><strong>Question 4: Which condition must hold to express $\dot{V}$ directly in terms of $\ddot{\theta}$ and $\theta$?</strong></p>
 <form id="q6-4">
   <input type="radio" name="q6-4" value="A"> The Jacobian $J(\theta)$ must be invertible<br>
   <input type="radio" name="q6-4" value="B"> Gravity must be zero<br>
@@ -2220,14 +2219,14 @@ $F_{\text{ee}} = \Lambda(\theta)\dot{V} + \eta(\theta,V) + F_{\text{tip}}$?</str
   <button type="button"
     onclick="checkTrueFalse2('q6-4', 'A',
       'Correct!  An invertible Jacobian lets us solve $\\dot{V}=J\\ddot{\\theta}+\\dot{J}\\dot{\\theta}$ for $\\ddot{\\theta}$ or vice-versa.',
-      'Not quite.  The key requirement is that $J$ be non-singular so it can be inverted.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q6-4-feedback"></p>
 </form>
 
 <!-- Question 5 -->
-<p><strong>Question&nbsp;5: How does an externally applied end-effector wrench $F_{\text{tip}}$ enter the task-space dynamic equation?</strong></p>
+<!-- <p><strong>Question 5: How does an externally applied end-effector wrench $F_{\text{tip}}$ enter the task-space dynamic equation?</strong></p>
 <form id="q6-5">
   <input type="radio" name="q6-5" value="A"> It is multiplied by the Jacobian to produce joint torques<br>
   <input type="radio" name="q6-5" value="B"> It subtracts from the bias wrench<br>
@@ -2239,6 +2238,35 @@ $F_{\text{ee}} = \Lambda(\theta)\dot{V} + \eta(\theta,V) + F_{\text{tip}}$?</str
       'Not quite.  $F_{tip}$ is added (not subtracted or multiplied) in the task-space equation.')">
     Check Answer
   </button>
+  <p id="q6-5-feedback"></p>
+</form> -->
+
+<p><strong>Question 5:</strong> For a planar 2-DOF end effector, let:
+$
+J(\theta)=\begin{bmatrix}1&0\cr 0&2\end{bmatrix},
+M(\theta)=\begin{bmatrix}2&0\cr 0&8\end{bmatrix}.
+$
+The task-space mass matrix is defined by $\Lambda(\theta)=J(\theta)^{-T}\,M(\theta)\,J(\theta)^{-1}$.
+
+What is $\Lambda(\theta)$?</p>
+
+<form id="q6-5">
+  <input type="radio" name="q6-5" value="A">
+  $\begin{bmatrix}2&0\cr 0&2\end{bmatrix}$ <br>
+  <input type="radio" name="q6-5" value="B">
+  $\begin{bmatrix}2&0\cr 0&8\end{bmatrix}$ <br>
+  <input type="radio" name="q6-5" value="C">
+  $J(\theta)^{T}M(\theta)J(\theta)$<br>
+  <input type="radio" name="q6-5" value="D">
+  $\begin{bmatrix}1&0\cr 0&1\end{bmatrix}$ <br><br>
+
+  <button type="button"
+    onclick="checkTrueFalse2('q6-5','A',
+      'Correct!',
+      'Not quite. Try again.')">
+    Check Answer
+  </button>
+
   <p id="q6-5-feedback"></p>
 </form>
 
@@ -2464,7 +2492,7 @@ Constraint dynamics lets us model and control robots that must simultaneously **
   <summary>Conceptual Questions</summary>
 
 <!-- Question 1 -->
-<p><strong>Question&nbsp;1: What is the purpose of the projection matrix&nbsp;$P(\theta)$ in constrained dynamics?</strong></p>
+<p><strong>Question 1: What is the purpose of the projection matrix $P(\theta)$ in constrained dynamics?</strong></p>
 <form id="q7-1">
   <input type="radio" name="q7-1" value="A"> To invert the Jacobian<br>
   <input type="radio" name="q7-1" value="B"> To project torques onto the motion-producing subspace and remove constraint forces<br>
@@ -2473,30 +2501,30 @@ Constraint dynamics lets us model and control robots that must simultaneously **
   <button type="button"
     onclick="checkTrueFalse2('q7-1', 'B',
       'Correct!  $P$ eliminates the torque components that enforce constraints, leaving only motion-producing torques.',
-      'Not quite.  $P$ projects torques onto the unconstrained directions.')">
+      'Not quite. Try again. ">
     Check Answer
   </button>
   <p id="q7-1-feedback"></p>
 </form>
 
 <!-- Question 2 -->
-<p><strong>Question&nbsp;2: Constraint torques are expressed as $\tau_{\text{con}} = A^{\!\top}\lambda$.  What does the vector&nbsp;$\lambda$ represent?</strong></p>
+<p><strong>Question 2: Constraint torques are expressed as $\tau_{\text{con}} = A^{\!\top}\lambda$.  What does the vector $\lambda$ represent?</strong></p>
 <form id="q7-2">
   <input type="radio" name="q7-2" value="A"> Joint accelerations<br>
-  <input type="radio" name="q7-2" value="B"> Lagrange multipliers enforcing the constraints<br>
+  <input type="radio" name="q7-2" value="B"> Motor friction parameters<br>
   <input type="radio" name="q7-2" value="C"> Gravity coefficients<br>
-  <input type="radio" name="q7-2" value="D"> Motor friction parameters<br>
+  <input type="radio" name="q7-2" value="D"> Lagrange multipliers enforcing the constraints<br>
   <button type="button"
-    onclick="checkTrueFalse2('q7-2', 'B',
+    onclick="checkTrueFalse2('q7-2', 'D',
       'Correct!  Lagrange multipliers scale each constraint row to produce the necessary constraint forces.',
-      'Not quite.  These scalars enforce the constraints as additional torques.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q7-2-feedback"></p>
 </form>
 
 <!-- Question 3 -->
-<p><strong>Question&nbsp;3: The velocity constraint $A(\theta)\dot{\theta}=0$ is called a Pfaffian constraint when it is:</strong></p>
+<p><strong>Question 3: The velocity constraint $A(\theta)\dot{\theta}=0$ is called a Pfaffian constraint when it is:</strong></p>
 <form id="q7-3">
   <input type="radio" name="q7-3" value="A"> Linear in $\dot{\theta}$<br>
   <input type="radio" name="q7-3" value="B"> Quadratic in $\dot{\theta}$<br>
@@ -2504,31 +2532,31 @@ Constraint dynamics lets us model and control robots that must simultaneously **
   <input type="radio" name="q7-3" value="D"> Time-varying only<br>
   <button type="button"
     onclick="checkTrueFalse2('q7-3', 'A',
-      'Correct!  A Pfaffian constraint is linear in the generalized velocities.',
-      'Not quite.  Pfaffian constraints are linear relations in $\\dot\\theta$.')">
+      'Correct!  A Pfaffian constraint is linear in the generalized velocities ($\\dot\\theta$).',
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q7-3-feedback"></p>
 </form>
 
 <!-- Question 4 -->
-<p><strong>Question&nbsp;4: Why do we assume constraint forces are “workless” in this formulation?</strong></p>
+<p><strong>Question 4: Why do we assume constraint forces are “workless” in this formulation?</strong></p>
 <form id="q7-4">
   <input type="radio" name="q7-4" value="A"> To simplify the kinematics<br>
-  <input type="radio" name="q7-4" value="B"> Because they do no mechanical work on the robot (torque·velocity&nbsp;=&nbsp;0)<br>
+  <input type="radio" name="q7-4" value="B"> Because they do no mechanical work on the robot (torque·velocity = 0)<br>
   <input type="radio" name="q7-4" value="C"> Because gravity cancels them<br>
   <input type="radio" name="q7-4" value="D"> To eliminate friction modeling<br>
   <button type="button"
     onclick="checkTrueFalse2('q7-4', 'B',
       'Correct!  Workless constraint forces act perpendicular to allowable motion so torque·velocity is zero.',
-      'Not quite.  The definition of workless means no power is transferred by constraint forces.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q7-4-feedback"></p>
 </form>
 
 <!-- Question 5 -->
-<p><strong>Question&nbsp;5: In constrained inverse dynamics, what additional torque can we add without affecting the robot’s motion?</strong></p>
+<p><strong>Question 5: In constrained inverse dynamics, what additional torque can we add without affecting the robot’s motion?</strong></p>
 <form id="q7-5">
   <input type="radio" name="q7-5" value="A"> Any multiple of the identity matrix<br>
   <input type="radio" name="q7-5" value="B"> Any torque of the form $A^{\!\top}\lambda$<br>
@@ -2537,7 +2565,7 @@ Constraint dynamics lets us model and control robots that must simultaneously **
   <button type="button"
     onclick="checkTrueFalse2('q7-5', 'B',
       'Correct!  Torques along $A^{\\!T}$ enforce constraints but do not change generalized motion.',
-      'Not quite.  Only torques in the constraint-force subspace leave motion unchanged.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q7-5-feedback"></p>
@@ -2616,7 +2644,7 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
   <summary>Conceptual Questions</summary>
 
 <!-- Question 1 -->
-<p><strong>Question&nbsp;1: Why are direct-drive joints (no gearing) uncommon in most industrial robots?</strong></p>
+<p><strong>Question 1: Why are direct-drive joints (no gearing) uncommon in most industrial robots?</strong></p>
 <form id="q8-1">
   <input type="radio" name="q8-1" value="A"> Motors supply too much torque and too little speed<br>
   <input type="radio" name="q8-1" value="B"> Motors supply high speed but insufficient torque for typical tasks<br>
@@ -2625,14 +2653,14 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
   <button type="button"
     onclick="checkTrueFalse2('q8-1','B',
       'Correct!  Electric motors typically run fast with low torque, so gearing is added to boost torque.',
-      'Not quite.  The key limitation is low torque at motor shaft speed.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q8-1-feedback"></p>
 </form>
 
 <!-- Question 2 -->
-<p><strong>Question&nbsp;2: If the gear ratio is&nbsp;$G$, the apparent rotor inertia reflected to the joint scales as&nbsp;…</strong></p>
+<p><strong>Question 2: If the gear ratio is $G$, the apparent rotor inertia reflected to the joint scales as ...</strong></p>
 <form id="q8-2">
   <input type="radio" name="q8-2" value="A"> $I_{\text{rotor}}/G$<br>
   <input type="radio" name="q8-2" value="B"> $G\,I_{\text{rotor}}$<br>
@@ -2641,14 +2669,14 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
   <button type="button"
     onclick="checkTrueFalse2('q8-2','C',
       'Correct!  Apparent inertia is multiplied by $G^{2}$.',
-      'Not quite.  Remember the rotor spins $G$ times faster, squaring its kinetic-energy contribution.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q8-2-feedback"></p>
 </form>
 
 <!-- Question 3 -->
-<p><strong>Question&nbsp;3: As gear ratios become very large, what generally happens to the off-diagonal elements of the mass matrix&nbsp;$M(\theta)$?</strong></p>
+<p><strong>Question 3: As gear ratios become very large, what generally happens to the off-diagonal elements of the mass matrix $M(\theta)$?</strong></p>
 <form id="q8-3">
   <input type="radio" name="q8-3" value="A"> They dominate over the diagonal terms<br>
   <input type="radio" name="q8-3" value="B"> They stay the same magnitude<br>
@@ -2657,30 +2685,30 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
   <button type="button"
     onclick="checkTrueFalse2('q8-3','C',
       'Correct!  Large apparent rotor inertias enlarge the diagonal and reduce coupling.',
-      'Not quite.  Coupling terms diminish relative to growing diagonal terms with high gearing.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q8-3-feedback"></p>
 </form>
 
 <!-- Question 4 -->
-<p><strong>Question&nbsp;4: With very high gear ratios, the robot’s joint dynamics increasingly resemble…</strong></p>
+<p><strong>Question 4: With very high gear ratios, the robot’s joint dynamics increasingly resemble...</strong></p>
 <form id="q8-4">
-  <input type="radio" name="q8-4" value="A"> a fully coupled multi-body system<br>
-  <input type="radio" name="q8-4" value="B"> $n$ independent single-joint systems<br>
+  <input type="radio" name="q8-4" value="A"> $n$ independent single-joint systems<br>
+  <input type="radio" name="q8-4" value="B"> a fully coupled multi-body system<br>
   <input type="radio" name="q8-4" value="C"> a mass-spring-damper chain<br>
   <input type="radio" name="q8-4" value="D"> a freely floating rigid body<br>
   <button type="button"
-    onclick="checkTrueFalse2('q8-4','B',
+    onclick="checkTrueFalse2('q8-4','A',
       'Correct!  High gearing makes each joint’s inertia dominant, reducing coupling.',
-      'Not quite.  High gear ratios decouple the joints rather than coupling them.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q8-4-feedback"></p>
 </form>
 
 <!-- Question 5 -->
-<p><strong>Question&nbsp;5: When adding friction to the joint-torque model, which statement is generally true?</strong></p>
+<p><strong>Question 5: When adding friction to the joint-torque model, which statement is generally true?</strong></p>
 <form id="q8-5">
   <input type="radio" name="q8-5" value="A"> Friction usually decreases with higher gear ratios<br>
   <input type="radio" name="q8-5" value="B"> Friction is negligible in geared joints and can be ignored<br>
@@ -2689,7 +2717,7 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
   <button type="button"
     onclick="checkTrueFalse2('q8-5','C',
       'Correct!  More gears typically mean more friction, so simple friction models are added.',
-      'Not quite.  Gearheads add friction that grows with the ratio and should be modeled.')">
+      'Not quite. Try again.')">
     Check Answer
   </button>
   <p id="q8-5-feedback"></p>
@@ -2701,15 +2729,9 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 
 ## Mathematical Development Questions
 
-Here’s a polished version of your text with corrected grammar and style:
-
----
-
-## Mathematical Development Questions
-
 For additional practice and deeper derivations, see the **PDF:** [Modern Robotics – Practice Exercises](https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf). The **dynamics problems begin on page 55**, and the **solutions are on page 62**.
 
-Other exam-level exercises and their solutions are also available here:
+Additional exam-level exercises covering other chapters of the book [Modern Robotics]((http://modernrobotics.org)) and their solutions are also available here:
 
 * [SNU 2017 Exams](https://hades.mech.northwestern.edu/images/2/28/SNU-2017-exams.pdf)
 * [SNU 2018 Exams](https://hades.mech.northwestern.edu/images/5/56/SNU-2018-exams.pdf)

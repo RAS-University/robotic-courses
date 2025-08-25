@@ -148,6 +148,17 @@ $$
 \;\xrightarrow{\text{A/D}}\; \text{Digital data}
 $$
 
+<details markdown="1">
+ <summary>Video introduction</summary>
+
+  Here is a small video explaining what sensors are and how to use them.
+
+  ![](https://www.youtube.com/watch?v=XI49uFm5HRE&t=112s)
+
+
+</details>
+
+
 
 
 #### 0.1 **Definition** 
@@ -352,7 +363,7 @@ Every sensor output is ultimately expressed in a **physical unit** defined by th
 | Amount of substance | mole (mol) | Gas sensor |
 
 
-##### 1.1.2 Measurement Range
+##### 1.1.2 **Measurement Range**
 {:.no_toc}
 
 *Range* is the interval $$[x_{\min},\,x_{\max}]$$ within which the sensor maintains its specified performance.
@@ -477,8 +488,8 @@ Keep this mental picture handy, later chapters on noise modelling, uncertainty p
 
 ---
 
-#### Chapter 1.2: **Noise models** 
-<!-- ### Chapter 1.2: Noise models 
+#### Chapter 1.2: Noise models 
+
 *How randomness seeps into every measurement and how to describe it.*
 
 > **Learning goals**  
@@ -648,16 +659,16 @@ These parameters (white variance, bias instability, correlation time $$\tau$$) f
   <p id="noise-q4-feedback"></p>
 </form>
 
-</details> --> 
+</details>  
 
 
 ---
 
-#### Chapter 1.3: **Uncertainty propagation**
+#### Chapter 1.3: Uncertainty propagation
 
 ---
 
-#### chapter 1.4: **Calibration & validation strategies**
+#### chapter 1.4: Calibration & validation strategies
 
 
 ---
@@ -725,5 +736,9 @@ These parameters (white variance, bias instability, correlation time $$\tau$$) f
 
 - [Perception in Robotics course Skoltech 2021](https://github.com/MobileRoboticsSkoltech/Perception-in-Robotics-course-T3-2021-Skoltech?tab=readme-ov-file) 
 
+
+### Websites
+
+- [Interactive Kalman filter](https://calerga.ch/projects/epfl/mobots/18/kalman.html)
 
 [Back to Top](#start)

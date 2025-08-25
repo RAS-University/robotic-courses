@@ -994,21 +994,103 @@ Let's get familiriar with this type of method doing similar exercise:
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-[IN PROGRESS]
+Let's consider this following robotic arm. Guve the forward kinematic model that expresses the coordinates (x,y) of point P as a function of the joint coordinates $q_1$ and $q_2$
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 1">
+</figure>
+
+*Hint: Use the homogeneous matrices of the transformations:*
+1. *Rotation of $q_2$ around $(L_1,0)$*
+2. *Rotation of $q_1$ around the origin $(0,0)$*
 
 <!-- Practice what you've learned with Exercises **1**,**2** and **3**. -->
 
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+First, place the arm in its reference position as shown in the figure below. Then, develop the homogeneous matrices at each joint, starting from the last one (the end effector). 
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/sol1_chap4.png" width="450" height="auto" alt="Fig 1 sol">
+</figure>
+
+1. Homogenous matrix corresponding to the rotation $q_2$ around the end of the first arm $p_{10}$ with coordinates $(L_1,0)$:
+$$
+H_{q_2} = 
+\begin{bmatrix}
+    R_2 & p_{10} - R_2 \cdot p_{10} \cr
+    0 & 1 
+\end{bmatrix} =
+\begin{bmatrix}
+    c_2 & -s_2 & L_1 (1-c_2) \cr
+    s_2 &  c_2 & -L_1 s_2 \cr
+    0   &  0   & 1
+\end{bmatrix}
+$$
+
+2. Homogenous matrix corresponding to the rotation $q_1$ around the origin:
+$$
+H_{q_1} = 
+\begin{bmatrix}
+    c_1 & -s_1 & 0 \cr
+    s_1 &  c_1 & 0 \cr
+    0   &  0   & 1
+\end{bmatrix}
+$$
+
+The combined homogenous matrix of the sequence of the two rotations is equal to:
+$$
+H = H_{q_1} \cdot H_{q_2} = 
+\begin{bmatrix}
+    c_1 & -s_1 & 0 \cr
+    s_1 &  c_1 & 0 \cr
+    0   &  0   & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    c_2 & -s_2 & L_1 (1-c_2) \cr
+    s_2 &  c_2 & -L_1 s_2 \cr
+    0   &  0   & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+    c_{1+2} & -s_{1+2} & L_1 (c_1 (1-c_2) + s_1 s_2) \cr
+    s_{1+2} &  c_{1+2} & L_1 (s_1 (1-c_2) - c_1 s_2) \cr
+    0   &  0   & 1
+\end{bmatrix}
+$$
+
+Therefore to find the coordinates $(x,y)$ of the point P:
+$$
+\boxed{
+\begin{pmatrix}
+    x \cr
+    y \cr
+    1
+\end{pmatrix} = H \cdot 
+\begin{pmatrix}
+    L_1 + L_2 \cr
+    0 \cr
+    1
+\end{pmatrix} = 
+\begin{pmatrix}
+    L_1 c_1 + L_2 c_{1+2} \cr
+    L_1 s_1 + L_2 s_{1+2} \cr
+    1
+\end{pmatrix}
+}
+$$
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
+
 
 --- 
 
@@ -1154,9 +1236,152 @@ For each of these sequences:
     - (a) the corresponding **angles of rotation**.
     - (b) the corresponding **unit axes of rotation**.
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+1: We start by calculating $Q_{y\,90^\circ}$ and $Q_{z\,90^\circ}$, the quaternions corresponding respectively to $R_y(90^\circ)$ and $R_z(90^\circ)$.
+
+
+* For $Q_{y\,90^\circ}$, we have:
+$$
+\theta_y = 90^\circ \;\Rightarrow\; \cos(\theta_y/2)=\sin(\theta_y/2)=\frac{\sqrt{2}}{2}
+$$
+
+$$
+\underline{\lambda}_y = \frac{\sqrt{2}}{2}
+\begin{bmatrix}
+0\cr
+1\cr
+0
+\end{bmatrix}
+(\underline{\lambda}\text{ is the axis part whose norm is } \sin(\theta/2))
+$$
+
+$$
+\lambda_{y,0}=\cos(\theta_y/2)=\frac{\sqrt{2}}{2}
+$$
+
+And finally:
+$$
+Q_{y\,90^\circ}=
+\begin{pmatrix}\lambda_{y,0}\cr
+\underline{\lambda}_y
+\end{pmatrix}
+=\frac{\sqrt{2}}{2}
+\begin{bmatrix}
+1\cr
+0\cr
+1\cr
+0
+\end{bmatrix}
+$$
+
+* For $Q_{z\,90^\circ}$, we have:
+$$
+\theta_z = 90^\circ \;\Rightarrow\; \cos(\theta_z/2)=\sin(\theta_z/2)=\frac{\sqrt{2}}{2}
+$$
+
+$$
+\underline{\lambda}_z = \frac{\sqrt{2}}{2}
+\begin{bmatrix}
+0\cr
+0\cr
+1
+\end{bmatrix}
+(\underline{\lambda}\text{ is the axis part whose norm is } \sin(\theta/2))
+$$
+
+$$
+\lambda_{z,0}=\cos(\theta_z/2)=\frac{\sqrt{2}}{2}
+$$
+
+And finally:
+$$
+Q_{z\,90^\circ}=
+\begin{pmatrix}\lambda_{z,0}\cr 
+\underline{\lambda}_z
+\end{pmatrix}
+=\frac{\sqrt{2}}{2}
+\begin{bmatrix}
+1\cr
+0\cr
+0\cr
+1
+\end{bmatrix}
+$$
+
+We notice that the two quaternions are unitary (the opposite would have been surprising).
+
+We then calculate the two sequences by multiplying the quaternions (the product is non‑commutative).
+
+First sequence: $R_z(90^\circ) \rightarrow R_y(90^\circ)$
+
+$$
+Q_1 = Q_{y\,90^\circ}\,Q_{z\,90^\circ}
+$$
+
+Using $(a_0,\mathbf{a})(b_0,\mathbf{b})=(a_0 b_0-\mathbf{a}\cdot\mathbf{b},\; a_0\mathbf{b}+b_0\mathbf{a}+\mathbf{a}\times\mathbf{b})$, we get
+
+$$
+Q_1=\frac{1}{2}
+\begin{bmatrix}
+1\cr
+1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
+* Second sequence: $\mathbf{R_y}(90^\circ) \rightarrow \mathbf{R_z}(90^\circ)$
+
+(Analogous computation gives another unit quaternion with different vector part due to non‑commutativity.)
+
+---
+
+2: (a) Corresponding rotation angles
+
+* First sequence: $\mathbf{R_z}(90^\circ)\rightarrow\mathbf{R_y}(90^\circ)$:
+$
+\theta_1=2\arccos(\lambda_{1,0})=2\arccos\!\left(\frac{1}{2}\right)
+=2\arcsin\!\big(\|\underline{\lambda}_1\|\big)
+=2\arcsin\!\left(\frac{\sqrt{3}}{2}\right)
+\Rightarrow\;
+\theta_1=\frac{2\pi}{3}\ \text{rad}=120^\circ
+$
+
+* Second sequence: $\mathbf{R_y}(90^\circ)\rightarrow\mathbf{R_z}(90^\circ)$:
+$$
+\theta_2=2\arccos(\lambda_{2,0})=2\arccos\!\left(\frac{1}{2}\right)
+=2\arcsin\!\left(\frac{\sqrt{3}}{2}\right)
+\Rightarrow\;
+\theta_2=\frac{2\pi}{3}\ \text{rad}=120^\circ
+$$
+
+
+(b) Corresponding unit axes
+
+* First sequence: $\mathbf{R_z}(90^\circ)\rightarrow\mathbf{R_y}(90^\circ)$:
+$$
+\mathbf{k}_1=\frac{\underline{\lambda}_1}{\sin(\theta_1/2)}
+=\frac{1}{\sqrt{3}}
+\begin{bmatrix}
+1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
+* Second sequence: $\mathbf{R_y}(90^\circ)\rightarrow\mathbf{R_z}(90^\circ)$:
+$$
+\mathbf{k}_2=\frac{\underline{\lambda}_2}{\sin(\theta_2/2)}
+=\frac{1}{\sqrt{3}}
+\begin{bmatrix}
+-1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_5.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -1239,29 +1464,53 @@ Watch the following video for a clear introduction to inverse kinematics:
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-<!-- Question 1 -->
-<p><strong>Question 1: </strong> Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below): given x and y, what are \(θ_1\) and \(θ_2\)?</p>
+Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below): given x and y, what are $θ_1$ and $θ_2$?
 
-$
-x = L_1 \cos{\theta_1} + L_2 \cos{(\theta_1 + \theta_2)}
-$
+- $x = L_1 \cos{\theta_1} + L_2 \cos{(\theta_1 + \theta_2)}$
+- $y = L_1 \sin{\theta_1} + L_2 \sin{(\theta_1 + \theta_2)}$
 
-$
-y = L_1 \sin{\theta_1} + L_2 \sin{(\theta_1 + \theta_2)}
-$
+*Hint: Use the trigonometric formulas for the sine and cosine of the sum of two angles, as well as the identity involving the sum of the squares of sine and cosine. Also, recall that we computed the forward kinematics in the exercise from Chapter 3.*
 
-<p>
-Hint : use the trigonometric formulas for the sine
-and cosine of the sum of two angles, as well as the
-one of the sum of squares of sine and cosine.
-</p>
-
-<img src="{{ site.baseurl }}/assets/images/kinematics/inv.png" alt="examples" width="200" />
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 2">
+</figure>
 
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+As we have seen on the exercise from Chapter 3, 
+- $x = L_1 c_1 + L_2 c_{1+2}$
+- $y = L_1 s_1 + L_2 s_{1+2}$
+and we also know that:
+- $c^2 + s^2 = 1$
+
+Using the law of cosines we see that the angle $\theta_2$ is given by:
+- $c_2 = \frac{x^2 + y^2-L_{1}^2-L_{2}^2}{2 L_1 L_2}$
+- $s_2 = \pm \sqrt(1-(c_2)^2)$
+
+Hence, $\theta_2$ can be found by: 
+$\boxed{\theta_2 = \arctan \frac{\pm \sqrt(1-(c_2)^2)}{c_2}}$
+
+The choice of $\pm$ is arbitrary but important (it must be consistent) for pairs of final solutions.  
+
+Moreover, finding the angle of $\theta_{2}$ by using the $\arctan$ function is advantageous, since it recovers both elbow-up and elbow-down solutions by choosing the positive and negative signs, respectively.
+
+---
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap6.png" width="450" height="auto" alt="Fig 3">
+</figure>
+
+$\theta_1$ can be defined as $\theta_1 = \alpha - \beta$ where 
+- $\alpha = \arctan \frac{y}{x}$
+- $\beta = \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}$
+
+Therefore,  
+$\boxed{\theta_1 = \arctan \frac{y}{x} - \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}}$
+
+
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_3.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -1370,7 +1619,7 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_5.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
 [IN PROGRESS]
 

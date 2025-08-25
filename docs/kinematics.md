@@ -101,7 +101,8 @@ For those looking to deepen their understanding or seeking clear explanations of
 ### Chapter 0 : General Concepts
 In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to clearly link theoretical concepts to mathematical formalisms.
 
-#### **Serial vs. Parallel robots**
+#### *Serial vs. Parallel robots*
+
 Among the various configurations in which mechanical components can be arranged, two key topologies are particularly significant in robotics:
 - ***Serial Chains***: These consist of a series of rigid links connected sequentially by joints. Each link (except the first and last) is connected to exactly two other links. Serial chains are commonly seen in robotic arms.
 - ***Fully Parallel Mechanisms***: These mechanisms have two primary components (often the base and the end-effector) connected by multiple independent chains. Each of these connecting chains itself typically forms a serial structure. An example is the Delta robot used in high-speed pick-and-place tasks.
@@ -229,7 +230,7 @@ For a visual comparison of these two robot types, watch the following short vide
 
 ---
 
-#### **Drawing kinematic diagrams**
+#### *Drawing kinematic diagrams*
 In robotics, accurately representing the structure of robots (left image) through **kinematic diagrams** (right image) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
 
 <figure style="text-align: center;">
@@ -315,7 +316,7 @@ Give it a try !
 
 ---
 
-#### **Degrees of Freedom (DOF)**
+#### *Degrees of Freedom (DOF)*
 <!-- - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
@@ -454,7 +455,7 @@ $$
 
 ---
 
-#### **Grübler’s formula and its application**
+#### *Grübler’s formula and its application*
 ***Grübler’s formula*** is a powerful tool to quickly calculate the degrees of freedom of mechanisms, especially useful for complex robot configurations:
 $$
 \boxed{ \text{DoF} = m(N - 1 - J) + \sum_{i=1}^{J} \text{f}_i }
@@ -720,8 +721,8 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
 <p><strong>Question 2: The matrix 
   <p>\[
   \begin{bmatrix}
-  c & -s & t_x \\
-  s & c & t_y \\
+  \cos \theta & -\sin \theta & t_x \\
+  \sin \theta & \cos \theta & t_y \\
   0 & 0 & 1
   \end{bmatrix}
   \]</p> correspond to ...</strong></p>
@@ -732,7 +733,7 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
   <button type="button" onclick="checkMCQ(
     'matrix-order', 
     'option2', 
-    'Correct! This matrix represents a rotation followed by a translation (proved in mathematical development).',
+    'Correct! This matrix represents a rotation followed by a translation.',
     'Incorrect. Please try again!'
   )">
     Check Answer
@@ -790,15 +791,115 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-[IN PROGRESS]
+
+**Calculate the following 2D rotation matrices:**
+
+1. $R(\theta = 0)$.
+2. $R(-\theta) $.
+3. $ \left(R(\theta)\right)^{-1} $.
+4. Find $\theta$ such that $R(\theta) = R(\theta_2)\,R(\theta_1) $.
+
+5. Give the homogeneous **matrix** (no need to expand,just write the matrix product) for the follwing sequence of operations:
+$$
+t_1 → R(\theta_{1}) → t_2 → R(\theta_{1}) 
+$$
+
+*Hint: Start by computing the homogeneous matrix corresponding to the pure translation $t=\begin{bmatrix} t_x \\ t_y \end{bmatrix}$ and pure rotation $R(\theta)=\begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}$.*
+
 
 <!-- Practice what you've learned with Exercises **1**,**2**,**3** and **4**. -->
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_2.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+1: $R(\theta = 0)=\begin{bmatrix} 1 & 0 \\ 1 & 0 \end{bmatrix}$.
+
+---
+
+2: $R(-\theta)=\begin{bmatrix} \cos -\theta & -\sin -\theta \\ \sin -\theta & \cos -\theta \end{bmatrix} =\begin{bmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{bmatrix}$.
+
+---
+
+3: As $\begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \frac{1}{\text{det}} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$, therefore: 
+$$
+(R(-\theta))^{1}=\frac{1}{(\cos \theta)^2 + (\sin \theta)^2} \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix} =  \begin{bmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{bmatrix} = (R(-\theta))^{T} = R(-\theta)
+$$
+
+---
+
+4: $R(\theta_2)\,R(\theta_1)$
+$$
+= \begin{bmatrix} \cos \theta_{2} & \sin -\theta_{2} \\ \sin \theta_{2} & \cos \theta_{2} \end{bmatrix} \, \begin{bmatrix} \cos \theta_{1} & -\sin \theta_{1} \\ \sin \theta_{1} & \cos \theta_{1} \end{bmatrix}
+= \begin{bmatrix} \cos \theta_{1+2} & -\sin \theta_{1+2} \\ \sin \theta_{1+2} & \cos \theta_{1+2} \end{bmatrix}
+= R(\theta_{1} + \theta_{2}) 
+$$
+
+---
+
+5: Let's proceed step by step: 
+
+* Homogeneous matrix of a pure translation:
+$$
+M_t =
+\begin{bmatrix}
+1 & 0 & t_x \cr
+0 & 1 & t_y \cr
+0 & 0 & 1
+\end{bmatrix}
+$$
+
+* Homogeneous matrix of a pure rotation with an angle $\theta$ around the origin  
+($c=\cos\theta,\; s=\sin\theta\$):
+$$
+M_r =
+\begin{bmatrix}
+c & -s & 0 \cr
+s & \;\;c & 0 \cr
+0 & \;\;0 & 1
+\end{bmatrix}
+$$
+
+* Homogeneous matrix for the sequence $t \rightarrow R(\theta)$:
+$$
+M_r M_t =
+\begin{bmatrix}
+c & -s & 0 \cr
+s & \;\;c & 0 \cr
+0 & \;\;0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 & t_x \cr
+0 & 1 & t_y \cr
+0 & 0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+c & -s & c\,t_x - s\,t_y \cr
+s & \;\;c & s\,t_x + c\,t_y \cr
+0 & \;\;0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+R(\theta) & R(\theta)\,t \cr
+0 & 1
+\end{bmatrix}
+$$
+
+
+Therefore: 
+$$
+\boxed{M_{r_2} M_{t_2} M_{r_1} M_{t_1}} =
+\begin{bmatrix}
+R(\theta_{1}) & R(\theta_{1})\,t \cr
+0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+R(\theta_{2}) & R(\theta_{2})\,t \cr
+0 & 1
+\end{bmatrix}
+$$
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_2.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -1608,7 +1709,7 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 ---
 
-## Resources
+## Ressources
 
 ### Books
 - [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.

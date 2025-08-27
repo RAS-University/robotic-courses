@@ -58,6 +58,7 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
+NOTE: **This is a basic course on kinematics**. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.
 ---
 
 ## 2. General Motivation
@@ -65,17 +66,17 @@ While you don’t need to be an expert in any one of these areas, having a comfo
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
 ><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
 
-Have you ever watched a precision robot—like the Delta robot in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
+Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> (invented by <a href="https://en.wikipedia.org/wiki/Reymond_Clavel" Reymond Clavel</a>) in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
 
 Kinematics, often referred to as the “**geometry of movement**,” is the study of *how bodies move in space without considering the forces or torques causing the motion*. By focusing on the geometry and arrangement of joints, links, and end-effectors, kinematics allows us to:
 
-- ***Predict and Control Robot Positions***: From assembly lines to surgical suites, robots must position their end-effectors at **exact points in space**. Kinematics equations provide the road map, telling us how each joint angle translates into a specific position and orientation.
+- ***Predict and Control Robot Positions***: For instance, a robotic arm used in an assembly line must position its **end-effector** (tip of the arm) at **exact points in space**. Kinematics equations compute a correspondence between a **robot joint configuration** (particular choice of value for each joint angle) and a specific position and orientation of the end-effector. This is necessary to translate a desired carthesian location for the robot's tip into a set of robot's joint values.
 
-- ***Design Efficient Mechanisms***: Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, well-planned kinematic structures enable robots to work **faster**, with better range of motion and fewer mechanical constraints.
+- ***Backbone to Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions. Kinematics is the back bone to all standard and advanced path planning techniques. Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, it is necessary to design the robot's kinematic structure to ensure that the path will be **kinematically feasible**, namely that it will satisfy the robot's mechanical constraints.
 
-- ***Streamline Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions.
+In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic arms, and learn a systematic way to map your robot’s geometry into kinematic equations to enable control. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**.
 
-In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic joints, and learn a systematic way to map your robot’s geometry into the equations that bring the entire mechanism to life. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**, unlocking a world of innovative possibilities.
+
 
 ---
 

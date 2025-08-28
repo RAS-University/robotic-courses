@@ -58,8 +58,9 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
- **Note on Course Level**: 
->***This is a basic course on kinematics**. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
+ **Note on Course Level** 
+
+> This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
 ---
 
 ## 2. General Motivation
@@ -67,7 +68,7 @@ While you don’t need to be an expert in any one of these areas, having a comfo
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
 ><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
 
-Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> (invented by <a href="https://en.wikipedia.org/wiki/Reymond_Clavel" Reymond Clavel</a>) in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
+Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
 
 Kinematics, often referred to as the “**geometry of movement**,” is the study of *how bodies move in space without considering the forces or torques causing the motion*. By focusing on the geometry and arrangement of joints, links, and end-effectors, kinematics allows us to:
 
@@ -187,20 +188,20 @@ For a visual comparison of these two robot types, watch the following short vide
 </form>
 
 <!-- Second question  -->
-<p><strong>Question 3: In general, a parallel robot is more rigid than a serial robot</strong></p>
+<p><strong>Question 3: Parallel robots are designed to move parrallel to a plane.</strong></p>
 <form id="q2">
   <input type="radio" name="q2" value="True"> True<br>
   <input type="radio" name="q2" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q2', 'True', 
-      'Correct! ',
-      'Incorrect. Refer to the definition of parallel and serial robot')">
+      'Correct! And this is why this mechanism sped up pick and place of marchandise moving along conveyer belts',
+      'Incorrect. But there is exists closed-kinematic chain robots that are not parallel robots.')">
     Check Answer
   </button>
   <p id="q2-feedback"></p>
 </form>
 
-<!-- Third question  -->
+<!-- Third question  
 <p><strong>Question 4: A parallel robot is a structure characterized by a closed kinematic loop</strong></p>
 <form id="q3">
   <input type="radio" name="q3" value="True"> True<br>
@@ -213,7 +214,7 @@ For a visual comparison of these two robot types, watch the following short vide
   </button>
   <p id="q3-feedback"></p>
 </form>
-
+-->
 </details>
 
 ---

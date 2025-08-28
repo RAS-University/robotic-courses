@@ -19,7 +19,9 @@
 // }
 
 class SecondOrderSystem {
-    constructor(naturalFrequency = 1.5, dampingRatio = 0.3, gain = 1, delaySteps = 1) {
+    //constructor(naturalFrequency = 0.2, dampingRatio = 1.5, gain = 1, delaySteps = 1) {
+    constructor(naturalFrequency = 0.7, dampingRatio = 0.3, gain = 0.9, delaySteps = 1) {
+
         this.wn = naturalFrequency;
         this.zeta = dampingRatio;
         this.gain = gain;
@@ -145,8 +147,8 @@ function initializePIDSimulator(containerId, showZieglerNicholsButton = false) {
     const numPoints = 2000;
     const config = {
         setpoint: 1.0,
-        timePoints: Array.from({length: numPoints}, (_, i) => i * 50 / numPoints),
-        dt: 50 / numPoints,
+        timePoints: Array.from({length: numPoints}, (_, i) => i *40 / numPoints),
+        dt: 40 / numPoints,
         chart: null,
         sliderElements: {
             kp: container.querySelector('.kp-slider'),

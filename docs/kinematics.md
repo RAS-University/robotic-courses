@@ -58,7 +58,8 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
-NOTE: **This is a basic course on kinematics**. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.
+ **Note on Course Level**: 
+>***This is a basic course on kinematics**. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
 ---
 
 ## 2. General Motivation

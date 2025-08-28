@@ -58,6 +58,9 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
+ **Note on Course Level** 
+
+> This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
 ---
 
 ## 2. General Motivation
@@ -65,43 +68,30 @@ While you don’t need to be an expert in any one of these areas, having a comfo
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
 ><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
 
-Have you ever watched a precision robot—like the Delta robot in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
+Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
 
 Kinematics, often referred to as the “**geometry of movement**,” is the study of *how bodies move in space without considering the forces or torques causing the motion*. By focusing on the geometry and arrangement of joints, links, and end-effectors, kinematics allows us to:
 
-- ***Predict and Control Robot Positions***: From assembly lines to surgical suites, robots must position their end-effectors at **exact points in space**. Kinematics equations provide the road map, telling us how each joint angle translates into a specific position and orientation.
+- ***Predict and Control Robot Positions***: For instance, a robotic arm used in an assembly line must position its **end-effector** (tip of the arm) at **exact points in space**. Kinematics equations compute a correspondence between a **robot joint configuration** (particular choice of value for each joint angle) and a specific position and orientation of the end-effector. This is necessary to translate a desired carthesian location for the robot's tip into a set of robot's joint values.
 
-- ***Design Efficient Mechanisms***: Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, well-planned kinematic structures enable robots to work **faster**, with better range of motion and fewer mechanical constraints.
+- ***Backbone to Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions. Kinematics is the back bone to all standard and advanced path planning techniques. Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, it is necessary to design the robot's kinematic structure to ensure that the path will be **kinematically feasible**, namely that it will satisfy the robot's mechanical constraints.
 
-- ***Streamline Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions.
+In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic arms, and learn a systematic way to map your robot’s geometry into kinematic equations to enable control. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**.
 
-In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic joints, and learn a systematic way to map your robot’s geometry into the equations that bring the entire mechanism to life. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**, unlocking a world of innovative possibilities.
+
 
 ---
 
 ## 3. Course Content
 
-
-<!-- This course closely follows videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) with some additional videos and conceptual and mathematical exercises. -->
-
-<!-- 
-This section of the course is primarily based on content shared by **Mohammad Zainullah Khan**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton. You can find more information on his website: [www.zainullah.com](https://www.zainullah.com/).
-
-Mohammad’s videos are **well-structured**, **visually engaging** and **not very long** (less than 10 minute), making them an excellent resource for anyone beginning to study kinematics for robotics. We recommend starting with the videos listed below to build a solid foundation. 
-
-Additionally other videos from other youtubers that we have found the most relevant to explain the phenomenom or concepts are proposed. 
-
-Once you’ve grasped the basics, you can further strengthen your understanding by working through  conceptual and mathematical exercises are inspired by [Prof. Mohamed Bouri](https://people.epfl.ch/mohamed.bour), Professor at EPFL. 
-
-For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html), Professor of Mechanical Engineering at Northwestern University. These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials. -->
-
 ⚠️ **Note on Notation**: 
 >*Please be aware that notation, variable naming, and the style of writing equations may slightly differ between instructors. Always refer to the provided formulas and definitions in this course when working on assignments or exercises to avoid any confusion.*
 
 ### Chapter 0 : General Concepts
-In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to clearly link theoretical concepts to mathematical formalisms.
+In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
 
-#### **Serial vs. Parallel robots**
+#### *Serial vs. Parallel robots*
+
 Among the various configurations in which mechanical components can be arranged, two key topologies are particularly significant in robotics:
 - ***Serial Chains***: These consist of a series of rigid links connected sequentially by joints. Each link (except the first and last) is connected to exactly two other links. Serial chains are commonly seen in robotic arms.
 - ***Fully Parallel Mechanisms***: These mechanisms have two primary components (often the base and the end-effector) connected by multiple independent chains. Each of these connecting chains itself typically forms a serial structure. An example is the Delta robot used in high-speed pick-and-place tasks.
@@ -174,9 +164,9 @@ For a visual comparison of these two robot types, watch the following short vide
 <!-- Draggable items -->
 <div class="drag-container" id="drag-items">
   <div class="drag-item" id="open-chain" draggable="true" ondragstart="drag(event)">Open kinematic chain</div>
-  <div class="drag-item" id="serially-linked" draggable="true" ondragstart="drag(event)">Serially linked actuated segments</div>
+  <div class="drag-item" id="serially-linked" draggable="true" ondragstart="drag(event)">Three serially linked segments</div>
   <div class="drag-item" id="closed-chain" draggable="true" ondragstart="drag(event)">Closed kinematic chain robots</div>
-  <div class="drag-item" id="fixed-motors" draggable="true" ondragstart="drag(event)">Fixed motors on the base</div>
+  <div class="drag-item" id="fixed-motors" draggable="true" ondragstart="drag(event)">Two fixed bases</div>
 </div>
 
 <button class="check-button" onclick="checkRobotStructure()">Check Answer</button>
@@ -198,20 +188,20 @@ For a visual comparison of these two robot types, watch the following short vide
 </form>
 
 <!-- Second question  -->
-<p><strong>Question 3: In general, a parallel robot is more rigid than a serial robot</strong></p>
+<p><strong>Question 3: Parallel robots are designed to move parrallel to a plane.</strong></p>
 <form id="q2">
   <input type="radio" name="q2" value="True"> True<br>
   <input type="radio" name="q2" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q2', 'True', 
-      'Correct! ',
-      'Incorrect. Refer to the definition of parallel and serial robot')">
+      'Correct! And this is why this mechanism sped up pick and place of marchandise moving along conveyer belts',
+      'Incorrect. But there is exists closed-kinematic chain robots that are not parallel robots.')">
     Check Answer
   </button>
   <p id="q2-feedback"></p>
 </form>
 
-<!-- Third question  -->
+<!-- Third question  
 <p><strong>Question 4: A parallel robot is a structure characterized by a closed kinematic loop</strong></p>
 <form id="q3">
   <input type="radio" name="q3" value="True"> True<br>
@@ -224,12 +214,12 @@ For a visual comparison of these two robot types, watch the following short vide
   </button>
   <p id="q3-feedback"></p>
 </form>
-
+-->
 </details>
 
 ---
 
-#### **Drawing kinematic diagrams**
+#### *Drawing kinematic diagrams*
 In robotics, accurately representing the structure of robots (left image) through **kinematic diagrams** (right image) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
 
 <figure style="text-align: center;">
@@ -315,7 +305,7 @@ Give it a try !
 
 ---
 
-#### **Degrees of Freedom (DOF)**
+#### *Degrees of Freedom (DOF)*
 <!-- - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
@@ -454,7 +444,7 @@ $$
 
 ---
 
-#### **Grübler’s formula and its application**
+#### *Grübler’s formula and its application*
 ***Grübler’s formula*** is a powerful tool to quickly calculate the degrees of freedom of mechanisms, especially useful for complex robot configurations:
 $$
 \boxed{ \text{DoF} = m(N - 1 - J) + \sum_{i=1}^{J} \text{f}_i }
@@ -720,8 +710,8 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
 <p><strong>Question 2: The matrix 
   <p>\[
   \begin{bmatrix}
-  c & -s & t_x \\
-  s & c & t_y \\
+  \cos \theta & -\sin \theta & t_x \\
+  \sin \theta & \cos \theta & t_y \\
   0 & 0 & 1
   \end{bmatrix}
   \]</p> correspond to ...</strong></p>
@@ -732,7 +722,7 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
   <button type="button" onclick="checkMCQ(
     'matrix-order', 
     'option2', 
-    'Correct! This matrix represents a rotation followed by a translation (proved in mathematical development).',
+    'Correct! This matrix represents a rotation followed by a translation.',
     'Incorrect. Please try again!'
   )">
     Check Answer
@@ -790,15 +780,115 @@ To find the familiar vectors, just delete the last element. Matrices and homogen
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-[IN PROGRESS]
+
+**Calculate the following 2D rotation matrices:**
+
+1. $R(\theta = 0)$.
+2. $R(-\theta) $.
+3. $ \left(R(\theta)\right)^{-1} $.
+4. Find $\theta$ such that $R(\theta) = R(\theta_2)\,R(\theta_1) $.
+
+5. Give the homogeneous **matrix** (no need to expand,just write the matrix product) for the follwing sequence of operations:
+$$
+t_1 → R(\theta_{1}) → t_2 → R(\theta_{1}) 
+$$
+
+*Hint: Start by computing the homogeneous matrix corresponding to the pure translation $t=\begin{bmatrix} t_x \\ t_y \end{bmatrix}$ and pure rotation $R(\theta)=\begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix}$.*
+
 
 <!-- Practice what you've learned with Exercises **1**,**2**,**3** and **4**. -->
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_2.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+1: $R(\theta = 0)=\begin{bmatrix} 1 & 0 \\ 1 & 0 \end{bmatrix}$.
+
+---
+
+2: $R(-\theta)=\begin{bmatrix} \cos -\theta & -\sin -\theta \\ \sin -\theta & \cos -\theta \end{bmatrix} =\begin{bmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{bmatrix}$.
+
+---
+
+3: As $\begin{bmatrix} a & b \\ c & d \end{bmatrix}^{-1} = \frac{1}{\text{det}} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$, therefore: 
+$$
+(R(-\theta))^{1}=\frac{1}{(\cos \theta)^2 + (\sin \theta)^2} \begin{bmatrix} \cos \theta & -\sin \theta \\ \sin \theta & \cos \theta \end{bmatrix} =  \begin{bmatrix} \cos \theta & \sin \theta \\ -\sin \theta & \cos \theta \end{bmatrix} = (R(-\theta))^{T} = R(-\theta)
+$$
+
+---
+
+4: $R(\theta_2)\,R(\theta_1)$
+$$
+= \begin{bmatrix} \cos \theta_{2} & \sin -\theta_{2} \\ \sin \theta_{2} & \cos \theta_{2} \end{bmatrix} \, \begin{bmatrix} \cos \theta_{1} & -\sin \theta_{1} \\ \sin \theta_{1} & \cos \theta_{1} \end{bmatrix}
+= \begin{bmatrix} \cos \theta_{1+2} & -\sin \theta_{1+2} \\ \sin \theta_{1+2} & \cos \theta_{1+2} \end{bmatrix}
+= R(\theta_{1} + \theta_{2}) 
+$$
+
+---
+
+5: Let's proceed step by step: 
+
+* Homogeneous matrix of a pure translation:
+$$
+M_t =
+\begin{bmatrix}
+1 & 0 & t_x \cr
+0 & 1 & t_y \cr
+0 & 0 & 1
+\end{bmatrix}
+$$
+
+* Homogeneous matrix of a pure rotation with an angle $\theta$ around the origin  
+($c=\cos\theta,\; s=\sin\theta\$):
+$$
+M_r =
+\begin{bmatrix}
+c & -s & 0 \cr
+s & \;\;c & 0 \cr
+0 & \;\;0 & 1
+\end{bmatrix}
+$$
+
+* Homogeneous matrix for the sequence $t \rightarrow R(\theta)$:
+$$
+M_r M_t =
+\begin{bmatrix}
+c & -s & 0 \cr
+s & \;\;c & 0 \cr
+0 & \;\;0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+1 & 0 & t_x \cr
+0 & 1 & t_y \cr
+0 & 0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+c & -s & c\,t_x - s\,t_y \cr
+s & \;\;c & s\,t_x + c\,t_y \cr
+0 & \;\;0 & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+R(\theta) & R(\theta)\,t \cr
+0 & 1
+\end{bmatrix}
+$$
+
+
+Therefore: 
+$$
+\boxed{M_{r_2} M_{t_2} M_{r_1} M_{t_1}} =
+\begin{bmatrix}
+R(\theta_{1}) & R(\theta_{1})\,t \cr
+0 & 1
+\end{bmatrix}
+\begin{bmatrix}
+R(\theta_{2}) & R(\theta_{2})\,t \cr
+0 & 1
+\end{bmatrix}
+$$
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_2.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -893,21 +983,103 @@ Let's get familiriar with this type of method doing similar exercise:
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-[IN PROGRESS]
+Let's consider this following robotic arm. Guve the forward kinematic model that expresses the coordinates (x,y) of point P as a function of the joint coordinates $q_1$ and $q_2$
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 1">
+</figure>
+
+*Hint: Use the homogeneous matrices of the transformations:*
+1. *Rotation of $q_2$ around $(L_1,0)$*
+2. *Rotation of $q_1$ around the origin $(0,0)$*
 
 <!-- Practice what you've learned with Exercises **1**,**2** and **3**. -->
 
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+First, place the arm in its reference position as shown in the figure below. Then, develop the homogeneous matrices at each joint, starting from the last one (the end effector). 
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/sol1_chap4.png" width="450" height="auto" alt="Fig 1 sol">
+</figure>
+
+1. Homogenous matrix corresponding to the rotation $q_2$ around the end of the first arm $p_{10}$ with coordinates $(L_1,0)$:
+$$
+H_{q_2} = 
+\begin{bmatrix}
+    R_2 & p_{10} - R_2 \cdot p_{10} \cr
+    0 & 1 
+\end{bmatrix} =
+\begin{bmatrix}
+    c_2 & -s_2 & L_1 (1-c_2) \cr
+    s_2 &  c_2 & -L_1 s_2 \cr
+    0   &  0   & 1
+\end{bmatrix}
+$$
+
+2. Homogenous matrix corresponding to the rotation $q_1$ around the origin:
+$$
+H_{q_1} = 
+\begin{bmatrix}
+    c_1 & -s_1 & 0 \cr
+    s_1 &  c_1 & 0 \cr
+    0   &  0   & 1
+\end{bmatrix}
+$$
+
+The combined homogenous matrix of the sequence of the two rotations is equal to:
+$$
+H = H_{q_1} \cdot H_{q_2} = 
+\begin{bmatrix}
+    c_1 & -s_1 & 0 \cr
+    s_1 &  c_1 & 0 \cr
+    0   &  0   & 1
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+    c_2 & -s_2 & L_1 (1-c_2) \cr
+    s_2 &  c_2 & -L_1 s_2 \cr
+    0   &  0   & 1
+\end{bmatrix}
+=
+\begin{bmatrix}
+    c_{1+2} & -s_{1+2} & L_1 (c_1 (1-c_2) + s_1 s_2) \cr
+    s_{1+2} &  c_{1+2} & L_1 (s_1 (1-c_2) - c_1 s_2) \cr
+    0   &  0   & 1
+\end{bmatrix}
+$$
+
+Therefore to find the coordinates $(x,y)$ of the point P:
+$$
+\boxed{
+\begin{pmatrix}
+    x \cr
+    y \cr
+    1
+\end{pmatrix} = H \cdot 
+\begin{pmatrix}
+    L_1 + L_2 \cr
+    0 \cr
+    1
+\end{pmatrix} = 
+\begin{pmatrix}
+    L_1 c_1 + L_2 c_{1+2} \cr
+    L_1 s_1 + L_2 s_{1+2} \cr
+    1
+\end{pmatrix}
+}
+$$
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_1-3.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
 
 </details>
+
 
 --- 
 
@@ -1053,9 +1225,152 @@ For each of these sequences:
     - (a) the corresponding **angles of rotation**.
     - (b) the corresponding **unit axes of rotation**.
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+1: We start by calculating $Q_{y\,90^\circ}$ and $Q_{z\,90^\circ}$, the quaternions corresponding respectively to $R_y(90^\circ)$ and $R_z(90^\circ)$.
+
+
+* For $Q_{y\,90^\circ}$, we have:
+$$
+\theta_y = 90^\circ \;\Rightarrow\; \cos(\theta_y/2)=\sin(\theta_y/2)=\frac{\sqrt{2}}{2}
+$$
+
+$$
+\underline{\lambda}_y = \frac{\sqrt{2}}{2}
+\begin{bmatrix}
+0\cr
+1\cr
+0
+\end{bmatrix}
+(\underline{\lambda}\text{ is the axis part whose norm is } \sin(\theta/2))
+$$
+
+$$
+\lambda_{y,0}=\cos(\theta_y/2)=\frac{\sqrt{2}}{2}
+$$
+
+And finally:
+$$
+Q_{y\,90^\circ}=
+\begin{pmatrix}\lambda_{y,0}\cr
+\underline{\lambda}_y
+\end{pmatrix}
+=\frac{\sqrt{2}}{2}
+\begin{bmatrix}
+1\cr
+0\cr
+1\cr
+0
+\end{bmatrix}
+$$
+
+* For $Q_{z\,90^\circ}$, we have:
+$$
+\theta_z = 90^\circ \;\Rightarrow\; \cos(\theta_z/2)=\sin(\theta_z/2)=\frac{\sqrt{2}}{2}
+$$
+
+$$
+\underline{\lambda}_z = \frac{\sqrt{2}}{2}
+\begin{bmatrix}
+0\cr
+0\cr
+1
+\end{bmatrix}
+(\underline{\lambda}\text{ is the axis part whose norm is } \sin(\theta/2))
+$$
+
+$$
+\lambda_{z,0}=\cos(\theta_z/2)=\frac{\sqrt{2}}{2}
+$$
+
+And finally:
+$$
+Q_{z\,90^\circ}=
+\begin{pmatrix}\lambda_{z,0}\cr 
+\underline{\lambda}_z
+\end{pmatrix}
+=\frac{\sqrt{2}}{2}
+\begin{bmatrix}
+1\cr
+0\cr
+0\cr
+1
+\end{bmatrix}
+$$
+
+We notice that the two quaternions are unitary (the opposite would have been surprising).
+
+We then calculate the two sequences by multiplying the quaternions (the product is non‑commutative).
+
+First sequence: $R_z(90^\circ) \rightarrow R_y(90^\circ)$
+
+$$
+Q_1 = Q_{y\,90^\circ}\,Q_{z\,90^\circ}
+$$
+
+Using $(a_0,\mathbf{a})(b_0,\mathbf{b})=(a_0 b_0-\mathbf{a}\cdot\mathbf{b},\; a_0\mathbf{b}+b_0\mathbf{a}+\mathbf{a}\times\mathbf{b})$, we get
+
+$$
+Q_1=\frac{1}{2}
+\begin{bmatrix}
+1\cr
+1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
+* Second sequence: $\mathbf{R_y}(90^\circ) \rightarrow \mathbf{R_z}(90^\circ)$
+
+(Analogous computation gives another unit quaternion with different vector part due to non‑commutativity.)
+
+---
+
+2: (a) Corresponding rotation angles
+
+* First sequence: $\mathbf{R_z}(90^\circ)\rightarrow\mathbf{R_y}(90^\circ)$:
+$
+\theta_1=2\arccos(\lambda_{1,0})=2\arccos\!\left(\frac{1}{2}\right)
+=2\arcsin\!\big(\|\underline{\lambda}_1\|\big)
+=2\arcsin\!\left(\frac{\sqrt{3}}{2}\right)
+\Rightarrow\;
+\theta_1=\frac{2\pi}{3}\ \text{rad}=120^\circ
+$
+
+* Second sequence: $\mathbf{R_y}(90^\circ)\rightarrow\mathbf{R_z}(90^\circ)$:
+$$
+\theta_2=2\arccos(\lambda_{2,0})=2\arccos\!\left(\frac{1}{2}\right)
+=2\arcsin\!\left(\frac{\sqrt{3}}{2}\right)
+\Rightarrow\;
+\theta_2=\frac{2\pi}{3}\ \text{rad}=120^\circ
+$$
+
+
+(b) Corresponding unit axes
+
+* First sequence: $\mathbf{R_z}(90^\circ)\rightarrow\mathbf{R_y}(90^\circ)$:
+$$
+\mathbf{k}_1=\frac{\underline{\lambda}_1}{\sin(\theta_1/2)}
+=\frac{1}{\sqrt{3}}
+\begin{bmatrix}
+1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
+* Second sequence: $\mathbf{R_y}(90^\circ)\rightarrow\mathbf{R_z}(90^\circ)$:
+$$
+\mathbf{k}_2=\frac{\underline{\lambda}_2}{\sin(\theta_2/2)}
+=\frac{1}{\sqrt{3}}
+\begin{bmatrix}
+-1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_5.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -1138,29 +1453,53 @@ Watch the following video for a clear introduction to inverse kinematics:
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-<!-- Question 1 -->
-<p><strong>Question 1: </strong> Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below): given x and y, what are \(θ_1\) and \(θ_2\)?</p>
+Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below): given x and y, what are $θ_1$ and $θ_2$?
 
-$
-x = L_1 \cos{\theta_1} + L_2 \cos{(\theta_1 + \theta_2)}
-$
+- $x = L_1 \cos{\theta_1} + L_2 \cos{(\theta_1 + \theta_2)}$
+- $y = L_1 \sin{\theta_1} + L_2 \sin{(\theta_1 + \theta_2)}$
 
-$
-y = L_1 \sin{\theta_1} + L_2 \sin{(\theta_1 + \theta_2)}
-$
+*Hint: Use the trigonometric formulas for the sine and cosine of the sum of two angles, as well as the identity involving the sum of the squares of sine and cosine. Also, recall that we computed the forward kinematics in the exercise from Chapter 3.*
 
-<p>
-Hint : use the trigonometric formulas for the sine
-and cosine of the sum of two angles, as well as the
-one of the sum of squares of sine and cosine.
-</p>
-
-<img src="{{ site.baseurl }}/assets/images/kinematics/inv.png" alt="examples" width="200" />
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 2">
+</figure>
 
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
+
+As we have seen on the exercise from Chapter 3, 
+- $x = L_1 c_1 + L_2 c_{1+2}$
+- $y = L_1 s_1 + L_2 s_{1+2}$
+and we also know that:
+- $c^2 + s^2 = 1$
+
+Using the law of cosines we see that the angle $\theta_2$ is given by:
+- $c_2 = \frac{x^2 + y^2-L_{1}^2-L_{2}^2}{2 L_1 L_2}$
+- $s_2 = \pm \sqrt(1-(c_2)^2)$
+
+Hence, $\theta_2$ can be found by: 
+$\boxed{\theta_2 = \arctan \frac{\pm \sqrt(1-(c_2)^2)}{c_2}}$
+
+The choice of $\pm$ is arbitrary but important (it must be consistent) for pairs of final solutions.  
+
+Moreover, finding the angle of $\theta_{2}$ by using the $\arctan$ function is advantageous, since it recovers both elbow-up and elbow-down solutions by choosing the positive and negative signs, respectively.
+
+---
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap6.png" width="450" height="auto" alt="Fig 3">
+</figure>
+
+$\theta_1$ can be defined as $\theta_1 = \alpha - \beta$ where 
+- $\alpha = \arctan \frac{y}{x}$
+- $\beta = \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}$
+
+Therefore,  
+$\boxed{\theta_1 = \arctan \frac{y}{x} - \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}}$
+
+
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_4_3.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -1269,7 +1608,7 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Exercise_set_5.pdf'}}" width="100%" height="600px"></iframe> -->
 
-<details markdown="2">
+<details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
 [IN PROGRESS]
 
@@ -1608,7 +1947,24 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 ---
 
-## Resources
+## Credits
+
+This course uses videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and closely follows the structure, videos and exercises from [Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) courses, with some additional videos and conceptual and mathematical exercises.
+
+
+
+<!-- 
+This section of the course is primarily based on content shared by **Mohammad Zainullah Khan**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton. You can find more information on his website: [www.zainullah.com](https://www.zainullah.com/).
+
+Mohammad’s videos are **well-structured**, **visually engaging** and **not very long** (less than 10 minute), making them an excellent resource for anyone beginning to study kinematics for robotics. We recommend starting with the videos listed below to build a solid foundation. 
+
+Additionally other videos from other youtubers that we have found the most relevant to explain the phenomenom or concepts are proposed. 
+
+Once you’ve grasped the basics, you can further strengthen your understanding by working through  conceptual and mathematical exercises are inspired by [Prof. Mohamed Bouri](https://people.epfl.ch/mohamed.bour), Professor at EPFL. 
+
+For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html), Professor of Mechanical Engineering at Northwestern University. These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials. -->
+
+## Ressources
 
 ### Books
 - [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.
@@ -1616,6 +1972,8 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 - [Springer Handbook of Robotics ](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_2) (Chapter 2. Kinematics)
 
 - [Robotic Manipulation](https://manipulation.csail.mit.edu/pick.html) (Chapter 3. Basic Pick and Place)
+
+For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html). These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials
 
 ### Videos
 
@@ -1625,16 +1983,17 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 - [Robotic Manipulation](https://www.youtube.com/watch?v=ZOXp_wixIzo&list=PLkx8KyIQkMfVRPReg9FHtBk_RGEwnVxU-&index=3) (MIT 2020)
 
-### Exercices 
+<!-- ### Exercices 
 
 - [IN PROGRESS]
 <!-- - Conceptual and mathematical exercises are inspired by **[Mr. Mohamed Bouri](https://people.epfl.ch/mohamed.bour)**, giving the course [Basic of Robotics for Manipulation](https://edu.epfl.ch/coursebook/en/basics-of-robotics-for-manipulation-MICRO-450) at [EPFL](https://www.epfl.ch/fr/).  -->
 
-### Programming
+<!-- ### Programming
 
 - Exercises adapted from the course **[Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2022/)** taught by **[Dr. Garth Zeglin](https://www.cs.cmu.edu/~garthz/)**, instructor at [Carnegie Mellon University](https://www.cmu.edu/).  
   Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 
 
+ -->
 
 - 
 

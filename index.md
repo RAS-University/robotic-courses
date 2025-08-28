@@ -32,13 +32,13 @@ nav_order: 1
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# 🚀 Welcome to the IEEE Robotics and Autonomation University (RAS-U)
+# Welcome to the IEEE Robotics and Automation University (RAS-U)
 
 The RAS-U provides a structured and comprehensive robotics course for self-learners. The course covers fundamental and advanced topics and applications in robotics.
 
-RAS-U is funded by the <a href="https://www.ieee-ras.org/">IEEE Robotics and Automation Society</a>
+RAS-U is funded by the <a href="https://www.ieee-ras.org/">IEEE Robotics and Automation Society</a>.
 
-# 📚 [Course Topics](docs/index)
+# 📚 [Robotics Courses](docs/index)
 
 RAS-U is composed of modules, each of which covers a robotics topic. 
 

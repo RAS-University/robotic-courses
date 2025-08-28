@@ -1076,7 +1076,6 @@ Your task is to gradually increase the value of the integral gain $K_i$ while ke
           <canvas class="pid-chart"></canvas>
       </div>
       <div class="pid-buttons">
-          <button class="ziegler-nichols-button">Ziegler-Nichols</button>
           <button class="reset-button">Reset</button>
       </div>
   </div>
@@ -1348,8 +1347,7 @@ Your task is to gradually increase the value of the derivative gain $K_d$ while 
           <canvas class="pid-chart"></canvas>
       </div>
       <div class="pid-buttons">
-          <button class="ziegler-nichols-button">Ziegler-Nichols</button>
-          <button class="reset-button">Reset</button>
+         <button class="reset-button">Reset</button>
       </div>
   </div>
 

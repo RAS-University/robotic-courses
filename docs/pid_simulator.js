@@ -1,23 +1,3 @@
-// class SecondOrderSystem {
-//     constructor(naturalFrequency = 2, dampingRatio = 0.7, gain = 2, delaySteps = 0) {
-//         this.wn = naturalFrequency;
-//         this.zeta = dampingRatio;
-//         this.gain = gain;
-//         this.x = [0.0, 0.0];
-//         this.delaySteps = delaySteps;
-//         this.inputBuffer = new Array(this.delaySteps).fill(0.0);
-//     }
-//     update(controlInput, dt) {
-//         this.inputBuffer.push(controlInput);
-//         const delayedInput = this.inputBuffer.shift();
-//         const dxdt = this.x[1];
-//         const dvdt = this.gain * delayedInput - 2 * this.zeta * this.wn * this.x[1] - Math.pow(this.wn, 2) * this.x[0];
-//         this.x[0] += dxdt * dt;
-//         this.x[1] += dvdt * dt;
-//         return this.x[0];
-//     }
-// }
-
 class SecondOrderSystem {
     //constructor(naturalFrequency = 0.2, dampingRatio = 1.5, gain = 1, delaySteps = 1) {
     constructor(naturalFrequency = 0.7, dampingRatio = 0.3, gain = 0.9, delaySteps = 1) {
@@ -65,37 +45,6 @@ class SecondOrderSystem {
 }
 
 
-// class PIDController {
-//     constructor(kp = 1.0, ki = 0.0, kd = 0.0) {
-//         this.kp = kp;
-//         this.ki = ki;
-//         this.kd = kd;
-//         this.previousError = 0;
-//         this.integral = 0;
-//         this.previousDerivative = 0;
-//         this.alpha = 0.1; // Low-pass filter coefficient
-//     }
-//     update(setpoint, processVariable, dt) {
-//         const error = setpoint - processVariable;
-//         this.integral += error * dt;
-        
-//         let derivative = 0;
-//         if (dt > 0) {
-//             derivative = (error - this.previousError) / dt;
-//         }
-        
-//         // Use exponential smoothing instead of moving average
-//         const filteredDerivative = this.alpha * derivative + (1 - this.alpha) * this.previousDerivative;
-//         this.previousDerivative = filteredDerivative;
-        
-//         const output = this.kp * error + this.ki * this.integral + this.kd * filteredDerivative;
-        
-//         console.log(`PID Output: ${output.toFixed(4)}, Error: ${error.toFixed(4)}, Integral: ${this.integral.toFixed(4)}, Derivative: ${filteredDerivative.toFixed(4)}, Kp: ${this.kp.toFixed(4)}, Ki: ${this.ki.toFixed(4)}, Kd: ${this.kd.toFixed(4)}`);
-
-//         this.previousError = error;
-//         return output;
-//     }
-// }
 class PIDController {
     constructor(kp = 1.0, ki = 0.0, kd = 0.0) {
         this.kp = kp;

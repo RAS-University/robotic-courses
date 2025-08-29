@@ -100,7 +100,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Transfer Learning](Transfer) - In progress
 
 **Chapter 9: Human-Robot Interaction**
--  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI) - In progress
+-  [Interfaces for Human-Robot Interaction](interfaces-for-HRI) - In progress
 -  [Haptics for Virtual Reality, Teleoperation and Prostheses](haptics-for-robotics) - In progress
 -  [Safety in Design and Control](Safety)
 -  [Shared-Control](Shared-Control)

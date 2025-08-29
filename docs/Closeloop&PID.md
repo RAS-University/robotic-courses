@@ -1,5 +1,5 @@
 ---
-title: Control Systems and PID
+title: Close-loop Control and PID
 parent: Courses
 layout: default
 math: mathjax

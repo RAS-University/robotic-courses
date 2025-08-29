@@ -52,7 +52,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Kinematics](kinematics) - In progress
 -  [Dynamics](dynamics) - In progress
 -  [System Identification](identification) - 
--  [Close-loop Control](pid) - In progress
+-  [Close-loop Control](Closeloop&PID) - In progress
 -  [Model Predictive Control](mpc) - In progress
 -  [Nonlinear Control](nonlinearcontrol) - In progress
 -  [Force Control](force-control) - In progress

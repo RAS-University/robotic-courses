@@ -82,10 +82,10 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Whole-Body Control](wholebody)
 
 **Chapter 7: Robotic Application Domains Part - I**
--  [Aerial Robotics](Drones) - In progress
--  [Humanoids](Humanoids)
--  [Underwater Robotics](Underwater)
--  [Space Exploration](Space)
+-  [Aerial Robotics](aerial) - In progress
+-  [Humanoids](humanoids)
+-  [Underwater Robotics](underwater)
+-  [Space Exploration](space)
 
 
 # Robotics Advanced Topics II# 

@@ -91,11 +91,18 @@ In this chapter we are first going to learn how to represent robots, what is a j
 ---
 #### *Robot Structure:*
 
-A traditional (rigid) robot is composed of a series of links, attached to oneanother by joints. The links move around the joints. 
+A traditional (rigid) robot is composed of a series of ***links***, attached to one another by ***joints***. The links move around the joints. 
 
-The simplest of these joint-based linkage consists of attaching in sequence two links. This is what we refer to as revolute joint, also called hinge joint. It is also referred to as the elbow joint as it bears some vague resemblance to the attachment of the upeer and lower human arms. In place of enabling the links to rotate around the joint, the joint can also allow the links to slide along each other. One then refers to these links as prismatic joint, also called a sliding or linear joint. 
+The simplest of these joint-based linkage consists of attaching in sequence two links. This is what we refer to as ***revolute*** joint, also called ***hinge*** joint. It is also referred to as the elbow joint as it bears some vague resemblance to the attachment of the upeer and lower human arms. 
 
-More interesting are joints that enable either the links to do more than one motion type (combining translation and rotation) or enable to connect three or more links simultaneously. The helical or screw joint allows simultaneous rotation and translation about a screw axis. The spherical joint, also called a ball-and-socket joint, enables rotation along three axes. 
+In place of enabling the links to rotate around the joint, the joint can also allow the links to slide along each other. One then refers to these links as ***prismatic*** joint, also called a sliding or linear joint. 
+
+More interesting are joints that enable either the links to do more than one motion type (combining translation and rotation) or enable to connect three or more links simultaneously. The ***helical*** or ***screw*** joint allows simultaneous rotation and translation about a screw axis. The ***spherical*** joint, also called a ball-and-socket joint, enables rotation along three axes. 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (credit: Kevin Lynch)</figcaption>
+</figure>
 
 #### *Serial vs. Parallel robots*
 
@@ -314,31 +321,31 @@ Give it a try !
 
 ---
 
-#### *Formalism to Describe Robot Structural Mobility*
+#### *Formalism*
 
 The structure of the robot determines entirely its mobility. For instance, the extent by which one link can move it determined by the extent to which it can rotate or slide only the joints it is attached to. The length of the robot's links and the range of motion at each joint determines the volume of the space surrounding the robot that can be reached or travelled through by the robot. To analyse this volume of motion is crucial. For instance, when controling robots tasked to pick and place objects, it allows to determine the regions the robot can reach the object successfully. It also enables to determine the regions of the space free of robot, and hence safe for humans to move around. To control robots, it is hence crucial to be able to express mathematically the range of motion it can do. We refer to this as the robot's structural mobility. 
 
 The first key mathematical notion you must get accustomed to is the notion of:
-***Degrees of Freedom (DOF):*** it refers to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+-***Degrees of Freedom (DoF):*** it refers to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 The state and structural mobility of the robot are expressed through its:
 - ***Configuration***: consists of a the set of parameters that completely specifies the position and orientation of every robot's link. It is usually represented as a vector of joint angles. For instance, the two-link serial robot we saw earlier on is entirely specify by two scalars, denoting the two angles formed by the two joints with their based and with one another.  
 - ***Configuration space (called C-space)*** is the space of all configurations that can be adopted by the robot.
 
 See next a video that introduce this formalism:
-<!--- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
+
+<!-- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
 
 To better understand these concepts, watch the following concise and clear explanation: -->
+
 ![Degrees of Freedom of a Rigid Body](https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4)
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.1: Degrees of Freedom of a Rigid Body. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
-
-
-General rule which holds for any system, not just rigid bodies: 
+From this video, we have learned a general rule which holds for any system, not just rigid bodies: 
 $$
 \boxed{ \text{DoF} = \sum_{}^{} \text{freedoms of } \textbf{points} - \text{number of independent constraints} }
 $$
@@ -460,8 +467,7 @@ $$
 
 </details> -->
 
-
-Revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple degrees of freedom. The cylindrical joint (C) has two degrees of freedom and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three degrees of freedom and 
+The number of direction of motion enabled at a joint is described by the number of DoFs associetd to the joint. For instance, revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple DoFs. The cylindrical joint (C) has two DoFs and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three DoFs. 
 
 
 | Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
@@ -473,26 +479,23 @@ Revolute (R), prismatic (P), and helical (H) joints all have one degree of freed
 | Universal (U)    | 2           | N/A                                                 | 4                                                    |
 | Spherical (S)    | 3           | N/A                                                 | 3                                                    |
 
-<figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
-  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption>
-</figure>
+
 ---
 
 #### *Grübler’s formula and its application*
-***Grübler’s formula*** is a powerful tool to quickly calculate the degrees of freedom of mechanisms, especially useful for complex robot configurations:
+***Grübler’s formula*** is a powerful tool to quickly calculate the DOFs of mechanisms, especially useful for complex robot configurations:
 $$
 \boxed{ \text{DoF} = m(N - 1 - J) + \sum_{i=1}^{J} \text{f}_i }
 $$
 
 Where:
-- $m$ is the dimension of the space (e.g., $m = 3$ for planar mechanisms, $m = 6$ for spatial mechanisms).
+- $m$ is the number of DoFs of the robot's body in space (e.g., $m = 3$ if robot is constrained to move in translation only, such as so called planar robots, $m = 6$ for robots that can both translate and rotate in space).
 - $N$ is the number of links (including the frame).
 - $J$ is the number of joints.
-- $f_i$ is the number of degrees of freedom permitted by joint $i$.
+- $f_i$ is the number of DoFs permitted at each joint $i$.
 
 
-To clearly understand how this formula is applied, check out the following detailed explanation:
+To understand how this formula is applied, check out the following detailed explanation:
 
 ![Degrees of Freedom of a Robot](https://www.youtube.com/watch?v=zI64DyaRUvQ&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=5)
 >  Detailed explanation of Grübler’s formula and practical examples of its application.
@@ -558,8 +561,8 @@ Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the fol
 
 - $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(11 - 1 - 15) + 39 = 9 $
 
-This Delta robot as designed with the parallel bars and spherical joints has **6 supplementary mobilities**.
-These mobilities concern **internal mobilities** not affecting the **pure translation of the mobile plate**. They are actually related to the **rotation of each bar around its principal axis**. 
+This Delta robot as designed with the parallel bars and spherical joints has **6 supplementary DoFs**, enabled by the **rotation of each bar around its principal axis**. 
+These DoFs are referred to as **internal DoFs**, as they are not affecting the **translation of the mobile plate**. They are actually related to the **rotation of each bar around its principal axis**. 
 
 </details>
 
@@ -633,14 +636,14 @@ Now that we have seen some basics notions, foundational concepts, proceed to the
   <summary>Conceptual Questions</summary>
 
 <!-- First question  -->
-<p><strong>Question 1: Forward kinematics (FK) is...</strong></p>
+<p><strong>Question 1: Forward kinematics (FK) allows to compute...</strong></p>
 <form id="q2-fk">
-  <input type="radio" name="q2-fk" value="option1"> How to calculate the position/orientation from given joint variables<br>
-  <input type="radio" name="q2-fk" value="option2"> Finding joint variables from end-effector position and orientation<br>
-  <input type="radio" name="q2-fk" value="option3"> Calculating robot dynamics<br>
+  <input type="radio" name="q2-fk" value="option1"> the position/orientation of the robot's end-effector from given robot's joint configuration<br>
+  <input type="radio" name="q2-fk" value="option2"> the robot's joint configuration from the robot's end-effector position and orientation<br>
+  <input type="radio" name="q2-fk" value="option3"> neither of these two<br>
 
   <button type="button" onclick="checkMCQ('q2-fk', 'option1',
-    'Correct! Forward Kinematics computes the position and orientation from joint variables.',
+    'Correct! Forward Kinematics computes the end-effector's position and orientation from joint configuration for a robotic arm.',
     'Incorrect. Please try again!')">
     Check Answer
   </button>

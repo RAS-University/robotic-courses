@@ -58,9 +58,9 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
- **Note on Course Level** 
+⚠️ **Note on Course Level** 
 
-> This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
+>*This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
 ---
 
 ## 2. General Motivation
@@ -76,9 +76,7 @@ Kinematics, often referred to as the “**geometry of movement**,” is the stud
 
 - ***Backbone to Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions. Kinematics is the back bone to all standard and advanced path planning techniques. Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, it is necessary to design the robot's kinematic structure to ensure that the path will be **kinematically feasible**, namely that it will satisfy the robot's mechanical constraints.
 
-In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic arms, and learn a systematic way to map your robot’s geometry into kinematic equations to enable control. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**.
-
-
+In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic arms, and learn a systematic way to map your robot’s geometry into kinematic equations to enable control. By mastering kinematics, you’ll have a strong foundation for starting your journey into controling robots. 
 
 ---
 
@@ -89,6 +87,15 @@ In this chapter, you will explore different ways of representing positions and o
 
 ### Chapter 0 : General Concepts
 In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
+
+---
+#### *Robot Structure:*
+
+A traditional (rigid) robot is composed of a series of links, attached to oneanother by joints. The links move around the joints. 
+
+The simplest of these joint-based linkage consists of attaching in sequence two links. This is what we refer to as revolute joint, also called hinge joint. It is also referred to as the elbow joint as it bears some vague resemblance to the attachment of the upeer and lower human arms. In place of enabling the links to rotate around the joint, the joint can also allow the links to slide along each other. One then refers to these links as prismatic joint, also called a sliding or linear joint. 
+
+More interesting are joints that enable either the links to do more than one motion type (combining translation and rotation) or enable to connect three or more links simultaneously. The helical or screw joint allows simultaneous rotation and translation about a screw axis. The spherical joint, also called a ball-and-socket joint, enables rotation along three axes. 
 
 #### *Serial vs. Parallel robots*
 
@@ -217,18 +224,20 @@ For a visual comparison of these two robot types, watch the following short vide
 -->
 </details>
 
+
 ---
 
 #### *Drawing kinematic diagrams*
-In robotics, accurately representing the structure of robots (left image below) through **kinematic diagrams** (right image below) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+In robotics, accurately representing the structure of robots (left image below) through **kinematic diagrams** (right image below) is crucial. These diagrams help us clearly visualize joints, links, and their connections.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_repre.png' }}" width="500px" alt="Kine">
   <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of a 3-axes parralel robot (left) represented in an kinematic diagram (right)</figcaption>
 </figure>
 
-
 By learning how to sketch these diagrams, you will be better prepared to analyze robot motion and systematically compute essential parameters such as mobility and degrees of freedom.
+
+To draw a proper diagram, one needs to identify the number of links and type of joint that connects them.
 
 <!-- Step by step -->
 <details markdown="1">
@@ -442,6 +451,23 @@ $$
 
 </details> -->
 
+
+Revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple degrees of freedom. The cylindrical joint (C) has two degrees of freedom and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three degrees of freedom and 
+
+
+| Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
+|------------------|-------------|-----------------------------------------------------|------------------------------------------------------|
+| Revolute (R)     | 1           | 2                                                   | 5                                                    |
+| Prismatic (P)    | 1           | 2                                                   | 5                                                    |
+| Helical (H)      | 1           | N/A                                                 | 5                                                    |
+| Cylindrical (C)  | 2           | N/A                                                 | 4                                                    |
+| Universal (U)    | 2           | N/A                                                 | 4                                                    |
+| Spherical (S)    | 3           | N/A                                                 | 3                                                    |
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption>
+</figure>
 ---
 
 #### *Grübler’s formula and its application*
@@ -467,21 +493,6 @@ To clearly understand how this formula is applied, check out the following detai
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
 
-**Different type of joints:**
-
-| Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
-|------------------|-------------|-----------------------------------------------------|------------------------------------------------------|
-| Revolute (R)     | 1           | 2                                                   | 5                                                    |
-| Prismatic (P)    | 1           | 2                                                   | 5                                                    |
-| Helical (H)      | 1           | N/A                                                 | 5                                                    |
-| Cylindrical (C)  | 2           | N/A                                                 | 4                                                    |
-| Universal (U)    | 2           | N/A                                                 | 4                                                    |
-| Spherical (S)    | 3           | N/A                                                 | 3                                                    |
-
-<figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
-  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption>
-</figure>
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">

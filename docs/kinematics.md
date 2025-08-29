@@ -220,11 +220,11 @@ For a visual comparison of these two robot types, watch the following short vide
 ---
 
 #### *Drawing kinematic diagrams*
-In robotics, accurately representing the structure of robots (left image) through **kinematic diagrams** (right image) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+In robotics, accurately representing the structure of robots (left image below) through **kinematic diagrams** (right image below) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_repre.png' }}" width="500px" alt="Kine">
-  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of robots represented in kinematic diagrams</figcaption>
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of a 3-axes parralel robot (left) represented in an kinematic diagram (right)</figcaption>
 </figure>
 
 
@@ -247,7 +247,7 @@ Here is a video explaining the step-by-step procedure to draw the kinematic diag
 <details markdown="1">
   <summary>Hands-on exercices </summary>
 
-Here are some exercie to learn how to draw the **kinematic representation structures** of these following robots.
+Here is an exercises to learn how to draw the **kinematic representation structures** for three closed-chain robots.
 Give it a try !
 
 <figure style="text-align: center;">

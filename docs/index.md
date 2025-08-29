@@ -51,21 +51,22 @@ If you are already a robotics expert—or an expert in another field simply curi
 **Chapter 1: Basics of Motion Control**
 -  [Kinematics](kinematics) - In progress
 -  [Dynamics](dynamics) - In progress
--  [Close-loop Control](closeloop) 
--  [Proportional Integral Derivative](pid) - In progress
+-  [System Identification](identification) - 
+-  [Close-loop Control](pid) - In progress
+-  [Model Predictive Control](mpc) - In progress
+-  [Nonlinear Control](nonlinearcontrol) - In progress
 -  [Force Control](force-control) - In progress
 
 **Chapter 2: Sensing in Robotics**
--  [Sensors](new-sensors-for-robotics) - In progress
--  [Vision for Robotics](vision-for-robotics) - In progress
--  [Tactile and Force Perception for Robotics](force) - In progress
+-  [Sensors and Sensing](new-sensors-for-robotics) - In progress
+-  [Vision](vision-for-robotics) - In progress
+-  [Force Perception](force) - In progress
 
 **Chapter 4: Motion Planning and Navigation**
 -  [Sampling-Based Planning](sampling-planning) 
 -  [Geometric-Methods for Planing](geometry-planning) 
 -  [Dynamical-Systems-Based Planning](DS-planning) - In progress
 -  [Simultaneous Localization and Mapping](SLAM)
-
 
 # Robotics Advanced Topics I# 
 

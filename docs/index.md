@@ -58,7 +58,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 **Chapter 2: Sensing in Robotics**
 -  [Sensors](new-sensors-for-robotics) - In progress
 -  [Vision for Robotics](vision-for-robotics) - In progress
--  [Haptics for Robotics](haptics-for-robotics) - In progress
+-  [Tactile and Force Perception for Robotics](force) - In progress
 
 **Chapter 4: Motion Planning and Navigation**
 -  [Sampling-Based Planning](sampling-planning) 
@@ -100,6 +100,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 **Chapter 9: Human-Robot Interaction**
 -  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI) - In progress
+-  [Haptics for Virtual Reality, Teleoperation and Prostheses](haptics-for-robotics) - In progress
 -  [Safety in Design and Control](Safety)
 -  [Shared-Control](Shared-Control)
 -  [Cognitive Robotics](Social)

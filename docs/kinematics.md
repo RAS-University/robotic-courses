@@ -314,8 +314,19 @@ Give it a try !
 
 ---
 
-#### *Degrees of Freedom (DOF)*
-<!-- - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+#### *Formalism to Describe Robot Structural Mobility*
+
+The structure of the robot determines entirely its mobility. For instance, the extent by which one link can move it determined by the extent to which it can rotate or slide only the joints it is attached to. The length of the robot's links and the range of motion at each joint determines the volume of the space surrounding the robot that can be reached or travelled through by the robot. To analyse this volume of motion is crucial. For instance, when controling robots tasked to pick and place objects, it allows to determine the regions the robot can reach the object successfully. It also enables to determine the regions of the space free of robot, and hence safe for humans to move around. To control robots, it is hence crucial to be able to express mathematically the range of motion it can do. We refer to this as the robot's structural mobility. 
+
+The first key mathematical notion you must get accustomed to is the notion of:
+***Degrees of Freedom (DOF):*** it refers to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+
+The state and structural mobility of the robot are expressed through its:
+- ***Configuration***: consists of a the set of parameters that completely specifies the position and orientation of every robot's link. It is usually represented as a vector of joint angles. For instance, the two-link serial robot we saw earlier on is entirely specify by two scalars, denoting the two angles formed by the two joints with their based and with one another.  
+- ***Configuration space (called C-space)*** is the space of all configurations that can be adopted by the robot.
+
+See next a video that introduce this formalism:
+<!--- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
 
@@ -325,9 +336,7 @@ To better understand these concepts, watch the following concise and clear expla
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
-- ***Configuration of a robot*** is a representation of the positions of all the points of the robot.
-- ***Configuration space (called C-space)*** is the space of all configurations
-- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
+
 
 General rule which holds for any system, not just rigid bodies: 
 $$

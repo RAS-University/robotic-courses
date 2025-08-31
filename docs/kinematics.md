@@ -1243,8 +1243,8 @@ Consider the two sequences of rotations :
 
 For each of these sequences:
 
-1. Determine the resulting corresponding **quaternion**.
-2. Deduce:
+1: Determine the resulting corresponding **quaternion**.
+2: Deduce:
     - (a) the corresponding **angles of rotation**.
     - (b) the corresponding **unit axes of rotation**.
 
@@ -1266,7 +1266,7 @@ $$
 1\cr
 0
 \end{bmatrix}
-(\underline{\lambda}\text{ is the axis part whose norm is } \sin(\theta/2))
+(\underline{\lambda}_y\text{ is the axis part whose norm is } \sin(\theta/2))
 $$
 
 $$
@@ -1300,7 +1300,7 @@ $$
 0\cr
 1
 \end{bmatrix}
-(\underline{\lambda}\text{ is the axis part whose norm is } \sin(\theta/2))
+(\underline{\lambda}_z\text{ is the axis part whose norm is } \sin(\theta/2))
 $$
 
 $$
@@ -1348,26 +1348,43 @@ $$
 
 (Analogous computation gives another unit quaternion with different vector part due to non‑commutativity.)
 
+$$
+Q_2=\frac{1}{2}
+\begin{bmatrix}
+1\cr
+-1\cr
+1\cr
+1
+\end{bmatrix}
+$$
+
 ---
 
 2: (a) Corresponding rotation angles
 
 * First sequence: $\mathbf{R_z}(90^\circ)\rightarrow\mathbf{R_y}(90^\circ)$:
 $
-\theta_1=2\arccos(\lambda_{1,0})=2\arccos\!\left(\frac{1}{2}\right)
-=2\arcsin\!\big(\|\underline{\lambda}_1\|\big)
-=2\arcsin\!\left(\frac{\sqrt{3}}{2}\right)
+\theta_1=2\arccos(\lambda_{1,0})=2\arccos\left(\frac{1}{2}\right)
+$
+and 
+$
+\theta_1 =2\arcsin\big(\lVert \lambda_{1} \rVert\big) = 
+2\arcsin\left(\frac{\sqrt{3}}{2}\right)
 \Rightarrow\;
 \theta_1=\frac{2\pi}{3}\ \text{rad}=120^\circ
 $
 
 * Second sequence: $\mathbf{R_y}(90^\circ)\rightarrow\mathbf{R_z}(90^\circ)$:
-$$
-\theta_2=2\arccos(\lambda_{2,0})=2\arccos\!\left(\frac{1}{2}\right)
-=2\arcsin\!\left(\frac{\sqrt{3}}{2}\right)
+$
+\theta_2=2\arccos(\lambda_{2,0})=2\arccos\left(\frac{1}{2}\right)
+$
+and 
+$
+\theta_2 =2\arcsin\big(\lVert \lambda_{2} \rVert\big) 
+=2\arcsin\left(\frac{\sqrt{3}}{2}\right)
 \Rightarrow\;
 \theta_2=\frac{2\pi}{3}\ \text{rad}=120^\circ
-$$
+$
 
 
 (b) Corresponding unit axes
@@ -1511,7 +1528,7 @@ Moreover, finding the angle of $\theta_{2}$ by using the $\arctan$ function is a
 ---
 
 <figure style="text-align:center;">
-  <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap6.png" width="450" height="auto" alt="Fig 3">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/exsol_chap6.png" width="450" height="auto" alt="Fig 6">
 </figure>
 
 $\theta_1$ can be defined as $\theta_1 = \alpha - \beta$ where 
@@ -1626,8 +1643,35 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 
 **Exercice 1:**
 
+Figure 4.1 shows the KUKA LBR iiwa 7R robot arm. The figure defines an {s} frame at the base with the ŷ_s-axis pointing out of the page and a {b} frame aligned with {s} at the end-effector. The robot is at its home configuration. The screw axes for the seven joints are illustrated (positive rotation about these axes is by the right-hand rule). The axes for joints 2, 4, and 6 are aligned, and the axes for joints 1, 3, 5, and 7 are identical at the home configuration. The dimensions are $L_1 = 0.34 \, m$, $L_2 = 0.4 \, m$, $L_3 = 0.4 \, m$, and $L_4 = 0.15 \, m$.  
+
+**(a)**
+What is the space Jacobian when the robot is at its home configuration?  
+
+**(b)**
+What is the body Jacobian when the robot is at its home configuration?  
+
+**(c)** 
+What is the rank of the space and body Jacobian at the home configuration? (It is always the same.) Is the home configuration a singularity?  
+What is the dimension of the space of feasible twists at the home configuration?  
+
+*For the remaining questions, assume the angles of the joints are $i\pi/16$ for joints $i = 1 \dots 7$*.  
+
+**(d)** 
+What is the space Jacobian? What joint torques are needed to generate the wrench  
+$\mathcal{F}_s = (1 \, Nm, 1 \, Nm, 1 \, Nm, 1 \, Nm, 1 \, N, 1 \, N, 1 \, N)$?  
+What is the manipulability measure $\mu_2$ for the angular velocity manipulability ellipsoid in the space frame?  
+What is the manipulability measure $\mu_2$ for the linear manipulability ellipsoid in the space frame?  
+
+**(e)** 
+What is the body Jacobian? What joint torques are needed to generate the wrench  
+$\mathcal{F}_b = (1 \, Nm, 1 \, Nm, 1 \, Nm, 1 \, Nm, 1 \, N, 1 \, N, 1 \, N)$?  
+What is the manipulability measure $\mu_2$ for the angular velocity manipulability ellipsoid in the body frame?  
+What is the manipulability measure $\mu_2$ for the linear manipulability ellipsoid in the body frame?  
+
+
 <figure style="text-align:center;">
-  <img src="{{ site.baseurl }}/assets/images/kinematics/4.1.png" width="450" height="auto" alt="Fig 4.1">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/4.1.jpeg" width="450" height="auto" alt="Fig 4.1">
   <figcaption>
     <strong>Figure 4.1.</strong> The KUKA LBR iiwa 7-dof robot (LBR = Leichtbauroboter, German for lightweight robot; iiwa = intelligent industrial work assistant).
   </figcaption>
@@ -1639,14 +1683,21 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 
 **Exercice 2:**
 
+Figure 5.1 shows an RPR robot that is confined to the plane of the page.  
+An end-effector frame {b} is illustrated, where the $\hat{x}_b$-axis is out of the page.  
+The directions of positive motion of the three joints are indicated by arrows.  
+The axes of the two revolute joints are out of the page, and the prismatic joint moves in the plane of the page. Joint 1 is at $q_1 = (0, -5, -7)$ in {b} and joint 3 is at $q_3 = (0, -1, -3)$ in {b}.  
+
+Write the body Jacobian $J_b(\theta)$ for the configuration shown.  
+All entries of your $J_b(\theta)$ matrix should be numerical (no symbols or math).
+
+
 <figure style="text-align:center;">
-  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.png" width="450" height="auto" alt="Fig 5.1">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.jpeg" width="300" height="auto" alt="Fig 5.1">
   <figcaption>
     <strong>Figure 5.1.</strong> An RPR robot
   </figcaption>
 </figure>
-
-[IN PROGRESS]
 
 <!-- Practice what you've learned with Exercises **1** and **2** below.
 *(Note: Exercise 2.8 on finding singularities will be introduced in the next video.)* -->
@@ -1656,9 +1707,66 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 
 <details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
-[IN PROGRESS]
 
 **Exercice 1:**
+
+Angular units are radians and linear units are mm.
+
+**(a)**  
+$$
+J_s =
+\begin{bmatrix}
+0 & 1 & 0 & 1 & 0 & 1 & 0 \cr
+0 & 0 & 0 & 0 & 0 & 0 & 0 \cr
+1 & 0 & 1 & 0 & 1 & 0 & 1 \cr
+0 & 0 & 0 & 0 & 0 & 0 & 0 \cr
+0 & 0.34 & 0 & 0.74 & 0 & 1.14 & 0 \cr
+0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}.
+$$
+
+**(b)**  
+$$
+J_b =
+\begin{bmatrix}
+0 & 1 & 0 & 1 & 0 & 1 & 0 \cr
+0 & 0 & 0 & 0 & 0 & 0 & 0 \cr
+1 & 0 & 1 & 0 & 1 & 0 & 1 \cr
+0 & 0 & 0 & 0 & 0 & 0 & 0 \cr
+0 & -0.95 & 0 & -0.55 & 0 & -0.15 & 0 \cr
+0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{bmatrix}.
+$$
+
+**(c)**  
+The rank is three. Columns 2, 3, and 4 of the Jacobians are linearly independent;  
+all feasible velocity directions are linear combinations of these three columns.  
+The space of feasible twists is three dimensional.
+
+**(d)**  Calculate $J_s(\theta)$ using **JacobianSpace**.
+
+$$
+\tau = J_s^{T}(\theta)\,\mathcal{F}_s
+= \begin{bmatrix} 1 & 1.44 & 0.78 & 1.72 & 1.13 & 0.54 & 2.29 \end{bmatrix}^{T}.
+$$
+
+$$
+\mu_2(J_{sw} J_{sw}^{T}) = 2.427, \qquad
+\mu_2(J_{sv} J_{sv}^{T}) = 30.5.
+$$
+
+**(e)**  Calculate $J_b(\theta)$ using **JacobianBody**.
+
+$$
+\tau = J_b^{T}(\theta)\,\mathcal{F}_b
+= \begin{bmatrix} -0.19 & 1.76 & 0.18 & 0.26 & 1.36 & -0.96 & 1 \end{bmatrix}^{T}.
+$$
+
+$$
+\mu_2(J_{bw} J_{bw}^{T}) = 2.427, \qquad
+\mu_2(J_{bv} J_{bv}^{T}) = 20.6.
+$$
+
 
 ---
 
@@ -1674,6 +1782,9 @@ J_b =
 5 & 1/\sqrt(2) & 1 
 \end{bmatrix}
 $$
+
+You can see this by visualization (imagine turntables at joints 1 and 3 and visualize the motion of a point at the origin of $b$, and imagine a conveyor moving in the direction of joint 2) or by recognizing that $\omega_1 = \omega_3 = (1, 0, 0)$ and points on the joint 1 and 3 axes are $q_1$ and $q_3$ and calculating $v_i = -\,\omega_i \times q_i$. For joint 2, the linear direction of positive motion is given by $v_2 = (q_3 - q_1)/\lVert q_3 - q_1 \rVert$.
+
 
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_5.pdf'}}" width="100%" height="600px"></iframe> -->
@@ -1758,64 +1869,255 @@ Which of the following diagrams represent singularities of this Delta robot? *(M
 
 Consider the following Lambda robot:
 <figure style="text-align:center;">
-  <img src="{{ site.baseurl }}/assets/images/kinematics/ex.chap8.png" width="450" height="auto" alt="Fig chap 8">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex.chap8.jpeg" width="450" height="auto" alt="Fig chap 8">
 </figure>
 
 The two arms are of the length $l (AC=BC=l)$. 
 
 **Kinematics:**
-1. Is it a parallel or a serial robot? 
-2. Give the number of DOF. 
-3. Wrtie down the vector for:
-  (a) the position of the end effector: $c$ = ()
-  (b) the generalized coordinates: $q$ = ()
-  (c) the output velocity:  $\dot(c)$ = ()
-  (d) the joint velocity: $\dot(q)$ = ()
-4. Suggest applications for this robot. 
+
+**a.** Is it a parallel or a serial robot? 
+
+**b.** Give the number of DOF. 
+
+**c.** Wrtie down the vector for:
+* (1) the position of the end effector: $c$ = ()
+* (2) the generalized coordinates: $q$ = ()
+* (3) the output velocity:  $\dot(c)$ = ()
+* (4) the joint velocity: $\dot(q)$ = ()
+
+**d.** Suggest applications for this robot. 
 
 **Modeling:** 
-5. Find the DGM and IGM of this robot. 
-6. Deduce the direct and inverse Jacobians of this robot. 
-7. Explain the utility of Jacobian matrices. 
-8. Find the singular positions of this robot. 
+
+**e.** Find the DGM and IGM of this robot. 
+
+**f.** Deduce the direct and inverse Jacobians of this robot. 
+
+**g.** Explain the utility of Jacobian matrices. 
+
+**h.** Find the singular positions of this robot. 
 
 <!-- Now, you can apply what you've learned by solving **Exercise 2.8** from the previous exercise set ! -->
+
+---
 
 <details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
 
-1.  This robot has parallel kinematics. 
+**a.**  This robot has parallel kinematics. 
 
-2.  It is a robot with 2 DOF, a translation along $X$ and a translation along $Y$: 
+---
+
+**b.**  It is a robot with 2 DOF, a translation along $X$ and a translation along $Y$: 
 - If both motorized joints move in the same direction at the same speed, the movement is only along $X$. 
 - If both motorized joints move in opposite directions at the same speed, the movement is only along $Y$. 
 - In all other cases, the movement is coupled. 
 
-3. 
-  (a) The tool position vector is $c = \frac{x}{y}$
-  (b) The generalized coordinate vector is $q = \frac{q_1}{q_2}$
-  (c) The output velocity vector is $\dot(c) = \frac{\dot(x)}{\dot(y)}$
-  (d) The joint velocity vector is $\dot(q) = \frac{\dot(q_1)}{\dot(q_2)}$
+---
 
-4. The applications of this robot are multiple: 
-- Seated position rehabilitation movements, figure Lambda (a), https://www.lhs-sa.ch/ 
-- Gait trainer from Reha Technology, figure Lambda (b), https://www.rehatechnology.com/en 
+**c.** 
+* (1) The tool position vector is $c = \frac{x}{y}$
+* (2) The generalized coordinate vector is $q = \frac{q_1}{q_2}$
+* (3) The output velocity vector is $\dot(c) = \frac{\dot(x)}{\dot(y)}$
+* (4) The joint velocity vector is $\dot(q) = \frac{\dot(q_1)}{\dot(q_2)}$
 
-5. 
+---
+
+**d.** The applications of this robot are multiple: 
+- Seated position rehabilitation movements, Figure Lambda (a), [LHS-SA](https://www.lhs-sa.ch/)  
+- Gait trainer from Reha Technology, Figure Lambda (b), [Reha Technology](https://www.rehatechnology.com/en)  
+
+---
+
+
+**e.** 
+
+**Direct geometric model (DGM):**
+
+$$
+\begin{cases}
+x \;=\; q_1 + \dfrac{q_2 - q_1}{2} \;=\; \dfrac{q_1}{2} + \dfrac{q_2}{2},\cr\cr
+y \;=\; \sqrt{\,l^2 - \left(\dfrac{q_2 - q_1}{2}\right)^{2}}
+\end{cases}
+$$
+
+**Inverse geometric model (IGM):**
+
+$$
+\begin{cases}
+q_1 \;=\; x - \sqrt{\,l^2 - y^2},\cr\cr
+q_2 \;=\; x + \sqrt{\,l^2 - y^2}
+\end{cases}
+$$
+
+---
+
+**f.** **Direct Jacobian matrix** $J$ (derivative of the DGM w.r.t. the joint variables $q_1,q_2$):
+
+Since
+$$
+x=\tfrac{1}{2}q_1+\tfrac{1}{2}q_2, \qquad
+y=\sqrt{\,l^2-\left(\dfrac{q_2-q_1}{2}\right)^2},
+$$
+we get
+$$
+\frac{\partial x}{\partial q_1}=\frac{1}{2},\quad
+\frac{\partial x}{\partial q_2}=\frac{1}{2},\quad
+\frac{\partial y}{\partial q_1}=\frac{q_2-q_1}{4\sqrt{\,l^2-\left(\dfrac{q_2-q_1}{2}\right)^2}},\quad
+\frac{\partial y}{\partial q_2}=-\frac{q_2-q_1}{4\sqrt{\,l^2-\left(\dfrac{q_2-q_1}{2}\right)^2}}.
+$$
+
+Therefore
+$$
+J=
+\begin{bmatrix}
+\dfrac{\partial x}{\partial q_1} & \dfrac{\partial x}{\partial q_2} \cr
+\dfrac{\partial y}{\partial q_1} & \dfrac{\partial y}{\partial q_2}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} \cr
+\dfrac{q_2-q_1}{4\sqrt{\,l^2-\left(\dfrac{q_2-q_1}{2}\right)^2}} &
+-\dfrac{q_2-q_1}{4\sqrt{\,l^2-\left(\dfrac{q_2-q_1}{2}\right)^2}}
+\end{bmatrix}.
+$$
+
+**Inverse Jacobian** $J^{-1}$ (derivative of the IGM w.r.t. the tool coordinates $(x,y)$):
+
+From
+$$
+q_1=x-\sqrt{\,l^2-y^2}, \qquad q_2=x+\sqrt{\,l^2-y^2},
+$$
+we obtain
+$$
+\frac{\partial q_1}{\partial x}=1,\quad
+\frac{\partial q_1}{\partial y}=\frac{y}{\sqrt{\,l^2-y^2}},\quad
+\frac{\partial q_2}{\partial x}=1,\quad
+\frac{\partial q_2}{\partial y}=-\frac{y}{\sqrt{\,l^2-y^2}}.
+$$
+
+Thus
+$$
+J^{-1} =
+\begin{bmatrix}
+\dfrac{\partial q_1}{\partial x} & \dfrac{\partial q_1}{\partial y} \cr
+\dfrac{\partial q_2}{\partial x} & \dfrac{\partial q_2}{\partial y}
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & \dfrac{y}{\sqrt{\,l^2-y^2}} \cr
+1 & -\dfrac{y}{\sqrt{\,l^2-y^2}}
+\end{bmatrix}.
+$$
+
+---
+
+**g.** The Jacobian matrices have multiple applications:  
+
+1: Relation between the speeds:  
+
+$$
+\begin{pmatrix}
+\dot{x} \cr
+\dot{y}
+\end{pmatrix}
+= J(q_{1}, {q_2})
+\begin{pmatrix}
+\dot{q}_1 \cr
+\dot{q}_2
+\end{pmatrix}
+$$
+
+$$
+= f_{direct}({q_1}, {q_2}, \dot{q}_1, \dot{q}_2)
+$$
+
+From the knowledge of the speeds of motors 1 and 2, we can deduce the speeds at the level of the tool.  
+This matrix is a relationship between the tool and joint speeds: the direct Jacobian matrix is also a reduction matrix.  
+
+$$
+\begin{pmatrix}
+\dot{q}_1 \cr
+\dot{q}_2
+\end{pmatrix}
+= J^{-1}(x,y)
+\begin{pmatrix}
+\dot{x} \cr
+\dot{y}
+\end{pmatrix}
+$$
+
+$$
+= f_{inverse}({x}, {y}, \dot{x}, \dot{y})
+$$
+
+Thanks to the knowledge of the desired speeds at the tool level, we can choose the motors (it is a question of dimensioning only the speed of the motors).  
+It should be noted that these joint speeds (motors) depend on the working position of the robot, and it is necessary to do an in-depth analysis to size the worst case.  
+
+2: Relation between joint and tool differential movements is as follows:  
+
+$$
+\begin{pmatrix}
+\Delta x \cr
+\Delta y
+\end{pmatrix}
+= J(q_1, q_2)
+\begin{pmatrix}
+\Delta q_1 \cr
+\Delta q_2
+\end{pmatrix}
+= f_{direct}(q_1, q_2, \Delta q_1, \Delta q_2)
+$$
+
+Thus, from the joint resolutions (sensors at the level of the motors), we deduce the resolutions at the level of the tool.  
+Note that this tool resolution depends on the working position.  
+
+$$
+\begin{pmatrix}
+\Delta q_1 \cr
+\Delta q_2
+\end{pmatrix}
+= J^{-1}(x,y)
+\begin{pmatrix}
+\Delta x \cr
+\Delta y
+\end{pmatrix}
+= f_{inverse}(x, y, \Delta x, \Delta y)
+$$
+
+From the knowledge of the tool resolution specified by the specifications ($\Delta x$ and $\Delta y$), we deduce the joint resolutions at the level of the motors ($\Delta q_1$ and $\Delta q_2$).  
+These joint resolutions (motor sensors) depend on the working position of the robot, and it is necessary to do an in-depth analysis to size the worst case.  
+
+**h.** The direct Jacobian matrix is:  
+
+$$
+J =
+\begin{bmatrix}
+\frac{1}{2} & \frac{1}{2} \cr
+\frac{q_2 - q_1}{4 \sqrt{l^2 - \left( \tfrac{q_2 - q_1}{2} \right)^2}} & \frac{q_1 - q_2}{4 \sqrt{l^2 - \left( \tfrac{q_2 - q_1}{2} \right)^2}}
+\end{bmatrix}.
+$$
+
+and its determinant is  
+
+$$
+\frac{q_1 - q_2}{4 \sqrt{l^2 - \left( \tfrac{q_2 - q_1}{2} \right)^2}}
+$$  
+
+The singularities are found for a null determinant and for invalid values, i.e.:  
+
+$$\boxed{q_1 = q_2 \quad \text{and} \quad q_2 = 2l + q_1}$$
 
 <figure style="text-align:center;">
-  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.png" width="450" height="auto" alt="Fig 5.1">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/sol.singul.chap8.jpeg" width="450" height="auto" alt="Fig. Sing">
   <figcaption>
-    <strong>Figure 5.1.</strong> An RPR robot
+    <strong>a.</strong> Parallel singularity: $q_1 = q_2$ (left) & <strong>b.</strong> Serial singularity: $q_2 = 2 l + q_1$ (right)
   </figcaption>
 </figure>
 
-<figure style="text-align:center;">
-  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.png" width="450" height="auto" alt="Fig 5.1">
-  <figcaption>
-    <strong>Figure 5.1.</strong> An RPR robot
-  </figcaption>
-</figure>
+We could have also found these values by using a drawing, as in the figure above. 
+
 </details>
 
 </details>
@@ -2071,6 +2373,9 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 ---
 
 ## Credits
+
+This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
+
 
 This course uses videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and closely follows the structure, videos and exercises from [Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) courses, with some additional videos and conceptual and mathematical exercises.
 

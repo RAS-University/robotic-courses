@@ -279,7 +279,14 @@ Other interesting videos
 
 -----------------------
 
-Reference:
+## Credit
+
+This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
+
+-----------------------
+
+
+## Reference:
 
 1. <a id="ref1"></a>Morrell, A. L. G., Morrell-Junior, A. C., Morrell, A. G., Mendes, J. M. F., Tustumi, F., de Oliveira-e-Silva, L. G., & Morrell, A. (2021). *The history of robotic surgery and its evolution: when illusion becomes reality.* Revista do Colégio Brasileiro de Cirurgiões, 48, e20202798. https://doi.org/10.1590/0100-6991e-20202798  
 

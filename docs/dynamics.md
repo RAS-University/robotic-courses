@@ -2738,6 +2738,12 @@ Additional exam-level exercises covering other chapters of the book [Modern Robo
 
 ---
 
+## Credits
+
+This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
+
+---
+
 ## Additional Resources
 
 ### Books

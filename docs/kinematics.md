@@ -1606,10 +1606,33 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 >
 ><sub> Jacobian | Robotics 101. YouTube video, 16 September 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA&index=13
 
-
 <!-- Mathematical Development Questions -->
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
+
+> *From Practice Exercise 5.1, MODERN ROBOTICS, Practice Exercices*
+
+**Exercice 1:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/4.1.png" width="450" height="auto" alt="Fig 4.1">
+  <figcaption>
+    <strong>Figure 4.1.</strong> The KUKA LBR iiwa 7-dof robot (LBR = Leichtbauroboter, German for lightweight robot; iiwa = intelligent industrial work assistant).
+  </figcaption>
+</figure>
+
+---
+
+> *From Practice Exercise 5.3, MODERN ROBOTICS, Practice Exercices*
+
+**Exercice 2:**
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.png" width="450" height="auto" alt="Fig 5.1">
+  <figcaption>
+    <strong>Figure 5.1.</strong> An RPR robot
+  </figcaption>
+</figure>
 
 [IN PROGRESS]
 
@@ -1622,6 +1645,24 @@ Now that you've understood the exciting concept of the Jacobian, let's practice 
 <details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
 [IN PROGRESS]
+
+**Exercice 1:**
+
+---
+
+**Exercice 2:**
+$$
+J_b =
+\begin{bmatrix}
+1 & 0 & 1 \cr
+0 & 0 & 0 \cr
+0 & 0 & 0 \cr
+0 & 0 & 0 \cr
+-7 & 1/\sqrt(2) & -3 \cr
+5 & 1/\sqrt(2) & 1 
+\end{bmatrix}
+$$
+
 
 <!-- <iframe src="{{ site.baseurl }}{{'/assets/pdfs/kinematics/Solution_set_5.pdf'}}" width="100%" height="600px"></iframe> -->
 </details>
@@ -1702,9 +1743,68 @@ Which of the following diagrams represent singularities of this Delta robot? *(M
 <!-- Mathematical Development Questions -->
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
-[IN PROGRESS]
+
+Consider the following Lambda robot:
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/ex.chap8.png" width="450" height="auto" alt="Fig chap 8">
+</figure>
+
+The two arms are of the length $l (AC=BC=l)$. 
+
+**Kinematics:**
+1. Is it a parallel or a serial robot? 
+2. Give the number of DOF. 
+3. Wrtie down the vector for:
+  (a) the position of the end effector: $c$ = ()
+  (b) the generalized coordinates: $q$ = ()
+  (c) the output velocity:  $\dot(c)$ = ()
+  (d) the joint velocity: $\dot(q)$ = ()
+4. Suggest applications for this robot. 
+
+**Modeling:** 
+5. Find the DGM and IGM of this robot. 
+6. Deduce the direct and inverse Jacobians of this robot. 
+7. Explain the utility of Jacobian matrices. 
+8. Find the singular positions of this robot. 
 
 <!-- Now, you can apply what you've learned by solving **Exercise 2.8** from the previous exercise set ! -->
+
+<details markdown="1">
+<summary><strong>Click here for Solutions</strong></summary>
+
+1.  This robot has parallel kinematics. 
+
+2.  It is a robot with 2 DOF, a translation along $X$ and a translation along $Y$: 
+- If both motorized joints move in the same direction at the same speed, the movement is only along $X$. 
+- If both motorized joints move in opposite directions at the same speed, the movement is only along $Y$. 
+- In all other cases, the movement is coupled. 
+
+3. 
+  (a) The tool position vector is $c = \frac{x}{y}$
+  (b) The generalized coordinate vector is $q = \frac{q_1}{q_2}$
+  (c) The output velocity vector is $\dot(c) = \frac{\dot(x)}{\dot(y)}$
+  (d) The joint velocity vector is $\dot(q) = \frac{\dot(q_1)}{\dot(q_2)}$
+
+4. The applications of this robot are multiple: 
+- Seated position rehabilitation movements, figure Lambda (a), https://www.lhs-sa.ch/ 
+- Gait trainer from Reha Technology, figure Lambda (b), https://www.rehatechnology.com/en 
+
+5. 
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.png" width="450" height="auto" alt="Fig 5.1">
+  <figcaption>
+    <strong>Figure 5.1.</strong> An RPR robot
+  </figcaption>
+</figure>
+
+<figure style="text-align:center;">
+  <img src="{{ site.baseurl }}/assets/images/kinematics/5.1.png" width="450" height="auto" alt="Fig 5.1">
+  <figcaption>
+    <strong>Figure 5.1.</strong> An RPR robot
+  </figcaption>
+</figure>
+</details>
 
 </details>
 

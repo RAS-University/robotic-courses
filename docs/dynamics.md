@@ -2738,7 +2738,7 @@ Additional exam-level exercises covering other chapters of the book [Modern Robo
 
 ---
 
-## Resources
+## Additional Resources
 
 ### Books
 - <a id="ref1"></a> [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.

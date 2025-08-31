@@ -4,10 +4,12 @@ parent: Courses
 layout: default
 nav_order: 7
 ---
-
 # Interfaces for Human-Robot Interaction
 
-## 1. General Motivation
+## 1. Prerequisites
+
+## 2. General Motivation
+
 ![Teaching a Robot]({{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobot.jpg)
 > Teaching a robot through demonstration (ASK FOR HIGHER QUALITY OF THIS PIC TO UPDATE IT)
 
@@ -18,3 +20,18 @@ Our main motivation is to transmit skills to robots to be able to do different t
 *add the paragraph about methods to train robots from word 
 
 *find a place for teaching to play golf picture
+
+## 3. Course Content
+
+### Chapter 0 : General Concepts
+
+### Chapter 1 : Introduction to ...
+
+
+## Additional Resources
+
+### Credits:
+<!-- List all the sources that you used to create the page   -->
+
+### Additional Resources:
+<!-- List all the sources that could be relevant to a reader who would like to know more, including   -->

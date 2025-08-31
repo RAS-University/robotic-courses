@@ -1,5 +1,5 @@
 ---
-title: New sensors in Robotics
+title: Sensors and Sensing in Robotics
 parent: Courses
 layout: default
 ---
@@ -7,7 +7,7 @@ layout: default
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
 
-# Sensing in Robotics [In progress]
+# Sensors and Sensing in Robotics [In progress]
 
 
 <a name="top"></a>

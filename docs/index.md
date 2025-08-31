@@ -51,21 +51,22 @@ If you are already a robotics expert—or an expert in another field simply curi
 **Chapter 1: Basics of Motion Control**
 -  [Kinematics](kinematics) - In progress
 -  [Dynamics](dynamics) - In progress
--  [Close-loop Control](closeloop) 
--  [Proportional Integral Derivative](pid) - In progress
+-  [System Identification](identification) - 
+-  [Close-loop Control](Closeloop&PID) - In progress
+-  [Model Predictive Control](mpc) - In progress
+-  [Nonlinear Control](nonlinearcontrol) - In progress
 -  [Force Control](force-control) - In progress
 
 **Chapter 2: Sensing in Robotics**
--  [Sensors](new-sensors-for-robotics) - In progress
--  [Vision for Robotics](vision-for-robotics) - In progress
--  [Haptics for Robotics](haptics-for-robotics) - In progress
+-  [Sensors and Sensing](new-sensors-for-robotics) - In progress
+-  [Vision](vision-for-robotics) - In progress
+-  [Force Perception](force) - In progress
 
 **Chapter 4: Motion Planning and Navigation**
 -  [Sampling-Based Planning](sampling-planning) 
 -  [Geometric-Methods for Planing](geometry-planning) 
 -  [Dynamical-Systems-Based Planning](DS-planning) - In progress
 -  [Simultaneous Localization and Mapping](SLAM)
-
 
 # Robotics Advanced Topics I# 
 
@@ -81,10 +82,10 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Whole-Body Control](wholebody)
 
 **Chapter 7: Robotic Application Domains Part - I**
--  [Aerial Robotics](Drones) - In progress
--  [Humanoids](Humanoids)
--  [Underwater Robotics](Underwater)
--  [Space Exploration](Space)
+-  [Aerial Robotics](aerial) - In progress
+-  [Humanoids](humanoids)
+-  [Underwater Robotics](underwater)
+-  [Space Exploration](space)
 
 
 # Robotics Advanced Topics II# 
@@ -99,7 +100,8 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Transfer Learning](Transfer) - In progress
 
 **Chapter 9: Human-Robot Interaction**
--  [Interfaces for Human-Robot Interaction](Interfaces-for-HRI) - In progress
+-  [Interfaces for Human-Robot Interaction](interfaces-for-HRI) - In progress
+-  [Haptics for Virtual Reality, Teleoperation and Prostheses](haptics-for-robotics) - In progress
 -  [Safety in Design and Control](Safety)
 -  [Shared-Control](Shared-Control)
 -  [Cognitive Robotics](Social)

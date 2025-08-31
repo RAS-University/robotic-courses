@@ -58,6 +58,9 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
+⚠️ **Note on Course Level** 
+
+>*This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
 ---
 
 ## 2. General Motivation
@@ -65,41 +68,41 @@ While you don’t need to be an expert in any one of these areas, having a comfo
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
 ><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
 
-Have you ever watched a precision robot—like the Delta robot in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
+Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
 
 Kinematics, often referred to as the “**geometry of movement**,” is the study of *how bodies move in space without considering the forces or torques causing the motion*. By focusing on the geometry and arrangement of joints, links, and end-effectors, kinematics allows us to:
 
-- ***Predict and Control Robot Positions***: From assembly lines to surgical suites, robots must position their end-effectors at **exact points in space**. Kinematics equations provide the road map, telling us how each joint angle translates into a specific position and orientation.
+- ***Predict and Control Robot Positions***: For instance, a robotic arm used in an assembly line must position its **end-effector** (tip of the arm) at **exact points in space**. Kinematics equations compute a correspondence between a **robot joint configuration** (particular choice of value for each joint angle) and a specific position and orientation of the end-effector. This is necessary to translate a desired carthesian location for the robot's tip into a set of robot's joint values.
 
-- ***Design Efficient Mechanisms***: Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, well-planned kinematic structures enable robots to work **faster**, with better range of motion and fewer mechanical constraints.
+- ***Backbone to Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions. Kinematics is the back bone to all standard and advanced path planning techniques. Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, it is necessary to design the robot's kinematic structure to ensure that the path will be **kinematically feasible**, namely that it will satisfy the robot's mechanical constraints.
 
-- ***Streamline Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions.
-
-In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic joints, and learn a systematic way to map your robot’s geometry into the equations that bring the entire mechanism to life. By mastering kinematics, you’ll have a strong foundation for making robots move **precisely** and **reliably**, unlocking a world of innovative possibilities.
+In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic arms, and learn a systematic way to map your robot’s geometry into kinematic equations to enable control. By mastering kinematics, you’ll have a strong foundation for starting your journey into controling robots. 
 
 ---
 
 ## 3. Course Content
 
-
-<!-- This course closely follows videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) with some additional videos and conceptual and mathematical exercises. -->
-
-<!-- 
-This section of the course is primarily based on content shared by **Mohammad Zainullah Khan**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton. You can find more information on his website: [www.zainullah.com](https://www.zainullah.com/).
-
-Mohammad’s videos are **well-structured**, **visually engaging** and **not very long** (less than 10 minute), making them an excellent resource for anyone beginning to study kinematics for robotics. We recommend starting with the videos listed below to build a solid foundation. 
-
-Additionally other videos from other youtubers that we have found the most relevant to explain the phenomenom or concepts are proposed. 
-
-Once you’ve grasped the basics, you can further strengthen your understanding by working through  conceptual and mathematical exercises are inspired by [Prof. Mohamed Bouri](https://people.epfl.ch/mohamed.bour), Professor at EPFL. 
-
-For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html), Professor of Mechanical Engineering at Northwestern University. These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials. -->
-
 ⚠️ **Note on Notation**: 
 >*Please be aware that notation, variable naming, and the style of writing equations may slightly differ between instructors. Always refer to the provided formulas and definitions in this course when working on assignments or exercises to avoid any confusion.*
 
 ### Chapter 0 : General Concepts
-In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to clearly link theoretical concepts to mathematical formalisms.
+In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
+
+---
+#### *Robot Structure:*
+
+A traditional (rigid) robot is composed of a series of ***links***, attached to one another by ***joints***. The links move around the joints. 
+
+The simplest of these joint-based linkage consists of attaching in sequence two links. This is what we refer to as ***revolute*** joint, also called ***hinge*** joint. It is also referred to as the elbow joint as it bears some vague resemblance to the attachment of the upeer and lower human arms. 
+
+In place of enabling the links to rotate around the joint, the joint can also allow the links to slide along each other. One then refers to these links as ***prismatic*** joint, also called a sliding or linear joint. 
+
+More interesting are joints that enable either the links to do more than one motion type (combining translation and rotation) or enable to connect three or more links simultaneously. The ***helical*** or ***screw*** joint allows simultaneous rotation and translation about a screw axis. The ***spherical*** joint, also called a ball-and-socket joint, enables rotation along three axes. 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (credit: Kevin Lynch)</figcaption>
+</figure>
 
 #### *Serial vs. Parallel robots*
 
@@ -175,9 +178,9 @@ For a visual comparison of these two robot types, watch the following short vide
 <!-- Draggable items -->
 <div class="drag-container" id="drag-items">
   <div class="drag-item" id="open-chain" draggable="true" ondragstart="drag(event)">Open kinematic chain</div>
-  <div class="drag-item" id="serially-linked" draggable="true" ondragstart="drag(event)">Serially linked actuated segments</div>
+  <div class="drag-item" id="serially-linked" draggable="true" ondragstart="drag(event)">Three serially linked segments</div>
   <div class="drag-item" id="closed-chain" draggable="true" ondragstart="drag(event)">Closed kinematic chain robots</div>
-  <div class="drag-item" id="fixed-motors" draggable="true" ondragstart="drag(event)">Fixed motors on the base</div>
+  <div class="drag-item" id="fixed-motors" draggable="true" ondragstart="drag(event)">Two fixed bases</div>
 </div>
 
 <button class="check-button" onclick="checkRobotStructure()">Check Answer</button>
@@ -199,20 +202,20 @@ For a visual comparison of these two robot types, watch the following short vide
 </form>
 
 <!-- Second question  -->
-<p><strong>Question 3: In general, a parallel robot is more rigid than a serial robot</strong></p>
+<p><strong>Question 3: Parallel robots are designed to move parrallel to a plane.</strong></p>
 <form id="q2">
   <input type="radio" name="q2" value="True"> True<br>
   <input type="radio" name="q2" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q2', 'True', 
-      'Correct! ',
-      'Incorrect. Refer to the definition of parallel and serial robot')">
+      'Correct! And this is why this mechanism sped up pick and place of marchandise moving along conveyer belts',
+      'Incorrect. But there is exists closed-kinematic chain robots that are not parallel robots.')">
     Check Answer
   </button>
   <p id="q2-feedback"></p>
 </form>
 
-<!-- Third question  -->
+<!-- Third question  
 <p><strong>Question 4: A parallel robot is a structure characterized by a closed kinematic loop</strong></p>
 <form id="q3">
   <input type="radio" name="q3" value="True"> True<br>
@@ -225,21 +228,23 @@ For a visual comparison of these two robot types, watch the following short vide
   </button>
   <p id="q3-feedback"></p>
 </form>
-
+-->
 </details>
+
 
 ---
 
 #### *Drawing kinematic diagrams*
-In robotics, accurately representing the structure of robots (left image) through **kinematic diagrams** (right image) is crucial. These diagrams help us clearly visualize joints, links, and their connections, facilitating easier calculation of mobility, degrees of freedom, and overall system analysis.
+In robotics, accurately representing the structure of robots (left image below) through **kinematic diagrams** (right image below) is crucial. These diagrams help us clearly visualize joints, links, and their connections.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_repre.png' }}" width="500px" alt="Kine">
-  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of robots represented in kinematic diagrams</figcaption>
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of a 3-axes parralel robot (left) represented in an kinematic diagram (right)</figcaption>
 </figure>
 
-
 By learning how to sketch these diagrams, you will be better prepared to analyze robot motion and systematically compute essential parameters such as mobility and degrees of freedom.
+
+To draw a proper diagram, one needs to identify the number of links and type of joint that connects them.
 
 <!-- Step by step -->
 <details markdown="1">
@@ -258,7 +263,7 @@ Here is a video explaining the step-by-step procedure to draw the kinematic diag
 <details markdown="1">
   <summary>Hands-on exercices </summary>
 
-Here are some exercie to learn how to draw the **kinematic representation structures** of these following robots.
+Here is an exercises to learn how to draw the **kinematic representation structures** for three closed-chain robots.
 Give it a try !
 
 <figure style="text-align: center;">
@@ -316,22 +321,31 @@ Give it a try !
 
 ---
 
-#### *Degrees of Freedom (DOF)*
-<!-- - ***Degrees of Freedom (DOF)*** refer to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+#### *Formalism*
+
+The structure of the robot determines entirely its mobility. For instance, the extent by which one link can move it determined by the extent to which it can rotate or slide only the joints it is attached to. The length of the robot's links and the range of motion at each joint determines the volume of the space surrounding the robot that can be reached or travelled through by the robot. To analyse this volume of motion is crucial. For instance, when controling robots tasked to pick and place objects, it allows to determine the regions the robot can reach the object successfully. It also enables to determine the regions of the space free of robot, and hence safe for humans to move around. To control robots, it is hence crucial to be able to express mathematically the range of motion it can do. We refer to this as the robot's structural mobility. 
+
+The first key mathematical notion you must get accustomed to is the notion of:
+-***Degrees of Freedom (DoF):*** it refers to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
+
+The state and structural mobility of the robot are expressed through its:
+- ***Configuration***: consists of a the set of parameters that completely specifies the position and orientation of every robot's link. It is usually represented as a vector of joint angles. For instance, the two-link serial robot we saw earlier on is entirely specify by two scalars, denoting the two angles formed by the two joints with their based and with one another.  
+- ***Configuration space (called C-space)*** is the space of all configurations that can be adopted by the robot.
+
+See next a video that introduce this formalism:
+
+<!-- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
 
 - ***Mobility*** typically refers to the number of controllable, active joints (motors) a robot possesses, directly determining its range of motion and the complexity of its achievable tasks.
 
 To better understand these concepts, watch the following concise and clear explanation: -->
+
 ![Degrees of Freedom of a Rigid Body](https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4)
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.1: Degrees of Freedom of a Rigid Body. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
 >
 ><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
 
-- ***Configuration of a robot*** is a representation of the positions of all the points of the robot.
-- ***Configuration space (called C-space)*** is the space of all configurations
-- ***Degrees of freedom*** is the dimension of the C-space, or the minimum number of real numbers you need to represent the configuration.
-
-General rule which holds for any system, not just rigid bodies: 
+From this video, we have learned a general rule which holds for any system, not just rigid bodies: 
 $$
 \boxed{ \text{DoF} = \sum_{}^{} \text{freedoms of } \textbf{points} - \text{number of independent constraints} }
 $$
@@ -453,32 +467,8 @@ $$
 
 </details> -->
 
----
+The number of direction of motion enabled at a joint is described by the number of DoFs associetd to the joint. For instance, revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple DoFs. The cylindrical joint (C) has two DoFs and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three DoFs. 
 
-#### *Grübler’s formula and its application*
-***Grübler’s formula*** is a powerful tool to quickly calculate the degrees of freedom of mechanisms, especially useful for complex robot configurations:
-$$
-\boxed{ \text{DoF} = m(N - 1 - J) + \sum_{i=1}^{J} \text{f}_i }
-$$
-
-Where:
-- $m$ is the dimension of the space (e.g., $m = 3$ for planar mechanisms, $m = 6$ for spatial mechanisms).
-- $N$ is the number of links (including the frame).
-- $J$ is the number of joints.
-- $f_i$ is the number of degrees of freedom permitted by joint $i$.
-
-
-To clearly understand how this formula is applied, check out the following detailed explanation:
-
-![Degrees of Freedom of a Robot](https://www.youtube.com/watch?v=zI64DyaRUvQ&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=5)
->  Detailed explanation of Grübler’s formula and practical examples of its application.
->
-><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.2: Degrees of Freedom of a Robot. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
->
-><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
-
-
-**Different type of joints:**
 
 | Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
 |------------------|-------------|-----------------------------------------------------|------------------------------------------------------|
@@ -489,10 +479,32 @@ To clearly understand how this formula is applied, check out the following detai
 | Universal (U)    | 2           | N/A                                                 | 4                                                    |
 | Spherical (S)    | 3           | N/A                                                 | 3                                                    |
 
-<figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
-  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Types of Joints in Kinematics (Screenshot from previous video at 1:03)</figcaption>
-</figure>
+
+---
+
+#### *Grübler’s formula and its application*
+***Grübler’s formula*** is a powerful tool to quickly calculate the DOFs of mechanisms, especially useful for complex robot configurations:
+$$
+\boxed{ \text{DoF} = m(N - 1 - J) + \sum_{i=1}^{J} \text{f}_i }
+$$
+
+Where:
+- $m$ is the number of DoFs of the robot's body in space (e.g., $m = 3$ if robot is constrained to move in translation only, such as so called planar robots, $m = 6$ for robots that can both translate and rotate in space).
+- $N$ is the number of links (including the frame).
+- $J$ is the number of joints.
+- $f_i$ is the number of DoFs permitted at each joint $i$.
+
+
+To understand how this formula is applied, check out the following detailed explanation:
+
+![Degrees of Freedom of a Robot](https://www.youtube.com/watch?v=zI64DyaRUvQ&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=5)
+>  Detailed explanation of Grübler’s formula and practical examples of its application.
+>
+><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 2.2: Degrees of Freedom of a Robot. YouTube video, 26 August 2017. Available at: https://www.youtube.com/watch?v=z29hYlagOYM&list=PLggLP4f-rq02vX0OQQ5vrCxbJrzamYDfx&index=4*</sub>
+>
+><sub>*Lynch, K.M. and Park, F.C. (2017) Modern Robotics: Mechanics, Planning, and Control. Cambridge: Cambridge University Press.*</sub>
+
+
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
@@ -549,8 +561,8 @@ Applying the spatial version ($ m =6 $) of Grübler’s formula leads to the fol
 
 - $ \text{dof} = m(N - 1 - J) + \sum f_i = 6(11 - 1 - 15) + 39 = 9 $
 
-This Delta robot as designed with the parallel bars and spherical joints has **6 supplementary mobilities**.
-These mobilities concern **internal mobilities** not affecting the **pure translation of the mobile plate**. They are actually related to the **rotation of each bar around its principal axis**. 
+This Delta robot as designed with the parallel bars and spherical joints has **6 supplementary DoFs**, enabled by the **rotation of each bar around its principal axis**. 
+These DoFs are referred to as **internal DoFs**, as they are not affecting the **translation of the mobile plate**. They are actually related to the **rotation of each bar around its principal axis**. 
 
 </details>
 
@@ -624,14 +636,14 @@ Now that we have seen some basics notions, foundational concepts, proceed to the
   <summary>Conceptual Questions</summary>
 
 <!-- First question  -->
-<p><strong>Question 1: Forward kinematics (FK) is...</strong></p>
+<p><strong>Question 1: Forward kinematics (FK) allows to compute...</strong></p>
 <form id="q2-fk">
-  <input type="radio" name="q2-fk" value="option1"> How to calculate the position/orientation from given joint variables<br>
-  <input type="radio" name="q2-fk" value="option2"> Finding joint variables from end-effector position and orientation<br>
-  <input type="radio" name="q2-fk" value="option3"> Calculating robot dynamics<br>
+  <input type="radio" name="q2-fk" value="option1"> the position/orientation of the robot's end-effector from given robot's joint configuration<br>
+  <input type="radio" name="q2-fk" value="option2"> the robot's joint configuration from the robot's end-effector position and orientation<br>
+  <input type="radio" name="q2-fk" value="option3"> neither of these two<br>
 
   <button type="button" onclick="checkMCQ('q2-fk', 'option1',
-    'Correct! Forward Kinematics computes the position and orientation from joint variables.',
+    'Correct! Forward Kinematics computes the end-effector's position and orientation from joint configuration for a robotic arm.',
     'Incorrect. Please try again!')">
     Check Answer
   </button>
@@ -2058,6 +2070,23 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 ---
 
+## Credits
+
+This course uses videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and closely follows the structure, videos and exercises from [Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) courses, with some additional videos and conceptual and mathematical exercises.
+
+
+
+<!-- 
+This section of the course is primarily based on content shared by **Mohammad Zainullah Khan**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton. You can find more information on his website: [www.zainullah.com](https://www.zainullah.com/).
+
+Mohammad’s videos are **well-structured**, **visually engaging** and **not very long** (less than 10 minute), making them an excellent resource for anyone beginning to study kinematics for robotics. We recommend starting with the videos listed below to build a solid foundation. 
+
+Additionally other videos from other youtubers that we have found the most relevant to explain the phenomenom or concepts are proposed. 
+
+Once you’ve grasped the basics, you can further strengthen your understanding by working through  conceptual and mathematical exercises are inspired by [Prof. Mohamed Bouri](https://people.epfl.ch/mohamed.bour), Professor at EPFL. 
+
+For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html), Professor of Mechanical Engineering at Northwestern University. These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials. -->
+
 ## Ressources
 
 ### Books
@@ -2067,6 +2096,8 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 - [Robotic Manipulation](https://manipulation.csail.mit.edu/pick.html) (Chapter 3. Basic Pick and Place)
 
+For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html). These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials
+
 ### Videos
 
 - Contents shared by **[Mohammad Zainullah Khan](https://www.zainullah.com/)**, an engineer with a Master’s degree in Mechanical Engineering (specializing in robotics, design, and mechatronics) from the University of Dayton.
@@ -2075,16 +2106,17 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 - [Robotic Manipulation](https://www.youtube.com/watch?v=ZOXp_wixIzo&list=PLkx8KyIQkMfVRPReg9FHtBk_RGEwnVxU-&index=3) (MIT 2020)
 
-### Exercices 
+<!-- ### Exercices 
 
 - [IN PROGRESS]
 <!-- - Conceptual and mathematical exercises are inspired by **[Mr. Mohamed Bouri](https://people.epfl.ch/mohamed.bour)**, giving the course [Basic of Robotics for Manipulation](https://edu.epfl.ch/coursebook/en/basics-of-robotics-for-manipulation-MICRO-450) at [EPFL](https://www.epfl.ch/fr/).  -->
 
-### Programming
+<!-- ### Programming
 
 - Exercises adapted from the course **[Robotics for Creative Practice](https://courses.ideate.cmu.edu/16-375/f2022/)** taught by **[Dr. Garth Zeglin](https://www.cs.cmu.edu/~garthz/)**, instructor at [Carnegie Mellon University](https://www.cmu.edu/).  
   Content licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). 
 
+ -->
 
 - 
 

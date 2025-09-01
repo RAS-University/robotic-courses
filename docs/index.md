@@ -71,7 +71,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 # Robotics Advanced Topics I# 
 
 **Chapter 5: Manipulation**
--  [Singularities and Advanced Kinematics Analysis](singularities) - In progress
+-  [Advanced Kinematics](adv_kin) - In progress
 -  [Operational Space and Null Space Control](Null-Space) 
 -  [Grasping](grasping)  - In progress
 -  [Dexterous Manipulation](dexterousmanipulation) 

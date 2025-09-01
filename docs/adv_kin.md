@@ -1,6 +1,5 @@
 ---
-title: "Singularities in Robotics"
-nav_order: 4
+title: "Advanced Kinematics"
 parent: Courses
 layout: default
 math: mathjax
@@ -41,7 +40,7 @@ nav_order: 2
 {:toc}
 
 
-# Singularities in Robotics
+# Advanced Kinematics
 
 This page covers the theory, application, and practical considerations of singularities in robotics. Understanding singularities is crucial for roboticists working on kinematics, motion planning, and advanced robotic systems.
 
@@ -73,11 +72,22 @@ By addressing singularities, we can:
 
 ## 3. Course Content
 
+### Topics in this lecture
+- Introduction to singularities
+- Singularities in parallel robots (Screw Theory)
+- Singularities in serial robots (Geometric perspective)
+- Cuspidal robots and nontraditional configurations
+- Path planning with analytical guarantees
+- Leveraging kinematics with policy-based training
+- Path planning for redundant robots
+- Advanced topics: Conformal Geometric Algebra
+- Programming exercises and practical implementations
+
 ### Chapter 0. Introduction to Singularities
 
 Singularities are defined by the loss of rank in the robot's Jacobian matrix. This can lead to multiple issues such as uncontrollable robot motion or a loss of degrees of freedom.
 
-{% include_relative singularities/chapter0_intro.md %}
+{% include_relative adv_kin/chapter0_intro.md %}
 
 ---
 
@@ -85,7 +95,7 @@ Singularities are defined by the loss of rank in the robot's Jacobian matrix. Th
 
 Parallel robots exhibit unique types of singularities that can be described using **screw theory**. This theory provides a geometric interpretation of singularities, especially in terms of the robot's kinematic constraints.
 
-{% include_relative singularities/chapter1_parallel_screw.md %}
+{% include_relative adv_kin/chapter1_parallel_screw.md %}
 
 ---
 
@@ -93,7 +103,7 @@ Parallel robots exhibit unique types of singularities that can be described usin
 
 Serial robots experience singularities at specific configurations that can be described geometrically. These singularities often arise due to limitations in joint movements or actuator ranges.
 
-{% include_relative singularities/chapter2_serial_geometric.md %}
+{% include_relative adv_kin/chapter2_serial_geometric.md %}
 
 ---
 
@@ -101,7 +111,7 @@ Serial robots experience singularities at specific configurations that can be de
 
 Cuspidal robots are characterized by their non-traditional configurations and path planning strategies. Singularities in cuspidal robots require a different approach to motion planning.
 
-{% include_relative singularities/chapter3_cuspidal.md %}
+{% include_relative adv_kin/chapter3_cuspidal.md %}
 
 ---
 
@@ -109,7 +119,7 @@ Cuspidal robots are characterized by their non-traditional configurations and pa
 
 Path planning with analytical guarantees ensures that a robot can avoid singularities while navigating its workspace. This is crucial for autonomous robots and robotic arms in industrial applications.
 
-{% include_relative singularities/chapter4_path_analytical.md %}
+{% include_relative adv_kin/chapter4_path_analytical.md %}
 
 ---
 
@@ -117,7 +127,7 @@ Path planning with analytical guarantees ensures that a robot can avoid singular
 
 Policy-based reinforcement learning (RL) can help robots learn to avoid singularities through continuous interaction with their environment. This chapter discusses the integration of kinematics with RL policies.
 
-{% include_relative singularities/chapter5_policy_training.md %}
+{% include_relative adv_kin/chapter5_policy_training.md %}
 
 ---
 
@@ -125,7 +135,7 @@ Policy-based reinforcement learning (RL) can help robots learn to avoid singular
 
 Redundant robots, with more degrees of freedom than necessary for a given task, provide flexibility in path planning. Managing redundancy helps in avoiding singularities and improving the overall task execution.
 
-{% include_relative singularities/chapter6_redundant_path_planning.md %}
+{% include_relative adv_kin/chapter6_redundant_path_planning.md %}
 
 ---
 
@@ -133,7 +143,7 @@ Redundant robots, with more degrees of freedom than necessary for a given task, 
 
 Conformal Geometric Algebra (CGA) offers an advanced framework for understanding and addressing singularities in complex kinematic systems, particularly in multi-body robotic systems.
 
-{% include_relative singularities/chapter7_CGA.md %}
+{% include_relative adv_kin/chapter7_CGA.md %}
 
 ---
 
@@ -146,7 +156,7 @@ The following exercises will allow you to implement the concepts discussed:
 - **Exercise 3**: Path planning in cuspidal robots
 - **Exercise 4**: An example of connectivity for DS in joint space
 
-{% include_relative singularities/programming.md %}
+{% include_relative adv_kin/programming.md %}
 
 ---
 

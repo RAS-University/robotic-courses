@@ -37,7 +37,7 @@ layout: default
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/sensors.jpg)
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/ICUBBALL.jpg)
 
 
 - Table of Contents
@@ -46,15 +46,18 @@ layout: default
 ---
 
 ## 1. Prerequisites
-
+This page does not require any specific prerequisite, outside knowing what a robot consists of.
 ---
 
 ## 2. General Motivation
 
-![](https://www.youtube.com/watch?v=KdNqmxu_V4A)
-><sub>HBFS Line Follower - Next Generation of Robots. YouTube video, April 2018. Available at: https://www.youtube.com/watch?v=KdNqmxu_V4A</sub>
+<!--![](https://www.youtube.com/watch?v=KdNqmxu_V4A)
+><sub>HBFS Line Follower - Next Generation of Robots. YouTube video, April 2018. Available at: https://www.youtube.com/watch?v=KdNqmxu_V4A</sub>-->
 
-From autonomous drones to collaborative factory arms, every robot relies on **sensing**, the relentless conversion of motion, light, sound and force into digital signals a computer can reason about. Regardless of the task, meaningful action begins with accurate perception of both the robot’s own state and its surroundings.
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/precision_accuracy.png)
+><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
+
+From collaborative factory arms to drones and humanoids, every robot relies on **sensing** to perceive their environment and to control their own actions. **Sensors** can acquire and process information from a variety of sources, from recording motor displacement, to detecting light, sound and force. They convert this information into (usually) digital signals that a computer can then further process and analyse. Regardless of the task, meaningful robot actions begin with accurate perception of both the robot’s own state and its surroundings.
 
 Sensing is to a robot what the nervous system is to living beings. Without reliable sensory feedback, the most sophisticated control algorithm degenerates into blind open-loop commands. Conversely, well-designed sensing turns a simple mechanical platform into a **situationally aware** agent that can:
 

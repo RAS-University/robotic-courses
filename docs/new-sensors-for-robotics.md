@@ -37,8 +37,6 @@ layout: default
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/ICUBBALL.jpg)
-
 
 - Table of Contents
 {:toc}
@@ -138,6 +136,17 @@ Early robotics tried to side-step sensing by assuming perfectly known environmen
 
 </details>
 
+Here are two examples of usage of sensors for state of the art robots. 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/wamsensors.png)
+><sub>Examples of sensors mounted on an industrial arm; Credit: EPFL/LASA Laboratory</sub>
+
+An industrial robot arm tasked to manover a shovel must be endowed with motor encoders for accurate positioning and orienting of the shovel, force/toque sensors at its end-effect to sense and react to change in the stiffness of the material, and tactile sensors at its fingertip to guarantee tight grip on the shovel.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
+><sub>Examples of sensors mounted on a humanoid robot; Credit: EPFL/LASA Laboratory</sub>
+
+A humanoid robot may be tasked to interact with its environment in more ways than would an industrial robot. In addition to motor encoders, force/torque and tactile sensors, it needs an IMU to measure its global orientation in space. Cameras and microphones are, on the other hand, crucial to allow the robot to interact in human-inhabited environments. 
 
 ---
 
@@ -161,12 +170,6 @@ $$
 
 
 </details>
-
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/wamsensors.png)
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
-><sub>Examples of sensors mounted on a humanoid (left) and industrial arm (right) Credit: EPFL/LASA Laboratory</sub>
-
-
 
 #### 0.1 **Definition** 
 {: .no_toc }

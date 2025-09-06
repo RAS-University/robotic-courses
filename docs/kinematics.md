@@ -58,9 +58,9 @@ To get the most out of this Kinematics module, it’s helpful to have:
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
-⚠️ **Note on Course Level** 
-
+3. ⚠️ **Note on Course Level** 
 >*This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
+
 ---
 
 ## 2. General Motivation
@@ -620,7 +620,7 @@ Observe that if the three prismatic joints and three revolute joints at the base
 
 ### Chapter 1 : Introduction to Robotics | Kinematics & Modeling
 
-Now that we have seen some basics notions, foundational concepts, proceed to the next chapter for an in-depth exploration of kinematics and modeling:
+Now that we have seen some basics notions, we move to an more in-depth exploration of kinematics and modeling. To start off, you may want to watch this short video that gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.
 
 ![Robotics 101: Full course for beginners](https://www.youtube.com/watch?v=K_xIJBlbjg4&list=PL1YrgW7ROFofBqPGiWAmTqIwDc5SrzZrA)
 > This video gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.

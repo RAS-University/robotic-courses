@@ -37,8 +37,6 @@ layout: default
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/sensors.jpg)
-
 
 - Table of Contents
 {:toc}
@@ -46,17 +44,21 @@ layout: default
 ---
 
 ## 1. Prerequisites
-
+This page does not require any specific prerequisite, outside knowing what a robot consists of.
 ---
 
 ## 2. General Motivation
 
-![](https://www.youtube.com/watch?v=KdNqmxu_V4A)
+<!--![](https://www.youtube.com/watch?v=KdNqmxu_V4A)
 ><sub>HBFS Line Follower - Next Generation of Robots. YouTube video, April 2018. Available at: https://www.youtube.com/watch?v=KdNqmxu_V4A</sub>
+-->
 
-From autonomous drones to collaborative factory arms, every robot relies on **sensing**, the relentless conversion of motion, light, sound and force into digital signals a computer can reason about. Regardless of the task, meaningful action begins with accurate perception of both the robot’s own state and its surroundings.
+From collaborative factory arms to drones and humanoids, every robot relies on **sensing** to perceive their environment and to control their own actions. **Sensors** can acquire and process information from a variety of sources, from recording motor displacement, to detecting light, sound and force. They convert this information into (usually) digital signals that a computer can then further process and analyse. 
 
-Sensing is to a robot what the nervous system is to living beings. Without reliable sensory feedback, the most sophisticated control algorithm degenerates into blind open-loop commands. Conversely, well-designed sensing turns a simple mechanical platform into a **situationally aware** agent that can:
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/ICUBBALL.jpg)
+><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
+
+Regardless of the task, meaningful robot actions begin with accurate perception of both the robot’s own state and its surroundings. Without reliable sensory feedback, the most sophisticated control algorithm degenerates into blind open-loop commands. Conversely, well-designed sensing turns a simple robotic platform into a **situationally aware** agent that can:
 
 - **Estimate its own state (proprioception)** – joint encoders, IMUs and force sensors provide the data to infer pose, velocities and loads, yielding an internal state estimate that closes the control loop.  
 - **Perceive the external world (exteroception)** – cameras, lidars, radars and tactile arrays reveal obstacles, objects and humans, enabling navigation, manipulation and safe collaboration.  
@@ -134,6 +136,17 @@ Early robotics tried to side-step sensing by assuming perfectly known environmen
 
 </details>
 
+Here are two examples of usage of sensors for state of the art robots. 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/wamsensors.png)
+><sub>Examples of sensors mounted on an industrial arm; Credit: EPFL/LASA Laboratory</sub>
+
+An industrial robot arm tasked to manover a shovel must be endowed with motor encoders for accurate positioning and orienting of the shovel, force/toque sensors at its end-effect to sense and react to change in the stiffness of the material, and tactile sensors at its fingertip to guarantee tight grip on the shovel.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
+><sub>Examples of sensors mounted on a humanoid robot; Credit: EPFL/LASA Laboratory</sub>
+
+A humanoid robot may be tasked to interact with its environment in more ways than would an industrial robot. In addition to motor encoders, force/torque and tactile sensors, it needs an IMU to measure its global orientation in space. Cameras and microphones are, on the other hand, crucial to allow the robot to interact in human-inhabited environments. 
 
 ---
 
@@ -157,9 +170,6 @@ $$
 
 
 </details>
-
-
-
 
 #### 0.1 **Definition** 
 {: .no_toc }

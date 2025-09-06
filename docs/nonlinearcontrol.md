@@ -1,3 +1,4 @@
+---
 title: Nonlinear Control
 parent: Courses
 layout: default

@@ -30,6 +30,16 @@ layout: default
   }
 </style>
 
+<style>
+.ak-drop { margin: .4rem 0 .8rem 0; border: 1px solid #e5e7eb; border-radius: .5rem; }
+.ak-drop > summary { cursor: pointer; padding: .6rem .9rem; font-weight: 600; list-style: none; }
+.ak-drop[open] > summary { border-bottom: 1px solid #e5e7eb; }
+.ak-drop > .content { padding: .7rem .9rem .9rem; }
+.ak-drop summary::-webkit-details-marker { display: none; }
+.ak-drop summary::before { content: "▸"; display: inline-block; margin-right: .45rem; }
+.ak-drop[open] summary::before { content: "▾"; }
+</style>
+
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 # Robotics Courses 
@@ -69,19 +79,27 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Simultaneous Localization and Mapping](SLAM)
 
 # Robotics Advanced Topics I# 
+**Chapter 5: Advanced Mathematical Foundations**
+- [Group theory](adv_math) - In progress
+- [Dual Quaternions](adv_math) - In progress
 
-**Chapter 5: Manipulation**
--  [Singularities and Advanced Kinematics Analysis](singularities) - In progress
+**Chapter 6: Advanced Kinematics**
+{% include_relative adv_kin.md %}
+
+
+**Chapter 7: Advanced Control**
+
+**Chapter 8: Manipulation**
 -  [Operational Space and Null Space Control](Null-Space) 
 -  [Grasping](grasping)  - In progress
 -  [Dexterous Manipulation](dexterousmanipulation) 
 
-**Chapter 6: Locomotion**
+**Chapter 9: Locomotion**
 -  [Central Pattern Generator](wholebody)
 -  [Stability](wholebody)
 -  [Whole-Body Control](wholebody)
 
-**Chapter 7: Robotic Application Domains Part - I**
+**Chapter 10: Robotic Application Domains Part - I**
 -  [Aerial Robotics](aerial) - In progress
 -  [Humanoids](humanoids)
 -  [Underwater Robotics](underwater)
@@ -90,7 +108,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 # Robotics Advanced Topics II# 
 
-**Chapter 8: Robot Learning**
+**Chapter 11: Robot Learning**
 -  [Learning from Demonstration](LfD) - In progress
 -  [Reinforcement Learning](RL)
 -  [End-to-End Learning](End-to-End)
@@ -99,26 +117,26 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Constraint Learning](Constraint)
 -  [Transfer Learning](Transfer) - In progress
 
-**Chapter 9: Human-Robot Interaction**
+**Chapter 12: Human-Robot Interaction**
 -  [Interfaces for Human-Robot Interaction](interfaces-for-HRI) - In progress
 -  [Haptics for Virtual Reality, Teleoperation and Prostheses](haptics-for-robotics) - In progress
 -  [Safety in Design and Control](Safety)
 -  [Shared-Control](Shared-Control)
 -  [Cognitive Robotics](Social)
 
-**Chapter 10: Soft Robotics**
+**Chapter 13: Soft Robotics**
 -  [Materials](Materials)
 -  [Design and Fabrication](Fabrication)
 -  [Modeling and Control](Mod-Control)
 -  [Hybrid Design](Hybrid)
   
-**Chapter 11: Robotic Application Domains Part - II**
+**Chapter 14: Robotic Application Domains Part - II**
 -  [Exoskeletons](Exoskeletons)
 -  [Educational Robotics](Education)
 -  [Surgical Robotics](surgical) - In Progress
 -  [Micro-Robotics](Microrobots)
 
-**Chapter 12: Novel Trendy Research Areas in Robotics**
+**Chapter 15: Novel Trendy Research Areas in Robotics**
 -  [Supernumerary Limbs](Supernumerary)
 -  [Sustainable Robotics](Sustainable) - In Progress
 -  [Robotics and Arts](Arts)

@@ -1006,7 +1006,7 @@ Let's get familiriar with this type of method doing similar exercise:
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Let's consider this following robotic arm. Guve the forward kinematic model that expresses the coordinates (x,y) of point P as a function of the joint coordinates $q_1$ and $q_2$
+Let's consider this following robotic arm. Give the forward kinematic model that expresses the coordinates (x,y) of point P as a function of the joint coordinates $q_1$ and $q_2$
 
 <figure style="text-align:center;">
   <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 1">
@@ -1897,8 +1897,6 @@ The two arms are of the length $l (AC=BC=l)$.
 **g.** Explain the utility of Jacobian matrices. 
 
 **h.** Find the singular positions of this robot. 
-
-<!-- Now, you can apply what you've learned by solving **Exercise 2.8** from the previous exercise set ! -->
 
 ---
 

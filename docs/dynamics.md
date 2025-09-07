@@ -98,7 +98,7 @@ If you want to make robots that **move like athletes**, **adapt like animals**, 
 
 
 ### Chapter 0: Why Dynamics?
-> - Motivation: Why kinematics isn't enough  
+> - Motivation: Why kinematics is not enough  
 > - What dynamics adds: Forces, torques, and real-world behavior  
 > - Examples: Balancing, jumping, slipping, and interacting with the world
 
@@ -139,7 +139,7 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
 <p><strong>Question 2: A robot follows a planned path but slips while walking downhill. Why might this happen?</strong></p>
 <form id="q0-2">
   <input type="radio" name="q0-2" value="A"> The robot's motors were not strong enough<br>
-  <input type="radio" name="q0-2" value="B"> The dynamics (forces, friction) weren't accounted for<br>
+  <input type="radio" name="q0-2" value="B"> The dynamics (forces, friction) were not accounted for<br>
   <input type="radio" name="q0-2" value="C"> The robot had a sensor malfunction<br>
   <input type="radio" name="q0-2" value="D"> All of the above<br>
   <button type="button"
@@ -264,6 +264,9 @@ This is used in **control** to determine the torques needed to follow a trajecto
 You can think of forward and inverse dynamics like this:
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/Dynamics/dyna.png' }}" width="200px" alt="dyna">
+  <figcaption>
+    <strong>Figure:</strong> Explaining the relation between forward and inverse dynamics (created by author).
+  </figcaption>
 </figure>
 
 
@@ -390,10 +393,10 @@ $$
 \Gamma_{i,j,k} = \frac{1}{2} \left( \frac{\partial M_{i,k}}{\partial \theta_j} + \frac{\partial M_{i,j}}{\partial \theta_k} - \frac{\partial M_{j,k}}{\partial \theta_i} \right)
 $$
 
-The $i$-th component of $c(\theta, \dot{\theta})$ is:
+The $ij$-th component of $c(\theta, \dot{\theta})$ is:
 
 $$
-c_i(\theta, \dot{\theta}) = \sum_{j=1}^n \sum_{k=1}^n \Gamma_{i,j,k}(\theta) \dot{\theta}_j \dot{\theta}_k
+c_{ij}(\theta, \dot{\theta}) = \sum_{k=1}^n \Gamma_{i,j,k}(\theta) \dot{\theta}_k
 $$
 
 ---
@@ -868,7 +871,7 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
 </form>
 
 <!-- Question 3 -->
-<p><strong>Question 3: Why doesn't a robot's end-effector feel like a point mass when you push it by hand?</strong></p>
+<p><strong>Question 3: Why does not a robot's end-effector feel like a point mass when you push it by hand?</strong></p>
 <form id="q2-3">
   <input type="radio" name="q2-3" value="A"> Because the end-effector is rigidly fixed and cannot move independently of the robot’s structure.<br>
   <input type="radio" name="q2-3" value="B"> Friction at joints causes this<br>
@@ -2005,6 +2008,9 @@ With no friction, total mechanical **energy** (kinetic + potential) should remai
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/Dynamics/dyna.png' }}" width="200px" alt="dyna">
+  <figcaption>
+    <strong>Figure:</strong> Explaining the relation between forward and inverse dynamics (created by author).
+  </figcaption>
 </figure>
 
 <details markdown="1">

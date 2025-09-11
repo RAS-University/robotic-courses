@@ -78,23 +78,23 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Simultaneous Localization and Mapping](SLAM)
 
 # Robotics Advanced Topics I# 
-**Chapter 5: Advanced Mathematical Foundations**
+**Chapter 4: Advanced Mathematical Foundations**
 - [Group theory](adv_math) - In progress
 - [Dual Quaternions](adv_math) - In progress
 
-**Chapter 6: Advanced Kinematics**
+**Chapter 5: Advanced Kinematics**
 {% include_relative adv_kin.md %}
 
-**Chapter 7: Advanced Control**
+**Chapter 6: Advanced Control**
 -  [Robust Control](nonlinearcontrol) - In progress
 -  [Nonlinear Control](nonlinearcontrol) - In progress
   
-**Chapter 8: Manipulation**
+**Chapter 7: Manipulation**
 -  [Operational Space and Null Space Control](Null-Space) 
 -  [Grasping](grasping)  - In progress
 -  [Dexterous Manipulation](dexterousmanipulation) 
 
-**Chapter 9: Locomotion**
+**Chapter 8: Locomotion**
 -  [Central Pattern Generator](wholebody)
 -  [Stability](wholebody)
 -  [Whole-Body Control](wholebody)

@@ -3,6 +3,7 @@ title: Force Perception
 parent: Courses
 layout: default
 nav_order: 7
+author: Mael Studer (EPFL)
 ---
 
 # Force Perception (in Robotics)

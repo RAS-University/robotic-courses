@@ -3,6 +3,7 @@ title: Haptics in HRI
 parent: Courses
 layout: default
 nav_order: 7
+author: Mael Studer (EPFL)
 ---
 
 # Haptics

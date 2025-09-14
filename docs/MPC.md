@@ -381,7 +381,7 @@ $$
 
 ## 1.2 : Convex Optimization
 
-### Convex Set
+**Convex Set**
 
 A set $\mathcal{S}$ is **convex** if, for any two points $x_1, x_2 \in \mathcal{S}$ and any scalar $\lambda \in [0, 1]$, the point $\lambda x_1 + (1 - \lambda) x_2$ is also in $\mathcal{S}$. i.e. the line segment connecting any two points in the set lies entirely within the set.
 
@@ -470,7 +470,7 @@ $$
   </div>
 </div>
 
-### Convex functions
+**Convex functions**
 
 <div class="formula-window">
     A function \( f: \mathcal{S} \to \mathbb{R} \) is convex if \(\mathcal{S}\) is a convex set and
@@ -541,7 +541,7 @@ i.e. the Hessian matrix is positive semidefinite for all $x$ in the domain of $f
   </div>
 </div>
 
-### Convex optimization problem
+**Convex optimization problem**
 
 A convex optimization problem is an optimization problem where the objective function is convex, and the feasible region (the set of points that satisfy the constraints) is also a convex set. This means that any local minimum is also a global minimum, making these problems easier to solve than general optimization problems.
 

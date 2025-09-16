@@ -4,7 +4,6 @@ parent: Courses
 layout: default
 nav_order: 7
 ---
-
 # Interfaces for Human-Robot Interaction
 
 *Table of Contents*
@@ -17,7 +16,13 @@ nav_order: 7
 
 ><sub>The Chief Cook Robot (short version): A humanoid robot learning to cook an omelet by whipping eggs, cutting ham and grating cheese. YouTube video, Apr 2008. Available at: https://www.youtube.com/watch?v=FtjC-BXGgAE</sub>
 
+## 0. Prerequisites
+
 ## 1. General Motivation
+
+![Teaching a Robot]({{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobot.jpg)
+> Teaching a robot through demonstration (ASK FOR HIGHER QUALITY OF THIS PIC TO UPDATE IT)
+
 
 Our main motivation is to transmit skills to robots so they can perform different tasks. We want to teach our robots how to carry out a task. The most trivial solution would be to teach the robot by moving it, just as we do with a baby. However, unlike with a baby, this is by no means trivial with a robot. This is because our bodies differ from robot bodies. As a result, to solve this discrepancy between the human body and the robot body, we need **interfaces**.
 
@@ -26,6 +31,7 @@ Our main motivation is to transmit skills to robots so they can perform differen
 ### Chapter 1: Data-driven Learning
 <br>
 
+<<<<<<< HEAD
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
 </p>
@@ -226,3 +232,18 @@ The main difficulty in teaching a robot is that human bodies and robotic bodies 
 We also differ at the sensor level. Humans have different sensors, located in different places and with different densities. Moreover, humans have limited ranges of motion in their kinematics. All of this makes transferring information from a human to a robot non-trivial. To manage this discrepancy between human and robot bodies, we need appropriate interfaces.
 <br>
 **TO BE CONTINUED**
+
+
+=======
+
+
+
+
+## Additional Resources
+
+### Credits:
+<!-- List all the sources that you used to create the page   -->
+
+### Additional Resources:
+<!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
+

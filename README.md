@@ -24,7 +24,7 @@ gem install bundler jekyll
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/TLucking/RAS-University.git
+git clone https://github.com/RAS-University/robotic-courses
 ```
 
 ### 3. Install the Required Gems

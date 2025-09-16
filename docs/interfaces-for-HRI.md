@@ -20,18 +20,12 @@ nav_order: 7
 
 ## 1. General Motivation
 
-![Teaching a Robot]({{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobot.jpg)
-> Teaching a robot through demonstration (ASK FOR HIGHER QUALITY OF THIS PIC TO UPDATE IT)
-
-
 Our main motivation is to transmit skills to robots so they can perform different tasks. We want to teach our robots how to carry out a task. The most trivial solution would be to teach the robot by moving it, just as we do with a baby. However, unlike with a baby, this is by no means trivial with a robot. This is because our bodies differ from robot bodies. As a result, to solve this discrepancy between the human body and the robot body, we need **interfaces**.
 
 ## 2. Course Content
 
 ### Chapter 1: Data-driven Learning
-<br>
 
-<<<<<<< HEAD
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
 </p>

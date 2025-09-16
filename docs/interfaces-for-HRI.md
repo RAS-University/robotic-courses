@@ -26,6 +26,8 @@ Our main motivation is to transmit skills to robots so they can perform differen
 
 ### Chapter 1: Data-driven Learning
 
+<br>
+
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
 </p>

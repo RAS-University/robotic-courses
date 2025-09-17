@@ -145,6 +145,22 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
   .tab-content.active {
     display: block;
   }
+  .code-window {
+  background: #f4f4f8;
+  border: 2px solid #4F3DDB;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(79,61,219,0.08);
+  padding: 1.2em;
+  margin: 2em 0;
+  font-size: 0.8em;
+  overflow-x: auto;
+}
+.code-window code {
+  background: none;
+  color: #222;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', 'Monaco', monospace;
+  font-size: 1em;
+}
 </style>
 
 <!-- Script definitions for the page -->
@@ -638,27 +654,24 @@ $$
 
 Stating that there is a relationship between how the state and the control interact.
 
-Whithin this context, we can set up an optimization problem. For this we need to consider a cost function that we want to minimize.
-$$
-J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt \tag{2}
-$$
-$$
-\begin{aligned}
-\text{Where:} \quad & \bar{x}(t) = n\times 1 \text{ state vector} \\\\ 
-& \bar{u}(t) = m\times 1 \text{ control vector}\\\\ 
-& Q = n\times n \text{ symmetric positive semi-definite matrix (} Q \geq 0 \text{ or } Q \succeq 0 \text{)} \\\\ 
-& R = m\times m \text{ symmetric positive definite matrix (} R > 0 \text{ or } R \succ 0 \text{)} \\\\ 
-\end{aligned}
-$$
+<div class="formula-window">
+  In this context, we formulate an optimization problem by defining a cost function that we aim to minimize.
+  \[
+  J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt \tag{2}
+  \]
+  \[
+  \begin{aligned}
+  \text{Where:} \quad & \bar{x}(t) = n\times 1 \text{ state vector} \\ 
+  & \bar{u}(t) = m\times 1 \text{ control vector}\\ 
+  & Q = n\times n \text{ symmetric positive semi-definite matrix (} Q \geq 0 \text{ or } Q \succeq 0 \text{)} \\ 
+  & R = m\times m \text{ symmetric positive definite matrix (} R > 0 \text{ or } R \succ 0 \text{)}
+  \end{aligned}
+  \]
+</div>
 
 <details markdown="1">
 <summary><strong>Positivity semi-definite and definite matrices</strong></summary>
   Positive semi-definite:
-  <!-- $$
-  \begin{array}{cccccc}
-    \bar{x}^T & Q & \bar{x} & \geq 0, & \forall\ \bar{x} \\\\
-    1\times n & n\times n & n\times 1 & & 
-  \end{array} -->
   $$
   \displaystyle\bar{x}^T_{1\times n} \displaystyle Q_{n\times n} \bar{x}_{n\times 1} > 0, \quad \forall\ \bar{x}
   $$
@@ -669,9 +682,9 @@ $$
   We can notice the that is exactly the terms that we have in the cost function (2).
 </details>
 
-The way the **cost function** $J$ is set up here is that the integral is always positive (due to the properties of $Q$ and $R$), for any $\bar{x}(t)$ and $\bar{u}(t)$ combination. We can have a feeling of what this cost function represents. The matrices $Q$ and $R$ are weighting matrices/values that allow us to tune the cost function, where these matrices tradeoff between non-zero states and non-zero control inputs. We will be thinking about $Q$ and $R$ as weights to determine how much we value state compared to how much we value control.
+The way the **cost function** $J$ is set up here leads to the integral always being positive (due to the properties of $Q$ and $R$), for any $\bar{x}(t)$ and $\bar{u}(t)$ combination. We can have a feeling of what this cost function represents. The matrices $Q$ and $R$ are weighting matrices/values that allow us to tune the cost function, where these matrices tradeoff between non-zero states and non-zero control inputs. We will be thinking about $Q$ and $R$ as weights to determine how much we value state compared to how much we value control.
 
-We can now formulate the optimization problem that we would like to solve as follows:
+We can now formulate the optimization problem we would like to solve as follows:
 $$
 \min_{\bar{u}(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt
 $$
@@ -720,34 +733,34 @@ The matrices $Q$ and $R$ allow us to determine how much we value the state being
 _Note: the terms "large" and "small" here are relative knowing that $Q$ and $R$ are matrices and can be of different sizes._
 
 <details markdown="1">
-<summary><strong>Example: 2 states, 2 control system</strong></summary>
-<div style="border: 2px dashed #2a7ae2; border-radius: 10px; background: #f8f9fa; padding: 1.5em; margin: 2em 0;">
-<strong style="color: #2a7ae2; font-size: 1.1em;">Worked Example: 2 states, 2 control system</strong><br><br>
-Let's consider a simple example with 2 states and 2 control inputs. The state vector $\bar{x}(t)$ and control vector $\bar{u}(t)$ can be represented as:
-\[
-\bar{x}(t) = \begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix}
-\quad
-\bar{u}(t) = \begin{bmatrix} u_1(t) \\ u_2(t) \end{bmatrix}
-\]
-In this case, the matrices $Q$ and $R$ will be $2\times 2$ matrices. Let's choose:
-\[
-Q = \begin{bmatrix} q_{11} & 0 \\ 0 & q_{22} \end{bmatrix} 
-\quad
-R = \begin{bmatrix} r_{11} & 0 \\ 0 & r_{22} \end{bmatrix}
-\]
-Where $q_{11}, q_{22}, r_{11}, r_{22}$ are positive scalars. 
+  <summary><strong>Example: 2 states, 2 control system</strong></summary>
+  <div style="border: 2px dashed #2a7ae2; border-radius: 10px; background: #f8f9fa; padding: 1.5em; margin: 2em 0;">
+    <strong style="color: #2a7ae2; font-size: 1.1em;">2 states, 2 control system</strong><br><br>
+    Let's consider a simple example with 2 states and 2 control inputs. The state vector $\bar{x}(t)$ and control vector $\bar{u}(t)$ can be represented as:
+    \[
+    \bar{x}(t) = \begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix}
+    \quad
+    \bar{u}(t) = \begin{bmatrix} u_1(t) \\ u_2(t) \end{bmatrix}
+    \]
+    In this case, the matrices $Q$ and $R$ will be $2\times 2$ matrices. Let's choose:
+    \[
+    Q = \begin{bmatrix} q_{11} & 0 \\ 0 & q_{22} \end{bmatrix} 
+    \quad
+    R = \begin{bmatrix} r_{11} & 0 \\ 0 & r_{22} \end{bmatrix}
+    \]
+    Where $q_{11}, q_{22}, r_{11}, r_{22}$ are positive scalars. 
 
-Let's compute the integrand of the cost function $J$:
-\[
-\bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
-\]
+    Let's compute the integrand of the cost function $J$:
+    \[
+    \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
+    \]
 
-We can identify $q_{11}$ as the penalty or the weight on the non-zero state $x_1(t)$, $q_{22}$ as the penalty on the non-zero state $x_2(t)$. The $Q$ matrix, by tunning the entries appropriatly, allows us to tune how much we care about each state being non-zero.
+    We can identify $q_{11}$ as the penalty or the weight on the non-zero state $x_1(t)$, $q_{22}$ as the penalty on the non-zero state $x_2(t)$. The $Q$ matrix, by tunning the entries appropriatly, allows us to tune how much we care about each state being non-zero.
 
-Similarely, $r_{11}$ as the penalty on the non-zero control input $u_1(t)$, and $r_{22}$ as the penalty on the non-zero control input $u_2(t)$. Hence, the $R$ matrix allows us to tune how much we care about each control input being non-zero.
+    Similarely, $r_{11}$ as the penalty on the non-zero control input $u_1(t)$, and $r_{22}$ as the penalty on the non-zero control input $u_2(t)$. Hence, the $R$ matrix allows us to tune how much we care about each control input being non-zero.
 
-By adjusting these weights, we can shape the behavior of the optimal control policy to meet our specific requirements.
-</div>
+    By adjusting these weights, we can shape the behavior of the optimal control policy to meet our specific requirements.
+  </div>
 </details>
 
 This allows us to set up the optimization problem that we want to solve and to have a good understanding of what the cost function represents and how the matrices $Q$ and $R$ influence the solution.
@@ -859,15 +872,16 @@ $$
   x^THx-2x^THv+v^THv+d=x^T(A+B)x-2x^T(Aa+Bb)+a^TAa+b^TBb
   $$
   Equating terms at each order gives 
-  $$
-  H=A+B
-  $$
-  $$
-  v=H^{-1}(Aa+Bb)
-  $$
-  $$
-  d=-v^THv+a^TAa+b^TBb = -(Aa+Bb)^TH^{-1}(Aa+Bb)+a^TAa+b^TBb
-  $$
+  <div>
+    \[
+    \begin{align}
+    H&=A+B \\
+    v&=H^{-1}(Aa+Bb) \\
+    d&=-v^THv+a^TAa+b^TBb=-(Aa+Bb)^TH^{-1}(Aa+Bb)+a^TAa+b^TBb
+    \end{align}  
+    \]
+  </div>
+
   Notice that $H$ is positive definite sinc $A$ and $B$ are positive definite. Substituing the values of $a$, $A$, $b$ and $B$ gives
   $$
   H=\begin{bmatrix} 2.75 & 0.25 \\\\ 0.25 & 2.75 \end{bmatrix} 
@@ -879,15 +893,15 @@ $$
   The level set $V(x)=2$ is also plotted in figure above.
 
   (b) Expanding and comparing terms as before, we obtain
-  $$
-  H=A+C^TBC
-  $$
-  $$
-  v=H^{-1}(Aa+C^TBb)
-  $$
-  $$
-  d=-(Aa+C^TBb)^TH^{-1}(Aa+C^TBb)+a^TAa+b^TBb\tag{*}
-  $$
+  <div>
+    \[
+    \begin{align}
+    H&=A+C^TbC \\
+    v&=H^{-1}(Aa+C^TBb) \\
+    d&=-(Aa+C^TBb)^TH^{-1}(Aa+C^TBb)+a^TAa+b^TBb \tag{*}
+    \end{align}  
+    \]
+  </div>
   Notice the $H$ is positive definite since $A$ is positive definite and $C^TBC$ is positive semi-definite for any $C$.
 
   (c)Define $\bar{x}=x-a$ and $\bar{y}=b-Ca$ and express the problem as 
@@ -909,15 +923,15 @@ $$
   \bar{v}=A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}\bar{b}
   $$
   The function $V(x)$ can be expressed as
-  $$
-  V(x)=\frac{1}{2}((x-v)^T\tilde{H}^{-1}(x-v)+d)
-  $$
-  $$
-  V(x)=\frac{1}{2}((x-a-\bar{v})^T\tilde{H}^{-1}(x-a-\bar{v})+d)
-  $$
-  $$
-  V(x)=\frac{1}{2}((x-v)^T\tilde{H}^{-1}(x-v)+d)
-  $$
+  <div>
+    \[
+    \begin{align}
+    V(x)&=\frac{1}{2}((\bar{x}-\bar{v})^TH(\bar{x}-\bar{v})+d) \\
+    &=\frac{1}{2}((x-a-\bar{v})^TH(x-a-\bar{v})+d) \\
+    &=\frac{1}{2}((x-v)^TH(x-v)+d)
+    \end{align}  
+    \]
+  </div>
   where
   $$
   v=a+A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}(b-Ca) \quad \quad □
@@ -927,14 +941,6 @@ $$
 We will see in the next chapter that in order to solve the optimization problem, we will need to solve the Riccati equation.
 
 ## 2.2: The Riccati Equation
-<!-- 
-<iframe width="735" height="413"
-  src="https://youtu.be/wEevt2a4SKI?si=JiptiiY8khdDWCiq&t=2496"
-  title="Riccati Equation - LQR Part 2" 
-  frameborder="0" 
-  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe> -->
 
 <iframe width="735" height="413"
   src="https://www.youtube.com/embed/wEevt2a4SKI?si=jZOiS9c6RWdX-cTm?&start=2497"
@@ -956,13 +962,15 @@ We will see in the next chapter that in order to solve the optimization problem,
 
 Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $\bar{u}(t)$ which will make teh whole system optimimal. 
 
-*recall the optimization problem:*
-$$
-\min_{\bar{u}(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt
-$$
-$$
-\text{s.t.} \quad \dot{\bar{x}}(t) = A\bar{x}(t) + B\bar{u}(t)
-$$
+<div class="formula-window">
+  <strong>Recall the optimization problem:</strong>
+  \[
+  \min_{\bar{u}(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt
+  \]
+  \[
+  \text{s.t.} \quad \dot{\bar{x}}(t) = A\bar{x}(t) + B\bar{u}(t)
+  \]
+</div>
 
 It is beyound the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
 $$
@@ -972,7 +980,7 @@ Where $K$ is the feedback gain matrix, which is given by:
 $$
 K = R^{-1} B^T S
 $$
-Where $S$ is the solution of the algebraic Riccati equation (ARE) ($S$ as size $n \times n +$ symmetric):
+Where $S$ is the solution of the (continuous time) algebraic Riccati equation (CARE) ($S$ as size $n \times n +$ symmetric):
 $$
 A^T S + S A - S B R^{-1} B^T S + Q = 0 \tag{2.2.2}
 $$
@@ -1040,6 +1048,274 @@ $$
   This concludes the transcript of the video. The following section provides additional exercises and/or explanations not included in the video.
 </div>
 
+**To go further: How to obtain the Riccati Equation from the LQR problem**
+
+In the previous video, we used the continuous-time algebraic Riccati equation (CARE) to solve the Linear Quadratic Regulator (LQR) problem. However, the derivation of the Riccati equation from the LQR problem was not covered in detail. Here, we will look at the discret-time version of the LQR problem and derive the discrete-time Riccati equation (DARE).
+
+<u>Key assuptions:</u>
+
+**Markovian assumption:** 
+* There exists a Markovian state that evolves according to 
+$$
+x_{t+1} = f_t(x_t, u_t) \quad \text{discrete-time dynamical system}
+$$
+* The initial state $x_0$ i sknowm.
+* The cost is additive over time 
+$$
+J = \sum_{t} g_t(x_t, u_t)
+$$
+
+**Bellman's principle of optimality**
+
+* _"An optimal policy has the property that whatever the initial state and initial decisions are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision."_
+
+Meaning we can optimize the first decision instead of all the decisions at once and then make the optimal decision at each time step. The cost function is defined as:
+
+<!-- $$
+V_{0}(X_{0}) = \min_{u_{0}} \left(g_{0}(X_{0}, u_{0}) + 
+  \min_{\substack{u_{1}, \ldots, u_{T} \\ x_{1}, \ldots, x_{T}}} 
+      \sum_{t=1}^{T} g_{t}(x_{t}, u_{t})
+\right)
+$$
+where the minimization is subject to the dynamics constraints:
+$$
+x_{t+1} = f_{t}(x_{t}, u_{t})
+$$
+$$
+x_{1} = f_{0}(X_{0}, u_{0})
+$$ -->
+
+<div>
+  \[
+    V_{0}(X_{0}) 
+    = \min_{u_{0}} \Biggl\{ 
+        \begin{array}{cc}
+          & \min_{u_{1}, \ldots, u_{T} \atop x_{1}, \ldots, x_{T}} &
+                \sum_{t=1}^{T} g_{t}(x_{t}, u_{t}) \\
+          g_{0}(X_{0}, u_{0}) + &\text{s.t.} & x_{t+1} = f_{t}(x_{t}, u_{t}) \\
+          &            & x_{1} = f_{0}(X_{0}, u_{0})
+        \end{array}
+    \Biggr\}
+  \]
+</div>
+
+Note that
+$$
+\min_{\substack{u_{1}, \ldots, u_{T} \\ x_{1}, \ldots, x_{T}}} \sum_{t=1}^{T} g_{t}(x_{t}, u_{t}) = V_{1}(x_{1}) = V_{1}(f_{0}(X_{0}, u_{0}))
+$$
+The problem are nested minimizations, we can solve them recursively.
+
+<u>Derivation of the discrete-time Riccati equation (DARE):</u>
+
+We us **Dynamic programming** to solve the discrete-time LQR problem. The idea is to break down the optimization problem into smaller subproblems and solve them recursively. We can first look at the last stage of the optimization problem, at that tome-step , the solution is trivial as there is no future cost to consider (no input anymore). 
+$$
+V_T(x_T) = g_T(x_T)
+$$
+We can then move one step back in time and compute the cost function for $T-1$:
+<div>
+  \[
+    \begin{align}
+      V_{T-1}(x_{T-1}) =& \min_{u_{T-1}} \left( g_{T-1}(x_{T-1}, u_{T-1}) + V_T(x_T)\right) \\
+      &\text{s.t.} \quad x_T = f_{T-1}(x_{T-1}, u_{T-1})
+      \end{align}
+  \]
+</div>
+That is 
+$$
+\min_{u_{T-1}} \left( g_{T-1}(x_{T-1}, u_{T-1}) + V_T(f_{T-1}(x_{T-1}, u_{T-1})) \right)
+$$
+
+We can continue this process recursively until we reach the initial time step. At each time step, we solve a smaller optimization problem that considers the current state, control input, and the cost-to-go from the next time step. That way the optimal control problem is decomposed into **stages problems** that can be solved using backward induction.
+
+Now if we introduce the specific quadratic cost function and linear dynamics of the discrete-time LQR problem:
+$$
+V_t(x) = \min_{u_t,\cdots,u_{T-1}} \left( x_t^T Q x_t + u_t^T R u_t + V_{t+1}(A x + B u) \right)
+$$
+with the terminal cost $ V_T(x)=x^TSx$.
+
+In the following section we will derive the induction step of the dynamic programming algorithm, which will lead us to the discrete-time Riccati equation (DARE).
+
+The assumptions are thate the cost function is quadratic, the dynamics are linear and there are no constraints on the system.
+
+$$
+V_T(x) = x^T S x
+$$
+$$
+V_{T+1}(x) = x^T P_t x
+$$
+We will show that $V_t(x)=x^TP_tx$ and derive a formula for $P_t$
+<div>
+\[
+\begin{align}
+V_t(x) &= x^T Q x + \min_{u}\left(u^T R u + V_{T+1}(Ax+Bu)\right) \\
+&= x^T Q x + \min_{u}\left(u^T R u + (Ax+Bu)^T P_{T+1}(Ax+Bu)\right) \\
+&= x^T Q x + \min_{u}\left(u^T\left(R+B^T P_{T+1} B\right)u 
+          + 2 B^T P_{T+1} A x + x^T A^T P_{T+1} A x\right) \\
+&= x^T Q x + x^T A^T P_{T+1} A x 
+          + \min_{u}\left(u^T\left(R+B^T P_{T+1} B\right)u + 2 B^T P_{T+1} A x\right) \\
+&= x^T\left(Q+A^T P_{T+1} A\right)x 
+          + x^T A P_{T+1} B\left(R+B^T P_{T+1} B\right)^{-1}\left(R+B^T P_{T+1} B\right) \\
+&\quad \left(R+B^T P_{T+1} B\right)^{-1} B^T P_{T+1} A x 
+      - 2 x^T A^T P_{T+1} B\left(R+B^T P_{T+1} B\right)^{-1} B^T P_{T+1} A x \\
+&= x^T\left(Q + A^T P_{T+1} A 
+          - A^T P_{T+1} B\left(R+B^T P_{T+1} B\right)^{-1} B^T P_{T+1} A\right) x \\
+V_t(x) &= x^T P_t x
+\end{align}
+\]
+</div>
+
+<details markdown="1">
+  <summary><strong>How to remove $\min_{u}(\cdots)$</strong></summary>
+  <div>
+    We use the gradient to find the minimum for $u$, denoted $u^*$:
+    \[
+    \begin{aligned}
+    \frac{1}{2}\text{gradient}&=\left(R+B^TP_{T+1}B\right)u+B^TP_{T+1}Ax=0\\ 
+    u^* &= -\left(R+B^TP_{T+1}B\right)^{-1}B^TP_{T+1}Ax
+    \end{aligned}
+    \]
+  </div>
+</details>
+
+<div class="formula-window">
+  This derivation allowed to find an uptimal feedback control:
+  \[
+  u_t=-\left(R+B^TP_{T+1}B\right)^{-1}B^TP_{T+1}Ax_t
+  \]
+  where 
+  \[
+  P_{t-1}=Q+A^TP_{T+1}A - A^TP_{T+1}B\left(R+B^TP_{T+1}B\right)^{-1}B^TP_{T+1}A
+  \]
+  For $t\to -\infty$, $P_t$ converges to a constant matrix $P$, the solution of the **discrete-time algebraic Riccati equation** (DARE):
+  \[
+  P=Q+A^TPA - A^TPB\left(R+B^TPB\right)^{-1}B^TPA
+  \]
+</div>
+
+## Exercises
+
+**Exercise 2.1: State space form for chemical reaction model**
+
+Consider the following chemical reaction kinematics for a two-step series reaction:
+$$
+A \xrightarrow{\;k_1\;} B \quad B\xrightarrow{\;k_2\;} C 
+$$
+We wish to follow the reaction in a constant volume, well-mixed, batch reactor. As taught in th undergraduate chemical engineering curriculum, we proceed by writing material balances for the three species giving
+$$
+\frac{dc_A}{dt}=-r_1 \quad \frac{dc_B}{dt}=r_1-r_2 \quad \frac{dc_C}{dt}=r_2
+$$
+in which $c_j$ is the concentration of species $j$, and $r_1$ and $r_2$ are the rates (mol/(time$\cdot$vol)) at which the two reactions occur. We the assume some rate law for the reaction kinetics, such as
+$$
+r_1=k_1c_A \quad r_2 = k_2c_B
+$$
+We substitute the rate laws into the material balances and specify the starting concentrations to produce three differential equations for te three spiecies concentrations.
+
+<ol type="a">
+  <li>Write the linear state space model for the deterministic series chemical reaction model. Assume we can measure the component A concentration. What are $\bar{x}$, $\bar{y}$, $A$, $B$, $C$, and $D$ for this model?</li>
+  <li>(Optional) Simulate this model with initial conditions and parameters given by 
+  <div>\[ c_{A0}=1 \quad c_{B0}=c_{C0}=0 \quad k_1=2 \quad k_2=1\]</div></li>
+</ol>
+
+<details markdown="1">
+  <summary><strong>Correction</strong></summary>
+  <em>Note: This correction reflects my interpretation of the exercise as a master’s student. I am not a professional in the field, and while I have done my best, errors may still be present.</em>
+
+  <div>
+    1. We first need to determine the state and result vectors, namely $\bar{x}$ and $\bar{y}$. Since the resulting compenent of this chemical reactions is compenent C, we define the concentration of that compenent as our output. The state of our system would be the concentration of all the components taking part in the reaction:
+    \[
+    \bar{x} = \begin{bmatrix} c_A \\ c_B \\ c_C \end{bmatrix} \quad \bar{y} = \begin{bmatrix} c_C \end{bmatrix}  
+    \]
+
+    From our control lecture, we know that the state space equation of a dynamical system is written as follow: 
+    \[
+    \begin{align}
+      \dot{\bar{x}} &= A\bar{x} + B\bar{u} \\
+      \bar{y} &= C\bar{x} + D\bar{u}
+    \end{align}
+    \]
+
+    From the given dynamics, we can derive
+    \[
+    \begin{align}
+      \frac{dc_A}{dt}= \dot x_1 &= -r_1 = -k_1 x_1 \\
+      \frac{dc_B}{dt}= \dot x_2 &= r_1-r_2 = k_1 x_1 - k_2 x_2 \\
+      \frac{dc_C}{dt}= \dot x_3 &= r_2 = k_2 x_2
+    \end{align}
+    \]
+
+    \[
+    \begin{align}
+      \dot{\bar{x}} &= \begin{bmatrix} -k_1 & 0 & 0 \\ k_1 & -k_2 & 0 \\ 0 & k_2 & 0 \end{bmatrix} \bar{x} + \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \bar{u}\\
+      y &= \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} + \begin{bmatrix} 0 \end{bmatrix}
+    \end{align}  
+    \]
+
+    Thus we have
+    \[
+    A = \begin{bmatrix} -k_1 & 0 & 0 \\ k_1 & -k_2 & 0 \\ 0 & k_2 & 0 \end{bmatrix} \quad B = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \quad C = \begin{bmatrix} 0 & 0 & 0 \end{bmatrix} \quad D = \begin{bmatrix} 0 \end{bmatrix}
+    \]
+
+    2. Here is a simple python script to simulate the system dynamics using the packages <code>control</code>, <code>numpy</code> and <code>matplotlib.pyplot</code>:
+  </div>
+  <div class="code-window">
+  <pre><code class="language-python">
+    import control as ctrl
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    # Define the values
+    c_A0 = 1.0  # Initial concentration of A (mol/L)
+    C_B0 = 0.0  # Initial concentration of B (mol/L)
+    C_C0 = 0.0  # Initial concentration of C (mol/L)
+    k1 = 2.0    # Rate constant for A -> B (1/min)
+    k2 = 1      # Rate constant for B -> C (1/min)
+
+    A_0 = 5.0  # Initial concentration of A
+
+    T = np.linspace(0, 10, 100)    # time vector
+    U = np.zeros_like(T)           # input (step)
+    X0 = [A_0, 0, 0]               # initial state
+
+    # Define the state-space representation
+    A = [[-k1, 0, 0],
+        [k1, -k2, 0],
+        [0, k2, 0]]
+    B = [[0], [0], [0]]  # No input
+    C = [[0, 0, 1]]  # We are interested in the concentration of C
+    D = [[0]]
+
+    # Create the state-space system
+    system = ctrl.StateSpace(A, B, C, D)
+    T, yout, xout = ctrl.forced_response(system, T, U, X0, return_states=True)
+
+    def plot_dynamics(T, yout, xout):
+        """Plot the dynamics of the system."""
+        plt.figure(figsize=(10, 6))
+        # Plot each state variable
+
+        plt.plot(T, xout[0, :], label=f'Concentration of A', color='blue', linestyle='--')
+        plt.plot(T, xout[1, :], label=f'Concentration of B', color='green', linestyle='--')
+        plt.plot(T, yout.T, label=f'Concentration of C', color='red', linewidth=2)
+        plt.xlabel('Time')
+        plt.ylabel('Concentration (mol/L)')
+        plt.title('System Dynamics initial state A=5 mol/L')
+        plt.legend()
+        plt.show()
+
+    # Plot the results
+    plot_dynamics(T, yout, xout)
+  </code></pre>
+  </div>
+  
+  This gives the following result for a starting concentration of component $A_0 = 5$ (mol/L):
+  <div class="images">
+    <figure>
+        <img src="{{ site.baseurl }}/assets/images/MPC/EX_2_1_system_dynamics.png" alt="Dynamics" width="650"/>
+        <figcaption style="text-align: center;">System dynamics</figcaption>
+    </figure>
+  </div>
+
+</details>
 
 # Chapter 3 : Classical MPC
 
@@ -1061,7 +1337,7 @@ $$
 - Saverio Bolognani's lectures : **Computational Control** at ETH Zurich in spring 2024
 - Colin Jones' lectures : **Model Predictive Control ME-425** at EPFL in Automn 2024
 - **Model Predictive Control : Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
-- **Model Predictive Control : Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022
+- **Model Predictive Control : Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)
 
 <!-- I will ask for their permisions before using their materials -->
 

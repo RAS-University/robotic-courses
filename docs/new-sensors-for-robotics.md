@@ -150,69 +150,174 @@ A humanoid robot may be tasked to interact with its environment in more ways tha
 
 ---
 
-## 3. Course Content
+## Chapter 0: What is a sensor
+{: #ch0 }
 
-### Chapter 0: Sensors - What are they?
+A **sensor** is a device that detects or measures a physical property, the **measurand** (e.g., distance, light, temperature, pressure, motion), and converts it into a signal that can be read, interpreted, and used by a computer.
 
-Robotic perception begins with **sensors**: devices that transform a physical phenomenon into an electrical (or optical, pneumatic, …) signal that a computer can process.
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/What_is_a_sensor.png)
+><sub>Illustration of the sensing principle: a physical phenomenon (light) interacts with a sensor, which converts it into an electrical signal that can be processed. Image source : https://fity.club/lists/suggestions/types-of-electrical-sensors/ </sub>
 
-$$
+<!-- $$
 (\text{Physical quantity}) \;\xrightarrow{\text{Transduction}}\; (\text{Signal}) 
 \;\xrightarrow{\text{A/D}}\; \text{Digital data}
-$$
+$$ -->
+
+> **Example:**  
+> - A **light sensor** detects the intensity of light and converts it into a varying electrical signal.  
+> - An **ultrasonic** sensor measures the time it takes for a sound pulse to bounce back from an object, then converts that into a distance value.
+> - An **accelerometer** measures acceleration and outputs a voltage proportional to the force it experiences.
+
+In robotics, sensors are essential because they provide the link between the robot and its environment. Without them, a robot would be “blind” and unable to adapt.
 
 <details markdown="1">
  <summary>Video introduction</summary>
 
-  Here is a small video explaining what sensors are and how to use them.
+  Here is a small video explaining what sensors are and how they are used.
 
-  ![](https://www.youtube.com/watch?v=XI49uFm5HRE&t=112s)
-
+  ![](https://www.youtube.com/watch?v=XI49uFm5HRE&t)
+  ><sub>*What is a Sensor? Different Types of Sensors, Applications . YouTube video, 19 August 2020. Available at: https://www.youtube.com/watch?v=XI49uFm5HRE&t*</sub>
 
 </details>
 
-#### 0.1 **Definition** 
-{: .no_toc }
-A sensor is a *measuring element* that **maps a physical property $x$** (temperature, distance, force, …) **to an output signal $y$** (voltage, current, frequency, pulses).
+---
 
-*Formal view*  
-$$
-y \;=\; f(x)\;+\;\varepsilon
-$$
-where $f$ is the ideal transfer function and $\varepsilon$ captures noise, non-linearity and bias.
+### 0.1 The Ideal Sensor
 
-A real-world example makes this model more concrete:
+To understand real sensors, it helps to imagine the **ideal sensor**, a theoretical device that:
 
-> **Example – Temperature sensor (thermistor):**  
-> $x$ = temperature (°C), $y$ = voltage output (V)  
-> Ideal transfer: $f(x) = 0.01x$ (e.g. 10 mV per °C)  
-> Typical noise $\varepsilon$ ≈ $\mathcal{N}(0,\,0.02\text{ V})$ due to electrical interference and ADC resolution.
->
->Even if $f(x)$ is perfectly known, the output signal $y$ can vary due to noise $\varepsilon$, especially at low temperatures where signal changes are small. This is why concepts like **resolution** and **accuracy** matter in practice.
-
-
-
-#### 0.2 **The Ideal Sensor** 
-{: .no_toc }
-
-| Property | Ideal behaviour |
-|----------|-----------------|
-| **Selectivity** | Respond **only** to the target measurand |
-| **Immunity** | Ignore all other influences (temperature, vibrations …) |
-| **Non-invasiveness** | Leave the measurand unchanged |
-| **Perfect model** | Known, usually linear, $y \propto x$ |
+| Property              | Ideal Behaviour                                                   |
+|-----------------------|-------------------------------------------------------------------|
+| **Perfect accuracy**  | Measures the true value with **no error**                         |
+| **Noise-free**            | Output has **zero noise** (no random fluctuations)                                        |
+| **Infinite resolution** | Detects the **smallest possible change** in the measurand       |
+| **Instantaneous response** | Responds to changes with **no delay or lag**                 |
+| **Selectivity**       | Respond **only** to the target measurand                          |
+| **Immunity**          | Ignore all other influences (temperature, vibrations …)           |
+| **Non-invasiveness**  | Leave the measurand unchanged                                     |
+| **Perfect model**     | Known, usually linear, $y \propto x$                              |
+| **Universal conditions** | Operates in **all environments** (temperature, lighting, etc.) |
+| **Unlimited lifetime** | **Never degrades** or wears out over time                        |
 
 
-#### 0.3 **Reality Check — Imperfections** 
-{: .no_toc }
+The ideal sensor doesn’t exist, but it’s a useful reference. When engineers design robots, they compare real sensors against this “perfect” baseline to reason about **range, resolution, noise, latency, linearity, drift,** and **environmental robustness**.
 
-Real sensors deviate from the ideal in well-defined ways:
+---
 
-* **Accuracy** – closeness of the *average* measurement to the true value.  
-* **Precision** – repeatability; statistical spread around the mean.  
-* **Resolution** – smallest detectable change in input, limited by noise or step size.  
+### 0.2 Sensor imperfections 
 
+Real sensors are always imperfect. They come with **limitations** and **trade-offs**, such as:
 
+- **Noise** : Random variations in the signal, making readings uncertain.  
+  >*Example:* an IMU yaw reading jitters even while the robot is stationary.
+
+- **Limited range** : Every sensor has minimum and maximum values it can detect.  
+  >*Example:* an ultrasonic module may only work from ~2 cm to ~4 m.
+
+- **Finite resolution** : Sensors (and ADCs) can only detect changes above a threshold (quantization).  
+  >*Example:* a 10-bit ADC over 3.3 V has ≈3.2 mV per LSB.
+
+- **Accuracy vs precision** : A sensor may be consistent but biased, or accurate on average but inconsistent.  
+  >*Example:* readings are tightly clustered but offset by +0.5 °C.
+
+- **Latency** : Some sensors take time to respond or update slowly.  
+  >*Example:* GPS typically updates at 1–10 Hz; barometers often require filtering.
+
+- **Environmental sensitivity** : Performance may drop under certain conditions (lighting, temperature, materials, EMI, vibrations).  
+  >*Example:* cameras in low light; sonar on soft or angled surfaces.
+
+**Trade-off examples**
+>- A **LiDAR** provides very accurate distance maps but is **expensive** and **power-hungry**.  
+>- An **ultrasonic** sensor is **cheap and robust**, but has **low resolution** and can be **confused by certain materials**.  
+>- A **camera** captures **rich information** but requires **heavy processing power** (and favorable lighting).
+
+**Key takeaway:** A sensor is the robot’s window into the physical world. The “ideal” sensor helps us define what we want, but real sensors always involve trade-offs. Understanding those trade-offs is the first step to choosing the right sensor for a robotic application.
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: What is the primary role of a sensor in robotics?</strong></p>
+<form id="ch0-q1">
+  <input type="radio" name="ch0-q1" value="A"> To convert physical quantities into signals usable by a computer<br>
+  <input type="radio" name="ch0-q1" value="B"> To control the actuators directly<br>
+  <input type="radio" name="ch0-q1" value="C"> To store data permanently<br>
+  <input type="radio" name="ch0-q1" value="D"> To generate movement<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch0-q1', 'A',
+      '✅ Correct! A sensor translates a property of the environment into a usable signal.',
+      '❌ Not quite. Sensors measure, they don’t directly control or generate movement.')">
+    Check Answer
+  </button>
+  <p id="ch0-q1-feedback"></p>
+</form>
+
+<!-- Question 2 -->
+<p><strong>Question 2: In the chain <em>Physical Quantity → Sensor → Signal → A/D → Digital data</em>, what does the A/D step represent?</strong></p>
+<form id="ch0-q2">
+  <input type="radio" name="ch0-q2" value="A"> Amplification of the signal<br>
+  <input type="radio" name="ch0-q2" value="B"> Analog-to-Digital conversion<br>
+  <input type="radio" name="ch0-q2" value="C"> Automatic decision-making<br>
+  <input type="radio" name="ch0-q2" value="D"> Adjustment for noise<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch0-q2', 'B',
+      '✅ Correct! A/D is the Analog-to-Digital conversion step.',
+      '❌ Careful. A/D refers specifically to turning analog signals into digital form.')">
+    Check Answer
+  </button>
+  <p id="ch0-q2-feedback"></p>
+</form>
+
+<!-- Question 3 -->
+<p><strong>Question 3: Which of the following is <em>not</em> an example of a sensor?</strong></p>
+<form id="ch0-q3">
+  <input type="radio" name="ch0-q3" value="A"> Ultrasonic distance module<br>
+  <input type="radio" name="ch0-q3" value="B"> Accelerometer<br>
+  <input type="radio" name="ch0-q3" value="C"> DC motor<br>
+  <input type="radio" name="ch0-q3" value="D"> Temperature probe<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch0-q3', 'C',
+      '✅ Correct! A DC motor is an actuator, not a sensor.',
+      '❌ Try again. Remember, sensors measure properties, actuators cause motion.')">
+    Check Answer
+  </button>
+  <p id="ch0-q3-feedback"></p>
+</form>
+
+<!-- Question 4 -->
+<p><strong>Question 4: Which statement correctly distinguishes accuracy and precision?</strong></p>
+<form id="ch0-q4">
+  <input type="radio" name="ch0-q4" value="A"> Accuracy is repeatability; precision is closeness to truth<br>
+  <input type="radio" name="ch0-q4" value="B"> Precision is closeness to truth; accuracy is repeatability<br>
+  <input type="radio" name="ch0-q4" value="C"> Accuracy is closeness to the true value; precision is repeatability<br>
+  <input type="radio" name="ch0-q4" value="D"> They mean the same thing<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch0-q4', 'C',
+      '✅ Correct! Accuracy = closeness to truth; precision = repeatability/spread.',
+      '❌ Not quite. Accuracy is about truth; precision is about spread/repeatability.')">
+    Check Answer
+  </button>
+  <p id="ch0-q4-feedback"></p>
+</form>
+
+<!-- Question 5 -->
+<p><strong>Question 5: A camera struggles in low light. Which limitation best describes this?</strong></p>
+<form id="ch0-q5">
+  <input type="radio" name="ch0-q9" value="A"> Environmental sensitivity<br>
+  <input type="radio" name="ch0-q9" value="B"> Non-invasiveness<br>
+  <input type="radio" name="ch0-q9" value="C"> Infinite resolution<br>
+  <input type="radio" name="ch0-q9" value="D"> Unlimited lifetime<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch0-q5', 'A',
+      '✅ Correct! Performance depends on illumination—an environmental factor.',
+      '❌ Think about how lighting conditions affect the sensor.')">
+    Check Answer
+  </button>
+  <p id="ch0-q5-feedback"></p>
+</form>
+</details>
+
+<!-- 
 
 #### 0.4 **Key Sensor Characteristics** 
 {: .no_toc }
@@ -232,7 +337,7 @@ Real sensors deviate from the ideal in well-defined ways:
 <details markdown="1">
   <summary>Conceptual Questions</summary>
 
-<!-- Question 1 -->
+
 <p><strong>Question 1: In the relation&nbsp;$y = f(x) + \varepsilon$, what does the term&nbsp;$\varepsilon$ represent?</strong></p>
 <form id="ch0-q1">
   <input type="radio" name="ch0-q1" value="A"> The ideal, noise-free output<br>
@@ -248,7 +353,6 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q1-feedback"></p>
 </form>
 
-<!-- Question 2 -->
 <p><strong>Question 2: Which feature is <em>not</em> part of the definition of an <em>ideal</em> sensor?</strong></p>
 <form id="ch0-q2">
   <input type="radio" name="ch0-q2" value="A"> Responds only to the target measurand<br>
@@ -264,7 +368,7 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q2-feedback"></p>
 </form>
 
-<!-- Question 3 -->
+
 <p><strong>Question 3: The <em>smallest input change</em> a sensor can detect is called:</strong></p>
 <form id="ch0-q3">
   <input type="radio" name="ch0-q3" value="A"> Accuracy<br>
@@ -280,7 +384,7 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q3-feedback"></p>
 </form>
 
-<!-- Question 4 -->
+
 <p><strong>Question 4: A force sensor whose reading drifts when the ambient temperature changes suffers primarily from:</strong></p>
 <form id="ch0-q4">
   <input type="radio" name="ch0-q4" value="A"> Poor bandwidth<br>
@@ -296,7 +400,7 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q4-feedback"></p>
 </form>
 
-<!-- Question 5 -->
+
 <p><strong>Question 5: Which of these sensors is <em>active</em> rather than passive?</strong></p>
 <form id="ch0-q5">
   <input type="radio" name="ch0-q5" value="A"> Thermistor<br>
@@ -312,7 +416,7 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q5-feedback"></p>
 </form>
 
-<!-- Question 6 -->
+
 <p><strong>Question 6: <em>Dynamic range</em> is best described as:</strong></p>
 <form id="ch0-q6">
   <input type="radio" name="ch0-q6" value="A"> The time delay between input and output<br>
@@ -328,7 +432,7 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q6-feedback"></p>
 </form>
 
-<!-- Question 7 -->
+
 <p><strong>Question 7: True or False – A highly precise sensor is always accurate.</strong></p>
 <form id="ch0-q7">
   <input type="radio" name="ch0-q7" value="True"> True<br>
@@ -342,23 +446,16 @@ Real sensors deviate from the ideal in well-defined ways:
   <p id="ch0-q7-feedback"></p>
 </form>
 
-</details>
+</details> -->
 
 
 ---
 
-### Chapter 1: Measurement & Uncertainty
+## Chapter 1: Characteristics of Sensors
 {: #ch1 }
 
-#### Chapter 1.1 Physical Units, Range, Resolution & Repeatability
-{: #ch1-1 }
 
-Measurement is the bridge between the physical world and numeric computation.  
-Before we dive into error sources and noise, we need a shared vocabulary for **what** is measured and **how well** it is measured.
-
-
-##### 1.1.1 **Units & Scales**
-{:.no_toc}
+### 1.1 Units & Scales
 
 Every sensor output is ultimately expressed in a **physical unit** defined by the International System of Units (SI).
 
@@ -372,9 +469,14 @@ Every sensor output is ultimately expressed in a **physical unit** defined by th
 | Luminous intensity | candela (cd) | Photodiode |
 | Amount of substance | mole (mol) | Gas sensor |
 
+For robots, it’s important to always check what units a sensor outputs and whether conversion or calibration is needed.
 
-##### 1.1.2 **Measurement Range**
-{:.no_toc}
+**Example**: 
+>A temperature sensor might output a voltage that corresponds to °C, but you need to apply a formula (e.g., 10 mV per °C).
+
+---
+
+### 1.2 Measurement Range
 
 *Range* is the interval $$[x_{\min},\,x_{\max}]$$ within which the sensor maintains its specified performance.
 
@@ -388,15 +490,15 @@ Key rules:
 1. A wider range prevents saturation but often reduces resolution.  
 2. Outside the range, data si *invalid*.
 
+---
 
-##### 1.1.3 **Resolution**
-{:.no_toc}
+### 1.3 Resolution
 
 Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect.
 
 * For an **ADC-based sensor**  
   $$\Delta x_{\text{min}} = \tfrac{\text{FS}}{2^N}$$  
-  where \(N\) = number of bits.
+  where \(N\) = number of bits, and FS the Full Scale of the sensor.
 
 * For an **analog sensor** it is limited by inherent noise.
 
@@ -405,12 +507,28 @@ Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system
 
 A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the sensor
 
+---
 
-##### 1.1.4 **Accuracy & Precision (Repeatability)**
-{:.no_toc}
+### 1.4 Accuracy & Precision
+
+When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
+
+- **Accuracy** is about how close the average measurement is to the true or reference value.
+
+  $$
+  \text{Accuracy Error} = \big|\bar{y} - y_{\text{true}}\big|
+  $$  
+
+- **Precision (Repeatability)** is about how close repeated measurements are to one another, regardless of whether they are correct on average.
+
+  $$
+  \sigma_{\text{rep}} = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(y_i-\bar{y})^2}\,.
+  $$
+
+The dartboard analogy below is a classic way to illustrate this difference:
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/precision_accuracy.png)
-><sub>Precision and accuracy in glacial geology. Website image. Available at: https://www.antarcticglaciers.org/glacial-geology/dating-glacial-sediments-2/precision-and-accuracy-glacial-geology/</sub>
+><sub>Precision and accuracy. Website image. Available at: https://www.antarcticglaciers.org/glacial-geology/dating-glacial-sediments-2/precision-and-accuracy-glacial-geology/</sub>
 
 
 | Quadrant | Accuracy | Precision | Interpretation |
@@ -420,280 +538,615 @@ A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the s
 | **Bottom-left** | High | Low | Centred on truth but large scatter → **high random noise**. |
 | **Bottom-right** | High | High | Ideal sensor: tight cluster around true value. |
 
-* **Accuracy** — closeness of the *mean* measurement to the true value.  
-  *Requires an external reference or calibration standard.*
 
-* **Precision (Repeatability)** — closeness of *individual* measurements to each other under identical conditions.  
-  Quantified by the **standard deviation**  
-  $$
-  \sigma_{\text{rep}} = \sqrt{\frac{1}{n-1}\sum_{i=1}^{n}(y_i-\bar{y})^2}\,.
-  $$
-
-
-Key take-aways:
+**Key take-aways:**
 
 1. A sensor can be **precise yet inaccurate** (systematic bias) or **accurate yet imprecise** (large random scatter).  
 2. Calibration removes bias to improve *accuracy*; filtering averages out noise to improve *precision*.  
-3. Most robotic estimation pipelines model measurements as  
-   $$
-   y = x_{\text{true}} + b \;+\; \varepsilon,\qquad  
-   \varepsilon \sim \mathcal{N}(0,\sigma_{\text{rep}}^{2}),
-   $$  
-   where $b$ is bias (accuracy error) and $\varepsilon$ is zero-mean random noise (precision limit).
-
-Keep this mental picture handy, later chapters on noise modelling, uncertainty propagation and calibration revolve around pushing sensors toward the **high-accuracy, high-precision** quadrant.
-
 
 
 <details markdown="1">
-  <summary>Conceptual Questions </summary>
+ <summary>Video Explaining Accuracy and Precision</summary>
 
-<!-- Q1 -->
-<p><strong>Question 1:</strong> If a 16-bit pressure sensor covers 0–100 kPa, what is its ideal resolution?</p>
-<form id="ch1-1-q1">
-  <input type="radio" name="ch1-1-q1" value="A"> 0.0015 kPa<br>
-  <input type="radio" name="ch1-1-q1" value="B"> 0.024 kPa<br>
-  <input type="radio" name="ch1-1-q1" value="C"> 1.6 kPa<br>
-  <input type="radio" name="ch1-1-q1" value="D"> 6.1 kPa<br>
-  <button type="button"
-    onclick="checkTrueFalse('ch1-1-q1','B',
-      '✅ Correct! Δxₘᵢₙ = 100 kPa / 2¹⁶ ≈ 0.0015 kPa? Wait—careful! 100 / 65536 ≈ 0.00153 kPa. Option A would be correct if listed. But given the choices the closest is 0.024 kPa (100 / 4096 for 12 bits).',
-      '❌ Not quite. Remember: Δxₘᵢₙ = range / 2ᴺ.')">
-    Check Answer
-  </button>
-  <p id="ch1-1-q1-feedback"></p>
-</form>
+  A short video that illustrates the concepts of accuracy and precision in the context of sensors.
 
-<!-- Q2 -->
-<p><strong>Question 2:</strong> Repeatability mainly characterises <em>which</em> aspect of sensor behavior?</p>
-<form id="ch1-1-q2">
-  <input type="radio" name="ch1-1-q2" value="A"> Systematic bias<br>
-  <input type="radio" name="ch1-1-q2" value="B"> Long-term drift<br>
-  <input type="radio" name="ch1-1-q2" value="C"> Short-term random scatter<br>
-  <input type="radio" name="ch1-1-q2" value="D"> Measurement range<br>
-  <button type="button"
-    onclick="checkTrueFalse('ch1-1-q2','C',
-      '✅ Correct! Repeatability is all about random scatter under identical conditions.',
-      '❌ Try again. Think about repeated *identical* trials.')">
-    Check Answer
-  </button>
-  <p id="ch1-1-q2-feedback"></p>
-</form>
-
-<!-- Q3 -->
-<p><strong>Question 3:</strong> True or False — Increasing a sensor’s range always reduces its resolution.</p>
-<form id="ch1-1-q3">
-  <input type="radio" name="ch1-1-q3" value="True"> True<br>
-  <input type="radio" name="ch1-1-q3" value="False"> False<br>
-  <button type="button"
-    onclick="checkTrueFalse('ch1-1-q3','False',
-      '✅ Correct! Only fixed-bit-depth ADCs force that trade-off; analog high-dynamic-range designs can keep both.',
-      '❌ Recall that analog designs or variable-gain stages can decouple range from resolution.')">
-    Check Answer
-  </button>
-  <p id="ch1-1-q3-feedback"></p>
-</form>
+  ![](https://www.youtube.com/watch?v=KEeSQvMCPLg)
+  ><sub>Accuracy and Precision | It's Easy! . YouTube video, 06.11.2017. Available at: https://www.youtube.com/watch?v=KEeSQvMCPLg</sub>
 
 </details>
 
 ---
 
-#### Chapter 1.2: Noise models 
+### 1.5 Noise
 
-*How randomness seeps into every measurement and how to describe it.*
+*Noise* is any undesired variation added to a measurement. It limits how well we can estimate the true value, even when the sensor is otherwise “perfect.”
 
-> **Learning goals**  
-> 1. Distinguish *statistical* vs *spectral* descriptions of noise  
-> 2. Recognise when the ubiquitous Gaussian assumption breaks down  
-> 3. Estimate noise parameters from logged data for later filter design  
-
----
-
-#### 1.2.1 What *is* Noise?  
-Every sensor reading $y$ deviates from the ideal output $f(x)$ by  
+We model a measured signal \(y(t)\) as:
 $$
-y \;=\; f(x)\;+\; n(t),
-$$  
-where $n(t)$ is **noise**, any unwanted, unpredictable component.
-
-*Sources*  
-- **Thermal agitation** in resistors and semiconductors  
-- **Quantisation** in Analog-to-Digital Converters (ADCs)  
-- **Photon statistics** in cameras and lidars  
-- **Mechanical vibration** coupling into MEMS structures  
-
----
-
-#### 1.2.2 Statistical Noise Distributions  
-
-| Distribution | PDF $p(n)$ | Typical sensors | When to use |
-|--------------|-----------|-----------------|-------------|
-| **Gaussian (Normal)** | $\displaystyle \mathcal N(\mu,\sigma^2)$ | MEMS accel / gyro, strain gauges | Central-limit holds, noise dominated by many tiny effects |
-| **Uniform** | flat on $[-\Delta/2,\Delta/2]$ | Low-bit ADC, coarse ToF sensor | Pure quantisation error |
-| **Poisson** | $\displaystyle \frac{\lambda^n e^{-\lambda}}{n!}$ | Photon-counting lidar, Geiger counter | Event counts, variance = mean |
-| **Laplacian** | $\displaystyle \tfrac{1}{2b}\exp(-|n|/b)$ | Edge pixel error in vision | Heavy-tailed outliers |
-| **Rayleigh** | $\displaystyle \frac{n}{\sigma^2}e^{-n^2/2\sigma^2}$ | Laser speckle, radar | Multiplicative amplitude noise |
-
-*Key idea:* choose a PDF that matches histograms of recorded **static** data.
-
-> **Mini-Task**  
-> 1. Fix an IMU flat on the desk, record 30 s of $x$-axis acceleration.  
-> 2. Plot a histogram; overlay Gaussian & Laplacian fits.  
-> 3. Which fit has lower Kolmogorov–Smirnov error?
-
----
-
-#### 1.2.3 Spectral (Colour) Noise  
-
-The **Power Spectral Density** (PSD) $S(f)$ shows how noise power spreads over frequency.
-
-| Colour | PSD trend | Common appearance | Effect on estimation |
-|--------|-----------|-------------------|----------------------|
-| **White** | $S(f)\!\propto\! f^0$ | High-grade gyros, ADC quantisation | Integrates to random walk; easy KF tuning |
-| **Pink (1/f)** | $S(f)\!\propto\! 1/f$ | MEMS gyro bias, flicker | Long-term drift; requires bias states |
-| **Brown (1/f²)** | $S(f)\!\propto\! 1/f^2$ | Clock drift, random-walk current | Position error ∝ $t^{1.5}$ |
-| **Blue** | $S(f)\!\propto\! f$ | Laser speckle, differentiation amplifies noise | High-freq aliasing risk |
-| **Band-limited** | flat inside [$$f_L,f_H$$] | Digital low-pass outputs | Easier anti-alias design |
-
-*Estimating colour*  
-1. Compute FFT on a long **stationary** record.  
-2. Plot PSD on log–log axes.  
-   *Slope ≈ 0 → white, ≈ –1 → pink, ≈ –2 → brown.*
-
-> **Example – Gyro PSD**  
-> ![PSD example]({{ site.baseurl }}/assets/images/new_sensors/gyro_psd.svg)  
-> *Knee at ≈0.05 Hz separates 1/f from white floor.*
-
----
-
-#### 1.2.4 Quantisation Noise  
-
-For an $$N$$-bit ADC covering range $$\text{FS}$$:  
-- **Step size** $$\Delta = \text{FS}/2^N$$  
-- **Uniform model variance** $$\sigma_q^2 = \Delta^2/12$$  
-
-> If raw sensor noise $$\sigma_s$$ is *much* lower than $$\sigma_q$$, add dither or oversample to reclaim resolution.
-
----
-
-#### 1.2.5 Composite Noise & Bias Models  
-
-Real sensors mix several processes:  
-
+y(t) \;=\; x(t) \;+\; b \;+\; \varepsilon(t)
 $$
-n(t) = n_{\text{white}}(t) \;+\; n_{1/f}(t) \;+\; b(t),
+where $x(t)$ is the true signal, $b$ is a (possibly time/temperature-dependent) **bias** (systematic error), and $\varepsilon(t)$ is **random noise**.
+
+To understand and manage noise effectively, it is important to distinguish between **random noise**, which is unpredictable and varies from reading to reading, and **systematic errors**, which are repeatable biases built into the measurement process.
+
+
+**Random noise** (stochastic, zero-mean)  
+Unpredictable jitter that causes repeated readings to fluctuate around the true value.
+
+**Examples**
+>- A distance sensor reports 100.2, 99.8, 100.5, 100.1 cm while the target is fixed at 100 cm.
+>- A light sensor varies slightly due to mains flicker or transient shadows.
+>- An IMU yaw estimate wanders by about ±0.2° when the platform is stationary.
+
+**Mitigation**  
+Averaging or low-pass filtering. If the standard deviation of single readings is $\sigma$, averaging $M$ independent readings yields approximately
 $$
-
-where the *bias* $$b(t)$$ is often a first-order Gauss–Markov process:
-
+\sigma_{\text{avg}} \approx \frac{\sigma}{\sqrt{M}}.
 $$
-\dot b(t) = -\tfrac{1}{\tau} b(t) + w(t),\qquad w(t)\sim\mathcal N(0,Q_b).
-$$
+This reduces scatter but increases latency.
 
-These parameters (white variance, bias instability, correlation time $$\tau$$) feed directly into Kalman-filter **Q** and **R** matrices.
+**Systematic noise (errors)** (deterministic, repeatable)  
+Consistent deviations that bias measurements in a fixed direction. Averaging does **not** remove these; **calibration** is required.
 
----
+**Examples**
+>- **Bias/offset**: A thermometer consistently reads $+2\,^\circ\mathrm{C}$ high.  
+>- **Scale factor error**: Wheel odometry overestimates distance because the wheel diameter is set too large, reporting $1.02\times$ the true travel.  
+>- **Misalignment**: A range sensor tilted upward returns longer distances than actual.  
+>- **Drift**: A sensor’s output shifts gradually with warm-up or supply voltage changes.
 
-#### 1.2.6 Practical Workflow for Noise Characterisation  
+**Mitigation**  
+Zeroing and multi-point calibration (to remove bias and correct scale), improved mounting/alignment, temperature compensation, stable power, and appropriate warm-up time.
 
-1. **Static log:** capture sensor output at rest → distribution & PSD.  
-2. **Histogram fit:** identify PDF shape, estimate mean $$\mu$$, variance $$\sigma^2$$.  
-3. **PSD / Allan variance:** distinguish white vs coloured, extract bias stability.  
-4. **Document parameters:** $\sigma_w$, $\sigma_{1/f}$, $\tau_b$, $\sigma_q$.  
-5. **Update estimator configs:** set filter gains / covariances accordingly.
-
----
+> **Rule of thumb**  
+> Use **calibration** to remove *systematic* errors; use **filtering/averaging** to reduce *random* noise.
 
 <details markdown="1">
-<summary>Conceptual Questions</summary>
+ <summary>Videos</summary>
 
-<!-- Q1 -->
-<!-- <p><strong>Q1:</strong> A histogram of stationary accelerometer data shows long, heavy tails. Which distribution is <em>most</em> appropriate?</p>
-<form id="noise-q1">
-  <input type="radio" name="noise-q1" value="A"> Gaussian<br>
-  <input type="radio" name="noise-q1" value="B"> Laplacian<br>
-  <input type="radio" name="noise-q1" value="C"> Uniform<br>
-  <input type="radio" name="noise-q1" value="D"> Poisson<br>
-  <button type="button"
-    onclick="checkTrueFalse('noise-q1','B',
-      '✅ Correct! Heavy tails suggest a Laplacian (or t) distribution.',
-      '❌ Not quite. Gaussian tails decay faster than heavy tails.')">
-    Check Answer
-  </button>
-  <p id="noise-q1-feedback"></p>
-</form>
+  Two short videos provide additional context: the first introduces the concept of noise in sensors, while the second explains the distinction between random and systematic errors.
 
-<!-- Q2 -->
-<!-- <p><strong>Q2:</strong> Pink (1/f) noise mainly affects <em>which</em> part of a gyro heading estimate?</p>
-<form id="noise-q2">
-  <input type="radio" name="noise-q2" value="A"> Short-term jitter<br>
-  <input type="radio" name="noise-q2" value="B"> Long-term drift<br>
-  <input type="radio" name="noise-q2" value="C"> Quantisation error<br>
-  <input type="radio" name="noise-q2" value="D"> Measurement range<br>
-  <button type="button"
-    onclick="checkTrueFalse('noise-q2','B',
-      '✅ Correct! 1/f dominates low frequencies, causing slow bias wander.',
-      '❌ Hint: think low-frequency components.')">
-    Check Answer
-  </button>
-  <p id="noise-q2-feedback"></p>
-</form> -->
 
-<!-- Q3 -->
-<!-- <p><strong>Q3:</strong> For a 14-bit ADC over ±8 g, what is the quantisation variance <em>per axis</em> (approx.)?</p>
-<form id="noise-q3">
-  <input type="radio" name="noise-q3" value="A"> (16 g / 16&nbsp;384)² / 12 ≈ 6 ×10⁻⁶ g²<br>
-  <input type="radio" name="noise-q3" value="B"> (16 g / 8&nbsp;192)² / 12 ≈ 2 ×10⁻⁵ g²<br>
-  <input type="radio" name="noise-q3" value="C"> (8 g / 16&nbsp;384)² / 12 ≈ 1 ×10⁻⁶ g²<br>
-  <input type="radio" name="noise-q3" value="D"> Zero – quantisation adds no noise<br>
-  <button type="button"
-    onclick="checkTrueFalse('noise-q3','A',
-      '✅ Correct! Δ = 16/16 384 → σ² ≈ (0.000976)²/12 ≈ 6 ×10⁻⁶ g².',
-      '❌ Try again. Use σ² = Δ²/12 with Δ = range / 2ᴺ.')">
-    Check Answer
-  </button>
-  <p id="noise-q3-feedback"></p>
-</form> -->
+  ![](https://www.youtube.com/watch?v=cPm3ii1ngmw)
+  ><sub>*Whats's the Noise about Sensor Technology? . YouTube video, 17.11.2016. Available at: https://www.youtube.com/watch?v=cPm3ii1ngmw*</sub>
 
-<!-- Q4 -->
-<!-- <p><strong>Q4:</strong> True or False – “White” noise always has a Gaussian distribution.</p>
-<form id="noise-q4">
-  <input type="radio" name="noise-q4" value="True"> True<br>
-  <input type="radio" name="noise-q4" value="False"> False<br>
-  <button type="button"
-    onclick="checkTrueFalse('noise-q4','False',
-      '✅ Correct! “White” refers to a <em>flat spectrum</em>; the PDF can be Gaussian, uniform, etc.',
-      '❌ Remember: colour = spectral shape, not PDF shape.')">
-    Check Answer
-  </button>
-  <p id="noise-q4-feedback"></p>
-</form>
-
-</details>  
-
+  ![](https://www.youtube.com/watch?v=huDRfgbc1HA)
+  ><sub>*Random and systematic error explained: from fizzics.org . YouTube video, 15.02.2021. Available at: https://www.youtube.com/watch?v=huDRfgbc1HA*</sub>
+</details>
 
 ---
 
-#### Chapter 1.3: Uncertainty propagation
+### 1.6 Response Time & Bandwidth
+
+A sensor’s **dynamic performance** determines how well it tracks changes over time. Two core notions are used:
+
+- **Response time**: how quickly the output reacts to a change at the input (latency, rise/settling time).
+- **Bandwidth**: the highest signal frequency the sensor and its electronics can follow with acceptable attenuation and phase lag.
+
+**First-order model**  
+Many sensors can be approximated by a first-order low-pass system with time constant $\tau$:
+$$
+y(t)=x_0\big(1-e^{-t/\tau}\big)\quad\text{(step input)}.
+$$
+Common timing metrics include:
+- **Rise time** $t_r$: time to move from 10% to 90% of the final value (about $2.2\tau$ for a first-order system).
+- **Settling time** $t_s$: time to enter and remain within $\pm2\%$ of the final value (about $4\tau$).
+- **Latency**: total end-to-end delay (sensor physics, internal filtering, communication, and processing).
+
+The corresponding $-3$ dB bandwidth is
+$$
+f_{3\text{dB}}\approx\frac{1}{2\pi\tau},
+$$
+the frequency at which amplitude falls to roughly $70\%$ and phase lag becomes appreciable.
+
+**Update rate, bandwidth, and latency are distinct**  
+- **Update/sample rate** $f_s$: how often samples are produced (e.g., 100 Hz IMU, 30 fps camera).
+- **Bandwidth** $f_{3\text{dB}}$: how rapidly the *content* may vary without being smoothed away.
+- **Latency**: the delay before a change appears in the data stream.
+
+A device may output at $f_s=1\,\text{kHz}$ yet exhibit a small **bandwith** due to internal filtering, with several milliseconds of **latency**.
+
+**Sampling and aliasing**  
+To represent a signal with highest relevant frequency $f_{\text{signal}}$, the sampling frequency should satisfy
+$$
+f_s\ge 2\,f_{\text{signal}}\quad\text{(Nyquist criterion)}.
+$$
+In feedback control, $f_s$ in the range $5\text{–}10\times f_{\text{signal}}$ is commonly selected to preserve phase margin. An anti-alias filter is typically applied so that content above $f_s/2$ is attenuated prior to sampling.
+
+**Effect of filtering**  
+Filters reduce noise at the cost of delay. A simple $M$-point moving average introduces a group delay
+$$
+\text{delay}\approx\frac{M-1}{2\,f_s},
+$$
+and lowers effective bandwidth roughly in proportion to $M$. Digital filter cutoffs should therefore be configured to avoid excessive lag when responsiveness is critical.
+
+> **Example 1 — Temperature probe**  
+> For $\tau=5\,\text{s}$, $t_s\approx20\,\text{s}$ and $f_{3\text{dB}}\approx\frac{1}{2\pi\cdot5}\approx0.032\,\text{Hz}$ (period $\sim31\,\text{s}$). Suitable for slow variations; unsuitable for fast control.
+
+> **Example 2 — Quadcopter attitude**  
+> If body-rate content extends to $f_{\text{signal}}\approx10\,\text{Hz}$, an IMU bandwidth $\ge100\,\text{Hz}$ and sample rate $f_s\approx1\,\text{kHz}$ are typical. End-to-end latency $\lesssim10\,\text{ms}$ (preferably a few ms) supports stable control.
+
+> **Example 3 — Ultrasonic ranging on a rover**  
+> Round-trip time to $4\,\text{m}$ is approximately $2\cdot4/343\approx0.023\,\text{s}$, plus processing, leading to tens of milliseconds latency and update rates around $10\text{–}20\,\text{Hz}$. Adequate for slow navigation; inadequate for high-speed avoidance.
+
+**Practical guidelines**
+1. The highest relevant signal frequency $f_{\text{signal}}$ should be identified from task dynamics.  
+2. Sensor bandwidth should satisfy $f_{3\text{dB}}\gtrsim2\,f_{\text{signal}}$ (preferably higher), and the sample rate $f_s\gtrsim5\text{–}10\,f_{\text{signal}}$.  
+3. Latency should be budgeted across the entire pipeline (sensor → bus → driver → estimator).  
+4. Dynamic performance should be validated on the platform by injecting steps, ramps, or sinusoids and measuring $t_s$, $\tau$, and phase lag.
+
+**Key takeaway**  
+High-speed robotic systems require sensors with sufficient bandwidth and low end-to-end latency. Bandwidth and sampling choices should reflect task dynamics, and filtering should be treated as a trade-off between noise reduction and delayed response.
+
+<details markdown="1">
+ <summary>Videos</summary>
+
+  Two short videos provide additional context: the first introduces the concept of aliasing and the Nyquist theorem, while the second explains what the terme Bandwith means.
+
+
+  ![](https://www.youtube.com/watch?v=IZJQXlbm2dU&t)
+  ><sub>*What is aliasing and the Nyquist theorem? . YouTube video, 04.03.2022. Available at: https://www.youtube.com/watch?v=IZJQXlbm2dU&t*</sub>
+
+  ![](https://www.youtube.com/watch?v=whUkZUORix0)
+  ><sub>*What is Bandwidth? (Bandwidth and Signal Processing) . YouTube video, 21.08.2017. Available at: https://www.youtube.com/watch?v=whUkZUORix0*</sub>
+</details>
+
+
+<details markdown="1">
+ <summary>Conceptual questions</summary>
+<!-- ========================= -->
+<!-- Chapter 1: Practice Items -->
+<!-- ========================= -->
+
+<!-- ========== 1.1 Units & Scales ========== -->
+
+<!-- ========== 1.2 Measurement Range ========== -->
+
+<p><strong>Question 3: The <em>measurement range</em> of a sensor is best described as:</strong></p>
+<form id="ch1-q3">
+  <input type="radio" name="ch1-q3" value="A"> The smallest input change that can be detected<br>
+  <input type="radio" name="ch1-q3" value="B"> The interval $[x_{\min}, x_{\max}]$ where specifications hold<br>
+  <input type="radio" name="ch1-q3" value="C"> The average error relative to the true value<br>
+  <input type="radio" name="ch1-q3" value="D"> The time to reach 90% of a step input<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q3', 'B',
+      '✅ Correct! Range is the valid interval $[x_{\min}, x_{\max}]$ with specified performance.',
+      '❌ Review the definition of range in Section 1.2.')">
+    Check Answer
+  </button>
+  <p id="ch1-q3-feedback"></p>
+</form>
+
+<p><strong>Question 4: True or False : Data measured outside the specified range should be considered invalid.</strong></p>
+<form id="ch1-q4">
+  <input type="radio" name="ch1-q4" value="True"> True<br>
+  <input type="radio" name="ch1-q4" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q4', 'True',
+      '✅ Correct! Outside-range readings may saturate or be misleading.',
+      '❌ Outside the range, performance is not guaranteed and readings are unreliable.')">
+    Check Answer
+  </button>
+  <p id="ch1-q4-feedback"></p>
+</form>
+
+<hr>
+
+<!-- ========== 1.3 Resolution ========== -->
+
+<p><strong>Question 5: An ADC spans 0–5 V with $N=10$ bits. What is the ideal voltage resolution?</strong></p>
+<form id="ch1-q5">
+  <input type="radio" name="ch1-q5" value="A"> $5/512 \approx 9.77$ mV<br>
+  <input type="radio" name="ch1-q5" value="B"> $5/1024 \approx 4.88$ mV<br>
+  <input type="radio" name="ch1-q5" value="C"> $5/2048 \approx 2.44$ mV<br>
+  <input type="radio" name="ch1-q5" value="D"> $5/256 \approx 19.5$ mV<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q5', 'B',
+      '✅ Correct! $\Delta x_{\min}=\mathrm{FS}/2^N=5/1024\ \mathrm{V}\approx4.88$ mV.',
+      '❌ Use $\Delta x_{\min}=\mathrm{FS}/2^N$ with FS = 5 V and $N=10$.')">
+    Check Answer
+  </button>
+  <p id="ch1-q5-feedback"></p>
+</form>
+
+<p><strong>Question 6: True or False : Higher resolution guarantees higher accuracy.</strong></p>
+<form id="ch1-q6">
+  <input type="radio" name="ch1-q6" value="True"> True<br>
+  <input type="radio" name="ch1-q6" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q6', 'False',
+      '✅ Correct! Resolution concerns smallest detectable step; accuracy depends on bias, linearity, calibration.',
+      '❌ Resolution and accuracy measure different aspects.')">
+    Check Answer
+  </button>
+  <p id="ch1-q6-feedback"></p>
+</form>
+
+<hr>
+
+<!-- ========== 1.4 Accuracy & Precision ========== -->
+
+<p><strong>Question 7: Which statement best defines <em>precision</em>?</strong></p>
+<form id="ch1-q7">
+  <input type="radio" name="ch1-q7" value="A"> Closeness of the average to the true value<br>
+  <input type="radio" name="ch1-q7" value="B"> Closeness of repeated measurements to each other<br>
+  <input type="radio" name="ch1-q7" value="C"> The maximum measurable value<br>
+  <input type="radio" name="ch1-q7" value="D"> The derivative $\partial y/\partial x$<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q7', 'B',
+      '✅ Correct! Precision is repeatability (tight clustering).',
+      '❌ Accuracy relates to closeness to truth; precision is about repeatability.')">
+    Check Answer
+  </button>
+  <p id="ch1-q7-feedback"></p>
+</form>
+
+<p><strong>Question 8: True or False : Averaging many measurements removes systematic bias.</strong></p>
+<form id="ch1-q8">
+  <input type="radio" name="ch1-q8" value="True"> True<br>
+  <input type="radio" name="ch1-q8" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q8', 'False',
+      '✅ Correct! Averaging reduces random noise but does not remove bias; calibration addresses bias.',
+      '❌ Averaging combats random noise, not systematic error.')">
+    Check Answer
+  </button>
+  <p id="ch1-q8-feedback"></p>
+</form>
+
+<hr>
+
+<!-- ========== 1.5 Noise ========== -->
+
+<p><strong>Question 9: Which of the following is a <em>systematic</em> error?</strong></p>
+<form id="ch1-q9">
+  <input type="radio" name="ch1-q9" value="A"> Readings fluctuating ±0.2 °C due to electrical interference<br>
+  <input type="radio" name="ch1-q9" value="B"> A thermometer consistently reading $+2\,^\circ\mathrm{C}$ high<br>
+  <input type="radio" name="ch1-q9" value="C"> Random encoder jitter at standstill<br>
+  <input type="radio" name="ch1-q9" value="D"> Shot noise in a photodiode<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q9', 'B',
+      '✅ Correct! A constant offset is a systematic (bias) error.',
+      '❌ Systematic errors are repeatable biases; random fluctuations are not.')">
+    Check Answer
+  </button>
+  <p id="ch1-q9-feedback"></p>
+</form>
+
+<p><strong>Question 10: True or False : Averaging $M$ independent samples reduces the standard deviation approximately by $1/\sqrt{M}$.</strong></p>
+<form id="ch1-q10">
+  <input type="radio" name="ch1-q10" value="True"> True<br>
+  <input type="radio" name="ch1-q10" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q10', 'True',
+      '✅ Correct! $\sigma_{\text{avg}}\approx\sigma/\sqrt{M}$ for independent, zero-mean noise.',
+      '❌ See the averaging relation in Section 1.5.')">
+    Check Answer
+  </button>
+  <p id="ch1-q10-feedback"></p>
+</form>
+
+<hr>
+
+<!-- ========== 1.6 Response Time & Bandwidth ========== -->
+
+<p><strong>Question 11: For a first-order sensor with time constant $\tau$, which relation holds for the $-3$ dB bandwidth?</strong></p>
+<form id="ch1-q11">
+  <input type="radio" name="ch1-q11" value="A"> $f_{3\text{dB}}=\dfrac{1}{\tau}$<br>
+  <input type="radio" name="ch1-q11" value="B"> $f_{3\text{dB}}=\dfrac{1}{2\pi\tau}$<br>
+  <input type="radio" name="ch1-q11" value="C"> $f_{3\text{dB}}=2\pi\tau$<br>
+  <input type="radio" name="ch1-q11" value="D"> $f_{3\text{dB}}=\tau$<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q11', 'B',
+      '✅ Correct! $f_{3\text{dB}} \approx 1/(2\pi\tau)$ for a first-order low-pass.',
+      '❌ Review the time constant–bandwidth relation in Section 1.6.')">
+    Check Answer
+  </button>
+  <p id="ch1-q11-feedback"></p>
+</form>
+
+<p><strong>Question 12: True or False : A 1 kHz sample rate implies a 1 kHz sensor bandwidth.</strong></p>
+<form id="ch1-q12">
+  <input type="radio" name="ch1-q12" value="True"> True<br>
+  <input type="radio" name="ch1-q12" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch1-q12', 'False',
+      '✅ Correct! Sample rate $f_s$ differs from bandwidth; internal filtering and dynamics often make bandwidth lower.',
+      '❌ Update rate, bandwidth, and latency are distinct quantities (see Section 1.6).')">
+    Check Answer
+  </button>
+  <p id="ch1-q12-feedback"></p>
+</form>
+</details>
+
+<!-- ================================================ -->
+<!-- Harder multi-part problem combining Ch. 1 topics -->
+<!-- ================================================ -->
+<details markdown="1">
+<summary>Mathematical Problem</summary>
+<p><strong>Comprehensive Problem (Range, Resolution, Accuracy/Precision, Noise, Response Time & Bandwidth)</strong></p>
+
+<p>
+A temperature measurement chain is designed as follows:
+</p>
+<ul>
+  <li>Physical span: maps from <code>-40&nbsp;°C</code> to <code>+125&nbsp;°C</code> into <code>0–5 V</code> (span <code>165&nbsp;°C</code>).</li>
+  <li>ADC: ideal, <code>12-bit</code>, full-scale <code>0–5 V</code>.</li>
+  <li>Uncalibrated sensor bias: <code>+0.6&nbsp;°C</code> (systematic; constant over the range).</li>
+  <li>Random noise per sample: <code>&sigma; = 0.30&nbsp;°C</code> (zero-mean, independent between samples).</li>
+  <li>Sensor dynamics: first-order low-pass with time constant <code>&tau; = 0.8&nbsp;s</code>.</li>
+  <li>Sampling rate: <code>f<sub>s</sub> = 10&nbsp;Hz</code>. A simple moving average of <code>M</code> samples is applied before logging.</li>
+  <li>Application: The control loop may contain temperature oscillations up to <code>0.20&nbsp;Hz</code>.</li>
+</ul>
+
+<p><em>Tasks:</em> Enter numerical answers (rounded sensibly). The checker accepts small tolerances.</p>
+
+<form id="ch1-hard">
+  <ol>
+    <li>
+      ADC <em>temperature resolution per LSB</em> (in °C): 
+      <input type="number" id="hard-delta" step="0.0001" placeholder="°C/LSB">
+    </li>
+    <li>
+      Quantization noise standard deviation <em>&sigma;<sub>q</sub></em> (in °C), assuming uniform quantization: 
+      <input type="number" id="hard-sigmaq" step="0.0001" placeholder="°C">
+    </li>
+    <li>
+      Minimum moving-average length <em>M</em> to achieve post-filter standard deviation <code>&le; 0.10&nbsp;°C</code>: 
+      <input type="number" id="hard-M" step="1" placeholder="integer">
+    </li>
+    <li>
+      Group delay introduced by that moving average (in seconds): 
+      <input type="number" id="hard-delay" step="0.01" placeholder="s">
+    </li>
+    <li>
+      Sensor <em>$-3$ dB bandwidth</em> <code>f<sub>3dB</sub></code> from <code>&tau = 0.8&nbsp;s</code> (in Hz): 
+      <input type="number" id="hard-f3db" step="0.001" placeholder="Hz">
+    </li>
+    <li>
+      First-order amplitude ratio at <code>0.20&nbsp;Hz</code> (i.e., output/input magnitude; 0–1): 
+      <input type="number" id="hard-atten" step="0.001" placeholder="ratio">
+    </li>
+    <li>
+      Post-average random standard deviation using your <em>M</em> (in °C): 
+      <input type="number" id="hard-sigmaavg" step="0.001" placeholder="°C">
+    </li>
+    <li>
+      Uncalibrated accuracy error magnitude due to bias (in °C): 
+      <input type="number" id="hard-bias" step="0.1" placeholder="°C">
+    </li>
+  </ol>
+
+  <button type="button" onclick="checkCh1Hard()">Check Answers</button>
+  <p id="ch1-hard-feedback"></p>
+</form>
+</details>
+
+<details markdown="1">
+<summary>Show Full Worked Solution</summary>
+
+**1) ADC resolution (°C/LSB):**  
+The temperature span is $165\,^\circ\mathrm{C}$ over $2^{12}=4096$ codes, so  
+
+$$
+\Delta T_{\text{LSB}} = \frac{165}{4096}\,^\circ\mathrm{C} \;\approx\; 0.0403\,^\circ\mathrm{C/LSB}.
+$$
 
 ---
 
-#### chapter 1.4: Calibration & validation strategies
+**2) Quantization noise (std):**  
+For uniform quantization, $\sigma_q = \Delta/\sqrt{12}$, hence  
+
+$$
+\sigma_q \;\approx\; \frac{0.0403}{\sqrt{12}}\,^\circ\mathrm{C} \;\approx\; 0.0116\,^\circ\mathrm{C}.
+$$
+
+---
+
+**3) Minimum $M$ for post-filter $\leq 0.10\,^\circ\mathrm{C}$:**  
+Single-sample random standard deviation combines as  
+
+$$
+\sigma_{\text{single}} = \sqrt{\sigma^2 + \sigma_q^2}, \qquad \sigma = 0.30\,^\circ\mathrm{C},
+$$
+
+so  
+
+$$
+\sigma_{\text{single}} \;\approx\; \sqrt{0.30^2 + 0.0116^2} \;\approx\; 0.3002\,^\circ\mathrm{C}.
+$$
+
+Averaging $M$ independent samples gives  
+
+$$
+\sigma_{\text{avg}} = \frac{\sigma_{\text{single}}}{\sqrt{M}}.
+$$
+
+Require $\sigma_{\text{avg}} \leq 0.10$, so  
+
+$$
+M \;\geq\; \left(\frac{0.3002}{0.10}\right)^2 \approx 9.01 \;\;\Rightarrow\;\; M_{\min}=10.
+$$
+
+---
+
+**4) Moving-average delay:**  
+For a length-$M$ moving average at $f_s=10\,\mathrm{Hz}$, group delay is  
+
+$$
+\text{delay} \;\approx\; \frac{M-1}{2 f_s}.
+$$
+
+With $M=10$:  
+
+$$
+\text{delay} = \frac{9}{20} = 0.45\,\mathrm{s}.
+$$
+
+---
+
+**5) Sensor $-3$ dB bandwidth:**  
+For a first-order system,  
+
+$$
+f_{3\text{dB}} = \frac{1}{2\pi\tau}.
+$$
+
+With $\tau=0.8\,\mathrm{s}$:  
+
+$$
+f_{3\text{dB}} = \frac{1}{2\pi\cdot 0.8}\,\mathrm{Hz} \;\approx\; 0.199\,\mathrm{Hz}.
+$$
+
+---
+
+**6) First-order amplitude ratio at $f=0.20\,\mathrm{Hz}$:**  
+Let $r = f/f_{3\text{dB}}$, with magnitude  
+
+$$
+|H(j2\pi f)| = \frac{1}{\sqrt{1+r^2}}.
+$$
+
+For $f=0.20\,\mathrm{Hz}$:  
+
+$$
+r = \frac{0.20}{0.199} \approx 1.005, \qquad |H| \approx \frac{1}{\sqrt{1+1.005^2}} \approx 0.705.
+$$
+
+Thus about $70.5\%$ of the amplitude passes (≈ $-3.0$ dB).
+
+---
+
+**7) Post-average random std with $M=10$:**  
+
+$$
+\sigma_{\text{avg}} = \frac{0.3002}{\sqrt{10}}\,^\circ\mathrm{C} \;\approx\; 0.0949\,^\circ\mathrm{C}.
+$$
+
+---
+
+**8) Uncalibrated accuracy error:**  
+The systematic bias contributes an absolute error of  
+
+$$
+|\text{bias}| = 0.6\,^\circ\mathrm{C}.
+$$
+
+---
+
+**Notes & cross-checks:**  
+- The measurement range includes the expected operating window (e.g., $[-20,110]\,^\circ\mathrm{C}$) since it lies within $[-40,125]\,^\circ\mathrm{C}$.  
+- Nyquist for $0.20\,\mathrm{Hz}$ content is $f_s \geq 0.40\,\mathrm{Hz}$; here $f_s=10\,\mathrm{Hz}$ is ample.  
+- The total latency includes the sensor’s lag (from $\tau$) plus digital filtering delay; both influence controller stability (see §1.6).  
+
+</details>
+
+
+
 
 
 ---
 
 ### Chapter 2: Proprioceptive Sensors
+{: #ch2 }
 
-- Rotary encoders (optical, magnetic)
-- Linear encoders & potentiometers
-- Inertial Measurement Units (accelerometer, gyroscope, magnetometer)
-- Force, torque, strain & tactile skins
-- Joint & motor current sensing
+Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power).
+
+**Definition.**  
+*Proprioceptive sensing* provides measurements of variables intrinsic to the robot’s body and actuators. Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene).
+
+| Aspect | Proprioceptive | Exteroceptive |
+|-------|-----------------|---------------|
+| What is measured | Internal state (joints, body motion, actuator/electrical) | External world (terrain, objects, features) |
+| Typical sensors | Encoders, IMUs, current/voltage, strain/torque, temperature | Cameras, LiDAR, sonar, GPS, tactile arrays |
+| Primary use | Low-level control, odometry, health monitoring | Mapping, localization against world, perception |
+| Latency/bandwidth | Generally low latency, high update rate | Often higher latency, heavier processing |
+
+**Role in the control stack.**  
+Proprioception closes feedback loops and stabilizes dynamics:
+- **Low-level control** (inner loops): current/torque, velocity, and position loops rely on fast, low-latency measurements.  
+- **State estimation & odometry**: joint encoders and IMUs provide inputs to kinematics- and dynamics-based estimators.  
+- **Safety & monitoring**: temperature, supply voltage, overcurrent/over-torque detection protect hardware.  
+
+A minimal measurement model is
+$$
+y_k \;=\; h(x_k) \;+\; n_k,
+$$
+where $x_k$ is the robot’s internal state (e.g., joint angles/velocities, body rates), $h(\cdot)$ maps state to sensor outputs, and $n_k$ represents noise/bias (cf. Ch. 1.5). Low latency and adequate bandwidth (Ch. 1.6) are critical to preserve control stability.
+
+**Common proprioceptive signals.**
+
+| Quantity | Typical sensor | Units | Notes |
+|---------|-----------------|-------|------|
+| Joint/shaft position | Incremental/absolute encoder, potentiometer | rad, deg, counts | Resolution/CPR, index/homing, backlash sensitivity |
+| Joint/shaft velocity | Derived from encoder or tachometer | rad/s, rpm | Differentiation amplifies noise; filtering adds delay |
+| Linear position/force (links/structures) | LVDT, strain gauge (bridge) | m, N, Nm | Calibration and temperature compensation required |
+| Body acceleration/rotation | IMU (accelerometers, gyroscopes) | m/s², °/s | Bias/scale drift, alignment, Allan characteristics |
+| Electrical current/voltage | Shunt/Hall sensor, ADC | A, V | Bandwidth, isolation, burden voltage, ripple/noise |
+| Torque (estimate) | From current: $\tau \approx k_t I$; torque sensor | Nm | $k_t$ tolerance, saturation, temperature dependence |
+| Temperature | Thermistor/RTD/IC sensor | °C | Warm-up, placement, thermal lag |
+| Battery state | Voltage, current (Coulomb counting) | V, A, Ah | SoC estimation; measurement noise vs filtering delay |
+
 
 ---
 
-### Chapter 3: Exteroceptive Sensors
+### 2.2 Rotary & Linear Position Sensing (Encoders & Potentiometers)
+
+Position sensing provides joint/shaft angle and linear travel for feedback control, odometry, and safety. Common technologies include **incremental encoders**, **absolute encoders**, **resolvers/synchros**, and **potentiometers**. Selection should be guided by the characteristics in Ch. 1 (range, resolution, accuracy, noise, bandwidth/latency) and by mechanical integration constraints.
+
+**Incremental encoders.**  
+Quadrature encoders emit two square waves (A,B) in quadrature (90° phase shift). Counting edges yields relative motion; direction is inferred from the A/B phase. A once-per-revolution **index (Z)** marks a reference position for homing. With 4× decoding, an encoder with $\text{PPR}$ pulses per revolution produces $\text{CPR}=4\,\text{PPR}$ counts per turn. The angular estimate after $N$ counts is
+$$
+\theta \;=\; 2\pi\,\frac{N}{\text{CPR}}\quad(\text{rad}).
+$$
+Velocity is commonly computed by finite differences,
+$$
+\dot\theta \;\approx\; \frac{\Delta\theta}{\Delta t},
+$$
+optionally with low-pass filtering (Ch. 1.6) to reduce quantization noise at the cost of added delay. High-speed operation requires adequate **edge-rate capacity** in the interface and **debounce/Schmitt-triggering** to suppress chatter. Missed edges or false transitions directly corrupt counts; differential signaling (e.g., RS-422) improves noise immunity.
+
+**Absolute encoders.**  
+Absolute encoders report angle directly, eliminating the need for homing after power-up. **Single-turn** encoders resolve angle within one revolution; **multi-turn** variants also track the number of turns (via gears, magnetic counters, or energy-harvesting). Sensing can be **optical** or **magnetic**; digital outputs typically use **Gray code** so only one bit changes between adjacent positions, minimizing transition ambiguity. Common interfaces include **SSI**, **BiSS-C**, and **SPI**. Resolution is given in bits; an $n$-bit single-turn device has nominal step size
+$$
+\Delta\theta \;=\; \frac{2\pi}{2^{\,n}}\quad(\text{rad/LSB}),
+$$
+subject to accuracy/linearity limits (Ch. 1.4). Multi-turn encoders specify both single-turn resolution and turn count.
+
+**Resolvers & synchros (brief).**  
+Resolvers are rotary transformers providing analog **sine/cosine** signals proportional to angle. They require AC **excitation** and **demodulation** via a resolver-to-digital converter (RDC). Advantages include wide temperature range, high shock/vibration tolerance, and excellent reliability in harsh environments; disadvantages are added electronics, higher cost, and integration complexity. Synchros are related, legacy three-wire machines used in older aerospace/industrial systems.
+
+**Potentiometers.**  
+Rotary or linear potentiometers provide a ratiometric analog voltage proportional to position. Benefits: simplicity, low cost, absolute position without homing, and minimal processing latency. Limitations: **wear** (finite wiper life), **linearity error**, **hysteresis**, and susceptibility to noise on long leads. Mechanical travel is typically less than $360^\circ$ (e.g., $300^\circ$), with **multi-turn** versions available for extended range. Effective resolution is set by the ADC (Ch. 1.3) and electrical noise (Ch. 1.5). Buffering with a high-impedance amplifier reduces loading error.
+
+
+**Example (rotary to linear).**  
+A 2000 PPR quadrature encoder (4×) yields $\text{CPR}=8000$. With a $5\,\text{mm}$ lead screw, the linear resolution is
+$$
+\Delta x \;=\; \frac{5\,\text{mm}}{8000} \;\approx\; 0.625\,\mu\text{m}\,,
+$$
+subject to accuracy, alignment, and backlash constraints. Filtering may be required to obtain smooth velocity while respecting latency limits (Ch. 1.6).
+
+
+---
+
+### 2.2 : Inertial Sensing
+(IMUs: Accelerometers, Gyroscopes, Magnetometers)
+
+---
+
+### 2.3 : Motor & Drive Sensing
+(Current, Voltage, Back-EMF)
+
+---
+
+### 2.4 : Force/Torque & Strain Sensing
+
+---
+
+### 2.5 : Odometry & Body State Estimation (opt)
+
+---
+
+## Chapter 3: Exteroceptive Sensors
 
 - Contact sensors (switch, bumper, capacitive touch)
 - Rangefinders: IR, ultrasonic, time‑of‑flight (ToF)
@@ -705,7 +1158,7 @@ These parameters (white variance, bias instability, correlation time $$\tau$$) f
 
 ---
 
-### Chapter 4: Multisensor Data Fusion
+## Chapter 4: Multisensor Data Fusion
 
 - Probabilistic grids
 - The Kalman Filter
@@ -713,7 +1166,7 @@ These parameters (white variance, bias instability, correlation time $$\tau$$) f
 
 ---
 
-### Chapter 5: Sensor Selection and Integration
+## Chapter 5: Sensor Selection and Integration
 
 - Defining requirements
 - Mechanical, electrical & software integration

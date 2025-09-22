@@ -101,7 +101,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 **Chapter 9: Aerial Robotics**
 -  [Unmanned Aerial Vehicles](UAV) - In progress
--  [Multirotor](aerial) - In progress
+-  [Multirotor](multirotor) - In progress
 -  [Aerial Manipulation](aerialmanip)
 -  [Collective](aerialmanip)
 -  [Vision for UAVs](vision_UAV)

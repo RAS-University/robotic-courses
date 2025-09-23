@@ -1049,10 +1049,10 @@ $$
 ### Chapter 2: Proprioceptive Sensors
 {: #ch2 }
 
-Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power).
+Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene).
 
-**Definition.**  
-*Proprioceptive sensing* provides measurements of variables intrinsic to the robot’s body and actuators. Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene).
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/ICUBBALL.jpg)
+><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
 
 | Aspect | Proprioceptive | Exteroceptive |
 |-------|-----------------|---------------|
@@ -1066,12 +1066,6 @@ Proprioception closes feedback loops and stabilizes dynamics:
 - **Low-level control** (inner loops): current/torque, velocity, and position loops rely on fast, low-latency measurements.  
 - **State estimation & odometry**: joint encoders and IMUs provide inputs to kinematics- and dynamics-based estimators.  
 - **Safety & monitoring**: temperature, supply voltage, overcurrent/over-torque detection protect hardware.  
-
-A minimal measurement model is
-$$
-y_k \;=\; h(x_k) \;+\; n_k,
-$$
-where $x_k$ is the robot’s internal state (e.g., joint angles/velocities, body rates), $h(\cdot)$ maps state to sensor outputs, and $n_k$ represents noise/bias (cf. Ch. 1.5). Low latency and adequate bandwidth (Ch. 1.6) are critical to preserve control stability.
 
 **Common proprioceptive signals.**
 
@@ -1087,6 +1081,101 @@ where $x_k$ is the robot’s internal state (e.g., joint angles/velocities, body
 | Battery state | Voltage, current (Coulomb counting) | V, A, Ah | SoC estimation; measurement noise vs filtering delay |
 
 
+### 2.1 Odometry
+{: #ch2-odom }
+
+*Odometry* estimates a robot’s change in pose by integrating *proprioceptive* motion measurements over time (e.g., wheel/track motion, joint motion, IMU). Historically known as *dead reckoning*, odometry develops a kinematic model relating actuator motions to body motion, then integrates that model to produce pose as a function of time. Errors from modeling and sensing accumulate and must be managed or corrected with additional measurements.
+
+
+#### Differential-drive wheel odometry 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/Differential_drive.png)
+><sub>Differential drive kinematics</sub>
+
+One of the most common forms of odometry is wheel odometry. Consider a planar robot with two powered wheels mounted on a common axle, separated by track width $b=2d$ (so $d$ is the half-baseline). Let the right/left wheel **linear** speeds be $v_{r}, v_{\ell}$ (positive forward) and the corresponding incremental **travels** over a sample be $\Delta s_{r}, \Delta s_{\ell}$. The body’s instantaneous motion is a rigid twist about an *instantaneous center of curvature* (ICC) on the axle line.
+
+**Kinematic relations .** With body angular rate $\omega$ and ICC radius $R$ (signed, measured from the body center):
+$$
+\omega (R+d)=v_{\ell}, \qquad \omega (R-d)=v_{r}.
+$$
+
+We can rearrange these two equations to solve for ω the rate of rotation about the ICC and R the distance from the center of the robot to the ICC :
+$$
+V=\tfrac{1}{2}(v_{r}+v_{\ell}), \qquad 
+\omega=\frac{v_{r}-v_{\ell}}{b}, \qquad
+R=\frac{V}{\omega}=\frac{b}{2}\,\frac{v_{r}+v_{\ell}}{\,v_{r}-v_{\ell}\,}.
+$$
+
+Now as $v_{r}, v_{\ell}$ are functions of time we can generate a set of equations of motion for the differential drive robot. Using the point midway between the wheels as the origin of the robot, and writing $/omega$ as the orientation of the robot with respect to the x-axis of a global Cartesian coordinate system, one obtains
+
+$$
+x(t) = \int V(t)\cos(\theta(t))\,dt, \qquad
+y(t) = \int V(t)\sin(\theta(t))\,dt, \qquad
+\theta(t) = \int \omega(t)\,dt .
+$$
+
+**From encoders to wheel travel.**  
+Encoders report **counts** as the wheel (or motor) turns. Over one sample, let the right/left counts be $\Delta N_r,\ \Delta N_\ell$. If each **wheel** revolution produces $\text{CPR}$ counts and the wheel radius is $r$, then
+
+$$
+\Delta \phi = 2\pi\,\frac{\Delta N}{\text{CPR}}\quad(\text{rad}),\qquad
+\Delta s = r\,\Delta \phi = \frac{2\pi r}{\text{CPR}}\,\Delta N.
+$$
+
+Apply the same to each side:
+$$
+\Delta s_r = \frac{2\pi r}{\text{CPR}}\,\Delta N_r,\qquad
+\Delta s_\ell = \frac{2\pi r}{\text{CPR}}\,\Delta N_\ell.
+$$
+
+A simple **velocity** estimate uses the sample time $\Delta t$:
+$$
+v \approx \frac{\Delta s}{\Delta t}.
+$$
+
+**Practical notes.**  
+- Choose a **sign convention** (e.g., forward counts positive).  
+- Use the **effective** CPR after any decode mode (e.g., 4× quadrature).  
+
+> **Example** $r=0.05\,\text{m}$, $\text{CPR}=8000$ (after 4×). One count corresponds to  
+> $$
+> \Delta s_{\text{per count}} = \frac{2\pi r}{\text{CPR}} \approx \frac{2\pi\cdot 0.05}{8000} \approx 0.0000393\,\text{m} = 0.039\,\text{mm}.
+> $$
+> If $\Delta N_r=+300$ and $\Delta N_\ell=+280$ over $\Delta t=0.02\,\text{s}$, then  
+> $\Delta s_r\approx 11.8\,\text{mm}$, $\Delta s_\ell\approx 11.0\,\text{mm}$ and $v_r\approx 0.59\,\text{m/s}$, $v_\ell\approx 0.55\,\text{m/s}$.
+
+
+---
+
+#### IMU-aided odometry (strapdown inertial dead reckoning)
+
+An IMU integrates gyroscope rates to orientation and transforms triaxial accelerometer readings into the navigation frame; subtracting gravity and integrating yields velocity and position. Residual orientation error (e.g., gyro bias) corrupts gravity removal; after double integration, position error grows rapidly (typically quadratically in time under constant bias). Therefore, pure inertial odometry *drifts* and benefits from aiding (e.g., wheel odometry, zero-velocity updates, contact events). :contentReference[oaicite:5]{index=5}
+
+---
+
+#### Calibration & error sources (typical)
+
+- **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
+- **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
+- **Encoder quantization & missed counts.** Sets resolution and adds random noise (cf. Ch. 1.3, 1.5).  
+- **Backlash & compliance.** Reversals cause transient under/over-counting; mount encoders on motor vs. output shaft accordingly.  
+- **Wheel slip & terrain effects.** Slip, sinkage, uneven contact violate the no-slip model; *systematic* curvature error accumulates.  
+- **Time synchronization.** Pose errors arise if encoder/IMU samples are integrated with inconsistent time stamps.  
+- **Integration drift.** Dead reckoning accumulates error; *pose maintenance* requires fusing with external references (e.g., vision, LiDAR, GPS) or loop closures. :contentReference[oaicite:6]{index=6}
+
+**Practical calibration.**  
+Drive straight lines and circles of known radius; fit wheel scale and baseline to minimize terminal pose error. Verify with both clockwise and counterclockwise trials to separate scale vs. baseline effects.
+
+---
+
+#### Odometry in the estimation stack
+
+Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots. :contentReference[oaicite:7]{index=7}
+
+**Key takeaway.**  
+Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance. :contentReference[oaicite:8]{index=8}
+
+
 ---
 
 ### 2.2 Rotary & Linear Position Sensing (Encoders & Potentiometers)
@@ -1094,36 +1183,57 @@ where $x_k$ is the robot’s internal state (e.g., joint angles/velocities, body
 Position sensing provides joint/shaft angle and linear travel for feedback control, odometry, and safety. Common technologies include **incremental encoders**, **absolute encoders**, **resolvers/synchros**, and **potentiometers**. Selection should be guided by the characteristics in Ch. 1 (range, resolution, accuracy, noise, bandwidth/latency) and by mechanical integration constraints.
 
 **Incremental encoders.**  
-Quadrature encoders emit two square waves (A,B) in quadrature (90° phase shift). Counting edges yields relative motion; direction is inferred from the A/B phase. A once-per-revolution **index (Z)** marks a reference position for homing. With 4× decoding, an encoder with $\text{PPR}$ pulses per revolution produces $\text{CPR}=4\,\text{PPR}$ counts per turn. The angular estimate after $N$ counts is
-$$
-\theta \;=\; 2\pi\,\frac{N}{\text{CPR}}\quad(\text{rad}).
-$$
-Velocity is commonly computed by finite differences,
-$$
-\dot\theta \;\approx\; \frac{\Delta\theta}{\Delta t},
-$$
-optionally with low-pass filtering (Ch. 1.6) to reduce quantization noise at the cost of added delay. High-speed operation requires adequate **edge-rate capacity** in the interface and **debounce/Schmitt-triggering** to suppress chatter. Missed edges or false transitions directly corrupt counts; differential signaling (e.g., RS-422) improves noise immunity.
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/encoder.png)
+><sub>Sketch of the quadrature encoder disc, and output from photodetectors placed over each of the two pattern. The corresponding state changes are shown on the right</sub>
+
+Incremental encoders measure relative motion by generating a series of pulses as the shaft rotates. The position is obtained by **counting pulses** from a reference point.
+
+A typical incremental encoder produces two output signals, **Channel A** and **Channel B**, which are square waves shifted by 90° (in quadrature). By observing the phase relationship between these two signals, the direction of rotation can be determined:
+
+- If Channel A leads Channel B, the shaft is rotating in one direction.
+- If Channel B leads Channel A, the shaft is rotating in the opposite direction.
+
+Each pair of transitions (rising and falling edges of A and B) defines a **state**. By cycling through four distinct states $(S_1, S_2, S_3, S_4)$, one complete quadrature period is formed. Counting all four edges per cycle provides **4× resolution** compared to a single channel.
+
+Many incremental encoders also include an **Index (I)** signal, which generates a single pulse per revolution. This provides a reference or “home” position for absolute alignment.
+
 
 **Absolute encoders.**  
-Absolute encoders report angle directly, eliminating the need for homing after power-up. **Single-turn** encoders resolve angle within one revolution; **multi-turn** variants also track the number of turns (via gears, magnetic counters, or energy-harvesting). Sensing can be **optical** or **magnetic**; digital outputs typically use **Gray code** so only one bit changes between adjacent positions, minimizing transition ambiguity. Common interfaces include **SSI**, **BiSS-C**, and **SPI**. Resolution is given in bits; an $n$-bit single-turn device has nominal step size
-$$
-\Delta\theta \;=\; \frac{2\pi}{2^{\,n}}\quad(\text{rad/LSB}),
-$$
-subject to accuracy/linearity limits (Ch. 1.4). Multi-turn encoders specify both single-turn resolution and turn count.
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/Absolute_encoder.png)
+><sub>Each concentric track on the encoder disk represents one bit of resolution. Note that each track, starting from the inside of the disk, has double the number of light-and-dark bands than the previous track. The encoder shown here has 4 tracks, so has 4 bits of resolution and can measure 16 positions (2^4) for each rotation of the encoder. Source : https://www.linearmotiontips.com/when-is-encoder-resolution-specified-in-bits-and-what-does-that-tell-us/</sub>
 
-**Resolvers & synchros (brief).**  
-Resolvers are rotary transformers providing analog **sine/cosine** signals proportional to angle. They require AC **excitation** and **demodulation** via a resolver-to-digital converter (RDC). Advantages include wide temperature range, high shock/vibration tolerance, and excellent reliability in harsh environments; disadvantages are added electronics, higher cost, and integration complexity. Synchros are related, legacy three-wire machines used in older aerospace/industrial systems.
+Absolute encoders, whether rotary or linear, track the position of an axis by assigning a unique value to each position on the encoder. This means that no matter where the axis is located, its exact position can always be determined. Because each position is uniquely identified, this remains true even if the encoder has been powered off and restarted, there is no need to re-home the encoder upon power-up to determine its position.
+
+For most absolute rotary encoders, resolution is defined in terms of **bits**. The encoder disk is patterned with concentric tracks around its circumference (and a corresponding number of sensors, one for each track), with each track representing one bit of resolution.
+
+To convert bits of resolution into the number of positions the encoder can detect in one shaft revolution, raise 2 to the power of the number of bits:
+
+- An 8-bit encoder can measure  
+  $2^8 = 256$ positions per revolution.  
+
+- A 16-bit encoder can measure  
+  $2^{16} = 65{,}536$ positions per revolution.
+
 
 **Potentiometers.**  
-Rotary or linear potentiometers provide a ratiometric analog voltage proportional to position. Benefits: simplicity, low cost, absolute position without homing, and minimal processing latency. Limitations: **wear** (finite wiper life), **linearity error**, **hysteresis**, and susceptibility to noise on long leads. Mechanical travel is typically less than $360^\circ$ (e.g., $300^\circ$), with **multi-turn** versions available for extended range. Effective resolution is set by the ADC (Ch. 1.3) and electrical noise (Ch. 1.5). Buffering with a high-impedance amplifier reduces loading error.
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/poten.jpg)
+><sub>The figure shows a typical linear potentiometer. A slider (wiper) moves along a resistive track from terminal A to C; the output at B is proportional to displacement. Source: https://www.cpi-nj.com/resources/articles-and-whitepapers/linear-potentiometer-drawbacks-as-position-sensors/</sub>
 
+Potentiometers (rotary or linear) measure position by forming a **voltage divider**. With an excitation $V_{\text{ref}}$ across the end terminals and the wiper at normalized position $0\le\alpha\le1$, the ideal output is
+$$
+V_{\text{out}} \;=\; \alpha\,V_{\text{ref}} \quad\text{(ideal, no load).}
+$$
+Thus $V_{\text{out}}$ is **absolute**: power cycles do not require homing. Linear pots map displacement to $\alpha$; rotary pots map angle $\theta$ to $\alpha=\theta/\theta_{\max}$.
 
-**Example (rotary to linear).**  
-A 2000 PPR quadrature encoder (4×) yields $\text{CPR}=8000$. With a $5\,\text{mm}$ lead screw, the linear resolution is
-$$
-\Delta x \;=\; \frac{5\,\text{mm}}{8000} \;\approx\; 0.625\,\mu\text{m}\,,
-$$
-subject to accuracy, alignment, and backlash constraints. Filtering may be required to obtain smooth velocity while respecting latency limits (Ch. 1.6).
+> **Example (rotary, ADC-limited resolution).**  
+> $\theta_{\max}=300^\circ$, $N=12$ bits, ratiometric readout. Then  
+> $$
+> \Delta \theta \;=\; \frac{300^\circ}{2^{12}} \;\approx\; 0.073^\circ\ \text{per LSB},
+> $$
+> subject to linearity error and contact/noise limits.
+
+**Pros.** Simple, low cost, absolute position, minimal processing latency.  
+**Cons.** Wear (finite life), linearity/hysteresis limits, sensitivity to loading and noise, rotary travel often $<360^\circ$.
 
 
 ---
@@ -1140,9 +1250,6 @@ subject to accuracy, alignment, and backlash constraints. Filtering may be requi
 
 ### 2.4 : Force/Torque & Strain Sensing
 
----
-
-### 2.5 : Odometry & Body State Estimation (opt)
 
 ---
 

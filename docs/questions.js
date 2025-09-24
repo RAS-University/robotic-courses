@@ -273,5 +273,65 @@ function checkRobotStructure() {
 
 
 
+function approxEqual(val, target, absTol, relTol) {
+  const diff = Math.abs(val - target);
+  const rel = Math.abs(diff / (Math.abs(target) + 1e-12));
+  return (diff <= absTol) || (rel <= relTol);
+}
 
-  
+function checkCh1Hard() {
+  // Ground-truth values (computed from problem statement)
+  const delta = 165 / 4096;                 // °C/LSB
+  const sigma_q = delta / Math.sqrt(12);    // °C
+  const sigma_random = 0.30;                // °C
+  const sigma_single = Math.sqrt(sigma_random**2 + sigma_q**2); // combined
+  const Mmin = Math.ceil((sigma_single / 0.10)**2);             // target 0.10 °C
+  const fs = 10;                             // Hz
+  const delay = (Mmin - 1) / (2 * fs);       // seconds, moving average
+  const tau = 0.8;                            // s
+  const f3db = 1 / (2 * Math.PI * tau);       // Hz
+  const f = 0.20;                             // Hz
+  const r = f / f3db;
+  const atten = 1 / Math.sqrt(1 + r*r);       // first-order LP magnitude
+  const sigma_avg = sigma_single / Math.sqrt(Mmin); // post-average std
+  const bias = 0.6;                           // °C
+
+  // User inputs
+  const u_delta    = parseFloat(document.getElementById('hard-delta').value);
+  const u_sigmaq   = parseFloat(document.getElementById('hard-sigmaq').value);
+  const u_M        = parseFloat(document.getElementById('hard-M').value);
+  const u_delay    = parseFloat(document.getElementById('hard-delay').value);
+  const u_f3db     = parseFloat(document.getElementById('hard-f3db').value);
+  const u_atten    = parseFloat(document.getElementById('hard-atten').value);
+  const u_sigmaavg = parseFloat(document.getElementById('hard-sigmaavg').value);
+  const u_bias     = parseFloat(document.getElementById('hard-bias').value);
+
+  let results = [];
+
+  // Tolerances (abs, rel)
+  const ok_delta    = approxEqual(u_delta,    delta,   0.001, 0.05);   // ±0.001 abs or ±5%
+  const ok_sigmaq   = approxEqual(u_sigmaq,   sigma_q, 0.001, 0.08);   // ±0.001 abs or ±8%
+  const ok_M        = (Math.round(u_M) === Mmin);
+  const ok_delay    = approxEqual(u_delay,    delay,   0.03,  0.07);   // ±0.03 s or ±7%
+  const ok_f3db     = approxEqual(u_f3db,     f3db,    0.002, 0.02);   // tight
+  const ok_atten    = approxEqual(u_atten,    atten,   0.02,  0.03);   // ±0.02 abs or ±3%
+  const ok_sigmaavg = approxEqual(u_sigmaavg, sigma_avg,0.01, 0.08);   // ±0.01 °C or ±8%
+  const ok_bias     = approxEqual(u_bias,     bias,    0.05,  0.05);   // ±0.05 °C or ±5%
+
+  results.push(ok_delta   ? "✅ 1) Resolution correct" : "❌ 1) Resolution off");
+  results.push(ok_sigmaq  ? "✅ 2) Quantization σ correct" : "❌ 2) Quantization σ off");
+  results.push(ok_M       ? "✅ 3) M (length) correct" : "❌ 3) M (length) should be an integer ≥ required minimum");
+  results.push(ok_delay   ? "✅ 4) Moving-average delay correct" : "❌ 4) Delay off");
+  results.push(ok_f3db    ? "✅ 5) f₃dB correct" : "❌ 5) f₃dB off");
+  results.push(ok_atten   ? "✅ 6) First-order amplitude ratio correct" : "❌ 6) Amplitude ratio off");
+  results.push(ok_sigmaavg? "✅ 7) Post-average σ correct" : "❌ 7) Post-average σ off");
+  results.push(ok_bias    ? "✅ 8) Bias (accuracy error) correct" : "❌ 8) Bias (accuracy error) off");
+
+  const allOk = ok_delta && ok_sigmaq && ok_M && ok_delay && ok_f3db && ok_atten && ok_sigmaavg && ok_bias;
+
+  let fb = results.join("<br>");
+  if (allOk) {
+    fb = "🎉 All answers correct!<br>" + fb;
+  }
+  document.getElementById('ch1-hard-feedback').innerHTML = fb;
+}

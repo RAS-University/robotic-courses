@@ -227,7 +227,7 @@ function showTab(idx, windowId) {
 | $a =: b$                          | $b$ is defined to be equal to $a$                                 |
 | $\approx$                         | approximately equal                                               |
 | $V(\cdot)$                        | function $V$                                                      |
-| $V : A \to B$                     | $V$ is a function mapping set $A$ into set $B$                    |
+| $V: A \to B$                     | $V$ is a function mapping set $A$ into set $B$                    |
 | $x \mapsto V(x)$                  | function $V$ maps variable $x$ to value $V(x)$                    |
 | $x^+$                             | value of $x$ at next sample time (discrete time system)           |
 | $\dot{x}$                         | time derivative of $x$ (continuous time system)                   |
@@ -253,7 +253,7 @@ function showTab(idx, windowId) {
 | $V^{uc}$       | unconstrained                                         |
 | $V^{sp}$       | unreachable setpoint                                  |
 
-# Chapter 0 : Motivation
+# Chapter 0: Motivation
 
 <!-- Introduce limitation of "classical feedback control" and the need for more, -->
 
@@ -267,9 +267,11 @@ In the pursuit of optimality one is therefore forced to consider approximate sol
 MPC has found applications in various fields, including chemical process control, automotive systems, aerospace, and robotics. Its ability to handle multivariable systems and constraints makes it a powerful tool for modern control challenges.
 
 
-# Chapter 1 : Introduction to MPC
+# Chapter 1: Introduction to MPC
 
-## 1.1 : Unconstrained Optimization - Newton's Method
+[See notations](#notations)
+
+## 1.1: Unconstrained Optimization - Newton's Method
 
 <iframe width="735" height="413"
   src="https://www.youtube.com/embed/W7S94pq5Xuo?start=15&end=460" 
@@ -293,7 +295,7 @@ MPC has found applications in various fields, including chemical process control
 The focus is on unconstrained optimization, meaning we are given a multivariable function in $n$ variables $f$ without any constraints on the variables. We want to find the point $x$ that minimizes the function $f(x)$.
 
 $$
-f : \mathbb{R}^n \to \mathbb{R}
+f: \mathbb{R}^n \to \mathbb{R}
 $$
 $$
 \min_{x \in \mathbb{R}^n} f(x)
@@ -390,7 +392,7 @@ $$
     \]
 </div>
 
-## 1.2 : Convex Optimization
+## 1.2: Convex Optimization
 
 **Convex Set**
 
@@ -419,7 +421,7 @@ $$
     <button class="tab-btn" onclick="showTab(3, 'convexSetExamples')">Polytope</button>
   </div>
   <div class="tab-content active">
-    <p>A hyperplane is a flat affine subspace of one dimension less than its ambient space. Formally, in \(\mathbb{R}^n\), a hyperplane can be defined as the set of points \(\{x \in \mathbb{R}^n : a^T x = b\}\) for some \(a \in \mathbb{R}^n\) (\(a \neq 0\)) and \(b \in \mathbb{R}\).
+    <p>A hyperplane is a flat affine subspace of one dimension less than its ambient space. Formally, in \(\mathbb{R}^n\), a hyperplane can be defined as the set of points \(\{x \in \mathbb{R}^n: a^T x = b\}\) for some \(a \in \mathbb{R}^n\) (\(a \neq 0\)) and \(b \in \mathbb{R}\).
 </p>
     <div class="images">
     <figure>
@@ -428,7 +430,7 @@ $$
 </div>
   </div>
   <div class="tab-content">
-    <p>A halfspace is the set of points on one side of a hyperplane. Formally, in \(\mathbb{R}^n\), a halfspace can be defined as the set of points \(\{x \in \mathbb{R}^n : a^T x \leq b\}\) for some \(a \in \mathbb{R}^n\) (\(a \neq 0\)) and \(b \in \mathbb{R}\).
+    <p>A halfspace is the set of points on one side of a hyperplane. Formally, in \(\mathbb{R}^n\), a halfspace can be defined as the set of points \(\{x \in \mathbb{R}^n: a^T x \leq b\}\) for some \(a \in \mathbb{R}^n\) (\(a \neq 0\)) and \(b \in \mathbb{R}\).
 </p>
     <div class="images">
     <figure>
@@ -437,7 +439,7 @@ $$
 </div>
 </div>
 <div class="tab-content">
-    <p>A polyhedron is the intersection of a finite number of halfspaces. Formally, in \(\mathbb{R}^n\), a polyhedron can be defined as the set of points \(\{x \in \mathbb{R}^n : a_i^T x \leq b_i, \, i = 1, \ldots, m\}\) for some \(a_i \in \mathbb{R}^n\) (\(a_i \neq 0\)) and \(b_i \in \mathbb{R}\).
+    <p>A polyhedron is the intersection of a finite number of halfspaces. Formally, in \(\mathbb{R}^n\), a polyhedron can be defined as the set of points \(\{x \in \mathbb{R}^n: a_i^T x \leq b_i, \, i = 1, \ldots, m\}\) for some \(a_i \in \mathbb{R}^n\) (\(a_i \neq 0\)) and \(b_i \in \mathbb{R}\).
 </p>
     <div class="images">
     <figure>
@@ -446,7 +448,7 @@ $$
 </div>
 </div>
 <div class="tab-content">
-    <p>A polytope is a bounded polyhedron. Formally, in \(\mathbb{R}^n\), a polytope can be defined as the set of points \(\{x \in \mathbb{R}^n : a_i^T x \leq b_i, \, i = 1, \ldots, m\}\) for some \(a_i \in \mathbb{R}^n\) (\(a_i \neq 0\)) and \(b_i \in \mathbb{R}\), with the additional constraint that the feasible region is bounded.
+    <p>A polytope is a bounded polyhedron. Formally, in \(\mathbb{R}^n\), a polytope can be defined as the set of points \(\{x \in \mathbb{R}^n: a_i^T x \leq b_i, \, i = 1, \ldots, m\}\) for some \(a_i \in \mathbb{R}^n\) (\(a_i \neq 0\)) and \(b_i \in \mathbb{R}\), with the additional constraint that the feasible region is bounded.
 </p>
     <div class="images">
     <figure>
@@ -579,7 +581,7 @@ $$
 \end{aligned}
 $$
 
-Where $C:\mathbb{R}^{n \times m}$ is a matrix and $g : \mathbb{R}^n \to \mathbb{R}^m$.
+Where $C:\mathbb{R}^{n \times m}$ is a matrix and $g: \mathbb{R}^n \to \mathbb{R}^m$.
 
 **Important properties:** Feasible set of a convex optimization problem is convex.
 
@@ -599,11 +601,11 @@ Assume $x$ is locally optimal and a feasible $y$ such that $f(y) < f(x)$. $x$ lo
     </figure>
 </div>
 
-<!-- ## 1.2 : Constrained systems -->
+<!-- ## 1.2: Constrained systems -->
 <!-- ## Exercises -->
 
 
-<!-- # Chapter 2 :  Linear Quadratic Regulation -->
+<!-- # Chapter 2:  Linear Quadratic Regulation -->
 
 ## 1.3: Linear Quadratic Regulator (LQR)
 
@@ -628,7 +630,7 @@ Assume $x$ is locally optimal and a feasible $y$ such that $f(y) < f(x)$. $x$ lo
 
 <u>Setting up the optimization problem:</u>
 
-We can imagine a system that we want to control, for example a satellite. The satellite has several states that we want to control, for example its orientation, position, etc. We can represent the state of the satellite as a vector $\bar{x}(t)$, where $t$ is the time. Often represented as follow : 
+We can imagine a system that we want to control, for example a satellite. The satellite has several states that we want to control, for example its orientation, position, etc. We can represent the state of the satellite as a vector $\bar{x}(t)$, where $t$ is the time. Often represented as follow: 
 $$
 \bar{x}(t) = \begin{bmatrix}\text{orientation} \\ \text{position} \\ \vdots \\ \end{bmatrix} 
 $$
@@ -870,7 +872,7 @@ $$
 K = \begin{bmatrix} 10.0 & 10.76 \end{bmatrix}
 $$
 
-Another way to solve this problem is to use Matlab, which has a built-in function `lqr` that can directly compute the gain matrix $K$ given the matrices $A$, $B$, $Q$, and $R$. Using Matlab's `lqr` function, we obtain as a result the matrices $K$, $S$ and the closed-loop eigenvalues : 
+Another way to solve this problem is to use Matlab, which has a built-in function `lqr` that can directly compute the gain matrix $K$ given the matrices $A$, $B$, $Q$, and $R$. Using Matlab's `lqr` function, we obtain as a result the matrices $K$, $S$ and the closed-loop eigenvalues: 
 $$
 \begin{bmatrix} K, & S, & E \end{bmatrix} = \text{lqr}(A, B, Q, R)
 $$
@@ -1013,6 +1015,8 @@ V_t(x) &= x^T P_t x
 
 ## Exercises
 
+[See notations](#notations)
+
 **Exercise 1.1: Applying Newton's method**
 <!-- Ex 9.2 in https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf -->
 
@@ -1049,22 +1053,18 @@ Show that the set $(x\in \mathbb{R}^n \mid \|x\| \leq r)$ is convex, where $r>0$
 
 <details markdown="1">
   <summary><strong>Solution</strong></summary>
-  Let $u, v \in \Theta \{x\in \mathbb{R}^n: ||x|| \leq r\}$, and $\alpha \in [0, 1]$. suppose $z=\alpha u + (1-\alpha)v$. To show that $\Theta$ is convex, we need to show that $z\in\Theta$, i.e., $||z|| \leq r$. To this end,
-  <div>
-    \[
-      \begin{aligned}
-        ||z|| &= (\alpha u^T + (1-\alpha)u^T) (\alpha u + (1-\alpha)v) \\
-        &= \alpha^2 ||u||^2 + 2 \alpha (1-\alpha)u^Tv + (1-\alpha)^2||v||^2
-      \end{aligned}
-    \]
-  </div>
-  Since $u,v \in \Theta$, then $||u||^2 \leq r^2$ and $||v||^2 \leq r^2$. Furermore, by teh Cauchy-Schwarz Inequality, we have $u^Tv \leq ||u|| ||v|| \leq r^2$. Therefore,
-  <div>
-    \[
-      ||z||^2\leq\alpha^2 r^2 + 2 \alpha(1-\alpha)r^2 +(1-\alpha)^2 r^2 = r^2
-    \]
-  </div>
-  Hence, $z\in\Theta$ is a convex set, i.e., the any point on the line segment joining $u$ and $v$ is also in $\Theta$.
+  Let $u, v \in \Theta = \{x\in \mathbb{R}^n: \|x\| \leq r\}$, and $\alpha \in [0, 1]$. Suppose $z=\alpha u + (1-\alpha)v$. To show that $\Theta$ is convex, we need to show that $z\in\Theta$, i.e., $\|z\| \leq r$. To this end,
+  $$
+  \begin{aligned}
+    \|z\|^2 &= (\alpha u + (1-\alpha)v)^T (\alpha u + (1-\alpha)v) \\
+    &= \alpha^2 \|u\|^2 + 2 \alpha (1-\alpha)u^Tv + (1-\alpha)^2\|v\|^2
+  \end{aligned}
+  $$
+  Since $u,v \in \Theta$, then $\|u\|^2 \leq r^2$ and $\|v\|^2 \leq r^2$. Furthermore, by the Cauchy-Schwarz inequality, we have $u^Tv \leq \|u\| \|v\| \leq r^2$. Therefore,
+  $$
+  \|z\|^2\leq\alpha^2 r^2 + 2 \alpha(1-\alpha)r^2 +(1-\alpha)^2 r^2 = r^2
+  $$
+  Hence, $z\in\Theta$, which shows that $\Theta$ is a convex set, i.e., any point on the line segment joining $u$ and $v$ is also in $\Theta$.
 </details>
 
 **Exercise 1.3: State space form for chemical reaction model**
@@ -1455,9 +1455,13 @@ $$
   $$
 </details>
 
-# Chapter 2 : Classical MPC
+# Chapter 2: Classical MPC
 
-## 2.1 : Invariant Sets
+[See notations](#notations)
+
+## 2.1: Introduction
+
+## 2.2: Invariant Sets
 
 ### Invariance
 
@@ -1563,7 +1567,7 @@ Consider the phase diagram below, which shows the target set $T$, teh pre-set of
   </figure>
 </div>
 
-<div vlass="lemma-window">
+<div class="lemma-window">
   <div class="lemma-title">Theorem 2.2: Geometric condition for invariance</div>
   <div style="padding: 1.5em;">
   A set $\mathcal{X}$ is positively invariant under the dynamics defined by (2.1) and (2.2) and the constraints (2.3) if and only if $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$.
@@ -1578,23 +1582,138 @@ We prove the contrapositive for both the necessary and sufficient conditions.
 
 _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\text{pre}(\mathcal{X}) \cap \mathcal{X} = \mathcal{X}$._
 
-## 2.? : Lyapunov stability
+<div style="border: 2px dashed #2a7ae2; border-radius: 10px; background: #f8f9fa; padding: 1.1em; margin: 1em 0;">
+    <strong style="color: #2a7ae2; font-size: 1.1em;">Algorithm to compute invariant set</strong><br><br>
+    \[
+    \begin{aligned}
+    &\textbf{Input: } ( f, \mathbb{X} ) & \\
+    &\textbf{Output: } ( \mathcal{X}_{\infty} ) \\
+    & \\
+    &\Omega_{0} \leftarrow \mathbb{X} \\
+    &\textbf{loop} \\
+    &\quad \Omega_{i+1} \leftarrow \text{pre}(\Omega_{i}) \cap \Omega_{i} \\
+    &\quad \textbf{if } \Omega_{i+1} = \Omega_{i} \textbf{ then} \\
+    &\qquad \text{return } \mathcal{X}_{\infty} = \Omega_{i} \\
+    &\quad \textbf{end if} \\
+    &\textbf{end loop}
+    \end{aligned}
+    \]
 
-### Review on Lyapunov functions
+    The algorithm generates the set sequence $\{\Omega_i\}$ satisfying $\Omega_{i+1} \subseteq \Omega_i$ for all $i \geq 0$. If the sequence converges in finite time, i.e., $\exists i^* \geq 0$ such that $\Omega_{i^*+1} = \Omega_{i^*}$, then the limit set $\mathcal{X}_{\infty} = \Omega_{i^*}$ is the maximal positively invariant set contained in $\mathbb{X}$.
+</div>
 
-# Chapter 3 : Robust MPC
+### Controlled Invariance
 
-# Chapter 4 : Economic MPC
+<div class="lemma-window">
+  <div class="lemma-title">Control invariant set</div>
+  <div style="padding: 1.5em;">
+  A set $\mathcal{C} \in \mathbb{X}$ is said to be a controlled invariant set if 
+  \[
+    x_i \in \mathcal{C} \quad \exists u_i \in \mathbb{U} \text{ such that } f(x_i,u_i)\in \mathcal{C} \quad \text{for all } x_i \in \mathbb{N}^+
+  \]
+  </div>
+</div>
+
+This defines the states for which tehre exist a **controller** that will satisfy the constraints at all time.
+
+<div class="lemma-window">
+  <div class="lemma-title">Maximal control invariant set</div>
+  <div style="padding: 1.5em;">
+  The set $\mathcal{C}_\infty$ is said to be the maximal control invariant set for the system $x^+=f(x,u)$ subject to the constraints $(x,u)\in \mathbb{X}\times\mathbb{U}$ if it is control invariant and contains all control invariant sets contained in $\mathbb{X}$.
+  </div>
+</div>
+
+The concept of **pre-sets** we saw in the previous section can be extended to control invariant set in order to comput the maximal control invariant set (MCPI).
+
+The maximum control invariant set is the best a controller can do.
+
+From this control invariant set, we can derive a control law, this control law $\kappa(x)$ will guarantee that the system $x^+=f(x,\kappa(x))$ will satisfy the constrains at all time if:
+$$
+f(x, \kappa(x)) \in \mathcal{C} \quad \text{forr all } x\in\mathcal{C} \quad \text{with } \mathcal{C} \text{ a control invariant set of the system}
+$$
+
+We can use this to synthetize a control law from a control invariant set by solving an optimization problem:
+<div>
+\[
+\kappa(x) \colon= \text{argmin } \{ g(x,u)\mid f(x,\kappa(x)\in\mathcal{C} \}
+\]
+</div>
+Where $g$ is any function.
+
+<p style="text-align: center;"><strong>Why don't we compute maximal control invariant set for all systems !?</strong></p>
+
+We can't ! We often deal with linear system for which the the dynamics are usually too complex to be able to compute those sets, and when we deal with nonlinear system dynamics, it is almost always too complex to compute those sets.
+
+That's where MPC comes into play, we will use MPC to approximate the control invariant set such that it is easier to represent and compute.
+
+## 2.3: Model Predictive Control
+
+## 2.3: Stability and Convergence
+
+### Lyapunov
+
+## 2.4: Controllability and Observability
+
+### Controllability
+
+<iframe width="735" height="413"
+  src="https://youtu.be/u5Sv7YKAkt4?si=cqaAxu3aEaB9nUBZ"
+  title="Controllability" 
+  frameborder="0" 
+  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  allowfullscreen>
+</iframe>
+
+<div class="ytb-window">
+  This video is part of a series of lectures on control theory by Steve Brunton. It provides a clear and concise explanation of the concept of controllability in control systems, including the mathematical conditions for controllability and its implications for system design and analysis.
+    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
+        Source: Steve Brunton - YouTube  
+        <a href="https://youtu.be/u5Sv7YKAkt4?si=cqaAxu3aEaB9nUBZ" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
+    </div>
+</div>
+
+## 2.5: Examples of MPC
+
+## Exercises
+[See notations](#notations)
+
+# Chapter 3: Robust MPC
+[See notations](#notations)
+
+## 3.1: Introduction
+
+## 3.2: A Game Theoretic Approach
+
+## 3.3: Prediction Dynamics in Robust MPC
+
+## 3.4: Robust Min-Max MPC
+
+## 3.5: To go further - Tube MPC
+
+## Exercises
+[See notations](#notations)
+
+# Chapter 4: Economic MPC
+[See notations](#notations)
+
+## Stage cost
+
+## Horizon
+
+## Economic MPC vs MPC
+
+## Exercises
+[See notations](#notations)
 
 # Additional Resources
 
 ## Credits:
 <!-- List all the sources that you used to create the page   -->
 
-- Saverio Bolognani's lectures : **Computational Control** at ETH Zurich in spring 2024
-- Colin Jones' lectures : **Model Predictive Control ME-425** at EPFL in Automn 2024
-- **Model Predictive Control : Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
-- **Model Predictive Control : Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)
+- Saverio Bolognani's lectures: **Computational Control** at ETH Zurich in spring 2024
+- Colin Jones' lectures: **Model Predictive Control ME-425** at EPFL in Automn 2024
+- **Model Predictive Control: Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
+- **Model Predictive Control: Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)
 - **An Introduction to Optimization** Edwin K.P Chong, Stanislaw H. Zak, 2th Edition, available for free [here](https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf)
 
 <!-- I will ask for their permisions before using their materials -->

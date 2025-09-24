@@ -1197,6 +1197,18 @@ Each pair of transitions (rising and falling edges of A and B) defines a **state
 
 Many incremental encoders also include an **Index (I)** signal, which generates a single pulse per revolution. This provides a reference or “home” position for absolute alignment.
 
+<details markdown="1">
+ <summary>Video</summary>
+
+  This short video explains how a incremental encoders works.
+
+  ![](https://www.youtube.com/watch?v=zzHcsJDV3_o)
+  ><sub>*Incremental Encoder (Shaft Encoder)- how it works. YouTube video, Mar 22, 2017. Available at: https://www.youtube.com/watch?v=zzHcsJDV3_o*</sub>
+
+
+</details>
+
+
 
 **Absolute encoders.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Absolute_encoder.png)
@@ -1214,6 +1226,16 @@ To convert bits of resolution into the number of positions the encoder can detec
 - A 16-bit encoder can measure  
   $2^{16} = 65{,}536$ positions per revolution.
 
+<details markdown="1">
+ <summary>Video</summary>
+
+  This short video explains how an absolute encoder works.
+
+  ![](https://www.youtube.com/watch?v=yOmYCh_i_JI)
+  ><sub>*Absolute Encoder (Shaft Encoder, Rotary encoder) - how it works!. YouTube video, Mar 22, 2017. Available at: https://www.youtube.com/watch?v=yOmYCh_i_JI*</sub>
+
+
+</details>
 
 **Potentiometers.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/poten.jpg)
@@ -1266,6 +1288,20 @@ which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text
 
 #### Gyroscopic Systems
 
+
+<details markdown="1">
+ <summary>Video</summary>
+
+  This short video explains how a Gyroscope works.
+
+  ![](https://www.youtube.com/watch?v=V6XSsNAWg00)
+  ><sub>*How a Gyroscope Works. What a Gyroscope Is . YouTube video, Aug 25, 2022. Available at: https://www.youtube.com/watch?v=V6XSsNAWg00*</sub>
+
+
+</details>
+
+
+
 ---
 
 #### Accelerometer
@@ -1312,6 +1348,18 @@ In a strapdown IMU, tri-axial gyros integrate attitude; accelerometer readings a
 
 **Key takeaway.**  
 Accelerometers convert proof-mass deflection into acceleration, inherently sensing gravity as well as motion. Their usefulness in robotics hinges on proper range selection, noise/bias management, bandwidth/latency budgeting, and calibration, and on fusing with other sensors to prevent integrated drift.
+
+<details markdown="1">
+ <summary>Video</summary>
+
+  This short video explains how an accelerometer works.
+
+  ![](https://www.youtube.com/watch?v=KZVgKu6v808)
+  ><sub>*How a Smartphone Knows Up from Down (accelerometer) . YouTube video, 22.05.2012. Available at: https://www.youtube.com/watch?v=KZVgKu6v808*</sub>
+
+
+</details>
+
 
 ---
 

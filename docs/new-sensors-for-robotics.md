@@ -1046,7 +1046,7 @@ $$
 
 ---
 
-### Chapter 2: Proprioceptive Sensors
+## Chapter 2: Proprioceptive Sensors
 {: #ch2 }
 
 Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene).
@@ -1088,9 +1088,9 @@ Proprioception closes feedback loops and stabilizes dynamics:
 
 
 #### Differential-drive wheel odometry 
-
+{: .no_toc }
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Differential_drive.png)
-><sub>Differential drive kinematics</sub>
+><sub>Differential drive kinematics. Source : Springer Handbook of Robotics, Chapter : 20.1</sub>
 
 One of the most common forms of odometry is wheel odometry. Consider a planar robot with two powered wheels mounted on a common axle, separated by track width $b=2d$ (so $d$ is the half-baseline). Let the right/left wheel **linear** speeds be $v_{r}, v_{\ell}$ (positive forward) and the corresponding incremental **travels** over a sample be $\Delta s_{r}, \Delta s_{\ell}$. The body’s instantaneous motion is a rigid twist about an *instantaneous center of curvature* (ICC) on the axle line.
 
@@ -1148,13 +1148,13 @@ $$
 ---
 
 #### IMU-aided odometry (strapdown inertial dead reckoning)
-
+{: .no_toc }
 An IMU integrates gyroscope rates to orientation and transforms triaxial accelerometer readings into the navigation frame; subtracting gravity and integrating yields velocity and position. Residual orientation error (e.g., gyro bias) corrupts gravity removal; after double integration, position error grows rapidly (typically quadratically in time under constant bias). Therefore, pure inertial odometry *drifts* and benefits from aiding (e.g., wheel odometry, zero-velocity updates, contact events). :contentReference[oaicite:5]{index=5}
 
 ---
 
 #### Calibration & error sources (typical)
-
+{: .no_toc }
 - **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
 - **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
 - **Encoder quantization & missed counts.** Sets resolution and adds random noise (cf. Ch. 1.3, 1.5).  
@@ -1169,7 +1169,7 @@ Drive straight lines and circles of known radius; fit wheel scale and baseline t
 ---
 
 #### Odometry in the estimation stack
-
+{: .no_toc }
 Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots. :contentReference[oaicite:7]{index=7}
 
 **Key takeaway.**  
@@ -1217,38 +1217,110 @@ To convert bits of resolution into the number of positions the encoder can detec
 
 **Potentiometers.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/poten.jpg)
-><sub>The figure shows a typical linear potentiometer. A slider (wiper) moves along a resistive track from terminal A to C; the output at B is proportional to displacement. Source: https://www.cpi-nj.com/resources/articles-and-whitepapers/linear-potentiometer-drawbacks-as-position-sensors/</sub>
+><sub>A linear potentiometer: a wiper slides along a resistive track (A–C). The output at B is a fraction of the excitation proportional to displacement.</sub>
 
-Potentiometers (rotary or linear) measure position by forming a **voltage divider**. With an excitation $V_{\text{ref}}$ across the end terminals and the wiper at normalized position $0\le\alpha\le1$, the ideal output is
+**Operating principle.**  
+A potentiometer (rotary or linear) forms a **voltage divider**. With excitation $V_{\text{ref}}$ across the end terminals and the wiper at normalized position $0\le \alpha \le 1$ (measured from the low end), the **ideal** output is
 $$
-V_{\text{out}} \;=\; \alpha\,V_{\text{ref}} \quad\text{(ideal, no load).}
+V_{\text{out}} = \alpha\,V_{\text{ref}} \quad \text{(no load).}
 $$
-Thus $V_{\text{out}}$ is **absolute**: power cycles do not require homing. Linear pots map displacement to $\alpha$; rotary pots map angle $\theta$ to $\alpha=\theta/\theta_{\max}$.
+Therefore the reading is **absolute** (no homing needed after power cycles). Rotary devices map angle $\theta$ to $\alpha=\theta/\theta_{\max}$; linear devices map travel $x$ to $\alpha=x/L$.
 
-> **Example (rotary, ADC-limited resolution).**  
-> $\theta_{\max}=300^\circ$, $N=12$ bits, ratiometric readout. Then  
-> $$
-> \Delta \theta \;=\; \frac{300^\circ}{2^{12}} \;\approx\; 0.073^\circ\ \text{per LSB},
-> $$
-> subject to linearity error and contact/noise limits.
+**Key specs.**
+- **Range (mechanical/electrical travel).** Rotary parts often provide $\theta_{\max}\!\approx\!300^\circ$; **multi-turn** (e.g., $5$–$10$ turns) extends range. Linear parts specify stroke $L$ and electrical travel (slightly less than mechanical).  
+- **Resolution.** Set by the ADC and noise, not by “bits” in the pot:
+  $$
+  \Delta \alpha = \frac{1}{2^N},\qquad
+  \Delta \theta = \theta_{\max}\,\Delta\alpha,\qquad
+  \Delta x = L\,\Delta\alpha.
+  $$
+- **Accuracy/linearity & hysteresis.** Typical linearity $\pm(0.5\%\text{–}2\%)$ FS; small **hysteresis** from wiper and bearings.  
+
+**Loading & ratiometric readout.**  
+Finite input impedance $R_{\text{in}}$ of the ADC/load **pulls down** $V_{\text{out}}$ and introduces gain error. With total track resistance $R_{\text{pot}}$, the loaded divider is
+$$
+V_{\text{out,loaded}} \;=\; V_{\text{ref}}\,
+\frac{(\alpha R_{\text{pot}} \parallel R_{\text{in}})}
+{(1-\alpha)R_{\text{pot}} + (\alpha R_{\text{pot}} \parallel R_{\text{in}})}\,,
+$$
+which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text{in}}\!\gg\!R_{\text{pot}}$.  
+
+**Integration notes.**
+- Buffer the wiper with a high-impedance amplifier if $R_{\text{in}}$ is not large.  
+- Add a small **RC** near the ADC to tame contact noise; keep leads short or shielded.  
+- Avoid mechanical end-stops in normal operation; select stroke so the application stays inside the **electrical** travel.  
+- For longevity and lower noise, choose **conductive-plastic** over wirewound when available; check IP rating and temperature coeff.
+
+> **Examples**  
+> 1) *ADC-limited resolution (rotary)*: $\theta_{\max}=300^\circ$, $N=12$.  
+> $$\Delta\theta = \frac{300^\circ}{2^{12}} \approx 0.073^\circ \text{ per LSB}.$$
+> 2) *Loading error check*: $R_{\text{pot}}=10\,\text{k}\Omega$, $R_{\text{in}}=1\,\text{M}\Omega$. At mid-travel ($\alpha\!=\!0.5$), the error relative to $\alpha V_{\text{ref}}$ is $\approx 0.25\%$; with $R_{\text{in}}=100\,\text{k}\Omega$ it rises to a few percent.
 
 **Pros.** Simple, low cost, absolute position, minimal processing latency.  
-**Cons.** Wear (finite life), linearity/hysteresis limits, sensitivity to loading and noise, rotary travel often $<360^\circ$.
+**Cons.** Wear (finite wiper life), linearity/hysteresis limits, sensitivity to loading and noise, rotary travel often $<360^\circ$.
 
 
 ---
 
-### 2.2 : Inertial Sensing
-(IMUs: Accelerometers, Gyroscopes, Magnetometers)
+### 2.3 : Inertial Sensing
+
+#### Gyroscopic Systems
 
 ---
 
-### 2.3 : Motor & Drive Sensing
+#### Accelerometer
+{:.no_toc}
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/accel.png)
+><sub>Accelerometers. (a) Mechanical accelerometer. (b) Piezoelectric accelerometer. Source: Springer Handbook of Robotics, Chapter 20.3</sub>
+
+Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
+
+**Physical model (spring–mass–damper).**  
+A basic accelerometer can be idealized as a proof mass $m$ attached to a spring $k$ with damping $c$; external force produces displacement $x$ measured by the readout:
+$$
+\begin{array}{rl}
+F_{\text{applied}} &= F_{\text{inertial}} + F_{\text{damping}} + F_{\text{spring}} \\
+&= m\ddot{x} + c\dot{x} + kx \, .
+\end{array}
+$$
+
+
+Under a constant acceleration $a$ (e.g., gravity component), static equilibrium gives $k\,x \approx m\,a$ (ignoring damping), so displacement is proportional to acceleration; dynamics (bandwidth, settling) follow from the second-order system above. Mechanical implementations are sensitive to vibration and may converge slowly if under-damped. 
+
+**Common transduction mechanisms.**
+- **Mechanical (displacement-measured).** Uses the spring–mass–damper directly; simple but vibration-prone and slower to settle.
+- **Piezoelectric.** A crystal stressed by the proof mass generates a measurable voltage; well suited to dynamic acceleration.
+- 
+*(Modern MEMS devices often use capacitive sensing of the proof-mass displacement; principles still map to the model above.)*
+
+**Link to the inertial pipeline.**  
+In a strapdown IMU, tri-axial gyros integrate attitude; accelerometer readings are rotated to the navigation frame, gravity is subtracted, and the result is integrated to **velocity** and then **position**. Any gyro/accel bias mis-orients gravity removal, so residual gravity integrates to large position drift over time, hence the need for aiding/fusion.
+
+**Key specifications**
+- **Range** (e.g., $\pm2g,\ \pm16g$): prevent saturation during maneuvers.  
+- **Scale factor / sensitivity** (e.g., mV/$(\mathrm{m/s^2})$): maps output to acceleration; accuracy matters for bias/scale calibration. 
+- **Bias & bias stability / drift**: dominant long-term error; characterize across temperature and time.
+- **Bandwidth / response time**: choose high enough for platform dynamics; avoid excessive internal filtering that adds latency.
+- **Alignment & orthogonality**: small axis misalignments couple motions; include in calibration.
+
+**Calibration & usage notes.**
+- **Six-position “1 g” check.** Place each axis alternately up/down to estimate per-axis bias and scale ($\lVert a\rVert\approx g$ at rest).  
+- **Ratiometric, low-noise readout.** Stable reference and clean analog path reduce noise; average multiple samples with care (filtering adds delay, Ch. 1.6).  
+- **Mounting & temperature.** Rigid mounting minimizes parasitics; allow warm-up and compensate temperature coefficients.  
+- **Gravity handling.** For motion estimation, subtract gravity using the best available attitude estimate before integration.
+
+**Key takeaway.**  
+Accelerometers convert proof-mass deflection into acceleration, inherently sensing gravity as well as motion. Their usefulness in robotics hinges on proper range selection, noise/bias management, bandwidth/latency budgeting, and calibration, and on fusing with other sensors to prevent integrated drift.
+
+---
+
+### 2.4 : Motor & Drive Sensing
 (Current, Voltage, Back-EMF)
 
 ---
 
-### 2.4 : Force/Torque & Strain Sensing
+### 2.5 : Force/Torque & Strain Sensing
 
 
 ---

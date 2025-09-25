@@ -235,7 +235,7 @@ function showTab(idx, windowId) {
 | $\nabla$                          | nabla or del operator                                             |
 | $\delta$                          | unit impulse or delta function                                    |
 | $\|x\|$                           | absolute value of scalar; norm of vector (two-norm unless stated) |
-| **x** or $\bar{x}$                | sequence of vector-valued variable $x$, $(x(0), x(1), \dots)$     |
+| **x** or $x$                | sequence of vector-valued variable $x$, $(x(0), x(1), \dots)$     |
 | $\|x\|$                           | $\sup_{i \geq 0} \|x(i)\|$ (sup norm over a sequence)             |
 | $\|x\|_{a:b}$                     | $\max_{a \leq i \leq b} \|x(i)\|$                                 |
 
@@ -630,15 +630,19 @@ Assume $x$ is locally optimal and a feasible $y$ such that $f(y) < f(x)$. $x$ lo
 
 <u>Setting up the optimization problem:</u>
 
-We can imagine a system that we want to control, for example a satellite. The satellite has several states that we want to control, for example its orientation, position, etc. We can represent the state of the satellite as a vector $\bar{x}(t)$, where $t$ is the time. Often represented as follow: 
-$$
-\bar{x}(t) = \begin{bmatrix}\text{orientation} \\ \text{position} \\ \vdots \\ \end{bmatrix} 
-$$
+We can imagine a system that we want to control, for example a satellite. The satellite has several states that we want to control, for example its orientation, position, etc. We can represent the state of the satellite as a vector $x(t) \in \mathbb{R}^n$, where $t$ is the time and $n$ is the dimention of the vector. We will denotate $x_i$ with $i = 1, \cdots, n$ the different states of the satellite. The state vector is often represented as follow: 
+<div>
+  \[
+    x(t) = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ \end{bmatrix} \quad \left\{\begin{matrix} \text{orientation} \\ \text{position} \\ \vdots \\ \end{matrix}\right.
+  \]
+</div>
 
-The satellite might have also multiple control inputs that we can use to influence its state, for example main thrusters, electrical thrusters, momentum wheels, etc. We can represent the control inputs as a vector $\bar{u}(t)$.
-$$
-\bar{u}(t) = \begin{bmatrix}\text{main thrusters} \\ \text{electrical thrusters} \\ \text{momentum wheels} \\ \vdots \\ \end{bmatrix}
-$$
+The satellite might have also multiple control inputs that we can use to influence its state, for example main thrusters, electrical thrusters, momentum wheels, etc. We can represent the control inputs as a vector $u(t) \in \mathbb{R}^m$, were the components $u_i$ with $i=1,\cdots, m$ are the differents control inputs.
+<div>
+  \[
+    u(t) = \begin{bmatrix} u_1 \\ u_2 \\ u_3 \\ \vdots \\ \end{bmatrix} \quad \left\{\begin{matrix} \text{main thrusters} \\ \text{electrical thrusters} \\ \text{momentum wheels} \\ \vdots \\ \end{matrix}\right.
+  \]
+</div>
 
 <div class="images">
     <figure>
@@ -648,24 +652,24 @@ $$
 
 It is a dynamical system which has multiple states and multiple control. Let's assume that the dynamics of this system is linear, governed by the dynamics of the form:
 $$
-\dot{\bar{x}}(t) = A\bar{x}(t) + B\bar{u}(t)\tag{1}
+\dot{x}(t) = Ax(t) + Bu(t)\tag{1}
 $$
 
-Stating that there is a relationship between how the state and the control interact.
+With $A \in \mathbb{R}^{n \times n}$ the state matrix and $B \in \mathbb{R}^{n \times m}$ the input matrix. Stating that there is a relationship between how the state and the control interact.
 
 <div class="lemma-window">
   <div class="lemma-title">LQR cost function</div>
   <div style="padding: 1.5em;">
   In this context, we formulate an optimization problem by defining a cost function that we aim to minimize.
   \[
-  J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt \tag{2}
+  J = \int_0^\infty \left( x(t)^T Q x(t) + u(t)^T R u(t) \right) dt \tag{2}
   \]
   \[
   \begin{aligned}
-  \text{Where:} \quad & \bar{x}(t) = n\times 1 \text{ state vector} \\ 
-  & \bar{u}(t) = m\times 1 \text{ control vector}\\ 
-  & Q = n\times n \text{ symmetric positive semi-definite matrix (} Q \geq 0 \text{ or } Q \succeq 0 \text{)} \\ 
-  & R = m\times m \text{ symmetric positive definite matrix (} R > 0 \text{ or } R \succ 0 \text{)}
+  \text{Where:} \quad & x(t) \in \mathbb{R}^{n\times 1} \text{ state vector} \\ 
+  & u(t) \in \mathbb{R}^{m\times 1} \text{ control vector}\\ 
+  & Q \in \mathbb{R}^{n\times n} \text{ symmetric positive semi-definite matrix (} Q \geq 0 \text{ or } Q \succeq 0 \text{)} \\ 
+  & R \in \mathbb{R}^{m\times m} \text{ symmetric positive definite matrix (} R > 0 \text{ or } R \succ 0 \text{)}
   \end{aligned}
   \]
   </div>
@@ -675,30 +679,48 @@ Stating that there is a relationship between how the state and the control inter
 <summary><strong>Positivity semi-definite and definite matrices</strong></summary>
   Positive semi-definite:
   $$
-  \displaystyle\bar{x}^T_{1\times n} \displaystyle Q_{n\times n} \bar{x}_{n\times 1} > 0, \quad \forall\ \bar{x}
+    x^T Q x \geq 0, \quad \forall\ x
   $$
+  <div>
+    \[
+      \begin{align}
+      \text{Where:} \quad & x \in \mathbb{R}^{1 \times n} \\
+      & Q \in \mathbb{R}^{n \times n} \\
+      & x^T \in\mathbb{R}^{n \times 1} \\
+      \end{align}
+    \]
+  </div>
   Similarly, positive definite:
   $$
-  \bar{u}^T R \bar{u} > 0, \quad \forall\ \bar{u}
+  u^T R u > 0, \quad \forall\ u
   $$
+  <div>
+    \[
+      \begin{align}
+      \text{Where:} \quad & u \in \mathbb{R}^{1 \times m} \\
+      & R \in \mathbb{R}^{m \times m} \\
+      & u^T \in \mathbb{R}^{m \times 1} \\
+      \end{align}
+    \]
+  </div>
   We can notice the that is exactly the terms that we have in the cost function (2).
 </details>
 
-The way the **cost function** $J$ is set up here leads to the integral always being positive (due to the properties of $Q$ and $R$), for any $\bar{x}(t)$ and $\bar{u}(t)$ combination. We can have a feeling of what this cost function represents. The matrices $Q$ and $R$ are weighting matrices/values that allow us to tune the cost function, where these matrices tradeoff between non-zero states and non-zero control inputs. We will be thinking about $Q$ and $R$ as weights to determine how much we value state compared to how much we value control.
+The way the **cost function** $J$ is set up here leads to the integral always being positive (due to the properties of $Q$ and $R$), for any $x(t)$ and $u(t)$ combination. The matrices $Q$ and $R$ are weighting matrices that allow us to tune the cost function, where these matrices tradeoff between non-zero states and non-zero control inputs. We will be thinking about $Q$ and $R$ as weights to determine how much we value state compared to how much we value control.
 
 We can now formulate the optimization problem we would like to solve as follows:
 $$
-\min_{\bar{u}(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt
+\min_{u(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( x(t)^T Q x(t) + u(t)^T R u(t) \right) dt
 $$
 $$
-\text{s.t.} \quad \dot{\bar{x}}(t) = A\bar{x}(t) + B\bar{u}(t)
+\text{s.t.} \quad \dot{x}(t) = Ax(t) + Bu(t)
 $$
 
-It is basicly saying that we want to find the control input $\bar{u}(t)$ that minimizes the cost function $J$ while satisfying the dynamics of the system (1).
+It is basicly saying that we want to find the control input $u(t)$ that minimizes the cost function $J$ while satisfying the dynamics of the system (1).
 <!-- 
 **Visualization Example:** -->
 
-If we take an initial non-zero state for our satellite, i.e. $\bar{x}(0) \neq 0$, the satellite is at some weird orientation and position, not zero (unwanted state). Thus the term $\bar{x}(t)^T Q \bar{x}(t)$ in the cost function (2) is non-zero and positive. If left in that state without any control input, the cost function $J$ will blow up to infinity as time goes on. This is because the integral from time 0 to infinity in (2) accumulates the positive value of $\bar{x}(t)^T Q \bar{x}(t)$ over time.
+If we take an initial non-zero state for our satellite, i.e. $x(0) \neq 0$, the satellite is at some weird orientation and position, not zero (unwanted state). Thus the term $x(t)^T Q x(t)$ in the cost function (2) is non-zero and positive. If left in that state without any control input, the cost function $J$ will blow up to infinity as time goes on. This is because the integral from time 0 to infinity in (2) accumulates the positive value of $x(t)^T Q x(t)$ over time.
 
 <div class="images">
     <figure>
@@ -711,7 +733,7 @@ If we take an initial non-zero state for our satellite, i.e. $\bar{x}(0) \neq 0$
     </figure>
 </div>
 
-This is not an optimal solution, we can't leave the satellite in that state as it will yields a cost value of infinity. Instead, what is better is to try to bring back the system to the origin, i.e. $\bar{x}(t) \to 0$. This will make the term $\bar{x}(t)^T Q \bar{x}(t)$ in the cost function (2) decrease over time, thus the integral will converge to a finite value. This is a much better solution as it minimizes the cost function $J$.
+This is not an optimal solution, we can't leave the satellite in that state as it will yields a cost value of infinity. Instead, what is better is to try to bring back the system to the origin, i.e. $x(t) \to 0$. This will make the term $x(t)^T Q x(t)$ in the cost function (2) decrease over time, thus the integral will converge to a finite value. This is a much better solution as it minimizes the cost function $J$.
 
 <div class="images">
     <figure>
@@ -726,7 +748,7 @@ This is not an optimal solution, we can't leave the satellite in that state as i
 
 $^*$_The plots are illustrative and not based on actual numerical simulations._
 
-The flip side of the story is how to bring the state back to zero. We can use thrusters, momentum wheels, etc. to influence the state of the satellite. However, using these control inputs also comes with a cost, represented by the term $\bar{u}(t)^T R \bar{u}(t)$ in the cost function (2). If we use too much control input, this term will become large and will also contribute to increasing the cost function $J$.
+The flip side of the story is how to bring the state back to zero. We can use thrusters, momentum wheels, etc. to influence the state of the satellite. However, using these control inputs also comes with a cost, represented by the term $u(t)^T R u(t)$ in the cost function (2). If we use too much control input, this term will become large and will also contribute to increasing the cost function $J$.
 
 The cost function $J$ is a combination of how long the system is away from the origin (non-zero state) and how much non-zero control input we are using to bring it back to the origin. The goal is to find a balance between these two competing objectives, minimizing the overall cost function $J$.
 
@@ -738,11 +760,11 @@ _Note: the terms "large" and "small" here are relative knowing that $Q$ and $R$ 
   <summary><strong>Example: 2 states, 2 control system</strong></summary>
   <div style="border: 2px dashed #2a7ae2; border-radius: 10px; background: #f8f9fa; padding: 1.5em; margin: 2em 0;">
     <strong style="color: #2a7ae2; font-size: 1.1em;">2 states, 2 control system</strong><br><br>
-    Let's consider a simple example with 2 states and 2 control inputs. The state vector $\bar{x}(t)$ and control vector $\bar{u}(t)$ can be represented as:
+    Let's consider a simple example with 2 states and 2 control inputs. The state vector $x(t)$ and control vector $u(t)$ can be represented as:
     \[
-    \bar{x}(t) = \begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix}
+    x(t) = \begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix}
     \quad
-    \bar{u}(t) = \begin{bmatrix} u_1(t) \\ u_2(t) \end{bmatrix}
+    u(t) = \begin{bmatrix} u_1(t) \\ u_2(t) \end{bmatrix}
     \]
     In this case, the matrices $Q$ and $R$ will be $2\times 2$ matrices. Let's choose:
     \[
@@ -754,7 +776,7 @@ _Note: the terms "large" and "small" here are relative knowing that $Q$ and $R$ 
 
     Let's compute the integrand of the cost function $J$:
     \[
-    \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
+    x(t)^T Q x(t) + u(t)^T R u(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
     \]
 
     We can identify $q_{11}$ as the penalty or the weight on the non-zero state $x_1(t)$, $q_{22}$ as the penalty on the non-zero state $x_2(t)$. The $Q$ matrix, by tunning the entries appropriatly, allows us to tune how much we care about each state being non-zero.
@@ -793,21 +815,21 @@ We will see in the next chapter that in order to solve the optimization problem,
 
 **Video transcript :**
 
-Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $\bar{u}(t)$ which will make teh whole system optimital. 
+Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $u(t)$ which will make teh whole system optimital. 
 
 <div class="formula-window">
   <strong>Recall the optimization problem:</strong>
   \[
-  \min_{\bar{u}(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( \bar{x}(t)^T Q \bar{x}(t) + \bar{u}(t)^T R \bar{u}(t) \right) dt
+  \min_{u(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( x(t)^T Q x(t) + u(t)^T R u(t) \right) dt
   \]
   \[
-  \text{s.t.} \quad \dot{\bar{x}}(t) = A\bar{x}(t) + B\bar{u}(t)
+  \text{s.t.} \quad \dot{x}(t) = Ax(t) + Bu(t)
   \]
 </div>
 
 It is beyound the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
 $$
-\bar{u}(t) = -K\bar{x}(t) \tag{2.2.1}
+u(t) = -Kx(t) \tag{2.2.1}
 $$
 Where $K$ is the feedback gain matrix, which is given by:
 $$
@@ -841,11 +863,11 @@ Where $p(t)$ is the position of the block, $\dot{p}(t)$ is the velocity and $\dd
 
 Let define the state and control vectors as:
 $$
-\bar{x}(t) = \begin{bmatrix} p(t) \\\\ v(t) \text{ or } \dot{p}(t) \end{bmatrix}, \quad \bar{u}(t) = \begin{bmatrix} F(t) \end{bmatrix}
+x(t) = \begin{bmatrix} p(t) \\\\ v(t) \text{ or } \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
 $$
 We can rewrite the dynamics in state-space form as:
 $$
-\dot{\bar{x}}(t) = \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{c}{m} \end{bmatrix} \bar{x}(t) + \begin{bmatrix} 0 \\\\ \frac{1}{m} \end{bmatrix} \bar{u}(t)
+\dot{x}(t) = \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{c}{m} \end{bmatrix} x(t) + \begin{bmatrix} 0 \\\\ \frac{1}{m} \end{bmatrix} u(t)
 $$
 Let's choose some numerical values for the parameters: $m = 1$ and $c = 0.2$. Thus the matrices $A$ and $B$ are given by:
 $$
@@ -863,7 +885,7 @@ The next step is to solve the Riccati equation (2.2.2) for $S$. This can be done
 
 In Mathematica, we need to use function like `Transpose`, `Simplify`, and `Inverse` to manipulate matrices. The Riccati equation is a matrix equation, so we need to express it in a form that Mathematica can understand. After setting up the equation in Mathematica, we can use the `Solve` function to find the matrix $S$ that satisfies the Riccati equation. As mentionned before, we get several solutions for $S$, but we will only keep the one that yield a stable system.
 
-In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^T S$. Then, we can analyze the closed-loop system dynamics given by $\dot{\bar{x}}(t) = (A - BK)\bar{x}(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
+In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^T S$. Then, we can analyze the closed-loop system dynamics given by $\dot{x}(t) = (A - BK)x(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
 
 _Note: Mathematically, all the solutions for $S$ are valid, but from an engineering perspective, we are only interested in the solution that yield a stable system._
 
@@ -1085,7 +1107,7 @@ $$
 We substitute the rate laws into the material balances and specify the starting concentrations to produce three differential equations for te three spiecies concentrations.
 
 <ol type="a">
-  <li>Write the linear state space model for the deterministic series chemical reaction model. Assume we can measure the component A concentration. What are $\bar{x}$, $\bar{y}$, $A$, $B$, $C$, and $D$ for this model?</li>
+  <li>Write the linear state space model for the deterministic series chemical reaction model. Assume we can measure the component A concentration. What are $x$, $y$, $A$, $B$, $C$, and $D$ for this model?</li>
   <li>(Optional) Simulate this model with initial conditions and parameters given by 
   <div>\[ c_{A0}=1 \quad c_{B0}=c_{C0}=0 \quad k_1=2 \quad k_2=1\]</div></li>
 </ol>
@@ -1095,16 +1117,16 @@ We substitute the rate laws into the material balances and specify the starting 
   <em>Note: This correction reflects my interpretation of the exercise as a master's student. I am not a professional in the field, and while I have done my best, errors may still be present.</em>
 
   <div>
-    1. We first need to determine the state and output vectors, namely $\bar{x}$ and $\bar{y}$. Since the output of this chemical reaction is component C, we define the concentration of that component as our output. The state of our system is the concentration of all the components taking part in the reaction:
+    1. We first need to determine the state and output vectors, namely $x$ and $y$. Since the output of this chemical reaction is component C, we define the concentration of that component as our output. The state of our system is the concentration of all the components taking part in the reaction:
     \[
-    \bar{x} = \begin{bmatrix} c_A \\ c_B \\ c_C \end{bmatrix} \quad \bar{y} = \begin{bmatrix} c_C \end{bmatrix}  
+    x = \begin{bmatrix} c_A \\ c_B \\ c_C \end{bmatrix} \quad y = \begin{bmatrix} c_C \end{bmatrix}  
     \]
 
     From control theory, the state-space equations are:
     \[
     \begin{align}
-      \dot{\bar{x}} &= A\bar{x} + B\bar{u} \\
-      \bar{y} &= C\bar{x} + D\bar{u}
+      \dot{x} &= Ax + Bu \\
+      y &= Cx + Du
     \end{align}
     \]
 
@@ -1119,8 +1141,8 @@ We substitute the rate laws into the material balances and specify the starting 
 
     \[
     \begin{align}
-      \dot{\bar{x}} &= \begin{bmatrix} -k_1 & 0 & 0 \\ k_1 & -k_2 & 0 \\ 0 & k_2 & 0 \end{bmatrix} \bar{x} + \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} \bar{u}\\
-      \bar{y} &= \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} \bar{x} + \begin{bmatrix} 0 \end{bmatrix} \bar{u}
+      \dot{x} &= \begin{bmatrix} -k_1 & 0 & 0 \\ k_1 & -k_2 & 0 \\ 0 & k_2 & 0 \end{bmatrix} x + \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix} u\\
+      y &= \begin{bmatrix} 0 & 0 & 1 \end{bmatrix} x + \begin{bmatrix} 0 \end{bmatrix} u
     \end{align}  
     \]
 
@@ -1248,7 +1270,7 @@ We substitute the rate laws into the material balances and specify the starting 
 **Exercise 1.4: Time to Laplace domain**
 <!-- Exercise 1.4: Time to Laplace domain - Model Predictive Control: Theory, Computation, and Design 2nd Edition -->
 
-Take the Laplace Transform of the following det of differential equations and fine the transfer function, G(s) connecting $\bar{u}(s)$ and $\bar{y}(s)$, $\bar{y}=G\bar{u}$.
+Take the Laplace Transform of the following det of differential equations and fine the transfer function, G(s) connecting $u(s)$ and $y(s)$, $y=Gu$.
 
 <div>
 \[
@@ -1421,30 +1443,30 @@ $$
   </div>
   Notice the $H$ is positive definite since $A$ is positive definite and $C^TBC$ is positive semi-definite for any $C$.
 
-  (c)Define $\bar{x}=x-a$ and $\bar{y}=b-Ca$ and express the problem as 
+  (c)Define $x=x-a$ and $y=b-Ca$ and express the problem as 
   $$
-  V(x)=\frac{1}{2}\bar{x}^TA\bar{x}+\frac{1}{2}(C(\bar{x}+a)-b)^TB(C\bar{x}+a-b)=\frac{1}{2}\bar{x}^TA\bar{x}+\frac{1}{2}(C\bar{x}-\bar{b})^TB(C\bar{x}-\bar{b})
+  V(x)=\frac{1}{2}x^TAx+\frac{1}{2}(C(x+a)-b)^TB(Cx+a-b)=\frac{1}{2}x^TAx+\frac{1}{2}(Cx-b)^TB(Cx-b)
   $$
   Apply the solution from part (b) to obtain 
   $$
-  V(x)=\frac{1}{2}((\bar{x}-\bar{v})^TH(\bar{x}-\bar{v})+d) \\\\
+  V(x)=\frac{1}{2}((x-v)^TH(x-v)+d) \\\\
   $$
   $$
-  H=A+C^TBC \quad \bar{v}=H^{-1}C^TB\bar{b}\\\\
+  H=A+C^TBC \quad v=H^{-1}C^TBb\\\\
   $$
-  and we do not need to evaluate $d$. From the matrix invesion lemma, use (1.54) on $H$ and (1.55) on $\bar{v}$ to obtain 
+  and we do not need to evaluate $d$. From the matrix invesion lemma, use (1.54) on $H$ and (1.55) on $v$ to obtain 
   $$
   \tilde{H}=A^{-1}-A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}CA^{-1}
   $$
   $$
-  \bar{v}=A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}(b-Ca)
+  v=A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}(b-Ca)
   $$
   The function $V(x)$ can be expressed as
   <div>
     \[
     \begin{align}
-    V(x)&=\frac{1}{2}((\bar{x}-\bar{v})^TH(\bar{x}-\bar{v})+d) \\
-    &=\frac{1}{2}((x-a-\bar{v})^TH(x-a-\bar{v})+d) \\
+    V(x)&=\frac{1}{2}((x-v)^TH(x-v)+d) \\
+    &=\frac{1}{2}((x-a-v)^TH(x-a-v)+d) \\
     &=\frac{1}{2}((x-v)^TH(x-v)+d)
     \end{align}  
     \]
@@ -1670,6 +1692,25 @@ That's where MPC comes into play, we will use MPC to approximate the control inv
         Source: Steve Brunton - YouTube  
         <a href="https://youtu.be/u5Sv7YKAkt4?si=cqaAxu3aEaB9nUBZ" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
     </div>
+</div>
+
+**Video transcript:**
+
+We consider the linear time-invariant system 
+
+$$
+\dot{x} = Ax + Bu
+$$
+
+<div>
+\[
+\begin{align}
+\text{where } & x\in \mathbb{R}^n \text{ is the state vector,} \\
+&u \in \mathbb{R}^m \text{ is the input vector,} \\
+&A \in \mathbb{R}^{n\times n} \text{ is the system matrix,} \\
+&B \in \mathbb{R}^{n\times m} \text{ is the input matrix.}
+\end{align}
+\]
 </div>
 
 ## 2.5: Examples of MPC

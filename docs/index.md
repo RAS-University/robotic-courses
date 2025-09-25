@@ -63,7 +63,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Dynamics](dynamics) - In progress
 -  [System Identification](identification) - 
 -  [Close-loop Control](Closeloop&PID) - In progress
--  [Model Predictive Control](mpc) - In progress
+-  [Model Predictive Control](MPC) - In progress
 -  [Force Control](force-control) - In progress
 
 **Chapter 2: Sensing in Robotics**

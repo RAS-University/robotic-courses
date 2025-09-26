@@ -1,10 +1,13 @@
 ---
-title: Unmanned Aerial Vehicules
+title: Unmanned Aerial Vehicles
 parent: Courses
 layout: default
 nav_order: 7
 ---
-# Unmanned Aerial Vehicules
+
+<script src="questions.js"></script>
+
+# Unmanned Aerial Vehicles
 
 <!-- bundle exec jekyll serve -->
 
@@ -31,27 +34,167 @@ The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the 
 This course aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
 
 ### Chapter 0 : Introduction to aerodynamic principles
-The three most important forces when it comes to drones are lift, thrust and drag. For simplicity, lift and drag will be explained on a fixed wing aircraft - an airplane. The next chapter will cover how for different drone types, lift and thrust is generated. But it is important to get a basic grasp of what the forces are.
+
+On the image below you see in <span style="color: #FFAA00;">yellow</span> a flying object - here you can think of it as the profile of a wing. Suppose the wing is moving the direction of the <span style="color: #020FA4;">blue</span> vector. What kind of forces are acting on it? There is of course the gravity coming from the weight of the wing - here in <span style="color: black;">black</span>. The force that makes the wing stay in the air - instead of being restrained to the ground as us humans - is called <span style="color: #C20000;">*lift*</span> force. But the wing is not simply hovering in the air, it moves in the <span style="color: #020FA4;">direction of movement</span>. The force making this possible is the <span style="color: #02E308;">*thrust*</span>, which is counteracted by the *drag*. For a wing we call the angle between the direction of movement and the centerline of the wing the *angle of attack*. 
 
 <div style="text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/Lift-force-en.svg" alt="Illustration of lift, drag and thrust force." style="width: 400px; height: auto;">
+  <img src="{{ site.baseurl }}/assets/images/uav/Lift-force-en.svg" alt="Illustration of lift, drag and thrust force." style="width: 450px; height: auto;">
   <p style="font-size: small;">The figure illustrates lift, thrust and drag force. Schema by <a href="https://commons.wikimedia.org/wiki/File:Lift-force-en.svg" target="_blank">Bartosz Kosiorek</a></p>
 </div>
 
+The three most important forces when it comes to drones are lift, thrust and drag. For simplicity, lift and drag will be explained on a fixed wing aircraft - i.e. an airplane. The next chapter will cover how for different drone types, lift and thrust is generated. But it is important to get a basic grasp of what the forces are now.
+
+<!-- <div class="disclaimer-panel"> -->
+<div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
+  <strong>Disclaimer:</strong> Aerodynamic is an entire subject on it's own. This chapter will not be a full or complete module. It rather aims to provide you with the necessary tools and intuition to understand the relevant aspects of aerodynamics related to drones. This is crucial to understand how drones are controlled.
+</div>
+
 #### Drag
-When moving through a fluid there is a resistive force acting in the opposite direction of motion. Often referred to as air resistance, the drag force depends on the air density, the shape of the moving object and *quadratically* to the speed of the drone. It is always **parallel** to the flow direction.
+When an object moves through a fluid there is a resistive force acting in the opposite direction of motion. Often referred to as air resistance, the drag force depends on the air density, the shape of the moving object and *quadratically* to the speed of the drone. It is always **parallel** to the flow direction. 
+
+To grasp this in more detail, please watch the video below from **0:10** until **10:37** or read the description beneath it:
 
 ![video](https://www.youtube.com/watch?v=GMmNKUlXXDs)
 ><sub>Understanding Aerodynamic Drag by The Efficient Engineer. Available at: https://www.youtube.com/watch?v=GMmNKUlXXDs</sub>
 
-<!-- $C_D=\frac{D}{1/2\rho A v^2}$ -->
-$D=C_D\frac{1}{2}\rho A v^2$
+<details markdown='1'>
+  <summary><strong>Description of the video</strong></summary>
 
-$D$:    drag force \\
-$C_D$:  drag coefficient, depending on the morphology of the object\\
-$\rho$: air density\\
-$A$:    wing area\\
-$v$:    airspeed 
+  The fluid flowing around an object exerts a force on it. You can split the force in two parts:
+  - one perpendicular to the flow direction, which is called *lift*.
+  - and on in the opposite direction of movement - the *drag*.
+
+  In air, we call these forces aerodynamic forces.
+   
+  Here we only focus on the drag force. The drag force is usually an undesirable force - it slows your object down or in other words you need more energy to advance in the fluid and loose in efficiency. Therefore engineers usually try to minimize the drag - if it is a car, a boat or an airplane. The same goes for drones. But what exactly does cause drag?
+  The cause of drag can be decomposed into two effects:
+  1. shear stresses acting tangential to the surface and are caused by frictional forces due to the fluids viscosity. This is the **friction drag**.
+  2. pressure stresses acting perpendicular to the surface and are caused by how the pressure is distributed around a object. This is the **pressure drag** or sometimes **form drag**.
+  The sum of these two effects in the direction of movement is the drag.
+
+  **Pressure Drag**:
+   
+  Pressure drag is the strongest for blunt bodies like a ball. It is caused by difference in pressure in front and rear of an object. Pressure drag increases *significantly* in case of flow separation, which is the case when the fluids boundary layer detaches from the body. This causes a recirculating flow, significantly decreasing the pressure behind the body. This is called the *separation region*. To reduce drag forces, you want to minimize flow separation at all cost. Flow separation can also lead to vortex creation, which can lead to instability and turbulence. Why does flow separation occur to begin with?
+  
+  When the fluid passes over the surface of the sphere it initially accelerates and the pressure decreases in the flow direction. Beyond a certain point the flow then decelerates and the pressure starts increasing. The increase in pressure pushes the fluid backward. But due to the oncoming fluid it cannot travel back, forcing to to detach from the surface, resulting in flow separation. The flow separation occurs at 80° for a smooth sphere in laminar flow. In case of a turbulent flow it can delay until 120° which drastically reduces the drag. This is because the mixing between different flow layers which transfers momentum to the fluid allowing them to sustain a larger pressure difference. That is why for example a golf ball has dimples instead of being completely smooth. The turbulence caused delays flow separation, reduces drag and hence allows the ball to travel further.
+  Bodies traveling through fluid like plane wings or racing cars are usually designed in *tear-drop* shape to minimize flow separation. Flow separation is delayed so much or doesn't occur at all, that pressure drag is greatly reduced. For these type of objects it's the shear stresses that contribute most to the total drag force.
+
+  **Friction Drag**:
+  
+  Friction drag increases with the viscosity of the fluid and the surface of area aligned with the direction of flow. While turbulence decreases pressure drag by delaying the flow separation, it has the opposite effect on friction drag. Laminar and turbulent boundary layers show very different velocity profiles. Turbulence boundary layers have a higher velocity gradients and thus produces larger shear stress. Hence to reduce friction drag, you want to maintain laminar flow for the largest possible distance around the object. 
+
+  If you would manage to maintain laminar flow over   wings of commercial aircraft, could reduce the total drag by 10-15%. But this is very hard to achieve and is an open question in research. One idea that was partially successful is the so called hybrid-laminar flow control, where air is suck downwards along the surface of the wing. Another possibility is to reduce the effect of turbulent flow on friction drag. One interesting research aspect there looks at the microstructure of shark skin.
+
+  We have seen that the magnitude of friction and pressure drag depends on the magnitude of a body relative ot the direction of flow. An obvious example is flat plat at 90° angle to the direction flow. The flow separates easily, creating a separation region and the pressure drag is large. In this case friction drag is almost zero, since shear stresses are not aligned with the drag direction. However if you turn the plate by 90° such that the surface is aligned with the direction of flow, we have a very streamlined body and the pressure drag is small. But the friction is now much more significant. 
+  The same logic applies to airfoils, where the angle of attack - i.e. the angle between the centerline of a wing and the direction of flow - has a large influence on the drag force. At high angles of attack (AOA) separation occurs, which significantly increases the drag force. In general it is important to remember that friction drag increases as pressure drag decreases and so these two aspects need to be carefully balanced.
+
+  **Drag Force Calculation**:
+  
+  If you would integrate the pressure stress and wall shear stresses of an object, you would obtain the exact drag force. However those information are almost never available. That is why usually the drag equation is used to represent the total drag force:
+  $$D=C_D\frac{1}{2}\rho A v^2$$
+
+  $D$:    drag force \\
+  $C_D$:  drag coefficient, depending on the morphology of the object\\
+  $\rho$: fluid density\\
+  $A$:    wing area\\
+  $v$:    airspeed 
+
+  The $C_D$ drag coefficient includes all of the hard to measure parameters such as object geometry or the effect of flow regime. It can be determined experimentally by running wind tunnel experiments or by running numerical simulations. $\rho$ is the fluids density, $v$ the relative velocity of the fluid to the object and usually assumed to be steady and uniform. Finally $A$ is a reference area, that depends on how the drag coefficient is determined. For airfoils it is usually the object's planform area. For blunt bodies it is usually the projected frontal area.
+  ><hr>
+</details>
+
+<!-- Conceputal questions -->
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<style>
+  .drag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    min-height: 150px;
+    width: 45%;
+    background-color: #f9f9f9;
+  }
+
+  .drag-item {
+    background-color: #e3e3e3;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    margin: 4px;
+  }
+
+  .check-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .feedback {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+
+<p><strong>Question 1: Pressure drag is caused by shear stresses acting along the surface.</strong></p>
+<form id="q1">
+  <input type="radio" name="q1" value="True"> True<br>
+  <input type="radio" name="q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1', 'True', 
+      'Correct! Turbulent boundary layers have steeper gradients near the surface, increasing shear stress.',
+      'Incorrect.')">
+    Check Answer
+  </button>
+  <p id="q1-feedback"></p>
+</form>
+
+<p><strong>Question 2: To achieve the smallest total drag of an object possible, it's shape should be the most streamlined possible.</strong></p>
+<form id="drag-q2">
+  <input type="radio" name="drag-q2" value="True"> True<br>
+  <input type="radio" name="drag-q2" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('drag-q2', 'False', 
+      'Correct! The optimal shape of body is usually not perfectly streamlined to reduce the effect of friction drag. To minimize the drag as much as possible, both drag contributions need to be considered.',
+      'Incorrect. A perfectly streamlined body results in almost zero pressure drag, but the friction drag increases due to the greater surface aligned with the flow direction. The smallest total drag is usually a compromise between the two drag contributions.')">
+    Check Answer
+  </button>
+  <p id="drag-q2-feedback"></p>
+</form>
+
+<p><strong>Question 3: Which changes would likely help reduce total aerodynamic drag on a vehicle?</strong></p>
+<form id="drag-q3">
+  <input type="checkbox" name="drag-q3" value="A"> <strong>(A)</strong> Streamlining the shape<br>
+  <input type="checkbox" name="drag-q3" value="B"> <strong>(B)</strong> Maintaining laminar flow over the surface<br>
+  <input type="checkbox" name="drag-q3" value="C"> <strong>(C)</strong> Increasing the surface area exposed to flow<br>
+  <input type="checkbox" name="drag-q3" value="D"> <strong>(D)</strong> Inducing early flow separation<br>
+  <input type="checkbox" name="drag-q3" value="E"> <strong>(E)</strong> Using textures like dimples or riblets in the right locations<br>
+  <button type="button" onclick="checkMultipleAnswers('drag-q3', ['A', 'B', 'E'], 
+    'Correct!<br><br>
+    <ul>
+      <li><strong>(A)</strong> Correct! Streamlining delays or even prevents flow separations which drastically reduce pressure drag.</li>
+      <li><strong>(B)</strong> Correct! Maintaining laminar flow reduces significantly the contribution of friction drag to the total drag force.</li>
+      <li><strong>(C)</strong> Incorrect! Increasing the surface area exposed to the flow of the fluid, increases friction drag, which scales linearly with surface area.</li>
+      <li><strong>(D)</strong> Incorrect! The earlier flow separation occurs the greater the influence of pressure drag. Flow separation should be delayed as long as possible.</li>
+      <li><strong>(E)</strong> Correct! Using textures like dimples causes turbulent flow which delays flow separation. Since turbulent flow also increases friction drag, it must be carefully balanced.</li>
+    </ul>
+    ', 
+    'Incorrect. Try again!')">
+    Check Answer
+  </button>
+  <p id="drag-q3-feedback"></p>
+</form>
+
+</details>
 
 #### Lift
 

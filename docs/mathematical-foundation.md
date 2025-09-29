@@ -1,6 +1,7 @@
 ---
 title: Mathematical Foundation
 parent: Courses
+has_children: true
 layout: default
 math: mathjax
 nav_order: 0
@@ -17,6 +18,8 @@ Robotics heavily relies on a robust mathematical foundation. To succeed in this 
 - **Calculus**: Used extensively for analyzing dynamics, motion planning, and control.
 
 - **Probability and Statistics**: Critical for interpreting sensor data, uncertainty modeling, and robotics perception.
+
+- **Optimization**: Important for control strategies, path planning, and decision-making in robotics. You can find a brief introduction to optimization in the [Optimization chapter](optimization).
 
 This section provides brief overviews and key concepts from these mathematical fields to refresh your knowledge and support your learning experience.
 

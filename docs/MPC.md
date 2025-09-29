@@ -28,7 +28,7 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
 
 <style>
   .ytb-window{
-    border-left: 4px solid #053838;k
+    border-left: 4px solid #053838;
     background: #f8f9fa;
     padding: 1em;
   }
@@ -199,10 +199,22 @@ function showTab(idx, windowId) {
 }
 </script>
 
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: {
+    equationNumbers: {
+      autoNumber: "AMS"
+    },
+    extensions: ["AMSmath.js", "AMSsymbols.js"]
+  }
+});
+</script>
+
 # Prerequisites
 
 * Linear Algebra
 * Differential equations
+* probability and statistics
 * Control theory :
     - First- and second-order system response
     - Transfer functions and feedback
@@ -210,13 +222,16 @@ function showTab(idx, windowId) {
 * Signals and Systems :
     - Time-domain analysis
     - Frequency-domain analysis
-    - System stability
+* Optimization :
+    - Convex sets and functions
+    - Unconstrained and constrained optimization
+    - Numerical optimization methods
 
 # Notations
 
-## Mathematical notation
+<!-- ## Mathematical notation -->
 
-| Symbol                            | Meaning                                                           |
+<!-- | Symbol                            | Meaning                                                           |
 |-----------------------------------|-------------------------------------------------------------------|
 | $\exists$                         | there exists                                                      |
 | $\in$                             | is an element of                                                  |
@@ -237,11 +252,27 @@ function showTab(idx, windowId) {
 | $\|x\|$                           | absolute value of scalar; norm of vector (two-norm unless stated) |
 | **x** or $x$                | sequence of vector-valued variable $x$, $(x(0), x(1), \dots)$     |
 | $\|x\|$                           | $\sup_{i \geq 0} \|x(i)\|$ (sup norm over a sequence)             |
-| $\|x\|_{a:b}$                     | $\max_{a \leq i \leq b} \|x(i)\|$                                 |
+| $\|x\|_{a:b}$                     | $\max_{a \leq i \leq b} \|x(i)\|$                                 | -->
 
-## Subscripts, Superscripts, and Accents
+<!-- ## Subscripts, Superscripts, and Accents -->
 
-| Symbol         | Meaning                                               |
+Throuhout this lecture notes, we will use the following subscripts, superscripts, and accents to denote specific meanings:
+
+- $x \in \mathbb{R}^{1\times n}$: vector $x$ of dimension $n$
+- $x_i$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$
+- $x_k$: value of $x$ at time step $k$ (discrete time)
+<!-- - $x_{i\mid k}$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$ at time step $k$ -->
+- $x^+$ or $x_{k+1}$: value of $x$ at next time step (discrete time)
+- $\dot{x}$: time derivative of $x$ (continuous time)
+- $x^*$: optimal value of $x$
+- $x^\top$: transpose of vector or matrix $x$
+- $\hat{x}$: estimate of variable $x$ (see chatper on [State Estimation](#-14-intro-to-state-estimation-))
+- $\hat{x}^-$: estimate of variable $x$ before measurement update
+- $\tilde{x}$: estimation error of variable $x$
+- $x_s$: steady state value of variable $x$
+
+
+<!-- | Symbol         | Meaning                                               |
 |----------------|-------------------------------------------------------|
 | $\hat{x}$      | estimate                                              |
 | $\hat{x}^-$    | estimate before measurement                           |
@@ -251,14 +282,15 @@ function showTab(idx, windowId) {
 | $x_{sp}$       | setpoint                                              |
 | $V^0$          | optimal                                               |
 | $V^{uc}$       | unconstrained                                         |
-| $V^{sp}$       | unreachable setpoint                                  |
+| $V^{sp}$       | unreachable setpoint                                  | -->
 
-# Chapter 0: Motivation
+---
+
+# Motivation
 
 <!-- Introduce limitation of "classical feedback control" and the need for more, -->
 
-
-Even though feedback control has been applied by humans for more than two millennia, the systematic analysis of dynamical systems is relatively recent, beginning with James Clerk Maxwell’s pioneering work about 150 years ago. Since then, the field has advanced spectacularly, driven by contributions from mathematicians, engineers, and physicists alike. Laplace, Lyapunov, Kolmogorov, Wiener, Nyquist, Bode, and Bellman are just a few of the towering figures who shaped what we know today as control theory.
+Even though feedback control has been applied for more than two millennia, the systematic analysis of dynamical systems is relatively recent, beginning with James Clerk Maxwell’s pioneering work about 150 years ago. Since then, the field has advanced spectacularly, driven by contributions from mathematicians, engineers, and physicists alike. Laplace, Lyapunov, Kolmogorov, Wiener, Nyquist, Bode, and Bellman are just a few of the towering figures who shaped what we know today as control theory.
 
 Despite these advancements, classical control methods often struggle with complex, high-dimensional systems, particularly those with constraints and uncertainties. This has led to the exploration of more advanced control strategies, such as Model Predictive Control (MPC), which explicitly considers system constraints and optimizes control actions over a prediction horizon.
 
@@ -266,348 +298,22 @@ In the pursuit of optimality one is therefore forced to consider approximate sol
 
 MPC has found applications in various fields, including chemical process control, automotive systems, aerospace, and robotics. Its ability to handle multivariable systems and constraints makes it a powerful tool for modern control challenges.
 
+---
 
 # Chapter 1: Introduction to MPC
 
 [See notations](#notations)
 
-## 1.1: Unconstrained Optimization - Newton's Method
-
-<iframe width="735" height="413"
-  src="https://www.youtube.com/embed/W7S94pq5Xuo?start=15&end=460" 
-  title="Visually Explained: Newton's Method in Optimization" 
-  frameborder="0" 
-  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
+In control theory, we usually talk about controllers and regulators. A controller is a device or algorithm that manages the behavior of a system to achieve a desired outcome. Controllers can be simple, like a thermostat that maintains room temperature, or complex, like those used in aerospace applications to stabilize aircraft. A regulator, on the other hand, is a specific type of controller that focuses on maintaining a system's output at a desired setpoint, often by minimizing deviations from that setpoint. Regulators are commonly used in systems where stability and precision are crucial, such as in power supply systems or industrial processes.
 
 
-<div class="ytb-window">
-    This video offers a visual and intuitive explanation of Newton's Method, a fundamental optimization technique used to find local minima or maxima of functions. Through clear illustrations and step-by-step demonstrations, it delves into how this method accelerates convergence compared to gradient descent, especially near the optimum.
-    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
-        Video from 0:15 to 7:40 | Source: Visually Explained - YouTube  
-        <a href="https://youtu.be/W7S94pq5Xuo?si=xKeMSgbhHonwVSQ3" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
-    </div>
-</div>
+## 1.1: Linear Quadratic Regulator (LQR)
 
-**Video transcript :**
+In this introductory chapter, we will explore a specific type of regulator known as the Linear Quadratic Regulator (LQR). The LQR is a fundamental concept in control theory that provides an optimal solution for controlling linear systems with quadratic cost functions. We will delve into the mathematical formulation of LQR, its properties, and its applications in various engineering fields. To help illustrate these concepts, we will refer to a video lecture by Christopher Lum, which provides a comprehensive overview of LQR.
 
-The focus is on unconstrained optimization, meaning we are given a multivariable function in $n$ variables $f$ without any constraints on the variables. We want to find the point $x$ that minimizes the function $f(x)$.
-
-$$
-f: \mathbb{R}^n \to \mathbb{R}
-$$
-$$
-\min_{x \in \mathbb{R}^n} f(x)
-$$
-
-One way of finding the minimum could be to eyeball it after drawing the function, however this method would only work as the dimension of the function is inferior to 2 and even for those functions this method is not precise. In some application like Machine Learning or Robotics, the functions that we want to minimize can have tens, thousands, or even **millions of variables**, making it impractical to visualize them.
-
-Some of the most useful and used algorithms belong to the families of iterative optimization algorithms, which progressively refine their estimates of the minimum. The **Newton's method** is one such algorithm as we will see.
-
-The process of those algorithms is as follows:
-
-* **Initialization**: Start with an initial guess $x_0$ for the minimum (often chosen randomly or based on prior knowledge).
-
-<div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_1_init_unconstrained_opt.png" alt="Initialization step" width="250"/>
-        <figcaption style="text-align: center;">Initialization step</figcaption>
-    </figure>
-</div>
-
-* **Iteration**: Pick a direction, i.e. a vector $d_0$, and follow it to obtain $x_1$. To track how much progress have been made, calculate the value of $x_1 = f(x_1)$. Hopfully $f(x_1) \leq f(x_0)$, meaning we have descended the value on the graph traced by $f(x)$ in space. This direction $d_0$ is usualy called a **descent direction**. Then iteratively, at step $k$ we calculate $x_{k+1} = x_k + d_k$.
-
-<div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_1_1st_step_unconstrained_opt.png" alt="Initialization" width="250"/>
-        <figcaption style="text-align: center;">1st step after direction $d_0$</figcaption>
-    </figure>
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_1_kstep_unconstrained_opt.png" alt="Optimization step" width="250"/>
-        <figcaption style="text-align: center;">k-th step after direction $d_k$</figcaption>
-    </figure>
-</div>
-
-* **Convergence Check**: Repeat the iteration until convergence criteria are met (e.g., the change in function value is below a threshold).
-
-The way to chose the direction step $d_k$ in the iteration step is crucial to achieve convergence to the optimal solution in a reasonable time frame. The chosen algorithm's will depend on the choice made for this direction. 
-
-To pick a good descent direction, we need to understand how the function $f(x)$ behaves in the vicinity of the current point $x_k$. This is typically done using the gradient $\nabla f(x_k)$, which points in the direction of steepest increase. The negative gradient $-\nabla f(x_k)$, therefore, points in the direction of steepest descent.
-
-**Example :** ($n=1$)
-$$
-f(x) = \frac{1}{20} x^4 - \frac{2}{5} x + 1
-$$
-
-$$
-f'(x) = \frac{f(x) - f(x_k)}{x - x_k} \Rightarrow f(x) \approx 
-f(x_k) + \color{orange}{f'(x_k)} \color{black}{(x - x_k)} \tag{1}
-$$
-
-<div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_1_fx.png" alt="graphical f(x)" width="280"/>
-        <figcaption style="text-align: center;">Graphical representation of $f(x)$</figcaption>
-    </figure>
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_1_fprime_x.png" alt="graphical f'(x)" width="280"/>
-        <figcaption style="text-align: center;">Graphical representation of $f'(x)$</figcaption>
-    </figure>
-</div>
-
-We can observe that locally around the point $x_k$, the function $f(x)$ can be approximated by a linear function. This is the essence of gradient-based optimization methods: they use the local linear approximation to guide the search for the minimum as linear functions are simpler to optimize.
-
-We have then an iteration step using the gradient information:
-
-$$
-x_{k+1} = x_k - \alpha f'(x_k)
-$$
-
-Where $\alpha$ is a step size (also called **learning rate**). This step size determines how far we move along the descent direction. If $\alpha$ is too large, we might overshoot the minimum; if it's too small, convergence will be slow. Trying to tune $\alpha$ in an optimal way it what leads us to **Newton's method**. 
-
-Newton's method comes from the observation that using the second-order derivative (the Hessian $\nabla^2 f(x_k)$) can provide a more accurate estimate of the function's curvature, allowing for more informed step sizes and directions. From calculus, we know that we can use the **Taylor expansion** we can refine the approximation made in equation (1).
-
-$$
-f(x) \approx f(x_k) + f'(x_k) (x - x_k) + \frac{1}{2} f\'\'(x_k) (x - x_k)^2 \tag{2}
-$$
-
-<div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_1_f_2nd_x.png" alt="2nd derivative" width="280"/>
-        <figcaption style="text-align: center;">Graphical representation of $f''(x)$</figcaption>
-    </figure>
-</div>
-
-This leads us to the following iteration step using both the first derivative and secound derivative information as $\alpha = \frac{1}{f'(x_k)}$:
-
-$$
-x_{k+1} = x_k - \frac{1}{f'(x_k)} f'(x_k)
-$$
-
-<div class="formula-window">
-    Newton's method can be generalized in higher dimensions ($n\geq1$) as:
-    \[
-    x_{k+1} = x_k - \nabla^2 f(x_k)^{-1} \nabla f(x_k)
-    \]
-</div>
-
-## 1.2: Convex Optimization
-
-**Convex Set**
-
-A set $\mathcal{S}$ is **convex** if, for any two points $x_1, x_2 \in \mathcal{S}$ and any scalar $\lambda \in [0, 1]$, the point $\lambda x_1 + (1 - \lambda) x_2$ is also in $\mathcal{S}$. i.e. the line segment connecting any two points in the set lies entirely within the set.
-
-<div class="formula-window">
-    Mathematical definition of a convex set \( \mathcal{S} \):
-    \[
-    \lambda x_1 + (1 - \lambda) x_2 \in \mathcal{S}, \quad \forall x_1, x_2 \in \mathcal{S}, \forall \lambda \in [0, 1]
-    \]
-</div>
-
-**Convex combination** of $x_1, \cdots, x_k$: any point $z$ of the form:
-$$
-z= \theta _1 z_1 + \theta _2 z_2 + \cdots + \theta _k z_k \quad \text{with} \quad \theta _1 + \cdots + \theta_k = 1, \theta _i \geq 0
-$$
-
-
-
-<div class="tab-window" id="convexSetExamples">
-  <div class="tab-title">Convex Set Examples</div>
-    <div class="tab-header">
-    <button class="tab-btn active" onclick="showTab(0, 'convexSetExamples')">Hyperplane</button>
-    <button class="tab-btn" onclick="showTab(1, 'convexSetExamples')">Halfspace</button>
-    <button class="tab-btn" onclick="showTab(2, 'convexSetExamples')">Polyhedron</button>
-    <button class="tab-btn" onclick="showTab(3, 'convexSetExamples')">Polytope</button>
-  </div>
-  <div class="tab-content active">
-    <p>A hyperplane is a flat affine subspace of one dimension less than its ambient space. Formally, in \(\mathbb{R}^n\), a hyperplane can be defined as the set of points \(\{x \in \mathbb{R}^n: a^T x = b\}\) for some \(a \in \mathbb{R}^n\) (\(a \neq 0\)) and \(b \in \mathbb{R}\).
-</p>
-    <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_hyperplane.png" alt="Hyperplane" width="550"/>
-    </figure>
-</div>
-  </div>
-  <div class="tab-content">
-    <p>A halfspace is the set of points on one side of a hyperplane. Formally, in \(\mathbb{R}^n\), a halfspace can be defined as the set of points \(\{x \in \mathbb{R}^n: a^T x \leq b\}\) for some \(a \in \mathbb{R}^n\) (\(a \neq 0\)) and \(b \in \mathbb{R}\).
-</p>
-    <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_halfspace.png" alt="Halfspace" width="550"/>
-    </figure>
-</div>
-</div>
-<div class="tab-content">
-    <p>A polyhedron is the intersection of a finite number of halfspaces. Formally, in \(\mathbb{R}^n\), a polyhedron can be defined as the set of points \(\{x \in \mathbb{R}^n: a_i^T x \leq b_i, \, i = 1, \ldots, m\}\) for some \(a_i \in \mathbb{R}^n\) (\(a_i \neq 0\)) and \(b_i \in \mathbb{R}\).
-</p>
-    <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_polyhedron.png" alt="Polyhedron" width="550"/>
-    </figure>
-</div>
-</div>
-<div class="tab-content">
-    <p>A polytope is a bounded polyhedron. Formally, in \(\mathbb{R}^n\), a polytope can be defined as the set of points \(\{x \in \mathbb{R}^n: a_i^T x \leq b_i, \, i = 1, \ldots, m\}\) for some \(a_i \in \mathbb{R}^n\) (\(a_i \neq 0\)) and \(b_i \in \mathbb{R}\), with the additional constraint that the feasible region is bounded.
-</p>
-    <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_polytop.png" alt="Polytop" width="550"/>
-    </figure>
-</div>
-</div>
-</div>
-
-<div class="quizz-window" id="quizzConvex1">
-    <div class="quizz-title">Quizz</div>
-    <div style="padding: 1.5em;">
-  <div style="margin-bottom: 1em;">Which of the following is a <span style="color: #73C47C; font-weight: bold;">convex set</span>?</div>
-    <form id="quizForm">
-      <div style="display: flex; flex-direction: row; justify-content: center; gap: 2em; margin-bottom: 1em;">
-        <label style="display: flex; align-items: center; gap: 8px;">
-          <input type="radio" name="answer" value="a" style="transform: scale(1.5);">
-          <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_Octogone.png" alt="octogone" width="100"/>
-        </label>
-        <label style="display: flex; align-items: center; gap: 8px;">
-          <input type="radio" name="answer" value="b" style="transform: scale(1.5);">
-          <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_nonconvex_set.png" alt="shape" width="130"/>
-        </label>
-        <label style="display: flex; align-items: center; gap: 8px;">
-          <input type="radio" name="answer" value="c" style="transform: scale(1.5);">
-          <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_nonconvex_square.png" alt="square" width="100"/>
-        </label>
-      </div>
-      <button type="button" onclick="checkQuizAnswer('quizzConvex1')" style="background: #73C47C; color: #fff; border: none; padding: 0.5em; border-radius: 6px; font-size: 1em; cursor: pointer;">Confirm</button>
-    </form>
-  <div id="quizResult" style="margin-top: 1em; font-weight: bold;"></div>
-  </div>
-</div>
-
-**Convex functions**
-
-<div class="formula-window">
-    A function \( f: \mathcal{S} \to \mathbb{R} \) is convex if \(\mathcal{S}\) is a convex set and
-    \[
-    f(\lambda x_1 + (1 - \lambda) x_2) \leq \lambda f(x_1) + (1 - \lambda) f(x_2)
-    \]
-    \[
-    \forall x_1, x_2 \in \mathcal{S}, \lambda \in [0,1]
-    \]
-</div>
-
-<div class="images">
-  <figure>
-    <image src="{{ site.baseurl}}/assets/images/MPC/1_1_2_convex_def.png" alt="Convex function definition" width="450"/>
-    <figcaption style="text-align: center;">Convex function definition</figcaption>
-  </figure>
-</div>
-
-A function $f:\mathcal{S} \to \mathbb{R}$ is **strictly convex** if $\mathcal{S}$ is a convex set and for any two points $x_1, x_2 \in \mathcal{S}$ and any scalar $\lambda \in [0, 1]$, the following inequality holds:
-$$
-f(\lambda x_1 + (1 - \lambda) x_2) < \lambda f(x_1) + (1 - \lambda) f(x_2)
-$$
-
-A function $f:\mathcal{S} \to \mathbb{R}$ is **concave** if $\mathcal{S}$ is a convex set and $-f$ is convex.
-
-**First-order condition for convexity:** Differentiable $f$ with convex domain is convex iff 
-$$
-f(y) \geq f(x) + \nabla f(x)^T (y - x), \quad \forall x, y \in \textbf{dom} f
-$$
-
-**Second-order condition for convexity:** Twice differentiable $f$ with open convex domain is convex iff
-$$\nabla^2 f(x) \succeq 0, \quad \forall x \in \textbf{dom} f$$
-i.e. the Hessian matrix is positive semidefinite for all $x$ in the domain of $f$.
-
-<div class="tab-window" id="convexFunctionTabs">
-  <div class="tab-title">Convex Function Examples</div>
-  <div class="tab-header">
-    <button class="tab-btn active" onclick="showTab(0, 'convexFunctionTabs')">Exponential</button>
-    <button class="tab-btn" onclick="showTab(1, 'convexFunctionTabs')">Powers</button>
-    <button class="tab-btn" onclick="showTab(2, 'convexFunctionTabs')">Logarithm</button>
-  </div>
-  <div class="tab-content active">
-    <strong>Exponential Function Example:</strong>
-    <p>\(f(x) = e^{ax}\), for any \(a \in \mathbb{R}\).</p>
-    <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_exp.png" alt="Exponential" width="550"/>
-    </figure>
-</div>
-  </div>
-  <div class="tab-content">
-    <strong>Powers Function Example:</strong>
-    <p>\(f(x) = x^a\) on \(\mathbb{R}_+\), for \(a \geq 1\) or \(a < 0\) (otherwise concave).</p>
-     <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_powers.png" alt="Powers" width="550"/>
-    </figure>
-</div>
-  </div>
-  <div class="tab-content">
-    <strong>Logarithm Function Example:</strong>
-    <p>\(f(x) = -\log(x)\) on \(\mathbb{R}_{+}\).</p>
-    <div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_1_2_log.png" alt="Logarithm" width="550"/>
-    </figure>
-</div>
-  </div>
-</div>
-
-**Convex optimization problem**
-
-A convex optimization problem is an optimization problem where the objective function is convex, and the feasible region (the set of points that satisfy the constraints) is also a convex set. This means that any local minimum is also a global minimum, making these problems easier to solve than general optimization problems.
-
-<div class="formula-window">
-    A convex optimization problem has the form:
-    \[
-    \begin{aligned}
-    & \text{minimize}   && f(x) \\
-    & \text{subject to} && g_i(x) \leq 0, \quad i = 1, \ldots, m \\
-    &                   && h_i(x) = 0, \quad i = 1, \ldots, p
-    \end{aligned}
-    \]
-    where \(f\) and \(g_i\) are convex functions, and \(h_i\) are affine functions.
-</div>
-
-With $f, g_i, \cdots, g_m$ convex functions and $c_i^T x = b_i$ affine functions (equality constrains are affine).
-
-Often rewrite as follows:
-$$
-\begin{aligned}
-& \text{min}   && f(x) \\\\
-& \text{s.t.}  && g(x) \leq 0 \\\\
-&              && Cx = b
-\end{aligned}
-$$
-
-Where $C:\mathbb{R}^{n \times m}$ is a matrix and $g: \mathbb{R}^n \to \mathbb{R}^m$.
-
-**Important properties:** Feasible set of a convex optimization problem is convex.
-
-<div class="lemma-window">
-  <div class="lemma-title">Lemma -  Convex problems: Local optima are global optima</div>
-  <div style="padding: 1.5em;">
-    Any locally optimal point of a convex problem is globally optimal.
-  </div>
-</div>
-
-**Proof:** 
-Assume $x$ is locally optimal and a feasible $y$ such that $f(y) < f(x)$. $x$ locally optimal implies that there exists an $R > 0$ such that $\left\| y - x \right\|_2 \leq R \Rightarrow f(y) \geq f(x)$.
-
-<div class="images">
-    <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/1_2_convex_proof.png" alt="Proof" width="300"/>
-    </figure>
-</div>
-
-<!-- ## 1.2: Constrained systems -->
-<!-- ## Exercises -->
-
-
-<!-- # Chapter 2:  Linear Quadratic Regulation -->
-
-## 1.3: Linear Quadratic Regulator (LQR)
+You might ask yourself, why quadratic? The quadratic cost function is chosen for several reasons:
+1. **Mathematical Convenience**: Quadratic functions are mathematically tractable, allowing for analytical solutions in many cases. This makes it easier to derive optimal control laws.
+2. **Convexity**: Quadratic functions are convex, which ensures that any local minimum is also a global minimum. This property is crucial for optimization problems, as it guarantees that the solution found is the best possible one. (see the mathemimatical fondation on [optimization](optimization))
 
 <iframe width="735" height="413"
   src="https://www.youtube.com/embed/wEevt2a4SKI?si=jZOiS9c6RWdX-cTm?&start=1165"
@@ -617,7 +323,6 @@ Assume $x$ is locally optimal and a feasible $y$ such that $f(y) < f(x)$. $x$ lo
   allowfullscreen>
 </iframe>
 
-
 <div class="ytb-window">
     This video provides a comprehensive overview of the Linear Quadratic Regulator (LQR), a fundamental concept in control theory. It explains how LQR is used to design optimal controllers for linear systems by minimizing a quadratic cost function, balancing performance and control effort. The video covers the mathematical formulation, solution methods, and practical applications of LQR in various engineering fields.
     <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
@@ -626,18 +331,20 @@ Assume $x$ is locally optimal and a feasible $y$ such that $f(y) < f(x)$. $x$ lo
     </div>
 </div>
 
-**Video transcript :**
+<!-- **Video transcript :** -->
 
 <u>Setting up the optimization problem:</u>
 
-We can imagine a system that we want to control, for example a satellite. The satellite has several states that we want to control, for example its orientation, position, etc. We can represent the state of the satellite as a vector $x(t) \in \mathbb{R}^n$, where $t$ is the time and $n$ is the dimention of the vector. We will denotate $x_i$ with $i = 1, \cdots, n$ the different states of the satellite. The state vector is often represented as follow: 
+To understand the Linear Quadratic Regulator (LQR), let's consider a practical example. We will consider a dynamical system with multiple states and multiple control inputs, such as a satellite for example. Our system has several states that need to be controled or monitored, for example its orientation, position, etc. We represent the state of the satellite as a vector $x(t) \in \mathbb{R}^n$, where $t$ is the time and $n$ is the dimention of the vector, i.e. the amount of state that we identified in the system. We will denotate $x_i$ with $i \in \mathbb{N}$, $i = 1, \cdots, n$ the state $i$ of the satellite. The state vector is represented as follow: 
+
 <div>
   \[
     x(t) = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ \end{bmatrix} \quad \left\{\begin{matrix} \text{orientation} \\ \text{position} \\ \vdots \\ \end{matrix}\right.
   \]
 </div>
 
-The satellite might have also multiple control inputs that we can use to influence its state, for example main thrusters, electrical thrusters, momentum wheels, etc. We can represent the control inputs as a vector $u(t) \in \mathbb{R}^m$, were the components $u_i$ with $i=1,\cdots, m$ are the differents control inputs.
+The satellite might have also multiple control inputs that we can use to influence its state, for example main thrusters, electrical thrusters, momentum wheels, etc. We represent the control inputs as a vector $u(t) \in \mathbb{R}^m$, with $m$ input commands identified by the components $u_i$ with $i=1,\cdots, m$. The control vector is represented as follow:
+
 <div>
   \[
     u(t) = \begin{bmatrix} u_1 \\ u_2 \\ u_3 \\ \vdots \\ \end{bmatrix} \quad \left\{\begin{matrix} \text{main thrusters} \\ \text{electrical thrusters} \\ \text{momentum wheels} \\ \vdots \\ \end{matrix}\right.
@@ -646,31 +353,45 @@ The satellite might have also multiple control inputs that we can use to influen
 
 <div class="images">
     <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/2_satellite.jpg" alt="Satellite" width="300"/>
+        <img src="{{ site.baseurl }}/assets/images/MPC/2_satellite.jpg" alt="Satellite" width="450"/>
     </figure>
 </div>
 
-It is a dynamical system which has multiple states and multiple control. Let's assume that the dynamics of this system is linear, governed by the dynamics of the form:
+We will assume that the dynamics of this system is linear, governed by the following state-space representation:
 $$
-\dot{x}(t) = Ax(t) + Bu(t)\tag{1}
+\dot{x}(t) = Ax(t) + Bu(t)\tag{1.1.1}\label{eq:1_1_dynamics}
 $$
 
-With $A \in \mathbb{R}^{n \times n}$ the state matrix and $B \in \mathbb{R}^{n \times m}$ the input matrix. Stating that there is a relationship between how the state and the control interact.
+With $A \in \mathbb{R}^{n \times n}$ the state matrix and $B \in \mathbb{R}^{n \times m}$ the input matrix. These matrices define how the state of the system evolves over time and how the control inputs affect the state, they are usually fixed and defined by the physics of the system. The goal of the controller is to determine the appropriate control inputs $u(t)$ that will drive the state $x(t)$ to a desired state, often the origin (zero state), while minimizing a cost function that penalizes deviations from the desired state and excessive control effort.
 
 <div class="lemma-window">
-  <div class="lemma-title">LQR cost function</div>
+  <div class="lemma-title" id="cost-func">LQR cost function</div>
   <div style="padding: 1.5em;">
-  In this context, we formulate an optimization problem by defining a cost function that we aim to minimize.
+  In this context, we formulate a cost function for our optimization problem (continuous time):
   \[
-  J = \int_0^\infty \left( x(t)^T Q x(t) + u(t)^T R u(t) \right) dt \tag{2}
+  J(x(t),u(t)) = \int_0^\infty \left( x(t)^\top Q x(t) + u(t)^\top R u(t) \right) dt \tag{1.1.2} \label{eq:cost_func_ct}
   \]
   \[
   \begin{aligned}
-  \text{Where:} \quad & x(t) \in \mathbb{R}^{n\times 1} \text{ state vector} \\ 
-  & u(t) \in \mathbb{R}^{m\times 1} \text{ control vector}\\ 
-  & Q \in \mathbb{R}^{n\times n} \text{ symmetric positive semi-definite matrix (} Q \geq 0 \text{ or } Q \succeq 0 \text{)} \\ 
-  & R \in \mathbb{R}^{m\times m} \text{ symmetric positive definite matrix (} R > 0 \text{ or } R \succ 0 \text{)}
+  \text{Where:} \quad & x(t) \in \mathbb{R}^{n\times 1} \text{ continuous time state vector} \\ 
+  & u(t) \in \mathbb{R}^{m\times 1} \text{ continuous time control vector}\\ 
+  & Q \in \mathbb{R}^{n\times n}, Q \geq 0 \text{ or } Q \succeq 0 \text{, symmetric positive semi-definite matrix} \\ 
+  & R \in \mathbb{R}^{m\times m}, R > 0 \text{ or } R \succ 0  \text{, symmetric positive definite matrix}
   \end{aligned}
+  \]
+
+  We can also defined the cost function $J(x, u)$ for discrete time systems and a finite horizon, as follows:
+  \[
+    J(x, u) = \sum_{t=0}^{T-1} \left( x_t^\top Q x_t + u_t^\top R u_t \right) + x_T^\top S x_T \tag{1.1.3} \label{eq:cost_func_dt}
+  \]
+  \[
+    \begin{aligned}
+    \text{Where:} \quad & x \in \mathbb{R}^{n\times 1} \text{ discrete time state vector}\\ 
+    & u \in \mathbb{R}^{m\times 1} \text{ discrete time control vector}\\ 
+    & Q \in \mathbb{R}^{n\times n}, \succeq 0 \text{ symmetric positive semi-definite matrix} \\ 
+    & R \in \mathbb{R}^{m\times m}, \succ 0 \text{ symmetric positive definite matrix} \\
+    & S \in \mathbb{R}^{n\times n}, \succeq 0 \text{ symmetric positive semi-definite matrix (terminal cost)}
+    \end{aligned}
   \]
   </div>
 </div>
@@ -679,48 +400,81 @@ With $A \in \mathbb{R}^{n \times n}$ the state matrix and $B \in \mathbb{R}^{n \
 <summary><strong>Positivity semi-definite and definite matrices</strong></summary>
   Positive semi-definite:
   $$
-    x^T Q x \geq 0, \quad \forall\ x
+    x^\top Q x \geq 0, \quad \forall\ x
   $$
   <div>
     \[
       \begin{align}
       \text{Where:} \quad & x \in \mathbb{R}^{1 \times n} \\
       & Q \in \mathbb{R}^{n \times n} \\
-      & x^T \in\mathbb{R}^{n \times 1} \\
+      & x^\top \in\mathbb{R}^{n \times 1} \\
       \end{align}
     \]
   </div>
   Similarly, positive definite:
   $$
-  u^T R u > 0, \quad \forall\ u
+  u^\top R u > 0, \quad \forall\ u
   $$
   <div>
     \[
       \begin{align}
       \text{Where:} \quad & u \in \mathbb{R}^{1 \times m} \\
       & R \in \mathbb{R}^{m \times m} \\
-      & u^T \in \mathbb{R}^{m \times 1} \\
+      & u^\top \in \mathbb{R}^{m \times 1} \\
       \end{align}
     \]
   </div>
-  We can notice the that is exactly the terms that we have in the cost function (2).
+
+  The terms $x(t)^\top Q x(t)$ and $u(t)^\top R u(t)$ are scalars. This is because:
+  - $x(t)^\top$ is a $1 \times n$ vector
+  - $Q$ is a $n \times n$ matrix
+  - $x(t)$ is a $n \times 1$ vector
+  
+  Thus, the multiplication $x(t)^\top Q x(t)$ results in a $1 \times 1$ matrix, which is a scalar. The same reasoning applies to the term $u(t)^\top R u(t)$.
+<!-- 
+  We can notice the that is exactly the terms that we have in the cost function \eqref{eq:cost_func_ct}. -->
 </details>
 
 The way the **cost function** $J$ is set up here leads to the integral always being positive (due to the properties of $Q$ and $R$), for any $x(t)$ and $u(t)$ combination. The matrices $Q$ and $R$ are weighting matrices that allow us to tune the cost function, where these matrices tradeoff between non-zero states and non-zero control inputs. We will be thinking about $Q$ and $R$ as weights to determine how much we value state compared to how much we value control.
 
-We can now formulate the optimization problem we would like to solve as follows:
-$$
-\min_{u(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( x(t)^T Q x(t) + u(t)^T R u(t) \right) dt
-$$
-$$
-\text{s.t.} \quad \dot{x}(t) = Ax(t) + Bu(t)
-$$
+The next step is to formulate the optimization problem, which consists in finding the control input $u(t)$ that minimizes the cost function $J$ while satisfying the dynamics of the system \eqref{eq:1_1_dynamics}. This can be expressed mathematically by the value function $V(x)$ defined in the box below.
 
-It is basicly saying that we want to find the control input $u(t)$ that minimizes the cost function $J$ while satisfying the dynamics of the system (1).
+<div class="lemma-window">
+  <div class="lemma-title" id="value-func">Value function</div>
+  <div style="padding: 1.5em;">
+
+  The value function for a continuous time system $V(x)$ is defined as the minimum cost-to-go, starting from state $x$ at time $t$:
+
+  \[
+    \tag{1.1.4} \label{eq:value-func-ct}
+    \begin{aligned}
+      V(x) = \inf_{u(\cdot) \in \mathcal{U}} & \int_{0}^{\infty} \left( x(\tau)^\top Q x(\tau) + u(\tau)^\top R u(\tau) \right) d\tau \\
+      \text{s.t.} \quad & \dot{x}(\tau) = A x(\tau) + B u(\tau) \\
+      & x(0) = x
+    \end{aligned}
+  \]
+
+  The value function for a discret time system is defined as:
+
+  \[
+    \tag{1.1.5} \label{eq:value-func-dt}
+    \begin{aligned}
+      V_t(x) = \min_{u_t, \ldots, u_{T-1}} & \sum_{k=t}^{T-1} \left( x_k^\top Q x_k + u_k^\top R u_k \right) + x_T^\top S x_T \\
+      \text{s.t.} \quad & x_{k+1} = A x_k + B u_k, \quad k = t, \ldots, T-1 \\
+      & x_t = x
+    \end{aligned}
+  \]
+
+  $V_0(x_0)$ is the optimal cost.
+
+  </div>
+</div>
+
+It is basicly saying that we want to find the control input $u(t)$ that minimizes the cost function $J$ while satisfying the dynamics of the system \eqref{eq:1_1_dynamics}.
 <!-- 
 **Visualization Example:** -->
 
-If we take an initial non-zero state for our satellite, i.e. $x(0) \neq 0$, the satellite is at some weird orientation and position, not zero (unwanted state). Thus the term $x(t)^T Q x(t)$ in the cost function (2) is non-zero and positive. If left in that state without any control input, the cost function $J$ will blow up to infinity as time goes on. This is because the integral from time 0 to infinity in (2) accumulates the positive value of $x(t)^T Q x(t)$ over time.
+If we take an initial non-zero state for our satellite, i.e. $x(0) \neq 0$, the satellite is at some weird orientation and position, non-zero (unwanted state). Thus the term $x(t)^\top Q x(t)$ in the cost function \eqref{eq:cost_func_ct} is non-zero and **positive**. If left in that state without any control input, the cost function $J$ will blow up to infinity as time goes on. This is because the integral from time 0 to infinity in \eqref{eq:cost_func_ct} accumulates the positive value of $x(t)^\top Q x(t)$ over time.
 
 <div class="images">
     <figure>
@@ -733,7 +487,7 @@ If we take an initial non-zero state for our satellite, i.e. $x(0) \neq 0$, the 
     </figure>
 </div>
 
-This is not an optimal solution, we can't leave the satellite in that state as it will yields a cost value of infinity. Instead, what is better is to try to bring back the system to the origin, i.e. $x(t) \to 0$. This will make the term $x(t)^T Q x(t)$ in the cost function (2) decrease over time, thus the integral will converge to a finite value. This is a much better solution as it minimizes the cost function $J$.
+This is not an optimal solution, we can't leave the satellite in that state as it will yields a cost value of infinity. Instead, what is better is to try to bring back the system to the origin, i.e. $x(t) \to 0$. This will make the term $x(t)^\top Q x(t)$ in the cost function \eqref{eq:cost_func_ct} decrease over time, thus the integral will converge to a finite value. This is a much better solution as it minimizes the cost function $J$.
 
 <div class="images">
     <figure>
@@ -748,9 +502,9 @@ This is not an optimal solution, we can't leave the satellite in that state as i
 
 $^*$_The plots are illustrative and not based on actual numerical simulations._
 
-The flip side of the story is how to bring the state back to zero. We can use thrusters, momentum wheels, etc. to influence the state of the satellite. However, using these control inputs also comes with a cost, represented by the term $u(t)^T R u(t)$ in the cost function (2). If we use too much control input, this term will become large and will also contribute to increasing the cost function $J$.
+The flip side of the story is how to bring the state back to zero. In our case, we can use thrusters, momentum wheels, etc. to influence the state of the satellite, meaning we can use the control input $u(t)$. However, using $u(t)$ also comes with a cost, represented by the term $u(t)^\top R u(t)$ in the cost function \eqref{eq:cost_func_ct}. If we use too much control input, this term will become large and will also contribute to increasing the cost function $J$.
 
-The cost function $J$ is a combination of how long the system is away from the origin (non-zero state) and how much non-zero control input we are using to bring it back to the origin. The goal is to find a balance between these two competing objectives, minimizing the overall cost function $J$.
+The cost function is a combination of how long the system is away from the origin (non-zero state) and how much non-zero control input we are using to bring it back to the origin. The goal is to find a balance between these two competing objectives, minimizing the overall cost function $J$.
 
 The matrices $Q$ and $R$ allow us to determine how much we value the state being zero compared to how much we value the control input to be zero. For example, if we set $Q$ to be very "large" and $R$ to be very "small", we are saying that we care a lot about bringing the state back to zero, even if it means using a lot of control input. Conversely, if we set $Q$ to be very "small" and $R$ to be very "large", we are saying that we care more about minimizing the control input, even if it means the state takes longer to return to zero. We say that a control policy is **aggressive** when $Q$ is large and $R$ is small, and **conservative** when $Q$ is small and $R$ is large.
 
@@ -776,7 +530,7 @@ _Note: the terms "large" and "small" here are relative knowing that $Q$ and $R$ 
 
     Let's compute the integrand of the cost function $J$:
     \[
-    x(t)^T Q x(t) + u(t)^T R u(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
+    x(t)^\top Q x(t) + u(t)^\top R u(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
     \]
 
     We can identify $q_{11}$ as the penalty or the weight on the non-zero state $x_1(t)$, $q_{22}$ as the penalty on the non-zero state $x_2(t)$. The $Q$ matrix, by tunning the entries appropriatly, allows us to tune how much we care about each state being non-zero.
@@ -795,7 +549,11 @@ This allows us to set up the optimization problem that we want to solve and to h
 
 We will see in the next chapter that in order to solve the optimization problem, we will need to solve the Riccati equation.
 
-## 1.4: The Riccati Equation
+While the LQR provides an elegant and powerful solution for unconstrained linear systems with quadratic costs, it falls short in many practical scenarios. Real-world systems often have constraints on states and inputs (such as actuator limits, safety boundaries, or physical restrictions) that LQR cannot handle directly. Moreover, LQR assumes perfect model knowledge and does not account for disturbances or uncertainties.
+
+Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporating constraints and optimizing control actions over a finite prediction horizon. MPC can handle multivariable systems, constraints, and even nonlinearities, making it a much more versatile and practical approach for modern control problems. Understanding MPC is therefore essential for advancing in control theory and tackling real-world engineering challenges.
+
+## 1.2: The Riccati Equation
 
 <iframe width="735" height="413"
   src="https://www.youtube.com/embed/wEevt2a4SKI?si=jZOiS9c6RWdX-cTm?&start=2497"
@@ -815,12 +573,12 @@ We will see in the next chapter that in order to solve the optimization problem,
 
 **Video transcript :**
 
-Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $u(t)$ which will make teh whole system optimital. 
+Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $u(t)$ which will make the whole system optimital. 
 
 <div class="formula-window">
   <strong>Recall the optimization problem:</strong>
   \[
-  \min_{u(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( x(t)^T Q x(t) + u(t)^T R u(t) \right) dt
+  \min_{u(t) \in \mathbb{R}^m} \quad J = \int_0^\infty \left( x(t)^\top Q x(t) + u(t)^\top R u(t) \right) dt
   \]
   \[
   \text{s.t.} \quad \dot{x}(t) = Ax(t) + Bu(t)
@@ -828,28 +586,32 @@ Now that we have set up the optimization problem for the Linear Quadratic Regula
 </div>
 
 It is beyound the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
-$$
-u(t) = -Kx(t) \tag{2.2.1}
-$$
+<div>
+  \[
+    u(t) = -Kx(t) \tag{1.2.1} \label{eq:feedback_law_riccati}
+  \]
+</div>
 Where $K$ is the feedback gain matrix, which is given by:
 $$
-K = R^{-1} B^T S
+K = R^{-1} B^\top S
 $$
 Where $S$ is the solution of the (continuous time) algebraic Riccati equation (CARE) ($S$ as size $n \times n +$ symmetric):
-$$
-A^T S + S A - S B R^{-1} B^T S + Q = 0 \tag{2.2.2}
-$$
+<div>
+\[
+  A^\top S + S A - S B R^{-1} B^\top S + Q = 0 \tag{1.2.2} \label{eq:riccati}
+\]
+</div>
 
-If we look back only at (2.2.1), we can see that it is only a full state feedback controller, in other words the optimal way to solve the optimization problem is to use a full state feedback controller. But in order to compute the gain matrix $K$, we need go through several steps.
+If we look back only at \eqref{eq:feedback_law_riccati}, we can see that it is only a full state feedback controller, in other words the optimal way to solve the optimization problem is to use a full state feedback controller. But in order to compute the gain matrix $K$, we need go through several steps.
 
 <div class="lemma-window">
-  <div class="lemma-title">Procedure for LQR</div>
+  <div class="lemma-title">Procedure to solve LQR problems</div>
   <div style="padding: 1.5em;">
     <ol>
       <li>Define the system dynamics: $A$, $B$ (known from the plant)</li>
       <li>Define the cost function weights: $Q$, $R$ (tuning parameters)</li>
-      <li>Solve the Riccati equation (2.2.2) for $S$</li>
-      <li>Compute the optimal gain matrix: $K = R^{-1} B^T S$</li>
+      <li>Solve the Riccati equation \eqref{eq:riccati} for $S$</li>
+      <li>Compute the optimal gain matrix: $K = R^{-1} B^\top S$</li>
       <li>Choose the $K$ solution that yield a stable system</li>
     </ol>
   </div>
@@ -881,11 +643,11 @@ Q = \begin{bmatrix} 1 & 0 \\\\ 0 & 1 \end{bmatrix}, \quad R = \begin{bmatrix} 0.
 $$
 For the sake of this example we choose $Q$ as the identity matrix, meaning that we care equally about both states being zero. We choose $R$ to be a small value, meaning that we are willing to use a lot of control input to bring the states back to zero. We will later solve problems with matrices that are not identities.
 
-The next step is to solve the Riccati equation (2.2.2) for $S$. This can be done using numerical methods or software tools like MATLAB, Python, etc. For this example, let's use Mathematica in order to solve the Riccati equation.
+The next step is to solve the Riccati equation \eqref{eq:riccati} for $S$. This can be done using numerical methods or software tools like MATLAB, Python, etc. For this example, let's use Mathematica in order to solve the Riccati equation.
 
 In Mathematica, we need to use function like `Transpose`, `Simplify`, and `Inverse` to manipulate matrices. The Riccati equation is a matrix equation, so we need to express it in a form that Mathematica can understand. After setting up the equation in Mathematica, we can use the `Solve` function to find the matrix $S$ that satisfies the Riccati equation. As mentionned before, we get several solutions for $S$, but we will only keep the one that yield a stable system.
 
-In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^T S$. Then, we can analyze the closed-loop system dynamics given by $\dot{x}(t) = (A - BK)x(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
+In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^\top S$. Then, we can analyze the closed-loop system dynamics given by $\dot{x}(t) = (A - BK)x(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
 
 _Note: Mathematically, all the solutions for $S$ are valid, but from an engineering perspective, we are only interested in the solution that yield a stable system._
 
@@ -903,7 +665,7 @@ $$
   This concludes the transcript of the video. The following section provides additional exercises and/or explanations not included in the video.
 </div>
 
-## 1.5: Dynamic Programming
+## 1.3: Dynamic Programming
 
 In the previous video, we used the continuous-time algebraic Riccati equation (CARE) to solve the Linear Quadratic Regulator (LQR) problem. However, the derivation of the Riccati equation from the LQR problem was not covered in detail. Here, we will look at the discret-time version of the LQR problem and derive the discrete-time Riccati equation (DARE) using **Dynamic programming**.
 
@@ -924,20 +686,24 @@ $$
 
 * _"An optimal policy has the property that whatever the initial state and initial decisions are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision."_
 
-Meaning we can optimize the first decision instead of all the decisions at once and then make the optimal decision at each time step. The cost function is defined as:
+Meaning we can optimize the first decision instead of all the decisions at once and then make the optimal decision at each time step. We can break down the optimization problem into smaller subproblems and solve them recursively using the value function $V_t(x)$ defined in [previous section](#value-func):
 
-<div>
-  \[
-    V_{0}(X_{0}) 
-    = \min_{u_{0}} \Biggl\{ 
-        \begin{array}{cc}
-          & \min_{u_{1}, \ldots, u_{T} \atop x_{1}, \ldots, x_{T}} &
-                \sum_{t=1}^{T} g_{t}(x_{t}, u_{t}) \\
-          g_{0}(X_{0}, u_{0}) + &\text{s.t.} & x_{t+1} = f_{t}(x_{t}, u_{t}) \\
-          &            & x_{1} = f_{0}(X_{0}, u_{0})
-        \end{array}
-    \Biggr\}
-  \]
+<div class="formula-window">
+  <div>
+    \[
+      V_{0}(X_{0}) 
+      = \min_{u_{0}} \Biggl\{ 
+          \begin{array}{cc}
+            & \min_{u_{1}, \ldots, u_{T} \atop x_{1}, \ldots, x_{T}} &
+                  \sum_{t=1}^{T} g_{t}(x_{t}, u_{t}) \\
+            g_{0}(X_{0}, u_{0}) + &\text{s.t.} & x_{t+1} = f_{t}(x_{t}, u_{t}) \\
+            &            & x_{1} = f_{0}(X_{0}, u_{0})
+          \end{array}
+      \Biggr\}
+    \]
+  </div>
+
+  where $g_t(x_t, u_t)$ is an arbitrary cost function.
 </div>
 
 Note that
@@ -948,7 +714,7 @@ The problem are nested minimizations, we can solve them recursively.
 
 <u>Derivation of the discrete-time Riccati equation (DARE):</u>
 
-We us **Dynamic programming** to solve the discrete-time LQR problem. The idea is to break down the optimization problem into smaller subproblems and solve them recursively. We can first look at the last stage of the optimization problem, at that tome-step , the solution is trivial as there is no future cost to consider (no input anymore). 
+We us **Dynamic programming** to solve the discrete-time LQR problem. The idea is to break down the optimization problem into smaller subproblems and solve them recursively. We can first look at the last stage of the optimization problem, at that terminal-step, the solution is trivial as there is no future cost to consider (no input anymore). 
 $$
 V_T(x_T) = g_T(x_T)
 $$
@@ -970,37 +736,37 @@ We can continue this process recursively until we reach the initial time step. A
 
 Now if we introduce the specific quadratic cost function and linear dynamics of the discrete-time LQR problem:
 $$
-V_t(x) = \min_{u_t,\cdots,u_{T-1}} \left( x_t^T Q x_t + u_t^T R u_t + V_{t+1}(A x + B u) \right)
+V_t(x) = \min_{u_t,\cdots,u_{T-1}} \left( x_t^\top Q x_t + u_t^\top R u_t + V_{t+1}(A x + B u) \right)
 $$
-with the terminal cost $ V_T(x)=x^TSx$.
+with the terminal cost $ V_T(x)=x^\top Sx$.
 
 In the following section we will derive the induction step of the dynamic programming algorithm, which will lead us to the discrete-time Riccati equation (DARE).
 
 The assumptions are thate the cost function is quadratic, the dynamics are linear and there are no constraints on the system.
 
 $$
-V_T(x) = x^T S x
+V_T(x) = x^\top S x
 $$
 $$
-V_{T+1}(x) = x^T P_t x
+V_{T+1}(x) = x^\top P_t x
 $$
-We will show that $V_t(x)=x^TP_tx$ and derive a formula for $P_t$
+We will show that $V_t(x)=x^\top P_tx$ and derive a formula for $P_t$
 <div>
 \[
 \begin{align}
-V_t(x) &= x^T Q x + \min_{u}\left(u^T R u + V_{T+1}(Ax+Bu)\right) \\
-&= x^T Q x + \min_{u}\left(u^T R u + (Ax+Bu)^T P_{T+1}(Ax+Bu)\right) \\
-&= x^T Q x + \min_{u}\left(u^T\left(R+B^T P_{T+1} B\right)u 
-          + 2 B^T P_{T+1} A x + x^T A^T P_{T+1} A x\right) \\
-&= x^T Q x + x^T A^T P_{T+1} A x 
-          + \min_{u}\left(u^T\left(R+B^T P_{T+1} B\right)u + 2 B^T P_{T+1} A x\right) \\
-&= x^T\left(Q+A^T P_{T+1} A\right)x 
-          + x^T A P_{T+1} B\left(R+B^T P_{T+1} B\right)^{-1}\left(R+B^T P_{T+1} B\right) \\
-&\quad \left(R+B^T P_{T+1} B\right)^{-1} B^T P_{T+1} A x 
-      - 2 x^T A^T P_{T+1} B\left(R+B^T P_{T+1} B\right)^{-1} B^T P_{T+1} A x \\
-&= x^T\left(Q + A^T P_{T+1} A 
-          - A^T P_{T+1} B\left(R+B^T P_{T+1} B\right)^{-1} B^T P_{T+1} A\right) x \\
-V_t(x) &= x^T P_t x
+V_t(x) &= x^\top Q x + \min_{u}\left(u^\top R u + V_{T+1}(Ax+Bu)\right) \\
+&= x^\top Q x + \min_{u}\left(u^\top R u + (Ax+Bu)^\top P_{T+1}(Ax+Bu)\right) \\
+&= x^\top Q x + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u 
+          + 2 B^\top P_{T+1} A x + x^\top A^\top P_{T+1} A x\right) \\
+&= x^\top Q x + x^\top A^\top P_{T+1} A x 
+          + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u + 2 B^\top P_{T+1} A x\right) \\
+&= x^\top\left(Q+A^\top P_{T+1} A\right)x 
+          + x^\top A P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1}\left(R+B^\top P_{T+1} B\right) \\
+&\quad \left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x 
+      - 2 x^\top A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x \\
+&= x^\top\left(Q + A^\top P_{T+1} A 
+          - A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A\right) x \\
+V_t(x) &= x^\top P_t x
 \end{align}
 \]
 </div>
@@ -1011,8 +777,8 @@ V_t(x) &= x^T P_t x
     We use the gradient to find the minimum for $u$, denoted $u^*$:
     \[
     \begin{aligned}
-    \frac{1}{2}\text{gradient}&=\left(R+B^TP_{T+1}B\right)u+B^TP_{T+1}Ax=0\\ 
-    u^* &= -\left(R+B^TP_{T+1}B\right)^{-1}B^TP_{T+1}Ax
+    \frac{1}{2}\text{gradient}&=\left(R+B^\top P_{T+1}B\right)u+B^\top P_{T+1}Ax=0\\ 
+    u^* &= -\left(R+B^\top P_{T+1}B\right)^{-1}B^\top P_{T+1}Ax
     \end{aligned}
     \]
   </div>
@@ -1021,75 +787,142 @@ V_t(x) &= x^T P_t x
 <div class="formula-window">
   This derivation allowed to find an uptimal feedback control:
   \[
-  u_t=-\left(R+B^TP_{T+1}B\right)^{-1}B^TP_{T+1}Ax_t
+  u_t=-\left(R+B^\top P_{T+1}B\right)^{-1}B^\top P_{T+1}Ax_t
   \]
   where 
   \[
-  P_{t-1}=Q+A^TP_{T+1}A - A^TP_{T+1}B\left(R+B^TP_{T+1}B\right)^{-1}B^TP_{T+1}A
+  P_{t-1}=Q+A^\top P_{T+1}A - A^\top P_{T+1}B\left(R+B^\top P_{T+1}B\right)^{-1}B^\top P_{T+1}A
   \]
   For $t\to -\infty$, $P_t$ converges to a constant matrix $P$, the solution of the **discrete-time algebraic Riccati equation** (DARE):
   \[
-  P=Q+A^TPA - A^TPB\left(R+B^TPB\right)^{-1}B^TPA
+  P=Q+A^\top PA - A^\top PB\left(R+B^\top PB\right)^{-1}B^\top PA
   \]
 </div>
 
-## ? 1.6: Intro to state estimation ?
+## 1.4: Controllability and Observability
+
+### Controllability
+
+We consider the following system 
+
+$$
+\dot{x} = Ax + Bu
+$$
+
+<div>
+\[
+\begin{align}
+\text{where } & x\in \mathbb{R}^n \text{ is the state vector,} \\
+&u \in \mathbb{R}^m \text{ is the input vector,} \\
+&A \in \mathbb{R}^{n\times n} \text{ is the system matrix,} \\
+&B \in \mathbb{R}^{n\times m} \text{ is the input matrix.}
+\end{align}
+\]
+</div>
+
+We want to set the eigenvalues of $A$ to be in the left half plane, so that the system is stable. We can use the feedback control given by the matrix $B$ and the input $u$ to do so. But first, we need to ckeck if the dynamics of the system allow us to manipulate the eigenvalues of $A$ using the input $u$. This is where the concept of **controllability** comes into play. If the system is controllable, then we can design a control law that will allow us to place the eigenvalues of $A$ in the left half plane. 
+
+For linear systems, we know that an optimal control law is given by $u=-Kx$, where $K \in \mathbb{R}^{m \times n}$. Which leads to the dynamics:
+$$
+\dot{x} = Ax - BKx = (A-BK)x
+$$
+
+The system is controllable if we can chose $u=-Kx$ and it allows us to place the eigenvalues of the system wherever we want in the complex plane. Moreover, a controllable system means that we can drive the state $x$ from any initial state $x(0)$ to any final state $x_f$ in a finite time using an appropriate input $u(t)$.
+
+In most of the systems, the matrices $A$ and $B$ are given and fixed due to the physical properties of the system, but we get to choose the input $u(t)$. The only thing that impacts whether the system is controllable or not are the matrices $A$ and $B$, depending on those matrices, the system can be easy to control or impossible to control.
+
+To check if a system is controllable, we can use the **controllability matrix** defined as:
+$$
+\mathcal{C} = \begin{bmatrix} B & AB & A^2B & \cdots & A^{n-1}B \end{bmatrix}
+$$
+
+The system is controllable if the controllability matrix $\mathcal{C}$ has full row rank, i.e. $\text{rank}(\mathcal{C}) = n$. If the rank of $\mathcal{C}$ is less than $n$, then the system is not controllable.
+
+<div class="lemma-window">
+  <div class="lemma-title" id="HPB-controllability">Hautus for controllability</div>
+  <div style="padding: 1.5em;">
+    Another way to check if a system is controllable is with the <strong>Popov-Belevitch-Hautus (PBH) test</strong>. The PBH test states that the system is controllable if and only if
+    
+    \[
+    \text{rank}\begin{bmatrix} \lambda I - A & B \end{bmatrix} = n
+    \]
+
+    for every eigenvalue $\lambda$ of $A$. If there exists an eigenvalue $\lambda$ such that the rank condition is not satisfied, then the system is not controllable.
+  </div>
+</div>
+
+### Observability
+
+Similarly to controllability, we consider the following system
+
+$$
+\dot{x} = Ax + Bu
+$$
+
+<div>
+\[
+\begin{align}
+\text{where } & x\in \mathbb{R}^n \text{ is the state vector,} \\
+&u \in \mathbb{R}^m \text{ is the input vector,} \\
+&A \in \mathbb{R}^{n\times n} \text{ is the system matrix,} \\
+&B \in \mathbb{R}^{n\times m} \text{ is the input matrix.}
+\end{align}
+\]
+</div>
+
+We also consider the output equation:
+$$
+y = Cx + Du
+$$
+
+<div>
+\[
+\begin{align}
+\text{where } & y\in \mathbb{R}^p \text{ is the output vector,} \\
+&C \in \mathbb{R}^{p\times n} \text{ is the output matrix,} \\
+&D \in \mathbb{R}^{p\times m} \text{ is the feedthrough matrix.}
+\end{align}
+\]
+</div>
+
+We want to be able to estimate the state $x$ of the system using the output $y$. This is where the concept of **observability** comes into play. If the system is observable, then we can design an observer that will allow us to estimate the state $x$ using the output $y$.
+
+To check if a system is observable, we can use the **observability matrix** defined as:
+$$
+\mathcal{O} = \begin{bmatrix} C \\ CA \\ CA^2 \\ \vdots \\ CA^{n-1} \end{bmatrix}
+$$
+
+The system is observable if the observability matrix $\mathcal{O}$ has full column rank, i.e. $\text{rank}(\mathcal{O}) = n$. If the rank of $\mathcal{O}$ is less than $n$, then the system is not observable.
+
+<div class="lemma-window">
+  <div class="lemma-title" id="HPB-observability">Hautus for observability</div>
+  <div style="padding: 1.5em;">
+    The same way as for controllability, we can use the <strong>Popov-Belevitch-Hautus (PBH) test</strong> to check if a system is observable. The PBH test states that the system is observable if and only if
+    
+    \[
+    \text{rank}\begin{bmatrix} \lambda I - A \\ C \end{bmatrix} = n
+    \]
+
+    for every eigenvalue $\lambda$ of $A$. If there exists an eigenvalue $\lambda$ such that the rank condition is not satisfied, then the system is not observable.
+  </div>
+</div>
+
+<!-- ## 1.5: Introduction to state estimation
+
+In most practical applications, it is not possible to directly measure all the states of a system. Even in the few cases where this is feasible, the measurements are often corrupted by sensor and process noise. This creates the challenge of obtaining reliable state estimates from noisy and incomplete output measurements—precisely the goal of **state estimation**.
+
+In this section, we introduce the probabilistic framework for state estimation in its simplest form: a linear discrete-time model subject to normally distributed process and measurement noise. In this setting, the **Kalman filter** provides the optimal state estimator. Later in the course, we will revisit the state estimation problem in more general contexts and present analytical solutions such as the Kalman filter in greater detail.
+
+We assume that the reader is familiar with the concepts of a random variable, probability density and distribution, the multivariate normal distribution, mean and variance, statistical independence, and conditional probability.  -->
+<!-- create an appindix for it ??? -->
+
+---
 
 ## Exercises
 
 [See notations](#notations)
 
-**Exercise 1.1: Applying Newton's method**
-<!-- Ex 9.2 in https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf -->
-
-Consider the problem of minimizing $f(x)=x^{\frac{4}{3}}=(\sqrt[3]{x})^4$. Note that 0 is a global minimizer of $f$.
-
-<ol type="a">
-  <li>Write down the algorithm for Newton's metod applied to this problem</li>
-  <li>Show thar as long as teh starting point is not 0, the algorithm in part 1. does not converge to 0 (no matter how close to 0 we start).</li>
-</ol>
-
-<details markdown="1">
-  <summary><strong>Solution</strong></summary>
-  <div>
-    1. We compute $f'(x)$ and $f'\'(x)$:
-    \[
-    \begin{align}
-    f'(x) &= \frac{4}{3} x^{\frac{1}{3}} \\
-    f''(x) &= \frac{4}{9} x^{-\frac{2}{3}}
-    \end{align}  
-    \]
-    Therefore the Newton's algorithm for this problem takes the form 
-    \[
-    x_{k+1} = x_k - \frac{\frac{4}{3} x_k^{\frac{1}{3}}}{\frac{4}{9} x_k^{-\frac{2}{3}}} = -2 x_k
-    \]
-    2. From part 1., we have $x_k = -2 x_k$. Therefore, as long as $x_0 \neq 0$, the sequence $\{x_k\}$ diverges and does not converge to 0.
-  </div>
-
-</details>
-
-**Exercise 1.2: Convex Set**
-<!-- Ex 4.2 in https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf -->
-
-Show that the set $(x\in \mathbb{R}^n \mid \|x\| \leq r)$ is convex, where $r>0$ is a given real number, and $\|x\| = \sqrt{x^Tx}$ is the Euclidean norm of $x\in \mathbb{R}^n$.
-
-<details markdown="1">
-  <summary><strong>Solution</strong></summary>
-  Let $u, v \in \Theta = \{x\in \mathbb{R}^n: \|x\| \leq r\}$, and $\alpha \in [0, 1]$. Suppose $z=\alpha u + (1-\alpha)v$. To show that $\Theta$ is convex, we need to show that $z\in\Theta$, i.e., $\|z\| \leq r$. To this end,
-  $$
-  \begin{aligned}
-    \|z\|^2 &= (\alpha u + (1-\alpha)v)^T (\alpha u + (1-\alpha)v) \\
-    &= \alpha^2 \|u\|^2 + 2 \alpha (1-\alpha)u^Tv + (1-\alpha)^2\|v\|^2
-  \end{aligned}
-  $$
-  Since $u,v \in \Theta$, then $\|u\|^2 \leq r^2$ and $\|v\|^2 \leq r^2$. Furthermore, by the Cauchy-Schwarz inequality, we have $u^Tv \leq \|u\| \|v\| \leq r^2$. Therefore,
-  $$
-  \|z\|^2\leq\alpha^2 r^2 + 2 \alpha(1-\alpha)r^2 +(1-\alpha)^2 r^2 = r^2
-  $$
-  Hence, $z\in\Theta$, which shows that $\Theta$ is a convex set, i.e., any point on the line segment joining $u$ and $v$ is also in $\Theta$.
-</details>
-
-**Exercise 1.3: State space form for chemical reaction model**
+**Exercise 1.1: State space form for chemical reaction model**
 <!-- Exercise 1.1: State space form for chemical reaction model - Model Predictive Control: Theory, Computation, and Design 2nd Edition -->
 
 Consider the following chemical reaction kinematics for a two-step series reaction:
@@ -1267,7 +1100,7 @@ We substitute the rate laws into the material balances and specify the starting 
   </div>
 </details>
 
-**Exercise 1.4: Time to Laplace domain**
+**Exercise 1.2: Time to Laplace domain**
 <!-- Exercise 1.4: Time to Laplace domain - Model Predictive Control: Theory, Computation, and Design 2nd Edition -->
 
 Take the Laplace Transform of the following det of differential equations and fine the transfer function, G(s) connecting $u(s)$ and $y(s)$, $y=Gu$.
@@ -1307,12 +1140,12 @@ For $x\in\mathbb{R}^n$, $y\in\mathbb{R}^p$ and $u\in\mathbb{R}^m$, what is the d
   The initial state $x_0$ produces the extra term $C(sI-A)^{-1}x_0$ in $Y(s)$. This term is independent of the input $U(s)$ and represents the system’s natural (homogeneous) response due to the initial condition. If the initial condition is zero ($x_0=0$), the extra term vanishes and $Y(s)=G(s)U(s)$.
 </details>
 
-**Exercise 1.5: Sum of quadratic functions**
+**Exercise 1.3: Sum of quadratic functions**
 <!-- Example 1.1: Sum of quadratic functions - Model Predictive Control: Theory, Computation, and Design 2nd Edition -->
 
 Consider the two quadratic unctions given by: 
 $$
-V_1(x)=\frac{1}{2}(x-a)^TA(x-a) \quad V_2(x)=\frac{1}{2}(x-b)^TB(x-b)
+V_1(x)=\frac{1}{2}(x-a)^\top A(x-a) \quad V_2(x)=\frac{1}{2}(x-b)^\top B(x-b)
 $$
 in which $A$, $B>0$ are positive definite matrices and $a$ and $b$ are n-vectors locating the minimum of each function. The figure below displays the elipses defined by the level set $V_1(x)=\frac{1}{4}$ and $V_2(x)=\frac{1}{4}$ for the following parameters:
 $$
@@ -1334,33 +1167,33 @@ $$
 
 (a) Show that the sum $V(x)=V_1(x)+V_2(x)$ is also quadratic
 $$
-V(x)=\frac{1}{2}((x-v)^TH(x-v)+d)
+V(x)=\frac{1}{2}((x-v)^\top H(x-v)+d)
 $$
 in which 
 $$
 H=A+B \quad v=H^{-1}(Aa+Bb)
 $$
 $$
-d=-(Aa+Bb)^TH^{-1}(Aa+Bb)+a^TAa+b^TBb
+d=-(Aa+Bb)^\top H^{-1}(Aa+Bb)+a^\top Aa+b^\top Bb
 $$
 and verify the three ellipses given in the figure above.
 
 (b) Considere the generalization useful in the discussion of th eupcomming regulation and estimation problems. Let 
 $$
-V_1(x)=\frac{1}{2}(x-a)^TA(x-a) \quad V_2(x)=\frac{1}{2}(x-b)^TB(x-b)
+V_1(x)=\frac{1}{2}(x-a)^\top A(x-a) \quad V_2(x)=\frac{1}{2}(x-b)^\top B(x-b)
 $$
 Derive the expressions for $H$, $v$ and $d$ in this case.
 
 (c) Use the matrix inversion lemma and show that $V(x)$ of part (b) can be expressed also in an inverse form, which is useful in state estimation problems
 
 $$
-V(x)=\frac{1}{2}((x-v)^T\tilde{H}^{-1}(x-v)+\text{constante})
+V(x)=\frac{1}{2}((x-v)^\top\tilde{H}^{-1}(x-v)+\text{constante})
 $$
 $$
-H^{-1}=A^{-1}-A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}CA^{-1}
+H^{-1}=A^{-1}-A^{-1}C^\top(CA^{-1}C^\top+B^{-1})^{-1}CA^{-1}
 $$
 $$
-v=a+A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}(b-Ca)
+v=a+A^{-1}C^\top(CA^{-1}C^\top+B^{-1})^{-1}(b-Ca)
 $$
 
 <details markdown="1">
@@ -1386,7 +1219,7 @@ $$
 
   (c) A host of other useful control-related inversion formulas follow from these results. Equate the (1,1) or (2,2) entries of $Z^{-1}$ and derive the identity
   $$
-  (A + B C D)^{-1} = A^{-1} - A^{-1} B (DA^{-1} B + C^{-1})^{-1} D A^{-1}\tag{(1.54)}
+  (A + B C D)^{-1} = A^{-1} - A^{-1} B (DA^{-1} B + C^{-1})^{-1} D A^{-1} \tag{1.54} \label{1.54}
   $$
   A usefull special case of this result is 
   $$
@@ -1395,20 +1228,20 @@ $$
 
   (d) Equate the (1,2) or (2,1) entries of $Z^{-1}$ and derive the identity
   $$
-  (A+BCD)^{-1} BC= A^{-1} B (D A^{-1} B + C^{-1})^{-1}\tag{(1.55)}
+  (A+BCD)^{-1} BC= A^{-1} B (D A^{-1} B + C^{-1})^{-1} \tag{1.55} \label{1.55}
   $$
-  Equations (1.54) and (1.55) prove especially useful in rearranging formulas in least squares estimation.
+  Equations \eqref{1.54} and \eqref{1.55} prove especially useful in rearranging formulas in least squares estimation.
 </details>
 
 <details markdown="1">
   <summary><strong>Solution of the exercise</strong></summary>
   (a) The sum of two quadratics is also quadratic, so we parametrize the sum as 
   $$
-  V(x)=\frac{1}{2}((x-v)^TH(x-v)+d)
+  V(x)=\frac{1}{2}((x-v)^\top H(x-v)+d)
   $$
   and solve for $v$, $H$ and $d$. Comparing the expension of the quadratic of the right- and left-hand sides gives 
   $$
-  x^THx-2x^THv+v^THv+d=x^T(A+B)x-2x^T(Aa+Bb)+a^TAa+b^TBb
+  x^\top Hx-2x^\top Hv+v^\top Hv+d=x^\top(A+B)x-2x^\top(Aa+Bb)+a^\top Aa+b^\top Bb
   $$
   Equating terms at each order gives 
   <div>
@@ -1416,7 +1249,7 @@ $$
     \begin{align}
     H&=A+B \\
     v&=H^{-1}(Aa+Bb) \\
-    d&=-v^THv+a^TAa+b^TBb=-(Aa+Bb)^TH^{-1}(Aa+Bb)+a^TAa+b^TBb
+    d&=-v^\top Hv+a^\top Aa+b^\top Bb=-(Aa+Bb)^\top H^{-1}(Aa+Bb)+a^\top Aa+b^\top Bb
     \end{align}  
     \]
   </div>
@@ -1435,47 +1268,49 @@ $$
   <div>
     \[
     \begin{align}
-    H&=A+C^TbC \\
-    v&=H^{-1}(Aa+C^TBb) \\
-    d&=-(Aa+C^TBb)^TH^{-1}(Aa+C^TBb)+a^TAa+b^TBb \tag{*}
+    H&=A+C^\top bC \\
+    v&=H^{-1}(Aa+C^\top Bb) \\
+    d&=-(Aa+C^\top Bb)^\top H^{-1}(Aa+C^\top Bb)+a^\top Aa+b^\top Bb \tag{*} \label{d_expanded}
     \end{align}  
     \]
   </div>
-  Notice the $H$ is positive definite since $A$ is positive definite and $C^TBC$ is positive semi-definite for any $C$.
+  Notice the $H$ is positive definite since $A$ is positive definite and $C^\top BC$ is positive semi-definite for any $C$.
 
   (c)Define $x=x-a$ and $y=b-Ca$ and express the problem as 
   $$
-  V(x)=\frac{1}{2}x^TAx+\frac{1}{2}(C(x+a)-b)^TB(Cx+a-b)=\frac{1}{2}x^TAx+\frac{1}{2}(Cx-b)^TB(Cx-b)
+  V(x)=\frac{1}{2}x^\top Ax+\frac{1}{2}(C(x+a)-b)^\top B(Cx+a-b)=\frac{1}{2}x^\top Ax+\frac{1}{2}(Cx-b)^\top B(Cx-b)
   $$
   Apply the solution from part (b) to obtain 
   $$
-  V(x)=\frac{1}{2}((x-v)^TH(x-v)+d) \\\\
+  V(x)=\frac{1}{2}((x-v)^\top H(x-v)+d) \\\\
   $$
   $$
-  H=A+C^TBC \quad v=H^{-1}C^TBb\\\\
+  H=A+C^\top BC \quad v=H^{-1}C^\top Bb\\\\
   $$
   and we do not need to evaluate $d$. From the matrix invesion lemma, use (1.54) on $H$ and (1.55) on $v$ to obtain 
   $$
-  \tilde{H}=A^{-1}-A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}CA^{-1}
+  \tilde{H}=A^{-1}-A^{-1}C^\top (CA^{-1}C^\top +B^{-1})^{-1}CA^{-1}
   $$
   $$
-  v=A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}(b-Ca)
+  v=A^{-1}C^\top (CA^{-1}C^\top +B^{-1})^{-1}(b-Ca)
   $$
   The function $V(x)$ can be expressed as
   <div>
     \[
     \begin{align}
-    V(x)&=\frac{1}{2}((x-v)^TH(x-v)+d) \\
-    &=\frac{1}{2}((x-a-v)^TH(x-a-v)+d) \\
-    &=\frac{1}{2}((x-v)^TH(x-v)+d)
+    V(x)&=\frac{1}{2}((x-v)^\top H(x-v)+d) \\
+    &=\frac{1}{2}((x-a-v)^\top H(x-a-v)+d) \\
+    &=\frac{1}{2}((x-v)^\top H(x-v)+d)
     \end{align}  
     \]
   </div>
   where
   $$
-  v=a+A^{-1}C^T(CA^{-1}C^T+B^{-1})^{-1}(b-Ca) \quad \quad □
+  v=a+A^{-1}C^\top(CA^{-1}C^\top+B^{-1})^{-1}(b-Ca) \quad \quad □
   $$
 </details>
+
+---
 
 # Chapter 2: Classical MPC
 
@@ -1483,36 +1318,44 @@ $$
 
 ## 2.1: Introduction
 
+Model Predictive Control (MPC) is an advanced method of process control that has been widely adopted in various industries due to its ability to handle multivariable control problems with constraints. The core idea of MPC is to use a model of the system to predict future behavior and optimize control actions over a finite time horizon.
+
+MPC is a form of control in which the control action is obtained by solving, at each sampling instant (*online*), a finite horizon optimal control problem, using the current state of the plant as the initial state. The optimization yields an optimal control sequence and the first control in this sequence is applied to the plant. This process is repeated at the next sampling instant, creating a feedback loop. MPC differs, therefore, from tratitional control methods, which typically rely on a fixed control law derived offline.
+
+The great advantage of MPC is that open-loop optimal control problems often can be solved rapidly enough, using standard mathematical programming algorithms, to permit the use of MPC even though the system being controlled is nonlinear, and hard constraints on states and controls must be satisfed.
+
+In this chapter we study MPC for the case when the state is known. This case is particularly important, even though it rarely arises in practice, because important properties, such as stability and performance, may be relatively easily established.
+
 ## 2.2: Invariant Sets
 
 ### Invariance
 
 <div class="lemma-window">
-  <div class="lemma-title">Definition 2.1: Positively invariant set</div>
+  <div class="lemma-title" id="def-2-1-positive-invariant">Definition 2.1: Positively invariant set</div>
   <div style="padding: 1.5em;">
     A set $\mathcal{X} \subseteq \mathbb{R}^{n_x}$ is positively invariant under the dynamics defined by
     \[
-      u_{i\mid k} = K x_{i\mid k}, \quad i = N, N+1, \cdots \tag{2.1}
+      u_{k} = K x_{k}, \quad k = N, N+1, \cdots \tag{2.2.1} \label{eq:u_control}
     \]
     and
     \[
-      x_{i+1\mid k} = \Phi x_{i\mid k}, \quad i = N, N+1, \cdots \tag{2.2}
+      x_{k+1} = \Phi x_{k}, \quad k = N, N+1, \cdots \tag{2.2.2} \label{eq:x_dynamics}
     \]
     (where $\Phi = A+BK$ and $x_{0\mid k}=x_k$)
     and the constraints 
     \[
-    Fx+Gu \leq \mathbf{1} \quad \text{with} \quad \mathbf{1}=\begin{bmatrix} 1 & \cdots & 1 \end{bmatrix}^T \in \mathbb{R}^{n_c} \tag{2.3}
+    Fx+Gu \leq \mathbf{1} \quad \text{with} \quad \mathbf{1}=\begin{bmatrix} 1 & \cdots & 1 \end{bmatrix}^\top \in \mathbb{R}^{n_c} \tag{2.2.3} \label{eq:constraints}
     \]
     if and only if $(Fx+Gu \leq \mathbf{1})$ and $\Phi x \in \mathcal{X}$, for all $ \in\mathcal{X}$.
   </div>
 </div>
 
-The invariant set will provide a set of initial states for wich the trajectories will never violate the system constraints. In order to increase the applicability of the MPC algorithm, and in particular to increase the size of the set of initial conditions $x_{0\|k}$ for which the terminal condition $x_{N\|k} \in \mathcal{X}_T$ can be met, it is important to choose the maximal positively invariant set as the terminal constraint set. This set is defined as follows. 
+The invariant set will provide a set of initial states for wich the trajectories will never violate the system constraints. In order to increase the applicability of the MPC algorithm, and in particular to increase the size of the set of initial conditions $x_{0}$ for which the terminal condition $x_{N} \in \mathcal{X}_T$ can be met, it is important to choose the maximal positively invariant set as the terminal constraint set. This set is defined as follows. 
 
 <div class="lemma-window">
-  <div class="lemma-title">Definition 2.2: Maximal positively invariant set</div>
+  <div class="lemma-title" id="def-2-2-max-positive-invariant">Definition 2.2: Maximal positively invariant set</div>
   <div style="padding: 1.5em;">
-    The maximal positively invariant (MPI) set under the dynamics of (2.1) and (2.2) and the constraints (2.3) is the union of all sets that are positively invariant under these dynamics and constraints. We will denotate this set as $\mathcal{X}_\infty$ of $\mathcal{X}^{\text{MPI}}$.
+    The maximal positively invariant (MPI) set under the dynamics of \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} is the union of all sets that are positively invariant under these dynamics and constraints. We will denotate this set as $\mathcal{X}_\infty$ of $\mathcal{X}^{\text{MPI}}$.
   </div>
 </div>
 
@@ -1523,11 +1366,11 @@ The invariant set will provide a set of initial states for wich the trajectories
 </div>
 
 <div class="lemma-window">
-  <div class="lemma-title">Theorem 2.1</div>
+  <div class="lemma-title" id="th-2-1">Theorem 2.1</div>
   <div style="padding: 1.5em;">
-  The MPI set for the dynamics defined by (2.1) and (2.2) and the constraints (2.3) can be expressed
+  The MPI set for the dynamics defined by \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} can be expressed
   \[
-    \mathcal{X}  \: \colon =  \{ x \: \colon \: (F+GK)\Phi^i x \leq \mathbf{1}, \quad i=0, \cdots, v\} \tag{2.4}
+    \mathcal{X}  \: \colon =  \{ x \: \colon \: (F+GK)\Phi^i x \leq \mathbf{1}, \quad i=0, \cdots, v\} \tag{2.2.4} \label{eq:mpi_set}
   \]
   where $v$ is the smallest positive integer such that $(F+GK)\Phi^{v+1}x\leq \mathbf{1}$, for all $x$ satisfying $(F+GK)\Phi^{i}, i=0, \cdots, v$. If $\Phi$ i strictly stable and $(\Phi, F+GK)$ is observable, then $v$ is necessarely finite.
   </div>
@@ -1535,23 +1378,38 @@ The invariant set will provide a set of initial states for wich the trajectories
 
 <details markdown="1">
   <summary><strong>Proof</strong></summary>
+
+  Let consider 
+  
   <div>
-  Let $\mathcal{X}^{(n)}= \{ x \: \colon \: (F+GK)\Phi^i x \leq \mathbf{1}, i=0, \cdots, n \}$ for $n \geq 0$, then it can be shown that (2.4) holds for some finite $v$ using the definition on maximal positively invariant set to show that the MPI set $\mathcal{X}^{\text{MPI}}$ is equal to $\mathcal{X}^{(v)}$ for finite $v$.
+  \[
+    \mathcal{X}^{(n)}= \{ x \, \colon \, (F+GK)\Phi^i x \leq \mathbf{1}, i=0, \cdots, n \} \quad \text{for } n \geq 0
+  \] 
   </div>
+  
+  then it can be shown that \eqref{eq:mpi_set} holds for some finite $v$ using the [definition on maximal positively invariant set](#def-2-2-max-positive-invariant) to show that the MPI set $\mathcal{X}^{\text{MPI}}$ is equal to $\mathcal{X}^{(v)}$ for finite $v$.
 
-  In particular, if $x_{0\mid k} \notin \mathcal{X}^{(n)}$ for a given $n$, then the constraint (2.3) must be violated under the dynamics of (2.1) and (2.2). By Definition (2.2) therefore, any $x\notin \mathcal{X}^{(n)}$ cannot lie in $\mathcal{X}^{\text{MPI}}$, so $\mathcal{X}^{(n)}$ must contain $\mathcal{X}^{\text{MPI}}, for all $n\geq0$.
+  In particular, if $x_{0\mid k} \notin \mathcal{X}^{(n)}$ for a given $n$, then the constraint \eqref{eq:constraints} must be violated under the dynamics of \eqref{eq:u_control} and \eqref{eq:x_dynamics}. By [Definition 2.2](#def-2-2-max-positive-invariant) therefore, any $x\notin \mathcal{X}^{(n)}$ cannot lie in $\mathcal{X}^{\text{MPI}}$, so $\mathcal{X}^{(n)}$ must contain $\mathcal{X}^{\text{MPI}}$, for all $n\geq0$.
 
-  Furthemore, if $(F+GK)\Phi^{v+1}x\leq \mathbf{1}$, for all $x \in \mathcal{X}^{(v)}$, then $\Phi x\in\mathcal{X}^{(v)}$ must hold hold whenever $x \in \mathcal{X}^{(v)}$ (since $x \in \mathcal{X}^{(v)}$ and $(F+GK)\Phi^{v+1} \leq \mathbf{1}$ imply $(F+GK)\Phi^{v+1}(\Phi x) \leq \mathbf{1}$ for $i=0, \cdots, v$). But from the definition of $\mathcal{X}^{(v)}$ we have $(F+GK)x\leq \mathbf{1}$ for all $x\in\mathcal{X}^{(v)}$, and therefore $\mathcal{X}^{(v)}$ is positively invariant (2.1), (2.2) and (2.3). From Definition (2.2) it can be concluded that $\mathcal{X}^{(v)}$ is a subset of $\mathcal{X}^{\text{MPI}}$, and therefore equal to $\mathcal{X}^{\text{MPI}}$.
+  Furthemore, if $(F+GK)\Phi^{v+1}x\leq \mathbf{1}$, for all $x \in \mathcal{X}^{(v)}$, then $\Phi x\in\mathcal{X}^{(v)}$ must hold hold whenever $x \in \mathcal{X}^{(v)}$ (since $x \in \mathcal{X}^{(v)}$ and $(F+GK)\Phi^{v+1} \leq \mathbf{1}$ imply $(F+GK)\Phi^{v+1}(\Phi x) \leq \mathbf{1}$ for $i=0, \cdots, v$). But from the definition of $\mathcal{X}^{(v)}$ we have $(F+GK)x\leq \mathbf{1}$ for all $x\in\mathcal{X}^{(v)}$, and therefore $\mathcal{X}^{(v)}$ is positively invariant \eqref{eq:u_control}, \eqref{eq:x_dynamics} and \eqref{eq:constraints}. From [Definition 2.2](#def-2-2-max-positive-invariant) it can be concluded that $\mathcal{X}^{(v)}$ is a subset of $\mathcal{X}^{\text{MPI}}$, and therefore equal to $\mathcal{X}^{\text{MPI}}$.
 
-  Finally, for $v \geq n_x$, the set $\mathcal{X}^{(v)}$ is necessarily bounded if $(\Phi,F+GK)$ is observable, and, since $\Phi$ is strictly stable, the set $\{x \mid (F+KG)\Phi^{(v+1)}x\leq\mathbf{1}\}$ must contain $\mathcal{X}^{(v)}$ for finite $v$; therefore $\mathcal{X}^{\text{MPI}}$ must be defined by (2.4) for some finite $v$.
+  Finally, for $v \geq n_x$, the set $\mathcal{X}^{(v)}$ is necessarily bounded if $(\Phi,F+GK)$ is observable, and, since $\Phi$ is strictly stable, the set 
+  
+  <div>
+  \[
+    \{x \mid (F+KG)\Phi^{(v+1)}x\leq\mathbf{1}\}
+  \]
+  </div>
+  
+  must contain $\mathcal{X}^{(v)}$ for finite $v$; therefore $\mathcal{X}^{\text{MPI}}$ must be defined by \eqref{eq:mpi_set} for some finite $v$.
 </details>
 
 ### Pre-Sets
 
 <div class="lemma-window">
-  <div class="lemma-title">Pre Set</div>
+  <div class="lemma-title" id="def-2-3-pre-set">Pre Set</div>
   <div style="padding: 1.5em;">
-  Given a set $\mathcal{X}$ and the system discribe by the dynamic (2.3), the <strong>pre-set</strong> of $\mathcal{X}$ is the of states that evolve into the target set \mathcal{X}$ in one step:
+  Given a set $\mathcal{X}$ and the system discribe by the dynamic \eqref{eq:constraints}, the <strong>pre-set</strong> of $\mathcal{X}$ is the of states that evolve into the target set $\mathcal{X}$ in one step:
   \[
     \text{pre}(\mathcal{X}) \: \colon = \{x \: \mid \: (Fx+Bu)\in\mathcal{X}\}
   \]
@@ -1563,10 +1421,10 @@ The invariant set will provide a set of initial states for wich the trajectories
 The dynamics of the pendulum can be discribed as follow
 <div>
 \[
-  x_{k+1}=x_k+\begin{bmatrix} x_{2 \mid k} \\ -9.8\sin(x_{1 \mid k})-x_{2 \mid k} \end{bmatrix}
+  x^+=x+\begin{bmatrix} x_{2} \\ -9.8\sin(x_{1})-x_{2} \end{bmatrix}
 \]
 </div>
-(Discretized with forward Euler at 1Hz and $x_{1 \mid k }$: position at the $k^{\text{th}}$, $x_{2 \mid k}$: velocity at the $h^{\text{th}}$ iteration)
+Discretized with forward Euler at 1Hz, where $x_{1}$ is the position, $x_{2}$ is the velocity.
 
 The target set is defined as 
 <div>
@@ -1575,7 +1433,7 @@ The target set is defined as
 \]
 </div>
 
-Consider the phase diagram below, which shows the target set $T$, teh pre-set of $T$ is represented by the red area. The pre-set of $T$ is the set of states that will evolve into the target set $T$ in one step. For example, the state $x=[0, 1]^T$ is in the pre-set of $T$ since it will evolve into the target set $T$ in one step (see the red arrow). However, the state $x=[1, 0]^T$ is not in the pre-set of $T$ since it will not evolve into the target set $T$ in one step (illustrated by the orange arrow).
+Consider the phase diagram below, which shows the target set $T$, the pre-set of $T$ is represented by the red area. The pre-set of $T$ is the set of states that will evolve into the target set $T$ in one step. For example, the state $x=[0, 1]^\top$ is in the pre-set of $T$ since it will evolve into the target set $T$ in one step (see the red arrow). However, the state $x=[1, 0]^\top$ is not in the pre-set of $T$ since it will not evolve into the target set $T$ in one step (illustrated by the orange arrow).
 
 <div class="images">
   <figure>
@@ -1592,15 +1450,15 @@ Consider the phase diagram below, which shows the target set $T$, teh pre-set of
 <div class="lemma-window">
   <div class="lemma-title">Theorem 2.2: Geometric condition for invariance</div>
   <div style="padding: 1.5em;">
-  A set $\mathcal{X}$ is positively invariant under the dynamics defined by (2.1) and (2.2) and the constraints (2.3) if and only if $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$.
+  A set $\mathcal{X}$ is positively invariant under the dynamics defined by \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} if and only if $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$.
   </div>
 </div>
 
 We prove the contrapositive for both the necessary and sufficient conditions.
 
-**Necessary condition**: Assume that $\mathcal{X} \not\subseteq \text{pre}(\mathcal{X})$. Then there exists an $x \in \mathcal{X}$ such that $x \notin \text{pre}(\mathcal{X})$. From the definition of pre-set, this means that $(F+GK)x \leq \mathbf{1}$ but $\Phi x \notin \mathcal{X}$. Therefore, from Definition 2.1, $\mathcal{X}$ is not positively invariant.
+**Necessary condition**: Assume that $\mathcal{X} \not\subseteq \text{pre}(\mathcal{X})$. Then there exists an $x \in \mathcal{X}$ such that $x \notin \text{pre}(\mathcal{X})$. From the definition of pre-set, this means that $(F+GK)x \leq \mathbf{1}$ but $\Phi x \notin \mathcal{X}$. Therefore, from [Definition 2.1](#def-2-1-positive-invariant), $\mathcal{X}$ is not positively invariant.
 
-**Sufficient condition**: Assume that $\mathcal{X}$ is not positively invariant. Then, from Definition 2.1, $\exists x \in \mathcal{X}$ such that $(F+GK)x \leq \mathbf{1}$ but $\Phi x \notin \mathcal{X}$. From the definition of pre-set, this means that $x \notin \text{pre}(\mathcal{X})$. Therefore, $\mathcal{X} \not\subseteq \text{pre}(\mathcal{X})$.
+**Sufficient condition**: Assume that $\mathcal{X}$ is not positively invariant. Then, from [Definition 2.1](#def-2-1-positive-invariant), $\exists x \in \mathcal{X}$ such that $(F+GK)x \leq \mathbf{1}$ but $\Phi x \notin \mathcal{X}$. From the definition of pre-set, this means that $x \notin \text{pre}(\mathcal{X})$. Therefore, $\mathcal{X} \not\subseteq \text{pre}(\mathcal{X})$.
 
 _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\text{pre}(\mathcal{X}) \cap \mathcal{X} = \mathcal{X}$._
 
@@ -1613,15 +1471,15 @@ _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\te
     & \\
     &\Omega_{0} \leftarrow \mathbb{X} \\
     &\textbf{loop} \\
-    &\quad \Omega_{i+1} \leftarrow \text{pre}(\Omega_{i}) \cap \Omega_{i} \\
-    &\quad \textbf{if } \Omega_{i+1} = \Omega_{i} \textbf{ then} \\
-    &\qquad \text{return } \mathcal{X}_{\infty} = \Omega_{i} \\
+    &\quad \Omega_{k+1} \leftarrow \text{pre}(\Omega_{k}) \cap \Omega_{k} \\
+    &\quad \textbf{if } \Omega_{k+1} = \Omega_{k} \textbf{ then} \\
+    &\qquad \text{return } \mathcal{X}_{\infty} = \Omega_{k} \\
     &\quad \textbf{end if} \\
     &\textbf{end loop}
     \end{aligned}
     \]
 
-    The algorithm generates the set sequence $\{\Omega_i\}$ satisfying $\Omega_{i+1} \subseteq \Omega_i$ for all $i \geq 0$. If the sequence converges in finite time, i.e., $\exists i^* \geq 0$ such that $\Omega_{i^*+1} = \Omega_{i^*}$, then the limit set $\mathcal{X}_{\infty} = \Omega_{i^*}$ is the maximal positively invariant set contained in $\mathbb{X}$.
+    The algorithm generates the set sequence $\{\Omega_k\}$ satisfying $\Omega_{k+1} \subseteq \Omega_k$ for all $k \geq 0$. If the sequence converges in finite time, i.e., $\exists k^* \geq 0$ such that $\Omega_{k^*+1} = \Omega_{k^*}$, then the limit set $\mathcal{X}_{\infty} = \Omega_{k^*}$ is the maximal positively invariant set contained in $\mathbb{X}$.
 </div>
 
 ### Controlled Invariance
@@ -1636,7 +1494,7 @@ _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\te
   </div>
 </div>
 
-This defines the states for which tehre exist a **controller** that will satisfy the constraints at all time.
+This defines the states for which there exist a **controller** that will satisfy the constraints at all time.
 
 <div class="lemma-window">
   <div class="lemma-title">Maximal control invariant set</div>
@@ -1651,7 +1509,7 @@ The maximum control invariant set is the best a controller can do.
 
 From this control invariant set, we can derive a control law, this control law $\kappa(x)$ will guarantee that the system $x^+=f(x,\kappa(x))$ will satisfy the constrains at all time if:
 $$
-f(x, \kappa(x)) \in \mathcal{C} \quad \text{forr all } x\in\mathcal{C} \quad \text{with } \mathcal{C} \text{ a control invariant set of the system}
+f(x, \kappa(x)) \in \mathcal{C} \quad \text{for all } x\in\mathcal{C} \quad \text{with } \mathcal{C} \text{ a control invariant set of the system}
 $$
 
 We can use this to synthetize a control law from a control invariant set by solving an optimization problem:
@@ -1670,53 +1528,98 @@ That's where MPC comes into play, we will use MPC to approximate the control inv
 
 ## 2.3: Model Predictive Control
 
+Most nonlinear system descriptions derived from physical arguments are continuous time models in the form of nonlinear differential equations
+$$
+\frac{dx}{dt}=f(x(t),u(t))
+$$
+where $x(t)\in\mathbb{R}^{n_x}$ is the state vector and $u(t)\in\mathbb{R}^{n_u}$ is the control input vector. The function $f$ is assumed to be continuous and continuously differentiable with respect to its arguments.
+
+The control law with the best properties is the solution of the infinite horizon, constrained optimal control problem for which the cost function is
+$$
+V_\infty(x,u(\cdot))=\sum_{i=0}^\infty \mathcal{l}(x(t),u(t))dt
+$$
+where $x(t)$ and $u(t)$ satisfy the system dynamics $\dot{x}=f(x(t),u(t))$ and the constraints $(x(t),u(t))\in\mathbb{Z}$ for all $t\geq0$. The function $\mathcal{l}(x,u)$ is the stage cost, which is assumed to be continuous and continuously differentiable with respect to its arguments.
+
+The optimal control problem is defined as follows:
+<div class="lemma-window">
+  <div class="lemma-title">Infinite horizon optimal control problem</div>
+  <div style="padding: 1.5em;">
+    \[
+      \tag{2.3.1} \label{eq:infinite_horizon_ocp}
+      \begin{aligned}
+      \min_{u(\cdot)} \quad & V_\infty(x,u(\cdot)) \\
+      \text{subject to} \quad & \dot{x}(t)=f(x(t),u(t)), \quad x(0)=x_0 \\
+      & (x(t),u(t))\in\mathbb{Z}, \quad \text{for all } t\in\mathbb{R}_{\geq0}
+      \end{aligned}
+    \]
+  </div>
+</div>
+
+If $\mathcal{l}(\cdot)$ is positive definite, then the optimal cost $V_\infty^{\*}(x_0)$ is a Lyapunov function for the closed-loop system obtained by applying the optimal control law $u^{\*}(t)$ to the system. The optimal control law $u^{\*}(t)$ is therefore stabilizing the system to the origin.
+
 ## 2.3: Stability and Convergence
 
 ### Lyapunov
 
-## 2.4: Controllability and Observability
-
-### Controllability
-
-<iframe width="735" height="413"
-  src="https://youtu.be/u5Sv7YKAkt4?si=cqaAxu3aEaB9nUBZ"
-  title="Controllability" 
-  frameborder="0" 
-  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
-
-<div class="ytb-window">
-  This video is part of a series of lectures on control theory by Steve Brunton. It provides a clear and concise explanation of the concept of controllability in control systems, including the mathematical conditions for controllability and its implications for system design and analysis.
-    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
-        Source: Steve Brunton - YouTube  
-        <a href="https://youtu.be/u5Sv7YKAkt4?si=cqaAxu3aEaB9nUBZ" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
-    </div>
-</div>
-
-**Video transcript:**
-
-We consider the linear time-invariant system 
-
-$$
-\dot{x} = Ax + Bu
-$$
-
-<div>
-\[
-\begin{align}
-\text{where } & x\in \mathbb{R}^n \text{ is the state vector,} \\
-&u \in \mathbb{R}^m \text{ is the input vector,} \\
-&A \in \mathbb{R}^{n\times n} \text{ is the system matrix,} \\
-&B \in \mathbb{R}^{n\times m} \text{ is the input matrix.}
-\end{align}
-\]
-</div>
-
-## 2.5: Examples of MPC
+## 2.4: Examples of MPC
 
 ## Exercises
 [See notations](#notations)
+
+**Exercise 2.1: Maximum invariant**
+<!-- Exercise 4 p59 in Model Predictive Control textbook -->
+
+A discret time system is described by the model $x_{k+1}=Ax_k+Bu_k$ with
+$$
+A=\begin{bmatrix} 0.3 & -0.9 \\\\ -0.4 & -2.1 \end{bmatrix} \quad B=\begin{bmatrix} 0.5 \\\\ 1 \end{bmatrix}
+$$
+where $u_k=Kx_k$ for $K = \begin{bmatrix} 0.224 & 1.751 \end{bmatrix}$, and for all $k=0,1,\cdots$ the state $x_k$ is subject to the constraints
+$$
+\mid\begin{bmatrix} 1 & -1 \end{bmatrix}x\mid \, \leq \, 1
+$$
+
+(a) Describe a procedure based on linear programming for determining the largest invariant set compatible with constraints $\mid\begin{bmatrix} 1 & -1 \end{bmatrix}x\mid\,\leq \,1$.
+
+(b) Demonstrate by solving a linear program that the maximal invariant set is defined by
+<div>
+  \[
+  \left\{ x \colon \, Fx \leq 1 \text{ and } F\Phi x \leq 1 \right\}
+  \]
+</div>
+$$
+\text{where } F = \begin{bmatrix} 1 & -1 \\\\ -1 & 1 \end{bmatrix} \text{ and } \Phi = \begin{bmatrix} 0.42 & -0.025 \\\\ -0.16 & -0.35 \end{bmatrix}
+$$
+
+<details markdown="1">
+  <summary><strong>Solution</strong></summary>
+  (a) The largest invariant set compatible with the constraints is given by
+
+  <div>
+  \[
+    \mathcal{S}_v = \{ x \; \colon \; F\Phi^i x \leq 1, i=0,\cdots,v \}, F = \begin{bmatrix} 1 & -1 \\\\ -1 & 1 \end{bmatrix}, \Phi = \begin{bmatrix} 0.42 & -0.025 \\\\ -0.16 & -0.35 \end{bmatrix}
+  \]
+  </div>
+
+  where $v$ is such that $F\Phi^{v+1}x \leq 1$ for all $x \in \mathcal{S}_v$. Since $\mathcal{S}_v$ is symmetric about $x=0$, this condition can be checked by solving the linear program:
+
+  <div>
+  \[
+    \mu = \max_{x \in \mathcal{S}_v} \begin{bmatrix} 1 & -1 \end{bmatrix} \Phi^{v+1} x
+  \]
+  </div>
+
+  (b) To check $v=1$:
+
+  <div>
+  \[
+    \mu=\max_{x} \begin{bmatrix} 0.193 & -0.127 \end{bmatrix} x \quad \text{subject to } \begin{bmatrix} 1 & -1 \\\\ -1 & 1 \\\\ 0.578 & 0.324 \\\\ -0.578 & -0.324 \end{bmatrix} x \leq \begin{bmatrix} 1 \\\\ 1 \\\\ 1 \\\\ 1 \end{bmatrix}
+  \]
+  </div>
+
+  gives $\mu=0.224$, so $\mu\leq 1$ as required. The set $\mathcal{S}_v$ is therefore invariant for $v=1$.
+
+</details>
+
 
 # Chapter 3: Robust MPC
 [See notations](#notations)
@@ -1756,8 +1659,6 @@ $$
 - **Model Predictive Control: Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
 - **Model Predictive Control: Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)
 - **An Introduction to Optimization** Edwin K.P Chong, Stanislaw H. Zak, 2th Edition, available for free [here](https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf)
-
-<!-- I will ask for their permisions before using their materials -->
 
 <!-- ### Additional Resources: -->
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->

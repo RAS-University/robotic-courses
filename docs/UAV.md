@@ -58,34 +58,65 @@ To grasp this in more detail, please watch the video below from **0:10** until *
 ><sub>Understanding Aerodynamic Drag by The Efficient Engineer. Available at: https://www.youtube.com/watch?v=GMmNKUlXXDs</sub>
 
 <details markdown='1'>
-  <summary><strong>Description of the video</strong></summary>
+  <summary>Description of the video</summary>
 
-  The fluid flowing around an object exerts a force on it. You can split the force in two parts:
-  - one perpendicular to the flow direction, which is called *lift*.
-  - and on in the opposite direction of movement - the *drag*.
+  The fluid flowing around an object exerts a <span style="color: #73DBD8;">force</span> on it. You can split the force in two parts:
+  - one perpendicular to the flow direction, which is called <span style="color: #91D1EF;">*lift*</span>.
+  - and one in the opposite direction of movement - the <span style="color: #FAD255;">*drag*</span>.
 
   In air, we call these forces aerodynamic forces.
+
+  <div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/foil_forces.svg" alt="Illustration of lift and drag force of an airfoil in laminar flow." style="width: 450px; height: auto;">
+  <p style="font-size: small;">Lift and drag force of an airfoil in laminar flow. Illustration by author.</p>
+</div>
    
   Here we only focus on the drag force. The drag force is usually an undesirable force - it slows your object down or in other words you need more energy to advance in the fluid and loose in efficiency. Therefore engineers usually try to minimize the drag - if it is a car, a boat or an airplane. The same goes for drones. But what exactly does cause drag?
   The cause of drag can be decomposed into two effects:
-  1. shear stresses acting tangential to the surface and are caused by frictional forces due to the fluids viscosity. This is the **friction drag**.
-  2. pressure stresses acting perpendicular to the surface and are caused by how the pressure is distributed around a object. This is the **pressure drag** or sometimes **form drag**.
+  1. shear stresses acting *tangential* to the surface and are caused by frictional forces due to the fluids viscosity. This is the **friction drag**.
+  2. pressure stresses acting *perpendicular* to the surface and are caused by how the pressure is distributed around a object. This is the **pressure drag** or sometimes also called **form drag**.
+
   The sum of these two effects in the direction of movement is the drag.
 
   **Pressure Drag**:
    
-  Pressure drag is the strongest for blunt bodies like a ball. It is caused by difference in pressure in front and rear of an object. Pressure drag increases *significantly* in case of flow separation, which is the case when the fluids boundary layer detaches from the body. This causes a recirculating flow, significantly decreasing the pressure behind the body. This is called the *separation region*. To reduce drag forces, you want to minimize flow separation at all cost. Flow separation can also lead to vortex creation, which can lead to instability and turbulence. Why does flow separation occur to begin with?
-  
-  When the fluid passes over the surface of the sphere it initially accelerates and the pressure decreases in the flow direction. Beyond a certain point the flow then decelerates and the pressure starts increasing. The increase in pressure pushes the fluid backward. But due to the oncoming fluid it cannot travel back, forcing to to detach from the surface, resulting in flow separation. The flow separation occurs at 80° for a smooth sphere in laminar flow. In case of a turbulent flow it can delay until 120° which drastically reduces the drag. This is because the mixing between different flow layers which transfers momentum to the fluid allowing them to sustain a larger pressure difference. That is why for example a golf ball has dimples instead of being completely smooth. The turbulence caused delays flow separation, reduces drag and hence allows the ball to travel further.
-  Bodies traveling through fluid like plane wings or racing cars are usually designed in *tear-drop* shape to minimize flow separation. Flow separation is delayed so much or doesn't occur at all, that pressure drag is greatly reduced. For these type of objects it's the shear stresses that contribute most to the total drag force.
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/ball_pressure.svg" alt="Pressure distribution of a ball." style="width: 450px; height: auto;">
+    <p style="font-size: small;">Pressure distribution of a ball moving through a fluid. Illustration by author.</p>
+  </div>
+  Pressure drag is the strongest for blunt bodies like a ball. It is caused by a difference in pressure in front and rear of an object. While air in front of the body is compressed and thus pressure increases, the air behind the body becomes separated and turbulent, leading to a region of lower pressure. Pressure drag increases *substantially* in case of flow separation, which is the case when the fluid's boundary layer detaches from the body. This causes a recirculating flow, significantly decreasing the pressure behind the body. This is called the *separation region*. To reduce drag forces, it is desirable to minimize flow separation at all cost. Flow separation can also lead to vortex creation, which can lead to instability and turbulence. Why does flow separation occur to begin with?
+
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/ball_flow_separation.svg" alt="Flow separation of a ball." style="width: 450px; height: auto;">
+    <p style="font-size: small;">Flow separation on rear side of a ball moving through a fluid. Illustration by author.</p>
+  </div>
+
+  When the fluid passes over the surface of the sphere it initially accelerates and the pressure decreases in the flow direction. Beyond a certain point the flow then decelerates and the pressure starts increasing. The increase in pressure pushes the fluid backward. But due to the oncoming fluid it cannot travel back, forcing it to detach from the surface, resulting in flow separation. Flow separation occurs at 80° for a smooth sphere in laminar flow. In case of a turbulent flow it can be delayed until 120°, which drastically reduces the drag. This is because the mixing between different flow layers transfers momentum to the fluid, allowing them to sustain a larger pressure difference. That is why for example a golf ball has dimples instead of being completely smooth. The turbulence caused them delays flow separation, reduces drag and hence allows the ball to travel further.
+  Bodies traveling through fluid like plane wings or racing cars are usually designed in a *tear-drop* shape to minimize flow separation. Flow separation is delayed so much or doesn't occur at all, that pressure drag is greatly reduced. For these type of objects it's the shear stresses that contribute most to the total drag force.
 
   **Friction Drag**:
+
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/shear_stresses.svg" alt="Shear stress over an airfoil in a fluid." style="width: 450px; height: auto;">
+    <p style="font-size: small;">Shear stress over an airfoil caused by flow of fluid. Illustration by author.</p>
+  </div>
   
-  Friction drag increases with the viscosity of the fluid and the surface of area aligned with the direction of flow. While turbulence decreases pressure drag by delaying the flow separation, it has the opposite effect on friction drag. Laminar and turbulent boundary layers show very different velocity profiles. Turbulence boundary layers have a higher velocity gradients and thus produces larger shear stress. Hence to reduce friction drag, you want to maintain laminar flow for the largest possible distance around the object. 
+  Friction drag increases with the viscosity of the fluid and the surface of area aligned with the direction of flow. While turbulence decreases pressure drag by delaying the flow separation, it has the opposite effect on friction drag. Laminar and turbulent boundary layers show very different velocity profiles. Turbulence boundary layers have higher velocity gradients and thus produces larger shear stress. Hence to reduce friction drag, you want to maintain laminar flow for the largest possible distance around the object. 
 
-  If you would manage to maintain laminar flow over   wings of commercial aircraft, could reduce the total drag by 10-15%. But this is very hard to achieve and is an open question in research. One idea that was partially successful is the so called hybrid-laminar flow control, where air is suck downwards along the surface of the wing. Another possibility is to reduce the effect of turbulent flow on friction drag. One interesting research aspect there looks at the microstructure of shark skin.
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Velocity-profiles-for-laminar-and-turbulent-flow.jpg" alt="Shear stress over an airfoil in a fluid." style="width: 450px; height: auto;">
+    <p style="font-size: small;">The figure illustrates typical velocity profiles for laminar and turbulent flow along a surface. Schema from <a href="https://doi.org/10.13140/RG.2.2.29149.56802" target="_blank">Landis (2018). CFD Analysis of RAM Air Flow in an Aircraft Air Conditioning System. </a></p>
+  </div>
 
-  We have seen that the magnitude of friction and pressure drag depends on the magnitude of a body relative ot the direction of flow. An obvious example is flat plat at 90° angle to the direction flow. The flow separates easily, creating a separation region and the pressure drag is large. In this case friction drag is almost zero, since shear stresses are not aligned with the drag direction. However if you turn the plate by 90° such that the surface is aligned with the direction of flow, we have a very streamlined body and the pressure drag is small. But the friction is now much more significant. 
+  If you would manage to maintain laminar flow over the wings of commercial aircraft, you could reduce the total drag by 10-15%. But this is very hard to achieve and is an open question in research. One idea that was partially successful is the so called hybrid-laminar flow control, where air is suck downwards along the surface of the wing. Another possibility is to reduce the effect of turbulent flow on friction drag. One interesting research aspect there looks at the microstructure of shark skin.
+
+  We have seen that the magnitude of friction and pressure drag depends on the surface of a body relative to the direction of flow. An obvious example is flat plat at 90° angle to the direction of flow. The flow separates easily, creating a separation region and the pressure drag is large. In this case friction drag is almost zero, since shear stresses are not aligned with the drag direction. However if you turn the plate by 90° such that the surface is aligned with the direction of flow, we have a very streamlined body and the pressure drag is small. But the friction is now much more significant. 
+
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/airfoil_angles_of_attack.jpg" alt="Effect of angle of attack on flow separation for an airfoil." style="width: 450px; height: auto;">
+    <p style="font-size: small;">The figure shows the influence of the angle of attack on flow separation for an airfoil. Schema from <a href="https://www.centennialofflight.net/essay/Theories_of_Flight/Two_dimensional_coef/TH14G4.htm" target="_blank">NASA.</a></p>
+  </div>
+
   The same logic applies to airfoils, where the angle of attack - i.e. the angle between the centerline of a wing and the direction of flow - has a large influence on the drag force. At high angles of attack (AOA) separation occurs, which significantly increases the drag force. In general it is important to remember that friction drag increases as pressure drag decreases and so these two aspects need to be carefully balanced.
 
   **Drag Force Calculation**:
@@ -164,7 +195,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   <input type="radio" name="drag-q2" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('drag-q2', 'False', 
-      'Correct! Minimizing total drag requires balancing pressure drag and friction drag. A fully streamlined shape reduces pressure drag but can increase friction drag due to larger surface area.',
+      'Correct! Minimizing total drag requires balancing pressure drag and friction drag. A fully streamlined shape reduces pressure drag to a minimum but increases friction drag due to a larger surface area.',
       'Incorrect. While streamlining reduces pressure drag, it increases friction drag from the extended surface. The optimal shape is a compromise between both drag components.')">
     Check Answer
   </button>

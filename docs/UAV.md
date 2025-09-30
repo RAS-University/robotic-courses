@@ -67,7 +67,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   In air, we call these forces aerodynamic forces.
 
   <div style="text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/foil_forces.svg" alt="Illustration of lift and drag force of an airfoil in laminar flow." style="width: 450px; height: auto;">
+  <img src="{{ site.baseurl }}/assets/images/uav/foil_forces.svg" alt="Illustration of lift and drag force of an airfoil in laminar flow." style="width: 95%; height: auto;">
   <p style="font-size: small;">Lift and drag force of an airfoil in laminar flow. Illustration by author.</p>
 </div>
    
@@ -81,13 +81,13 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   **Pressure Drag**:
    
   <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/ball_pressure.svg" alt="Pressure distribution of a ball." style="width: 450px; height: auto;">
+    <img src="{{ site.baseurl }}/assets/images/uav/ball_pressure.svg" alt="Pressure distribution of a ball." style="width: 95%; height: auto;">
     <p style="font-size: small;">Pressure distribution of a ball moving through a fluid. Illustration by author.</p>
   </div>
   Pressure drag is the strongest for blunt bodies like a ball. It is caused by a difference in pressure in front and rear of an object. While air in front of the body is compressed and thus pressure increases, the air behind the body becomes separated and turbulent, leading to a region of lower pressure. Pressure drag increases *substantially* in case of flow separation, which is the case when the fluid's boundary layer detaches from the body. This causes a recirculating flow, significantly decreasing the pressure behind the body. This is called the *separation region*. To reduce drag forces, it is desirable to minimize flow separation at all cost. Flow separation can also lead to vortex creation, which can lead to instability and turbulence. Why does flow separation occur to begin with?
 
   <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/ball_flow_separation.svg" alt="Flow separation of a ball." style="width: 450px; height: auto;">
+    <img src="{{ site.baseurl }}/assets/images/uav/ball_flow_separation.svg" alt="Flow separation of a ball." style="width: 95%; height: auto;">
     <p style="font-size: small;">Flow separation on rear side of a ball moving through a fluid. Illustration by author.</p>
   </div>
 
@@ -97,14 +97,14 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   **Friction Drag**:
 
   <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/shear_stresses.svg" alt="Shear stress over an airfoil in a fluid." style="width: 450px; height: auto;">
+    <img src="{{ site.baseurl }}/assets/images/uav/shear_stresses.svg" alt="Shear stress over an airfoil in a fluid." style="width: 95%; height: auto;">
     <p style="font-size: small;">Shear stress over an airfoil caused by flow of fluid. Illustration by author.</p>
   </div>
   
   Friction drag increases with the viscosity of the fluid and the surface of area aligned with the direction of flow. While turbulence decreases pressure drag by delaying the flow separation, it has the opposite effect on friction drag. Laminar and turbulent boundary layers show very different velocity profiles. Turbulence boundary layers have higher velocity gradients and thus produces larger shear stress. Hence to reduce friction drag, you want to maintain laminar flow for the largest possible distance around the object. 
 
   <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/Velocity-profiles-for-laminar-and-turbulent-flow.jpg" alt="Shear stress over an airfoil in a fluid." style="width: 450px; height: auto;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Velocity-profiles-for-laminar-and-turbulent-flow.jpg" alt="Shear stress over an airfoil in a fluid." style="width: 95%; height: auto;">
     <p style="font-size: small;">The figure illustrates typical velocity profiles for laminar and turbulent flow along a surface. Schema from <a href="https://doi.org/10.13140/RG.2.2.29149.56802" target="_blank">Landis (2018). CFD Analysis of RAM Air Flow in an Aircraft Air Conditioning System. </a></p>
   </div>
 
@@ -113,7 +113,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   We have seen that the magnitude of friction and pressure drag depends on the surface of a body relative to the direction of flow. An obvious example is flat plat at 90° angle to the direction of flow. The flow separates easily, creating a separation region and the pressure drag is large. In this case friction drag is almost zero, since shear stresses are not aligned with the drag direction. However if you turn the plate by 90° such that the surface is aligned with the direction of flow, we have a very streamlined body and the pressure drag is small. But the friction is now much more significant. 
 
   <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/airfoil_angles_of_attack.jpg" alt="Effect of angle of attack on flow separation for an airfoil." style="width: 450px; height: auto;">
+    <img src="{{ site.baseurl }}/assets/images/uav/airfoil_angles_of_attack.jpg" alt="Effect of angle of attack on flow separation for an airfoil." style="width: 80%; height: auto;">
     <p style="font-size: small;">The figure shows the influence of the angle of attack on flow separation for an airfoil. Schema from <a href="https://www.centennialofflight.net/essay/Theories_of_Flight/Two_dimensional_coef/TH14G4.htm" target="_blank">NASA.</a></p>
   </div>
 
@@ -270,31 +270,95 @@ $$
 
 #### Lift
 
-Gravity holds everyone of us on the ground. To stay in the air, the gravitational force must be compensated. The force pointing in the opposite direction of the gravity is called lift force. The lift force is always **perpendicular** to the direction of the airflow and for most drone types the lift force is generated by the morphology of the wing or the propeller. To fly stable in the air, the parallel part of the lift force must equal the gravitational force.
+Gravity holds everyone of us on the ground. To stay in the air, the gravitational force must be compensated. The force pointing in the opposite direction of the gravity is called lift force and is always **perpendicular** to the direction of the airflow. For most drone types the lift force is generated by the morphology of the wing or the propeller. To fly stable in the air, the parallel part of the lift force must equal the gravitational force.
+
+To understand how the lift force is created with a typical airfoil, please watch the video below until **12:10** or read the description beneath it:
 
 ![video](https://youtu.be/E3i_XHlVCeU?si=uvFe0pPcO3qpL0Z3&t=5)
 ><sub>Understanding Aerodynamic lift by The Efficient Engineer. Available at: https://youtu.be/E3i_XHlVCeU?si=uvFe0pPcO3qpL0Z3&t=5</sub>
 
 <details markdown='1'>
-  <summary><strong>Description of the video</strong></summary>
-  Since well before the first  Wright brothers flight in 1903, and all the way to the present day, mankind  has been fascinated by taking to the skies. Once thought to be impossible, heavier-than-air  flight is only a reality because of the lift generated by aircraft wings. But lift is a complicated topic,  and even to this day engineers have  lengthy debates about how it's created. So what exactly is lift? When fluid flows past an object, or an object like this plane wing moves through a stationary  fluid, the fluid exerts a force on the object, which can be split into a component acting in the  same direction as the fluid flow, called drag, and a component acting perpendicular  to the flow direction, called lift. When talking about lift we're mostly interested  in streamlined bodies like this airfoil, which are carefully designed to produce  a lot of lift, but to minimise drag. Lift-producing airfoils can  obviously be found in airplane wings, but also in many other applications, like  wind turbine blades, or propeller blades. They're also used in the wings of Formula 1 cars, which are designed to generate downforce so that corners can be taken at higher speeds. Airfoils come in a huge range of shapes and sizes. One designed for an aircraft wing won't be optimised for a propellor blade, for example. And a wing designed to fly at supersonic speeds will have a very different profile compared to one designed to fly slower than the speed of sound. 
+  <summary>Description of the video</summary>
+
+  Humans have always been fascinated by the possibility to fly. Once thought to be impossible, heavier-than-air flight is only a reality because of the lift generated by aircraft wings. But lift is a complicated topic, and even to this day engineers do not entirely agree on about how it's created. So what exactly is lift? 
+
+  **Forces on an Airfoil**:
+
+  <div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/foil_forces.svg" alt="Illustration of lift and drag force of an airfoil in laminar flow." style="width: 95%; height: auto;">
+  <p style="font-size: small;">Lift and drag force of an airfoil in laminar flow. Illustration by author.</p>
+  </div>
+
+  When fluid flows past an object, or an object like the plane wing on the image above moves through a stationary  fluid, the fluid exerts a force on the object, which can be split into two components: 
+  1. acting in the same direction as the fluid flow, called drag, 
+  2. and a component acting perpendicular to the flow direction, called lift.
+
+  When talking about lift we're mostly interested in streamlined bodies like an airfoil, which are designed to produce a lot of lift, but to minimize drag at the same time. Airfoils aren’t just found on airplane wings — they’re used in wind turbines, propellers, and even Formula 1 cars. They come in a huge range of shapes and sizes. One designed for an aircraft wing won't be optimized for a propellor blade, for example. And a wing designed to fly at supersonic speeds will have a very different profile compared to one designed to fly slower than the speed of sound. 
+
+  **Airfoil Parameters**:
+
+  <div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/camber.svg" alt="Illustration of camber, chord, leading and trailing edge and angle of attack of a airfoil in laminar flow." style="width: 95%; height: auto;">
+  <p style="font-size: small;">Chord, camber, trailing and leading edge and the angle of attack presented on an airfoil in laminar flow. Illustration by author.</p>
+  </div>
 
   Airfoil profiles can be defined using a few different parameters. The forward-most edge of the airfoil is called the leading edge, and the trailing edge is at the back of the airfoil. Drawing a straight line between the leading and trailing edges gives us the chord line. The angle between the chord line and the flow direction is called the angle of attack. Drawing a line which is midway between the upper and lower surfaces gives us the mean camber line. Camber describes how curved an airfoil is. We can have positive camber or negative camber, and a symmetrical airfoil has zero camber. Camber and the angle of attack are important parameters that will have a large influence on how much lift an airfoil can generate. 
 
-  Pressure Distribution
-  So how does a humble teardrop shape generate enough force to lift heavy aircraft off the ground? As the fluid flows around the airfoil it creates two different types of stress which act on its surface. First we have the wall shear stresses. These stresses act tangential to the object's surface, and are caused by the frictional forces that act on the airfoil because of the fluid's viscosity. Then we have the pressure stresses. They act perpendicular to the object's surface, and are caused by how pressure is distributed around it. Lift is the resultant of these two stresses in the direction perpendicular to the flow. The only way a fluid can impart a force onto an object is through these stresses. Integrating the stresses in the lift direction over the surface of the airfoil gives us the lift force. For streamlined bodies like airfoils, the shear stresses will mostly be acting in the same direction as the flow. They will make a large contribution to the drag force, but won't contribute a significant amount to the lift force. And so we can neglect them and say that the lift acting on an airfoil is caused by the way pressure is distributed around it. A typical pressure distribution looks something like this. The pressure is low above the airfoil and high below it, which creates a net force with a large component in the lift direction. If we plot the pressure profile along the top and bottom surfaces, we can see that the low pressure on the top surface is larger in magnitude than the high pressure on the bottom surface. So the suction pressure on the top surface is what contributes most to the total lift force. We can also see that the majority of the pressure difference is coming from the forward-most part of the airfoil. In truth there's nothing particularly special  about the shape of an airfoil that allows it to generate lift. Any object that creates an uneven  pressure distribution will generate a force in the lift direction, like a flat plate at an angle  relative to the flow, for example. Airfoils are just optimised shapes that have been carefully  designed to have high lift-to-drag ratios. Without a difference in pressure above  and below an object there can be no lift. 
+  **How Lift is Generated**:
 
-  A symmetrical body like this bullet  doesn't generate any lift force because there's no pressure difference around it. So we know that lift is caused by the pressure   distribution around the airfoil. But where  does the pressure distribution come from? The answer to this question is complex, and  there's much debate about the best way to explain it in a concise way. We can broadly  split the different explanations into two groups - those based on Bernoulli's Principle  and those based on Newton's third law. Bernoulli's Principle explanations  focus on the velocity of the fluid.  If we look at how fluid flows around the airfoil,  we can see that close to the leading edge there's a point where the fluid velocity is reduced  to zero - this is called the stagnation point. Outside of the thin boundary layer surrounding the  airfoil, the fluid flowing above the stagnation point, over the top surface of the airfoil, travels faster than the fluid travelling over the bottom  surface, as we can see from these particles.  Bernoulli's Principle tells us that  when the velocity of a fluid increases,  it's pressure must be reduced, which is just  a statement of the conservation of energy. This means that the increase in velocity above  the airfoil creates an area of lower pressure, and the reduction in velocity below  it creates an area of higher pressure, and this pressure difference  creates the lift force. But then we need to explain what  causes the difference in velocity. One explanation is that the geometry of an airfoil  causes the flow to be pinched together above the   airfoil, but not below it. Because of the conservation of mass,   this results in increased  velocity above the airfoil. A more complete but less intuitive  explanation for the difference in velocity is based on the concept of circulation. The flow around an airfoil can be thought of as the superposition of idealised uniform  irrotational flow, and circulatory flow.  Without circulation, the flow around  the airfoil would look like this. This is clearly non-physical, since the  fluid can't turn such a sharp corner at the trailing edge, and so the airfoil  must be generating some circulation.  If we impose a condition that says that  the flow above and below the airfoil must   be parallel when leaving the trailing edge, we  can calculate the exact amount of circulation   that must be generated by the airfoil to do  this. This is called the Kutta condition.  Circulation has the effect of accelerating the  flow above the airfoil and delaying the flow below it, which gives us the explanation we need  so that we can apply Bernoulli's Principle. 
+  So how does a humble teardrop shape generate enough force to lift heavy aircraft off the ground? As the fluid flows around the airfoil it creates two different types of stress which act on its surface. 
+  1. First we have the wall shear stresses. These stresses act tangential to the object's surface, and are caused by the frictional forces that act on the airfoil because of the fluid's viscosity. 
+  2. Then we have the pressure stresses. They act perpendicular to the object's surface, and are caused by how pressure is distributed around it. 
+  
+  Lift is the resultant of these two stresses in the direction perpendicular to the flow. The only way a fluid can impart a force onto an object is through these stresses. Integrating the stresses in the lift direction over the surface of the airfoil gives us the lift force. For streamlined bodies like airfoils, the shear stresses will mostly be acting in the same direction as the flow. They will make a large contribution to the drag force, but won't contribute a significant amount to the lift force. And so we can neglect them and say that the lift acting on an airfoil is caused by the way pressure is distributed around it. 
 
-  Newtons Third Law
-  What about the explanations of lift  that are based on Newton's third law? These don't consider the velocity  above and below the airfoil but instead look more generally  at the behaviour of the fluid. If we look at a wider area we can observe  that the effect of an airfoil can be felt far beyond its immediate vicinity. Upstream of  the airfoil the flow is being swept upwards, which is called upwash. And downstream the  flow is deflected downwards, which is called downwash. A very large volume of air  is being displaced by the airfoil. Newton's third law tells us that for every  action there is an equal and opposite reaction. The airfoil must be imparting a  force on the air to create the downwash, and so based on Newton's third law, there must  be a corresponding reaction force acting on the airfoil. In other words an airfoil generates  lift by turning the incoming air downwards. We can use the concept of circulation  again, this time to explain how the upwash and downwash are created. 
-  In summary, a lift force acts on an airfoil because of the pressure distribution around it.  The exact cause of this pressure distribution is complex, and can be explained in several  different ways, which approach the problem from different angles. Explanations based  on Bernoulli's Principle and on Newton's Third Law provide valuable insight into how  lift is generated, although both approaches have limitations, partly because they're  based on cause-and-effect relationships. The problem is that there isn't always  a clear cause-and-effect relationship between the different phenomena which  are involved in generating lift, whether we're talking about the fluid velocity,  the pressure distribution around the airfoil, Cause Effect Relationshipor the down-turning of the fluid. In reality  all of these things are happening simultaneously and are mutually interacting. Nevertheless, these explanations are useful and can lead to a more  intuitive understanding of lift. We can easily imagine for example that  increasing the camber of an airfoil will allow it to deflect a larger amount of  fluid, and so will increase the lift force.   The same is true for the angle of  attack. Increasing the angle of attack deflects more fluid and increases lift. However there are limits to this logic. Once the angle of attack reaches a  certain critical value, we can observe a sudden decrease in the lift force. For this  airfoil it occurs at around 16 degrees.  At this angle of attack the boundary layer  is no longer able to remain attached to the airfoil and it detaches from the surface,  creating a wake behind it which affects the pressure distribution around the airfoil,  significantly reducing lift and increasing drag. I covered flow separation in detail  in my video on aerodynamic drag. The sudden reduction in lift is called stalling,  and it can be very dangerous for aircraft. Different airfoil shapes can have drastically  different lift characteristics. This airfoil is cambered. If  an airfoil is symmetrical, and so has zero camber, the lift force  will be zero for zero angle of attack. Aerobatic aircraft usually use symmetrical  airfoils since they allow planes to fly upside down more easily. Lift is generated by lifting the  nose of the plane to create an angle of attack. Aerobatics
-  Modern aircraft wings are equipped with  flaps and slats which allow the shape of the airfoil to be adjusted and optimised  for the different phases of flight. During take-off for example you want high lift.  Extending the flaps increases the camber of the wing, which increases lift, and so flaps are  extended during take-off. But the extra lift comes at the expense of increased drag, and so  the flaps are retracted when cruising, since high lift is no longer needed and drag should  be minimised to improve fuel consumption.
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/lift_pressure.gif" alt="Pressure distribution over an cambered airfoil." style="width: 95%; height: auto;">
+    <p style="font-size: small;">The figure shows the pressure distribution over a typical cambered airfoil. Schema from <a href="https://doi.org/10.13140/RG.2.1.5041.4562" target="_blank">Chakraborty, Manash (2015). A Computational Study on two horizontally close sequential airfoils to determine conjoined pressure distribution and aerodynamic influences on each other.</a></p>
+  </div>
+
+  *Pressure Distribution:*
+
+  You can see a typical pressure distribution on the image above. The pressure is low above the airfoil and high below it, which creates a net force with a large component in the lift direction. Also note that the low pressure on the top surface is larger in magnitude than the high pressure on the bottom surface. So the suction pressure on the top surface is what contributes most to the total lift force, in fact it's usually around 2/3 of it. We can also see that the majority of the pressure difference is coming from the forward-most part of the airfoil. 
+  
+  In truth there's nothing particularly special about the shape of an airfoil that allows it to generate lift. Any object that creates an uneven pressure distribution will generate a force in the lift direction, like a flat plate at an angle relative to the flow, for example. Airfoils are just optimized shapes that have been carefully designed to have high lift-to-drag ratios. **Without a difference in pressure above and below an object there can be no lift.** A symmetrical body like a bullet or a ball does not generate any lift force because there's no pressure difference around it. 
+  
+  But where does the pressure distribution come from? The answer to this question is complex, and  there is still much debate about the best way to explain it in a concise way. We can broadly split the different explanations into two groups - those based on Bernoulli's Principle and those based on Newton's third law. 
+ 
+  *Bernoulli's Principle:*
+
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/velocity-distribution-airfoil.png" alt="Pressure distribution over an cambered airfoil." style="width: 95%; height: auto;">
+    <p style="font-size: small;">The figure shows the pressure distribution over a typical cambered airfoil. Schema from <a href="https://doi.org/10.9734/BJAST/2017/31893" target="_blank">Petinrin (2017). Computational Study of Aerodynamic Flow over NACA 4412 Airfoil. British Journal of Applied Science & Technology.</a></p>
+  </div>
+
+ Bernoulli's Principle explanations focus on the velocity of the fluid. If we look at the velocity of the air around the airfoil, we can see that close to the leading edge there's a point where the fluid velocity is reduced to zero - this is called the stagnation point. Outside of the thin boundary layer surrounding the airfoil, the fluid flowing above the stagnation point, over the top surface of the airfoil, travels faster than the fluid traveling over the bottom  surface. Bernoulli's Principle tells us that when the velocity of a fluid increases, it's pressure must be reduced, which comes from the conservation of energy. This means that the increase in velocity above the airfoil creates an area of lower pressure, and the reduction in velocity below it creates an area of higher pressure, and this pressure difference creates the lift force. 
+ 
+ But then we need to explain what causes the difference in velocity. Here we present two of them:
+ 1. One explanation is that the geometry of an airfoil causes the flow to be pinched together above the airfoil, but not below it. Because of the conservation of mass, this results in increased velocity above the airfoil.
+ 2. A more complete but less intuitive explanation for the difference in velocity is based on the *concept of circulation*. The flow around an airfoil can be thought of as the superposition of idealized uniform  irrotational flow, and circulatory flow. If we impose a condition that says that the flow above and below the airfoil must be parallel when leaving the trailing edge, we can calculate the exact amount of circulation that must be generated by the airfoil to do this. This is called the Kutta condition. Circulation has the effect of accelerating the flow above the airfoil and delaying the flow below it. 
+
+  *Newtons Third Law*:
+
+  A second type of explanations are based on Newton's third law. Here we don't consider the velocity above and below the airfoil but instead look more generally at the behavior of the fluid. If we look at a wider area we can observe that the effect of an airfoil can be felt far beyond its immediate vicinity. Upstream of the airfoil the flow is being swept upwards, which is called upwash. And downstream the flow is deflected downwards, which is called downwash. A very large volume of air is being displaced by the airfoil. Newton's third law tells us that for every action there is an equal and opposite reaction. The airfoil must be imparting a force on the air to create the downwash, and so based on Newton's third law, there must be a corresponding reaction force acting on the airfoil. In other words an airfoil generates lift by turning more incoming air downwards than upwards. We can use the concept of circulation  again, this time to explain how the upwash and downwash are created.
+
+  In summary, a lift force acts on an airfoil because of the pressure distribution around it.  The exact cause of this pressure distribution is complex, and can be explained in several  different ways, which approach the problem from different angles. Explanations based on Bernoulli's Principle and on Newton's Third Law provide valuable insight into how lift is generated, although both approaches have limitations. Nevertheless, these explanations are useful and can lead to a more  intuitive understanding of lift. 
+  
+  **Stall and Angle of Attack**:
+
+  We can easily imagine for example that increasing the camber of an airfoil will allow it to deflect a larger amount of fluid downwards, and so will increase the lift force. The same is true for the angle of  attack. Increasing the angle of attack deflects more fluid and increases lift. *However* there are limits to this logic. Once the angle of attack reaches a certain critical value, we can observe a sudden decrease in the lift force and increase in the drag force. At this angle of attack the boundary layer is no longer able to remain attached to the airfoil and it detaches from the surface, creating a wake behind it which affects the pressure distribution around the airfoil, significantly reducing lift and increasing drag. Flow separation is explained in more detail in the section about aerodynamical drag. The sudden reduction in lift is called stalling, and it can be very dangerous for aircraft. Different airfoil shapes can have drastically different lift characteristics. For example if an airfoil is symmetrical, and so has zero camber, the lift force will be zero for zero angle of attack - as for any symmetrical body. Aerobatic aircraft usually use symmetrical airfoils since they allow planes to fly upside down more easily. Lift is then generated by lifting the nose of the plane to create an angle of attack.
+
+  **Control Surfaces:**
+
+  Modern aircraft wings are equipped with control surfaces - flaps and slats - which allow the shape of the airfoil to be adjusted and optimized for the different phases of flight. During take-off for example you want high lift. Extending the flaps increases the camber of the wing, which increases lift, and so flaps are extended during take-off. But the extra lift comes at the expense of increased drag, and so the flaps are retracted when cruising, since high lift is no longer needed and drag should be minimized to improve fuel consumption.
 
 </details>
 
-<!-- $C_L=\frac{L}{1/2\rho S v^2}$\\ -->
-$L=C_L\frac{1}{2}\rho Sv^2$
+ **Lift Force Calculation**:
+
+In practice the lift force is often calculated using an empirical formula similar to the one used for drag. It models the most important relationships - *linear* to surface area and *quadratic* to velocity - and combines the rest of the hard to explain values into $C_L$, the lift coefficient.
+
+$$L=C_L\frac{1}{2}\rho Sv^2$$
 
 
 $L$:    lift force \\
@@ -303,7 +367,164 @@ $\rho$: air density\\
 $S$:    wing area\\
 $v$:    airspeed
 
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
 
+<style>
+  .drag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    min-height: 150px;
+    width: 45%;
+    background-color: #f9f9f9;
+  }
+
+  .drag-item {
+    background-color: #e3e3e3;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    margin: 4px;
+  }
+
+  .check-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .feedback {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+
+<p><strong>Question 1: Pressure drag is caused by shear stresses acting along the surface.</strong></p>
+<form id="q1">
+  <input type="radio" name="q1" value="True"> True<br>
+  <input type="radio" name="q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1', 'False', 
+      'Correct! It is friction drag that is caused by shear stresses. Pressure drag is caused by the difference in pressure between the front and the rear of the body. This occurs in the presence of flow separation.',
+      'Incorrect! Pressure drag is caused by the difference in pressure between the front and the rear of the body. This occurs in the presence of flow separation. Friction drag is caused by shear stresses.')">
+    Check Answer
+  </button>
+  <p id="q1-feedback"></p>
+</form>
+
+<p><strong>Question 2: Does using the most streamlined shape, always result in the lowest drag?</strong></p>
+<form id="drag-q2">
+  <input type="radio" name="drag-q2" value="True"> True<br>
+  <input type="radio" name="drag-q2" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('drag-q2', 'False', 
+      'Correct! Minimizing total drag requires balancing pressure drag and friction drag. A fully streamlined shape reduces pressure drag to a minimum but increases friction drag due to a larger surface area.',
+      'Incorrect. While streamlining reduces pressure drag, it increases friction drag from the extended surface. The optimal shape is a compromise between both drag components.')">
+    Check Answer
+  </button>
+  <p id="drag-q2-feedback"></p>
+</form>
+
+<p><strong>Question 3: Which changes would likely help reduce total aerodynamic drag on a vehicle?</strong></p>
+<form id="drag-q3">
+  <input type="checkbox" name="drag-q3" value="A"> <strong>(A)</strong> Streamlining the shape<br>
+  <input type="checkbox" name="drag-q3" value="B"> <strong>(B)</strong> Maintaining laminar flow over the surface<br>
+  <input type="checkbox" name="drag-q3" value="C"> <strong>(C)</strong> Increasing the surface area exposed to flow<br>
+  <input type="checkbox" name="drag-q3" value="D"> <strong>(D)</strong> Inducing early flow separation<br>
+  <input type="checkbox" name="drag-q3" value="E"> <strong>(E)</strong> Using textures like dimples or riblets in the right locations<br>
+  <button type="button" onclick="checkMultipleAnswers('drag-q3', ['A', 'B', 'E'], 
+    'Correct!<br><br>
+    <ul>
+      <li><strong>(A)</strong> Correct! Streamlining delays or even prevents flow separations which drastically reduce pressure drag.</li>
+      <li><strong>(B)</strong> Correct! Maintaining laminar flow reduces significantly the contribution of friction drag to the total drag force.</li>
+      <li><strong>(C)</strong> Incorrect! Increasing the surface area exposed to the flow of the fluid, increases friction drag, which scales linearly with surface area.</li>
+      <li><strong>(D)</strong> Incorrect! The earlier flow separation occurs the greater the influence of pressure drag. Flow separation should be delayed as long as possible.</li>
+      <li><strong>(E)</strong> Correct! Using textures like dimples causes turbulent flow which delays flow separation. Since turbulent flow also increases friction drag, it must be carefully balanced.</li>
+    </ul>
+    ', 
+    'Incorrect. Try again!')">
+    Check Answer
+  </button>
+  <p id="drag-q3-feedback"></p>
+</form>
+
+</details>
+
+<details markdown="1"> 
+  <summary>Conceptual Questions on Lift</summary> 
+
+<style>
+  .drag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .drop-zone {
+    border: 2px dashed #ccc;
+    border-radius: 6px;
+    padding: 10px;
+    min-height: 150px;
+    width: 45%;
+    background-color: #f9f9f9;
+  }
+
+  .drag-item {
+    background-color: #e3e3e3;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: move;
+    user-select: none;
+    margin: 4px;
+  }
+
+  .check-button {
+    margin-top: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .feedback {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
+  
+<p><strong>Question 1: Lift is primarily generated due to the pressure difference between the upper and lower surfaces of a body.</strong></p> 
+  <form id="lift-q1"> <input type="radio" name="lift-q1" value="True"> True<br> <input type="radio" name="lift-q1" value="False"> False<br> 
+  <button type="button" onclick="checkTrueFalse('lift-q1', 'True', 'Correct! Lift is caused by a pressure difference — lower pressure on the upper surface and higher pressure on the lower surface due to the flow characteristics around the body.', 'Incorrect! Lift arises due to the pressure difference between the upper and lower surfaces of an airfoil or body moving through a fluid.')"> 
+  Check Answer </button> <p id="lift-q1-feedback"></p> </form> 
+  
+  <p><strong>Question 2: Which of the following factors contribute to generating lift on a wing or airfoil? (Select all that apply)</strong></p> <form id="lift-q2"> <input type="checkbox" name="lift-q2" value="A"> <strong>(A)</strong> Angle of attack<br> <input type="checkbox" name="lift-q2" value="B"> <strong>(B)</strong> Pressure difference across the wing<br> <input type="checkbox" name="lift-q2" value="C"> <strong>(C)</strong> Shape of the wing (airfoil)<br> <input type="checkbox" name="lift-q2" value="D"> <strong>(D)</strong> Surface roughness alone<br> <input type="checkbox" name="lift-q2" value="E"> <strong>(E)</strong> Flow velocity around the wing<br> <button type="button" onclick="checkMultipleAnswers('lift-q2', ['A', 'B', 'C', 'E'], 'Correct!<br><br> <ul> <li><strong>(A)</strong> Correct! Increasing angle of attack increases lift — up to a certain point before stall.</li> <li><strong>(B)</strong> Correct! Pressure difference is the root cause of lift.</li> <li><strong>(C)</strong> Correct! Airfoil shape affects how air flows and how pressure is distributed.</li> <li><strong>(D)</strong> Incorrect! While surface roughness affects drag and possibly boundary layer transition, it doesn’t directly generate lift.</li> <li><strong>(E)</strong> Correct! Lift is proportional to the square of the flow velocity over the wing.</li> </ul> ', 'Not quite. Check your understanding and try again.')"> 
+  Check Answer </button> <p id="lift-q2-feedback"></p> </form> 
+  
+  <p><strong>Question 3: Flow separation on the upper surface of an airfoil usually leads to:</strong></p> <form id="lift-q3"> <input type="radio" name="lift-q3" value="A"> (A) Increased lift and reduced drag<br> <input type="radio" name="lift-q3" value="B"> (B) Decreased lift and increased drag<br> <input type="radio" name="lift-q3" value="C"> (C) No change in lift<br> <input type="radio" name="lift-q3" value="D"> (D) Complete reversal of lift<br> 
+  <button type="button" onclick="checkTrueFalse('lift-q3', 'B', 'Correct! Flow separation causes a drop in lift and a rise in pressure drag due to the turbulent wake.', 'Incorrect! When flow separates from the upper surface, lift decreases significantly and drag increases due to the formation of a wake.')"> Check Answer </button> <p id="lift-q3-feedback"></p> </form> 
+  
+</details>
+
+<details markdown="1"> 
+  <summary>Mathematical Questions</summary> 
+
+  An airplane is flying at an altitude of $500 m$ with a speed of $72 m/s$. The total weight of the airplane is $7,200 N$. The wing area is $16 m²$.
+
+  **Question 1**: What is the lift coefficient of the airplane at 500m?
+
+  **Question 2**: How much faster must the airplane fly at 10,000 m to maintain level flight (same lift force)?
+
+  **Question 3**: How much does the drag increase when flying at 10,000 m?
+
+</details>
 
 #### Thrust
 

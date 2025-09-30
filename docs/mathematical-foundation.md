@@ -58,7 +58,7 @@ To start your journey in these topics, we recommend exploring the following reso
 </details>
 
 
-▶️ [Watch the Probabilty Series](https://www.3blue1brown.com/topics/probability) 
+▶️ [Watch the Probability Series](https://www.3blue1brown.com/topics/probability) 
 
 <details markdown="1">
   <summary>Useful chapters for us:</summary>

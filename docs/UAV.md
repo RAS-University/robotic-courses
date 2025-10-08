@@ -123,7 +123,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
 
   The sum of these two effects in the direction of movement is the drag.
 
-#### Pressure Drag:
+#### Pressure Drag
    
   <div style="text-align: center;">
     <img src="{{ site.baseurl }}/assets/images/uav/ball_pressure.svg" alt="Pressure distribution of a ball." style="width: 95%; height: auto;">
@@ -139,7 +139,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   When the fluid passes over the surface of the sphere it initially accelerates and the pressure decreases in the flow direction. Beyond a certain point the flow then decelerates and the pressure starts increasing. The increase in pressure pushes the fluid backward. But due to the oncoming fluid it cannot travel back, forcing it to detach from the surface, resulting in flow separation. Flow separation occurs at 80° for a smooth sphere in laminar flow. In case of a turbulent flow it can be delayed until 120°, which drastically reduces the drag. This is because the mixing between different flow layers transfers momentum to the fluid, allowing them to sustain a larger pressure difference. That is why for example a golf ball has dimples instead of being completely smooth. The turbulence caused them delays flow separation, reduces drag and hence allows the ball to travel further.
   Bodies traveling through fluid like plane wings or racing cars are usually designed in a *tear-drop* shape to minimize flow separation. Flow separation is delayed so much or doesn't occur at all, that pressure drag is greatly reduced. For these type of objects it's the shear stresses that contribute most to the total drag force.
 
-#### Friction Drag:
+#### Friction Drag
 
   <div style="text-align: center;">
     <img src="{{ site.baseurl }}/assets/images/uav/shear_stresses.svg" alt="Shear stress over an airfoil in a fluid." style="width: 95%; height: auto;">
@@ -164,7 +164,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
 
   The same logic applies to airfoils, where the angle of attack - i.e. the angle between the centerline of a wing and the direction of flow - has a large influence on the drag force. At high angles of attack (AOA) separation occurs, which significantly increases the drag force. In general it is important to remember that friction drag increases as pressure drag decreases and so these two aspects need to be carefully balanced.
 
-#### Drag Force Calculation:
+#### Drag Force Calculation
   
   If you would integrate the pressure stress and wall shear stresses of an object, you would obtain the exact drag force. However those information are almost never available. That is why usually the drag equation is used to represent the total drag force:
   $$D=C_D\frac{1}{2}\rho A v^2$$
@@ -531,45 +531,103 @@ $v$:    airspeed
 
 ### 1.3 Thrust
 
-Thrust is the mechanical force that propels an flying object forward. The physical principle behind them are all based on Newton’s Third Law of Motion, according to which *"for every action, there is an equal and opposite reaction"*. Thrust is generated when a system expels mass in one direction, producing an equal force in the opposite direction. There are different way of generating thrust, here we will only cover the most frequently used in aerial robotics which are propellers.
+Thrust is the mechanical force that propels an flying object forward. 
+<!-- The physical principle behind them are all based on Newton’s Third Law of Motion, according to which *"for every action, there is an equal and opposite reaction"*. Thrust is generated when a system expels mass in one direction, producing an equal force in the opposite direction.  -->
+There are different way of generating thrust, here we will only cover the most frequently used in aerial robotics which are propellers.
 
 *Propellers*:
 
-Propellers consist of rotating blades at high speed. The way they are generating thrust is in essence very similar to how an airfoil generates lift. The video below explains this in a bit more detail.
+Propellers consist of rotating blades at high speed. The way they are generating thrust is in essence very similar to how an airfoil generates lift. 
 
-![video](https://www.youtube.com/watch?v=6FAcVRBx0kc)
-><sub>Propelling Flight: The Science of Propellers. Available at: https://www.youtube.com/watch?v=6FAcVRBx0kc</sub>
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/propeller_designations.png" alt="Designation of a propeller on a De Havilland Canada DHC-1 Chipmunk." style="width: 80%; height: auto;">
+    <p style="font-size: small;">The figure shows designations of a propeller on a De Havilland Canada DHC-1 Chipmunk. Original photo from <a href="https://commons.wikimedia.org/wiki/File:DHC1_Chipmunk_WP976_nose.jpg" target="_blank">wikimedia.</a></p>
+  </div>
 
-  <details markdown='2'>
-  <summary>Description of Video</summary>
+<!-- The video below explains this in a bit more detail. -->
 
-  **How Propellers generate Thrust**:
+<!-- ![video](https://www.youtube.com/watch?v=6FAcVRBx0kc)
+><sub>Propelling Flight: The Science of Propellers. Available at: https://www.youtube.com/watch?v=6FAcVRBx0kc</sub> -->
 
-  **Factors Influencing Thrust**:
+<!-- <details markdown='2'> -->
+  <!-- <summary>Description of Video</summary> -->
 
-  **Thrust Equation for Propeller**:
-  Spinning propellers are in essence like spinning wings - an airfoil in rotation. They are usually compromised of four wings, called blades, attached to a central rotating nose. How do these massive structures function to keep an airplane airborne? 
-  
-  A blade of propeller is not much more than a rotating airfoil. It has a curved upper surface and is fixed with a certain angle of attack. The air on the curved front surface moves faster than the on the rear surface, creating as explained before a region of low pressure in front and region of high pressure in the back of the propeller. Since air naturally moves from high pressure to low pressure, it's this movement that provides the thrust to push the airplane forward.
+#### How Propellers generate Thrust
 
-  When you look at an airplane with spinning propellers, you’re essentially seeing wings in rotation. A propeller blade is nothing more than a rotating airfoil: it has a curved upper surface and a flatter lower surface, just like the wing profiles described in the section on lift. Because of this shape, the airflow around each spinning blade is faster on the curved side and slower on the flatter side, creating a pressure difference. Higher pressure builds up behind the propeller and lower pressure forms in front, and this imbalance generates a forward force we call thrust.
+Spinning propellers are like spinning wings - an airfoil in rotation. They are usually compromised of two wings, called blades, attached to a central rotating nose - the propeller hub. As an airfoil a blade of a propeller has a rounded leading edge and a more pointy trailing edge. It has a curved front and a flat back surface and is fixed at the hub with a certain angle of attack. The air on the curved front surface moves faster than the one on the rear surface, creating as explained before a region of low pressure in front and region of high pressure in the back of the propeller. This forward force called thrust propels the aircraft forward.
+Another way to reason about this is with Newton's third law of motion: a spinning propeller accelerates the air backwards and as a equal opposite reaction pushes the plane forward.
 
-  In fact, thrust generation by a propeller is a direct application of the same principles that explain lift. Where a stationary wing uses an airfoil to generate lift (a force perpendicular to the airflow), a spinning propeller uses its airfoil-shaped blades to generate thrust (a force aligned with the aircraft’s forward motion). Both forces come from differences in pressure distribution caused by the blade geometry, angle of attack, and the velocity of the surrounding air.
+The design of the blades — their curvature, camber, pitch angle, and even the number of blades — determines how efficiently they can deflect air and therefore how much thrust they generate. 
 
-  This connection becomes clearer if we think about Newton’s third law: when the propeller accelerates air backwards, the equal and opposite reaction pushes the aircraft forward. The design of the blades — their curvature, camber, pitch angle, and even the number of blades — determines how efficiently they can deflect air and therefore how much thrust they generate. A steeper pitch provides more thrust but requires more engine power, while a shallower pitch reduces thrust but is more efficient at lower speeds.
+#### Factors Influencing Thrust
 
-  In short, propellers can be understood as spinning wings. They rely on the same aerodynamic laws that govern lift, but they orient the resulting force in the forward direction to overcome drag and keep the airplane moving. Wings keep the airplane in the air, while propellers pull it through the air — both working together under the same principles of fluid dynamics.
+**Angle of Attack**:
 
-  </details>
-Propellers are twisted airfoils, spinning at high speed and thus pushing air backward. As a reaction the vehicle is pushed forward. To create an uniform lift force, the section of the propellers changes because the outer part of the propellers turn at a higher speed than the inner part of it. There are a lot of different possible curvature, blade pitch and number of blades, balancing thrust generation against drag.
+The Angle of Attack for a propeller, similar to the one of a wing, is the angle between the chord line of the blade and the direction of movement of the air. However for a propeller the direction of movement of the air is less trivial than for a wing. It consists of two components:
+1. The vertical speed caused by the rotation of the propeller.
+2. The horizontal airspeed caused by the forward movement of the plane.
 
-Now that you understand the basic principle of propeller. This introduction will not dive deeper, but know that there are a lot of different propeller designs. They vary in shape, number of blades, blade pitch. More advanced architectures include variable pitch propellers or contra-rotating propellers. The type of propeller must therefore be carefully chosen to balance thrust generation against drag and stability.
+The relative airflow relevant for the thrust generation is the combination of those two components. 
 
-By turning propellers by 90 degrees and orienting them to spin in the horizontal plane, it generates lift instead of thrust. That is the principle rotorcrafts like a helicopter or a multirotor drone uses.
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/propeller_AoA.jpg" alt="Angle of attack for a propeller" style="width: 60%; height: auto;">
+  <p style="font-size: small;">The figure illustrates the angle of attack on a propeller. Schematic from <a href="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Flearntoflyblog.com%2Fwp-content%2Fuploads%2F2017%2F05%2F5-9.jpg&f=1&nofb=1&ipt=6ebd7ebe5f412eaa171ed6adc8a1fd4ccaa2ff14449795e1940e7f46ed064104" target="_blank">learntoflyblog.com.</a></p>
+</div>
 
-<details markdown='1'>
-<summary>Additional information</summary>
-While as explained above, propellers are the most important concept to understand thrust in the context of aerial robotics, there are different ways. Jet engines for example use fuel to compress air and expell it high speed and are used in bigger aircrafts. 
+**Propeller Pitch**:
+
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/Propeller-Pitch.png" alt="Propller pitch illustration for low and high pitch." style="width: 90%; height: auto;">
+  <p style="font-size: small;">The figure illustrates a high and low pitch propeller.<a href="https://www.boatingbasicsonline.com/how-does-a-boat-propeller-work/" target="_blank">boatingbasicsonline</a>.</p>
+</div>
+
+The propeller pitch is the theoretical distance a propeller would move through the air per single revolution of the engine. This is similar to how a screw travels through wood. The higher the pitch, the more distance the propeller covers in one turn. The pitch is changed with the angle the propeller blade is attached to the hub. Low pitch propellers "bite" less air per turn, decrease the angle of attack which allows the engine to spin them faster. This is desireable for take-off but inefficient at cruise.
+
+Modern aircraft often use variable pitch propellers allowing pilots to adjust the pitch in different flight regimes. This allows optimal thrust generation while fixed pitch propeller compromise between performance at different speed.
+
+**Rotation Speed and Aircraft Speed**:
+
+If RPM increases, the vertical speed increases which causes an increase in the angle of attack.
+If aircraft forward speed increases, the angle of attack is decreased and with it the efficiency of a propeller. At very high speed there are compressibility effects present, which drastically drops efficiency. Also with increasing speed the noise increases. Therefore often larger blades at lower speed. There is a metric known as the advance ratio, which is big if the airspeed is high relative to the propeller speed:
+$$J=\frac{V}{nD}$$
+where $V$ is the true airspeed, $n$ is the propeller speed and $D$ is the propeller Diameter.
+
+On the image below it is well visible that for every propeller blade pitch there is an optimal advance ratio. Hence in order to achieve the most efficient flight for all advance ratios the pitch needs to change constantly. That's where the variable pitch propeller come into play.
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/prop_eff_adv_ratio.jpg" alt="Propeller efficiency for different propeller pitches against advance ratio." style="width: 90%; height: auto;">
+  <p style="font-size: small;">The figure illustrates propeller efficiency for different blade pitches against advance ratio. Schema by <a href="http://www.epi-eng.com/images/Redrives/NavWeps%20Prop%20Eff-600.jpg" target="_blank">EPI inc.</a></p>
+</div>
+
+**Blade Twist and Area**:
+
+Unlike a wing, a propeller blade does not move at a uniform speed along it's span. The tip of a blade travels faster than the root. Since the force produced by a blade is quadratically proportional to the speed, the force produced along the length of a blade would vary substantially. The larger the blades, the greater that difference. Blade twist compensates for the speed difference. So what exactly happens?
+
+The root of the blade is fixed with an angle in order to have a big angle of attack, while the tip is almost flat. This allows a more equal distribution of the force, allowing the entire length of the blade to contribute equally to the total thrust vector. This blade twist is illustrated on the image beneath.
+
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/aircraft_propeller_twist.png" alt="Blade twist along span of propeller blade" style="width: 90%; height: auto;">
+  <p style="font-size: small;">The figure illustrates propeller blade twist. You can see how the pitch is the highest at the hub and the lowest at the tip. Schema from <a href="https://commons.wikimedia.org/wiki/File:Aircraft_propeller_twist.png" target="_blank">Pilot's Handbook of Aeronautical Knowledge, page 7-5.</a></p>
+</div>
+
+Another way, often used in combination with blade twist, to counter the difference in speed between the root and the tip is to adapt the area of the blade. In the section about lift generation we concluded the force generated is linearly proportional to the area of the blade. Hence by gradually decreasing the surface area along the length of a blade, relatively increases the thrust generated at the root compared to the tip.
+
+**Diameter**:
+
+The diameter of a propeller is the length of one propeller from tip to tip. Larger diameters are more efficient.
+
+**Number of blades**:
+
+The majority of propellers used in UAV's have two blades, because they are more efficient. However more blades can be chosen to achieve more thrust in a small area. Each blade increases the volume of accelerated air per turn, but also increases drag which in total makes efficiency drop.
+
+More advanced architectures include variable pitch propellers or contra-rotating propellers. The type of propeller must therefore be carefully chosen to balance thrust generation against drag and stability.
+
+<div style="background-color: #e8f4fd; border-left: 4px solid #2b7bb9; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
+  <strong>Propellers in Rotorcraft</strong> By turning propellers by 90 degrees and orienting them to spin in the horizontal plane, it generates lift instead of thrust. That is the principle rotorcraft like a helicopter or a multirotor drone uses.
+</div>
+
+<!-- #### Other ways to generate thrust
+While as explained above, propellers are the most important concept to understand thrust in the context of aerial robotics, there are different ways. Jet engines for example use fuel to compress air and expell it high speed and are used in bigger aircrafts.
+
 *Jet Engines*:
 
 Jet engines, the type of engine any bigger airplane has, works as follows: Air is drawn inside the engine, compressed, mixed it with fuel, and expelled at high speed at the rear. The reaction pushes the aircraft forward. 
@@ -591,9 +649,9 @@ Jet engines, the type of engine any bigger airplane has, works as follows: Air i
   <img src="{{ site.baseurl }}/assets/images/uav/edf.jpg" alt="." style="width: 200px; height: auto;">
   <p style="font-size: small;">An example of an electric ducted fan. Image available <a href="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F617txcEYGTL.jpg&f=1&nofb=1&ipt=c80014e84ed580e0768f820cb3bec239527cdd26c4a640b9880fcdc526bf74a9" target="_blank">here</a>.</p>
 </div>
-A ducted fan is a small, high speed propeller enclosed in a cylindrical duct that accelerates air through a narrow channel.They work similarly to open propellers but are more efficient in certain conditions, as the duct helps streamline airflow, increase static thrust, and reduce tip vortices. Ducted fans also tend to produce less noise, making them ideal for compact aerial vehicles like drones where reduced acoustic signature and improved efficiency are important.
+A ducted fan is a small, high speed propeller enclosed in a cylindrical duct that accelerates air through a narrow channel.They work similarly to open propellers but are more efficient in certain conditions, as the duct helps streamline airflow, increase static thrust, and reduce tip vortices. Ducted fans also tend to produce less noise, making them ideal for compact aerial vehicles like drones where reduced acoustic signature and improved efficiency are important. -->
 
-</details>
+<!-- </details> -->
 
 ### 1.4 Conditions to fly
 With drag, lift, thrust and gravity as basic forces, we can already understand the conditions for an aircraft to fly.

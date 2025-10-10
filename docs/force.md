@@ -99,79 +99,84 @@ author: Mael Studer (EPFL)
 ## 1. Prerequisites
 
 - add at the end
+- closed-loop control page (controller definition)
 - (read course about sensors and sensing)
 
 ---
 
 ## 2. General Motivation
 
-Let's start this course with a question:
+Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to vision page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
 
-<p><strong>Why does force perception matter in robotics?</strong> (multiple answers possible)</p>
-<form id="intro">
-  <input type="checkbox" name="intro" value="option1">
-  Object handling<br>
+**Physical interaction** happens when a robot gets in touch with a human or an object of the real world. There is either a force generated from the robot towards the object or vice-versa. Physical interaction is classified into three catergories according to the executed task: **manipulation, exploration** and **reaction**. These categories are explained and illustrated below.  
 
-  <input type="checkbox" name="intro" value="option2">
-  Detection of material and surface properties (softness, roughness, etc.) <br>
+- **Manipulation:** (robot: active agent - object: passive agent)  
+*Goal: Use perception to perform an action on an object successfully.*  
+During manipulation, a robot senses an object and adapts its actions accordingly. An example of manipulation is the grasping of objects, essential in industrial applications. During grasping, touch could be used to maximize the contact surface between the robotic hand and the object or to prevent slippage of the object. (->link to grasping page)  
+Slippage can arise in scenarios like dealing with soft objects (e.g. fruit), when objects change weight mid grasp (e.g. water bottle filled during manipulation) or just while moving objects from one place to another. The latter is shown in the video below.  
+From the point of view of signals, the action related information flows from the manipulated object towards the controller.
 
-  <input type="checkbox" name="intro" value="option3">
-  Impact and contact recognition <br>
+![Manipulation Example](https://www.youtube.com/watch?v=teOeMzuwMpo)
+><sub>*Example of Manipulation: Lifting a Tennis Ball. Available on [YouTube](https://www.youtube.com/watch?v=teOeMzuwMpo)*</sub>
 
-  <button type="button" onclick="checkMultipleAnswers(
-    'intro',
-    ['option1','option2','option3'],
-    'Correct!',
-    'Incorrect. Try again.'
-  )">
-    Check Answer
-  </button>
+- **Exploration:** (robot: active agent - object: passive agent)  
+*Goal: Learn about object properties.*  
+As in manipulation, exploration is when a robot interacts with an object, except the robot performs movements to learn about the object (action reveals perception).  
+In exploration, touch is used to measure material properties like softness (stiff or compliant), surface texture (e.g. smooth vs rough), shape, temperature or even friction coefficient.  
+In the video below, a robotic finger moves over objects trying to identify their shape. The action related information flows from controller towards contact; the object has no infulence on action.
 
-  <p id="intro-feedback"></p>
-</form>
+![Exploration Example](https://www.youtube.com/watch?v=UWMRR38hNWA)
+><sub>*Example of Exploration: Shape detection. Available on [YouTube](https://www.youtube.com/watch?v=UWMRR38hNWA)*</sub>
 
-As you may have guessed, all the above answers are correct. Force and tactile perception is essential for robots in three main domains: **manipulation, exploration and response**. The figure below illustrates these three main functions.
+- **Reaction:** (robot: active agent - human/robot: activ agent)  
+*Goal: Enable safe interactions with another active agent.*  
+Reaction refers to an interaction between a robot and a human (or another robot). The robot not only perceives and acts, but also adapts in real-time to the other agent by interpreting the constant feedback.  
+Therefore there is a bi-directional information flow, known as closed-loop control. This enables safe operation of robots around humans.  
+For example, in the field of *haptics*, humans can guide robots and feel force feedback (e.g. teleoperation).
+More on *haptics* can be found on the dedicated page (link to haptics).
+In the video below, there is an example of a human shaking hands with a robot.
 
-<figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/uses_of_tactile_sensing.png' }}" 
-       width="500px" 
-       alt="Diagram showing manipulation, exploration, and response as the main uses of tactile sensing in robotics">
-  <figcaption style="margin-top: 8px; font-style: italic;">
-    Uses of tactile sensing in robotics (<a href="https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20">Springer Handbook of Robotics</a>, Chapter 19) -> ask permission
-  </figcaption>
-</figure>
+![Reaction Example](https://www.youtube.com/watch?v=TFwVKe3W41Y)
+><sub>*Example of Reaction: Handshake between Human and Robot. Available on [YouTube](https://www.youtube.com/watch?v=TFwVKe3W41Y)*</sub>
 
-Add robotics applications fields of tactile sensing (biomedical, HRI, prosthetics, etc.)
--> have a look at chapter 1.3 of SPRINGER tactile sensing.
+---
+
+Some promising fields in which force perception is used are biomedical robotics (e.g. surgical robotics -> link to page), rehabilitation (e.g. exoskeletons -> link to page) or humanoids (link to humanoids page).
+
+> On this page, the terms *sense of touch*, *tactile sensing* and *force perception* refer to the robot’s ability to perceive and interpret physical interaction.
 
 ---
 
 ## 3. Course Content
 
-- Chapter 0 is about where sensors are located and why
-- Chapter 1 and 2 give some sensor examples, emphasis on tactile sensors
-- Chapter 3 is about the interpretation of the obtained information
+Now that we have seen **why** robots need a sense of touch, we can dive into **how** force perception is implemented.
 
-### Chapter 0 : Sensor Location
+It is possible to distinguish two types of force perception: intrinsic sensing and extrinsic sensing.
+Intrinsic sensing is more inner — the sensors are located within the mechanical structure of the robot. They measure the overall forces applied on the system. Therefore, we speak of **force feedback**.
 
-#### 0.1 Joint
+On the other hand, extrinsic sensing refers to sensors mounted near the contact area of the robot — more outer. These sensors deal with localized regions and provide **tactile feedback**.
 
--> encoder, potentiometer, motor-current, etc.
+- **Force feedback (intrinsic sensing)** measures the global forces and torques applied at one specific point or interface. This point is considered infinitesimally small, meaning it has a low spatial resolution. We can think of it as the overall push/pull and twist that the robot feels at that contact point.  
 
-#### 0.2 Links
+- **Tactile feedback (extrinsic sensing)** measures pressure distributions. It does not concern a single point anymore but a whole area (an array of sensing points). We can think of it as an electronic skin. Because it has multiple contact points, it can detect slippage, surface texture or the exact contact location on the array. Depending on the material used, tactile sensors can be designed as hard-skin or soft-skin types.
 
-#### 0.2 Tip
 
--> tactile arrays, 6D F/T sensors, etc.
+TODO -> CONTINUE HERE
 
-#### 0.3 Challenges  
 
-add the challenges that come with the sensor location (integrated into skin surfaces, adequate friction to handle objects securely, robust enough to survive repeated impacts, etc.)  
--> these are task related challenges (chapter 4 tactile sensing)
+The structure of the content will be as follows:
+
+- Chapter 1
+- Chapter 2
+- Chapter 3
+- Chapter 4
+- Chapter 5
 
 ---
 
 ### Chapter 1 : Force/Torque Sensors
+
+-> also presented in chapter about "sensors and sensing" (discuss to not be redundant)
 
 #### 1.1 Traditionnal Force Sensors
 
@@ -188,34 +193,76 @@ add the challenges that come with the sensor location (integrated into skin surf
 
 From simple tactile sensors (yes or no / logic high or low) to more sophisticated ones.
 
-#### 2.1 Traditionnal Tactile Sensors
+-> different working principles (resistive, piezoresistive, capacitive, optical, magnetic, piezoelectric, ultrasonic)
+-> then mechanical nature of the sensor (rigid, flexible, compliant, stretchable)
 
--> resistive, capacitive, piezoelectrical, etc. 
+#### 2.1 Resistive Sensors
 
-- **Resistive sensors**: detect force by change in resistance of material (tactile sensing 5.2.1)
-- **Capacitive sensors**: detect changes in capacitance due to deformation of dielectric (tactile sensing 5.2.2)  
-- **Piezoelectric sensors**: generate charge proportional to applied forces (tactile sensing 5.2.6) 
+detect force by change in resistance of material (tactile sensing 5.2.1)
 
-- **Optical sensors**: tactile sensing 5.2.3
-- **Magnetism-based sensors**: tactile sensing 5.2.4
-- **electrorheological/magnetorheological**: tactile sensing 5.2.7–5.2.8).  
+#### 2.2 Capacitive Sensors
 
-#### 2.2 Advanced Tactile Sensors
+detect changes in capacitance due to deformation of dielectric (tactile sensing 5.2.2)
+
+#### 2.3 Piezoelectric Sensors
+
+generate charge proportional to applied forces (tactile sensing 5.2.)
+
+#### 2.4 Optical Sensors
+
+tactile sensing 5.2.3
+
+#### 2.5 Magnetism-based Sensors
+
+tactile sensing 5.2.4
+
+#### 2.6 Electrorheological / Magnetorheological
+
+tactile sensing 5.2.7–5.2.8).  
+
+---
+
+### Chapter 3: Advanced Tactile Sensors
+
+#### 3.1 Flexible Tactile Sensors
 
 -> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
 -> have a look at meta's fingertip tactile sensor
 
-#### 2.3 Vision-Based Tactile Sensors
+#### 3.2 Stretchable Tactile Sensors
+
+#### 3.3 Vision-Based Tactile Sensors
 
 -> make link to vision course
 -> video from TEDX MIT, guy explains how his vision based tactile sensor works
 
 ---
 
-### Chapter 3 : Information Processing
+### Chapter 4 : Information Processing
+
+(??? is this worth a chapter or should it just be beneath the concerned parts)
 
 add challenges of electronics: wiring, data transfer, power consumption  
 -> examples of how it is done today
+
+---
+
+### Chapter 5 : Sensor Location
+
+#### 0.1 Joint
+
+-> encoder, potentiometer, motor-current, etc.
+
+#### 0.2 Links
+
+#### 0.2 Tip
+
+-> tactile arrays, 6D F/T sensors, etc.
+
+#### 0.3 Challenges  
+
+add the challenges that come with the sensor location (integrated into skin surfaces, adequate friction to handle objects securely, robust enough to survive repeated impacts, etc.)  
+-> these are task related challenges (chapter 4 tactile sensing)
 
 ---
 

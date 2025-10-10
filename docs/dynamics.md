@@ -34,7 +34,7 @@ nav_order: 3
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# Dynamics [In progress]
+# Dynamics 
 
 
 <!-- bundle exec jekyll serve -->

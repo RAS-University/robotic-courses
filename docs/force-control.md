@@ -3,13 +3,10 @@ title: Force control
 parent: Courses
 layout: default
 math: mathjax
-author: Salim Boussofara (EPFL)
 ---
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
-
-
-
+#Force Control
 <a name="top"></a>
 
 <style>
@@ -37,7 +34,7 @@ author: Salim Boussofara (EPFL)
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-#Force Control
+
 
 - Table of Contents
 {:toc}
@@ -1746,7 +1743,7 @@ For those interested in applying the concepts introduced in this course, the [2-
 
 # Credits  
 
-This course was created by **Salim Boussofara, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
+This course was created by Salim Boussofara and Aude Billard, and funded by **IEEE RAS** and **EPFL**.  
 
 It makes use of selected material from:  
 

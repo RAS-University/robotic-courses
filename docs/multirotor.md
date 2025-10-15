@@ -44,6 +44,21 @@ Microncontroller & attitude sensors
 
 ### Chapter 2 : Dynamics of multirotor UAV's
 
+*Flying dynamics*:
+
+As mentioned above, the bottleneck for quadcopters in the 20th century was the unprecise control of motor speeds. But how can a quadrotor take-off, hover, turn and move forward?
+
+![video](https://www.youtube.com/watch?v=C0KBu2ihp-s)
+><sub>Drones flight dynamics. Video from Sabin Civil Engineering available at: https://www.youtube.com/watch?v=C0KBu2ihp-s</sub>
+
+<span style="color: red;">Add schema with forces and torques</span>
+
+> To **take off**, all rotors increase their speed until the generated lift force is greater than the weight of the drone. If the the lift force exactly balances the gravitational force, the drone hovers. 
+
+> Each rotor does not only generate lift, but also a **torque**, which will spin the drone in the opposite direction. To prevent spinning of the drone during flight rotorcrafts use an equal number of clockwise and anticlockwise spinning rotors. The torques from each pair cancel each other out, ensuring stability during flight.
+
+> Movement in 3D space for quadcopter is initiated by changing the rotation speeds of some of the propellers. To generate a **pitch** movement front rotor speeds are decreased and back rotor speeds increased, which will tilt the drone forward (or vie-versa to tilt backward). If now the rotor speeds are again balanced, the lift force has an angle to the gravitational force and the non-parallel part is a thrust moving the drone forwards. The same principle applies to create a **roll** movement and move sideways. Finally to create a **yaw** rotation, the speeds of clockwise and anticlockwise rotors are adapted to rotate the drone to the left or right.
+
 #### Types of Multirotors
 Quadrotor, hexrotor, octorotor, redundant systems
 

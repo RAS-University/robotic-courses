@@ -73,7 +73,7 @@ To get the most of this module, it is recommended that you have knowledge in:
 </div>
 
 Unmanned Aerial Vehicles (UAV) are flying object's without a pilot and controlled remotely or are autonomous. They are usually referred to as drones. And probably now, when you hear the word _drone_ you are thinking of a small commercial quadcopter people use to take stunning video shots like on the image above? Or maybe you are thinking of drone racing? Or maybe of military drones used more and more frequently in modern war?
-But, did you know that drones/UAV's are much more than only quadcopters?
+But, did you know that drones/UAVs are much more than only quadcopters?
 The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the last decade the drone market got revolutionized and is growing in a incredible pace. More complex mechanics, more stable control and more autonomy. This and the following lectures will give you an overview of different drone types, aerodynamic principles, and what it takes to build and control an UAV.
 
 This course aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
@@ -617,7 +617,7 @@ Another way, often used in combination with blade twist, to counter the differen
 
 **Number of blades**:
 
-The majority of propellers used in UAV's have two blades, because they are more efficient. However more blades can be chosen to achieve more thrust in a small area. Each blade increases the volume of accelerated air per turn, but also increases drag which in total makes efficiency drop.
+The majority of propellers used in UAVs have two blades, because they are more efficient. However more blades can be chosen to achieve more thrust in a small area. Each blade increases the volume of accelerated air per turn, but also increases drag which in total makes efficiency drop.
 
 More advanced architectures include variable pitch propellers or contra-rotating propellers. The type of propeller must therefore be carefully chosen to balance thrust generation against drag and stability.
 
@@ -745,33 +745,166 @@ Watch the following video to see how the magnitude of these forces are changing 
 
 ## Chapter 2 : Drone Types and Use Case
 
-### 2.1 Rotorcrafts:
+### 2.1 Rotorcrafts
 
-Rotorcrafts are aerial vehicles that generate lift using high speed rotary blades called rotors. They are able to do vertical take-off and landing, posses a high maneuverability (rapid change of velocity vector in multiple directions), but are usually energetically less efficient than fixed wing vehicle. 
+Rotorcrafts are aerial vehicles that generate lift using high speed rotary blades called rotors. They are relatively easy to build, capable of vertical take-off and landing (VTOL), possess high maneuverability (rapid change of velocity vector in multiple directions), but are less energy-efficient for long-range flight than fixed wing vehicle. 
 
-The lift force generation principle is the same as for the thrust force using propellers, but turned to the same axis as the gravity.
+The image below shows a collection of some state-of-the-art commercial rotorcrafts. These include tricopters, quadcopter, hexacopters and octocopters, ranging from underactuated to overactuated systems. Today, rotorcraft UAVs are used in a wide variety of fields including agriculture, search and rescue, infrastructure inspection, cargo delivery, mapping, entertainment, and more.
 
-*History*:
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/rotorcrafts_overview_named.png" alt="A selection of different multirotor drones" style="width: 90%; height: auto;">
+  <p style="font-size: small;">The figure illustrates various multicopters. From top left: DJI Mavic Air 2, Autel Robotics EVO II, DJI Phantom Pro, CyPhy LVL 1 Drone, Freefly Alta 8, Skydio 2, Voliro T, Yuneec H520E, Yuneec Typhoon H Plus. </p>
+</div>
 
-The first flying rotorcrafts were quadrotors - a machine with four rotors - in 1922 by Etienne Oehmichen. They were quickly overtaken by helicopters - one single rotor - due to the difficulty to control the four motors for the pilot. The comeback of the quadrotors was in 2000's with the availability of small and highly efficient, microcontroller, electric motors and imu's, which allowed to build small-scale unmanned aerial vehicles.
+The lift force generation principle of a rotorcraft is similar to that of thrust generation using propellers -  only the force acts vertically, countering gravity. Each rotor generates both lift and torque. To maintain balance, the system includes an equal number of clockwise and counterclockwise spinning rotors to cancel out rotational torque. 
+
+Drone movement is achieved by adjusting the rotational speed of individual rotors. For example increasing all rotors speed equally generates more lift, allowing the drone to ascend. By tilting the drone, the direction of the thrust force becomes misaligned with gravity, allowing the drone to move laterally or to rotate. 
+
+Different rotor configurations — both in number and arrangement - serve different operational needs and control strategies. You will learn more about this in the dedicated module about multirotor UAVs.
+
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/rotorcraft_configuration.png" alt="An overview of common drone configuration." style="width: 90%; height: auto;">
+  <p style="font-size: small;">The figure illustrates four common drone configurations. A classic quadcopter, a hexacopter, octocopter and a co-axial copter. Each shows rotor rotation directions (blue: counterclockwise, green: clockwise) along with a representative commercial model. From left: DJI Mavic Air 2, Yuneec H520E, Freefly Alta 8, OnyxStar HYDRA-12. </p>
+</div>
+
+#### History
+
+The first flying rotorcrafts were quadrotors - a machine with four rotors - in 1922 by George de Bothezat. Luckily there exists some footage of that time, which allows us follow the development of rotorcrafts up to the modern age. Below you see a test flight from de Bothezat. The flight was not that stable but here we have our first flying rotorcraft!
 
 ![video](https://www.youtube.com/watch?v=oM6TqjHfC5I)
-><sub>De Bothezat 1922 helicopter. Available at: https://www.youtube.com/watch?v=oM6TqjHfC5I</sub>
+><sub>De Bothezat 1922 helicopter. First flying quadrotor. Available at: https://www.youtube.com/watch?v=oM6TqjHfC5I</sub>
 
-*Flying dynamics*:
+Due to the difficulty of simultaneously controlling four motorspeeds for a human pilot, the development of quadcopters was paused and overtaken by the development of helicopters. Helicopters have a single rotor but  On September 14, 1939, the world's first practical helicopter took flight in Stratford, Connecticut. The VS-300, designed by Igor Sikorsky led the foundation of controllable rotorcraft. On the footage below you can see some of the early flights of the VS-300. Note the complex mechanical structure necessary for a helicopter to work. Mechanically a quadcopter is much simpler!
 
-As mentioned above, the bottleneck for quadcopters in the 20th century was the unprecise control of motor speeds. But how can a quadrotor take-off, hover, turn and move forward?
+![video](https://www.youtube.com/watch?v=PnbKZOG2gII)
+><sub>Igor Sikorsky test flies VS-300. Available at: https://www.youtube.com/watch?v=PnbKZOG2gII</sub>
 
-![video](https://www.youtube.com/watch?v=C0KBu2ihp-s)
-><sub>Drones flight dynamics. Video from Sabin Civil Engineering available at: https://www.youtube.com/watch?v=C0KBu2ihp-s</sub>
+<!-- While helicopters are extremely fascinating vehicules, we don't want to spend more time on them and focus on modern multirotor drones. During the post-war era some development of quadcopters took place again - like the Curtiss-Wright VZ-7 in the 1950s - but the true comeback of multirotos was in the early 2000s with small-scale UAVs. The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually.  -->
 
-<span style="color: red;">Add schema with forces and torques</span>
+<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
+  <div style="flex: 1; min-width: 300px;">
+    <p>
+      While helicopters are extremely fascinating vehicules, we don't want to spend more time on them and focus on modern multirotor drones. During the post-war era some development of quadcopters took place again - like the Curtiss-Wright VZ-7 in the 1950s - but the true comeback of multirotors was in the early 2000s with small-scale UAVs.
+    </p>
+  </div>
 
-> To **take off**, all rotors increase their speed until the generated lift force is greater than the weight of the drone. If the the lift force exactly balances the gravitational force, the drone hovers. 
+  <div style="flex: 2; min-width: 280px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Curtiss-Wright_VZ-7.webp" alt="Curtiss-Wright_VZ-7 helicopter." style="width: 100%; height: auto;">
+    <p style="font-size: small; text-align: center;">
+      The Curtiss-Wright VZ-7 machine developed for the U.S. Army in the 1950s. It was retired only a few years later. The<br>
+      Image from <a href="https://aviationsmilitaires.net/v3/kb/picture/10742/curtiss-wright-vz-7-au-sol" target="_blank">Librairie Images Collège Léodate Volmar</a>.
+    </p>
+  </div>
 
-> Each rotor does not only generate lift, but also a **torque**, which will spin the drone in the opposite direction. To prevent spinning of the drone during flight rotorcrafts use an equal number of clockwise and anticlockwise spinning rotors. The torques from each pair cancel each other out, ensuring stability during flight.
+</div>
 
-> Movement in 3D space for quadcopter is initiated by changing the rotation speeds of some of the propellers. To generate a **pitch** movement front rotor speeds are decreased and back rotor speeds increased, which will tilt the drone forward (or vie-versa to tilt backward). If now the rotor speeds are again balanced, the lift force has an angle to the gravitational force and the non-parallel part is a thrust moving the drone forwards. The same principle applies to create a **roll** movement and move sideways. Finally to create a **yaw** rotation, the speeds of clockwise and anticlockwise rotors are adapted to rotate the drone to the left or right.
+The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually. 
+
+<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
+  <div style="flex: 1; min-width: 280px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/phantom_1.jpg" alt="A selection of different multirotor drones" style="width: 100%; height: auto;">
+    <p style="font-size: small; text-align: center;">
+      Phantom 1 from DJI, released on January 7, 2013. With this drone, camera drones became accessible to a wider audience for the first time.<br>
+      Image from <a href="https://se-cdn.djiits.com/tpc/uploads/sku/cover/p1-1@ultra.png" target="_blank">DJI</a>.
+    </p>
+  </div>
+
+  <div style="flex: 2; min-width: 300px;">
+    <p>
+      This technological breakthrough sparked a wave of innovation. By the 2010s, several commercial brands entered the market, bringing drones to a wider audience. Chinese company DJI became a dominant player with the launch of the Phantom series in 2013, combining a compact quadcopter frame with integrated GPS, camera stabilization, and user-friendly controls. Other notable companies like Parrot, 3D Robotics, and Yuneec also contributed to the growing drone ecosystem, offering different designs such as hexacopters (six rotors) and octocopters (eight rotors), tailored for heavier payloads and enhanced stability.
+    </p>
+  </div>
+</div>
+
+These drones overcame early limitations in battery life, GPS accuracy, and control range through continual improvements in battery technology, GNSS systems, and wireless communication protocols. The result was a rapid evolution from basic remote-controlled flying toys to highly capable autonomous systems used in filmmaking, surveying, agriculture, and more.
+
+Today, multirotor drones take the biggest part of the consumer drone market and continue to evolve with the integration of obstacle avoidance, machine learning, and swarm coordination, opening up even more applications.
+
+#### Applications
+Nowadays the drone market covers a wide range of different applications with new spin-offs and start-ups continously pushing the boundaries.
+
+<ins>Search and rescue:</ins>
+
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
+  <div style="flex: 1; min-width: 280px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/drone_rescue.webp" alt="A selection of different multirotor drones" style="width: 100%; height: auto;">
+    <p style="font-size: small; text-align: center;">
+      On the right, Mike Smith the chief drone pilot accompanied by Jim Cooper, a drone pilot in training.<br>
+      Image from <a href="https://dronexl.co/2022/01/10/drones-revolutionize-search-and-rescue-operations/" target="_blank">Murdo MacLeod/The Guardian</a>.
+    </p>
+  </div>
+
+  <div style="flex: 2; min-width: 300px;">
+    <p>
+      Multirotor drones have become very useful tools in search and rescue operations due to their agility, stability, and ability to access hard-to-reach areas. They allow to search inaccessible and remote areas much faster and safer than a rescue team on the ground. Equipped with thermal imaging cameras, GPS, and live video feeds, these drones can quickly scan vast terrain where ground teams may struggle to reach. They assist in locating missing persons, delivering emergency supplies, and providing real-time situational awareness to rescue teams.
+    </p>
+  </div>
+</div>
+
+<ins>Aerial photography and mapping:</ins>
+
+<div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/drone_shot.png" alt="Cinematic rone shot of lake bled in Slovenia." style="width: 90%; height: auto;">
+    <p style="font-size: small;">Cinematic drone shots—like this one of Lake Bled in Slovenia—have become an integral part of modern photography and filmmaking. Screenshot from <em>DJI Mavic Air Lake Bled, Slovenia</em> by The Leisure Club, available on <a href="https://www.youtube.com/watch?v=4FWChWcOeHQ" target="_blank">Youtube</a>.</p>
+</div>
+
+In the fields of aerial photography and mapping, multirotor drones offer unmatched flexibility and precision. They are commonly used by photographers, filmmakers, and surveyors to capture high-resolution images and videos from various angles and altitudes. 
+In combination with GPS stabilization and automated flight paths, drones can perform detailed topographic surveys and 3D mapping of landscapes, infrastructure, construction sites or archaeological sites. 
+
+<ins>Inspection:</ins>
+
+IMAGE OR VIDEO OF Voliro Inspection
+
+Multirotor drones are revolutionizing inspection processes across industries by offering a safer, faster, and more cost-effective alternative to traditional methods. They are widely used to inspect infrastructure such as power lines, wind turbines, pipelines, bridges, and telecommunications towers. High-definition cameras, thermal sensors, and LiDAR enable detailed visual and thermal analysis, reducing the need for scaffolding, cranes, or manual climbing. This not only improves worker safety but also minimizes downtime and enhances maintenance planning.
+
+**Transportation**:
+
+In transportation, multirotor drones are being explored and utilized for short-distance logistics and delivery services. Their vertical takeoff and landing (VTOL) capability makes them well-suited for navigating urban environments, where they can deliver medical supplies, parcels, or even food in areas that are difficult to access by road. Companies and research institutions are also developing larger multirotor systems for human transport and urban air mobility, signaling the potential for future drone taxis and autonomous aerial commuting solutions.
+
+**Construction**:
+
+The construction industry benefits significantly from the use of multirotor drones for site monitoring, progress tracking, and project planning. Drones can perform frequent aerial surveys to create 3D models, monitor structural developments, and detect discrepancies between plans and actual builds. Their use reduces the need for manual inspections, improves safety, and increases efficiency by providing stakeholders with real-time updates. Drones also support logistics by overseeing material placement and movement across large construction zones.
+
+**Agriculture**:
+
+In modern agriculture, multirotor drones are critical tools for precision farming. They assist in crop monitoring, irrigation planning, pest detection, and yield estimation. Multispectral and thermal sensors allow farmers to assess plant health, soil conditions, and moisture levels with high accuracy. Additionally, drones can be equipped to spray fertilizers or pesticides in a targeted manner, reducing chemical usage and labor costs. This technological integration leads to better resource management and increased crop productivity.
+
+**Environmental Studies**:
+
+Multirotor drones are instrumental in environmental research and conservation efforts. They are used to monitor wildlife, assess deforestation, map ecosystems, and study climate-related changes such as glacier retreat or coastal erosion. Drones can access fragile or remote areas without disturbing habitats, allowing scientists to collect data more frequently and with less environmental impact. Their ability to carry sensors for air quality, radiation, and other environmental parameters enhances the scope and depth of ecological studies.
+
+**Military**:
+
+WRITE SOMETHING ABOUT UKRAINE_RUSSIA WAR AND KAMIKAZE DRONES
+
+In the military sector, multirotor drones serve both tactical and strategic purposes. They are deployed for reconnaissance, surveillance, target acquisition, and even payload delivery in combat zones. Compact and maneuverable, these drones provide real-time intelligence to ground units, increasing operational awareness while reducing soldier risk. Some models are designed for electronic warfare or equipped with non-lethal deterrents, highlighting their growing role in modern asymmetric warfare and defense operations.
+
+**Enterainement**:
+
+ADD PICTURE OF DRONE SHOW; DRONE RACING?
+![video](https://www.youtube.com/watch?v=3G1KBu6H6BM)
+><sub>Dragon Boat Show with 1500 drones in Shenzhen, China. Available at: https://www.youtube.com/watch?v=3G1KBu6H6BMI</sub>
+
+Multirotor drones have found a creative niche in the entertainment industry, transforming the way audiences experience live events and media. From synchronized drone light shows replacing traditional fireworks to aerial cinematography in films and concerts, drones add dynamic visual elements that were previously unattainable. In sports broadcasting, they offer immersive, bird's-eye views of the action, enhancing viewer engagement. Their precision and programmability allow for choreographed performances that blend technology with art in innovative ways.
+
+#### Challenges
+While the market and the innovation of multirotor drones grew exponentially over the past decade, there is still a lot of research going on, aiming to make drones more versatile and efficient. We want to provide below a non-exhaustive list with ongoing challenges.
+Agile, Efficience and autonomous
+Manipulation in Air
+squeezing through thight spaces
+landing on uneven surfaces
+swarm
+obstacle avoidance
+
+
+Despite the rapid growth and innovation in the field of multirotor drones over the past decade, numerous **technical and operational challenges** remain, which continue to drive cutting-edge research. One of the primary goals is enhancing **agility, efficiency, and autonomy**. This involves enabling drones to fly faster and more responsively while consuming less energy and relying less on human control—something that remains difficult due to limitations in onboard processing, battery capacity, and control algorithms. Another significant challenge lies in **aerial manipulation**, where drones are required not just to observe but to physically interact with their environment. Developing lightweight, stable systems that allow drones to grasp, move, or assemble objects mid-air presents both mechanical and control complexities.
+
+Operating in **tight or cluttered environments**—such as collapsed buildings, narrow pipelines, or dense forests—demands drones to be capable of **squeezing through tight spaces**, a problem that involves both adaptive physical design and advanced real-time navigation. Likewise, **landing on uneven or unpredictable surfaces** is a key challenge for expanding drone operations into rugged outdoor or unstructured indoor settings. Ensuring stable landings on inclined, moving, or irregular terrain without human assistance remains an open research problem.
+
+The concept of **drone swarms** introduces a whole new layer of complexity. Coordinating the flight paths, tasks, and communication of multiple drones in real time, especially in GPS-denied or dynamic environments, is far from trivial. Effective **swarm intelligence** requires breakthroughs in distributed algorithms, fault tolerance, and inter-drone communication protocols. Lastly, perhaps one of the most critical challenges for real-world deployment is **robust obstacle avoidance**. While significant progress has been made, developing compact, reliable systems that allow drones to detect and avoid dynamic obstacles in complex environments—especially at high speeds—is still an ongoing area of research.
+
+Addressing these challenges is essential not only for improving drone safety and functionality but also for expanding their application across fields like disaster response, infrastructure inspection, environmental monitoring, and urban logistics.
+
 
 
 ### 2.2 Flapping Wings:

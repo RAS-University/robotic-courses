@@ -72,13 +72,11 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Force Perception](force) - In progress
 
 **Chapter 3: Motion Planning and Navigation**
--  [Sampling-Based Planning](sampling-planning) 
--  [Geometric-Methods for Planing](geometry-planning) 
--  [Dynamical-Systems-Based Planning](DS-planning) - In progress
--  [Simultaneous Localization and Mapping](SLAM)
+{% include_relative motion_planning.md %}
 
 # Robotics Advanced Topics I# 
 **Chapter 4: Advanced Mathematical Foundations**
+- [Graph Theory](graph-theory) - In progress
 - [Group theory](adv_math) - In progress
 - [Dual Quaternions](adv_math) - In progress
 

@@ -256,7 +256,7 @@ MathJax.Hub.Config({
 
 <!-- ## Subscripts, Superscripts, and Accents -->
 
-Throuhout this lecture notes, we will use the following subscripts, superscripts, and accents to denote specific meanings:
+Throughout this lecture notes, we will use the following subscripts, superscripts, and accents to denote specific meanings:
 
 - $x \in \mathbb{R}^{1\times n}$: vector $x$ of dimension $n$
 - $x_i$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$
@@ -266,7 +266,7 @@ Throuhout this lecture notes, we will use the following subscripts, superscripts
 - $\dot{x}$: time derivative of $x$ (continuous time)
 - $x^*$: optimal value of $x$
 - $x^\top$: transpose of vector or matrix $x$
-- $\hat{x}$: estimate of variable $x$ (see chatper on [State Estimation](#-14-intro-to-state-estimation-))
+- $\hat{x}$: estimate of variable $x$ (see chapter on [State Estimation](#-14-intro-to-state-estimation-))
 - $\hat{x}^-$: estimate of variable $x$ before measurement update
 - $\tilde{x}$: estimation error of variable $x$
 - $x_s$: steady state value of variable $x$
@@ -313,7 +313,7 @@ In this introductory chapter, we will explore a specific type of regulator known
 
 You might ask yourself, why quadratic? The quadratic cost function is chosen for several reasons:
 1. **Mathematical Convenience**: Quadratic functions are mathematically tractable, allowing for analytical solutions in many cases. This makes it easier to derive optimal control laws.
-2. **Convexity**: Quadratic functions are convex, which ensures that any local minimum is also a global minimum. This property is crucial for optimization problems, as it guarantees that the solution found is the best possible one. (see the mathemimatical fondation on [optimization](optimization))
+2. **Convexity**: Quadratic functions are convex, which ensures that any local minimum is also a global minimum. This property is crucial for optimization problems, as it guarantees that the solution found is the best possible one. (see the mathematical foundation on [optimization](optimization))
 
 <iframe width="735" height="413"
   src="https://www.youtube.com/embed/wEevt2a4SKI?si=jZOiS9c6RWdX-cTm?&start=1165"
@@ -335,7 +335,7 @@ You might ask yourself, why quadratic? The quadratic cost function is chosen for
 
 <u>Setting up the optimization problem:</u>
 
-To understand the Linear Quadratic Regulator (LQR), let's consider a practical example. We will consider a dynamical system with multiple states and multiple control inputs, such as a satellite for example. Our system has several states that need to be controled or monitored, for example its orientation, position, etc. We represent the state of the satellite as a vector $x(t) \in \mathbb{R}^n$, where $t$ is the time and $n$ is the dimention of the vector, i.e. the amount of state that we identified in the system. We will denotate $x_i$ with $i \in \mathbb{N}$, $i = 1, \cdots, n$ the state $i$ of the satellite. The state vector is represented as follow: 
+To understand the Linear Quadratic Regulator (LQR), let's consider a practical example. We will consider a dynamical system with multiple states and multiple control inputs, such as a satellite for example. Our system has several states that need to be controlled or monitored, for example its orientation, position, etc. We represent the state of the satellite as a vector $x(t) \in \mathbb{R}^n$, where $t$ is the time and $n$ is the dimension of the vector, i.e. the amount of state that we identified in the system. We will denote $x_i$ with $i \in \mathbb{N}$, $i = 1, \cdots, n$ the state $i$ of the satellite. The state vector is represented as follow: 
 
 <div>
   \[
@@ -454,7 +454,7 @@ The next step is to formulate the optimization problem, which consists in findin
     \end{aligned}
   \]
 
-  The value function for a discret time system is defined as:
+  The value function for a discrete time system is defined as:
 
   \[
     \tag{1.1.5} \label{eq:value-func-dt}
@@ -495,7 +495,7 @@ This is not an optimal solution, we can't leave the satellite in that state as i
         <figcaption style="text-align: center;">Decreasing state</figcaption>
     </figure>
     <figure>
-        <img src="{{ site.baseurl }}/assets/images/MPC/2_finit_cost.png" alt="finit J" width="280"/>
+        <img src="{{ site.baseurl }}/assets/images/MPC/2_finit_cost.png" alt="finite J" width="280"/>
         <figcaption style="text-align: center;">Growth of cost function for a decreasing state$^*$</figcaption>
     </figure>
 </div>
@@ -533,9 +533,9 @@ _Note: the terms "large" and "small" here are relative knowing that $Q$ and $R$ 
     x(t)^\top Q x(t) + u(t)^\top R u(t) = q_{11} x_1(t)^2 + q_{22} x_2(t)^2 + r_{11} u_1(t)^2 + r_{22} u_2(t)^2
     \]
 
-    We can identify $q_{11}$ as the penalty or the weight on the non-zero state $x_1(t)$, $q_{22}$ as the penalty on the non-zero state $x_2(t)$. The $Q$ matrix, by tunning the entries appropriatly, allows us to tune how much we care about each state being non-zero.
+    We can identify $q_{11}$ as the penalty or the weight on the non-zero state $x_1(t)$, $q_{22}$ as the penalty on the non-zero state $x_2(t)$. The $Q$ matrix, by tunning the entries appropriately, allows us to tune how much we care about each state being non-zero.
 
-    Similarely, $r_{11}$ as the penalty on the non-zero control input $u_1(t)$, and $r_{22}$ as the penalty on the non-zero control input $u_2(t)$. Hence, the $R$ matrix allows us to tune how much we care about each control input being non-zero.
+    Similarly, $r_{11}$ as the penalty on the non-zero control input $u_1(t)$, and $r_{22}$ as the penalty on the non-zero control input $u_2(t)$. Hence, the $R$ matrix allows us to tune how much we care about each control input being non-zero.
 
     By adjusting these weights, we can shape the behavior of the optimal control policy to meet our specific requirements.
   </div>
@@ -551,7 +551,7 @@ We will see in the next chapter that in order to solve the optimization problem,
 
 While the LQR provides an elegant and powerful solution for unconstrained linear systems with quadratic costs, it falls short in many practical scenarios. Real-world systems often have constraints on states and inputs (such as actuator limits, safety boundaries, or physical restrictions) that LQR cannot handle directly. Moreover, LQR assumes perfect model knowledge and does not account for disturbances or uncertainties.
 
-Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporating constraints and optimizing control actions over a finite prediction horizon. MPC can handle multivariable systems, constraints, and even nonlinearities, making it a much more versatile and practical approach for modern control problems. Understanding MPC is therefore essential for advancing in control theory and tackling real-world engineering challenges.
+Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporating constraints and optimizing control actions over a finite prediction horizon. MPC can handle multivariable systems, constraints, and even nonlinearity, making it a much more versatile and practical approach for modern control problems. Understanding MPC is therefore essential for advancing in control theory and tackling real-world engineering challenges.
 
 ## 1.2: The Riccati Equation
 
@@ -573,7 +573,7 @@ Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporat
 
 **Video transcript :**
 
-Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $u(t)$ which will make the whole system optimital. 
+Now that we have set up the optimization problem for the Linear Quadratic Regulator (LQR), we want to solve it. We want to find a control law $u(t)$ which will make the whole system optimal. 
 
 <div class="formula-window">
   <strong>Recall the optimization problem:</strong>
@@ -645,7 +645,7 @@ For the sake of this example we choose $Q$ as the identity matrix, meaning that 
 
 The next step is to solve the Riccati equation \eqref{eq:riccati} for $S$. This can be done using numerical methods or software tools like MATLAB, Python, etc. For this example, let's use Mathematica in order to solve the Riccati equation.
 
-In Mathematica, we need to use function like `Transpose`, `Simplify`, and `Inverse` to manipulate matrices. The Riccati equation is a matrix equation, so we need to express it in a form that Mathematica can understand. After setting up the equation in Mathematica, we can use the `Solve` function to find the matrix $S$ that satisfies the Riccati equation. As mentionned before, we get several solutions for $S$, but we will only keep the one that yield a stable system.
+In Mathematica, we need to use function like `Transpose`, `Simplify`, and `Inverse` to manipulate matrices. The Riccati equation is a matrix equation, so we need to express it in a form that Mathematica can understand. After setting up the equation in Mathematica, we can use the `Solve` function to find the matrix $S$ that satisfies the Riccati equation. As mentioned before, we get several solutions for $S$, but we will only keep the one that yield a stable system.
 
 In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^\top S$. Then, we can analyze the closed-loop system dynamics given by $\dot{x}(t) = (A - BK)x(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
 
@@ -667,16 +667,16 @@ $$
 
 ## 1.3: Dynamic Programming
 
-In the previous video, we used the continuous-time algebraic Riccati equation (CARE) to solve the Linear Quadratic Regulator (LQR) problem. However, the derivation of the Riccati equation from the LQR problem was not covered in detail. Here, we will look at the discret-time version of the LQR problem and derive the discrete-time Riccati equation (DARE) using **Dynamic programming**.
+In the previous video, we used the continuous-time algebraic Riccati equation (CARE) to solve the Linear Quadratic Regulator (LQR) problem. However, the derivation of the Riccati equation from the LQR problem was not covered in detail. Here, we will look at the discrete-time version of the LQR problem and derive the discrete-time Riccati equation (DARE) using **Dynamic programming**.
 
-<u>Key assuptions:</u>
+<u>Key assumptions:</u>
 
 **Markovian assumption:** 
 * There exists a Markovian state that evolves according to 
 $$
 x_{t+1} = f_t(x_t, u_t) \quad \text{discrete-time dynamical system}
 $$
-* The initial state $x_0$ i sknowm.
+* The initial state $x_0$ is known.
 * The cost is additive over time 
 $$
 J = \sum_{t} g_t(x_t, u_t)
@@ -686,7 +686,7 @@ $$
 
 * _"An optimal policy has the property that whatever the initial state and initial decisions are, the remaining decisions must constitute an optimal policy with regard to the state resulting from the first decision."_
 
-Meaning we can optimize the first decision instead of all the decisions at once and then make the optimal decision at each time step. We can break down the optimization problem into smaller subproblems and solve them recursively using the value function $V_t(x)$ defined in [previous section](#value-func):
+Meaning we can optimize the first decision instead of all the decisions at once and then make the optimal decision at each time step. We can break down the optimization problem into smaller subproblem and solve them recursively using the value function $V_t(x)$ defined in [previous section](#value-func):
 
 <div class="formula-window">
   <div>
@@ -710,11 +710,11 @@ Note that
 $$
 \min_{\substack{u_{1}, \ldots, u_{T} \\ x_{1}, \ldots, x_{T}}} \sum_{t=1}^{T} g_{t}(x_{t}, u_{t}) = V_{1}(x_{1}) = V_{1}(f_{0}(X_{0}, u_{0}))
 $$
-The problem are nested minimizations, we can solve them recursively.
+The problem are nested minimization, we can solve them recursively.
 
 <u>Derivation of the discrete-time Riccati equation (DARE):</u>
 
-We us **Dynamic programming** to solve the discrete-time LQR problem. The idea is to break down the optimization problem into smaller subproblems and solve them recursively. We can first look at the last stage of the optimization problem, at that terminal-step, the solution is trivial as there is no future cost to consider (no input anymore). 
+We us **Dynamic programming** to solve the discrete-time LQR problem. The idea is to break down the optimization problem into smaller subproblem and solve them recursively. We can first look at the last stage of the optimization problem, at that terminal-step, the solution is trivial as there is no future cost to consider (no input anymore). 
 $$
 V_T(x_T) = g_T(x_T)
 $$
@@ -742,7 +742,10 @@ with the terminal cost $ V_T(x)=x^\top Sx$.
 
 In the following section we will derive the induction step of the dynamic programming algorithm, which will lead us to the discrete-time Riccati equation (DARE).
 
-The assumptions are thate the cost function is quadratic, the dynamics are linear and there are no constraints on the system.
+The assumptions are the following: 
+- the cost function is quadratic,
+- the dynamics are linear,
+- there are no constraints on the system.
 
 $$
 V_T(x) = x^\top S x
@@ -785,7 +788,7 @@ V_t(x) &= x^\top P_t x
 </details>
 
 <div class="formula-window">
-  This derivation allowed to find an uptimal feedback control:
+  This derivation allowed to find an optimal feedback control:
   \[
   u_t=-\left(R+B^\top P_{T+1}B\right)^{-1}B^\top P_{T+1}Ax_t
   \]
@@ -820,7 +823,7 @@ $$
 \]
 </div>
 
-We want to set the eigenvalues of $A$ to be in the left half plane, so that the system is stable. We can use the feedback control given by the matrix $B$ and the input $u$ to do so. But first, we need to ckeck if the dynamics of the system allow us to manipulate the eigenvalues of $A$ using the input $u$. This is where the concept of **controllability** comes into play. If the system is controllable, then we can design a control law that will allow us to place the eigenvalues of $A$ in the left half plane. 
+We want to set the eigenvalues of $A$ to be in the left half plane, so that the system is stable. We can use the feedback control given by the matrix $B$ and the input $u$ to do so. But first, we need to check if the dynamics of the system allow us to manipulate the eigenvalues of $A$ using the input $u$. This is where the concept of **controllability** comes into play. If the system is controllable, then we can design a control law that will allow us to place the eigenvalues of $A$ in the left half plane. 
 
 For linear systems, we know that an optimal control law is given by $u=-Kx$, where $K \in \mathbb{R}^{m \times n}$. Which leads to the dynamics:
 $$
@@ -914,7 +917,7 @@ In most practical applications, it is not possible to directly measure all the s
 In this section, we introduce the probabilistic framework for state estimation in its simplest form: a linear discrete-time model subject to normally distributed process and measurement noise. In this setting, the **Kalman filter** provides the optimal state estimator. Later in the course, we will revisit the state estimation problem in more general contexts and present analytical solutions such as the Kalman filter in greater detail.
 
 We assume that the reader is familiar with the concepts of a random variable, probability density and distribution, the multivariate normal distribution, mean and variance, statistical independence, and conditional probability.  -->
-<!-- create an appindix for it ??? -->
+<!-- create an appendix for it ??? -->
 
 ---
 
@@ -937,7 +940,7 @@ in which $c_j$ is the concentration of species $j$, and $r_1$ and $r_2$ are the 
 $$
 r_1=k_1c_A \quad r_2 = k_2c_B
 $$
-We substitute the rate laws into the material balances and specify the starting concentrations to produce three differential equations for te three spiecies concentrations.
+We substitute the rate laws into the material balances and specify the starting concentrations to produce three differential equations for te three species concentrations.
 
 <ol type="a">
   <li>Write the linear state space model for the deterministic series chemical reaction model. Assume we can measure the component A concentration. What are $x$, $y$, $A$, $B$, $C$, and $D$ for this model?</li>
@@ -1113,7 +1116,7 @@ Take the Laplace Transform of the following det of differential equations and fi
 \end{align}
 \]
 </div>
-For $x\in\mathbb{R}^n$, $y\in\mathbb{R}^p$ and $u\in\mathbb{R}^m$, what is the dimention of the $G$ matrix? What happens to the initial condition, $x(0)=x_0$?
+For $x\in\mathbb{R}^n$, $y\in\mathbb{R}^p$ and $u\in\mathbb{R}^m$, what is the dimension of the $G$ matrix? What happens to the initial condition, $x(0)=x_0$?
 
 <details markdown="1">
   <summary><strong>Solution</strong></summary>
@@ -1147,7 +1150,7 @@ Consider the two quadratic unctions given by:
 $$
 V_1(x)=\frac{1}{2}(x-a)^\top A(x-a) \quad V_2(x)=\frac{1}{2}(x-b)^\top B(x-b)
 $$
-in which $A$, $B>0$ are positive definite matrices and $a$ and $b$ are n-vectors locating the minimum of each function. The figure below displays the elipses defined by the level set $V_1(x)=\frac{1}{4}$ and $V_2(x)=\frac{1}{4}$ for the following parameters:
+in which $A$, $B>0$ are positive definite matrices and $a$ and $b$ are n-vectors locating the minimum of each function. The figure below displays the ellipses defined by the level set $V_1(x)=\frac{1}{4}$ and $V_2(x)=\frac{1}{4}$ for the following parameters:
 $$
 A=\begin{bmatrix} 1.25 & 0.75 \\\\ 0.75 & 1.25 \end{bmatrix}
 \quad 
@@ -1178,7 +1181,7 @@ d=-(Aa+Bb)^\top H^{-1}(Aa+Bb)+a^\top Aa+b^\top Bb
 $$
 and verify the three ellipses given in the figure above.
 
-(b) Considere the generalization useful in the discussion of th eupcomming regulation and estimation problems. Let 
+(b) Considere the generalization useful in the discussion of the upcoming regulation and estimation problems. Let 
 $$
 V_1(x)=\frac{1}{2}(x-a)^\top A(x-a) \quad V_2(x)=\frac{1}{2}(x-b)^\top B(x-b)
 $$
@@ -1187,7 +1190,7 @@ Derive the expressions for $H$, $v$ and $d$ in this case.
 (c) Use the matrix inversion lemma and show that $V(x)$ of part (b) can be expressed also in an inverse form, which is useful in state estimation problems
 
 $$
-V(x)=\frac{1}{2}((x-v)^\top\tilde{H}^{-1}(x-v)+\text{constante})
+V(x)=\frac{1}{2}((x-v)^\top\tilde{H}^{-1}(x-v)+\text{constant})
 $$
 $$
 H^{-1}=A^{-1}-A^{-1}C^\top(CA^{-1}C^\top+B^{-1})^{-1}CA^{-1}
@@ -1221,7 +1224,7 @@ $$
   $$
   (A + B C D)^{-1} = A^{-1} - A^{-1} B (DA^{-1} B + C^{-1})^{-1} D A^{-1} \tag{1.54} \label{1.54}
   $$
-  A usefull special case of this result is 
+  A useful special case of this result is 
   $$
   (I+X^{-1})^{-1}=I-(I+X)^{-1}
   $$
@@ -1239,7 +1242,7 @@ $$
   $$
   V(x)=\frac{1}{2}((x-v)^\top H(x-v)+d)
   $$
-  and solve for $v$, $H$ and $d$. Comparing the expension of the quadratic of the right- and left-hand sides gives 
+  and solve for $v$, $H$ and $d$. Comparing the expansion of the quadratic of the right- and left-hand sides gives 
   $$
   x^\top Hx-2x^\top Hv+v^\top Hv+d=x^\top(A+B)x-2x^\top(Aa+Bb)+a^\top Aa+b^\top Bb
   $$
@@ -1254,7 +1257,7 @@ $$
     \]
   </div>
 
-  Notice that $H$ is positive definite sinc $A$ and $B$ are positive definite. Substituing the values of $a$, $A$, $b$ and $B$ gives
+  Notice that $H$ is positive definite since $A$ and $B$ are positive definite. Substituting the values of $a$, $A$, $b$ and $B$ gives
   $$
   H=\begin{bmatrix} 2.75 & 0.25 \\\\ 0.25 & 2.75 \end{bmatrix} 
   \quad
@@ -1287,7 +1290,7 @@ $$
   $$
   H=A+C^\top BC \quad v=H^{-1}C^\top Bb\\\\
   $$
-  and we do not need to evaluate $d$. From the matrix invesion lemma, use (1.54) on $H$ and (1.55) on $v$ to obtain 
+  and we do not need to evaluate $d$. From the matrix inversion lemma, use (1.54) on $H$ and (1.55) on $v$ to obtain 
   $$
   \tilde{H}=A^{-1}-A^{-1}C^\top (CA^{-1}C^\top +B^{-1})^{-1}CA^{-1}
   $$
@@ -1320,9 +1323,9 @@ $$
 
 Model Predictive Control (MPC) is an advanced method of process control that has been widely adopted in various industries due to its ability to handle multivariable control problems with constraints. The core idea of MPC is to use a model of the system to predict future behavior and optimize control actions over a finite time horizon.
 
-MPC is a form of control in which the control action is obtained by solving, at each sampling instant (*online*), a finite horizon optimal control problem, using the current state of the plant as the initial state. The optimization yields an optimal control sequence and the first control in this sequence is applied to the plant. This process is repeated at the next sampling instant, creating a feedback loop. MPC differs, therefore, from tratitional control methods, which typically rely on a fixed control law derived offline.
+MPC is a form of control in which the control action is obtained by solving, at each sampling instant (*online*), a finite horizon optimal control problem, using the current state of the plant as the initial state. The optimization yields an optimal control sequence and the first control in this sequence is applied to the plant. This process is repeated at the next sampling instant, creating a feedback loop. MPC differs, therefore, from traditional control methods, which typically rely on a fixed control law derived offline.
 
-The great advantage of MPC is that open-loop optimal control problems often can be solved rapidly enough, using standard mathematical programming algorithms, to permit the use of MPC even though the system being controlled is nonlinear, and hard constraints on states and controls must be satisfed.
+The great advantage of MPC is that open-loop optimal control problems often can be solved rapidly enough, using standard mathematical programming algorithms, to permit the use of MPC even though the system being controlled is nonlinear, and hard constraints on states and controls must be satisfied.
 
 In this chapter we study MPC for the case when the state is known. This case is particularly important, even though it rarely arises in practice, because important properties, such as stability and performance, may be relatively easily established.
 
@@ -1350,12 +1353,12 @@ In this chapter we study MPC for the case when the state is known. This case is 
   </div>
 </div>
 
-The invariant set will provide a set of initial states for wich the trajectories will never violate the system constraints. In order to increase the applicability of the MPC algorithm, and in particular to increase the size of the set of initial conditions $x_{0}$ for which the terminal condition $x_{N} \in \mathcal{X}_T$ can be met, it is important to choose the maximal positively invariant set as the terminal constraint set. This set is defined as follows. 
+The invariant set will provide a set of initial states for which the trajectories will never violate the system constraints. In order to increase the applicability of the MPC algorithm, and in particular to increase the size of the set of initial conditions $x_{0}$ for which the terminal condition $x_{N} \in \mathcal{X}_T$ can be met, it is important to choose the maximal positively invariant set as the terminal constraint set. This set is defined as follows. 
 
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-2-max-positive-invariant">Definition 2.2: Maximal positively invariant set</div>
   <div style="padding: 1.5em;">
-    The maximal positively invariant (MPI) set under the dynamics of \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} is the union of all sets that are positively invariant under these dynamics and constraints. We will denotate this set as $\mathcal{X}_\infty$ of $\mathcal{X}^{\text{MPI}}$.
+    The maximal positively invariant (MPI) set under the dynamics of \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} is the union of all sets that are positively invariant under these dynamics and constraints. We will denote this set as $\mathcal{X}_\infty$ of $\mathcal{X}^{\text{MPI}}$.
   </div>
 </div>
 
@@ -1372,7 +1375,7 @@ The invariant set will provide a set of initial states for wich the trajectories
   \[
     \mathcal{X}  \: \colon =  \{ x \: \colon \: (F+GK)\Phi^i x \leq \mathbf{1}, \quad i=0, \cdots, v\} \tag{2.2.4} \label{eq:mpi_set}
   \]
-  where $v$ is the smallest positive integer such that $(F+GK)\Phi^{v+1}x\leq \mathbf{1}$, for all $x$ satisfying $(F+GK)\Phi^{i}, i=0, \cdots, v$. If $\Phi$ i strictly stable and $(\Phi, F+GK)$ is observable, then $v$ is necessarely finite.
+  where $v$ is the smallest positive integer such that $(F+GK)\Phi^{v+1}x\leq \mathbf{1}$, for all $x$ satisfying $(F+GK)\Phi^{i}, i=0, \cdots, v$. If $\Phi$ i strictly stable and $(\Phi, F+GK)$ is observable, then $v$ is necessarily finite.
   </div>
 </div>
 
@@ -1409,7 +1412,7 @@ The invariant set will provide a set of initial states for wich the trajectories
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-3-pre-set">Pre Set</div>
   <div style="padding: 1.5em;">
-  Given a set $\mathcal{X}$ and the system discribe by the dynamic \eqref{eq:constraints}, the <strong>pre-set</strong> of $\mathcal{X}$ is the of states that evolve into the target set $\mathcal{X}$ in one step:
+  Given a set $\mathcal{X}$ and the system describe by the dynamic \eqref{eq:constraints}, the <strong>pre-set</strong> of $\mathcal{X}$ is the of states that evolve into the target set $\mathcal{X}$ in one step:
   \[
     \text{pre}(\mathcal{X}) \: \colon = \{x \: \mid \: (Fx+Bu)\in\mathcal{X}\}
   \]
@@ -1418,7 +1421,7 @@ The invariant set will provide a set of initial states for wich the trajectories
 
 <div><strong>Example: Pendulum</strong></div>
 
-The dynamics of the pendulum can be discribed as follow
+The dynamics of the pendulum can be described as follow
 <div>
 \[
   x^+=x+\begin{bmatrix} x_{2} \\ -9.8\sin(x_{1})-x_{2} \end{bmatrix}
@@ -1512,7 +1515,7 @@ $$
 f(x, \kappa(x)) \in \mathcal{C} \quad \text{for all } x\in\mathcal{C} \quad \text{with } \mathcal{C} \text{ a control invariant set of the system}
 $$
 
-We can use this to synthetize a control law from a control invariant set by solving an optimization problem:
+We can use this to synthesize a control law from a control invariant set by solving an optimization problem:
 <div>
 \[
 \kappa(x) \colon= \text{argmin } \{ g(x,u)\mid f(x,\kappa(x)\in\mathcal{C} \}
@@ -1528,40 +1531,195 @@ That's where MPC comes into play, we will use MPC to approximate the control inv
 
 ## 2.3: Model Predictive Control
 
-Most nonlinear system descriptions derived from physical arguments are continuous time models in the form of nonlinear differential equations
-$$
-\frac{dx}{dt}=f(x(t),u(t))
-$$
-where $x(t)\in\mathbb{R}^{n_x}$ is the state vector and $u(t)\in\mathbb{R}^{n_u}$ is the control input vector. The function $f$ is assumed to be continuous and continuously differentiable with respect to its arguments.
+To study model predictive control, we consider the following system dynamics
+<div>
+\[
+  \boxed{x^+=f(x,u) \quad (x,u)\in\mathbb{X}, \mathbb{U}} \tag{2.3.1} \label{eq:system_dynamics_mpc}
+\]
+</div>
+where $x\in\mathbb{R}^{n}$ is the state vector and $u\in\mathbb{R}^{m}$ is the control input vector. The function $f$ is assumed to be continuous and continuously differentiable with respect to its arguments.
+
+The goal is to design a control law $u=\kappa(x)$ such that the following points ar respected
+- the system satisfy the constraints: $\{x_k\}\subset \mathbb{X}, \{u_k\} \subset \mathbb{U}$
+- it is stable: $\lim_{k\to\infty}x_k=0$
+- it optimizes "performance" (we will develop this idea later on)
+- it maximizes teh set of initial states $\{x_0\}$
+- (later) it is robust to noise
+- (later) it can be computed efficiently and reliably
 
 The control law with the best properties is the solution of the infinite horizon, constrained optimal control problem for which the cost function is
-$$
-V_\infty(x,u(\cdot))=\sum_{i=0}^\infty \mathcal{l}(x(t),u(t))dt
-$$
-where $x(t)$ and $u(t)$ satisfy the system dynamics $\dot{x}=f(x(t),u(t))$ and the constraints $(x(t),u(t))\in\mathbb{Z}$ for all $t\geq0$. The function $\mathcal{l}(x,u)$ is the stage cost, which is assumed to be continuous and continuously differentiable with respect to its arguments.
+
+<div>
+\[
+  \tag{2.3.2} \label{eq:infinite_horizon_control_law}
+  \begin{aligned}
+  u^{*}(x) \;\colon= \text{argmin} \quad & \sum_{t=0}^{N-1} \ell(x_t,u_t) + V_f(x_N) &&\\
+  \quad \text{s.t.} \quad & x_{0}=x && \text{measurement}\\
+  & x_{t+1}=f(x_t,u_t) && \text{system dynamics}\\
+  & g(x_t,u_t)\leq 0 && \text{constraints}\\
+  \end{aligned}
+\]
+</div>
+
+The function $\ell(x,u)$ is the stage cost, it describes the "cost" of being in state $x$ and applying input $u$. It is assumed to be continuous and continuously differentiable with respect to its arguments. And $g(x,u)$ is a vector of constraint functions, which are also assumed to be continuous and continuously differentiable with respect to their arguments. 
+
+The goal of the optimal control problem is to find a control law 
+<div>
+\[
+  u^{*}(x) = \{u^*_0, u^*_1, \cdots, u^*_{N-1}\}
+\]
+</div>
+that minimizes the cost function while satisfying the system dynamics and constraints, from which the input $u^{\*}_0$ will be applied to the system.
 
 The optimal control problem is defined as follows:
 <div class="lemma-window">
   <div class="lemma-title">Infinite horizon optimal control problem</div>
   <div style="padding: 1.5em;">
     \[
-      \tag{2.3.1} \label{eq:infinite_horizon_ocp}
+      \tag{2.3.3} \label{eq:infinite_horizon_ocp}
       \begin{aligned}
-      \min_{u(\cdot)} \quad & V_\infty(x,u(\cdot)) \\
-      \text{subject to} \quad & \dot{x}(t)=f(x(t),u(t)), \quad x(0)=x_0 \\
-      & (x(t),u(t))\in\mathbb{Z}, \quad \text{for all } t\in\mathbb{R}_{\geq0}
+      V^*(x_0) = \min_{u(\cdot)} & \sum_{t=0}^\infty \ell(x_t,u_t) \\
+      \text{s.t.} \quad & x_{t+1}=f(x_t,u_t) \\
+      & (x_t,u_t)\in\mathbb{X}, \mathbb{U}
       \end{aligned}
     \]
   </div>
 </div>
 
-If $\mathcal{l}(\cdot)$ is positive definite, then the optimal cost $V_\infty^{\*}(x_0)$ is a Lyapunov function for the closed-loop system obtained by applying the optimal control law $u^{\*}(t)$ to the system. The optimal control law $u^{\*}(t)$ is therefore stabilizing the system to the origin.
+If $\ell(\cdot)$ is positive definite, then the optimal cost $V_\infty^{\*}(x_0)$ is a Lyapunov function for the closed-loop system obtained by applying the optimal control law $u^{\*}(t)$ to the system. The optimal control law $u^{\*}(t)$ is therefore stabilizing the system to the origin.
 
-## 2.3: Stability and Convergence
+However, solving the infinite horizon optimal control problem is often intractable, especially when the system is nonlinear and/or when there are constraints on the states and inputs. Therefore, we approximate the infinite horizon optimal control problem by a finite horizon optimal control problem, which is more tractable. This leads to the approach:
+<div>
+\[
+  \tag{2.3.4} \label{eq:finite_horizon_ocp}
+  \begin{aligned}
+  V_N^{*}(x_0) = \min_{u(\cdot)} & \sum_{t=0}^{N-1} \ell(x_t,u_t) + V_f(x_N) \\
+  \text{s.t.} \quad & x_{t+1}=f(x_t,u_t) \\
+  & (x_t,u_t)\in\mathbb{X}, \mathbb{U} \\
+  & x_N \in \mathcal{X}_f
+  \end{aligned}
+\]
+</div>
+where $N$ is the prediction horizon, $V_f(x)$ is the terminal cost, and $\mathcal{X}_f$ is the terminal constraint set. The terminal cost and terminal constraint set are used to approximate cost of the system from $N$ to $\infty$ and to ensure stability of the closed-loop system.
 
-### Lyapunov
+**Example: Toy problem**
 
-## 2.4: Examples of MPC
+In this example we consider a simple linear system with a time horizon of 1 and a scalar integrator system:
+<div>
+\[
+  \tag{2.3.5} \label{eq:toy_problem}
+  \begin{aligned}
+  \min_{u_0,x_1} \quad & x_1^2 + u_0^2 \\
+  \text{s.t.} \quad & x_1 = x_0 + u_0 \\
+  & x_1 \leq 1 \\
+  \end{aligned}
+\]
+</div>
+
+* Quadratic problem with linear constraints
+* Parametric solution $u_0^{\*}(x_0)$
+* The equality constraints (model) allows to eliminate $x_1$
+* Convex problem $\Rightarrow$ KKT conditions are necessary and sufficient
+
+<div class="lemma-window">
+  <div class="lemma-title">KKT conditions (only inequalities)</div>
+  <div style="padding: 1.5em;">
+    The KKT conditions are given by
+    <div>
+    \[
+      \begin{aligned}
+        \min_{x}\; f(x)\quad\text{s.t.}\quad g(x)\le 0
+        \quad\longrightarrow\quad
+        \begin{cases}
+          \nabla f(x) + \mu^\top \nabla g(x) = 0,\\[6pt]
+          g(x) \le 0,\\[6pt]
+          \mu \ge 0,\\[6pt]
+          \mu_i\,g_i(x) = 0 \quad\forall i
+        \end{cases}
+      \end{aligned}
+    \]
+    </div>
+  </div>
+</div>
+
+The optimization problem for the toy problem can be rewritten as 
+<div>
+\[
+  \begin{aligned}
+  \min_{u_0} \quad & (x_0+u_0)^2 + u_0^2 \\
+  \text{s.t.}\quad & x_0 + u_0 \leq 1
+  \end{aligned}
+\]
+</div>
+
+We can identify two cases for the KKT conditions:
+- Case 1: $\mu=0$ and $g(u_0)<0$ (constraint not active)
+- Case 2: $\mu>0$ and $g(u_0)=0$ (constraint active)
+
+**Case 1**: $\mu=0$ and $g(u_0)<0$ (constraint not active)
+<div>
+\[
+  \begin{aligned}
+  \nabla f(u_0) &= 2(x_0+u_0) + 2u_0 = 0 \\
+  \Rightarrow u_0^{*}(x_0) &= -\frac{x_0}{2} \\
+  g(u_0^{*}) &= x_0 - \frac{x_0}{2} - 1 < 0 \\
+  \Rightarrow x_0 &< 2
+  \end{aligned}
+\]
+</div>
+
+**Case 2**: $\mu>0$ and $g(u_0)=0$ (constraint active)
+<div>
+\[
+  \begin{aligned}
+  g(u_0) &= x_0 + u_0 - 1 = 0 \\
+  \Rightarrow u_0^{*}(x_0) &= 1 - x_0 \\
+  \nabla f(u_0) + \mu \nabla g(u_0) &= 2(x_0+u_0) + 2u_0 + \mu = 0 \\
+  \Rightarrow \mu &= -2(1-x_0+x_0) - 2(1-x_0) = 2(x_0-2) > 0 \\
+  \Rightarrow x_0 &\geq 2
+  \end{aligned}
+\]
+</div>
+
+The optimal control law is therefore given by
+<div>
+\[
+  u_0^{*}(x_0) = \begin{cases}
+    -\frac{x_0}{2}, & x_0 < 2 \\
+    1 - x_0, & x_0 \geq 2
+  \end{cases}
+\]
+</div>
+
+<div class="images">
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/MPC/piecewise_function_plot.png" alt="Toy problem solution" width="600"/>
+  </figure>
+</div>
+
+## 2.4: Stability and Convergence
+
+<!-- ### Lyapunov analysis -->
+
+<div class="lemma-window">
+  <div class="lemma-title">Stable equilibrium</div>
+  <div style="padding: 1.5em;">
+  The equilibrium point $x=0$ pf the system $x^+=f(x,u)$ is said to be stable if a small perturbation of the state perturbs the state trajectory in a continuous way. More formally:
+
+  \[
+    \forall \epsilon > 0, \exists \delta > 0 \text{ such that } \|x_0\| < \delta \Rightarrow \|x_k\| < \epsilon, \forall k \geq 0
+  \]
+
+  The equilibrium point $x=0$ is said to be asymptotically stable if it is stable and, in addition, all state trajectories starting sufficiently close to the equilibrium converge to the equilibrium:
+
+  \[
+    \exists \delta > 0 \text{ such that } \|x_0\| < \delta \Rightarrow \lim_{k\to\infty} \|x_k\| = 0
+  \]
+  </div>
+</div>
+
+
+## 2.5: Examples of MPC
 
 ## Exercises
 [See notations](#notations)
@@ -1655,7 +1813,7 @@ $$
 <!-- List all the sources that you used to create the page   -->
 
 - Saverio Bolognani's lectures: **Computational Control** at ETH Zurich in spring 2024
-- Colin Jones' lectures: **Model Predictive Control ME-425** at EPFL in Automn 2024
+- Colin Jones' lectures: **Model Predictive Control (ME-425)** at EPFL in Automn 2024
 - **Model Predictive Control: Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
 - **Model Predictive Control: Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)
 - **An Introduction to Optimization** Edwin K.P Chong, Stanislaw H. Zak, 2th Edition, available for free [here](https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf)

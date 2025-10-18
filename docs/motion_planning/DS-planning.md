@@ -385,7 +385,19 @@ $\qquad Z := \psi_{\rho_j, p_j, v_j}(Z)$
 
 This iterative matching scheme is both efficient and robust, yielding a smooth diffeomorphism by composing a sequence of locally weighted translations.
 
+With our **tutorial code**, you can **inspect the mapping results** and the **DS constructed** using this method.
 
+<figure id="fig6">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/FDM.png" alt="compare results" width="600">
+  <figcaption><center><em>Figure: DS mapping results for the FDM method: the left figure shows the velocity vector field, and the right figure shows the potential field.</em></center>  </figcaption>
+</figure>
+
+<figure id="fig7">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/fdm_map.png" alt="compare results" width="600">
+  <figcaption><center><em>Figure: Grid representations of the latent space and original space, showing that the linear trajectory becomes the desired shape after mapping.</em></center>  </figcaption>
+</figure>
+
+---
 
 ### 4.2 Euclideanizing Flows （E-flow）
 Inspired by recent works in density estimation, E-flow propose to represent the diffeomorphism as a composition of simple parameterized diffeomorphisms. 
@@ -456,10 +468,22 @@ $$
 
 where $W_{s_k}, W_{t_k}$ are learnable parameters.
 
+
+
+With our **tutorial code**, you can **inspect the mapping results** and the **DS constructed** using this method.
+
+<figure id="fig8">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/eflow.png" alt="compare results" width="600">
+  <figcaption><center><em>Figure: DS mapping results for the FDM method: the left figure shows the velocity vector field, and the right figure shows the potential field.</em></center>  </figcaption>
+</figure>
+
+<figure id="fig9">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/eflow_map.png" alt="compare results" width="600">
+  <figcaption><center><em>Figure: Grid representations of the latent space and original space, showing that the linear trajectory becomes the desired shape after mapping.</em></center>  </figcaption>
+</figure>
+
+
 ---
-
-
-
 
 ### 4.3 Imitation Flow
 
@@ -552,7 +576,17 @@ $\qquad \Delta\theta, \Delta\phi \propto -\nabla_{\theta}\mathcal{L}, -\nabla_{\
 **<span class="kw">end while</span>**
 </div>
 
+With our **tutorial code**, you can **inspect the mapping results** and the **DS constructed** using this method.
 
+<figure id="fig10">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/iflow.png" alt="compare results" width="600">
+  <figcaption><center><em>Figure: DS mapping results for the FDM method: the left figure shows the velocity vector field, and the right figure shows the potential field.</em></center>  </figcaption>
+</figure>
+
+<figure id="fig11">
+  <img src="{{ site.baseurl }}/assets/images/DS-based-planning/iflow_map.png" alt="compare results" width="600">
+  <figcaption><center><em>Figure: Grid representations of the latent space and original space, showing that the linear trajectory becomes the desired shape after mapping.</em></center>  </figcaption>
+</figure>
 ---
 
 ## 5 Programming exercise for classical methods
@@ -632,10 +666,7 @@ The repository is organized into modular components that follow the stages outli
    - Vector field simulation to test learned DS trajectories against ground truth.
    - Plotting utilities for 2D, 3D, and vector field visualizations.
 
-    <figure id="fig6">
-      <img src="{{ site.baseurl }}/assets/images/DS-based-planning/Picture2.png" alt="compare results" width="600">
-      <figcaption><center><em>Figure: The comparation of different method. Left: Euclideanizing Flows; Right: Fast Diffeomorphic Mapping</em></center>  </figcaption>
-    </figure>
+   # here we will have a interaction interface to direct test code
 
 5. **Utilities**
    - Common functions for data loading, logging, and plotting.

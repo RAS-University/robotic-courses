@@ -4,10 +4,29 @@ parent: Courses
 layout: default
 math: mathjax
 ---
+<style>
+.algorithm {
+  border-left: 4px solid #3b82f6; /* blue accent */
+  background: #f0f7ff;            /* soft blue background */
+  padding: 12px 16px;
+  margin: 1em 0;
+  border-radius: 6px;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.algorithm strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+</style>
+
 
 <style>
 /* Lightweight styling for callouts and quizzes */
-.definition, .assignment, .example, .slide {
+.definition, .assignment, .example, .slide, .note {
   border-left: 4px solid #0ea5e9; padding: 0.75rem 1rem; margin: 1rem 0; background:#0ea5e90d;
 }
 .slide { border-left-color:#22c55e; background:#22c55e0d; }
@@ -58,7 +77,7 @@ The robot's goal is simple: travel from a starting point (blue) to an end point 
 
 ## From a Physical Maze to an Abstract Graph
 
-The robot's world of "floors" and "walls" is too literal. We can create a more powerful mental model by simplifying the maze into its two core components: the locations of interest where the robot can actually be, and the possible moves or direct paths between adjacent locations. By focusing on these ideas, we can transform the physical maze into an abstract map of connections. Each open square becomes a dot, and each possible move becomes a line connecting the corresponding dots. What we have just created is a graph.
+The robot's world of "floors" and "walls" is too literal. We can create a more powerful mental model by simplifying the maze into its two core components: the locations of interest where the robot can actually be, and the possible moves or direct paths between adjacent locations. By focusing on these ideas, we can transform the physical maze into an abstract map of connections. Each open square becomes a point, and each possible move becomes a line connecting the corresponding points. What we have just created is a graph.
 
 <div class="definition">
 <strong>Definition.</strong> A graph is a mathematical structure used to represent relationships between objects.  
@@ -89,7 +108,7 @@ If edges are ordered pairs \((u,v)\), the graph is directed.
 
 ![Building a Graph]({{ '/assets/images/sampling_based_planning/build_graph.gif' | relative_url }})
 
-This is a monumental leap. The robot's problem is no longer about navigating a physical space; it's about finding a path within this abstract network. We have given it a mind's eye. This representation is the common language for nearly all planning algorithms that follow.
+This is a monumental leap. The robot's problem is no longer about navigating a physical space; it's about finding a path within this abstract network. This representation is the common language for nearly all planning algorithms that follow.
 
 # Chapter 2: History of Motion Planning
 
@@ -101,8 +120,7 @@ Early attempts at motion planning in the 1980s tried to be mathematically perfec
 
 ## A Reactive Detour: Artificial Potential Fields
 
-One clever idea was to stop planning and start reacting. The Artificial Potential Fields method, popular in the late 1980s, treated the robot like a marble rolling on a contoured surface. The goal would be a low point, pulling the robot towards it, while obstacles (walls) would be high points, pushing the robot away. This worked well for simple, open environments. However, in our maze, the robot could easily get stuck in a dead-end (a "local minimum") without ever reaching the goal. It was a step forward in creating dynamic motion, but it wasn't a reliable planner.
-
+One clever idea was to stop planning and start reacting. The Artificial Potential Fields method, popular in the late 1980s, treated the robot like a marble rolling on a contoured surface. The goal would be a low point, pulling the robot towards it, while obstacles (walls) would be high points, pushing the robot away. 
 
 <div class="definition">
 <strong>Definition.</strong> Formally, the total potential function \( U(q) \) is defined as:
@@ -149,15 +167,20 @@ so the robot moves in the direction of steepest descent of the potential field.
 
 ![Potential Fields]({{ '/assets/images/sampling_based_planning/potential.gif' | relative_url }})
 
+This worked well for simple, open environments. However, in a maze, the robot could easily get stuck in a dead-end (a "local minimum") without ever reaching the goal. It was a step forward in creating dynamic motion, but it wasn't a reliable planner.
+
+
 ## The Breakthrough: Searching the Graph
 
 Before adopting a complex strategy, one might consider a simple heuristic. For our maze, a possible solution could be the "wall-follower" rule: always keep a wall to your left (or right). This can solve simple mazes, but it's not a general solution. It can fail in mazes with islands or complex layouts, and it provides no guarantees about finding the shortest or most efficient path. What was needed was a systematic, robust method.
 
-The most successful solution returned to our graph representation. If the maze is a graph, then planning is simply a matter of finding the best path through that graph. This led to the rise of graph search algorithms, which remain a cornerstone of robotics today.
+The most successful solution returned to our graph representation. If the maze is a graph, then planning is simply a matter of finding the best path through that graph. This led to the utilization of graph search algorithms, which remain a cornerstone of robotics today.
 
 ## Dijkstra's Algorithm: The Cost-Conscious Explorer
 
-Let's make our maze more interesting. Imagine some floor tiles are sand, taking more energy to cross. We can represent this by making our graph weighted—an edge over pavement might have a weight of 1, while an edge over sand has a weight of 5. Now, we don't just want any path; we want the cheapest path. Dijkstra's Algorithm is the classic and definitive solution for this. It operates by starting at (S) and exploring outwards like a ripple in a pond. Crucially, it always expands from the vertex that has the lowest total cost discovered so far. It meticulously builds a map of the cheapest way to get to every reachable vertex from the start and doesn't stop until it has found the cheapest path to the goal (G). The result is a guaranteed optimal path in terms of total weight. Its weakness is that it's "uninformed" - it explores in all directions equally, because it has no sense of direction. Still, its ability to find the provably best path on a known map was a revolutionary step.
+Let's make our maze more interesting. Imagine some floor tiles are sand, taking more energy to cross. We can represent this by making our graph weighted—an edge over pavement might have a weight of 1, while an edge over sand has a weight of 5. Now, we don't just want any path; we want the cheapest path. Dijkstra's Algorithm is the classic and definitive solution for this. It operates by starting at starting point and exploring outwards like a ripple in a pond. Crucially, it always expands from the vertex that has the lowest total cost discovered so far. It meticulously builds a map of the cheapest way to get to every reachable vertex from the start and doesn't stop until it has found the cheapest path to the goal. The result is a guaranteed optimal path in terms of total weight. Its weakness is that it's "uninformed" - it explores in all directions equally, because it has no sense of direction. 
+
+Its efficiency is typically described as `O(E + V log V)`, meaning its runtime depends on the number of edges `E` and vertices `V` in the graph. For a grid, this is very efficient. But as we'll see, for more complex problems, creating the graph itself is the real challenge.
 ![Dijkstra's shortest path]({{ '/assets/images/sampling_based_planning/dijkstra.gif' | relative_url }})
 
 (For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../graph-theory))
@@ -166,7 +189,33 @@ Let's make our maze more interesting. Imagine some floor tiles are sand, taking 
 
 The grid-based approach with Dijkstra’s algorithm feels powerful, a method that guarantees the best possible path on the grid we’ve defined. But what happens when the problem gets more complicated? The simple truth is that this exhaustive approach fails due to the The Curse of Dimensionality.
 
-Let's move from our simple 2D robot to a more realistic one, like a robotic arm used in manufacturing. A common arm might have 7 joints (7-DOF). To define the robot's complete pose, we need to know the angle of every single one of those 7 joints. This 7-dimensional space of all possible joint angles is the robot's Configuration Space (C-space). Now, imagine trying to create a grid for this C-space. To keep it simple, let's say we only divide each joint's range of motion into 10 discrete steps. For one joint, that's 10 grid cells. For two joints, it's $10x10 = 100$ cells. For our 7-DOF arm, it becomes $10^7 = 10 000 000$ cells. If we wanted a more reasonable resolution, say 100 steps per joint, we would need $100^7 = 10^{14}$ cells. No modern computer has enough memory to store such a grid, let alone run Dijkstra's on it.
+Let's move from our simple 2D robot to a more realistic one, like a robotic arm used in manufacturing. A common arm might have 7 joints (7-DOF). To define the robot's complete pose, we need to know the angle of every single one of those 7 joints. This 7-dimensional space of all possible joint angles is the robot's Configuration Space (C-space). 
+
+<div class="definition">
+<strong>Definition.</strong> The <em>configuration space</em> (often abbreviated as <strong>C-space</strong>) is a mathematical space that represents all possible positions and orientations of a robot.  
+Formally, each point in the configuration space corresponds to one unique configuration of the robot in the workspace.
+
+\[
+\mathcal{C} = \{ q \mid q \text{ describes the complete state (position, orientation, etc.) of the robot} \}
+\]
+
+We can partition the configuration space into two subsets:  
+<br>
+- Free space\( \mathcal{C}_{\text{free}} \): all configurations where the robot does <em>not</em> intersect any obstacle.  
+<br>
+- Obstacle space \( \mathcal{C}_{\text{obs}} \): all configurations that result in a collision with an obstacle.
+
+\[
+\mathcal{C} = \mathcal{C}_{\text{free}} \cup \mathcal{C}_{\text{obs}}, 
+\quad \mathcal{C}_{\text{free}} \cap \mathcal{C}_{\text{obs}} = \emptyset
+\]
+
+Motion planning in configuration space then becomes the problem of finding a continuous path in  
+\( \mathcal{C}_{\text{free}} \) that connects the start and goal configurations.
+</div>
+
+
+Now, imagine trying to create a grid for this C-space. To keep it simple, let's say we only divide each joint's range of motion into 10 discrete steps. For one joint, that's 10 grid cells. For two joints, it's $10x10 = 100$ cells. For our 7-DOF arm, it becomes $10^7 = 10 000 000$ cells. If we wanted a more reasonable resolution, say 100 steps per joint, we would need $100^7 = 10^{14}$ cells. No modern computer has enough memory to store such a grid, let alone run Dijkstra's on it.
 
 This problem isn't unique to robot arms. Imagine a self-driving car navigating a city. If the map is very large and the resolution is high (e.g., centimeter-level precision to avoid small obstacles), the number of grid cells again becomes astronomically large. This exponential explosion in the number of states as we add more dimensions (or higher resolution) is the Curse of Dimensionality. It makes grid-based methods computationally impossible for almost all real-world robotics problems. We need a fundamentally different way to think about the problem.
 
@@ -186,19 +235,208 @@ The core intuition is that if we take enough random samples, we can build a spar
   Your browser does not support the video tag.
 </video>
 
+This approach is built upon two simple but powerful components, which we will now explore in detail.
 
-> #### Core Components of Sampling-Based Planners
->
-> **Sampling Function:** Generates a random configuration in the C-space  
-> *For a 7-DOF arm, this means generating 7 random joint angles.*
->
-> **Local Planner:** Checks if a simple, direct path between two nearby configurations is collision-free.  
-> *Most commonly, this is a straight line in the C-space.*
-{: .note }
+---
+
+## The Sampling Function: The Engine of Exploration
+
+A sampling function is responsible for generating an infinite sequence of configurations:
+
+$$
+S = \{ q_1, q_2, q_3, \dots \}
+$$
+
+from the configuration space $\mathcal{C}$.
+
+For a planner to offer theoretical guarantees, this sequence must be dense in $\mathcal{C}$, meaning that for any point in the space, there exists a sampled point arbitrarily close to it.
+
+<div class="definition" markdown="1">
+<strong>Definition.</strong>  
+A sequence of samples $S$ is dense in $\mathcal{C}$ if for every configuration $q \in \mathcal{C}$ and for every $\varepsilon > 0$, there exists a sample $q_i \in S$ such that:
+
+$$
+d(q, q_i) < \varepsilon
+$$
+
+where $d(\cdot,\cdot)$ is a valid metric in the configuration space.
+</div>
+
+The most straightforward method is *unbiased (uniform) sampling*, which draws configurations from the C-space such that each has an equal probability of being chosen.  
+
+<div class="example" markdown="1">
+<strong>Example.</strong>  
+For a 7-DOF arm where each joint angle lies in $[0, 2\pi]$, this means generating 7 random numbers from a uniform distribution.
+</div>
+
+While simple, uniform sampling can be inefficient, in environments with many obstacles or narrow passages, most random samples will fall inside obstacles, wasting computational effort.
 
 
 
-By combining these two components, these algorithms come with a powerful new guarantee: Probabilistic Completeness. This means that if a valid path exists, the probability of the algorithm finding it approaches 1 as the number of samples approaches infinity. We are no longer guaranteed to find the optimal path, but we are guaranteed that we'll eventually find a path.
+<!-- ![Uniform sampling in 2D maze]({{ '/assets/images/sampling_based_planning/uniform.png' | relative_url }}) -->
+
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/narrow_passage.png' | relative_url }}" 
+       alt="Narrow passage in a 2D maze" 
+       width="55%">
+  <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
+    <strong>Figure.</strong> Narrow passage in a 2D maze.
+  </figcaption>
+</figure>
+
+
+
+<div class="note" markdown="1">
+
+**Uniform (Unbiased) Sampling**
+
+In uniform sampling, every configuration in the free configuration space  
+has the same probability of being selected. Formally, the probability density  
+function $p(q)$ over $\mathcal{C}_{\mathrm{free}}$ is constant:
+
+$$
+p(q) = \frac{1}{\mu(\mathcal{C}_{\mathrm{free}})} \text{ when } q \text{ is in the free space, and } p(q) = 0 \text{ otherwise.}
+$$
+
+where $\mu(\mathcal{C}_{\mathrm{free}})$ denotes the measure (volume) of the free space.  
+Uniform sampling is simple and unbiased, but can be inefficient in cluttered or high-dimensional environments.
+
+</div>
+
+
+
+
+To improve efficiency, *biased sampling* strategies were developed to focus on regions more likely to be useful. One such strategy is *obstacle-based sampling*, which increases the probability of sampling near obstacle boundaries. The intuition is that the most difficult parts of a path are often found when navigating around obstacles, so focusing effort there can speed up finding a solution in cluttered spaces or through narrow gaps.
+
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/obstacle_based.png' | relative_url }}" 
+       alt="Obstacle-based sampling showing higher density near walls and narrow passage"
+       width="50%">
+  <figcaption><strong>Figure.</strong> Obstacle-based sampling — biased toward regions near obstacles and narrow passages.</figcaption>
+</figure>
+
+<div class="note" markdown="1">
+<strong>Obstacle-Based Sampling</strong>
+
+Obstacle-based methods bias samples toward regions near obstacles to better  
+explore narrow passages. One approach defines the sampling density as inversely  
+proportional to the distance to the nearest obstacle $d(q)$:
+
+$$
+p(q) \propto \frac{1}{d(q) + \varepsilon},
+$$
+
+where $d(q) = \min_{q_o \in \mathcal{C}_{\mathrm{obs}}} \| q - q_o \|$ 
+and $\varepsilon > 0$ prevents singularities.  
+This concentrates samples around the boundaries of obstacles where planning is most difficult.
+
+</div>
+
+
+Another approach is *clearance-based sampling*, which prioritizes samples that are far away from obstacles. This leads to safer, smoother paths that are easier for a real robot to execute. This can be achieved by first taking a uniform sample and then performing a short random walk away from the nearest obstacle to improve its clearance. 
+
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/clearance_based.png' | relative_url }}" 
+       alt="Clearance-based sampling showing higher density further away from the obstacles"
+       width="50%">
+  <figcaption><strong>Figure.</strong> Obstacle-based sampling — biased toward regions near obstacles and narrow passages.</figcaption>
+</figure>
+
+<div class="note" markdown="1">
+
+**Clearance-Based Sampling**
+
+Clearance-based methods prefer configurations that are far from obstacles,  
+favoring safe and smooth trajectories. The sampling density is proportional  
+to the clearance $d(q)$ from obstacles:
+
+$$
+p(q) \propto d(q)^{\alpha}, \qquad \alpha > 0,
+$$
+
+where $d(q) = \min_{q_o \in \mathcal{C}_{\mathrm{obs}}} \| q - q_o \|$.  
+A larger exponent $\alpha$ increases the bias toward open, obstacle-free regions.
+
+</div>
+
+
+Finally, *deterministic sampling* uses low-dispersion sequences (like Halton or Sukharev grid sequences) instead of pseudo-random numbers. These sequences are designed to cover the space more evenly than random sampling, reducing large gaps and improving the reliability and predictability of the planner.
+
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/random_vs_halton.png' | relative_url }}" 
+       alt="Pseudo-random uniformly generated sequence vs Halton sequence"
+       width="100%">
+  <figcaption><strong>Figure.</strong> Pseudo-random uniformly generated sequence vs Halton sequence.</figcaption>
+</figure>
+<div class="note" markdown="1">
+
+**Halton (Low-Dispersion) Sampling**
+
+The Halton sequence generates deterministic, low-discrepancy samples that  
+cover the space more uniformly than random sampling.  
+For dimension $j$ with prime base $b_j$, the $i$-th component is:
+
+$$
+x_{i,j} = \sum_{k=0}^{\infty} a_k \, b_j^{-(k+1)},
+$$
+
+where $i = a_0 + a_1 b_j + a_2 b_j^2 + \dots$ is the base-$b_j$ expansion of $i$.  
+The resulting sequence $q_i = (x_{i,1}, x_{i,2}, \dots, x_{i,n})$  
+has low dispersion $O(1/N)$ and fills the space evenly without randomness.
+
+</div>
+
+<!-- <div class="example">
+<strong>Example.</strong>  
+A side-by-side comparison of 200 points generated by a pseudo-random generator versus a Halton sequence shows that the Halton sequence yields a much more uniform distribution across the space.
+</div> -->
+
+---
+
+## The Local Planner: The Reality Check
+
+A local planner determines whether a simple path between two nearby configurations $q_1$ and $q_2$ is collision-free.
+
+The most common approach is the Straight-Line Planner, which parameterizes the path as:
+
+$$
+\tau(s) = (1 - s)\, q_1 + s\, q_2, \quad s \in [0, 1]
+$$
+
+The local planner discretizes this path into intermediate configurations and checks each for collisions.  
+If all intermediate steps are collision-free, the connection is accepted as valid.
+
+For robots with differential constraints (e.g., cars or drones), a more advanced Steering Function is required, one that computes control inputs to move the robot from $q_1$ to $q_2$ while respecting its dynamics.
+
+---
+
+
+<p>
+By combining these two functions, one to propose potential locations and one to verify connections between them, these algorithms gain a powerful property known as
+<strong>Probabilistic Completeness</strong>.<br>
+
+<div class="definition">
+<strong>Definition.</strong>
+A randomized motion–planning algorithm is <em>probabilistically complete</em> if, whenever a valid path exists, the probability that the algorithm finds a solution approaches 1 as the number of samples (or iterations) goes to infinity. Formally, if a path exists in \( \mathcal{C}_{\text{free}} \),
+\[
+\lim_{n \to \infty} \Pr[\text{planner finds a path after } n \text{ samples}] = 1.
+\]
+If no valid path exists, a probabilistically complete algorithm is not guaranteed to terminate with a definitive “no solution.” 
+
+</div>
+
+<div class="definition">
+<strong>Definition.</strong>
+A sampling-based planner is <em>asymptotically optimal</em> if the cost of the best path it has found converges to the global optimum as the number of samples (or time) goes to infinity:
+\[
+\lim_{n \to \infty} c_{\text{best}}(n) = c^\star .
+\]
+</div>
+
+
+We are no longer guaranteed to find the <em>optimal</em> path, but we are guaranteed that we will eventually find <em>a</em> path.
+</p>
+
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
@@ -237,7 +475,8 @@ By combining these two components, these algorithms come with a powerful new gua
 #solution-box{display:none;margin-top:8px;border-left:3px solid #22c55e;background:#f0fdf4;padding:10px;border-radius:6px;}
 </style>
 
-### Coding Exercise: Sampling Free Configurations
+
+### Coding Exercise 1: Sampling Free Configurations
 
 In this exercise, you will implement a sampling function for a 2D maze:
 
@@ -357,67 +596,399 @@ document.addEventListener("DOMContentLoaded", async () => {
 {% endraw %}
 
 <!-- Exercise to add edges between previously sampled nodes -->
+<!-- ================== Coding Exercise 2: Collision-Checking Graph Building ================== -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/monokai.css">
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.js"></script>
+
+<style>
+.exercise-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fff;
+}
+.CodeMirror {
+  height: 260px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0 6px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 6px 12px;
+  border: 1px solid #111827;
+  border-radius: 6px;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+}
+.btn.alt {
+  background: #065f46;
+  border-color: #065f46;
+}
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.outbox {
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 10px;
+}
+.outbox img {
+  max-width: 100%;
+  display: block;
+}
+.muted {
+  color: #6b7280;
+  font-size: 0.9em;
+}
+#solution-box-2 {
+  display: none;
+  margin-top: 8px;
+  border-left: 3px solid #22c55e;
+  background: #f0fdf4;
+  padding: 10px;
+  border-radius: 6px;
+}
+</style>
+
+### Coding Exercise 2: Collision-Checking Graph Building
+
+In this exercise, you will implement a function to build a **collision-free graph** connecting sampled configurations in a 2D maze:
+
+```python
+def build_graph(grid, nodes, robot_radius=0.25, k=8, max_edge_len=None)
+```
+
+The function should return a list of undirected edges `[(i, j)]`, where each edge connects two valid configurations without intersecting walls.  
+Each edge must satisfy the robot’s clearance constraints.
+
+After you implement the function, click **Run ▶** below to visualize your constructed roadmap over the maze.
+<details>
+  <summary><strong>💡 Hints</strong></summary>
+
+  <ul>
+    <li>
+      For each node <code>i</code>, find up to <code>k</code> nearest neighbors <code>j</code> by Euclidean distance.
+    </li>
+    <li>
+      Optionally ignore distant pairs by using <code>max_edge_len</code> (only connect if distance ≤ <code>max_edge_len</code>).
+    </li>
+    <li>
+      Use the provided helper <code>segment_clearance(grid, p, q)</code> to get the minimum distance from the straight line segment <code>p→q</code> to any wall:<br>
+      – If it returns <code>0</code>, the segment collides.<br>
+      – If it returns <code>≥ robot_radius</code>, the connection is safe.
+    </li>
+    <li>
+      Add each edge only once (store as <code>(min(i, j), max(i, j))</code> to avoid duplicates).
+    </li>
+  </ul>
+</details>
 
 
-## Probabilistic Roadmaps (PRM)
-<!-- 
-The first major algorithm built on this sampling paradigm is the Probabilistic Roadmap (PRM). The philosophy behind PRM is intuitive: "Build a map first, then ask for directions." It focuses on creating a general-purpose roadmap of the free C-space, which can then be used for multiple queries. This makes it a multi-query planner.
 
-The PRM algorithm works in two distinct phases:
-
-- Construction Phase: In this phase, the roadmap is built. The algorithm iterates a set number of times, and in each iteration, it samples a random configuration. If that configuration is collision-free, it is added to the graph as a node. The algorithm then tries to connect this new node to its k-nearest neighbors that are already in the graph. For each neighbor, it uses the local planner to check if the path between them is collision-free. If it is, an edge is added to the graph connecting the two nodes.
-
-- Query Phase: Once the roadmap is constructed, finding a path is easy. We take our specific start and goal configurations and connect them to their nearest neighbors in the pre-computed roadmap. Now, the problem is reduced to a simple graph search, and we can use Dijkstra’s algorithm to find the shortest path between the start and goal on our new roadmap.
-
-The strength of PRM is its reusability. In a static environment like a factory floor, you can spend time building a high-quality roadmap of the entire workspace once. Then, for every new pick-and-place task, you can find a path almost instantly. Its primary weakness is the high upfront computation cost and its struggle with narrow passages, as the random chance of a sample landing inside a very small, constrained area is extremely low. -->
+<div class="exercise-card">
+  <textarea id="code-2">def build_graph(grid, nodes, robot_radius=0.25, k=8, max_edge_len=None):&#10;&#9;"""&#10;&#9;Build an undirected graph with collision-checked straight-line edges.&#10;&#9;&#10;&#9;Inputs&#10;&#9;------&#10;&#9;grid : np.ndarray (H, W) with 1=wall, 0=free&#10;&#9;nodes : list[(x, y)] continuous coordinates in free space&#10;&#9;robot_radius : float    minimum clearance required from walls&#10;&#9;k : int                 connect up to k nearest neighbors per node&#10;&#9;max_edge_len : float or None  if set, only connect if distance &lt;= max_edge_len&#10;&#9;&#10;&#9;Returns&#10;&#9;-------&#10;&#9;edges : list[(i, j)] with i &lt; j&#10;&#9;"""&#10;&#9;import numpy as np&#10;&#10;&#9;N = len(nodes)&#10;&#9;edges = []&#10;&#10;&#9;# TODO:&#10;&#9;# 1) Compute pairwise distances (or use a k-NN approach).&#10;&#9;# 2) For each node i, consider nearest neighbors j (skip i==j).&#10;&#9;#    - If max_edge_len is not None and dist(i,j) &gt; max_edge_len: skip&#10;&#9;#    - Query helper: clr = segment_clearance(grid, nodes[i], nodes[j])  # 0 =&gt; collision&#10;&#9;#    - If clr &gt;= robot_radius: accept edge (min(i,j), max(i,j)) once&#10;&#9;#    - Stop after adding up to k neighbors for node i&#10;&#10;&#9;return edges&#10;</textarea>
 
 
-<!-- Animation: Show a step-by-step animation of PRM on the 2D maze. Start with a few nodes, then show more nodes and edges appearing to form a connected graph. Finally, show the start and goal being connected and the final path being highlighted in a different color.
+  <div class="toolbar">
+    <label>Samples:
+      <input id="num-samples-2" type="number" min="10" max="1500" value="150">
+    </label>
+    <label>k:
+      <input id="knn-2" type="number" min="1" max="32" value="8">
+    </label>
+    <label>Max edge len:
+      <input id="maxlen-2" type="number" min="0" step="0.1" value="3.5">
+    </label>
+    <label>Robot radius:
+      <input id="radius-2" type="number" min="0" step="0.05" value="0.25">
+    </label>
+    <button id="run-2" class="btn">Run ▶</button>
+    <button id="show-solution-2" class="btn alt">Show Solution 💡</button>
+    <span id="status-2" class="muted"></span>
+  </div>
 
-Question for Students: "PRM is called a 'multi-query' planner. Give an example of a real-world robotics application where this would be a significant advantage over a 'single-query' planner." -->
+  <div id="solution-box-2">
+    <b>✅ One Possible Solution (for reference):</b>
+    <pre style="white-space: pre-wrap; font-size:13px; background:#fff; padding:8px; border-radius:5px; border:1px solid #ddd;">
+def build_graph(grid, nodes, robot_radius=0.25, k=8, max_edge_len=None):
+    import numpy as np
+    pts = np.array(nodes, dtype=float)
+    N = len(pts)
+    edges = []
+    seen = set()
 
-## Rapidly-exploring Random Trees (RRT)
+    # pairwise distances (O(N^2))
+    dmat = np.sqrt(((pts[:, None, :] - pts[None, :, :])**2).sum(axis=2))
 
-<!-- What if we don't need a map of the whole world, and instead just want to find a single path from A to B as quickly as possible? This is the problem that the Rapidly-exploring Random Tree (RRT) algorithm solves. Its philosophy is: "Explore purposefully from the start." RRT is a single-query planner that doesn't waste time mapping irrelevant regions of the space.
+    for i in range(N):
+        order = np.argsort(dmat[i])
+        added = 0
+        for j in order:
+            if j == i:
+                continue
+            dij = dmat[i, j]
+            if max_edge_len is not None and dij > float(max_edge_len):
+                continue
+            if added >= int(k):
+                break
+            clr = segment_clearance(grid, tuple(pts[i]), tuple(pts[j]))
+            if clr >= float(robot_radius):
+                a, b = (i, j) if i &lt; j else (j, i)
+                if (a, b) not in seen:
+                    edges.append((a, b))
+                    seen.add((a, b))
+                    added += 1
+    return edges
+    </pre>
+  </div>
 
-The RRT algorithm works by incrementally growing a tree of feasible paths from the start configuration. The magic is in how it decides where to grow the tree next. The core loop is as follows:
+  <div class="outbox">
+    <div class="muted">Output:</div>
+    <img id="plot-2" alt="Maze graph will appear here">
+  </div>
+</div>
 
-Generate a random configuration in the C-space (the "random target").
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const editor2 = CodeMirror.fromTextArea(document.getElementById("code-2"), {
+    mode: "python",
+    theme: "monokai",
+    lineNumbers: true,
+    indentUnit: 4,
+    tabSize: 4,
+    lineWrapping: true
+  });
 
-Find the node already in your tree that is nearest to this random target.
+  const pyodide2 = await loadPyodide({
+    indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/"
+  });
+  await pyodide2.loadPackage(["numpy", "matplotlib"]);
 
-Extend a new edge from this nearest node in the direction of the random target, but only for a small, fixed distance.
+  const runBtn2 = document.getElementById("run-2");
+  const showBtn2 = document.getElementById("show-solution-2");
+  const solutionBox2 = document.getElementById("solution-box-2");
+  const img2 = document.getElementById("plot-2");
+  const status2 = document.getElementById("status-2");
 
-If this new, short edge is collision-free, add its endpoint as a new node to the tree.
+  showBtn2.addEventListener("click", () => {
+    const visible = solutionBox2.style.display === "block";
+    solutionBox2.style.display = visible ? "none" : "block";
+    showBtn2.textContent = visible ? "Show Solution 💡" : "Hide Solution ✖️";
+  });
 
-This process has a fascinating emergent property: the tree is naturally biased to explore large, uncovered regions of the space. This is because a random sample is, by definition, more likely to land in a large open area than a small, cramped one. This bias makes the tree "rapidly-exploring" and allows it to find a solution very quickly.
+  runBtn2.addEventListener("click", async () => {
+    runBtn2.disabled = true;
+    status2.textContent = "Running…";
 
-RRT's main strength is its speed and effectiveness in finding an initial, feasible path in high-dimensional spaces. However, because of its greedy, sprawling nature, the first path it finds is almost never the best one. It is often jagged and inefficient. RRT prioritizes finding any solution quickly over finding the optimal solution.
+    const numSamples = parseInt(document.getElementById("num-samples-2").value);
+    const k = parseInt(document.getElementById("knn-2").value);
+    const maxLen = parseFloat(document.getElementById("maxlen-2").value);
+    const radius = parseFloat(document.getElementById("radius-2").value);
+    const codeUser = editor2.getValue();
 
-Teaching Material Ideas:
+    const boilerplate = `import numpy as np, matplotlib\nmatplotlib.use("Agg")\nimport matplotlib.pyplot as plt\nfrom matplotlib.patches import Rectangle, Circle\nfrom io import BytesIO\nimport base64\nCELL_W, CELL_H = 6, 5\nCELL_PX=64\nGRID_W, GRID_H = 2*CELL_W + 1, 2*CELL_H + 1\nSTART, GOAL = (1,1), (GRID_W-2, GRID_H-2)\nrng = np.random.default_rng(1)\n\ndef to_grid_xy(x,y): return 2*x+1, 2*y+1\n\ndef generate_maze(cw,ch,braid_prob=0.15):\n\tW,H=2*cw+1,2*ch+1\n\tg=np.ones((H,W),dtype=np.uint8)\n\tdef nbs(x,y):\n\t\tfor dx,dy in [(1,0),(-1,0),(0,1),(0,-1)]:\n\t\t\tnx,ny=x+dx,y+dy\n\t\t\tif 0<=nx<cw and 0<=ny<ch: yield nx,ny\n\tvis=[[False]*ch for _ in range(cw)]\n\tsx,sy=rng.integers(0,cw),rng.integers(0,ch)\n\tst=[(sx,sy)]; vis[sx][sy]=True\n\tgx,gy=to_grid_xy(sx,sy); g[gy,gx]=0\n\twhile st:\n\t\tx,y=st[-1]\n\t\tunv=[(nx,ny) for (nx,ny) in nbs(x,y) if not vis[nx][ny]]\n\t\tif unv:\n\t\t\tnx,ny=unv[rng.integers(0,len(unv))]\n\t\t\tg[2*y+1+(ny-y),2*x+1+(nx-x)]=0\n\t\t\tg[2*ny+1,2*nx+1]=0\n\t\t\tvis[nx][ny]=True; st.append((nx,ny))\n\t\telse:\n\t\t\tst.pop()\n\tg[START[1],START[0]]=0; g[GOAL[1],GOAL[0]]=0\n\treturn g\n\ndef sampling(grid, num_samples, size_of_grid, robot_radius=0.25):\n\timport numpy as np, math\n\tH, W = grid.shape\n\tsamples = []\n\tattempts = 0\n\tmax_attempts = max(1000, num_samples * 100)\n\twhile len(samples) < num_samples and attempts < max_attempts:\n\t\tattempts += 1\n\t\tx, y = np.random.uniform(0, W), np.random.uniform(0, H)\n\t\tc, r = int(x), int(y)\n\t\tif grid[r, c] == 1:\n\t\t\tcontinue\n\t\tpad = int(math.ceil(robot_radius)) + 1\n\t\tdmin = float(\"inf\")\n\t\tfor yy in range(max(0, r - pad), min(H - 1, r + pad) + 1):\n\t\t\tfor xx in range(max(0, c - pad), min(W - 1, c + pad) + 1):\n\t\t\t\tif grid[yy, xx] == 1:\n\t\t\t\t\tdx = max(xx - x, 0, x - (xx + 1))\n\t\t\t\t\tdy = max(yy - y, 0, y - (yy + 1))\n\t\t\t\t\td = math.hypot(dx, dy)\n\t\t\t\t\tif d < dmin:\n\t\t\t\t\t\tdmin = d\n\t\tif dmin >= robot_radius:\n\t\t\tsamples.append((x, y))\n\treturn samples\n\ndef clearance_point_vs_walls(grid, px, py, pad=3):\n\timport math\n\tH, W = grid.shape\n\tcx, cy = int(px), int(py)\n\tx0, x1 = max(0, cx - pad), min(W - 1, cx + pad)\n\ty0, y1 = max(0, cy - pad), min(H - 1, cy + pad)\n\tdmin = float(\"inf\")\n\tfor yy in range(y0, y1 + 1):\n\t\tfor xx in range(x0, x1 + 1):\n\t\t\tif grid[yy, xx] == 1:\n\t\t\t\tdx = 0.0 if xx <= px <= xx+1 else (xx - px if px < xx else px - (xx+1))\n\t\t\t\tdy = 0.0 if yy <= py <= yy+1 else (yy - py if py < yy else py - (yy+1))\n\t\t\t\td = math.hypot(dx, dy)\n\t\t\t\tif d < dmin: dmin = d\n\treturn dmin\n\ndef segment_clearance(grid, p, q):\n\timport math\n\tpx, py = p; qx, qy = q\n\tL = math.hypot(qx - px, qy - py)\n\tstep = 0.2\n\tn = max(2, int(math.ceil(L/step))+1)\n\tdmin = float(\"inf\")\n\tfor i in range(n):\n\t\tt = i/(n-1)\n\t\tx = px*(1-t) + qx*t\n\t\ty = py*(1-t) + qy*t\n\t\td = clearance_point_vs_walls(grid, x, y, pad=4)\n\t\tif d < dmin: dmin = d\n\t\tif d <= 0.0: return 0.0\n\treturn dmin\n\ndef render_maze_with_graph(grid,nodes,edges):\n\tH,W=grid.shape\n\tscale=CELL_PX/110.\n\tfig,ax=plt.subplots(figsize=(W*scale,H*scale),dpi=150)\n\tax.set_aspect('equal');ax.set_xlim(0,W);ax.set_ylim(H,0);ax.axis('off')\n\tfor y in range(H):\n\t\tfor x in range(W):\n\t\t\tif grid[y,x]==1: ax.add_patch(Rectangle((x,y),1,1,fc='black'))\n\tsx,sy=START[0]+.5,START[1]+.5; gx,gy=GOAL[0]+.5,GOAL[1]+.5\n\tax.add_patch(Circle((sx,sy),0.25,fc='#13adfa',ec='k'))\n\tax.add_patch(Circle((gx,gy),0.25,fc='#0feb55',ec='k'))\n\tfor(i,j) in edges:\n\t\t(x1,y1),(x2,y2)=nodes[i],nodes[j]\n\t\tax.plot([x1,x2],[y1,y2],lw=1.2,color='#111111',alpha=0.9)\n\tif nodes:\n\t\txs,ys=zip(*nodes)\n\t\tax.scatter(xs,ys,s=30,c='#ff4081',ec='white',lw=0.5)\n\tbuf=BytesIO();plt.savefig(buf,format='png',bbox_inches='tight',dpi=150)\n\tplt.close(fig)\n\treturn \"data:image/png;base64,\"+base64.b64encode(buf.getvalue()).decode()\n\ngrid=generate_maze(CELL_W,CELL_H)\nSIZE_OF_GRID=(GRID_W,GRID_H)\nnodes=sampling(grid,${numSamples},SIZE_OF_GRID)\n# add START and GOAL as first and last nodes\nnodes.insert(0,(START[0]+0.5,START[1]+0.5))\nnodes.append((GOAL[0]+0.5,GOAL[1]+0.5))\n${codeUser}\nedges=build_graph(grid,nodes,robot_radius=${radius},k=${k},max_edge_len=${maxLen})\nimg_url=render_maze_with_graph(grid,nodes,edges)\nimg_url
 
-Animation: An animation of RRT on the 2D maze is crucial. It should show the tree starting at the robot and growing outwards, with branches visibly reaching towards empty spaces, eventually connecting to the goal region.
 
-Exercise for Students: "In the RRT algorithm, we extend from the nearest node towards a random sample, but not all the way to it. Why is this small, fixed-distance step important for how the tree grows and explores the space?" -->
+`
+      .replace("{numSamples}", String(numSamples))
+      .replace("{k}", String(k))
+      .replace("{maxLen}", String(maxLen))
+      .replace("{radius}", String(radius))
+      .replace("{codeUser}", codeUser);
 
-<!-- 
-# Chapter 3: Sampling-based Methods
+    try {
+      const result = await pyodide2.runPythonAsync(boilerplate);
+      img2.src = result;
+      status2.textContent = "✅ Success";
+    } catch (err) {
+      console.error(err);
+      status2.textContent = "⚠️ " + err;
+    } finally {
+      runBtn2.disabled = false;
+    }
+  });
+});
+</script>
 
-Dijkstra's works perfectly for our maze, but its reliance on a pre-defined, explicit graph is a critical limitation. What happens when the "maze" becomes impossibly large or complex? This can happen in several ways. We might face a truly enormous 2D map, or a high-resolution map where tiny obstacles create a massive number of states. More commonly, we face a robot with many joints, like a 7-DOF robot arm, whose high-dimensional Configuration Space is continuous and infinite. In these scenarios, creating an explicit graph of the entire state space is computationally impossible.
 
-This is the problem that Sampling-Based Motion Planning (SBMP) was invented to solve in the 1990s. The core idea is brilliant: if the map is too big to build, don't build it. Instead, create a rough sketch of it by taking random samples. These algorithms don't try to capture every detail, but rather to estimate the connectivity of the free space. By doing so, they can offer a powerful guarantee known as probabilistic completeness, meaning that if a solution path exists, the probability of finding one approaches 1 as the algorithm runs for more time.
+---
+<div style="border-left: 4px solid #f47a16ff; background: #fff7f0ff; padding: 12px 16px; border-radius: 6px; margin: 1em 0;" markdown="1">
 
-## Graph-Based Planners: The Probabilistic Roadmap (PRM)
+### Reflection
 
-The Probabilistic Roadmap (PRM) is the natural evolution of our maze-solving approach. It constructs a sparse but representative graph, or "roadmap," of the high-dimensional space. The strategy involves a sampling phase, where a set number of samples, or configurations, are randomly placed in the robot's C-space. Any samples that result in a collision are discarded, and the valid ones become the vertices of our graph. To be more efficient, sampling can be biased towards "interesting" regions. For instance, obstacle-based sampling focuses on areas near obstacles to help find paths through narrow passages, while clearance-based sampling prioritizes safer paths away from obstacles.
+Try playing with the parameters `num_samples` and `k`.  
+What do you notice as you increase or decrease them? Does a valid path between the start and goal always exist?
 
-Next is a connection phase, where a local planner attempts to connect each sample to its nearest neighbors with a simple, collision-free path, forming the edges of the roadmap. Finally, in the querying phase, the start and goal configurations are added to this roadmap, and a graph search algorithm like Dijkstra's is used to find the cheapest path. A key advantage of PRM is that it's a multi-query planner; the roadmap can be built once and then reused for many different start and goal queries within the same environment.
+When the roadmap has too few samples or too small a `k`, some free regions may remain disconnected — making it impossible to find a path even though one exists.  
+Conversely, very large values improve connectivity but increase computation.
 
-## Tree-Based Planners: Rapidly-exploring Random Trees (RRT)
+Think about how the density and distribution of sampled nodes affect the connectivity of your roadmap. How could we choose or bias samples such that a path **always** exists?
 
-For problems where we only need a single path quickly, building a whole roadmap can be overkill. The Rapidly-exploring Random Tree (RRT) algorithm is designed for this single-query scenario. It works by growing a tree of reachable configurations starting from the initial state S. In each iteration, it picks a random sample from the C-space, finds the nearest node already in its tree, and extends a new edge from that node a small distance towards the random sample. This process inherently biases the tree's growth towards large, unexplored regions of the space, allowing it to "rapidly explore" and find a feasible path very quickly. To accelerate the search further, RRT-Connect uses a bidirectional approach, growing one tree from the start and another from the goal, attempting to connect them in the middle.
+That’s exactly where sampling-based motion planning algorithms such as **PRM**, **RRT**, and their variants come into play — they tackle this issue and provide elegant, efficient solutions by intelligently balancing exploration and connectivity in high-dimensional spaces.
 
-While basic RRT and PRM are designed to find any feasible path, a major breakthrough came with the development of asymptotically optimal planners like RRT* and PRM*. These advanced versions add a "rewiring" step, allowing them to continuously improve the solution quality over time, guaranteeing that the path will converge towards the true optimal solution as more samples are added. -->
+
+</div>
+
+
+In the following chapters, we’ll explore several of sampling-based algorithms in depth.  
+You’ll learn how they work, their pros and cons, and when to use each one depending on your environment and planning needs.  
+We’ll also discuss different variations and extensions designed to improve performance, guarantee completeness, or adapt to complex robot dynamics.
+
+
+
+# The Roadmap Approach: Probabilistic Roadmaps (PRM)
+
+The first major algorithm built on this sampling paradigm is the Probabilistic Roadmap (PRM).  
+Its philosophy is simple and powerful: *"Build a map first, then ask for directions."*  
+This makes it a *multi-query planner*, meaning it invests time upfront to build a comprehensive roadmap of the free configuration space ($\mathcal{C}_{\text{free}}$), which can then be reused to solve many different planning problems (e.g., moving between different start and goal points) almost instantly.  
+This is ideal for static environments, like a factory floor where the obstacles don't move.
+
+---
+
+## Construction Phase
+
+PRM operates in two distinct phases. The first is the Construction Phase, where the map is built. This is an automated version of the exercises you just completed.  
+
+The algorithm repeatedly samples a random configuration $q_{\text{rand}}$ from the free C-space.  
+If the sample is valid, it's added as a vertex to our graph.  Then, the algorithm finds the *k-nearest neighbors* to this new vertex that are already in the graph.  
+The "nearness" is determined by a distance metric, most commonly the standard Euclidean distance. For each of these neighbors, $q_{\text{near}}$, the local planner is called to see if a straight-line connection is collision-free. If it is, a new edge is added to the graph, connecting $q_{\text{rand}}$ and $q_{\text{near}}$.  
+
+This loop continues for a set number of samples, gradually building a rich network that captures the connectivity of the robot's free space.
+
+---
+
+## Query Phase
+
+The second phase is the Query Phase.  
+Now that we have our roadmap, solving a specific problem is easy.  
+We take our start configuration $q_{\text{start}}$ and our goal $q_{\text{goal}}$, and connect them to the roadmap using the same nearest-neighbor logic.  
+Once they are part of the graph, the complex robotics problem is reduced to a simple graph search.  
+We can use Dijkstra’s algorithm to find the shortest path on the roadmap from $q_{\text{start}}$ to $q_{\text{goal}}$.  
+
+A major strength of PRM is that if we get a new query (e.g., move from $q_{\text{start}}$ to a new $q_{\text{goal}_2}$), we only need to repeat this trivial query phase, the expensive map construction is already done.  
+
+Its primary weakness, however, is in dealing with narrow passages.  
+The probability of randomly sampling a point inside a tiny, narrow corridor is extremely low, so PRM often fails to connect regions on either side of such a bottleneck unless a huge number of samples are used.
+
+<!-- ---
+
+<div class="note" markdown="1">
+<strong>Quick Fact — Multi-Query vs. Single-Query Planners</strong>  
+PRM is a *multi-query* planner: once the roadmap is built, it can answer many start/goal pairs efficiently.  
+In contrast, algorithms like **RRT** are *single-query*: they focus on solving one specific planning problem from scratch.
+</div> -->
+
+---
+
+<!-- ![Animation: PRM algorithm building a roadmap in a 2D maze. Shows random nodes appearing, then edges connecting them, followed by the start and goal connecting to the graph, and finally the shortest path being highlighted.](image_link_here) -->
+
+---
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 1:</strong> Basic PRM  
+
+<pre>
+<strong>procedure</strong> BUILD-ROADMAP(num_samples)
+    G ← (V, E) with V = ∅, E = ∅
+    <strong>for</strong> i = 1 <strong>to</strong> num_samples <strong>do</strong>
+        q_rand ← sample from 𝒞_free
+        V.add(q_rand)
+        N(q_rand) ← k-nearest neighbors of q_rand in V
+        <strong>for each</strong> q_near <strong>in</strong> N(q_rand) <strong>do</strong>
+            <strong>if</strong> LocalPlanner(q_rand, q_near) is collision-free <strong>then</strong>
+                E.add((q_rand, q_near))
+    <strong>return</strong> G
+</pre>
+
+📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 1 (PRM).
+</div>
+
+
+---
+
+# The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
+
+What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT) algorithm solves. Its philosophy is: *"Explore purposefully from the start."*  
+RRT is a **single-query planner** that grows a tree structure rooted at the start configuration, incrementally expanding into unexplored regions of the C-space until it finds the goal.
+
+---
+
+## Core Idea
+
+The magic of RRT lies in its unique growth heuristic.  
+The core loop is beautifully simple:
+
+1. Sample a random configuration $q_{\text{rand}}$ from the entire C-space (note: not just the free space).  
+2. Find the node already in the tree that is nearest to this random sample — call it $q_{\text{near}}$.  
+3. Instead of trying to connect all the way to $q_{\text{rand}}$, the algorithm extends a new branch from $q_{\text{near}}$ in the direction of $q_{\text{rand}}$, but only for a small, predefined step distance $\varepsilon$. This new point is $q_{\text{new}}$.  
+4. The local planner checks if the small path segment from $q_{\text{near}}$ to $q_{\text{new}}$ is collision-free.  
+   If it is, $q_{\text{new}}$ is added to the tree as a new vertex with an edge connecting it back to $q_{\text{near}}$.  
+
+---
+
+<div class="note" markdown="1">
+<strong>Quick Fact — Voronoi Regions and Exploration Bias</strong>  
+Each node in the tree defines a Voronoi region — the set of configurations that are closer to that node than to any other.  
+Nodes on the frontier of the tree, whose Voronoi regions are large, are statistically more likely to be chosen as $q_{\text{near}}$ for new random samples.  
+This natural bias drives the RRT to expand into large, unexplored regions — the key reason for its rapid exploration property.
+</div>
+
+---
+
+This process has a fascinating emergent property:  
+nodes at the frontier of the tree tend to expand toward large, empty regions, making RRT extremely effective at finding an initial feasible path quickly, even in high-dimensional spaces.
+
+However, this speed comes at a cost — the first path found is often jagged, inefficient, and suboptimal, resembling a *“drunken sailor’s walk”* through the C-space.  
+For most practical applications, the path found by RRT must be smoothed or optimized in a post-processing step before it can be executed by a robot.
+
+---
+
+<!-- ![Animation: RRT algorithm growing a tree from a start point in a 2D maze. The tree visibly expands towards random points until it connects with the goal region.](image_link_here) -->
+
+---
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 2:</strong> Basic RRT  
+
+<pre>
+<strong>procedure</strong> BUILD-RRT(q_start)
+    T.initialize(q_start)
+    <strong>for</strong> i = 1 <strong>to</strong> num_iterations <strong>do</strong>
+        q_rand ← sample from 𝒞
+        q_near ← NearestNode(q_rand, T)
+        q_new ← Extend(q_near, q_rand)
+        <strong>if</strong> LocalPlanner(q_near, q_new) is collision-free <strong>then</strong>
+            T.add_node(q_new)
+            T.add_edge(q_near, q_new)
+    <strong>return</strong> T
+</pre>
+
+📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 2 (RRT).
+</div>
+
+
+---
+
+<div class="note" markdown="1">
+<strong>Quick Fact — PRM vs. RRT</strong>  
+- **PRM** is a *multi-query* planner: expensive upfront but reusable.  
+- **RRT** is a *single-query* planner: fast but temporary.  
+PRM builds a *roadmap* of the entire space; RRT grows a *tree* from the start.
+</div>
+
 
 ---
 

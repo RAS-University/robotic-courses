@@ -227,6 +227,8 @@ MathJax.Hub.Config({
     - Unconstrained and constrained optimization
     - Numerical optimization methods
 
+---
+
 # Notations
 
 <!-- ## Mathematical notation -->
@@ -306,6 +308,7 @@ MPC has found applications in various fields, including chemical process control
 
 In control theory, we usually talk about controllers and regulators. A controller is a device or algorithm that manages the behavior of a system to achieve a desired outcome. Controllers can be simple, like a thermostat that maintains room temperature, or complex, like those used in aerospace applications to stabilize aircraft. A regulator, on the other hand, is a specific type of controller that focuses on maintaining a system's output at a desired setpoint, often by minimizing deviations from that setpoint. Regulators are commonly used in systems where stability and precision are crucial, such as in power supply systems or industrial processes.
 
+---
 
 ## 1.1: Linear Quadratic Regulator (LQR)
 
@@ -553,6 +556,8 @@ While the LQR provides an elegant and powerful solution for unconstrained linear
 
 Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporating constraints and optimizing control actions over a finite prediction horizon. MPC can handle multivariable systems, constraints, and even nonlinearity, making it a much more versatile and practical approach for modern control problems. Understanding MPC is therefore essential for advancing in control theory and tackling real-world engineering challenges.
 
+---
+
 ## 1.2: The Riccati Equation
 
 <iframe width="735" height="413"
@@ -664,6 +669,8 @@ $$
 <div class="ytb-window">
   This concludes the transcript of the video. The following section provides additional exercises and/or explanations not included in the video.
 </div>
+
+---
 
 ## 1.3: Dynamic Programming
 
@@ -802,9 +809,11 @@ V_t(x) &= x^\top P_t x
   \]
 </div>
 
+---
+
 ## 1.4: Controllability and Observability
 
-### Controllability
+**Controllability**
 
 We consider the following system 
 
@@ -854,7 +863,7 @@ The system is controllable if the controllability matrix $\mathcal{C}$ has full 
   </div>
 </div>
 
-### Observability
+**Observability**
 
 Similarly to controllability, we consider the following system
 
@@ -1043,6 +1052,11 @@ We substitute the rate laws into the material balances and specify the starting 
         # Plot the results
         plot_dynamics(T, yout, xout)
       </code></pre>
+      <div style="text-align:center; margin:1.2em 0;">
+        <a class="download-btn" href="{{ site.baseurl }}/assets/downloads/MPC/System_dynamics.py" download="System_dynamics.py" style="display:inline-block; padding:8px 12px; background:#4F3DDB; color:#fff; border-radius:6px; text-decoration:none;">
+          Download System_dynamics.py
+        </a>
+      </div>
       This gives the following result for a starting concentration of component $A_0 = 5$ (mol/L):
       <div class="images">
         <figure>
@@ -1092,6 +1106,11 @@ We substitute the rate laws into the material balances and specify the starting 
         legend('show');
         grid on;
       </code></pre>
+      <div style="text-align:center; margin:1.2em 0;">
+        <a class="download-btn" href="{{ site.baseurl }}/assets/downloads/MPC/System_dynamics.m" download="System_dynamics.m" style="display:inline-block; padding:8px 12px; background:#4F3DDB; color:#fff; border-radius:6px; text-decoration:none;">
+          Download System_dynamics.m
+        </a>
+      </div>
       This gives the following result for a starting concentration of component $A_0 = 5$ (mol/L):
       <div class="images">
         <figure>
@@ -1329,9 +1348,11 @@ The great advantage of MPC is that open-loop optimal control problems often can 
 
 In this chapter we study MPC for the case when the state is known. This case is particularly important, even though it rarely arises in practice, because important properties, such as stability and performance, may be relatively easily established.
 
+---
+
 ## 2.2: Invariant Sets
 
-### Invariance
+**Invariance**
 
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-1-positive-invariant">Definition 2.1: Positively invariant set</div>
@@ -1407,7 +1428,7 @@ The invariant set will provide a set of initial states for which the trajectorie
   must contain $\mathcal{X}^{(v)}$ for finite $v$; therefore $\mathcal{X}^{\text{MPI}}$ must be defined by \eqref{eq:mpi_set} for some finite $v$.
 </details>
 
-### Pre-Sets
+**Pre-Sets**
 
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-3-pre-set">Pre Set</div>
@@ -1485,7 +1506,7 @@ _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\te
     The algorithm generates the set sequence $\{\Omega_k\}$ satisfying $\Omega_{k+1} \subseteq \Omega_k$ for all $k \geq 0$. If the sequence converges in finite time, i.e., $\exists k^* \geq 0$ such that $\Omega_{k^*+1} = \Omega_{k^*}$, then the limit set $\mathcal{X}_{\infty} = \Omega_{k^*}$ is the maximal positively invariant set contained in $\mathbb{X}$.
 </div>
 
-### Controlled Invariance
+**Controlled Invariance**
 
 <div class="lemma-window">
   <div class="lemma-title">Control invariant set</div>
@@ -1528,6 +1549,8 @@ Where $g$ is any function.
 We can't ! We often deal with linear system for which the the dynamics are usually too complex to be able to compute those sets, and when we deal with nonlinear system dynamics, it is almost always too complex to compute those sets.
 
 That's where MPC comes into play, we will use MPC to approximate the control invariant set such that it is easier to represent and compute.
+
+---
 
 ## 2.3: Model Predictive Control
 
@@ -1697,6 +1720,8 @@ The optimal control law is therefore given by
   </figure>
 </div>
 
+---
+
 ## 2.4: Stability and Convergence
 
 <!-- ### Lyapunov analysis -->
@@ -1718,8 +1743,11 @@ The optimal control law is therefore given by
   </div>
 </div>
 
+---
 
 ## 2.5: Examples of MPC
+
+---
 
 ## Exercises
 [See notations](#notations)
@@ -1778,36 +1806,63 @@ $$
 
 </details>
 
+---
 
 # Chapter 3: Robust MPC
 [See notations](#notations)
 
+---
+
 ## 3.1: Introduction
+
+---
 
 ## 3.2: A Game Theoretic Approach
 
+---
+
 ## 3.3: Prediction Dynamics in Robust MPC
+
+---
 
 ## 3.4: Robust Min-Max MPC
 
+---
+
 ## 3.5: To go further - Tube MPC
+
+---
 
 ## Exercises
 [See notations](#notations)
+
+---
 
 # Chapter 4: Economic MPC
 [See notations](#notations)
 
+---
+
 ## Stage cost
+
+---
 
 ## Horizon
 
+---
+
 ## Economic MPC vs MPC
+
+---
 
 ## Exercises
 [See notations](#notations)
 
+---
+
 # Additional Resources
+
+---
 
 ## Credits:
 <!-- List all the sources that you used to create the page   -->

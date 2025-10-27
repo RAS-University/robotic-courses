@@ -16,3 +16,4 @@ vendor/
 
 # Ignore system files
 .DS_Store
+.vscode/

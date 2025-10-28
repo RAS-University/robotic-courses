@@ -46,8 +46,11 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 </style>
 
 # Sampling-Based Planning
+- Table of Contents
+{:toc}
 
 ---
+
 
 
 ## Books
@@ -63,6 +66,8 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 <!-- - Collision checking in robot environments -->
 
 ---
+
+
 
 # Chapter 1: Introduction
 <!-- ## The Planner's Mind - A Story of Representation -->
@@ -88,19 +93,19 @@ G = (V, E)
 \]
 
 where: <br>
-- \(V\) is a non-empty set of vertices (or nodes), and  
+- $V$ is a non-empty set of vertices (or nodes), and  
 <br>
-- \(E\) is a set of edges.
+- $E$ is a set of edges.
 <br>
-An edge \( e \in E \) is typically represented as a pair of vertices:
+An edge $ e \in E $ is typically represented as a pair of vertices:
 
 \[
 e = (u, v), \quad \text{where } u, v \in V.
 \]
 
-If edges are unordered pairs \(\{u,v\}\), the graph is undirected.  
+If edges are unordered pairs $\{u,v\}$, the graph is undirected.  
 <br>
-If edges are ordered pairs \((u,v)\), the graph is directed.
+If edges are ordered pairs $(u,v)$, the graph is directed.
 </div>
 
 
@@ -110,20 +115,20 @@ If edges are ordered pairs \((u,v)\), the graph is directed.
 
 This is a monumental leap. The robot's problem is no longer about navigating a physical space; it's about finding a path within this abstract network. This representation is the common language for nearly all planning algorithms that follow.
 
-# Chapter 2: History of Motion Planning
+# Chapter 2: History of Motion Planning[<a href="#ref1">1</a>]
 
 With our graph representation in hand, we can now explore the history of motion planning, using our maze to understand how different strategies evolved.
 
 ## The Early Days: Exhaustive Search and the Complexity Wall
 
-Early attempts at motion planning in the 1980s tried to be mathematically perfect. They involved precisely defining the robot's shape and all obstacles, a concept known as Configuration Space. While powerful, these "complete" algorithms tried to solve the problem for every possible path. For our maze, this would be like listing every single possible sequence of moves. It was quickly proven that for complex robots, this problem is NP-hard. In simple terms, this means that as the problem gets bigger, the time required to find a perfect solution explodes exponentially. Our simple maze is solvable, but a slightly larger maze or a robot with more joints would be computationally impossible to solve this way. The quest for mathematical perfection had hit a wall.
+Early attempts at motion planning in the 1980s tried to be mathematically perfect. They involved precisely defining the robot's shape and all obstacles, a concept known as Configuration Space [<a href="#ref2">2</a>]. While powerful, these "complete" algorithms tried to solve the problem for every possible path. For our maze, this would be like listing every single possible sequence of moves. It was quickly proven that for complex robots, this problem is NP-hard [<a href="#ref3">3</a>]. In simple terms, this means that as the problem gets bigger, the time required to find a perfect solution explodes exponentially. Our simple maze is solvable, but a slightly larger maze or a robot with more joints would be computationally impossible to solve this way. The quest for mathematical perfection had hit a wall.
 
 ## A Reactive Detour: Artificial Potential Fields
 
-One clever idea was to stop planning and start reacting. The Artificial Potential Fields method, popular in the late 1980s, treated the robot like a marble rolling on a contoured surface. The goal would be a low point, pulling the robot towards it, while obstacles (walls) would be high points, pushing the robot away. 
+One clever idea was to stop planning and start reacting. The Artificial Potential Fields method[<a href="#ref4">4</a>], popular in the late 1980s, treated the robot like a marble rolling on a contoured surface. The goal would be a low point, pulling the robot towards it, while obstacles (walls) would be high points, pushing the robot away. 
 
 <div class="definition">
-<strong>Definition.</strong> Formally, the total potential function \( U(q) \) is defined as:
+<strong>Definition[<a href="#ref5">5</a>].</strong> Formally, the total potential function $ U(q) $ is defined as:
 
 \[
 U(q) = U_{\text{att}}(q) + U_{\text{rep}}(q)
@@ -131,9 +136,9 @@ U(q) = U_{\text{att}}(q) + U_{\text{rep}}(q)
 
 where: <br>
 
-- \( q \in \mathbb{R}^n \) is the configuration of the robot.  <br>
-- \( U_{\text{att}}(q) \) is the attractive potential guiding the robot toward the goal.  <br>
-- \( U_{\text{rep}}(q) \) is the repulsive potential preventing collisions with obstacles. <br>
+- $ q \in \mathbb{R}^n $ is the configuration of the robot.  <br>
+- $ U_{\text{att}}(q) $ is the attractive potential guiding the robot toward the goal.  <br>
+- $ U_{\text{rep}}(q) $ is the repulsive potential preventing collisions with obstacles. <br>
 <br>
 A common formulation is:
 
@@ -150,10 +155,10 @@ U_{\text{rep}}(q) =
 \]
 
 where: <br>
-- \( \zeta \) — attractive gain,  <br>
-- \( \eta \) — repulsive gain,  <br>
-- \( d(q) \) — distance from \( q \) to the nearest obstacle,  <br>
-- \( d_0 \) — radius of influence of the obstacle. <br>
+- $ \zeta $ — attractive gain,  <br>
+- $ \eta $ — repulsive gain,  <br>
+- $ d(q) $ — distance from $ q $ to the nearest obstacle,  <br>
+- $ d_0 $ — radius of influence of the obstacle. <br>
 
 The force acting on the robot is the negative gradient of the potential:
 
@@ -192,7 +197,7 @@ The grid-based approach with Dijkstra’s algorithm feels powerful, a method tha
 Let's move from our simple 2D robot to a more realistic one, like a robotic arm used in manufacturing. A common arm might have 7 joints (7-DOF). To define the robot's complete pose, we need to know the angle of every single one of those 7 joints. This 7-dimensional space of all possible joint angles is the robot's Configuration Space (C-space). 
 
 <div class="definition">
-<strong>Definition.</strong> The <em>configuration space</em> (often abbreviated as <strong>C-space</strong>) is a mathematical space that represents all possible positions and orientations of a robot.  
+<strong>Definition[<a href="#ref2">2</a>].</strong> The <em>configuration space</em> (often abbreviated as <strong>C-space</strong>) is a mathematical space that represents all possible positions and orientations of a robot.  
 Formally, each point in the configuration space corresponds to one unique configuration of the robot in the workspace.
 
 \[
@@ -201,9 +206,9 @@ Formally, each point in the configuration space corresponds to one unique config
 
 We can partition the configuration space into two subsets:  
 <br>
-- Free space\( \mathcal{C}_{\text{free}} \): all configurations where the robot does <em>not</em> intersect any obstacle.  
+- Free space$ \mathcal{C}_{\text{free}} $: all configurations where the robot does <em>not</em> intersect any obstacle.  
 <br>
-- Obstacle space \( \mathcal{C}_{\text{obs}} \): all configurations that result in a collision with an obstacle.
+- Obstacle space $ \mathcal{C}_{\text{obs}} $: all configurations that result in a collision with an obstacle.
 
 \[
 \mathcal{C} = \mathcal{C}_{\text{free}} \cup \mathcal{C}_{\text{obs}}, 
@@ -211,7 +216,7 @@ We can partition the configuration space into two subsets:
 \]
 
 Motion planning in configuration space then becomes the problem of finding a continuous path in  
-\( \mathcal{C}_{\text{free}} \) that connects the start and goal configurations.
+$ \mathcal{C}_{\text{free}} $ that connects the start and goal configurations.
 </div>
 
 
@@ -239,7 +244,7 @@ This approach is built upon two simple but powerful components, which we will no
 
 ---
 
-## The Sampling Function: The Engine of Exploration
+## The Sampling Function: The Engine of Exploration[<a href="#ref1">1</a>], [<a href="#ref6">6</a>] 
 
 A sampling function is responsible for generating an infinite sequence of configurations:
 
@@ -416,8 +421,8 @@ By combining these two functions, one to propose potential locations and one to 
 <strong>Probabilistic Completeness</strong>.<br>
 
 <div class="definition">
-<strong>Definition.</strong>
-A randomized motion–planning algorithm is <em>probabilistically complete</em> if, whenever a valid path exists, the probability that the algorithm finds a solution approaches 1 as the number of samples (or iterations) goes to infinity. Formally, if a path exists in \( \mathcal{C}_{\text{free}} \),
+<strong>Definition[<a href="#ref7">7</a>].</strong>
+A randomized motion–planning algorithm is <em>probabilistically complete</em> if, whenever a valid path exists, the probability that the algorithm finds a solution approaches 1 as the number of samples (or iterations) goes to infinity. Formally, if a path exists in $ \mathcal{C}_{\text{free}} $,
 \[
 \lim_{n \to \infty} \Pr[\text{planner finds a path after } n \text{ samples}] = 1.
 \]
@@ -426,7 +431,7 @@ If no valid path exists, a probabilistically complete algorithm is not guarantee
 </div>
 
 <div class="definition">
-<strong>Definition.</strong>
+<strong>Definition[<a href="#ref8">8</a>].</strong>
 A sampling-based planner is <em>asymptotically optimal</em> if the cost of the best path it has found converges to the global optimum as the number of samples (or time) goes to infinity:
 \[
 \lim_{n \to \infty} c_{\text{best}}(n) = c^\star .
@@ -850,22 +855,39 @@ We’ll also discuss different variations and extensions designed to improve per
 
 # The Roadmap Approach: Probabilistic Roadmaps (PRM)
 
-The first major algorithm built on this sampling paradigm is the Probabilistic Roadmap (PRM).  
-Its philosophy is simple and powerful: *"Build a map first, then ask for directions."*  
+The first major algorithm built on this sampling paradigm is the Probabilistic Roadmap (PRM)[<a href="#ref9">9</a>].  
+Its philosophy is simple and powerful: 
+
+*"Build a map first, then ask for directions."*  
+
 This makes it a *multi-query planner*, meaning it invests time upfront to build a comprehensive roadmap of the free configuration space ($\mathcal{C}_{\text{free}}$), which can then be reused to solve many different planning problems (e.g., moving between different start and goal points) almost instantly.  
 This is ideal for static environments, like a factory floor where the obstacles don't move.
 
 ---
-
 ## Construction Phase
 
 PRM operates in two distinct phases. The first is the Construction Phase, where the map is built. This is an automated version of the exercises you just completed.  
 
-The algorithm repeatedly samples a random configuration $q_{\text{rand}}$ from the free C-space.  
-If the sample is valid, it's added as a vertex to our graph.  Then, the algorithm finds the *k-nearest neighbors* to this new vertex that are already in the graph.  
-The "nearness" is determined by a distance metric, most commonly the standard Euclidean distance. For each of these neighbors, $q_{\text{near}}$, the local planner is called to see if a straight-line connection is collision-free. If it is, a new edge is added to the graph, connecting $q_{\text{rand}}$ and $q_{\text{near}}$.  
+1. **Sample a configuration.**  
+   Draw a random configuration $ q_{\text{rand}} $ uniformly from the free configuration space (C-space).
 
-This loop continues for a set number of samples, gradually building a rich network that captures the connectivity of the robot's free space.
+2. **Validate the sample.**  
+   If $ q_{\text{rand}} $ is collision-free, add it to the roadmap as a vertex; otherwise discard it.
+
+3. **Find neighbors.**  
+   Compute the $ k $ nearest existing vertices to $ q_{\text{rand}} $ using a chosen distance metric, typically Euclidean distance.
+
+4. **Call the local planner.**  
+   For each neighbor $ q_{\text{near}} $, invoke a straight-line local planner to test whether the segment  
+   $ \overline{q_{\text{rand}} q_{\text{near}}} $ is collision-free.
+
+5. **Add edges.**  
+   If the local connection is valid, add an undirected edge between $ q_{\text{rand}} $ and $ q_{\text{near}} $.
+
+6. **Repeat.**  
+   Iterate steps 1–5 for a fixed number of samples (or until a stopping criterion is met) to  gradually build a rich network that captures the connectivity of the robot's free space.
+
+
 
 ---
 
@@ -873,14 +895,23 @@ This loop continues for a set number of samples, gradually building a rich netwo
 
 The second phase is the Query Phase.  
 Now that we have our roadmap, solving a specific problem is easy.  
-We take our start configuration $q_{\text{start}}$ and our goal $q_{\text{goal}}$, and connect them to the roadmap using the same nearest-neighbor logic.  
-Once they are part of the graph, the complex robotics problem is reduced to a simple graph search.  
-We can use Dijkstra’s algorithm to find the shortest path on the roadmap from $q_{\text{start}}$ to $q_{\text{goal}}$.  
+
+1. **Insert query configurations.**  
+   Take the start $ q_{\text{start}} $ and goal $ q_{\text{goal}} $ configurations.
+
+2. **Connect to the roadmap.**  
+   Use the same $ k $-nearest neighbor search and local planner to connect $ q_{\text{start}} $ and $ q_{\text{goal}} $  
+   to nearby roadmap vertices (adding edges where collision-free).
+
+3. **Search the graph.**  
+   Run a shortest-path algorithm (e.g., Dijkstra’s) on the augmented roadmap to find a path  
+   from $ q_{\text{start}} $ to $ q_{\text{goal}} $.
+
+4. **Extract the trajectory.**  
+   Concatenate the straight-line local-planner segments along the found graph path to obtain  
+   a feasible trajectory in configuration space (C-space).
 
 A major strength of PRM is that if we get a new query (e.g., move from $q_{\text{start}}$ to a new $q_{\text{goal}_2}$), we only need to repeat this trivial query phase, the expensive map construction is already done.  
-
-Its primary weakness, however, is in dealing with narrow passages.  
-The probability of randomly sampling a point inside a tiny, narrow corridor is extremely low, so PRM often fails to connect regions on either side of such a bottleneck unless a huge number of samples are used.
 
 <!-- ---
 
@@ -891,10 +922,18 @@ In contrast, algorithms like **RRT** are *single-query*: they focus on solving o
 </div> -->
 
 ---
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/prm.gif' | relative_url }}" 
+       alt=" PRM algorithm building a roadmap in a 2D maze." 
+       width="100%">
+  <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
+    <strong>Figure.</strong>  PRM algorithm building a roadmap in a 2D maze.
+  </figcaption>
+</figure>
 
-<!-- ![Animation: PRM algorithm building a roadmap in a 2D maze. Shows random nodes appearing, then edges connecting them, followed by the start and goal connecting to the graph, and finally the shortest path being highlighted.](image_link_here) -->
 
 ---
+
 
 <div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
 
@@ -913,23 +952,66 @@ In contrast, algorithms like **RRT** are *single-query*: they focus on solving o
     <strong>return</strong> G
 </pre>
 
-📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 1 (PRM).
+
+📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 1 (PRM)[<a href="#ref1">1</a>].
 </div>
+
+---
+
+
+![PRM: Probabilistic Roadmap Method in 3D and with 7-DOF robot arm](https://www.youtube.com/watch?v=tlFVbHENPCI&t=568s)
+><sub>*PRM: Probabilistic Roadmap Method in 3D and with 7-DOF robot arm. YouTube video, Nov 23, 2020. Available at: https://www.youtube.com/watch?v=tlFVbHENPCI&t=568s*</sub>
+
+
+
+<div class="note">
+    This video gives a hands-on tour of the Probabilistic Roadmap (PRM) planner with clear visualizations in higher-dimensional configuration spaces. You’ll see PRM building a reusable roadmap from random, collision-free samples, then connecting start/goal and searching that graph for a path. The demos progress from simple 2-link scenes to 3-link (3D C-space) and a 7-DOF arm, highlighting why PRM was created for high-dimensional robots.
+    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
+        Source: Aaron Becker - YouTube  
+        <a href="https://www.youtube.com/watch?v=tlFVbHENPCI&t=568s" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
+    </div>
+</div>
+
+
+### Takeaways
+
+- In addition to the usual *k-nearest neighbors*, the video highlights a radius-based connection rule, where nodes are linked only if they lie within a fixed spatial threshold. A larger radius increases roadmap density and shortens paths, but also raises computational cost.
+
+- The roadmap can be reused if obstacles remain static, but when they move, one must recompute collisions and rebuild edges, even if the sample points themselves are retained.
+
+- The video compares *Dijkstra’s algorithm* with *A\**:  
+  A\* expands fewer nodes when the heuristic (Euclidean distance in C-space) is informative, but behaves like Dijkstra in cluttered or poorly guided spaces.
+
+
+- Increasing the number of samples or the connection radius reduces average path length, at the expense of longer preprocessing time.
+
+- The 3D and 7-DOF scenes show how PRM approximates complex manifolds in joint space and scales gracefully without explicitly constructing obstacle regions.
+
+---
+
+### Discussion and Reflection
+
+- How should distance metrics and interpolation be adapted for *toroidal joint spaces* to avoid discontinuities?  
+- What are the trade-offs between *k-nearest* and *radius-based* connection strategies?  
+- Why is it misleading to show the full configuration-space obstacles when teaching PRM, as the video notes?    
+- Can you design an experiment to observe diminishing returns in path length improvement as sample count increases?
 
 
 ---
 
 # The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
 
-What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT) algorithm solves. Its philosophy is: *"Explore purposefully from the start."*  
+What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT) [<a href="#ref11">11</a>]algorithm solves. Its philosophy is: 
+
+*"Explore purposefully from the start."*  
+
 RRT is a **single-query planner** that grows a tree structure rooted at the start configuration, incrementally expanding into unexplored regions of the C-space until it finds the goal.
 
 ---
 
 ## Core Idea
 
-The magic of RRT lies in its unique growth heuristic.  
-The core loop is beautifully simple:
+The growth heuristic is simple and powerful:
 
 1. Sample a random configuration $q_{\text{rand}}$ from the entire C-space (note: not just the free space).  
 2. Find the node already in the tree that is nearest to this random sample — call it $q_{\text{near}}$.  
@@ -941,23 +1023,25 @@ The core loop is beautifully simple:
 
 <div class="note" markdown="1">
 <strong>Quick Fact — Voronoi Regions and Exploration Bias</strong>  
-Each node in the tree defines a Voronoi region — the set of configurations that are closer to that node than to any other.  
+Each node in the tree defines a Voronoi region[<a href="#ref10">10</a>] — the set of configurations that are closer to that node than to any other.  
 Nodes on the frontier of the tree, whose Voronoi regions are large, are statistically more likely to be chosen as $q_{\text{near}}$ for new random samples.  
 This natural bias drives the RRT to expand into large, unexplored regions — the key reason for its rapid exploration property.
+
+**Implication.** Frontier nodes keep “reaching” toward open areas, so RRT often finds a feasible path quickly, even in high-dimensional problems.
+
+**Trade-off.** The first path is usually jagged and suboptimal. In practice, RRT solutions are commonly post-processed (shortcutting, spline fitting, or RRT*) before execution.
 </div>
 
 ---
 
-This process has a fascinating emergent property:  
-nodes at the frontier of the tree tend to expand toward large, empty regions, making RRT extremely effective at finding an initial feasible path quickly, even in high-dimensional spaces.
-
-However, this speed comes at a cost — the first path found is often jagged, inefficient, and suboptimal, resembling a *“drunken sailor’s walk”* through the C-space.  
-For most practical applications, the path found by RRT must be smoothed or optimized in a post-processing step before it can be executed by a robot.
-
----
-
-<!-- ![Animation: RRT algorithm growing a tree from a start point in a 2D maze. The tree visibly expands towards random points until it connects with the goal region.](image_link_here) -->
-
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/prm.gif' | relative_url }}" 
+       alt=" PRM algorithm building a roadmap in a 2D maze." 
+       width="100%">
+  <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
+    <strong>Figure.</strong>  PRM algorithm building a roadmap in a 2D maze.
+  </figcaption>
+</figure>
 ---
 <div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
 
@@ -976,9 +1060,50 @@ For most practical applications, the path found by RRT must be smoothed or optim
     <strong>return</strong> T
 </pre>
 
-📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 2 (RRT).
+📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 2 (RRT)[<a href="#ref1">1</a>].
 </div>
 
+---
+
+![RRT, RRT* & Random Trees](https://www.youtube.com/watch?v=Ob3BIJkQJEw)
+><sub>*RRT, RRT* & Random Trees. YouTube video, Nov 21, 2018. Available at: https://www.youtube.com/watch?v=Ob3BIJkQJEw*</sub>
+
+
+
+<div class="note">
+    Provides an intuitive and animated explanation of Random Trees, RRT, and RRT\*. The video contrasts how random expansion, nearest-neighbor growth, and rewiring lead to increasingly efficient exploration and smoother paths. It also demonstrates goal bias, optimization through rewiring, and the differences between single-query (RRT) and multi-query (PRM) planning.
+    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
+        Source: Aaron Becker - YouTube  
+        <a href="https://www.youtube.com/watch?v=Ob3BIJkQJEw" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
+    </div>
+</div>
+
+---
+
+### Takeaways
+
+- A purely random tree expands from arbitrary existing nodes and often remains clustered near the start. In contrast, RRT always extends the nearest node toward a random sample, driving rapid outward exploration.
+
+
+- RRT quickly finds a feasible path, but the result is usually jagged and non-optimal.  
+  The basic RRT does not improve its path even if more nodes are added.
+
+- *RRT\* (to be covered later)*: Introduces *rewiring*, allowing the algorithm to gradually shorten and smooth the path.  
+  As more nodes are added, the solution asymptotically approaches the true optimal path.
+
+- Sampling the goal with some probability (e.g., 5–10%) helps reach the goal faster in open spaces,  
+  but excessive bias can trap the tree in local minima or concave regions.
+
+- RRT’s local, forward-projection nature makes it efficient in high-dimensional and obstacle-rich environments, unlike PRM, which must solve many global connection checks.
+
+---
+
+### Discussion and Reflections
+
+1. In what types of environments can goal bias help or hinder progress?  
+2. Why can *RRT\** improve path optimality while RRT cannot?   
+3. Compare RRT’s forward projection to PRM’s global roadmap in terms of computational trade-offs.  
+4. What post-processing methods could smooth a jagged RRT path while maintaining feasibility?
 
 ---
 
@@ -999,3 +1124,26 @@ PRM builds a *roadmap* of the entire space; RRT grows a *tree* from the start.
 
 ---
 
+## References
+
+1. <a id="ref1"></a>Orthey, A., Chamzas, C., & Kavraki, L. E. (2023). *Sampling-Based Motion Planning: A Comparative Review.* arXiv preprint arXiv:2309.13119 [cs.RO]. Available at: [https://arxiv.org/abs/2309.13119](https://arxiv.org/abs/2309.13119)
+
+2. <a id="ref2"></a>Lozano-Pérez, T., & Wesley, M. A. (1979). *An algorithm for planning collision-free paths among polyhedral obstacles.* Communications of the ACM, 22(10), 560–570.
+
+3. <a id="ref3"></a>Canny, J., & Reif, J. (1987). *New lower bound techniques for robot motion planning problems.* In *Proceedings of the 28th Annual Symposium on Foundations of Computer Science (SFCS 1987)*, pp. 49–60. IEEE.
+
+4. <a id="ref4"></a>Khatib, O. (1986). *Real-time obstacle avoidance for manipulators and mobile robots.* In *Autonomous Robot Vehicles.* Springer.
+
+5. <a id="ref5"></a>Choset, H. (with Ji Yeong Lee, G. D. Hager & Z. Dodds). (n.d.). *Robotic Motion Planning: Potential Functions.* 16-735 Robotics Institute, Carnegie Mellon University. Retrieved from https://www.cs.cmu.edu/~motionplanning/lecture/Chap4-Potential-Field_howie.pdf
+
+6. <a id="ref6"></a>LaValle, S. M. (2012). *Motion Planning for Dynamic Environments, Part II: Motion Planning – Finding the Path.* ICRA 2012 Tutorial, University of Illinois at Urbana-Champaign. Retrieved from https://msl.cs.uiuc.edu/~lavalle/ (ICRA 2012 Tutorial, May 14 2012).
+
+7. <a id="ref7"></a>LaValle, S. M. (2006). *Planning Algorithms.* Cambridge University Press. Available at: [https://lavalle.pl/planning/](https://lavalle.pl/planning/)
+
+8. <a id="ref8"></a>Karaman, S., & Frazzoli, E. (2011). *Sampling-based algorithms for optimal motion planning.* The International Journal of Robotics Research, 30(7), 846–894. DOI: [10.1177/0278364911406761](https://doi.org/10.1177/0278364911406761)
+
+9. <a id="ref9"></a>Kavraki, L. E., Švestka, P., Latombe, J.-C., & Overmars, M. H. (1996). *Probabilistic roadmaps for path planning in high-dimensional configuration spaces.* IEEE Transactions on Robotics and Automation, 12(4), 566–580. DOI: [10.1109/70.508439](https://doi.org/10.1109/70.508439)
+
+10. <a id="ref10"></a>Okabe, A., Boots, B., Sugihara, K., & Chiu, S. N. (2000). *Spatial Tessellations: Concepts and Applications of Voronoi Diagrams* (2nd ed.). Wiley.
+
+11. <a id="ref11"></a>LaValle, S. M. (1998). *Rapidly-exploring random trees: A new tool for path planning.* Technical Report TR 98-11, Computer Science Department, Iowa State University.

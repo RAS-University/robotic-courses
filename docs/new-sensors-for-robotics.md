@@ -1056,7 +1056,7 @@ $$
 
 Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene).
 
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/ICUBBALL.jpg)
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
 ><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
 
 | Aspect | Proprioceptive | Exteroceptive |
@@ -1149,13 +1149,6 @@ $$
 > If $\Delta N_r=+300$ and $\Delta N_\ell=+280$ over $\Delta t=0.02\,\text{s}$, then  
 > $\Delta s_r\approx 11.8\,\text{mm}$, $\Delta s_\ell\approx 11.0\,\text{mm}$ and $v_r\approx 0.59\,\text{m/s}$, $v_\ell\approx 0.55\,\text{m/s}$.
 
-
----
-
-#### IMU-aided odometry (strapdown inertial dead reckoning)
-{: .no_toc }
-An IMU integrates gyroscope rates to orientation and transforms triaxial accelerometer readings into the navigation frame; subtracting gravity and integrating yields velocity and position. Residual orientation error (e.g., gyro bias) corrupts gravity removal; after double integration, position error grows rapidly (typically quadratically in time under constant bias). Therefore, pure inertial odometry *drifts* and benefits from aiding (e.g., wheel odometry, zero-velocity updates, contact events). :contentReference[oaicite:5]{index=5}
-
 ---
 
 #### Calibration & error sources (typical)
@@ -1166,7 +1159,7 @@ An IMU integrates gyroscope rates to orientation and transforms triaxial acceler
 - **Backlash & compliance.** Reversals cause transient under/over-counting; mount encoders on motor vs. output shaft accordingly.  
 - **Wheel slip & terrain effects.** Slip, sinkage, uneven contact violate the no-slip model; *systematic* curvature error accumulates.  
 - **Time synchronization.** Pose errors arise if encoder/IMU samples are integrated with inconsistent time stamps.  
-- **Integration drift.** Dead reckoning accumulates error; *pose maintenance* requires fusing with external references (e.g., vision, LiDAR, GPS) or loop closures. :contentReference[oaicite:6]{index=6}
+- **Integration drift.** Dead reckoning accumulates error; *pose maintenance* requires fusing with external references (e.g., vision, LiDAR, GPS) or loop closures.
 
 **Practical calibration.**  
 Drive straight lines and circles of known radius; fit wheel scale and baseline to minimize terminal pose error. Verify with both clockwise and counterclockwise trials to separate scale vs. baseline effects.
@@ -1175,10 +1168,10 @@ Drive straight lines and circles of known radius; fit wheel scale and baseline t
 
 #### Odometry in the estimation stack
 {: .no_toc }
-Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots. :contentReference[oaicite:7]{index=7}
+Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
 
 **Key takeaway.**  
-Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance. :contentReference[oaicite:8]{index=8}
+Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance.
 
 
 ---
@@ -1294,6 +1287,10 @@ which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text
 #### Gyroscopic Systems
 
 The goal of gyroscopic systems is to measure changes in vehicle orientation by taking advantage of physical laws that produce predictable effects under rotation. Effectively they measure how fast a robot is rotating about an axis (angular rate). By **integrating** this rate, we can track changes in orientation over time. In practice, every real gyro has noise and bias, so orientation from pure integration will drift and must be calibrated and often fused with other sensors. 
+
+**How a Gyroscope Works (YouTube, 9 min).** A visual refresher on mechanical intuition:
+![How a Gyroscope Works](https://www.youtube.com/watch?v=V6XSsNAWg00).
+  ><sub>*How a Gyroscope Works. What a Gyroscope Is . YouTube video, Aug 25, 2022. Available at: https://www.youtube.com/watch?v=V6XSsNAWg00*</sub>
 
 ---
 
@@ -1476,10 +1473,6 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 <details markdown="1">
  <summary>Further exploration</summary>
 
- * **How a Gyroscope Works (YouTube, 9 min).** A visual refresher on mechanical intuition:
-![How a Gyroscope Works](https://www.youtube.com/watch?v=V6XSsNAWg00).
-  ><sub>*How a Gyroscope Works. What a Gyroscope Is . YouTube video, Aug 25, 2022. Available at: https://www.youtube.com/watch?v=V6XSsNAWg00*</sub>
-
 * **Optical gyros.** Read about the Sagnac effect and ring laser gyros on [Wikipedia – Sagnac effect](https://en.wikipedia.org/wiki/Sagnac_effect).
   
 * **MEMS gyro basics.** Short primer on tuning-fork MEMS designs: [Wikipedia – MEMS gyroscope](https://en.wikipedia.org/wiki/Microelectromechanical_systems#Sensors).
@@ -1491,10 +1484,10 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 #### Accelerometer
 {:.no_toc}
 
+Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
+
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/accel.png)
 ><sub>Accelerometers. (a) Mechanical accelerometer. (b) Piezoelectric accelerometer. Source: Springer Handbook of Robotics, Chapter 20.3</sub>
-
-Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
 
 **Physical model (spring–mass–damper).**  
 A basic accelerometer can be idealized as a proof mass $m$ attached to a spring $k$ with damping $c$; external force produces displacement $x$ measured by the readout:
@@ -1547,12 +1540,157 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 
 ---
 
-### 2.4 : Motor & Drive Sensing
-(Current, Voltage, Back-EMF)
+
+### 2.4 Force/Torque & Strain Sensing
+
+Force, torque, and strain sensing let a robot *feel its own interaction* with the world. These signals close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice we combine measurements made at different places in the chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and skin or fingertip tactiles. Each location sees a different slice of mechanics and noise, so thinking about what you need the measurement *for* is the key design step. 
 
 ---
 
-### 2.5 : Force/Torque & Strain Sensing
+#### Where to measure? From effort to contact
+
+* **Actuator effort (motor current).** For many electric drives, torque is proportional to current, $\tau \approx k_t I$. This is attractive for fast inner-loop control, but gearbox losses, friction, and compliance mean current is an imperfect proxy for *external* contact loads at the output. When you care about contact forces, it is better to measure downstream. 
+* **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at a wrist or fingertip directly measure forces and moments with good bandwidth. With known fingertip geometry you can even infer the contact point from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$ (often called *intrinsic tactile sensing*).
+
+---
+
+#### Actuator effort: motor current as a torque sensor
+
+In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor.
+
+**Core relation.**
+For a motor with torque constant $k_t$,
+$$
+\tau_m \approx k_t I \quad \text{(SI units: } k_t[\mathrm{Nm/A]} \text{).}
+$$
+With a gear ratio $g$ (output torque is $g$ times motor shaft torque) and efficiency $\eta$,
+$$
+\tau_{\text{joint}} \approx \eta g k_t I - \tau_f(\dot{q}) - J_{\text{refl}} \ddot{q},
+$$
+where $\tau_f(\dot{q})$ captures friction and cogging effects, $J_{\text{refl}}$ is reflected inertia, and $q$ is the joint angle.
+
+**Why it is popular.**
+
+* Zero added mechanics or wiring; readings arrive at **drive rates** with minimal latency.
+* Sufficient for many inner-loop controllers, collision detection, and coarse force regulation.
+
+**Implementation notes.**
+
+* **Current measurement.** Shunt resistor (precise, adds burden voltage) or Hall-effect/isolated sensors (galvanic isolation, lower insertion loss).
+* **Calibration.** Identify $k_t$ from datasheet then verify under load; characterize $\tau_f(\dot{q})$ via slow sweeps; measure $\eta$ under representative speeds/loads.
+* **Limits and pitfalls.**
+
+  * Gear friction, stiction, and cogging bias the estimate at low speeds.
+  * Thermal drift of phase resistance and $k_t$ changes the mapping over temperature.
+  * Current loops and PWM add ripple; bandwidth and filtering trade latency against noise.
+  * Backlash/compliance decouple motor torque from external interaction torque during reversals.
+
+**When to add a true torque sensor.**
+If precise low-force regulation, contact transients, or model uncertainties dominate, **joint torque sensors**, **series elastic elements**, or **wrist F/T sensors** provide more reliable interaction measurements.
+
+---
+
+#### Strain-based sensing
+
+Strain-based sensing measures tiny elastic deformations in a compliant mechanical element and infers the applied force or torque through a known stiffness model. It is the workhorse behind joint torque sensors, six-axis wrist force–torque (F/T) sensors, weigh-scale load cells, and many tactile skins.
+
+##### What is measured
+
+* **Strain** is the relative change in length, $\varepsilon = \Delta L / L$ (unitless). In metals operating in the linear elastic regime, stress $\sigma$ and strain relate by $\sigma = E \varepsilon$, where $E$ is Young’s modulus.
+* **Strain gauges** convert strain to an electrical signal. The most common are metal-foil resistive gauges; alternatives include piezoresistive silicon and piezoelectric ceramics.
+
+##### Core transducer physics
+
+* **Foil (resistive) strain gauges.** Electrical resistance $R$ changes approximately linearly with strain:
+  $$
+  \frac{\Delta R}{R} \approx \mathrm{GF},\varepsilon,
+  $$
+  where $\mathrm{GF}$ is the gauge factor (typically 2.0 for metal foil). Gauges are bonded to the elastic element with adhesive; alignment sets sensitivity to axial, bending, or torsional strain.
+* **Piezoresistive silicon.** Doped silicon has a larger effective gauge factor (10–150), enabling compact, low-noise sensors, often integrated on diaphragms or micro-flexures.
+* **Piezoelectric.** Generates charge proportional to dynamic strain. Very high bandwidth but poor at true DC; best for vibration or impact sensing (dynamic tactile).
+
+##### From strain to force/torque
+
+A compliant element (beam, ring, cross-shape, diaphragm, or torsion tube) concentrates strain where gauges are placed. With a linear elastic model,
+$$
+\mathbf{v} = \mathbf{S},\mathbf{w} + \mathbf{b},
+$$
+where $\mathbf{v}$ collects bridge voltages, $\mathbf{w} = [F_x, F_y, F_z, \tau_x, \tau_y, \tau_z]^\top$ is the wrench (forces and torques) at a reference point, $\mathbf{S}$ is the sensitivity matrix determined by geometry and gauge placement, and $\mathbf{b}$ is an offset. Calibration identifies $\mathbf{S}$ (and $\mathbf{b}$) by applying known loads and solving a linear regression; the inverse then maps voltages back to forces and torques.
+
+##### Bridge circuits and signal conditioning
+
+* **Wheatstone bridge.** Gauges are wired as quarter-, half-, or full-bridges. Full-bridges place gauges in tension and compression, doubling sensitivity and providing temperature compensation.
+* **Excitation.** Constant-voltage (e.g., $V_\mathrm{ex}=2$–10 V) is common; constant-current can reduce self-heating drift.
+* **Amplification.** Instrumentation amplifiers provide high common-mode rejection ratio (CMRR). Typical strain signals are millivolts, so gain of 100–1000 is routine.
+* **Filtering and sampling.** Anti-alias filters and low-latency digitization (16–24 bit ADCs) preserve bandwidth while controlling noise.
+* **Ratiometric readout.** Measuring $V_\mathrm{out}/V_\mathrm{ex}$ cancels excitation drift.
+
+**Back-of-the-envelope.** Quarter-bridge, 120 Ω, $\mathrm{GF}=2$, $\varepsilon=1000,\mu\varepsilon$ gives $\Delta R/R = 0.002$. Approximate bridge output $V_\mathrm{out} \approx (V_\mathrm{ex}/4)(\Delta R/R)$, so with $V_\mathrm{ex}=5$ V, $V_\mathrm{out}\approx 2.5$ mV. An instrumentation amplifier is thus required.
+
+<!-- #### Dynamic tactile sensing (catching slip and events)
+
+Dynamic touch sensors respond to rapid, small disturbances at the contact. They are invaluable for:
+
+* **Slip detection.** Incipient slip starts at the contact periphery as micro-slips that create small vibrations. High-bandwidth elements (e.g., accelerometers on the skin, PVDF piezo films, or even acoustic emissions on metal grippers) detect these before gross sliding occurs, enabling you to *raise grip force just enough*. 
+* **Texture and fine feature perception.** Lightly dragging a ridged or fibered skin over a surface turns micro-geometry into vibrations that can be analyzed for material or texture cues. 
+
+Dynamic channels are often paired with slow/steady channels (F/T or pressure) so that you get both event timing and steady load level. Practically, you must distinguish true slip/contact events from drivetrain vibrations; comparing “at-contact” vs “off-contact” sensors or using pattern recognition helps. 
+
+---
+
+#### Array sensors (from “is it touching?” to “how is it touching?”)
+
+Tactile arrays turn contact patches into spatial maps. Families differ mainly by **transduction**, **robustness**, and **integration** needs.
+
+| Family                                                     | What it measures                                     | Typical build                                           | Strengths                                                  | Trade-offs                                                                 |
+| ---------------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------- |
+| **Capacitive pressure arrays**                             | Local normal pressure via change in capacitance      | Row/column electrodes with elastomer dielectric         | Good sensitivity, low hysteresis, scalable to large skins  | Needs shielding from stray capacitance; multiplexing and wiring complexity |
+| **Piezoresistive arrays (FSR, inks, elastomers, fabrics)** | Pressure via resistance change                       | Conductive rubber or inks; sometimes woven fabrics      | Simple electronics, low cost, conformable over large areas | Drift and hysteresis; limited absolute accuracy                            |
+| **MEMS micro-arrays**                                      | Normal and sometimes shear forces                    | Silicon or hybrid flexible devices with on-chip readout | High spatial resolution, integration with local processing | Brittle if silicon-only; packaging into soft skins is non-trivial          |
+| **Optical tactiles**                                       | Skin deformation or contact location via light paths | Tiny camera + marked membrane, or LED–photodiode pairs  | Immune to EM noise; can read rich deformations             | More computation; packaging and calibration of optics                      |
+| **Skin-deflection sensors**                                | Membrane shape or impedance change                   | Fluid or gel-filled skins with internal sensing         | Compliant, robust contact; can infer contact geometry      | Need models or deconvolution to map deflection to pressure                 |
+
+Large tactile coverings increasingly integrate local MCUs for capacitance measurement and scanning to reduce wiring, often borrowing touch-screen tech. For fingertips, hybrid “multimodal” tips combine pressure, vibration, and thermal sensing for robust grasping and surface characterization. 
+
+---
+
+#### Using force and tactiles in the control stack
+
+Tactile/force information flows neatly into manipulation tasks:
+
+* **From joints and F/T to contact forces.** With joint torques $\boldsymbol{\tau}$ and Jacobian $\mathbf{J}$, the mapping $\mathbf{J}^\top \mathbf{f}=\boldsymbol{\tau}$ links external wrench $\mathbf{f}$ to measured efforts. Wrist or fingertip F/T sensors give $\mathbf{f}$ directly and with better signal-to-noise for fast contact transients. Pair with geometry to localize contacts. 
+* **From arrays to distributed contact.** Sub-surface sensing blurs sharp pressure peaks. Simple elasticity models or deconvolution reconstruct approximate surface pressure and shear from the measured strains or deflections so controllers can react to not just *how much* but *where*. 
+* **Event channels.** Dynamic tactiles flag first touch, incipient slip, or impact, letting the controller switch modes or adjust gains quickly. 
+
+---
+
+#### Practical selection and integration notes
+
+* **Match sensor location to the job.** Inner torque loop: motor current. Grasp and contact regulation: wrist/fingertip F/T. Exploring shape or monitoring slip: add tactile arrays and dynamic channels. 
+* **Bandwidth and latency.** Choose bandwidth high enough to catch slip onset and contact transitions. Beware heavy filtering that adds delay.
+* **Mechanical design matters.** Flexure-based F/T sensors need stiffness without saturating; fingertip skins need compliance and friction for stable grasps. Mount rigidly and protect cables. 
+* **Calibration and drift.** Piezoresistive skins drift and show hysteresis; capacitives need shielding; optical tactiles need periodic reference frames. Temperature compensation helps across all types. 
+* **Wiring and modularity.** Dense arrays benefit from local scanning and digital buses to reduce harness bulk. Consider modular tiles with onboard microcontrollers. 
+
+**Key takeaway.** Effort, F/T, and tactile sensing are complementary. Use the simplest sensor that gives the information you actually need, and place it as *close to the contact* as practicality and robustness allow.
+
+---
+
+#### Conceptual questions
+
+1. What are two reasons motor current is often a poor *contact* force estimate at the end effector?
+2. Why are dynamic tactile sensors well suited to detecting *incipient* slip rather than only gross sliding?
+3. What key advantage do capacitive tactile arrays have over piezoresistive arrays, and what common challenge do they introduce?
+4. How can a wrist or fingertip F/T sensor plus fingertip geometry estimate the contact point without a tactile array?
+5. In a fingertip skin that senses sub-surface strain, why is deconvolution or a mechanical model needed to estimate surface pressure?
+
+---
+
+#### Further exploration (free resources)
+
+* Overview of tactile sensing in robotics: [Wikipedia – Tactile sensor](https://en.wikipedia.org/wiki/Tactile_sensor)
+* Manipulation and contact models: [MIT OCW – Underactuated Robotics (contact & manipulation lectures)](https://ocw.mit.edu)
+* Slip detection intuition: short demo talks on PVDF and accelerometer-based tactiles (search on YouTube for “robotic slip detection PVDF”). -->
 
 
 ---

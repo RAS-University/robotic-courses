@@ -55,9 +55,6 @@ This page does not require any specific prerequisite, outside knowing what a rob
 
 From collaborative factory arms to drones and humanoids, every robot relies on **sensing** to perceive their environment and to control their own actions. **Sensors** can acquire and process information from a variety of sources, from recording motor displacement, to detecting light, sound and force. They convert this information into (usually) digital signals that a computer can then further process and analyse. 
 
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/ICUBBALL.jpg)
-><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
-
 Regardless of the task, meaningful robot actions begin with accurate perception of both the robot’s own state and its surroundings. Without reliable sensory feedback, the most sophisticated control algorithm degenerates into blind open-loop commands. Conversely, well-designed sensing turns a simple robotic platform into a **situationally aware** agent that can:
 
 - **Estimate its own state (proprioception)** – joint encoders, IMUs and force sensors provide the data to infer pose, velocities and loads, yielding an internal state estimate that closes the control loop.  
@@ -66,6 +63,8 @@ Regardless of the task, meaningful robot actions begin with accurate perception 
 - **Share information with higher-level reasoning** – mapping, planning and learning modules all begin with raw observations turned into meaningful features.  
 
 Early robotics tried to side-step sensing by assuming perfectly known environments. Modern applications, from warehouse fulfilment to planetary exploration, demonstrate that **autonomy becomes feasible only when perception, estimation and control form a tight feedback cycle**.
+
+---
 
 <details markdown="1">
   <summary>Conceptual Questions</summary>
@@ -136,6 +135,8 @@ Early robotics tried to side-step sensing by assuming perfectly known environmen
 
 </details>
 
+---
+
 Here are two examples of usage of sensors for state of the art robots. 
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/wamsensors.png)
@@ -143,8 +144,12 @@ Here are two examples of usage of sensors for state of the art robots.
 
 An industrial robot arm tasked to manover a shovel must be endowed with motor encoders for accurate positioning and orienting of the shovel, force/toque sensors at its end-effect to sense and react to change in the stiffness of the material, and tactile sensors at its fingertip to guarantee tight grip on the shovel.
 
+<!-- ![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
+><sub>Examples of sensors mounted on a humanoid robot; Credit: EPFL/LASA Laboratory</sub> -->
+
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
-><sub>Examples of sensors mounted on a humanoid robot; Credit: EPFL/LASA Laboratory</sub>
+><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
+
 
 A humanoid robot may be tasked to interact with its environment in more ways than would an industrial robot. In addition to motor encoders, force/torque and tactile sensors, it needs an IMU to measure its global orientation in space. Cameras and microphones are, on the other hand, crucial to allow the robot to interact in human-inhabited environments. 
 
@@ -1106,7 +1111,7 @@ V=\tfrac{1}{2}(v_{r}+v_{\ell}), \qquad
 R=\frac{V}{\omega}=\frac{b}{2}\,\frac{v_{r}+v_{\ell}}{\,v_{r}-v_{\ell}\,}.
 $$
 
-Now as $v_{r}, v_{\ell}$ are functions of time we can generate a set of equations of motion for the differential drive robot. Using the point midway between the wheels as the origin of the robot, and writing $/omega$ as the orientation of the robot with respect to the x-axis of a global Cartesian coordinate system, one obtains
+Now as $v_{r}, v_{\ell}$ are functions of time we can generate a set of equations of motion for the differential drive robot. Using the point midway between the wheels as the origin of the robot, and writing $\omega$ as the orientation of the robot with respect to the x-axis of a global Cartesian coordinate system, one obtains
 
 $$
 x(t) = \int V(t)\cos(\theta(t))\,dt, \qquad
@@ -1288,19 +1293,198 @@ which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text
 
 #### Gyroscopic Systems
 
+The goal of gyroscopic systems is to measure changes in vehicle orientation by taking advantage of physical laws that produce predictable effects under rotation. Effectively they measure how fast a robot is rotating about an axis (angular rate). By **integrating** this rate, we can track changes in orientation over time. In practice, every real gyro has noise and bias, so orientation from pure integration will drift and must be calibrated and often fused with other sensors. 
+
+---
+
+### Main classes of gyroscopes
+
+#### 1) Mechanical gyroscopes and gyrocompasses
+
+* **Principle.** Gyroscopes and gyrocompasses rely on the principle of the  **conservation of angular momentum** $L=I\omega$. Angular momentum is the tendency of a rotating object to keep rotating at the same angular speed about the same axis of rotation in the absence of an external torque. A rapidly spinning rotor maintains its orientation; torques cause **precession** perpendicular to both spin and applied torque. Classical **gyrocompasses** exploit precession with a pendulous weight and damping so the spin axis aligns with true north in the Earth frame. 
+* **Notes for robots.** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/gyrocompas.png)
+><sub>Simple gyrocompass. (a) Pendulus gyro. (b) Precessional motion. Source: Springer Handbook of Robotics, Chapter 20.1</sub>
+
+#### 2) Optical gyroscopes: RLG and FOG
+
+* **Principle (Sagnac effect).** Send light both ways around a closed loop (see Fig below) of length $D=2\pi R$. If the loop is stationary, both pulses traverse the same distance at speed $c$ and arrive together after
+$$
+t = \frac{D}{c} = \frac{2\pi R}{c}.
+$$
+Now suppose the loop rotates clockwise at angular speed $\omega$. The clockwise pulse must travel farther to “catch” the moving end point, while the counterclockwise pulse travels a shorter distance.
+
+**Distances while the loop rotates.**
+
+* Clockwise path length: $D_c = 2\pi R + \omega R t_c$
+* Counterclockwise path length: $D_a = 2\pi R - \omega R t_a$
+
+Because speed is $c$ for both beams,
+$$
+c,t_c = D_c \Rightarrow t_c=\frac{2\pi R}{c-\omega R},\qquad
+c,t_a = D_a \Rightarrow t_a=\frac{2\pi R}{c+\omega R}.
+$$
+
+**Time difference (Sagnac delay).**
+$$
+\Delta t \equiv t_c - t_a
+= 2\pi R\left(\frac{1}{c-\omega R}-\frac{1}{c+\omega R}\right).
+$$
+
+This $\Delta t$ is what RLGs and FOGs convert into a measurable phase or frequency shift to estimate the rotation rate $\omega$. 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/opti-gyro-schematic.png)
+><sub>Circular light path. (a) Stationary path. (b) Moving path. Source: Springer Handbook of Robotics, Chapter 20.2.3</sub>
+
+Fiber-optic gyros (FOG) use long polarization-maintaining fiber loops; ring-laser gyros (RLG) use a laser cavity and measure the beat frequency between the two standing waves. Small rotations can cause **lock-in** in RLGs, mitigated by controlled dithering. Optical gyros are accurate, with no spinning mass. 
+
+#### 3) MEMS (micro-electromechanical) gyroscopes
+
+* **Principle (Coriolis).** A vibrating proof mass with velocity $\mathbf{v}$ inside a frame rotating at rate $\boldsymbol{\Omega}$ experiences **Coriolis acceleration**. Coriolis acceleration is the apparent acceleration that arises in a rotating frame of references. Suppose that an object moves along a straight line in a rotating frame of reference. To an outside observer in an inertial frame the object’s path is curved, thus there must be some force acting on the object to maintain the straight line motion as viewed by the rotating observer. An object moving in a straight line with local velocity $\mathbf{v}$ in a frame rotating at rate $\boldsymbol{\Omega}$ relative to an inertial frame will experience a Coriolis acceleration given by : 
+  $$
+  \mathbf{a}_{\text{Coriolis}} = 2\mathbf{v}\times \boldsymbol{\Omega}.
+  $$
+  By driving a known vibration and sensing the orthogonal motion induced by Coriolis forces, the device estimates angular rate. Common structures: **tuning-fork**, **vibrating-wheel**, and **wine-glass resonators**. Compact, low-power, and inexpensive, MEMS gyros dominate robotics platforms. 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/mems_gyroscope.png)
+><sub>MEMS gyroscope: principle of operation. Source: Springer Handbook of Robotics, Chapter 20.2.3</sub>
+
+Wine-glass resonator gyroscopes use the effect of Coriolis forces on the position of nodal points on a resonating structure to estimate the external rotation. As MEMS gyroscopes have no rotating parts, have low-power consumption requirements, and are very mall, MEMS gyros are quickly replacing mechanical and optical gyroscope sensors in robotic applications.
+
+---
+
+### What gyros actually deliver
+
+* **Rate gyros (RG).** Output angular **rate** $\dot{\theta}$ directly.
+* **Rate-integrating gyros (RIG).** Internally integrate to report **angle**, though most robotic pipelines still integrate rate in software to keep timing consistent with other sensors. 
+
+**Why fusion is essential.**
+All gyros exhibit **drift** due to bias and noise. Drift causes orientation error; in an IMU this misorients gravity removal for accelerometers, so residual gravity integrates to large position error over time. Robots therefore combine gyro data with other references (accelerometers, magnetometers, GPS, vision) using filters or factor graphs. 
+
+---
+
+### Important Performance metrics of Inertial measurement units
+
+* **Bias repeatability / stability.** How much the zero-rate output wanders over time at constant conditions; dominates long-term drift. 
+* **Angle Random Walk (ARW).** Noise-induced angle error growth when integrating rate; sets short-term orientation precision. 
+* **Scale factor.** Mapping from physical rate to volts or counts (e.g., mV per deg/s); errors here scale the estimate. 
+
+---
+
+### Practical selection and integration tips
+
+* **Match range and bandwidth to dynamics.** Choose full-scale so saturation is unlikely during worst maneuvers, and pick bandwidth high enough for control needs without excessive noise or latency.
+* **Mounting and alignment.** Keep axes orthogonal, rigidly mount near the robot’s center to reduce vibration coupling, and include axis misalignment in calibration.
+* **Bias handling.** Estimate bias at startup while the robot is still; track slowly varying bias in your estimator during operation.
+* **Thermal behavior.** Expect temperature-dependent bias and scale factors; if possible, calibrate across temperature.
+* **Triads and IMUs.** Three orthogonal gyros are ganged for full 3-D rotation; in practice they live with accelerometers in an IMU. 
+
+---
 
 <details markdown="1">
- <summary>Video</summary>
+  <summary>Conceptual Questions</summary>
 
-  This short video explains how a Gyroscope works.
+<!-- Question 1 -->
 
-  ![](https://www.youtube.com/watch?v=V6XSsNAWg00)
-  ><sub>*How a Gyroscope Works. What a Gyroscope Is . YouTube video, Aug 25, 2022. Available at: https://www.youtube.com/watch?v=V6XSsNAWg00*</sub>
+<p><strong>Question 1: Why does integrating gyro rate to get orientation drift over time?</strong></p>
+<form id="ch2-3-q1">
+  <input type="radio" name="ch2-3-q1" value="A"> Small bias and noise in the rate estimate accumulate when integrated<br>
+  <input type="radio" name="ch2-3-q1" value="B"> Magnetometers directly disturb the gyro reading<br>
+  <input type="radio" name="ch2-3-q1" value="C"> Higher sampling rate always causes more drift<br>
+  <input type="radio" name="ch2-3-q1" value="D"> Drift only happens if the robot is moving quickly<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q1', 'A',
+      '✅ Correct! Bias and noise in the rate integrate into angle error (drift).',
+      '❌ Try again. ')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q1-feedback"></p>
+</form>
 
+<!-- Question 2 -->
 
+<p><strong>Question 2: What physical principle do MEMS gyroscopes use to sense rotation?</strong></p>
+<form id="ch2-3-q2">
+  <input type="radio" name="ch2-3-q2" value="A"> Coriolis forces on a vibrating proof mass<br>
+  <input type="radio" name="ch2-3-q2" value="B"> Doppler shift of light in a fiber loop<br>
+  <input type="radio" name="ch2-3-q2" value="C"> Conservation of linear momentum in a sliding mass<br>
+  <input type="radio" name="ch2-3-q2" value="D"> Thermal expansion of a silicon beam<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q2', 'A',
+      '✅ Correct! Rotation couples energy into the orthogonal sense axis via Coriolis force.',
+      '❌ Try again.')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q2-feedback"></p>
+</form>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: The Sagnac effect used in optical gyros (FOG/RLG) is best described as:</strong></p>
+<form id="ch2-3-q3">
+  <input type="radio" name="ch2-3-q3" value="A"> A magnetic torque aligning the laser cavity with Earth’s field<br>
+  <input type="radio" name="ch2-3-q3" value="B"> A difference in light path time/phase for counter-propagating beams in a rotating loop<br>
+  <input type="radio" name="ch2-3-q3" value="C"> A thermal delay between clockwise and counterclockwise beams<br>
+  <input type="radio" name="ch2-3-q3" value="D"> A piezoelectric effect in the fiber under strain<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q3', 'B',
+      '✅ Correct! Rotation changes the effective path length, creating a measurable phase or frequency shift.',
+      '❌ Try again.')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q3-feedback"></p>
+</form>
+
+<!-- Question 4 -->
+
+<p><strong>Question 4: Which spec mainly limits short-term orientation precision when integrating gyro rate?</strong></p>
+<form id="ch2-3-q4">
+  <input type="radio" name="ch2-3-q4" value="A"> Angle Random Walk (ARW)<br>
+  <input type="radio" name="ch2-3-q4" value="B"> Long-term bias stability only<br>
+  <input type="radio" name="ch2-3-q4" value="C"> Scale-factor linearity at full temperature range<br>
+  <input type="radio" name="ch2-3-q4" value="D"> Maximum measurable rate (full-scale)<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q4', 'A',
+      '✅ Correct! ARW characterizes noise that integrates into short-term angle uncertainty.',
+      '❌ Try again.')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q4-feedback"></p>
+</form>
+
+<!-- Question 5 -->
+
+<p><strong>Question 5: What is a good practice to reduce orientation drift in an IMU-based estimator?</strong></p>
+<form id="ch2-3-q5">
+  <input type="radio" name="ch2-3-q5" value="A"> Rely only on double-integrated accelerometer data<br>
+  <input type="radio" name="ch2-3-q5" value="B"> Mount the IMU far from the center to increase sensed vibration<br>
+  <input type="radio" name="ch2-3-q5" value="C"> Maximize bandwidth regardless of noise<br>
+  <input type="radio" name="ch2-3-q5" value="D"> Fuse gyro with accelerometer/magnetometer (e.g., complementary/Kalman filter) and estimate bias<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q5', 'D',
+      '✅ Correct! Sensor fusion with bias estimation constrains drift using gravity and heading references.',
+      '❌ Try again.')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q5-feedback"></p>
+</form>
 </details>
 
+---
 
+<details markdown="1">
+ <summary>Further exploration</summary>
+
+ * **How a Gyroscope Works (YouTube, 9 min).** A visual refresher on mechanical intuition:
+![How a Gyroscope Works](https://www.youtube.com/watch?v=V6XSsNAWg00).
+  ><sub>*How a Gyroscope Works. What a Gyroscope Is . YouTube video, Aug 25, 2022. Available at: https://www.youtube.com/watch?v=V6XSsNAWg00*</sub>
+
+* **Optical gyros.** Read about the Sagnac effect and ring laser gyros on [Wikipedia – Sagnac effect](https://en.wikipedia.org/wiki/Sagnac_effect).
+  
+* **MEMS gyro basics.** Short primer on tuning-fork MEMS designs: [Wikipedia – MEMS gyroscope](https://en.wikipedia.org/wiki/Microelectromechanical_systems#Sensors).
+
+</details>
 
 ---
 

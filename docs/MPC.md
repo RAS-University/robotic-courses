@@ -630,12 +630,20 @@ Where $p(t)$ is the position of the block, $\dot{p}(t)$ is the velocity and $\dd
 
 Let define the state and control vectors as:
 $$
-x(t) = \begin{bmatrix} p(t) \\\\ dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
+x(t) = \begin{bmatrix} p(t) \\\\ \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
 $$
+With:
+- $x(t) \in \mathbb{R}^2$ because there are **two states**: position and velocity.  
+- $u(t) \in \mathbb{R}^1$ because there is a **single control input**, the force $F(t)$.
+
 We can rewrite the dynamics in state-space form as:
 $$
-\dot{x}(t) = \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{c}{m} \end{bmatrix} x(t) + \begin{bmatrix} 0 \\\\ \frac{1}{m} \end{bmatrix} u(t)
+\dot{x}(t) = Ax+Bu= \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{c}{m} \end{bmatrix} x(t) + \begin{bmatrix} 0 \\\\ \frac{1}{m} \end{bmatrix} u(t)
 $$
+With:
+- $A$ is $2\times 2$ because it maps a 2-dimensional state to a 2-dimensional derivative.  
+- $B$ is $2\times 1$ because it maps a single input to the 2-dimensional state derivative.
+
 Let's choose some numerical values for the parameters: $m = 1$ and $c = 0.2$. Thus the matrices $A$ and $B$ are given by:
 $$
 A = \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{1}{5} \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\\\ 1 \end{bmatrix}
@@ -646,6 +654,10 @@ In step two, we need to define the cost function weights $Q$ and $R$. Let's choo
 $$
 Q = \begin{bmatrix} 1 & 0 \\\\ 0 & 1 \end{bmatrix}, \quad R = \begin{bmatrix} 0.01 \end{bmatrix}
 $$
+With:
+- $Q$ must be $2 \times 2$ to match the 2-dimensional state vector $x(t)$.  
+- $R$ must be $1 \times 1$ to match the 1-dimensional control vector $u(t)$.
+
 For the sake of this example we choose $Q$ as the identity matrix, meaning that we care equally about both states being zero. We choose $R$ to be a small value, meaning that we are willing to use a lot of control input to bring the states back to zero. We will later solve problems with matrices that are not identities.
 
 The next step is to solve the Riccati equation \eqref{eq:riccati} for $S$. This can be done using numerical methods or software tools like MATLAB, Python, etc. For this example, let's use Mathematica in order to solve the Riccati equation.

@@ -368,8 +368,9 @@ The following Veritasium video provides an intuitive introduction to **chaos and
 
 ## Exercises
 
-** 1.1:**
-consider the following system:
+**1.1: System analysis**
+
+Consider the following system:
 $$
 \dot{x} = \begin{bmatrix} 4 & -1 \\ 16 & -4 \end{bmatrix} x + \begin{bmatrix} 2 \\ 5 \end{bmatrix} u
 $$
@@ -386,6 +387,8 @@ $$
   \begin{align}
 
   \end{align}
+  </div>
+</details>
 
 
 ---

@@ -630,7 +630,7 @@ Where $p(t)$ is the position of the block, $\dot{p}(t)$ is the velocity and $\dd
 
 Let define the state and control vectors as:
 $$
-x(t) = \begin{bmatrix} p(t) \\\\ v(t) \text{ or } \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
+x(t) = \begin{bmatrix} p(t) \\\\ dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
 $$
 We can rewrite the dynamics in state-space form as:
 $$

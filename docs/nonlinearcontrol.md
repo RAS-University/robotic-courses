@@ -198,45 +198,65 @@ function showTab(idx, windowId) {
   - Controllability/observability
 
 ---
-
 # Motivation
 
-The subject of nonlinear control deals with the analysis and design of control systems that exhibit nonlinear behavior, i.e., a control system in which one or more components are nonlinear. In the analysis of nonlinear control systems, we study the stability, controllability, and observability of these systems using various mathematical tools and techniques.
+The study of **nonlinear control** focuses on the analysis and design of control systems that exhibit nonlinear behavior, that is, systems in which one or more components do not obey the principle of superposition. In such systems, the relationship between input and output is not simply proportional, and as a result, linear control theory no longer provides accurate predictions or guarantees of stability.
 
-One can wonder why nonlinear control is necessary when linear control techniques are well-established and widely used. Many reasons justify the need for nonlinear control:
-- Improvement of performances: Linear control systems operate in a narrow range around an equilibrium point, when the range of control need to be extended, linear controllers fails to provide the desired performance. Nonlinear control techniques can be used to design controllers that can operate over a wider range of operating conditions, leading to improved performance.
-- Hard nonlinearity: Many real-world systems exhibit hard nonlinearity, such as saturation, dead zones, and hysteresis, which cannot be adequately modeled using linear control techniques. Nonlinear control techniques can be used to design controllers that can handle these hard nonlinearity effectively.
-- Model uncertainties: many control problems involve uncertainties in the model parameters. A linear controller based on an inaccurate model may lead to poor performance or instability. Nonlinear control techniques can be used to design controllers that are robust to model uncertainties, leading to improved performance and stability.
+In the analysis of nonlinear control systems, our primary objectives are to understand **stability**, **controllability**, and **observability**, and to design control laws that ensure the desired behavior of the system under nonlinear dynamics.
 
-The subject of nonlinear control is an important area of research in control theory. It has applications in various fields, including robotics, aerospace, automotive systems, and process control. Nonlinear control techniques are used to design controllers for complex systems that exhibit nonlinear behavior, leading to improved performance, stability, and robustness. 
+One might naturally ask: *why do we need nonlinear control when linear control techniques are already well-established and widely used?*  
+The answer lies in the limitations of linear methods and the complexity of real-world systems. Several key motivations justify the need for nonlinear control:
+
+- **Improved performance:**  
+  Linear control systems are typically designed to work around a small neighborhood of an equilibrium point. When the operating range of the system extends beyond this region, linear approximations lose accuracy, and performance can degrade significantly. Nonlinear control techniques allow us to design controllers that maintain high performance over a **wide range of operating conditions**.
+
+- **Handling hard nonlinearities:**  
+  Many physical systems display *hard nonlinearities*, such as **saturation**, **dead zones**, or **hysteresis**, which cannot be captured by linear models. Nonlinear control strategies provide tools to **explicitly model and compensate** for such behaviors, ensuring accurate and stable operation even when linearization fails.
+
+- **Dealing with model uncertainties:**  
+  In practice, system parameters are rarely known exactly. A linear controller designed for an idealized model may perform poorly or even cause instability if the real system deviates from that model. Nonlinear control methods, on the other hand, can be made **robust to model uncertainties** and **parameter variations**, leading to improved stability and reliability.
+
+Nonlinear control is, therefore, an essential field within modern control theory. Its techniques find applications in **robotics**, **aerospace systems**, **automotive control**, **power electronics**, and **process engineering** — wherever system dynamics deviate from linearity.  
+By embracing the nonlinear nature of these systems, engineers and researchers can design controllers that are more **accurate, robust, and efficient**, ultimately extending the reach of control theory to a much broader class of real-world problems.
 
 ---
 
 # Chapter 1: System Definitions
 
+Before diving into nonlinear control, it is essential to establish a clear understanding of the basic notions of **system behavior**, particularly the distinction between **linear** and **nonlinear** systems.  
+This chapter introduces the fundamental definitions and mathematical principles that form the foundation of system analysis.
+
+---
+
 ## 1.1: Superposition Principle
 
-A linear system with an output $u$ and an input $y$ follow the superposition principle.
+A **linear system** is one in which the relationship between the input signal $u(t)$ and the output signal $y(t)$ satisfies the **principle of superposition**. This property implies that the response to a combination of inputs is equal to the combination of the corresponding individual responses.
 
 <div class="lemma-window">
-  <div class="lemma-title" id="def_1.1">Definition 1.1 - Superposition principle</div>
+  <div class="lemma-title" id="def_1.1">Definition 1.1 — Superposition Principle</div>
   <div style="padding: 1.5em;">
-  Consider two input signals, $u_1$ and $u_2$, creating the output signals $y_1$ and $y_2$. The system's response to the sum of the inputs $u=u_1+u_2$ is the sum of the individual responses, i.e. $y=y_1+y_2$.
-  </div>
-</div> 
-
-This definition leads to the following characteristic: if the input signal is amplified by a factor of $\alpha$, the output will be amplified by the same factor $\alpha$. In mathematical terms, if the output of the system is $y$ for an input $u$, the if the input becomes $\alpha u$ the output will be $\alpha y$.
-
-A linear system is thus simply defined as: 
-
-<div class="lemma-window">
-  <div class="lemma-title" id="def_1.2">Definition 1.2 - Linear system</div>
-  <div style="padding: 1.5em;">
-  All systems that satisfy the superposition principle is a linear system
+  Consider two input signals \( u_1(t) \) and \( u_2(t) \), producing the corresponding outputs \( y_1(t) \) and \( y_2(t) \).  
+  The system satisfies the superposition principle if the response to the sum of the inputs \( u(t) = u_1(t) + u_2(t) \) is the sum of the individual responses:
+  \[
+  y(t) = y_1(t) + y_2(t)
+  \]
   </div>
 </div>
 
-Subsequently, every system that do not satisfy the superposition theorem is a nonlinear system, which is the focus of this lecture.
+An immediate consequence of this definition is **homogeneity**: if the input signal is scaled by a constant factor $\alpha$, the output scales by the same factor.  
+In other words, if an input $u(t)$ produces an output $y(t)$, then applying $\alpha u(t)$ yields an output $\alpha y(t)$.
+
+This leads to the general definition of a linear system:
+
+<div class="lemma-window">
+  <div class="lemma-title" id="def_1.2">Definition 1.2 — Linear System</div>
+  <div style="padding: 1.5em;">
+  A system is said to be <strong>linear</strong> if and only if it satisfies both the properties of <strong>additivity</strong> and <strong>homogeneity</strong>, i.e., if it obeys the superposition principle.
+  </div>
+</div>
+
+Any system that **does not** satisfy the superposition principle is termed a **nonlinear system**.  
+Such systems cannot be analyzed using the tools of linear system theory and form the primary focus of this lecture series on **nonlinear control**.
 
 ---
 
@@ -244,63 +264,66 @@ Subsequently, every system that do not satisfy the superposition theorem is a no
 
 Nonlinearities can be classified in two categories, *inherent (natural)* or *intentional (artificial)*.
 
-Inherent nonlinearity naturally comes from the system hardware and motion. To cite a few as an example, there is the centripetal forces, or the Coulomb interaction forces. Usually, those nonlinearities are undesirable and control system have to properly compensate for them. Intentional nonlinearities, on the other hand, are artificially introduces by the designer in the system. 
+**Inherent nonlinearity** naturally comes from the system hardware and motion. To cite a few as an example, there is the centripetal forces, or the Coulomb interaction forces. Usually, those nonlinearities are undesirable and control system have to properly compensate for them. **Intentional nonlinearities**, on the other hand, are artificially introduces by the designer in the system. 
 
-Nonlinearities can also be classified mathematically, as *continuous* or *discontinuous*. Because of their discontinuous nature, discontinuous nonlinearities are often referred as *hard nonlinearities*, while continuous nonlinearities are called *soft nonlinearities*. Examples of hard nonlinearities include saturation, dead zones, and backlash, it can appear in both small and large range operation systems.
+Nonlinearities can also be classified mathematically, as **continuous** or **discontinuous**. Because of their discontinuous nature, discontinuous nonlinearities are often referred as *hard nonlinearities*, while continuous nonlinearities are called *soft nonlinearities*. Examples of hard nonlinearities include saturation, dead zones, and backlash, it can appear in both small and large range operation systems.
 
 ---
 
-## 1.3: Non Symmetrical Unit Response
+## 1.3: Non-Symmetrical Unit Response
 
-Consider the simple linear system defined by the differential equation:
+To better illustrate the fundamental difference between linear and nonlinear systems, let us compare their responses to simple step inputs.
+
+Consider first the linear system defined by the differential equation:
 
 $$
 \dot{x} = -x + u
 $$
 
-When applying a step input of amplitude 1, the system will respond as shown in the blue dashed curve in [Figure 1.1](#fig_1.1_asymmetrical_response). If we now apply a step input of amplitude -1, the system will respond symmetrically, as shown by the blue dashed curve in [Figure 1.1](#fig_1.1_asymmetrical_response).
+When a unit step input of amplitude $+1$ is applied, the system exhibits an exponential response that gradually converges to the steady-state value $x = 1$.  If we now apply a step input of amplitude $-1$, the response will be perfectly symmetrical, converging to $x = -1$ with the same rate of decay. This symmetric behavior, shown by the **blue dashed curves** in [Figure 1.1](#fig_1.1_asymmetrical_response), is a direct consequence of the system’s **linearity**. In linear systems, the response to $-u$ is simply the negative of the response to $u$.
 
-Now consider the nonlinear system defined by the differential equation:
+Now, consider the **nonlinear** system described by:
 
 $$
 \dot{x} = -\|x\|x + u
 $$
 
-When applying a step input of amplitude 1, the system will respond as shown in the red solid curve in [Figure 1.1](#fig_1.1_asymmetrical_response). If we now apply a step input of amplitude -1, the system will respond asymmetrically, as shown by the red solid curve in [Figure 1.1](#fig_1.1_asymmetrical_response).
+Here, the term $-\|x\|x$ introduces a **state-dependent damping**, which makes the dynamics nonlinear. When a step input of amplitude $+1$ is applied, the system follows the **red solid curve** in [Figure 1.1](#fig_1.1_asymmetrical_response). However, when the input is switched to $-1$, the response is no longer symmetric, the convergence rate and steady-state behavior differ from the positive case. This **asymmetry** highlights a key characteristic of nonlinear systems: *the principle of superposition no longer holds*, and the system’s response depends on the **magnitude and sign** of the input.
 
-<div class="images">
+<div class="images" style="justify-content:center; text-align:center;">
   <figure id="fig_1.1_asymmetrical_response">
     <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch1_asymmetrical_response.png" alt="Step Response" width="700"/>
-    <figcaption style="text-align: center;"><strong>Figure 1.1:</strong> Step response of a linear system (blue dashed curve) and a nonlinear system (red curve)</figcaption>
+    <figcaption style="text-align: center;"><strong>Figure 1.1:</strong> Step responses of a linear system (blue dashed curve) and a nonlinear system (red solid curve)</figcaption>
   </figure>
 </div>
+
+This simple comparison demonstrates how nonlinearity can lead to qualitative differences in system behavior, even for simple inputs, and motivates the need for dedicated analysis and control methods beyond the linear framework.
 
 ---
 
 ## 1.4: Multiple Equilibrium Points
 
-Nonlinear systems can exhibit multiple equilibrium points, which are points where the system's state does not change over time. This is in contrast to linear systems, which typically have a single equilibrium point. One classic example of a nonlinear system with multiple equilibrium points is systems with higher order polynomial nonlinearities, such as the cubic nonlinearity.
+Nonlinear systems can exhibit **multiple equilibrium points**, which are states where the system remains constant over time. This is in contrast to typical linear systems, which usually have a single equilibrium point. A classical example is a system with a **cubic nonlinearity**:
 
 $$
 \dot{x} = - x + x^2
 $$
 
-We consider several initial conditions and simulate the system dynamics. The results are shown in [Figure 1.2](#fig_1.2_multiple_eq_pts).
+Simulating the system for several initial conditions produces the trajectories shown in [Figure 1.2](#fig_1.2_multiple_eq_pts).
 
 <div class="images">
   <figure id="fig_1.2_multiple_eq_pts">
     <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch1_multiple_eq_pts.png" alt="Multiple equilibrium points" width="700"/>
-    <figcaption style="text-align: center;"><strong>Figure 1.2:</strong> Solutions of $\dot{x}=-x+x^2$ with initial conditions $x_0= ±0.2, ±0.4, ±0.6, ±0.8, ±1.01, ±1.1$</figcaption>
+    <figcaption style="text-align: center;"><strong>Figure 1.2:</strong> Solutions of $\dot{x}=-x+x^2$ for initial conditions $x_0 = \pm 0.2, \pm 0.4, \pm 0.6, \pm 0.8, \pm 1.01, \pm 1.1$</figcaption>
   </figure>
 </div>
 
-We can observe that the system has two equilibrium points at $x=0$ and $x=1$. For different initial conditions, the system exhibits different behaviors, converging to either of the equilibrium points or diverging to infinity. This illustrates the complexity of nonlinear systems and the need for specialized analysis and control techniques.
+From the simulations, we observe that the system has two equilibrium points at $x = 0$ and $x = 1$. Depending on the initial condition, trajectories either converge to one of these points or diverge to infinity. This illustrates the richer behavior of nonlinear systems and the importance of **specialized analysis and control methods**.
 
-This lead us to the Remark:
 <div class="lemma-window">
-  <div class="lemma-title" id="rem_1.3">Remark 1.3 - Multiple Equilibrium points</div>
+  <div class="lemma-title" id="rem_1.3">Remark 1.3 — Multiple Equilibrium Points</div>
   <div style="padding: 1.5em;">
-  As opposed to linear systems, the stability of nonlinear systems can depend on the initial conditions, leading to multiple equilibrium points with different stability properties.
+  Unlike linear systems, the <strong>stability of nonlinear systems</strong> can depend on the initial conditions, leading to multiple equilibrium points with distinct stability properties.
   </div>
 </div>
 
@@ -308,37 +331,62 @@ This lead us to the Remark:
 
 ## 1.5: Chaos
 
-While a small change in initial conditions in a linear system will lead to a small change in the system's behavior, in nonlinear systems, a phenomenon called *chaos* can occur, where small changes in initial conditions can lead to vastly different outcomes.
-The essential feature of chaos is the unpredictability of the system's long-term behavior, despite being deterministic in nature. This means that even though the system follows a set of well-defined rules, its future state can be highly sensitive to initial conditions, making it difficult to predict over extended periods.
+In a linear system, a small change in initial conditions results in a proportionally small change in the system response. Nonlinear systems, however, can exhibit **chaos**, where tiny differences in initial conditions lead to drastically different trajectories.
 
-However, chaotic systems must be distinguished from random motion or noise. In random motion, the system's behavior is inherently unpredictable due to stochastic influences. In contrast, chaotic systems are deterministic, meaning that their future behavior is fully determined by their initial conditions and governing equations, even though this behavior appears random and unpredictable over time.
+The key feature of chaotic systems is that their **long-term behavior is highly sensitive** to initial conditions, despite being completely deterministic. This distinguishes chaos from random or noisy behavior: in chaotic systems, future states are fully determined by the governing equations and initial conditions, but appear unpredictable over time.
 
-Observe the system given by the following differential equation:
+Consider the following nonlinear system:
 
 $$
-\ddot{x} +0.1\dot{x}+ x^5 = 6\sin(t)
+\ddot{x} + 0.1 \dot{x} + x^5 = 6 \sin(t)
 $$
 
-In [Figure 1.3](#fig_1.3_chaotic_traj), we simulate the system's response for two slightly different initial conditions: $x_0=(0.1, 0.2)$, $x_0=(0.105, 0.2)$ and $x_0=(0.095, 0.2)$. We can observe that the trajectories diverge significantly over time, illustrating the sensitive dependence on initial conditions characteristic of chaotic systems.
+[Figure 1.3](#fig_1.3_chaotic_traj) shows the system's response for three slightly different initial conditions: $x_0 = (0.1, 0.2)$, $x_0 = (0.105, 0.2)$, and $x_0 = (0.095, 0.2)$. The trajectories diverge significantly over time, demonstrating the **sensitive dependence on initial conditions** characteristic of chaotic systems.
 
 <div class="images">
   <figure id="fig_1.3_chaotic_traj">
     <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch1_chaotic_traj.png" alt="Chaos" width="700"/>
-    <figcaption style="text-align: center;"><strong>Figure 1.3:</strong> Chaotic behavior of the system $\ddot{x} +0.1\dot{x}+ x^5 = 6\sin(t)$</figcaption>
+    <figcaption style="text-align: center;"><strong>Figure 1.3:</strong> Chaotic behavior of the system $\ddot{x} + 0.1 \dot{x} + x^5 = 6 \sin(t)$ for slightly different initial conditions</figcaption>
   </figure>
 </div>
 
-**To go further on chaos**, we recommend the following video by **Veritasium** on YouTube, which explore the concept of chaos and the butterfly effect in a clear and engaging manner.
+**Further exploration:**  
+The following Veritasium video provides an intuitive introduction to **chaos and the butterfly effect**, showing how tiny differences in initial conditions can lead to dramatically different outcomes.
 
 <iframe width="735" height="413" src="https://www.youtube.com/embed/fDek6cYijxI?si=3hu_bFoMzFVvjudq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 <div class="ytb-window">
-    Chaos: The Science of the Butterfly Effect
+    <strong>Chaos: The Science of the Butterfly Effect</strong><br>
+    The video illustrates the butterfly effect, highlighting how tiny changes in initial conditions of a chaotic system can lead to vastly different outcomes, emphasizing the sensitivity and unpredictability of nonlinear dynamics.
     <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
         Source: Veritasium - YouTube  
         <a href="https://youtu.be/fDek6cYijxI?si=rvVWCDbpGaH6kHtW" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
     </div>
 </div>
+
+---
+
+## Exercises
+
+** 1.1:**
+consider the following system:
+$$
+\dot{x} = \begin{bmatrix} 4 & -1 \\ 16 & -4 \end{bmatrix} x + \begin{bmatrix} 2 \\ 5 \end{bmatrix} u
+$$
+<ol>
+<li>We set the output as $y=x_1$. Derive the output $y$ until the input $u$ appears explicitly. Is it possible to stabilize the output using th input $u$ once it appeared?</li>
+<li>Same question but with the output $y=-5x_1+2x_2.</li>
+<li>What could be the advantage of choosing the second output instead of the first one?</li>
+</ol>
+
+<details markdown="1">
+  <summary>Solution</summary>
+  <strong>(1)</strong> We have:
+  <div>
+  \begin{align}
+
+  \end{align}
+
 
 ---
 
@@ -1405,7 +1453,320 @@ You can proceed in the following way:
 
 ---
 
-# Chapter 4: Lyapunov Stability Theorem
+# Chapter 4: Lyapunov Stability
+
+In control theory and dynamical systems, understanding whether a system remains stable under small disturbances is of fundamental importance. The concept of *stability* defines how a system behaves when perturbed — whether it returns to its equilibrium, deviates further, or oscillates around it. One of the most powerful and general approaches to analyze stability without explicitly solving the system’s differential equations is the **Lyapunov method**.
+
+This approach was introduced by the Russian mathematician **Aleksandr Mikhailovich Lyapunov (1857–1918)** in his seminal 1892 doctoral dissertation *“The General Problem of the Stability of Motion”*. Lyapunov extended earlier ideas from classical mechanics and developed a rigorous mathematical framework to study the stability of equilibria in nonlinear systems — a framework that remains foundational in modern control theory, robotics, and nonlinear dynamics.
+
+The essence of Lyapunov’s idea is to associate to a dynamical system a scalar function, called a **Lyapunov function**, which plays a role similar to that of an energy function. By studying how this function evolves over time, we can infer whether the system’s trajectories converge to an equilibrium point, remain bounded, or diverge.
+
+Lyapunov’s methods come in two main forms:
+- the **direct (second) method**, which studies stability using a suitable Lyapunov function without solving the system;
+- and the **indirect (first) method**, which uses linearization around the equilibrium point.
+
+---
+
+## 4.1: Equilibrium Points and Linear Systems
+
+Consider the following nonlinear dynamical system:
+<div>
+\[
+\dot{x} = f(x, t) \tag{4.1}\label{eq:nonlinear_system}
+\]
+</div>
+
+**Autonomous and Non-Autonomous systems**
+
+We use generally the terms *time-varying* and *time-invariant* systems to classify linear systems, depending on whether the matrix $A$ varies with time or not. The same classification can be applied to nonlinear systems, where the terms are replaced by *autonomous* and *non-autonomous* systems. 
+
+<div class="lemma-window">
+  <div class="lemma-title" id="def_4.1">Definition 4.1 - Autonomous System</div>
+  <div style="padding: 1.5em;">
+  The nonlinear system \eqref{eq:nonlinear_system} is said to be autonomous if the function $f$ does not depend explicitly on time, i.e., $f=f(x)$. Otherwise, the system is called non-autonomous, and the function $f$ depends explicitly on time, i.e., $f=f(x,t)$.
+  </div>
+</div>
+
+Strictly speaking, all physical systems are non-autonomous, as they are influenced by external time-varying factors. This concept is an idealized notion, like teh concept of linearity. However, many systems can be approximated as autonomous within a certain operating range or time frame, due to the important time scale of their varying parameters, making the analysis of autonomous systems highly relevant in practice.
+
+It is important to note that the definition of autonomous systems presented here is made on the **closed-loop dynamics**. Indeed, a control system being composed of a plant and a controller, even if the open-loop system is non-autonomous (e.g., due to time-varying inputs or parameters), the closed-loop system can be designed to be autonomous through appropriate feedback control strategies.
+
+The principal difference between autonomous and non-autonomous systems lies in the fact that the state of autonomous is independent of the starting time while the state of non-autonomous system generally is not. It is well known that the stability analysis of time invariant systems is generally simpler than that of time-varying systems, this particularity also holds for nonlinear systems. It is for this reason that we will focus in this chapter on autonomous systems.
+
+**Equilibrium Points**
+
+The equilibrium point, also known as fixed point or critical point, of a dynamical system is a state where the system doesn't continue evolve over time. 
+
+<div class="lemma-window">
+  <div class="lemma-title" id="def_4.2">Definition 4.2 - Equilibrium</div>
+  <div style="padding: 1.5em;">
+  Consider the system \eqref{eq:nonlinear_system}, where $x \in \mathbb{R}^n$ is the state and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function. A point $\bar{x} \in \mathbb{R}^n$ is called an equilibrium point of the system if:
+  \[
+  \dot{x}=f(\bar{x}) = 0
+  \]
+  </div>
+</div>
+
+**Stability for linear systems**
+
+Consider a linear system described by the following state-space representation: $\dot{x} = A x + B u $, where $x \in \mathbb{R}^n$ is the state vector, $u \in \mathbb{R}^m$ is the input vector, and $A \in \mathbb{R}^{n \times n}$ and $B \in \mathbb{R}^{n \times m}$ are constant matrices. We consider the system in close loop with the state feedback control law $u = -K x$, where $K \in \mathbb{R}^{m \times n}$ is the state feedback gain matrix. The closed-loop system can be expressed as:
+
+<div>
+\[
+  \dot{x} = (A - BK)\,x = \widetilde{A}\,x \tag{4.2}\label{eq:linear_closed_loop_system}
+\]
+</div>
+
+This system have a unique equilibrium point at the origin ($\bar{x} = 0$), unless $\widetilde{A}$ is singular, in that case there exists an infinite number of equilibrium points. Contrary to linear systems, nonlinear systems can have multiple equilibrium points, depending on the nature of the function $f(x)$. The stability of the equilibrium point can be determined by analyzing the eigenvalues of the matrix $\widetilde{A}$.
+
+*Remark*: Even though a nonlinear system may be approximated by a linear system around the equilibrium point using linearization techniques, the stability properties of the linearized system do not always guarantee the same properties for the original nonlinear system. Thus the study of the stability through the eigenvalues of the linearized system is not sufficient to conclude on the stability of the nonlinear system, and more advanced methods, such as Lyapunov's direct method, are required for a comprehensive analysis.
+
+All along this lecture, we mentioned a system being stable or unstable for a trajectory staying close or diverging from an equilibrium point. However, we did not give a formal definition of what is meant by "closeness". 
+
+<div class="lemma-window">
+  <div class="lemma-title" id="def_4.3">Definition 4.3 - Notion of distance</div>
+  <div style="padding: 1.5em;">
+  A vectorial space $\mathcal{V}$ is said to be a normed vectorial space if there exists a function $\lVert \cdot \rVert: \mathcal{V} \rightarrow \mathbb{R}_{\geq 0}$, called a norm, that satisfies the following properties:
+  <ul>
+  <li><strong>Positive Definiteness</strong> $\lVert x \rVert \geq 0, \forall x \in \mathcal{V}$ and $\lVert x \rVert = 0$ if and only if $x = 0$.</li>
+  <li><strong>Homogeneity</strong> $\lVert \alpha x \rVert = |\alpha| \lVert x \rVert, \forall c \in \mathbb{R}$ and $\forall x \in \mathcal{V}$.</li>
+  <li><strong>Triangle Inequality</strong>: $\lVert x + y \rVert \leq \lVert x \rVert + \lVert y \rVert, \forall x,y \in \mathcal{V}$.</li>
+  </ul>
+  </div>
+</div>
+
+In that vectorial space, the distance between two points $x_1$ and $x_2$ is defined as the following possible norms:
+- **Euclidean norm**: $\lVert x \rVert_2 = \sqrt{x_1^2 + x_2^2 + ... + x_n^2}$
+- **1-norm**: $\lVert x \rVert_1 = \sum_{i=1}^n \|x_i\|$
+- **Infinity norm**: $\lVert x \rVert_\infty = \max_{i=1}^n \|x_i\|$
+
+
+---
+
+## 4.2: Concept of Stability
+
+---
+
+## 4.3: Lyapunov's Direct Method
+
+---
+
+## 4.4: Global and Local Stability Analysis
+
+---
+
+## 4.5: LaSalle's Invariance Principle
+
+---
+
+## 4.6: Lyapunov Functions Construction
+
+---
+
+## Exercises
+
+**RLC Circuit**
+
+Consider the following RLC circuit:
+
+<div class="images" style="justify-content:center; text-align:center;">
+  <figure id="fig_4.1_RLC_circuit">
+    <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch4_ex1_electrical_circuit.png" alt="RLC Circuit" width="450"/>
+    <figcaption style="text-align: center;"><strong>Figure 4.1:</strong> RLC Circuit</figcaption>
+  </figure>
+</div>
+
+<ol>
+<li>Derive the state-space representation of the circuit, choosing the capacitor voltage $v_C$ and inductor current $i_L$ as state variables $x_1$ and $x_2$.</li>
+<li>Consider 
+<div>
+\[
+P = \begin{bmatrix} p_{11} & p_{12} \\ p_{12} & p_{22} \end{bmatrix} \quad Q= I
+\]
+and solve the Lyapunov equation
+\[
+A^\top P + PA=-Q
+\]
+</div>
+in order to find the unknown coefficients $p_{11}$, $p_{12}$ and $p_{22}$.</li>
+<li>Using the Kronecker product, defined as:
+<div>
+  \[
+    A \otimes B = \begin{bmatrix}
+    a_{11}B & a_{12}B & \cdots & a_{1n}B \\
+    a_{21}B & a_{22}B & \cdots & a_{2n}B \\
+    \vdots & \vdots & \ddots & \vdots \\ 
+    a_{m1}B & a_{m2}B & \cdots & a_{mn}B
+    \end{bmatrix}
+  \]
+show that the Lyapunov equation can be rewritten as:
+\[
+p=-\left(I \otimes A^\top + A^\top \otimes I\right)^{-1}q
+\]
+</div>
+where $p = [p_{11}, p_{12}, p_{12}, p_{22}]^\top$ and $q = [1, 0, 0, 1]^\top$.</li>
+
+<li>Using the <code>kron</code> function in MATLAB write a s;aal script that computes the matrix $P$ solving the Lyapunov equation (replacing the <code>lyap</code> function).</li>
+</ol>
+
+<details markdown="1">
+  <summary><strong>Solution</strong></summary>
+
+  **(1)** The state-space representation of the RLC circuit can be derived using Kirchhoff's laws.  
+  We define the state variables as:
+  $$
+  x_1 = u_C \quad \text{(capacitor voltage)}, \quad x_2 = i_L \quad \text{(inductor current)}.
+  $$
+
+  From the voltage and current relationships in the circuit, we can write:
+  <div>
+  \begin{align}
+    Ri_L + L \dfrac{di_L}{dt} + u_C &= 0 \tag{4.3}\label{eq:RLC_eq1} \\
+    i_L + C\dfrac{du_C}{dt} + \dfrac{u_C}{R} &= 0 \tag{4.4}\label{eq:RLC_eq2}
+  \end{align}
+  </div>
+
+  Substituting the state variables into these equations gives:
+  <div>
+  \begin{align}
+    &\begin{cases}
+    R x_2 + L \dfrac{dx_2}{dt} + x_1 = 0, \\[4pt]
+    x_2 + C\dfrac{dx_1}{dt} + \dfrac{x_1}{R} = 0.
+    \end{cases}\\[6pt]
+    \Rightarrow &
+    \begin{cases}
+    \dot{x}_2 = -\dfrac{x_1}{L} - \dfrac{R}{L}x_2, \\[4pt]
+    \dot{x}_1 = -\dfrac{x_1}{RC} - \dfrac{x_2}{C}.
+    \end{cases}
+  \end{align}
+  </div>
+
+  In matrix form:
+  <div>
+  \[
+  \dot{x} = A x \quad \text{with} \quad
+  A = \begin{bmatrix}
+  -\tfrac{1}{RC} & \tfrac{1}{C} \\[6pt]
+  -\tfrac{1}{L} & -\tfrac{R}{L}
+  \end{bmatrix}.
+  \]
+  </div>
+
+  **(2)** To find the Lyapunov equation terms, we compute  $A^\top P$ and $P A$:
+
+  <div>
+  \[
+  A^\top P = \begin{bmatrix} 
+  -\tfrac{p_{11}}{RC} - \tfrac{p_{12}}{L} & -\tfrac{p_{12}}{RC} - \tfrac{p_{22}}{L} \\
+  \tfrac{p_{11}}{C} - \tfrac{p_{12}R}{L} & \tfrac{p_{12}}{C} - \tfrac{p_{22}R}{L}
+  \end{bmatrix}, \quad
+  P A = \begin{bmatrix} 
+  -\tfrac{p_{11}}{RC} - \tfrac{p_{12}}{L} & \tfrac{p_{11}}{C} - \tfrac{p_{12}R}{L} \\
+  -\tfrac{p_{12}}{RC} - \tfrac{p_{22}}{L} & \tfrac{p_{12}}{C} - \tfrac{p_{22}R}{L}
+  \end{bmatrix}.
+  \]
+  </div>
+
+  Then:
+  <div>
+  \[
+  \Rightarrow A^\top P + P A =
+  \begin{bmatrix}
+  -2\tfrac{p_{11}}{RC} - 2\tfrac{p_{12}}{L} &
+  \tfrac{p_{11}}{C} - \tfrac{p_{22}}{L} - \tfrac{p_{12}}{RC} - p_{12}\tfrac{R}{L} \\[4pt]
+  \tfrac{p_{11}}{C} - \tfrac{p_{22}}{L} - \tfrac{p_{12}}{RC} - p_{12}\tfrac{R}{L} &
+  2\tfrac{p_{12}}{C} - 2p_{22}\tfrac{R}{L}
+  \end{bmatrix} = -Q.
+  \]
+  </div>
+
+  This leads to the system:
+  <div>
+  \[
+  \begin{cases}
+  -1 = -2p_{11}\dfrac{1}{RC} - 2p_{12}\dfrac{1}{L}, \\[4pt]
+  -1 = 2p_{11}\dfrac{1}{C} - 2p_{22}\dfrac{R}{L}, \\[4pt]
+  0 = p_{11}\dfrac{1}{C} - p_{22}\dfrac{1}{L} - p_{12}\dfrac{1}{RC} - p_{12}\dfrac{R}{L}.
+  \end{cases}
+  \]
+  </div>
+
+  Solving this system yields:
+  <div>
+  \begin{align}
+    p_{11} &= \dfrac{RC(R^2C + 2L + C)}{4(R^2C + L)}, \\[6pt]
+    p_{12} &= \dfrac{LC(R^2 - 1)}{4(R^2C + L)}.
+    p_{22} &= \dfrac{L(2R^2C + R^2L + L)}{4R(R^2C + L)}, \\[6pt]
+  \end{align}
+  </div>
+
+  **(3)** To compute $I \otimes A^\top + A^\top \otimes I$:
+
+  <div>
+  \begin{align}
+    I \otimes A^\top &=
+    \begin{bmatrix}
+    -\tfrac{1}{RC} & -\tfrac{1}{L} & 0 & 0 \\
+    \tfrac{1}{C} & -\tfrac{R}{L} & 0 & 0 \\
+    0 & 0 & -\tfrac{1}{RC} & -\tfrac{1}{L} \\
+    0 & 0 & \tfrac{1}{C} & -\tfrac{R}{L}
+    \end{bmatrix}, \\[10pt]
+    A^\top \otimes I &=
+    \begin{bmatrix}
+    -\tfrac{1}{RC} & 0 & -\tfrac{1}{L} & 0 \\
+    0 & -\tfrac{1}{RC} & 0 & -\tfrac{1}{L} \\
+    \tfrac{1}{C} & 0 & -\tfrac{R}{L} & 0 \\
+    0 & \tfrac{1}{C} & 0 & -\tfrac{R}{L}
+    \end{bmatrix}.
+  \end{align}
+  </div>
+
+  Therefore:
+  <div>
+  \[
+  I \otimes A^\top + A^\top \otimes I =
+  \begin{bmatrix}
+  -2\tfrac{1}{RC} & -\tfrac{1}{L} & -\tfrac{1}{L} & 0 \\[4pt]
+  \tfrac{1}{C} & -\tfrac{R}{L}-\tfrac{1}{RC} & 0 & -\tfrac{1}{L} \\[4pt]
+  \tfrac{1}{C} & 0 & -\tfrac{R}{L}-\tfrac{1}{RC} & -\tfrac{1}{L} \\[4pt]
+  0 & \tfrac{1}{C} & \tfrac{1}{C} & -2\tfrac{R}{L}
+  \end{bmatrix}.
+  \]
+  </div>
+
+  Taking its inverse we obtain (recommended to compute using MATLAB or another computational tool):
+  <div>
+  \[
+  \left(I \otimes A^\top + A^\top \otimes I\right)^{-1} =
+  \begin{bmatrix}
+  -\dfrac{C^2 R^3 + 2 L C R}{4 (C R^2 + L)} & \dfrac{C^2 R^2}{4 (C R^2 + L)} & \dfrac{C^2 R^2}{4 (C R^2 + L)} & -\dfrac{C^2 R}{4 (C R^2 + L)} \\[10pt]
+  -\dfrac{C L R^2}{4 (C R^2 + L)} & -\dfrac{3 C L R}{4 (C R^2 + L)} & \dfrac{C L R}{4 (C R^2 + L)} & \dfrac{C L}{4 (C R^2 + L)} \\[10pt]
+  -\dfrac{C L R^2}{4 (C R^2 + L)} & \dfrac{C L R}{4 (C R^2 + L)} & -\dfrac{3 C L R}{4 (C R^2 + L)} & \dfrac{C L}{4 (C R^2 + L)} \\[10pt]
+  -\dfrac{L^2 R}{4 (C R^2 + L)} & -\dfrac{L^2}{4 (C R^2 + L)} & -\dfrac{L^2}{4 (C R^2 + L)} & -\dfrac{L^2 + 2 C L R^2}{4 (C R^3 + L R)}
+  \end{bmatrix}.
+  \]
+  </div>
+  Which leads to:
+  <div>
+  \[
+  p = -\left(I \otimes A^\top + A^\top \otimes I\right)^{-1} q =
+  \begin{bmatrix} p_{11} \\[4pt] p_{12} \\[4pt] p_{12} \\[4pt] p_{22} \end{bmatrix} = 
+  \begin{bmatrix}
+  \dfrac{C R (C R^2 + C + 2L)}{4 (C R^2 + L)} \\[10pt]
+  \dfrac{C L (R^2 - 1)}{4 (C R^2 + L)} \\[10pt]
+  \dfrac{C L (R^2 - 1)}{4 (C R^2 + L)} \\[10pt]
+  \dfrac{L (L + 2 C R^2 + L R^2)}{4 R (C R^2 + L)}
+  \end{bmatrix}
+  \]
+  </div>
+
+  **(4)** The MATLAB script to compute the matrix $P$ solving the Lyapunov equation using the Kronecker product is as follows:
+
+  ```matlab
+  P=-inv(kron(eye(2),A.')+kron(A.',eye(2)))*[1;0;0;1]
+  ```
+
+</details>
 
 ---
 

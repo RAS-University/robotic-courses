@@ -1054,25 +1054,16 @@ $$
 ## Chapter 2: Proprioceptive Sensors
 {: #ch2 }
 
-Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene).
+Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene). 
+
+In the following figure, a humanoid robot demonstrates the use of multiple proprioceptive sensors to estimate its internal state. The robot employs an inertial measurement unit (IMU) to determine its orientation and body motion, joint encoders to measure joint positions, and force–torque sensors to monitor internal loads and interaction forces. Tactile sensors embedded in the fingertips provide additional feedback on contact conditions. Together, these sensors enable precise estimation and control of the robot’s posture and movement. In addition to these proprioceptive sensors, the robot is also equipped with cameras and microphones, exteroceptive sensors that capture visual and auditory information from the surrounding environment, allowing it to perceive and respond to external stimuli.
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
 ><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
 
-| Aspect | Proprioceptive | Exteroceptive |
-|-------|-----------------|---------------|
-| What is measured | Internal state (joints, body motion, actuator/electrical) | External world (terrain, objects, features) |
-| Typical sensors | Encoders, IMUs, current/voltage, strain/torque, temperature | Cameras, LiDAR, sonar, GPS, tactile arrays |
-| Primary use | Low-level control, odometry, health monitoring | Mapping, localization against world, perception |
-| Latency/bandwidth | Generally low latency, high update rate | Often higher latency, heavier processing |
-
-**Role in the control stack.**  
-Proprioception closes feedback loops and stabilizes dynamics:
-- **Low-level control** (inner loops): current/torque, velocity, and position loops rely on fast, low-latency measurements.  
-- **State estimation & odometry**: joint encoders and IMUs provide inputs to kinematics- and dynamics-based estimators.  
-- **Safety & monitoring**: temperature, supply voltage, overcurrent/over-torque detection protect hardware.  
-
 **Common proprioceptive signals.**
+
+Here are some of the typical proprioceptive sensors used in robotics, measuring key internal quantities that describe the robot’s mechanical and electrical state. These signals form the foundation for accurate estimation, feedback, and control.
 
 | Quantity | Typical sensor | Units | Notes |
 |---------|-----------------|-------|------|
@@ -1085,6 +1076,19 @@ Proprioception closes feedback loops and stabilizes dynamics:
 | Temperature | Thermistor/RTD/IC sensor | °C | Warm-up, placement, thermal lag |
 | Battery state | Voltage, current (Coulomb counting) | V, A, Ah | SoC estimation; measurement noise vs filtering delay |
 
+**Difference between proprioceptive and exteroceptive sensors**
+
+Proprioceptive and exteroceptive sensing form two complementary views of a robot’s perception system. Proprioceptive sensors describe the robot’s own internal state, while exteroceptive sensors capture information about the surrounding environment. The table below summarizes their main distinctions.
+
+| Aspect                  | Proprioceptive                                                                                | Exteroceptive                                                               |
+| ----------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| **What is measured**    | Internal state (joint angles, velocities, forces, body motion, actuator/electrical variables) | External world (terrain, obstacles, objects, features, lighting, sound)     |
+| **Typical sensors**     | Encoders, IMUs, current/voltage sensors, strain gauges, torque sensors, thermistors           | Cameras (mono/stereo/RGB-D), LiDAR, radar, sonar, GPS/UWB, microphones      |
+| **Primary use**         | Low-level control, odometry, state estimation, diagnostics, health monitoring                 | Mapping, localization relative to the world, object and scene perception    |
+| **Latency / bandwidth** | Low latency, high update rate, directly used in feedback loops                                | Higher latency, lower update rate, requires heavier processing              |
+| **Dependence**          | Independent of environment; depends on internal calibration                                   | Strongly dependent on environmental conditions (lighting, texture, clutter) |
+
+Together, these two sensing modalities provide the foundation for robust robotic behavior: proprioceptive sensors keep the robot stable and aware of itself, while exteroceptive sensors keep it situated and responsive to the world.
 
 ### 2.1 Odometry
 {: #ch2-odom }
@@ -1508,7 +1512,7 @@ Under a constant acceleration $a$ (e.g., gravity component), static equilibrium 
 *(Modern MEMS devices often use capacitive sensing of the proof-mass displacement; principles still map to the model above.)*
 
 **Link to the inertial pipeline.**  
-In a strapdown IMU, tri-axial gyros integrate attitude; accelerometer readings are rotated to the navigation frame, gravity is subtracted, and the result is integrated to **velocity** and then **position**. Any gyro/accel bias mis-orients gravity removal, so residual gravity integrates to large position drift over time, hence the need for aiding/fusion.
+In an IMU, tri-axial gyros integrate attitude, accelerometer readings are rotated to the navigation frame, gravity is subtracted, and the result is integrated to **velocity** and then **position**. Any gyro/accel bias mis-orients gravity removal, so residual gravity integrates to large position drift over time, hence the need for sensor fusion.
 
 **Key specifications**
 - **Range** (e.g., $\pm2g,\ \pm16g$): prevent saturation during maneuvers.  
@@ -1541,16 +1545,17 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 ---
 
 
-### 2.4 Force/Torque & Strain Sensing
+### 2.4 Force, Torque, and Strain Sensing
 
-Force, torque, and strain sensing let a robot *feel its own interaction* with the world. These signals close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice we combine measurements made at different places in the chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and skin or fingertip tactiles. Each location sees a different slice of mechanics and noise, so thinking about what you need the measurement *for* is the key design step. 
+Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
 ---
 
-#### Where to measure? From effort to contact
+#### Measurement Location: From Effort to Contact
 
-* **Actuator effort (motor current).** For many electric drives, torque is proportional to current, $\tau \approx k_t I$. This is attractive for fast inner-loop control, but gearbox losses, friction, and compliance mean current is an imperfect proxy for *external* contact loads at the output. When you care about contact forces, it is better to measure downstream. 
-* **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at a wrist or fingertip directly measure forces and moments with good bandwidth. With known fingertip geometry you can even infer the contact point from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$ (often called *intrinsic tactile sensing*).
+* **Actuator effort (motor current).** In many electric drives, torque is approximately proportional to current, $\tau \approx k_t I$. This relationship is useful for fast inner-loop control, however, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
+* **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
+
 
 ---
 

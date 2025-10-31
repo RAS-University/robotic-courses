@@ -151,26 +151,37 @@ Some promising fields in which force perception is used are biomedical robotics 
 
 Now that we have seen **why** robots need a sense of touch, we can dive into **how** force perception is implemented.
 
-It is possible to distinguish two types of force perception: intrinsic sensing and extrinsic sensing.
-Intrinsic sensing is more inner — the sensors are located within the mechanical structure of the robot. They measure the overall forces applied on the system. Therefore, we speak of **force feedback**.
+It is possible to distinguish two types of force perception based on where the sensors are located: **intrinsic** and **extrinsic**. In **intrinsic sensing**, the sensors are placed within the mechanical structure of the robot (more inward) and we speak of **force feedback**. On the other hand, **extrinsic sensing** refers to sensors mounted at the robot’s contact area (more outward) and we refer to this as **tactile feedback**.
 
-On the other hand, extrinsic sensing refers to sensors mounted near the contact area of the robot — more outer. These sensors deal with localized regions and provide **tactile feedback**.
+- **Force feedback (intrinsic)** measures the global forces and torques applied to the system at a specific point, considered infinitesimally small. It can be thought of as the overall push, pull and twist the robot feels at that contact point (usually at a joint).
 
-- **Force feedback (intrinsic sensing)** measures the global forces and torques applied at one specific point or interface. This point is considered infinitesimally small, meaning it has a low spatial resolution. We can think of it as the overall push/pull and twist that the robot feels at that contact point.  
+- **Tactile feedback (extrinsic)** measures pressure or stress distributions over a surface rather than at a single point. It relies on an array of sensing elements, forming what can be thought of as an electronic skin. Because it includes multiple contact points, it can detect slippage, surface texture and the exact contact location on the array. Depending on the used materials, tactile sensors can be flexible, compliant, stiff and rigid.
 
-- **Tactile feedback (extrinsic sensing)** measures pressure distributions. It does not concern a single point anymore but a whole area (an array of sensing points). We can think of it as an electronic skin. Because it has multiple contact points, it can detect slippage, surface texture or the exact contact location on the array. Depending on the material used, tactile sensors can be designed as hard-skin or soft-skin types.
+On this page, we will move gradually from **force feedback**, which describes interactions occurring at a single point, to **tactile feedback**, where sensing extends across a surface.  
+Although the examples shown in the introduction mainly focused on hands and fingertips, tactile sensing can be applied to the entire body of a robot. However, challenges such as wiring complexity and limited mechanical flexibility must also be addressed.
 
+<!-- This layout mirrors how robots evolve from simply feeling a global contact force to perceiving rich spatial details such as shape, texture and contact distribution. -->
 
-TODO -> CONTINUE HERE
+<!-- To explore this, we will start with the classical principles of **force/torque sensing**, then move on to **tactile sensors** and their different working principles.  
+Afterward, we will look at **advanced tactile technologies**, including flexible, stretchable, and vision-based sensors.  
+Finally, we will address how tactile information is processed and how sensor location within the robot influences performance and robustness. -->
 
+⚠️ Adapt in the end ⚠️
 
-The structure of the content will be as follows:
+- **Chapter 1 — Force/Torque Sensors**  
+  Introduction to classical F/T sensing methods.
 
-- Chapter 1
-- Chapter 2
-- Chapter 3
-- Chapter 4
-- Chapter 5
+- **Chapter 2 — Tactile Sensors**  
+  Overview of the main tactile sensing principles (resistive, capacitive, piezoelectric, optical, magnetic, etc.) and their mechanical implementations (rigid, flexible, compliant, stretchable).
+
+- **Chapter 3 — Advanced Tactile Sensors**  
+  Presentation of flexible, stretchable, and vision-based tactile sensors.
+
+- **Chapter 4 — Information Processing**  
+  Discussion of how tactile data are acquired, including the challenges related to wiring, data rate, and power consumption.
+
+- **Chapter 5 — Sensor Location and Integration (optional)**  
+  Summary of where sensors are typically placed (in joints, links, or fingertips) and how placement affects measurement quality and task performance.
 
 ---
 
@@ -180,6 +191,7 @@ The structure of the content will be as follows:
 
 #### 1.1 Traditionnal Force Sensors
 
+-> 3DOF and 6DOF
 -> example: ATI multi-axis F/T sensor
 
 #### 1.2 Motor-Current based Force sensing
@@ -191,10 +203,8 @@ The structure of the content will be as follows:
 
 ### Chapter 2 : Tactile Sensors
 
-From simple tactile sensors (yes or no / logic high or low) to more sophisticated ones.
-
--> different working principles (resistive, piezoresistive, capacitive, optical, magnetic, piezoelectric, ultrasonic)
--> then mechanical nature of the sensor (rigid, flexible, compliant, stretchable)
+-> From simple tactile sensors (yes or no / logic high or low) to more sophisticated ones.
+-> different working principles
 
 #### 2.1 Resistive Sensors
 
@@ -218,7 +228,7 @@ tactile sensing 5.2.4
 
 #### 2.6 Electrorheological / Magnetorheological
 
-tactile sensing 5.2.7–5.2.8).  
+tactile sensing 5.2.7 – 5.2.8
 
 ---
 
@@ -240,7 +250,7 @@ tactile sensing 5.2.7–5.2.8).
 
 ### Chapter 4 : Information Processing
 
-(??? is this worth a chapter or should it just be beneath the concerned parts)
+(is this worth a chapter or should it just be beneath the concerned parts)
 
 add challenges of electronics: wiring, data transfer, power consumption  
 -> examples of how it is done today
@@ -249,22 +259,26 @@ add challenges of electronics: wiring, data transfer, power consumption
 
 ### Chapter 5 : Sensor Location
 
-#### 0.1 Joint
+#### 5.1 Joint
 
 -> encoder, potentiometer, motor-current, etc.
 
-#### 0.2 Links
+#### 5.2 Links
 
-#### 0.2 Tip
+#### 5.2 Tip
 
 -> tactile arrays, 6D F/T sensors, etc.
 
-#### 0.3 Challenges  
+#### 5.3 Challenges  
 
 add the challenges that come with the sensor location (integrated into skin surfaces, adequate friction to handle objects securely, robust enough to survive repeated impacts, etc.)  
 -> these are task related challenges (chapter 4 tactile sensing)
 
 ---
+
+QUESTIONS: 
+
+- What exercices should I add? (as it is mainly theoretical parts)
 
 ## Additional Resources
 
@@ -275,11 +289,7 @@ add the challenges that come with the sensor location (integrated into skin surf
 ### Additional Resources
 <!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->
 
----
-
-## Questions:
-
-- should I tacle all traditionnal tactile sensing technologies? (magnetic, ultrasonic, electrorheological)
+- [Intrinsic Sense of Touch](https://www.science.org/stoken/author-tokens/ST-2065/full#)
 
 
 <!--  

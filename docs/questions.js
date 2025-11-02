@@ -126,6 +126,16 @@ function checkMCQ(questionId, correctAnswer, correctMessage, incorrectMessage) {
   }
 }
 
+  // Function to toggle the answer visibility for each question
+  function showAnswer(questionId) {
+    var answerDiv = document.getElementById("answer-" + questionId);
+    if (answerDiv.style.display === "none") {
+      answerDiv.style.display = "block";  // Show the answers
+    } else {
+      answerDiv.style.display = "none";   // Hide the answers
+    }
+  }
+
 function checkMultipleAnswers(questionId, correctAnswers, correctMessage, incorrectMessage) {
   const options = document.getElementsByName(questionId);
   let selectedValues = [];

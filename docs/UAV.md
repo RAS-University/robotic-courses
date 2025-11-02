@@ -974,7 +974,7 @@ Companies and research institutions are also developing larger multirotor system
 
 <ins>Military:</ins>
 
-Drones from an integral part of modern warfare. Most of them being fixed wing drones for higher payload and range, multirotor drones are also used due to their small size and cost. They are mainly used for strategic purposes to spot enemy troops and direct attacks. Despite that there are also some reports claiming small bombs being attached to the drones.
+Drones form an integral part of modern warfare. Most of them being fixed wing drones for higher payload and range, multirotor drones are also used due to their small size and cost. They are mainly used for strategic purposes to spot enemy troops and direct attacks.
 
 <ins>Entertainment:</ins>
 
@@ -1171,6 +1171,7 @@ Below you find some the key characteristics for bird-insipired flapping-wing rob
 #### Insect-inspired Flapping Wing Robots
 
 Next to birds, insects are one of the most versatile and diverse fliers on the planet. While their size ranges from a few centimeters to only a fraction of a millimeter, they manage to hover in place, fly in strong winds, and develop swarm intelligence. Researchers around the world try to understand how insects achieve this. One way of doing so is by mimicking them in robots to better understand the underlying physics and the control techniques used.
+
 <p>We invite you to have a look at the video below from the YouTube channel <em>Ant Lab</em>. They do an incredible job of making stunning video shots of a wide variety of insects. The video below shows several fascinating insects taking off in super slow-motion. Thanks to that, you can see well the complex but rhythmic flapping of the wings, the diversity of the wing structures, and how some of them manage to fly despite seeming unstable in the air. While this does not yet talk about UAVs, it is a great way to understand the motivation and goal behind the research to develop such tiny flying robots.</p>
 
 ![video](https://www.youtube.com/watch?v=gDI5g3rd0Ls)

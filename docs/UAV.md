@@ -53,6 +53,114 @@ nav_order: 7
   }
 </style>
 
+<style>
+.tab-window {
+  border: 2px solid #e8f4fd;
+  border-radius: 10px;
+  background: #f8f9fa;
+  width: 100%;
+  max-width: 900px;
+  margin: 1.5em auto;
+  box-shadow: 0 2px 8px rgba(42,122,226,0.08);
+  overflow: hidden;
+}
+
+.tab-title {
+  background: #e8f4fd; 
+  padding: 0.5em; 
+  font-size: 1.2em; 
+  font-weight: bold; 
+  color: #2b7bb9; 
+  border-top-left-radius: 5px; 
+  border-top-right-radius: 5px;
+}
+
+.tab-header {
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #e8f4fd;
+}
+
+.tab-btn {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.7em 1em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  color: #2b7bb9;
+  transition: background 0.2s;
+}
+.tab-btn.active {
+  background: #e8f4fd;
+  color: #2b7bb9;
+}
+
+.tab-content {
+  display: none;
+  padding: 1em;
+}
+.tab-content.active {
+  display: block;
+}
+
+.images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.images img {
+  width: 100%;
+  max-width: 550px;
+  height: auto;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Responsive video container */
+.video-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  margin: 1em 0;
+}
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Responsive behavior */
+@media (max-width: 700px) {
+  .tab-btn {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  .tab-title {
+    text-align: center;
+  }
+}
+</style>
+
+<script>
+function showTab(idx, windowId) {
+  var windowElem = document.getElementById(windowId);
+  var btns = windowElem.querySelectorAll('.tab-btn');
+  var tabs = windowElem.querySelectorAll('.tab-content');
+  btns.forEach((btn, i) => btn.classList.toggle('active', i === idx));
+  tabs.forEach((tab, i) => tab.classList.toggle('active', i === idx));
+}
+</script>
+
 # Unmanned Aerial Vehicles
 
 <!-- bundle exec jekyll serve -->
@@ -89,7 +197,6 @@ On the image below you see in <span style="color: #FFAA00;">yellow</span> a flyi
 
 The three most important forces when it comes to drones are lift, thrust and drag. For simplicity, lift and drag will be explained on a fixed wing aircraft - i.e. an airplane. The next chapter will cover how for different drone types, lift and thrust is generated. But it is important to get a basic grasp of what the forces are now.
 
-<!-- <div class="disclaimer-panel"> -->
 <div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
   <strong>Disclaimer:</strong> Aerodynamic is an entire subject on it's own. This chapter will not be a full or complete module. It rather aims to provide you with the necessary tools and intuition to understand the relevant aspects of aerodynamics related to drones. This is crucial to understand later how drones are controlled.
 </div>
@@ -688,34 +795,6 @@ While propellers are commonly used in smaller aircraft and UAVs due to their eff
   
 </details>
 
-<!-- #### Other ways to generate thrust
-While as explained above, propellers are the most important concept to understand thrust in the context of aerial robotics, there are different ways. Jet engines for example use fuel to compress air and expell it high speed and are used in bigger aircrafts.
-
-*Jet Engines*:
-
-Jet engines, the type of engine any bigger airplane has, works as follows: Air is drawn inside the engine, compressed, mixed it with fuel, and expelled at high speed at the rear. The reaction pushes the aircraft forward. 
-
-  <details markdown='1'>
-  <summary><strong>How jet engines work in detail</strong></summary>
-
-  >![video](https://www.youtube.com/watch?v=Pt24Pptvt_M)
-  > > <sub>*Aviators World: How Jet Engine Produces Thrust. Available at: https://www.youtube.com/watch?v=Pt24Pptvt_M*</sub>  
-  > >
-  > > *The video explains how a turbofan engine generates thrust by using a large front fan and a series of compressors, turbines, and a combustion chamber to accelerate air.*
-
-  > Explain more?
-  ><hr>
-  </details>
-
-*Electric Ducted Fans (EDF)*:
-<div style="float: left; margin-right: 15px; text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/edf.jpg" alt="." style="width: 200px; height: auto;">
-  <p style="font-size: small;">An example of an electric ducted fan. Image available <a href="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F617txcEYGTL.jpg&f=1&nofb=1&ipt=c80014e84ed580e0768f820cb3bec239527cdd26c4a640b9880fcdc526bf74a9" target="_blank">here</a>.</p>
-</div>
-A ducted fan is a small, high speed propeller enclosed in a cylindrical duct that accelerates air through a narrow channel.They work similarly to open propellers but are more efficient in certain conditions, as the duct helps streamline airflow, increase static thrust, and reduce tip vortices. Ducted fans also tend to produce less noise, making them ideal for compact aerial vehicles like drones where reduced acoustic signature and improved efficiency are important. -->
-
-<!-- </details> -->
-
 ### 1.4 Conditions to fly
 With drag, lift, thrust and gravity as basic forces, we can already understand the conditions for an aircraft to fly.
 
@@ -744,6 +823,11 @@ Watch the following video to see how the magnitude of these forces are changing 
 ><sub>4 Forces on Aircraft during the Take-off. Available at: https://www.youtube.com/watch?v=BxOeuovzT88</sub>
 
 ## Chapter 2 : Drone Types and Use Case
+In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs in three big groups: *rotorcrafts*, *fixed wing drones* and *flapping wing robots*. Then we will finish with a short discussion about morphing drones.
+
+<div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
+  <strong>Disclaimer:</strong> While there are fundamental differences between the three drone types, there is a big number of drones combining principles from different types. There exist bird inspired fixed wing drones, hybrid fixed wing rotorcrafts or morphing rotorcrafts etc... 
+</div>
 
 ### 2.1 Rotorcrafts
 
@@ -896,7 +980,7 @@ Drones from an integral part of modern warfare. Most of them being fixed wing dr
 
 <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
   <!-- Video Section -->
-  <div style="flex: 1; min-width: 300px;">
+  <div style="flex: 1; min-width: 350px;">
     <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
       <iframe
         src="https://www.youtube.com/embed/3G1KBu6H6BM"
@@ -918,11 +1002,6 @@ Drones from an integral part of modern warfare. Most of them being fixed wing dr
     </p>
   </div>
 </div>
-
-<!-- ![video](https://www.youtube.com/watch?v=3G1KBu6H6BM)
-><sub>Dragon Boat Show with 1500 drones in Shenzhen, China. Available at: https://www.youtube.com/watch?v=3G1KBu6H6BMI</sub>
-
-Multirotor drones have found a creative niche in the entertainment industry, transforming the way audiences experience live events and media. From synchronized drone light shows replacing traditional fireworks to aerial cinematography in films and concerts, drones add dynamic visual elements that were previously unattainable. Another field of application is in sports broadcasting, where they offer immersive, bird's-eye views of the action, enhancing the viewer's experience. -->
 
 #### Challenges
 While the market and the innovation of multirotor drones grew exponentially over the past decade, there is still a lot of research going on, aiming to make drones more versatile and efficient. We want to provide below a non-exhaustive list with ongoing challenges.
@@ -971,30 +1050,49 @@ A flapping wing drone is an aircraft where lift and thrust generation and maneuv
 
 Flapping-wing robots can be split into three groups based on their size and weight: _large-scale_ over 100g, _small-scale_ between 1g and 100g and _insect-size_ flappers below 1g. Despite the weight the different flapping-wing systems differ in the frequency of flapping, which is faster for small- and insect-scale robots, their hover capacity which decreases or vanishes for large-scale systems and their type of actuation used which usually are conventional electric motors for large-scale system and electro-static actuators for insect-scale systems.
 
-*History*:
+#### History
 
 Flapping-wing drones have roots in early aviation, as the most intuitive approach to create a flying machine was to get inspiration by nature: birds and insects. Attempts to create flapping-wing aerial vehicle date back to the ancien Greek legend of Daedalus and Icarus and the work of Architas 400 BC. In the 15th century Leonardo da Vinci sketched designs for bird-like flying machines. In the 1990s a research team around James DeLaurier developed a piloted ornithopter that was flying in 2006 for 40s. 
-INSERT VIDEO OR Picture
-But the modern era of flapping-wing drones started in the late 20th century with the advancements in materials science and lightweight electric motors. Until today it is mainly a research topic with potential applications in agriculture, search-and-rescue and environmental monitoring.
 
-*Insect-inspired drones:*
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">
+  <div style="flex: 1; max-width: 30%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Pieter_Thijs_deadakus-icarus.jpeg" 
+         alt="Painting from Pieter Thijs of Deadalus and Icarus from the 17th century." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      Daedalus fixing wings onto the shoulders of Icarus. A painting of the flemish painter Pieter Thjis from the 17th century. 
+      <!-- <a href="https://commons.wikimedia.org/wiki/File:Airfoil_lift_improvement_devices_(flaps).png" target="_blank">Wikimedia</a>. -->
+    </p>
+  </div>
 
-![video](https://www.youtube.com/watch?v=ca6Yviy5w2c)
-><sub>Kubeetle, bee inspired flapping wing drone. Available at: https://www.youtube.com/watch?v=ca6Yviy5w2c</sub>
+  <div style="flex: 1; max-width: 60%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Birdlike_plane.jpeg" 
+         alt="Flapping wing birdlike plane by DeLaurier" 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      Ornithopter designed by James DeLaurier which was flying for 40s with its flapping wings in 2002.
+      <a href="https://commons.wikimedia.org/wiki/File:Birdlike_plane.jpg" target="_blank">Institute for Aerospace Studies via Wikimedia</a>.
+    </p>
+  </div>
+</div>
 
-- hovering
-- smaller scale
-- flapping frequency: 200-300Hz
-- wings flap mainly forward and backward (horizontal plane)
-- tailless control
-- very agile, typically unstable
-- power demanding
+But the modern era of flapping-wing drones started in the late 20th century with the advancements in materials science and lightweight electric motors allowing for smaller insect- and bird-scale robots. Until today it is mainly a research topic with potential applications in agriculture, search-and-rescue and environmental monitoring.
 
-*Bid-inspired drones*:
+You might now rightfully ask yourself: Why with the maturity of very efficient fixed wing drones and very agile multirotor drones is the research nowadays still interested in flapping wing robots?
 
-![video](https://www.youtube.com/watch?v=hUE8o056Cpc)
-><sub>Festo, BionicSwift 2021. Available at: https://www.youtube.com/watch?v=hUE8o056Cpc</sub>
+Well there are several interesting opportunities when working with flapping wing drones. From a neuroscience point of view, FWFR serve as a robotic platform to explore control algorithms used by birds and insect, offering insights into biological flight. Aerodynamically, flapping wings offer an advantage at over fixed wings or propeller at small scale who lose efficiency at due to low Reynolds numbers. Lastly, oscillating wing motion produces less noise than fast spinning propellers and producing a more natural sound that tends to have a higher acceptance in human environments.
 
+#### Bird-inspired Flapping-Wing Robots
+
+Bird inspired flapping-wing robots produce lift and thrust by flapping their wings. The flapping motion consists mainly of an up-and-down motion typically at moderate frequencies. Lift and thrust are principally generated during the downstroke of the wing. Birds also use their tail to produce control forces for stability and maneuvering during flight. In nature, bird flight varies vastly from agile short distance flight (as in small birds) to extremely efficient long distance flights over thousands of kilometers when birds commute between the northern and southern hemisphere.
+
+<p>Look at the impressive footage below from a sparrowhaw. Despite flying at around 50km/h at top speed, it manages to take sharp turns, to maneuver in confined spaces and even to temporairily tuck the wings to pass through narrow gaps.</p>
+![video](https://www.youtube.com/watch?v=Ra6I6svXQPg)
+><sub>How sparrowhawks catch garden birds. Agile maneuvers of a hawk in slow motion. Available at: https://www.youtube.com/watch?v=Ra6I6svXQPg</sub>
+
+There are several challenges when trying to mimick a bird with a robot. An obvious one is to replicate the agile flying maneuvers which require a complex wing and tail mechanismn to achieve multiple degree of freedoms together with robust control algorithmns in a complex aerodynamical regime. Additionally, long-range flights require a hybrid strategy allowing to change between flapping and gliding modes. Another major challenge is the trade-off between a lightweight robot with yet powerful actuators, capable of providing sufficient force and torque. Despite thath, specific maneuvers like take-off and landing are a big challenge for flapping robots.
+
+Below you find some the key characteristics for bird-insipired flapping-wing robots:
 - forward flight
 - larger scale
 - flapping frequency 2-20Hz
@@ -1003,7 +1101,184 @@ But the modern era of flapping-wing drones started in the late 20th century with
 - passively stable
 - glide-capable
 
+<div class="tab-window" id="birdFlappers">
+  <div class="tab-title">Bird-inspired Flappers</div>
+  
+  <div class="tab-header">
+    <button class="tab-btn active" onclick="showTab(0, 'birdFlappers')">RoboFalcon</button>
+    <button class="tab-btn" onclick="showTab(1, 'birdFlappers')">P-Flap</button>
+    <button class="tab-btn" onclick="showTab(2, 'birdFlappers')">BionicSwift</button>
+  </div>
 
+  <!-- TAB 2 -->
+  <div class="tab-content active">
+    <p><strong>RoboFalcon:</strong> The RoboFalcon developped by Ang Chen and his team is equipped with a wing morphing mechanismn to achieve fast rolling agility in flapping level flight. The robot has wingspan of 1.2m and a weight of 600 grams.</p>
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/robofalcon.png" alt="RoboFalcon by Ang Cheng."/>
+      </figure>
+    </div>
+    <div class="ytb-window">
+      <div class="video-container">
+        <iframe
+          src="{{ site.baseurl }}/assets/images/uav/robofalcon.mp4"
+          title="RoboFalcon flight demonstration."
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://doi.org/10.1109/TRO.2022.3189812" target="_blank">A. Chen, B. Song, Z. Wang, D. Xue and K. Liu, "A Novel Actuation Strategy for an Agile Bioinspired FWAV Performing a Morphing-Coupled Wingbeat Pattern," in IEEE Transactions on Robotics, vol. 39, no. 1, pp. 452-469, Feb. 2023</a>.
+  </div>
+
+  <!-- TAB 3 -->
+  <div class="tab-content">
+    <p><strong>P-Flap:</strong> This 700 gramm flapping-wing robot developped by Raphael Zufferey and his team includes a grasping mechanismn on the claw which grasp a branch within 25 miliseconds. This allows the robot to perch and land autonomously on a branch.</p>
+    <div class="ytb-window">
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/pflap.png" alt="P-Flap by Raphael Zufferey."/>
+      </figure>
+    </div>
+      <div class="video-container">
+        <iframe src="{{ site.baseurl }}/assets/images/uav/pflap.mp4" 
+          title="P-Flap flight demonstration" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://doi.org/10.1038/s41467-022-35356-5" target="_blank">Zufferey, R., Tormo-Barbero, J., Feliu-Talegón, D. et al. How ornithopters can perch autonomously on a branch. Nat Commun 13, 7713 (2022)</a>.
+  </div>
+
+  <!-- TAB 4 -->
+  <div class="tab-content">
+    <p><strong>BionicSwift:</strong> Commercial flapping wing robot developped by festo. This 42 grams robot has a wingspan of 68 centimeters and is a highly agile flyer.</p>
+    <div class="ytb-window">
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/bionicswift.png" alt="Concept C figure"/>
+      </figure>
+    </div>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/hUE8o056Cpc" 
+          title="Concept C Video" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://www.festo.com/us/en/e/about-festo/research-and-development/bionic-learning-network/bionic-flying-objects/bionicswift-id_326830/" target="_blank">Festo (2021)</a>.
+  </div>
+</div>
+
+#### Insect-inspired Flapping Wing Robots
+
+Next to birds, insects are one of the most versatile and diverse fliers on the planet. While their size ranges from a few centimeters to only a fraction of a millimeter, they manage to hover in place, fly in strong winds, and develop swarm intelligence. Researchers around the world try to understand how insects achieve this. One way of doing so is by mimicking them in robots to better understand the underlying physics and the control techniques used.
+<p>We invite you to have a look at the video below from the YouTube channel <em>Ant Lab</em>. They do an incredible job of making stunning video shots of a wide variety of insects. The video below shows several fascinating insects taking off in super slow-motion. Thanks to that, you can see well the complex but rhythmic flapping of the wings, the diversity of the wing structures, and how some of them manage to fly despite seeming unstable in the air. While this does not yet talk about UAVs, it is a great way to understand the motivation and goal behind the research to develop such tiny flying robots.</p>
+
+![video](https://www.youtube.com/watch?v=gDI5g3rd0Ls)
+><sub>23 Insect Species in Slow-motion flight. Available at: https://www.youtube.com/watch?v=gDI5g3rd0Ls</sub>
+
+<!-- ![video](https://www.youtube.com/watch?v=ca6Yviy5w2c)
+><sub>Kubeetle, bee inspired flapping wing drone. Available at: https://www.youtube.com/watch?v=ca6Yviy5w2c</sub> -->
+
+Insect inspired drones, try to replicate those kind of flying behaviors at their small scale. From an engineering point of view this miniaturization is extremely challenging, since on a robot, often lighter than a single gram, you must fit an actuator, a processor and a power system. This being said there does not yet exist a small-scale flapping wing flying robot completely mastering all of these challenges.
+Another challenge is to control those small UAVs. Compared to larger UAVs, the small sized insect inspired drones operate at different reynold number, where viscous forces dominate and standard aerodynamic models fail to model the dynamics. However, research suggests that aerodynamically flapping-wing flight becomes the preferred solution compared to propellers at a very small scale.
+
+Before showing you a few examples of existing robots, the main characteristics of insect-inspired flight can be summarized as follows:
+- hovering capability 
+- small scale and ultra lightweight designs
+- high flapping frequency, typically ranging from 20 Hz to 300 Hz 
+- wings motion mainly in the horizontal plane with wings flapping forward and backward (horizontal plane)
+- tailless flight control, relying on wing modulation for stability and maneuvers
+- very agile, but typically inherently unstable
+- high power demand relative to weight
+
+<div class="tab-window" id="insectFlappers">
+  <div class="tab-title">Insect-Size Flapping-Wing Drones</div>
+  
+  <div class="tab-header">
+    <button class="tab-btn active" onclick="showTab(0, 'insectFlappers')">RoboBee</button>
+    <button class="tab-btn" onclick="showTab(1, 'insectFlappers')">RoboFly</button>
+    <button class="tab-btn" onclick="showTab(2, 'insectFlappers')">SoftFly</button>
+    <button class="tab-btn" onclick="showTab(3, 'insectFlappers')">PMN-PT-Flyer</button>
+  </div>
+
+
+  <div class="tab-content active">
+  <p><strong>RoboBee:</strong> This 80mg flapping-wing robot with 35mm wingspan was loosely modeled on the morphology of flies. Built by Kevin Ma it uses piezo-electric artificial flight muscles and is powered using a tethered wire. Closed-loop controlled it can hover and make controlled flight maneuvers.</p>
+    <div class="ytb-window">
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/robobee.jpg" alt="Robobee built by Kevin Ma."/>
+      </figure>
+    </div>
+      <div class="video-container">
+        <iframe src="{{ site.baseurl }}/assets/images/uav/robobee.mov" 
+          title="Robobee flight demonstration." frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://doi.org/10.1126/science.1231806" target="_blank">Kevin Y. Ma et al., Controlled Flight of a Biologically Inspired, Insect-Scale Robot. Science 340, 603-607(2013)</a>.
+  </div>
+
+  <div class="tab-content">
+    <p><strong>Laser RoboFly:</strong> This laser powered RoboFly capable of a wireless take-off with a weight of only 190mg was developped by Johannes James. It's powered by photovoltaic cell receving energy from a laser. As soon as the cell leaves the laser beam, the actuators stop and hence this robot is only capable of take-off but no sustained flight.</p>
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/robofly.png" alt="Laser powered RoboFly."/>
+      </figure>
+    </div>
+    <div class="ytb-window">
+      <div class="video-container">
+        <iframe
+          src="https://www.youtube.com/embed/17ATyC0kf2c"
+          title="Laser powered RobotFly lift-off demonstration."
+          style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://doi.org/10.1109/ICRA.2018.8460582" target="_blank">J. James, V. Iyer, Y. Chukewad, S. Gollakota and S. B. Fuller, "Liftoff of a 190 mg Laser-Powered Aerial Vehicle: The Lightest Wireless Robot to Fly," 2018 IEEE International Conference on Robotics and Automation (ICRA)</a>.
+  </div>
+
+  <div class="tab-content">
+    <p><strong>SoftFly:</strong> This SoftFly uses biomimetic artifical muscles that are capable of deformation to withstand external impact. With a weight of 120mg and a wingspan of 660mm is capable of stable flight. It uses a dielectric elastomer as an actuator and is powered using thin thethered wire.</p>
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/softfly.png" alt="SoftFly robotic fly."/>
+      </figure>
+    </div>
+    <div class="ytb-window">
+      <div class="video-container">
+        <iframe src="{{ site.baseurl }}/assets/images/uav/softfly.mp4" 
+          title="SoftFly kinematic demonstration." frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="video-container">
+        <iframe src="{{ site.baseurl }}/assets/images/uav/softfly_2.mp4" 
+          title="SoftFly closed-loop flight demonstration." frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://doi.org/10.1038/s41586-019-1737-7" target="_blank">Chen, Y., Zhao, H., Mao, J. et al. Controlled flight of a microrobot powered by soft artificial muscles. Nature 575, 324–329 (2019).</a>.
+  </div>
+
+  <div class="tab-content">
+    <p><strong>Pmn-pt flyer:</strong> This robot called pmn-pt flyer after its actuator type - a pmn-pt cantilever. Developped by Takashi Ozaki and his team this  robot uses wireless power-transmission, weighs 1.8g and has a wingspan of 100mm. It is able to take-off but no longer distance flight is possible since it needs to stay in proximity of the energy transmitting antenna.</p>
+    <div class="images">
+      <figure>
+        <img src="{{ site.baseurl }}/assets/images/uav/pmn-pt-flyer.png" alt="Pmn-pt flyer insect inspired drone by Takashi Ozaki."/>
+      </figure>
+    </div>
+    <div class="ytb-window">
+      <div class="video-container">
+        <iframe src="{{ site.baseurl }}/assets/images/uav/pmn-pt-flyer.mp4" 
+          title="Pmn-pt flyer insect inspired drone by Takashi Ozaki during test-flight." frameborder="0" 
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen></iframe>
+      </div>
+    </div>
+    <pre>Source: </pre> <a href="https://doi.org/10.1038/s41928-021-00669-8" target="_blank">Ozaki, T., Ohta, N., Jimbo, T. et al. A wireless radiofrequency-powered insect-scale flapping-wing aerial vehicle. Nat Electron 4, 845-852 (2021)</a>.
+  </div>
+
+</div>
 
 ### 2.3 Fixed wing drones
 A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They must move forward to generate lift and can thus not take off vertically. 
@@ -1022,8 +1297,6 @@ First human gliding flight by George Cayley in 1852, where he identified the fou
 
 
 ### 2.4 Morphing drones 
-<span style="color: red;">Question: treat as separate type or include as special case of rotor crafts and fixed wing drones?</span>
-
 
 Fixed wing drones that can change shape of the wings, or rotorcrafts that can change frame morphology to pass through narrow gaps
 

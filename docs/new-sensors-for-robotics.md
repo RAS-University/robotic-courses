@@ -1054,7 +1054,7 @@ $$
 ## Chapter 2: Proprioceptive Sensors
 {: #ch2 }
 
-Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). Typical measurements feed directly into feedback control and state estimation. In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene). 
+Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene). 
 
 In the following figure, a humanoid robot demonstrates the use of multiple proprioceptive sensors to estimate its internal state. The robot employs an inertial measurement unit (IMU) to determine its orientation and body motion, joint encoders to measure joint positions, and force–torque sensors to monitor internal loads and interaction forces. Tactile sensors embedded in the fingertips provide additional feedback on contact conditions. Together, these sensors enable precise estimation and control of the robot’s posture and movement. In addition to these proprioceptive sensors, the robot is also equipped with cameras and microphones, exteroceptive sensors that capture visual and auditory information from the surrounding environment, allowing it to perceive and respond to external stimuli.
 
@@ -1065,16 +1065,18 @@ In the following figure, a humanoid robot demonstrates the use of multiple propr
 
 Here are some of the typical proprioceptive sensors used in robotics, measuring key internal quantities that describe the robot’s mechanical and electrical state. These signals form the foundation for accurate estimation, feedback, and control.
 
-| Quantity | Typical sensor | Units | Notes |
-|---------|-----------------|-------|------|
-| Joint/shaft position | Incremental/absolute encoder, potentiometer | rad, deg, counts | Resolution/CPR, index/homing, backlash sensitivity |
-| Joint/shaft velocity | Derived from encoder or tachometer | rad/s, rpm | Differentiation amplifies noise; filtering adds delay |
-| Linear position/force (links/structures) | LVDT, strain gauge (bridge) | m, N, Nm | Calibration and temperature compensation required |
-| Body acceleration/rotation | IMU (accelerometers, gyroscopes) | m/s², °/s | Bias/scale drift, alignment, Allan characteristics |
-| Electrical current/voltage | Shunt/Hall sensor, ADC | A, V | Bandwidth, isolation, burden voltage, ripple/noise |
-| Torque (estimate) | From current: $\tau \approx k_t I$; torque sensor | Nm | $k_t$ tolerance, saturation, temperature dependence |
-| Temperature | Thermistor/RTD/IC sensor | °C | Warm-up, placement, thermal lag |
-| Battery state | Voltage, current (Coulomb counting) | V, A, Ah | SoC estimation; measurement noise vs filtering delay |
+
+| Quantity                                 | Typical sensor                                                         | Units            |
+| ---------------------------------------- | ---------------------------------------------------------------------- | ---------------- |
+| Joint/shaft position                     | Incremental/absolute encoder, potentiometer                            | rad, deg, counts |
+| Joint/shaft velocity                     | Derived from encoder or tachometer                                     | rad/s, rpm       |
+| Linear position/force (links/structures) | Strain gauge (bridge), Linear variable differential transformer (LVDT) | m, N, Nm         |
+| Body acceleration/rotation               | IMU (accelerometers, gyroscopes)                                       | m/s², °/s        |
+| Electrical current/voltage               | Shunt/Hall sensor, ADC                                                 | A, V             |
+| Torque (estimate)                        | From current: $\tau \approx k_t I$; torque sensor                      | Nm               |
+| Temperature                              | Thermistor/RTD/IC sensor                                               | °C               |
+| Battery state                            | Voltage, current (Coulomb counting)                                    | V, A, Ah         |
+
 
 **Difference between proprioceptive and exteroceptive sensors**
 
@@ -1124,7 +1126,7 @@ y(t) = \int V(t)\sin(\theta(t))\,dt, \qquad
 $$
 
 **From encoders to wheel travel.**  
-Encoders report **counts** as the wheel (or motor) turns. Over one sample, let the right/left counts be $\Delta N_r,\ \Delta N_\ell$. If each **wheel** revolution produces $\text{CPR}$ counts and the wheel radius is $r$, then
+Encoders report **counts** as the wheel (or motor) turns. Over one sample, let the right/left counts be $\Delta N_r,\ \Delta N_\ell$. If each **wheel** revolution produces $\text{CPR}$ (Counts Per Rotation) counts and the wheel radius is $r$, then
 
 $$
 \Delta \phi = 2\pi\,\frac{\Delta N}{\text{CPR}}\quad(\text{rad}),\qquad
@@ -1142,11 +1144,7 @@ $$
 v \approx \frac{\Delta s}{\Delta t}.
 $$
 
-**Practical notes.**  
-- Choose a **sign convention** (e.g., forward counts positive).  
-- Use the **effective** CPR after any decode mode (e.g., 4× quadrature).  
-
-> **Example** $r=0.05\,\text{m}$, $\text{CPR}=8000$ (after 4×). One count corresponds to  
+> **Example** $r=0.05\,\text{m}$, $\text{CPR}=8000$. One count corresponds to  
 > $$
 > \Delta s_{\text{per count}} = \frac{2\pi r}{\text{CPR}} \approx \frac{2\pi\cdot 0.05}{8000} \approx 0.0000393\,\text{m} = 0.039\,\text{mm}.
 > $$
@@ -1165,9 +1163,6 @@ $$
 - **Time synchronization.** Pose errors arise if encoder/IMU samples are integrated with inconsistent time stamps.  
 - **Integration drift.** Dead reckoning accumulates error; *pose maintenance* requires fusing with external references (e.g., vision, LiDAR, GPS) or loop closures.
 
-**Practical calibration.**  
-Drive straight lines and circles of known radius; fit wheel scale and baseline to minimize terminal pose error. Verify with both clockwise and counterclockwise trials to separate scale vs. baseline effects.
-
 ---
 
 #### Odometry in the estimation stack
@@ -1177,12 +1172,165 @@ Odometry provides a *high-rate, low-latency* motion prior for controllers and fi
 **Key takeaway.**  
 Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance.
 
+---
+
+<details markdown="1">
+ <summary>Conceptual Quesetions</summary>
+
+  <p><strong>Question 1: </strong> What is the core idea of odometry?</p>
+  <form id="ch2-odom-q1">
+    <input type="radio" name="ch2-odom-q1" value="A"> Estimating pose by matching images to a map<br>
+    <input type="radio" name="ch2-odom-q1" value="B"> Estimating pose by integrating proprioceptive motion with a kinematic model<br>
+    <input type="radio" name="ch2-odom-q1" value="C"> Estimating pose using GPS only<br>
+    <input type="radio" name="ch2-odom-q1" value="D"> Estimating pose by triangulating radio beacons<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q1','B',
+        '✅ Correct! Odometry integrates internal motion measurements through a kinematic model.',
+        '❌ Odometry relies on internal sensing and kinematics, not external references.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q1-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 2: </strong> If $v_r=v_\ell\neq 0$ for a differential drive with track width $b=2d$, what is the angular rate $\omega$?</p>
+  <form id="ch2-odom-q2">
+    <input type="radio" name="ch2-odom-q2" value="A"> $\omega = \dfrac{2v_r}{b}$<br>
+    <input type="radio" name="ch2-odom-q2" value="B"> $\omega = \dfrac{v_r-v_\ell}{b}=0$<br>
+    <input type="radio" name="ch2-odom-q2" value="C"> $\omega = \dfrac{v_r+v_\ell}{b}$<br>
+    <input type="radio" name="ch2-odom-q2" value="D"> $\omega$ is undefined<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q2','B',
+        '✅ Correct! Equal wheel speeds imply zero yaw rate and straight motion.',
+        '❌ Try again')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q2-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 3: </strong> With the sign convention $v_r,v_\ell&gt;0$ forward and $\omega=(v_r-v_\ell)/b$, if $v_r&gt;v_\ell$ the robot turns:</p>
+  <form id="ch2-odom-q3">
+    <input type="radio" name="ch2-odom-q3" value="A"> Toward the right wheel (clockwise)<br>
+    <input type="radio" name="ch2-odom-q3" value="B"> Toward the left wheel (counterclockwise)<br>
+    <input type="radio" name="ch2-odom-q3" value="C"> Straight ahead<br>
+    <input type="radio" name="ch2-odom-q3" value="D"> Backward<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q3','B',
+        '✅ Correct! $\omega&gt;0$ and the instantaneous center lies on the left side.',
+        '❌ Compare $v_r$ vs $v_\ell$ in $\omega=(v_r-v_\ell)/b$ and the ICC interpretation.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q3-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 4: </strong> If $\mathrm{CPR}$ doubles and all else is unchanged, the distance represented by one count:</p>
+  <form id="ch2-odom-q6">
+    <input type="radio" name="ch2-odom-q6" value="A"> Doubles<br>
+    <input type="radio" name="ch2-odom-q6" value="B"> Halves<br>
+    <input type="radio" name="ch2-odom-q6" value="C"> Stays the same<br>
+    <input type="radio" name="ch2-odom-q6" value="D"> Becomes zero<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q6','B',
+        '✅ Correct! Distance per count is inversely proportional to CPR.',
+        '❌ Use $\Delta s_{\text{per count}}=2\pi r/\mathrm{CPR}$.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q6-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 5: </strong> True or False: Mounting encoders on the motor shaft removes the influence of gearbox backlash on wheel odometry.</p>
+  <form id="ch2-odom-q7">
+    <input type="radio" name="ch2-odom-q7" value="True"> True<br>
+    <input type="radio" name="ch2-odom-q7" value="False"> False<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q7','False',
+        '✅ Correct! Motor-side encoders do not measure output-side lash and compliance, so wheel motion can be misestimated during reversals.',
+        '❌ See the note on backlash and encoder mounting in the error sources list.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q7-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 6: </strong> True or False: Even with perfect encoders and calibration, persistent wheel slip can create systematic curvature errors in odometry.</p>
+  <form id="ch2-odom-q9">
+    <input type="radio" name="ch2-odom-q9" value="True"> True<br>
+    <input type="radio" name="ch2-odom-q9" value="False"> False<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q9','True',
+        '✅ Correct! Slip violates the no-slip kinematic assumption and introduces bias.',
+        '❌ Slip breaks the kinematic model assumptions and biases path estimates.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q9-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 7: </strong> For $v_r=0.60$ m/s, $v_\ell=0.40$ m/s, and $b=0.50$ m, what is $\omega$?</p>
+  <form id="ch2-odom-q11">
+    <input type="radio" name="ch2-odom-q11" value="A"> $0.20$ rad/s<br>
+    <input type="radio" name="ch2-odom-q11" value="B"> $0.40$ rad/s<br>
+    <input type="radio" name="ch2-odom-q11" value="C"> $1.00$ rad/s<br>
+    <input type="radio" name="ch2-odom-q11" value="D"> $2.00$ rad/s<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q11','B',
+        '✅ Correct! $\omega=(v_r-v_\ell)/b=(0.60-0.40)/0.50=0.40$ rad/s.',
+        '❌ Apply $\omega=(v_r-v_\ell)/b$ carefully with units.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q11-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 8: </strong> Which statement best describes odometry in a modern fusion system?</p>
+  <form id="ch2-odom-q12">
+    <input type="radio" name="ch2-odom-q12" value="A"> It replaces exteroceptive sensors entirely<br>
+    <input type="radio" name="ch2-odom-q12" value="B"> It provides a high-rate motion prior, while drift is corrected by global or exteroceptive measurements<br>
+    <input type="radio" name="ch2-odom-q12" value="C"> It is only used when GPS is available<br>
+    <input type="radio" name="ch2-odom-q12" value="D"> It estimates absolute position without drift<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q12','B',
+        '✅ Correct! Odometry is low-latency input to filters; vision, LiDAR, or GPS bound drift.',
+        '❌ See the odometry-in-the-stack discussion and the key takeaway.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q12-feedback"></p>
+  </form>
+
+</details>
+
+---
+
+<details markdown="1">
+ <summary>Further exploration</summary>
+
+  Video explaining differential drive odometry in more detail.
+
+  ![](https://www.youtube.com/watch?v=LrsTBWf6Wsc)
+  ><sub>*wheeled robot control and odometry. YouTube video, Sep 11, 2019. Available at: https://www.youtube.com/watch?v=LrsTBWf6Wsc*</sub>
+
+  Article explaining differential Drive odometry :
+  - [Wheel Odometry Model for Differential Drive Robotics](https://medium.com/@nahmed3536/wheel-odometry-model-for-differential-drive-robotics-91b85a012299)
+
+</details>
 
 ---
 
 ### 2.2 Rotary & Linear Position Sensing (Encoders & Potentiometers)
 
 Position sensing provides joint/shaft angle and linear travel for feedback control, odometry, and safety. Common technologies include **incremental encoders**, **absolute encoders**, **resolvers/synchros**, and **potentiometers**. Selection should be guided by the characteristics in Ch. 1 (range, resolution, accuracy, noise, bandwidth/latency) and by mechanical integration constraints.
+
+---
 
 **Incremental encoders.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/encoder.png)
@@ -1210,7 +1358,7 @@ Many incremental encoders also include an **Index (I)** signal, which generates 
 
 </details>
 
-
+---
 
 **Absolute encoders.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Absolute_encoder.png)
@@ -1238,6 +1386,8 @@ To convert bits of resolution into the number of positions the encoder can detec
 
 
 </details>
+
+---
 
 **Potentiometers.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/poten.jpg)
@@ -1273,15 +1423,216 @@ which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text
 - Buffer the wiper with a high-impedance amplifier if $R_{\text{in}}$ is not large.  
 - Add a small **RC** near the ADC to tame contact noise; keep leads short or shielded.  
 - Avoid mechanical end-stops in normal operation; select stroke so the application stays inside the **electrical** travel.  
-- For longevity and lower noise, choose **conductive-plastic** over wirewound when available; check IP rating and temperature coeff.
 
 > **Examples**  
 > 1) *ADC-limited resolution (rotary)*: $\theta_{\max}=300^\circ$, $N=12$.  
 > $$\Delta\theta = \frac{300^\circ}{2^{12}} \approx 0.073^\circ \text{ per LSB}.$$
-> 2) *Loading error check*: $R_{\text{pot}}=10\,\text{k}\Omega$, $R_{\text{in}}=1\,\text{M}\Omega$. At mid-travel ($\alpha\!=\!0.5$), the error relative to $\alpha V_{\text{ref}}$ is $\approx 0.25\%$; with $R_{\text{in}}=100\,\text{k}\Omega$ it rises to a few percent.
+> 2) *Loading error check*: $R_{\text{pot}}=10\,\text{k}\Omega$, $R_{\text{in}}=1\,\text{M}\Omega$. At mid-travel ($\alpha\=\0.5$), the error relative to $\alpha V_{\text{ref}}$ is $\approx 0.25\%$; with $R_{\text{in}}=100\,\text{k}\Omega$ it rises to a few percent.
 
-**Pros.** Simple, low cost, absolute position, minimal processing latency.  
-**Cons.** Wear (finite wiper life), linearity/hysteresis limits, sensitivity to loading and noise, rotary travel often $<360^\circ$.
+---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+<p><strong>Question 1: Incremental vs. absolute encoders.</strong> Which statement best differentiates the two?</p>
+<form id="ch2-pos-q1">
+  <input type="radio" name="ch2-pos-q1" value="A"> Incremental reports a unique code for every angle; absolute provides pulses only<br>
+  <input type="radio" name="ch2-pos-q1" value="B"> Incremental counts motion from a reference (often needs homing); absolute reports a unique position code at all times<br>
+  <input type="radio" name="ch2-pos-q1" value="C"> Both require homing after power-up<br>
+  <input type="radio" name="ch2-pos-q1" value="D"> Both provide continuous analog voltage outputs<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q1','B',
+      '✅ Correct! Incremental measures relative motion; absolute encodes position uniquely and survives power cycles.',
+      '❌ Review how incremental counting differs from absolute coding.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q1-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 2: Quadrature resolution.</strong> An incremental encoder outputs 1000 <em>quadrature cycles</em> per revolution (i.e., 1000 A–B state periods). With 4× edge counting, the counts per revolution are:</p>
+<form id="ch2-pos-q2">
+  <input type="radio" name="ch2-pos-q2" value="A"> 1000<br>
+  <input type="radio" name="ch2-pos-q2" value="B"> 2000<br>
+  <input type="radio" name="ch2-pos-q2" value="C"> 4000<br>
+  <input type="radio" name="ch2-pos-q2" value="D"> 8000<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q2','C',
+      '✅ Correct! 4 edges per cycle ⇒ $4\times1000=4000$ counts/rev.',
+      '❌ Each quadrature cycle contributes four countable edges with 4× decoding.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q2-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 3: Direction from A/B.</strong> In a quadrature encoder, if Channel A <em>leads</em> Channel B, the direction is:</p>
+<form id="ch2-pos-q3">
+  <input type="radio" name="ch2-pos-q3" value="A"> One direction (by convention, forward)<br>
+  <input type="radio" name="ch2-pos-q3" value="B"> The opposite direction<br>
+  <input type="radio" name="ch2-pos-q3" value="C"> Cannot be determined<br>
+  <input type="radio" name="ch2-pos-q3" value="D"> Always alternating<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q3','A',
+      '✅ Correct! A leading B indicates one direction; B leading A indicates the other.',
+      '❌ The phase relationship between A and B encodes direction.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q3-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 4: Index pulse.</strong> The Index (I or Z) signal on many incremental encoders is used primarily to:</p>
+<form id="ch2-pos-q4">
+  <input type="radio" name="ch2-pos-q4" value="A"> Double the resolution<br>
+  <input type="radio" name="ch2-pos-q4" value="B"> Provide one reference mark per revolution for homing/alignment<br>
+  <input type="radio" name="ch2-pos-q4" value="C"> Measure temperature<br>
+  <input type="radio" name="ch2-pos-q4" value="D"> Filter noise on A/B<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q4','B',
+      '✅ Correct! The index gives a once-per-rev absolute reference.',
+      '❌ The index does not improve edge resolution nor filter signals.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q4-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 5: Angle per count.</strong> If a shaft yields 4096 counts per revolution, the ideal angular resolution is approximately:</p>
+<form id="ch2-pos-q5">
+  <input type="radio" name="ch2-pos-q5" value="A"> $0.18^\circ$/count<br>
+  <input type="radio" name="ch2-pos-q5" value="B"> $0.088^\circ$/count<br>
+  <input type="radio" name="ch2-pos-q5" value="C"> $0.0088^\circ$/count<br>
+  <input type="radio" name="ch2-pos-q5" value="D"> $0.44^\circ$/count<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q5','B',
+      '✅ Correct! $360^\circ/4096\approx0.0879^\circ$ per count.',
+      '❌ Divide $360^\circ$ by counts/rev to get degrees per count.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q5-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 6: Absolute encoder bits.</strong> A 14-bit absolute rotary encoder can uniquely report how many positions per revolution?</p>
+<form id="ch2-pos-q6">
+  <input type="radio" name="ch2-pos-q6" value="A"> $2^{10}=1024$<br>
+  <input type="radio" name="ch2-pos-q6" value="B"> $2^{12}=4096$<br>
+  <input type="radio" name="ch2-pos-q6" value="C"> $2^{14}=16384$<br>
+  <input type="radio" name="ch2-pos-q6" value="D"> $2^{16}=65536$<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q6','C',
+      '✅ Correct! Bits $\rightarrow$ positions: $2^{14}=16384$.',
+      '❌ Convert bits to positions with $2^n$.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q6-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 7: Potentiometer ideal output.</strong> A linear potentiometer is excited with $V_{\text{ref}}=5\,$V. Ignoring loading, at $\alpha=0.25$ the output is:</p>
+<form id="ch2-pos-q7">
+  <input type="radio" name="ch2-pos-q7" value="A"> $0.25$ V<br>
+  <input type="radio" name="ch2-pos-q7" value="B"> $1.25$ V<br>
+  <input type="radio" name="ch2-pos-q7" value="C"> $2.5$ V<br>
+  <input type="radio" name="ch2-pos-q7" value="D"> $3.75$ V<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q7','B',
+      '✅ Correct! $V_{\text{out}}=\alpha V_{\text{ref}}=0.25\times5=1.25$ V.',
+      '❌ Use the ideal divider relation $V_{\text{out}}=\alpha V_{\text{ref}}$ (no load).')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q7-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 8: Loading effect.</strong> True or False: With $R_{\text{pot}}=10\,\text{k}\Omega$ and ADC input $R_{\text{in}}=100\,\text{k}\Omega$, loading error is negligible across the stroke.</p>
+<form id="ch2-pos-q8">
+  <input type="radio" name="ch2-pos-q8" value="True"> True<br>
+  <input type="radio" name="ch2-pos-q8" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q8','False',
+      '✅ Correct! $R_{\text{in}}$ only $10\times$ larger than $R_{\text{pot}}$ causes noticeable gain error (a few percent). Prefer $R_{\text{in}}\!\gg\!R_{\text{pot}}$ or buffer the wiper.',
+      '❌ See the loading discussion: finite $R_{\text{in}}$ pulls down $V_{\text{out}}$.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q8-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 9: Ratiometric readout.</strong> True or False: Driving a potentiometer with the same $V_{\text{ref}}$ used by the ADC reference makes the reading insensitive (ideally) to supply variation.</p>
+<form id="ch2-pos-q9">
+  <input type="radio" name="ch2-pos-q9" value="True"> True<br>
+  <input type="radio" name="ch2-pos-q9" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q9','True',
+      '✅ Correct! The ratio $V_{\text{out}}/V_{\text{ref}}=\alpha$ cancels common $V_{\text{ref}}$ changes.',
+      '❌ Ratiometric measurement exploits the normalized divider output to reject supply drift.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q9-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 10: Resolution origin (potentiometers).</strong> Which statement is most accurate?</p>
+<form id="ch2-pos-q10">
+  <input type="radio" name="ch2-pos-q10" value="A"> Potentiometers have “bits” of resolution like absolute encoders<br>
+  <input type="radio" name="ch2-pos-q10" value="B"> Resolution is set by ADC quantization and noise on $V_{\text{out}}$<br>
+  <input type="radio" name="ch2-pos-q10" value="C"> Resolution is unlimited in practice<br>
+  <input type="radio" name="ch2-pos-q10" value="D"> Resolution depends only on mechanical stroke<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q10','B',
+      '✅ Correct! The divider is analog; effective resolution comes from the ADC and noise.',
+      '❌ Pots do not have discrete position codes; the ADC sets the LSB.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q10-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 11: Range and travel.</strong> Which statement is correct for typical devices?</p>
+<form id="ch2-pos-q11">
+  <input type="radio" name="ch2-pos-q11" value="A"> Rotary pots commonly allow unlimited turns<br>
+  <input type="radio" name="ch2-pos-q11" value="B"> Single-turn rotary pots often have $\theta_{\max}\approx300^\circ$; multi-turn versions increase range<br>
+  <input type="radio" name="ch2-pos-q11" value="C"> Electrical travel always equals mechanical travel<br>
+  <input type="radio" name="ch2-pos-q11" value="D"> Linear pots cannot specify stroke<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q11','B',
+      '✅ Correct! Single-turn pots are ~300°; multi-turn extend range and electrical travel is slightly less than mechanical.',
+      '❌ Revisit the range definitions for rotary and linear potentiometers.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q11-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 12: Integration best practice.</strong> When $R_{\text{in}}$ cannot be made $\gg R_{\text{pot}}$, the recommended interface is to:</p>
+<form id="ch2-pos-q12">
+  <input type="radio" name="ch2-pos-q12" value="A"> Add a large series resistor in the wiper lead<br>
+  <input type="radio" name="ch2-pos-q12" value="B"> Buffer the wiper with a high-impedance amplifier before the ADC<br>
+  <input type="radio" name="ch2-pos-q12" value="C"> Lower the ADC reference voltage<br>
+  <input type="radio" name="ch2-pos-q12" value="D"> Short the ends of the potentiometer<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-pos-q12','B',
+      '✅ Correct! A high-impedance buffer prevents loading and gain error.',
+      '❌ Series resistance does not fix divider loading.')">
+    Check Answer
+  </button>
+  <p id="ch2-pos-q12-feedback"></p>
+</form>
+
+</details>
 
 
 ---
@@ -1308,7 +1659,7 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/gyrocompas.png)
 ><sub>Simple gyrocompass. (a) Pendulus gyro. (b) Precessional motion. Source: Springer Handbook of Robotics, Chapter 20.1</sub>
 
-#### 2) Optical gyroscopes: RLG and FOG
+#### 2) Optical gyroscopes
 
 * **Principle (Sagnac effect).** Send light both ways around a closed loop (see Fig below) of length $D=2\pi R$. If the loop is stationary, both pulses traverse the same distance at speed $c$ and arrive together after
 $$
@@ -1338,7 +1689,7 @@ This $\Delta t$ is what RLGs and FOGs convert into a measurable phase or frequen
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/opti-gyro-schematic.png)
 ><sub>Circular light path. (a) Stationary path. (b) Moving path. Source: Springer Handbook of Robotics, Chapter 20.2.3</sub>
 
-Fiber-optic gyros (FOG) use long polarization-maintaining fiber loops; ring-laser gyros (RLG) use a laser cavity and measure the beat frequency between the two standing waves. Small rotations can cause **lock-in** in RLGs, mitigated by controlled dithering. Optical gyros are accurate, with no spinning mass. 
+Fiber-optic gyros (FOG) use long polarization-maintaining fiber loops; ring-laser gyros (RLG) use a laser cavity and measure the beat frequency between the two standing waves. Optical gyros are accurate, with no spinning mass. 
 
 #### 3) MEMS (micro-electromechanical) gyroscopes
 
@@ -1530,8 +1881,97 @@ In an IMU, tri-axial gyros integrate attitude, accelerometer readings are rotate
 **Key takeaway.**  
 Accelerometers convert proof-mass deflection into acceleration, inherently sensing gravity as well as motion. Their usefulness in robotics hinges on proper range selection, noise/bias management, bandwidth/latency budgeting, and calibration, and on fusing with other sensors to prevent integrated drift.
 
+---
+
 <details markdown="1">
- <summary>Video</summary>
+  <summary>Conceptual questions</summary>
+
+<p><strong>Question 1: Gravity sensitivity.</strong> True or False: An accelerometer at rest on a table will measure a nonzero acceleration magnitude of approximately $g$ because it senses gravity.</p>
+<form id="ch2-acc-q1">
+  <input type="radio" name="ch2-acc-q1" value="True"> True<br>
+  <input type="radio" name="ch2-acc-q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-acc-q1','True',
+      '✅ Correct! Accelerometers measure all external specific forces, including gravity.',
+      '❌ Accelerometers are gravity sensitive; at rest they read about $1g$.')">
+    Check Answer
+  </button>
+  <p id="ch2-acc-q1-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 2: Static equilibrium model.</strong> In the spring–mass–damper model with mass $m$, spring $k$, damping $c$, under constant acceleration $a$ (steady state), which relation best describes the displacement $x$?</p>
+<form id="ch2-acc-q2">
+  <input type="radio" name="ch2-acc-q2" value="A"> $kx \approx ma$<br>
+  <input type="radio" name="ch2-acc-q2" value="B"> $cx \approx ma$<br>
+  <input type="radio" name="ch2-acc-q2" value="C"> $m\ddot{x} \approx ma$<br>
+  <input type="radio" name="ch2-acc-q2" value="D"> $kx \approx 0$<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-acc-q2','A',
+      '✅ Correct! At steady state $\dot{x}=\ddot{x}=0$, so $kx=ma$ ignoring damping.',
+      '❌ At equilibrium the spring balances the inertial force: $kx=ma$.')">
+    Check Answer
+  </button>
+  <p id="ch2-acc-q2-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 3: Piezoelectric use case.</strong> Which statement best describes a piezoelectric accelerometer?</p>
+<form id="ch2-acc-q3">
+  <input type="radio" name="ch2-acc-q3" value="A"> Best for static measurements of $1g$ with no motion<br>
+  <input type="radio" name="ch2-acc-q3" value="B"> Well suited to dynamic acceleration and vibration sensing<br>
+  <input type="radio" name="ch2-acc-q3" value="C"> Measures velocity directly via Faraday induction<br>
+  <input type="radio" name="ch2-acc-q3" value="D"> Immune to bias and temperature effects<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-acc-q3','B',
+      '✅ Correct! Piezoelectric transducers respond to changing stress, ideal for dynamic signals.',
+      '❌ Piezo devices are poor for true DC $1g$ measurements; they excel at dynamics.')">
+    Check Answer
+  </button>
+  <p id="ch2-acc-q3-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 4: Six-position calibration.</strong> The primary goal of a six-position “1 g” test is to estimate per-axis:</p>
+<form id="ch2-acc-q4">
+  <input type="radio" name="ch2-acc-q4" value="A"> Bandwidth and latency<br>
+  <input type="radio" name="ch2-acc-q4" value="B"> Bias and scale factors using the known magnitude $\lVert a\rVert\approx g$ at rest<br>
+  <input type="radio" name="ch2-acc-q4" value="C"> Cross-axis vibration rejection only<br>
+  <input type="radio" name="ch2-acc-q4" value="D"> Gyro alignment<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-acc-q4','B',
+      '✅ Correct! Flipping each axis up/down lets you recover bias and scale against the $1g$ reference.',
+      '❌ The six-position test targets bias/scale using gravity as a known input.')">
+    Check Answer
+  </button>
+  <p id="ch2-acc-q4-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 5: Gravity removal in an IMU.</strong> True or False: Accurate attitude from gyros is important because any tilt error misprojects gravity, leaving a residual that integrates to large velocity/position drift.</p>
+<form id="ch2-acc-q5">
+  <input type="radio" name="ch2-acc-q5" value="True"> True<br>
+  <input type="radio" name="ch2-acc-q5" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-acc-q5','True',
+      '✅ Correct! Misestimated attitude corrupts gravity subtraction, causing integrated drift.',
+      '❌ Gravity must be removed in the correct frame; attitude errors cause significant drift.')">
+    Check Answer
+  </button>
+  <p id="ch2-acc-q5-feedback"></p>
+</form>
+
+</details>
+
+
+---
+
+<details markdown="1">
+ <summary>Further exploration</summary>
 
   This short video explains how an accelerometer works.
 

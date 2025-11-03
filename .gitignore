@@ -17,3 +17,6 @@ vendor/
 # Ignore system files
 .DS_Store
 .vscode/
+
+# Ignore Gemfile 
+Gemfile.lock

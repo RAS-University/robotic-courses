@@ -98,7 +98,8 @@ author: Mael Studer (EPFL)
 
 ## 1. Prerequisites
 
-- add at the end
+⚠️ Adapt in the end ⚠️
+
 - closed-loop control page (controller definition)
 - (read course about sensors and sensing)
 
@@ -113,37 +114,98 @@ Robots are expected to interact closely and safely with humans aswell as with th
 - **Manipulation:** (robot: active agent - object: passive agent)  
 *Goal: Use perception to perform an action on an object successfully.*  
 During manipulation, a robot senses an object and adapts its actions accordingly. An example of manipulation is the grasping of objects, essential in industrial applications. During grasping, touch could be used to maximize the contact surface between the robotic hand and the object or to prevent slippage of the object. (->link to grasping page)  
-Slippage can arise in scenarios like dealing with soft objects (e.g. fruit), when objects change weight mid grasp (e.g. water bottle filled during manipulation) or just while moving objects from one place to another. In the video below there is an example
+Slippage can arise in scenarios like dealing with soft objects (e.g. fruit), when objects change weight mid-grasp (e.g. a water bottle being filled during manipulation), or simply while moving objects from one place to another. In the video below, an example is shown of a robotic hand manipulating a filled champagne glass.  
 From the point of view of signals, the action related information flows from the manipulated object towards the controller.
 
+<video width="640" controls>
+  <source src="{{ '/assets/videos/force_perception/manipulation_ex.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<sub><i>
+Example of Manipulation: Moving a Champagne Glass
+(<a href="https://ieeexplore.ieee.org/document/10146043">F. Khadivar, A. Billard, IEEE T-RO 2023</a>).
+</i></sub>
+
+<!--
 ![Manipulation Example](https://www.youtube.com/watch?v=teOeMzuwMpo)
 ><sub>*Example of Manipulation: Lifting a Tennis Ball. Available on [YouTube](https://www.youtube.com/watch?v=teOeMzuwMpo)*</sub>
+-->
 
 - **Exploration:** (robot: active agent - object: passive agent)  
 *Goal: Learn about object properties.*  
 As in manipulation, exploration is when a robot interacts with an object, except the robot performs movements to learn about the object (action reveals perception).  
-In exploration, touch is used to measure material properties like softness (stiff or compliant), surface texture (e.g. smooth vs rough), shape, temperature or even friction coefficient.  
-In the video below, a robotic finger moves over objects trying to identify their shape. The action related information flows from controller towards contact; the object has no infulence on action.
+In exploration, touch is used to measure material properties like softness (stiff or compliant), surface texture (e.g. smooth vs rough), shape, temperature or even friction coefficient. In the video below, a humanoid robot moves his fingers over objects trying to identify their shape.  
+The action related information flows from controller towards contact; the object has no infulence on action.
 
+<video width="640" controls>
+  <source src="{{ '/assets/videos/force_perception/exploration_ex.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<sub><i>
+Example of Exploration: Shape detection
+(<a href="https://ieeexplore.ieee.org/document/6907804">N. Sommer, M. Li, A. Billard, ICRA 2014</a>).
+</i></sub>
+
+<!--
 ![Exploration Example](https://www.youtube.com/watch?v=UWMRR38hNWA)
 ><sub>*Example of Exploration: Shape detection. Available on [YouTube](https://www.youtube.com/watch?v=UWMRR38hNWA)*</sub>
+-->
 
 - **Reaction:** (robot: active agent - human/robot: activ agent)  
 *Goal: Enable safe interactions with another active agent.*  
 Reaction refers to an interaction between a robot and a human (or another robot). The robot not only perceives and acts, but also adapts in real-time to the other agent by interpreting the constant feedback.  
 Therefore there is a bi-directional information flow, known as closed-loop control. This enables safe operation of robots around humans.  
 For example, in the field of *haptics*, humans can guide robots and feel force feedback (e.g. teleoperation).
-More on *haptics* can be found on the dedicated page (link to haptics).
-In the video below, there is an example of a human shaking hands with a robot.
+More on *haptics* can be found on the dedicated page (link to haptics).  
+In the video below, a robotic hand is shown trying to massage a fake human arm while being pushed away by a person.
 
+<video width="640" controls>
+  <source src="{{ '/assets/videos/force_perception/reaction_ex.mp4' | relative_url }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<sub><i>
+Example of Reaction: Arm Massage by Robot
+(<a href="https://doi.org/10.1007/s10514-020-09934-9">M. Khoramshahi, A. Billard, ICRA 2020</a>).
+</i></sub>
+
+<!--
 ![Reaction Example](https://www.youtube.com/watch?v=TFwVKe3W41Y)
 ><sub>*Example of Reaction: Handshake between Human and Robot. Available on [YouTube](https://www.youtube.com/watch?v=TFwVKe3W41Y)*</sub>
-
----
+-->
 
 Some promising fields in which force perception is used are biomedical robotics (e.g. surgical robotics -> link to page), rehabilitation (e.g. exoskeletons -> link to page) or humanoids (link to humanoids page).
 
 > On this page, the terms *sense of touch*, *tactile sensing* and *force perception* refer to the robot’s ability to perceive and interpret physical interaction.
+
+<details markdown="1">
+<summary>Quiz (tap to expand)</summary>
+
+  <p><strong>Why is touch used in robotics?</strong></p>
+  <form id="quiz-touch">
+    <input type="checkbox" name="quiz-touch" value="option1">
+    Because it allows robots to adapt during physical interactions. <br>
+
+    <input type="checkbox" name="quiz-touch" value="option2">
+    Because it replaces the need for vision in robotic tasks. <br>
+
+    <input type="checkbox" name="quiz-touch" value="option3">
+    Because it helps robots generate speech responses. <br>
+
+    <input type="checkbox" name="quiz-touch" value="option4">
+    Because it enables robots to perceive forces exchanged with their environment. <br>
+
+    <button type="button" onclick="checkMultipleAnswers(
+      'quiz-touch',
+      ['option1', 'option4'],
+      'Correct!',
+      'Incorrect!'
+    )">
+      Check Answer
+    </button>
+
+    <p id="quiz-touch-feedback"></p>
+  </form>
+</details>
 
 ---
 
@@ -156,6 +218,36 @@ It is possible to distinguish two types of force perception based on where the s
 - **Force feedback (intrinsic)** measures the global forces and torques applied to the system at a specific point, considered infinitesimally small. It can be thought of as the overall push, pull and twist the robot feels at that contact point (usually at a joint).
 
 - **Tactile feedback (extrinsic)** measures pressure or stress distributions over a surface rather than at a single point. It relies on an array of sensing elements, forming what can be thought of as an electronic skin. Because it includes multiple contact points, it can detect slippage, surface texture and the exact contact location on the array. Depending on the used materials, tactile sensors can be flexible, compliant, stiff and rigid.
+
+<details markdown="1">
+<summary>Quiz (tap de expand)</summary>
+
+  <p><strong>What is a force?</strong></p>
+  <form id="quiz1">
+    <input type="checkbox" name="quiz1" value="option21">
+    A 6D vector (x, y, z + rotations) <br>
+
+    <input type="checkbox" name="quiz1" value="option2">
+    A 3D vector (x, y, z coordinates) <br>
+
+    <input type="checkbox" name="quiz1" value="option3">
+    A quantity measured in Newton [N] or Pascal [Pa] <br>
+
+    <input type="checkbox" name="quiz1" value="option4">
+    A quantity measured in Newton/meter [N/m] <br>
+
+    <button type="button" onclick="checkMultipleAnswers(
+      'quiz1',
+      ['option2', 'option3'],
+      'Correct!',
+      'Incorrect!'
+    )">
+      Check Answer
+    </button>
+
+    <p id="quiz1-feedback"></p>
+  </form>
+</details>
 
 On this page, we will move gradually from **force feedback**, which describes interactions occurring at a single point, to **tactile feedback**, where sensing extends across a surface.  
 Although the examples shown in the introduction mainly focused on hands and fingertips, tactile sensing can be applied to the entire body of a robot. However, challenges such as wiring complexity and limited mechanical flexibility must also be addressed.
@@ -188,6 +280,36 @@ Finally, we will address how tactile information is processed and how sensor loc
 ### Chapter 1 : Force/Torque Sensors
 
 -> also presented in chapter about "sensors and sensing" (discuss to not be redundant)
+
+<details markdown="1">
+<summary>Quiz (tap de expand)</summary>
+
+  <p><strong>Why do force sensors require calibration?</strong></p>
+  <form id="quiz2">
+    <input type="checkbox" name="quiz2" value="option1">
+    Measurement depends on the mass, which varies depending on where you are on Earth <br>
+
+    <input type="checkbox" name="quiz2" value="option2">
+    Because calibration increases the sensor’s weight <br>
+
+    <input type="checkbox" name="quiz2" value="option3">
+    No sensors are perfectly identical <br>
+
+    <input type="checkbox" name="quiz2" value="option4">
+    To synchronize the sensor’s internal clock with the computer <br>
+
+    <button type="button" onclick="checkMultipleAnswers(
+      'quiz2',
+      ['option3'],
+      'Correct!',
+      'Incorrect!'
+    )">
+      Check Answer
+    </button>
+
+    <p id="quiz2-feedback"></p>
+  </form>
+</details>
 
 #### 1.1 Traditionnal Force Sensors
 
@@ -248,12 +370,34 @@ tactile sensing 5.2.7 – 5.2.8
 
 ---
 
-### Chapter 4 : Information Processing
+### Chapter 4 : Issues and Difficulties
+
+-> tactile sensing chapter 4
 
 (is this worth a chapter or should it just be beneath the concerned parts)
 
 add challenges of electronics: wiring, data transfer, power consumption  
 -> examples of how it is done today
+
+---
+
+### Expectations of Tactile Systems
+
+#### Limited Space
+
+Tactile systems are most often placed in areas of the robot where space is limited, typically on a finger. Therefore, it is desirable to use multifunctional sensors, for example sensors that can detect not only tactile but also thermal properties.
+
+#### Spatial Resolution
+
+The resolution of a tactile sensing array does not need to be the same across all locations. For example, a tactile sensor on a fingertip needs to be more sensitive than one on the shoulder, and should therefore contain more elements in its sensing grid.
+
+#### Sensing Range and Directionality
+
+Depending on its application, a tactile sensor should be able to detect forces over a wide range. It should be capable of sensing both very light objects and heavier ones without being damaged. Moreover, the sensor should also be able to detect the direction of the applied force, providing a better understanding of the object being touched.
+
+#### Reaction Time
+
+When a tactile sensor is used for controlling a robot, it must provide feedback quickly in order to enable real-time reactions.
 
 ---
 
@@ -276,15 +420,28 @@ add the challenges that come with the sensor location (integrated into skin surf
 
 ---
 
-QUESTIONS: 
+QUESTIONS:  
 
-- What exercices should I add? (as it is mainly theoretical parts)
+-  
+
+-  
 
 ## Additional Resources
 
 ### Credits
 <!-- List all the sources that you used to create the page   -->
 - [Springer Handbook of Robotics](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20) (Chapter 19. Force and Tactile Sensors)
+
+### Videos
+
+- [Adaptive Fingers Coordination for Robust Grasp and In-Hand Manipulation Under Disturbances and Unknown Dynamics](https://ieeexplore.ieee.org/document/10146043) (F. Khadivar, A. Billard, IEEE Transactions on Robotics, 2023)  
+*Video example: Moving a Champagne Glass*
+
+- [Bimanual compliant tactile exploration for grasping unknown objects](https://ieeexplore.ieee.org/document/6907804) (N. Sommer, M. Li, A. Billard, ICRA 2014)  
+*Example of Exploration: Shape detection*
+
+- [A dynamical system approach for detection and reaction to human guidance in physical human–robot interaction](https://doi.org/10.1007/s10514-020-09934-9) (M. Khoramshahi, A. Billard, ICRA 2020)  
+*Example of Reaction: Arm Massage by Robot*
 
 ### Additional Resources
 <!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->

@@ -69,7 +69,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 **Chapter 2: Sensing in Robotics**
 -  [Sensors and Sensing](new-sensors-for-robotics) - In progress
 -  [Vision](vision-for-robotics) - In progress
--  [Force Perception](force) - In progress
+-  [Force Perception](force_perception) - In progress
 
 **Chapter 3: Motion Planning and Navigation**
 {% include_relative motion_planning.md %}

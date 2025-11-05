@@ -26,11 +26,16 @@ math: mathjax
 
 <style>
 /* Lightweight styling for callouts and quizzes */
-.definition, .assignment, .example, .slide, .note {
-  border-left: 4px solid #0ea5e9; padding: 0.75rem 1rem; margin: 1rem 0; background:#0ea5e90d;
+.definition, .assignment, .example, .slide{
+  border-left: 4px solid #0ea5e9; padding: 0.75rem 1rem; margin: 1rem 0; background: #0ea5e90d;
 }
+
+.note {
+  border-left: 4px solid #e9620eff; padding: 0.75rem 1rem; margin: 1rem 0; background: #e9990e0d;
+}
+
 .slide { border-left-color:#22c55e; background:#22c55e0d; }
-.assignment { border-left-color:#f59e0b; background:#f59e0b0d; }
+.assignment { border-left-color: #16a34a;background: #ecfdf5 }
 .example { border-left-color:#a855f7; background:#a855f70d; }
 
 .mcq { border:1px solid #e5e7eb; border-radius:8px; padding:1rem; margin:1rem 0; }
@@ -115,7 +120,7 @@ If edges are ordered pairs $(u,v)$, the graph is directed.
 
 This is a monumental leap. The robot's problem is no longer about navigating a physical space; it's about finding a path within this abstract network. This representation is the common language for nearly all planning algorithms that follow.
 
-# Chapter 2: History of Motion Planning[<a href="#ref1">1</a>]
+# Chapter 2: History of Sampling Motion Planning[<a href="#ref1">1</a>]
 
 With our graph representation in hand, we can now explore the history of motion planning, using our maze to understand how different strategies evolved.
 
@@ -127,6 +132,11 @@ Early attempts at motion planning in the 1980s tried to be mathematically perfec
 
 One clever idea was to stop planning and start reacting. The Artificial Potential Fields method[<a href="#ref4">4</a>], popular in the late 1980s, treated the robot like a marble rolling on a contoured surface. The goal would be a low point, pulling the robot towards it, while obstacles (walls) would be high points, pushing the robot away. 
 
+<div class="note" markdown="1">
+<strong>Note.</strong>
+This approach is not purely sampling-based but rather a continuous one, as it relies on smooth potential functions to define motion. In practice, these continuous formulations become discretized once paths are numerically integrated, but their underlying principles remain continuous and dynamic. Such representations are generally more expressive, as they directly describe how motion evolves under forces instead of connecting isolated samples. Potential fields therefore mark the beginning of dynamical-systems–based methods, explored further in [Dynamical-Systems-Based Planning](DS-planning).
+
+</div>
 <div class="definition">
 <strong>Definition[<a href="#ref5">5</a>].</strong> Formally, the total potential function $ U(q) $ is defined as:
 
@@ -185,7 +195,7 @@ The most successful solution returned to our graph representation. If the maze i
 
 Let's make our maze more interesting. Imagine some floor tiles are sand, taking more energy to cross. We can represent this by making our graph weighted—an edge over pavement might have a weight of 1, while an edge over sand has a weight of 5. Now, we don't just want any path; we want the cheapest path. Dijkstra's Algorithm is the classic and definitive solution for this. It operates by starting at starting point and exploring outwards like a ripple in a pond. Crucially, it always expands from the vertex that has the lowest total cost discovered so far. It meticulously builds a map of the cheapest way to get to every reachable vertex from the start and doesn't stop until it has found the cheapest path to the goal. The result is a guaranteed optimal path in terms of total weight. Its weakness is that it's "uninformed" - it explores in all directions equally, because it has no sense of direction. 
 
-Its efficiency is typically described as `O(E + V log V)`, meaning its runtime depends on the number of edges `E` and vertices `V` in the graph. For a grid, this is very efficient. But as we'll see, for more complex problems, creating the graph itself is the real challenge.
+Its complexity is described as `O(E + V log V)`, meaning its runtime depends on the number of edges `E` and vertices `V` in the graph. For a grid, this is very efficient. But as we'll see, for more complex problems, creating the graph itself is the real challenge.
 ![Dijkstra's shortest path]({{ '/assets/images/sampling_based_planning/dijkstra.gif' | relative_url }})
 
 (For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../graph-theory))
@@ -224,6 +234,105 @@ Now, imagine trying to create a grid for this C-space. To keep it simple, let's 
 
 This problem isn't unique to robot arms. Imagine a self-driving car navigating a city. If the map is very large and the resolution is high (e.g., centimeter-level precision to avoid small obstacles), the number of grid cells again becomes astronomically large. This exponential explosion in the number of states as we add more dimensions (or higher resolution) is the Curse of Dimensionality. It makes grid-based methods computationally impossible for almost all real-world robotics problems. We need a fundamentally different way to think about the problem.
 
+
+<div class="assignment" markdown="1">
+
+### Exercise: Growth in Planning Complexity
+
+#### 1) Grid Search Scaling
+Consider a robot moving on a 2D, 4-connected grid. Compute how the number of cells and connections grows when going from a **10×10** grid to a **100×100** grid. Discuss how this affects the computational cost of Dijkstra’s algorithm.
+
+<details markdown="1">
+<summary><strong>Hints</strong></summary> 
+- Vertices (cells): $V = N^2$.  
+- 4-connected edges: <br>
+  horizontal $= N(N-1)$, vertical $= N(N-1)$ → $E = 2N(N-1)$.  
+- Dijkstra with binary heap: $\mathcal{O}(E + V \log V)$.
+
+</details>
+
+<details markdown="1">
+<summary><strong>Solution</strong></summary>
+
+**Counts**
+
+- For $N=10$: <br>
+  <tab> $V_{10} = 10^2 = 100$, <br> 
+  <tab> $E_{10} = 2\cdot10\cdot9 = 180$. <br>
+
+- For $N=100$: <br>
+  $V_{100} = 100^2 = 10{,}000$, <br> 
+  $E_{100} = 2\cdot100\cdot99 = 19{,}800$. <br>
+
+**Work Estimate** (binary-heap Dijkstra)
+
+$$
+T(N)\approx E + V\log V.
+$$
+
+- $N=10$: <br>
+  $T_{10} \approx 180 + 100\log 100 \approx 180 + 100\cdot 4.605 \approx 640.5.$  
+- $N=100$: <br> 
+  $T_{100} \approx 19{,}800 + 10{,}000\log 10{,}000 \approx 19{,}800 + 10{,}000\cdot 9.210 \approx 111{,}900.$
+
+**Ratio**  
+$$
+\frac{T_{100}}{T_{10}} \approx \frac{112{,}900}{640.5} \approx 175\times.
+$$
+
+So increasing grid size by $10\times$ per side (i.e., $100\times$ cells) increases the approximate Dijkstra work by ~$175\times$, due to the $V\log V$ term.
+</details>
+
+---
+
+#### 2) 2-DoF Arm (2D Planar)
+A planar 2-DoF arm has two links of $0.5\,\mathrm{m}$ each (total reach $L=1\,\mathrm{m}$).  
+You require the end-effector position tolerance of $1\,\mathrm{cm}$. Assume the arm is in a fully extended configuration and small joint changes move the tip by $L\,\Delta\theta$.
+
+
+1. Choose a uniform joint step $\Delta\theta$ (radians) so that a small joint change moves the end-effector no more than $1\,\mathrm{cm}$. Use a coarse bound: end-effector shift $\approx L\,\Delta\theta$.  
+2. Compute steps per joint over $[0,2\pi)$.  
+3. Compute the number of joint states (2 DoF).  
+4. If each joint action is $\{-\Delta\theta,0,+\Delta\theta\}$, compute actions per state.
+
+<details markdown="1">
+<summary><strong>Solution</strong></summary>
+
+1) Tolerance bound: $L\,\Delta\theta \le 0.01\,\mathrm{m}$ with $L=1\,\mathrm{m}$ → $\Delta\theta \le 0.01\,\mathrm{rad}$ (≈ $0.57^\circ$).   <br>
+
+2) Steps per joint: $\frac{2\pi}{0.01} \approx 628$.   <br>
+
+3) States (independent discretization): $628^2 \approx 3.94\times 10^5$.  <br>
+
+4) Actions per state: $3^2 = 9$.<br>
+
+*Note:* This uses a simplified model. In reality, the end-effector motion for a given $\Delta\theta$ depends on the arm’s configuration (via the Jacobian). The fully-extended pose provides a reasonable order-of-magnitude estimate.
+
+</details>
+
+---
+
+#### 3) 4-DoF Arm Extension
+Extend the 2-DoF results to a 4-DoF planar arm using the same $\Delta\theta=0.01\,\mathrm{rad}$.
+
+1. Steps per joint?  
+2. Number of joint states?  
+3. Actions per state with $\{-\Delta\theta,0,+\Delta\theta\}$ for each joint?  
+4. Comment on scalability.
+
+<details markdown="1">
+<summary><strong>Solution</strong></summary>
+
+1) Steps per joint: ~$628$ (same $\Delta\theta$). <br> 
+
+2) States: $628^4 \approx 1.55\times 10^{11}$.  <br>
+
+3) Actions per state: $3^4 = 81$.  <br>
+
+4) Scalability: State/action spaces grow exponentially with DoF under tight Cartesian tolerances, making exhaustive search intractable and motivating sampling-based and/or continuous dynamical-systems approaches.
+</details>
+
+</div>
 
 <!-- Illustration: Show a diagram comparing a 2D grid (10x10=100 cells) next to a 3D grid (10x10x10=1,000 cells) to visually demonstrate the exponential growth. Follow this with a picture of a complex, multi-jointed robot arm like the Franka Emika.
 
@@ -267,6 +376,19 @@ $$
 where $d(\cdot,\cdot)$ is a valid metric in the configuration space.
 </div>
 
+### Distance Metrics: Workspace vs Configuration Space
+
+![Metrics in Configuration space](https://www.youtube.com/watch?v=B8I43AEerUU&list=PLYZT24lofrjXcuu1iBNWu-NprW2wZD3zu&index=46)
+><sub>*How close are 2 configurations of a robot?. YouTube video, Jan 23, 2018. Available at: https://www.youtube.com/watch?v=B8I43AEerUU&list=PLYZT24lofrjXcuu1iBNWu-NprW2wZD3zu&index=46*</sub>
+
+<div class="note">
+    Shows how different norms (1, 2, 3, ∞) shape “balls” in both workspace (x–y) and configuration space (θ₁–θ₂), and why measuring distance in <em>configuration space</em> is the right choice for planners like PRM and RRT. The demo illustrates that workspace distances can be misleading (parts of the plane are unreachable), while C-space norms respect joint limits and kinematic mapping. This directly affects <em>k</em>-NN and radius connections in PRM and the nearest-node step in RRT, influencing roadmap density, neighbor sets, and ultimately path quality.
+    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
+        Source: Aaron Becker - YouTube  
+        <a href="https://www.youtube.com/watch?v=B8I43AEerUU&list=PLYZT24lofrjXcuu1iBNWu-NprW2wZD3zu&index=46" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
+    </div>
+</div>
+
 The most straightforward method is *unbiased (uniform) sampling*, which draws configurations from the C-space such that each has an equal probability of being chosen.  
 
 <div class="example" markdown="1">
@@ -289,6 +411,32 @@ While simple, uniform sampling can be inefficient, in environments with many obs
   </figcaption>
 </figure>
 
+
+<div class="assignment" markdown="1">
+
+### Exercise: Narrow Passage Probability and Sample Budget
+
+A narrow passage occupies area fraction $a$ of $\mathcal{C}_{\text{free}}\subset[0,1]^2$.  
+With uniform sampling, derive the probability of hitting the passage at least once with $n$ i.i.d. samples.  
+Then compute the minimum $n$ needed for 95% success when $a=0.01$ and $a=0.001$.
+
+<details markdown="1"><summary>Solution</summary>
+
+If one sample lands in the passage with probability $a$, missing it has probability $(1-a)$.  
+For $n$ i.i.d. samples, the miss probability is $(1-a)^n$.  
+Thus the hit probability is
+$$
+P_{\text{hit}}(n) = 1 - (1-a)^n.
+$$
+For $P_{\text{hit}}\ge 0.95$: $(1-a)^n \le 0.05 \Rightarrow n \ge \frac{\ln 0.05}{\ln(1-a)}$.
+
+- $a=0.01$: $n \ge \frac{\ln 0.05}{\ln 0.99} \approx \frac{-2.9957}{-0.01005} \approx 298$.  
+- $a=0.001$: $n \ge \frac{\ln 0.05}{\ln 0.999} \approx \frac{-2.9957}{-0.0010005} \approx 2994$.
+
+Takeaway: Sample budgets scale roughly like $1/a$ for fixed success probability.
+</details>
+
+</div>
 
 
 <div class="note" markdown="1">
@@ -996,12 +1144,57 @@ In contrast, algorithms like **RRT** are *single-query*: they focus on solving o
 - Why is it misleading to show the full configuration-space obstacles when teaching PRM, as the video notes?    
 - Can you design an experiment to observe diminishing returns in path length improvement as sample count increases?
 
+<div class="assignment" markdown="1">
+
+### Exercise: PRM — k-NN vs Radius Connections
+
+You build a PRM with $n$ samples in the unit square $[0,1]^2$ (ignore boundary effects).  
+Compare expected edge counts when:  
+
+- Each node connects to its $k$ nearest neighbors, and  
+- Each node connects to all nodes within radius $r$.  
+
+
+1. Give $\mathbb{E}[\|E\|]$ for the k-NN rule.  
+2. Assuming uniform i.i.d. samples, derive an approximation for $\mathbb{E}[\|E\|]$ for the radius rule.  
+3. For $n = 1{,}000$, compare $\|E\|$ when $k=10$ vs $r=0.06$.
+
+<details markdown="1"><summary>Hints</summary>
+
+- Each undirected edge is counted twice if you sum “neighbors per node”.  
+- For the radius rule in 2D, expected neighbors $\approx n \pi r^2$.
+
+</details>
+
+<details markdown="1"><summary>Solution</summary>
+
+1. k-NN: Each node adds $k$ edges (directed); undirected edges thus  
+$$
+\mathbb{E}[|E|] \approx \frac{n k}{2}.
+$$
+
+2. Radius $r$: Expected neighbors per node $\approx n \pi r^2$, hence  
+$$
+\mathbb{E}[|E|] \approx \frac{\pi}{2}\, n^2 r^2.
+$$
+
+3. With $n=1000$:  <br>
+  k-NN: $|E| \approx \frac{1000\cdot 10}{2} = 5{,}000$.  <br>
+  Radius $r=0.06$: $|E| \approx \frac{\pi}{2}\cdot 10^6 \cdot 0.06^2 \approx 5{,}655$.  <br>
+
+They are of the same order; tuning $k$ and $r$ offers similar densities with different robustness/overhead trade-offs.
+
+</details>
+
+</div>
+
+
 
 ---
 
 # The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
 
-What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT) [<a href="#ref11">11</a>]algorithm solves. Its philosophy is: 
+What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT)[<a href="#ref11">11</a>] algorithm solves. Its philosophy is: 
 
 *"Explore purposefully from the start."*  
 
@@ -1035,11 +1228,11 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
 ---
 
 <figure style="text-align:center;">
-  <img src="{{ '/assets/images/sampling_based_planning/prm.gif' | relative_url }}" 
+  <img src="{{ '/assets/images/sampling_based_planning/rrt.gif' | relative_url }}" 
        alt=" PRM algorithm building a roadmap in a 2D maze." 
        width="100%">
   <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
-    <strong>Figure.</strong>  PRM algorithm building a roadmap in a 2D maze.
+    <strong>Figure.</strong>  RRT algorithm in a 2D maze.
   </figcaption>
 </figure>
 ---
@@ -1078,6 +1271,7 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
     </div>
 </div>
 
+
 ---
 
 ### Takeaways
@@ -1104,6 +1298,33 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
 2. Why can *RRT\** improve path optimality while RRT cannot?   
 3. Compare RRT’s forward projection to PRM’s global roadmap in terms of computational trade-offs.  
 4. What post-processing methods could smooth a jagged RRT path while maintaining feasibility?
+
+<div class="assignment" markdown="1">
+
+### Exercise: RRT Step Size — Coverage and Cost
+
+In an RRT, each extension moves a distance $\varepsilon$ (step size) toward $q_{\text{rand}}$ before collision checking.
+
+1. Given straight-line distance $D$ from start to goal in an obstacle-free region, estimate the minimum number of successful extensions needed to reach the goal.  
+2. In a corridor of width $w$ (walls parallel to the path), state a sufficient condition on $\varepsilon$ that avoids skipping over free configurations during discretized collision checking.  
+3. Discuss the trade-off of making $\varepsilon$ very small vs very large.
+
+<details markdown="1"><summary>Solution</summary>
+
+1) Each extension adds $\varepsilon$ of progress, so $\lceil D/\varepsilon \rceil$ successful steps suffice (ignoring sampling overhead).  
+
+2) With straight-segment collision checks sampled at step $\varepsilon$, a sufficient conservative condition is  
+$$
+\varepsilon \le w,
+$$
+so that successive samples do not jump across a wall; more robustly, use $\varepsilon \le \gamma\,w$ with $\gamma\in(0,1]$ and adequate intermediate checks along the edge.
+
+3) Small $\varepsilon$: finer collision checking and better fidelity, but more local-planner calls and slower growth.  
+Large $\varepsilon$: faster outward spread, but higher collision risk and missed narrow corridors; more jagged paths.
+</details>
+
+</div>
+
 
 ---
 

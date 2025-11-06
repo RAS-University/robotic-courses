@@ -1,0 +1,114 @@
+/* Styles for the Conceptual Exercises */
+.drag-container {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+}
+.all-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    background-color: #f7f7f7;
+}
+.drag-item {
+  cursor: grab;
+  padding: 12px 18px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #ffffff;
+  width: 200px; /* Uniform width for items */
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  font-size: 14px;
+  line-height: 1.4;
+  touch-action: none;
+}
+.drag-item:hover {
+    background-color: #eef;
+    transform: translateY(-2px);
+}
+.drag-item.dragging {
+    opacity: 0.5;
+    box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+}
+
+.drop-zone {
+  width: 48%;
+  min-height: 220px;
+  border: 2px dashed #007bff;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #e9f7ff;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.drop-zone h4 {
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #007bff;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+}
+.drop-zone.over {
+  background-color: #cce5ff;
+  border-color: #0056b3;
+  border-style: solid;
+}
+/* Feedback Colors */
+.correct {
+  background-color: #d4edda !important; /* Light Green */
+  border-color: #155724 !important;
+}
+.incorrect {
+  background-color: #f8d7da !important; /* Light Red */
+  border-color: #721c24 !important;
+}
+.button-group {
+  text-align: center;
+  margin-top: 25px;
+}
+.action-button {
+  padding: 12px 25px;
+  margin: 0 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.1s;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+#check-button {
+  background-color: #28a745;
+  color: white;
+}
+#check-button:hover {
+  background-color: #1e7e34;
+}
+#reset-button {
+  background-color: #ffc107;
+  color: #343a40;
+}
+#reset-button:hover {
+  background-color: #e0a800;
+}
+
+@media (max-width: 768px) {
+  .drag-container {
+    flex-direction: column;
+  }
+  .drop-zone {
+    width: 100%;
+  }
+}

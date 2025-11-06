@@ -57,30 +57,27 @@ Our main motivation is to transmit skills to robots so they can perform differen
 
 ### Chapter 1: Types of Interfaces
 
-How we gather data from humans to teach the robots revolves around three main themes:
+The interfaces we use to gather data from humans for teaching the robots revolve around three main themes:
 > - **Teleoperation:** User controls the robot through the interface and teleoperates the robot with some distance.
 > - **Kinesthetic Teaching:** User physically moves the robot (like how it is done while teaching a child or teaching a sport).
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
-Each of these methods has its own advantages and disadvantages. We will go through each of them in more detail.
+Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
 #### **1. Tele-operation:**
-In tele-operation, users control robots using some **interface** to perform the task. The quality of learning and performance is sensitive to: **1.Interface Design** and **2. Teacher Experience**.
-This means that the person who teleoperates needs to be good at it and understand the device he/she is using. As a result, the research today follows two main trends. In the first trend, the interface used is simple so that it doesn’t require much pretraining for usage, however, this results in limited capacity in what can be taught to the robot. In the second trend, a complex interface is designed. It takes time for the human to train himself/herself in good use of the interface, but very complex things can be taught to the robot. 
+In tele-operation, users control robots using some interface to perform the task from some **distance**. The quality of learning and performance is sensitive to: **1.Interface Design** and **2. Teacher Experience**.
+This means that the person teleoperating the robot needs to be skilled and understand the device they are using. As a result, current research follows two main trends. In the first trend, the interface is simple and requires little pretraining, but this limits what can be taught to the robot. In the second trend, a more complex interface is designed. It takes time for the human to learn to use it effectively, but it allows for teaching the robot more complex tasks.
 
 ##### **1.1. Graphical user interface/Tablet**
-The simplest interface that can be used is a tablet. It was used back in the 90s; it is becoming more complex with the increased capacity of today’s tablets. However, it is still a simple system. The user can communicate the desired motion by mimicking the motion on the tablet, or desired target.
+The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
+<br>
+Tablets have been used since the 1990s, and they have become more capable with the advancements of modern devices. Yet, they remain a simple system. The user can communicate the desired motion by mimicking it on the tablet or by indicating a desired target.
+<br>
+In addition to planar displacements, planar rotation can also be provided by rotating the tablet. As a result, all three degrees of planar movement can be represented through a tablet interface, allowing certain motions to be effectively conveyed this way. However, since the displacement is confined to a plane, the overall field of motion is limited. Consequently, a tablet interface remains restricted in what it can transfer. In the end, the field of motion provided by this interface is quite reduced.
+<br>
+In the left example, the user operates the robotic hand using a tablet interface. The opening and closing of all the fingers can be controlled, and the movement of the user’s hand on the tablet is directly translated to the robotic hand.
+<br>
+In the right example, the user controls the robot to pick up different objects. The robot’s point of view is rendered on the interface, providing a visual representation of the scene on the tablet.
 
-> + **Pros:** 
-> +User-friendly: Almost everybody knows how to work with a tablet these days.
-> + Cheap
-> + Easily integrable to existing set-up: It can be posted even on smart cellphones which is something almost everybody owns these days.
-
-> - **Cons:** 
-> + Limited in what can be transferred (displacement is in a plane and therefore the field of motion is reduced.)
-
-In the left example, the user is driving the robotic hand using a tablet interface. Opening and closing of all the fingers can be controlled. The movement of the user’s hand on the tablet interface is directly translated to a robotic hand.
-In the right example, the user can drive the robot to pick up different objects. The vision from the robot’s standpoint is rendered to the interface (a rendering of the scene onto the tablet).
-In addition to the planar displacements, planar rotation can also be provided by rotating the tablet. As a result, all the three dimensions of planar movement can be provided in a tablet interface. Although some desired motions can be provided this way, it is limited in what can be transferred in general. In the end, the field of motion is very reduced in this interface. 
 
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
@@ -93,9 +90,48 @@ In addition to the planar displacements, planar rotation can also be provided by
   </div>
 </div>
 
+<!-- Conceputal Exercise -->
+<details markdown="1">
+  <summary>Conceptual Exercise</summary>
+
+<p><strong>Drag and drop each feature into the correct box. Advantages and Disadvantages of using a Tablet/GUI for Human-Robot Interaction:</strong></p>
+
+
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/interfaces-for-HRI/Drag&DropStyle.css">
+
+<div class="all-items-container" id="items-to-drag">
+  <div class="drag-item" draggable="true" id="item-1" data-correct-zone="Pros">User-friendly</div>
+  <div class="drag-item" draggable="true" id="item-2" data-correct-zone="Cons">Limited in what can be transferred</div>
+  <div class="drag-item" draggable="true" id="item-3" data-correct-zone="Pros">Cheap</div>
+  <div class="drag-item" draggable="true" id="item-4" data-correct-zone="Pros">Easily integrable to existing set-ups</div>
+</div>
+
+<div class="drag-container">
+  <div class="drop-zone" id="pros-zone" data-zone-type="Pros">
+    <h4>✅ ADVANTAGES (PROS)</h4>
+  </div>
+  <div class="drop-zone" id="cons-zone" data-zone-type="Cons">
+    <h4>❌ DISADVANTAGES (CONS)</h4>
+  </div>
+</div>
+
+<div class="button-group">
+  <button id="check-button" class="action-button">Check Answers</button>
+  <button id="reset-button" class="action-button">Reset</button>
+</div>
+
+<script src="{{ site.baseurl }}/assets/js/interfaces-for-HRI/Drag&Drop.js"></script>
+
+</details>
+
+
 ##### **1.2. Joysticks**
 
-The user controls the robot's end-effector through a 3DOFs or 6DOFs joystick. In a 6DOF joystick, both position and orientation of the end-effector, which includes all the degrees of freedom of the end-effector, are controlled by the user. Note that the user is not controling the joints, she/he is controling the translation and orientation of the end-effector, which allows to control implictly for the tool that is being held. This is possible using inverse kinematics (the user relies on the internal controller of the system to do the inverse kinematics).
+With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
+<br>
+Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and is easily adaptable for controlling a 6-DOF robotic arm in both position and orientation. This interface can be easily integrated into a wide range of applications.
+<br>
+Using a joystick often requires both hands. This depends on the specific type of joystick, but it is often necessary to use one hand to control translation and the other to control orientation. Furthermore, joysticks are limited in what can be transferred: forces cannot be transmitted; only displacements and speeds are conveyed. (It is still a step forward compared to tablets, as the range of teachable actions increases; though this comes at the cost of reduced user-friendliness.) Moreover, the performance of this interface depends on the user’s point of view. The user must be positioned to have a clear view of the scene; for example, if the user is behind the robot, visibility is greatly reduced. (Comparing to tablet interfaces, tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.) Finally, joystick interfaces are sensitive to the user’s experience level. They tend to be less user-friendly than tablets and often require some training before they can be used effectively.
 
 > - **Pros:** 
 > + Can communicate the desired motion in 3D or even 6D, easily amenable to control 6DOFs robot arm in position and orientation 
@@ -116,7 +152,9 @@ The user controls the robot's end-effector through a 3DOFs or 6DOFs joystick. In
 > - Depends on the point of view of the user: The user should be well placed to have a relatively good view. For example, if the user is behind the robot, she/he can't see much (A positive point about tablets is that a rendering of the scene, viewed from robot's point of view, is provided).
 > - Sensitive to experience of teacher: It is a bit less user-firendly compared to tablets and often requires a bit of training before usage.
 
-The inverse kinematics can be an issue when it comes to teleoperation. The user may ask for an infeasible motion, for example, a very quick rotation that violates the joint limits. In such cases, an alternative path should be found. As a result, the user has to learn how to use the robot. On the other hand, there is a very nice advantage in teleoperation; the user can teach robots that are completely different from she/he. A good example of this is teaching drones.
+Inverse kinematics can present challenges in teleoperation. The user may command an infeasible motion—for example, a rapid rotation that violates the robot’s joint limits. In such cases, an alternative path must be computed. Consequently, the user needs to learn how to operate the robot effectively.
+<br>
+On the other hand, teleoperation offers a significant advantage: the user can teach robots that are entirely different from themselves. A good example of this is teaching drones.
 
 <p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/M-QUkgk3HyE" frameborder="0" allowfullscreen></iframe>
@@ -124,7 +162,65 @@ The inverse kinematics can be an issue when it comes to teleoperation. The user 
 
 ><sub>A. Ng, A. Coates, M. Diel, V. Ganapathi, J. Schulte, B. Tse, E. Berger, E. Liang, Inverted autonomous helicopter flight via reinforcement learning, in: International Symposium on Experimental Robotics, 2004. </sub>
 
-In the example above, a helicopter is taught to perform very complex manuevers. There exists an underlying controller which stabilizes the helicopter (this is a pre-exsisting controller for stabilization and is not trained). The training is on the very complex trajectory. Since it is desired to control for position and oreintation, 6DOF joystick is a proper tool. They rely on an underlying controller which can solve for a lot of issues that humans can't control. Stabilization and inverse kinematics are the examples. In this case, a very experienced and skilled teacher is required to teach the robot such complex manuvers.
+In the example above, a helicopter is taught to perform very complex maneuvers. An underlying controller is used to stabilize the helicopter; this is a pre-existing stabilization controller and is not part of the training process. The training instead focuses on learning the complex trajectory. Since both position and orientation need to be controlled, a 6-DOF joystick is an appropriate tool. The system relies on the underlying controller to handle many aspects that humans can not control directly, such as stabilization and inverse kinematics. In this case, a highly experienced and skilled operator is required to teach the robot such complex maneuvers.
+
+
+<!-- Conceputal Questions -->
+<details markdown="2">
+  <summary>Conceptual Questions</summary>
+
+  <p><strong>Question 1: Compared to tablets, joysticks are more user-friendly.</strong></p>
+  <form id="q1">
+    <input type="radio" name="q1" value="True"> True<br>
+    <input type="radio" name="q1" value="False"> False<br>
+    <button type="button"
+      onclick="checkTrueFalse('q1', 'False', 
+        'Correct! Tablets are more user-friendly.',
+        'Incorrect. Using a tablet is more intuitive than using a joystick. Consequently, tablets are more user-friendly.')">
+      Check Answer
+    </button>
+    <p id="q1-feedback" style="margin-top: 10px; padding: 10px; border-radius: 5px;"></p>
+  </form>
+
+  </details>
+
+  <script>
+    // This function handles the logic and applies inline styles for feedback.
+    function checkTrueFalse(formId, correctAnswer, correctMsg, incorrectMsg) {
+        const form = document.getElementById(formId);
+        // Look for the input where the name matches the formId (e.g., name="q1" if formId="q1")
+        const selected = form.querySelector('input[name="' + formId + '"]:checked');
+        const feedbackElement = document.getElementById(formId + '-feedback');
+
+        // Reset previous feedback styles
+        feedbackElement.style.backgroundColor = '';
+        feedbackElement.style.border = '';
+        feedbackElement.style.color = 'inherit';
+
+        if (!selected) {
+            feedbackElement.textContent = 'Please select an answer.';
+            feedbackElement.style.color = '#dc3545';
+            feedbackElement.style.border = '1px solid transparent';
+            return;
+        }
+
+        const userChoice = selected.value;
+
+        if (userChoice === correctAnswer) {
+            feedbackElement.textContent = correctMsg;
+            // Simple inline green styling
+            feedbackElement.style.backgroundColor = '#d4edda';
+            feedbackElement.style.border = '1px solid #155724';
+            feedbackElement.style.color = '#155724';
+        } else {
+            feedbackElement.textContent = incorrectMsg;
+            // Simple inline red styling
+            feedbackElement.style.backgroundColor = '#f8d7da';
+            feedbackElement.style.border = '1px solid #721c24';
+            feedbackElement.style.color = '#721c24';
+        }
+    }
+</script>
 
 ##### **1.3. Exoskeletons**
 

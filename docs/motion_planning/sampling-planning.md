@@ -578,17 +578,101 @@ If no valid path exists, a probabilistically complete algorithm is not guarantee
 
 </div>
 
-<div class="definition">
-<strong>Definition[<a href="#ref8">8</a>].</strong>
-A sampling-based planner is <em>asymptotically optimal</em> if the cost of the best path it has found converges to the global optimum as the number of samples (or time) goes to infinity:
-\[
-\lim_{n \to \infty} c_{\text{best}}(n) = c^\star .
-\]
-</div>
-
-
 We are no longer guaranteed to find the <em>optimal</em> path, but we are guaranteed that we will eventually find <em>a</em> path.
 </p>
+
+---
+
+## (Optional) Extending the Local Planner: Kinodynamic Planning
+
+The straight-line local planner works well for purely geometric planning problems, where the robot can move freely in any direction. However, most real-world robots, cars, drones, manipulators, or legged robots, cannot do this. They have kinodynamic constraints, meaning their motion depends not only on position but also on velocity, acceleration, and actuator limits.
+
+---
+
+### 1. What Are Kinodynamic Constraints?
+
+In real systems, motion is governed by the robot’s equations of motion, often written as:
+
+$$
+\dot{x} = f(x, u)
+$$
+
+where:
+
+- $x$ is the state vector (e.g., position, velocity, orientation)
+- $u$ is the control input (e.g., motor torque, thrust, or steering angle)
+
+The goal of kinodynamic planning is to find a feasible trajectory $x(t)$ and a sequence of control inputs $u(t)$ that move the robot from $x_{\text{start}}$ to $x_{\text{goal}}$ while avoiding obstacles and satisfying physical limits.
+
+<div class="definition" markdown="1">
+<strong>Definition. </strong> Kinodynamic Planning means finding a path that satisfies both kinematic and dynamic constraints, i.e., that lies within the robot’s configuration space $ \mathcal{C}_{\text{free}} $ and also respects its dynamic model $ \dot{x} = f(x, u) $.
+</div>
+
+---
+
+### 2. From Straight Lines to Dynamic Feasibility
+
+The simple local planner assumes the robot can follow a straight line between any two nearby configurations. For a robot with dynamics, this is no longer true — the system may **not be able to stop, turn, or move sideways**. Instead, the planner must connect states using feasible motions that respect the robot’s dynamic model.
+
+There are two general approaches to doing this:
+
+---
+
+#### Method 1: Analytical Steering Function (Two-Point BVP)
+
+A steering function computes a control law that moves the robot exactly from one state to another by solving a two-point boundary value problem (BVP).
+
+How it works:
+
+1. Given two states $x_1$ and $x_2$, solve for a control input $u(t)$ such that integrating $\dot{x} = f(x, u)$ moves $x_1 \rightarrow x_2$.
+2. The resulting trajectory is guaranteed to be dynamically feasible.
+
+**Examples:**
+- The Dubins Car (forward-only, minimum turning radius)
+- The Reeds–Shepp Car (can drive forward and backward)
+
+**Pros:**  
+Produces optimal, physically valid connections.
+
+**Cons:**  
+Analytical steering functions exist only for a few simple systems.  
+For most robots, the BVP is extremely difficult to solve.
+
+---
+
+#### Method 2: Forward Simulation (Sampling in Control Space)
+
+Instead of trying to solve a complex boundary-value problem, this approach samples control inputs and simulates the system forward in time, a much more general technique.
+
+**How it works:**
+
+1. Choose a state $x_{\text{near}}$ already in the tree.  
+2. Sample a random control $u_{\text{rand}} \in U$ (e.g., random steering or thrust command).  
+3. Simulate the dynamics forward for a short time $\Delta t$:  
+
+   $$
+   x_{\text{new}} = \text{Simulate}(x_{\text{near}}, u_{\text{rand}}, \Delta t)
+   $$
+4. If the simulated motion stays collision-free, accept the new state and continue.
+
+This “forward-propagation” idea enables planners to handle nonholonomic and dynamic systems  
+without needing a closed-form steering law.
+
+---
+
+### 3. Why It Matters
+
+Adding kinodynamic feasibility fundamentally changes the planning problem:
+
+- State space dimension increases (position + velocity + other dynamics)
+- Local connections become directional and irreversible
+- Paths are trajectories in time, not just curves in space
+
+These challenges make the local planner the core difficulty in motion planning for dynamic robots. Later chapters will show how global planners such as PRM and RRT extend these ideas  
+to build complete kinodynamic planning algorithms.
+
+
+---
 
 
 <script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
@@ -629,7 +713,7 @@ We are no longer guaranteed to find the <em>optimal</em> path, but we are guaran
 </style>
 
 
-### Coding Exercise 1: Sampling Free Configurations
+## Coding Exercise 1: Sampling Free Configurations
 
 In this exercise, you will implement a sampling function for a 2D maze:
 
@@ -815,7 +899,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 </style>
 
-### Coding Exercise 2: Collision-Checking Graph Building
+## 2: Collision-Checking Graph Building
 
 In this exercise, you will implement a function to build a **collision-free graph** connecting sampled configurations in a 2D maze:
 
@@ -1001,7 +1085,7 @@ We’ll also discuss different variations and extensions designed to improve per
 
 
 
-# The Roadmap Approach: Probabilistic Roadmaps (PRM)
+# Chapter 4: The Roadmap Approach: Probabilistic Roadmaps (PRM)
 
 The first major algorithm built on this sampling paradigm is the Probabilistic Roadmap (PRM)[<a href="#ref9">9</a>].  
 Its philosophy is simple and powerful: 
@@ -1192,7 +1276,7 @@ They are of the same order; tuning $k$ and $r$ offers similar densities with dif
 
 ---
 
-# The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
+# Chapter 5: The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
 
 What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT)[<a href="#ref11">11</a>] algorithm solves. Its philosophy is: 
 
@@ -1223,7 +1307,26 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
 **Implication.** Frontier nodes keep “reaching” toward open areas, so RRT often finds a feasible path quickly, even in high-dimensional problems.
 
 **Trade-off.** The first path is usually jagged and suboptimal. In practice, RRT solutions are commonly post-processed (shortcutting, spline fitting, or RRT*) before execution.
+
+<figure style="display:inline-block; text-align:center;">
+  <video width="500" autoplay loop muted playsinline controls style="display:block; margin:0 auto;">
+    <source src="{{ '/assets/videos/sampling_planning/2d-voronoi.mp4' | relative_url }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+  <figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+    RRTs have a <em>“Voronoi bias”</em><br>
+    <small>
+      Source: <a href="https://slides.com/russtedrake/spring24-lec18#/18/0/0" target="_blank">
+      Lecture 18: Sampling-Based Motion Planning</a>,
+      <a href="https://people.csail.mit.edu/russt" target="_blank">Russ Tedrake</a>,
+      MIT Underactuated Robotics (Spring 2024)
+    </small>
+  </figcaption>
+</figure>
+
 </div>
+
+
 
 ---
 
@@ -1338,6 +1441,305 @@ PRM builds a *roadmap* of the entire space; RRT grows a *tree* from the start.
 
 ---
 
+# Chapter 6: Planning for Optimality
+
+The paths found by PRM and RRT are feasible, but they are rarely good. Due to their random nature, the resulting paths are often jagged, inefficient, and unnatural. In many applications, especially in robotics, finding a path that is short, smooth, or energy-efficient is just as important as finding a path at all.
+
+This chapter explores two main strategies for finding higher-quality paths:
+
+- **Post-Processing:** Taking a "bad" path and improving it.
+- **Asymptotically-Optimal Planners:** Using algorithms that are guaranteed to find the optimal path, given enough time.
+
+---
+
+## Post-Processing
+
+Before 2010, optimality was commonly handled as a post-processing step. The planner would quickly find any feasible path, and then a separate optimization algorithm would try to improve it.[<a href="#ref1">1</a>]
+
+### Path Shortcutting[<a href="#ref12">12</a>]
+
+The simplest and most common post-processing technique is path shortcutting. The idea is to iteratively improve the path by replacing segments with shorter, collision-free "shortcuts."
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 3:</strong> Path Shortcutting  
+
+<pre>
+<strong>procedure</strong> SHORTCUT-PATH(path)
+    <strong>for</strong> i = 1 <strong>to</strong> N_ITERATIONS <strong>do</strong>
+        // 1. Pick two random points on the path
+        t1, t2 ← RandomTimes(path) with t1 < t2
+        q1 ← path(t1)
+        q2 ← path(t2)
+
+        // 2. Try to connect them with a local planner
+        <strong>if</strong> LocalPlanner(q1, q2) is collision-free <strong>then</strong>
+            // 3. Replace the old segment with the shortcut
+            path.replace(from=q1, to=q2, with=NewSegment(q1, q2))
+
+    <strong>return</strong> path
+</pre>
+</div>
+
+
+This is a gradient-free optimization method that is surprisingly effective. It is not guaranteed to find the true optimal path, but it can dramatically reduce path length and remove unnecessary detours with very little computational effort.
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/rrt_shortcut.gif' | relative_url }}" 
+       alt="RRT with path shortcutting post-processing" 
+       width="70%">
+  <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
+    <strong>Figure.</strong> RRT with <em>path shortcutting</em> post-processing.  
+    The original jagged RRT path (gray) is progressively shortened by replacing collision-free segments with straight-line shortcuts.
+  </figcaption>
+</figure>
+
+
+---
+
+## Asymptotically-Optimal Planners
+
+In 2011, a breakthrough occurred with the development of planners that are asymptotically optimal.[<a href="#ref1">1</a>]
+
+<div class="definition">
+<strong>Definition[<a href="#ref8">8</a>].</strong>
+A sampling-based planner is <em>asymptotically optimal</em> if the cost of the best path it has found converges to the global optimum as the number of samples (or time) goes to infinity:
+\[
+\lim_{n \to \infty} c_{\text{best}}(n) = c^\star .
+\]
+</div>
+
+This led to the "star" versions of the main algorithms: **PRM\*** and **RRT\***.
+
+---
+
+### Extending RRT Toward Optimality: RRT*[<a href="#ref8">8</a>]
+While the Rapidly-Exploring Random Tree (RRT) is highly effective at finding feasible paths in complex, high-dimensional spaces, it does not account for path quality. In many robotic applications, such as manipulator motion, drone navigation, or autonomous driving, path quality matters just as much as feasibility. A poor trajectory may increase energy consumption, execution time, or even risk of collision when tracking the path dynamically.
+
+To address this, *RRT\** extends the original *RRT* framework to not only explore the configuration space but also to improve the solution quality over time.  
+It introduces two critical operations, *ChooseParent* and *Rewire*, which enable local cost optimization and global convergence to the optimal path.  
+The resulting planner is asymptotically optimal, meaning that as the number of samples grows, the cost of the best path found converges to the true minimum.
+
+---
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 4:</strong> RRT* — Optimal Tree-Growing Planner  
+
+<pre>
+<strong>procedure</strong> BUILD-RRT*(q_start)
+    T.initialize(q_start)
+    <strong>for</strong> i = 1 <strong>to</strong> num_iterations <strong>do</strong>
+        q_rand ← sample from 𝒞
+        q_near ← NearestNode(q_rand, T)
+        q_new  ← Extend(q_near, q_rand)
+
+        <strong>if</strong> LocalPlanner(q_near, q_new) is collision-free <strong>then</strong>
+            N_near ← NearNodes(q_new, T, radius=r(n))
+            
+            // --- ChooseParent: locally optimal insertion ---
+            q_min ← q_near
+            c_min ← Cost(q_near) + Cost(q_near, q_new)
+            <strong>for each</strong> q_neighbor <strong>in</strong> N_near <strong>do</strong>
+                c_new ← Cost(q_neighbor) + Cost(q_neighbor, q_new)
+                <strong>if</strong> c_new < c_min <strong>and</strong> LocalPlanner(q_neighbor, q_new) <strong>then</strong>
+                    q_min ← q_neighbor
+                    c_min ← c_new
+            T.add_node(q_new)
+            T.add_edge(q_min, q_new)
+
+            // --- Rewire: locally optimal tree repair ---
+            <strong>for each</strong> q_neighbor <strong>in</strong> N_near <strong>do</strong>
+                c_old ← Cost(q_neighbor)
+                c_new ← Cost(q_new) + Cost(q_new, q_neighbor)
+                <strong>if</strong> c_new < c_old <strong>and</strong> LocalPlanner(q_new, q_neighbor) <strong>then</strong>
+                    T.rewire(q_neighbor, new_parent=q_new)
+
+    <strong>return</strong> T
+</pre>
+
+📘 *Reference:* Karaman & Frazzoli, *Sampling-based Algorithms for Optimal Motion Planning*, Algorithm 2 (RRT\*)[<a href="#ref8">8</a>].
+</div>
+
+---
+
+#### Intuition and Key Ideas
+
+RRT\* follows the same exploratory logic as RRT — sampling random configurations and incrementally growing a tree that covers the free configuration space.  
+However, instead of greedily attaching each new node to its nearest neighbor, it performs a local optimization every time a new node is added:
+
+1. **ChooseParent — optimal insertion:**  
+   When a new node $q_{\text{new}}$ is created, RRT\* looks at all existing nodes within a neighborhood of radius $r(n)$ and selects as its parent the one that minimizes the total path cost from the start.  
+   This ensures that $q_{\text{new}}$ is always connected through the most efficient local route.
+
+2. **Rewire — cost propagation:**  
+   Once $q_{\text{new}}$ is added, it may also improve existing connections.  
+   RRT\* checks whether connecting any nearby node *through* $q_{\text{new}}$ would yield a cheaper total cost.  
+   If so, it “rewires” that neighbor to use $q_{\text{new}}$ as its new parent, effectively reshaping the tree toward a more optimal structure.
+
+The search radius $r(n)$ gradually decreases with the number of samples $n$, ensuring both convergence and computational tractability.  
+Through repeated sampling and local rewiring, RRT\* progressively smooths out the tree, pulling all feasible paths toward the globally optimal solution.
+
+
+<figure style="margin:1.2em 0;">
+  <div style="display:flex; gap:12px; align-items:flex-start; justify-content:center; flex-wrap:wrap;">
+    <!-- Left: RRT -->
+    <div style="flex:1 1 360px; max-width:600px; text-align:center;">
+      <img src="{{ '/assets/images/sampling_based_planning/rrt3.gif' | relative_url }}" alt="RRT building a tree" style="width:100%; height:auto; border-radius:6px;" />
+      <figcaption style="margin-top:6px; color:#555; font-size:0.9em;">
+        <b>RRT</b> — finds a feasible path quickly (no rewiring).
+      </figcaption>
+    </div>
+
+    <!-- Right: RRT* -->
+    <div style="flex:1 1 360px; max-width:600px; text-align:center;">
+      <img src="{{ '/assets/images/sampling_based_planning/rrtstar.gif' | relative_url }}" alt="RRT* building and rewiring" style="width:100%; height:auto; border-radius:6px;" />
+      <figcaption style="margin-top:6px; color:#555; font-size:0.9em;">
+        <b>RRT*</b> — rewires locally to reduce cost, converging toward optimal.
+      </figcaption>
+    </div>
+  </div>
+
+  <figcaption style="text-align:center; margin-top:10px; color:#555; font-size:0.95em;">
+    <b>Figure.</b> Side-by-side comparison of <i>RRT</i> and <i>RRT*</i> on the same map.
+  </figcaption>
+</figure>
+
+
+---
+
+## Discussion: The Price of Optimality
+
+- **RRT** is fast. It finds a solution and stops. It is great for quickly checking if a path exists.
+- **RRT\*** is slow. It never stops; it just keeps improving. The *ChooseParent* and *Rewire* steps require many more nearest-neighbor searches and collision checks than RRT. However, the path it finds continuously gets better, eventually converging to the true, shortest path.
+
+---
+## Exercises
+
+<div class="assignment" markdown="1">
+
+### 1. Conceptual: Shortcutting vs. Rewiring
+
+Path Shortcutting (a post-processor) and the *Rewire* step in RRT* (an online method) both aim to improve path quality.
+
+Explain two fundamental differences between them in terms of:
+
+- What they optimize (the data structure)
+- When they optimize (during or after the search)
+
+<details markdown="1"> <summary><strong>Solution</strong></summary>
+
+**What they optimize:**
+
+- *Path Shortcutting* optimizes a single, completed path (a list of waypoints) *after* it has been found.  
+  It does not reuse or modify any of the nodes explored during the search.
+
+- *Rewire* optimizes the entire search tree — not just the final path.  
+  It adjusts the connections among many nodes, improving local and global path costs as the tree grows.
+
+**When they optimize:**
+
+- *Path Shortcutting* is a post-processing step.  
+  The planner first finds any feasible path, then a separate algorithm tries to shorten or smooth it.
+
+- *Rewire* is an online (in-process) step.  
+  The optimization happens during tree expansion, guiding the planner toward better solutions with every iteration.
+
+</details>
+</div>
+
+
+<div class="assignment" markdown="1">
+
+### 2. Applied: RRT* ChooseParent
+
+A new node $ q_{\text{new}} $ is sampled. The RRT* algorithm finds two nodes in its neighborhood:
+
+| Node | $ C(q_{\text{start}}, q) $ | $ C(q, q_{\text{new}}) $ |
+|:-----|:-----------------------------:|:---------------------------:|
+| $ q_A $ | 10 | 5 |
+| $ q_B $ | 12 | 2 |
+
+A standard RRT would have chosen $ q_B $ as the parent because it is the nearest.
+
+Which node will *RRT\**’s `ChooseParent` function select as the new parent for $ q_{\text{new}} $?  
+Show your calculations.
+
+<details markdown="1"> <summary><strong>Solution</strong></summary>
+
+The `ChooseParent` function selects the parent that minimizes the total cost-to-come for $ q_{\text{new}} $:
+
+$$
+\begin{aligned}
+C_{\text{via } q_A} &= C(q_A) + C(q_A, q_{\text{new}}) = 10 + 5 = 15
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+C_{\text{via } q_B} &= C(q_B) + C(q_B, q_{\text{new}}) = 12 + 2 = 14
+\end{aligned}
+$$
+
+✅ **Answer:**  
+RRT* will select Node $ q_B $ as the parent, because the total path cost (14) is lower than the path via $ q_A $ (15).
+
+</details>
+</div>
+
+
+<div class="assignment" markdown="1">
+
+### 3. Applied: RRT* Rewire
+
+Continuing from the previous exercise:  
+Node $ q_{\text{new}} $ has been added to the tree with $ q_B $ as its parent, and its total cost-to-come is:
+
+$$
+C(q_{\text{new}}) = 14
+$$
+
+Now the algorithm checks the neighbors of $ q_{\text{new}} $ for potential rewiring.  
+One of those neighbors is $ q_A $, which currently has:
+
+$$
+C(q_A)_{\text{old}} = 10
+$$
+
+$$
+C(q_{\text{new}}, q_A) = 5
+$$
+
+Will the algorithm rewire $ q_A $ to make $ q_{\text{new}} $ its new parent?  
+Why or why not?
+
+<details markdown="1"> <summary><strong>Solution</strong></summary>
+
+The algorithm checks whether the new potential path to $ q_A $ (through $ q_{\text{new}} $) is cheaper:
+
+$$
+\begin{aligned}
+C_{\text{old}}(q_A) &= 10
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+C_{\text{new}}(q_A) &= C(q_{\text{new}}) + C(q_{\text{new}}, q_A) = 14 + 5 = 19
+\end{aligned}
+$$
+
+Since $ 19 > 10 $, the new path is more expensive.
+
+❌ **Answer:**  
+No, the algorithm will *not* rewire $ q_A $.  
+The path through $ q_{\text{new}} $ increases the total cost, so the existing parent of $ q_A $ remains unchanged.
+
+</details>
+</div>
+
+
+
+---
 # Final Project
 - Implement and compare RM, RRT, RRT on a chosen benchmark.  
 - Evaluate success rate, runtime, and path quality.  
@@ -1368,3 +1770,5 @@ PRM builds a *roadmap* of the entire space; RRT grows a *tree* from the start.
 10. <a id="ref10"></a>Okabe, A., Boots, B., Sugihara, K., & Chiu, S. N. (2000). *Spatial Tessellations: Concepts and Applications of Voronoi Diagrams* (2nd ed.). Wiley.
 
 11. <a id="ref11"></a>LaValle, S. M. (1998). *Rapidly-exploring random trees: A new tool for path planning.* Technical Report TR 98-11, Computer Science Department, Iowa State University.
+
+12. <a id="ref12"></a>Geraerts, R., & Overmars, M. H. (2007). *Creating high-quality paths for motion planning.* International Journal of Robotics Research, 26(8), 845–863.

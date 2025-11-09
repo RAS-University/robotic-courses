@@ -86,16 +86,78 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 </style>
 
 # Graph Theory
+- Table of Contents
+{:toc}
 
 ---
 
-## Motivation
+
+
+## Books
+
+- *Introduction to Algorithms* — Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein (2022).  
+  *Comprehensive reference covering algorithm design and analysis, including graph traversal, shortest paths, and spanning trees.*
+
+- *Introduction to Graph Theory* — Richard J. Trudeau.  
+  *A visual and conceptual introduction to the fundamentals of graph theory and mathematical reasoning.*
+
+---
+
+## Prerequisites
+- **Basic Set Theory**  
+  Sets, subsets, unions, intersections, Cartesian products, and relations.
+- **Data Structures**  
+  Lists, stacks, queues, trees, heaps, and adjacency-based graph representations.
+- **Algorithmic Complexity**  
+  Big-O notation, asymptotic analysis, and time–space trade-offs.  
+  Understanding how runtime grows with input size is essential for comparing graph algorithms.
+
+<!-- - [Graph search algorithms](../graph-theory) -->
+<!-- - Collision checking in robot environments -->
+
+---
+---
+
+## Chapter 1: Motivation
 
 Graph theory provides the mathematical foundation for reasoning about motion planning. When a robot navigates through an environment, its possible configurations and the feasible transitions between them naturally form a graph. Each node represents a state of the system, and each edge corresponds to a feasible transition. Planning then becomes the task of finding a path through this graph that connects an initial configuration to a goal configuration while respecting certain constraints such as feasibility or optimality.
 
+### Example 1: GPS Navigation
+
+The most intuitive real-world example of a graph is the road network used by your car’s GPS or a mapping app. Intersections are nodes; road segments are edges. To find the “best” route, we assign each edge a weight (typically travel time), computed from distance, speed limits, and live traffic. A shortest-path algorithm then finds the path with minimum total weight from start to destination.
+
+
+<figure style="margin:1em 0; display:flex; justify-content:center; flex-direction:column; align-items:center;">
+  <img src="{{ '/assets/images/graph_theory/googlemaps.png' | relative_url }}"
+       alt="Route on a city map"
+       style="width:70%; max-width:760px; height:auto; border-radius:6px;">
+  <figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+    <!-- Example road-network route with edge weights representing travel time. <br> -->
+    <small>Map data & imagery © Google. Source: <a href="https://maps.google.com" target="_blank" rel="noopener">Google Maps</a>.</small>
+  </figcaption>
+</figure>
+
 ---
 
-# Chapter 1. Basic Definitions
+### Example 2: Warehouse Robotics
+
+Autonomous robots navigating a warehouse are another classic example. We can model the warehouse floor as a grid, where each free square is a node. Edges implicitly connect adjacent squares, representing a possible move. While a simple path-finding algorithm on this graph can find the route with the fewest moves, we can add weights to edges to represent "slower" zones or areas to avoid. This model also scales to complex multi-agent problems. To coordinate dozens of robots, the graph can be expanded to include time, allowing a search algorithm to find collision-free paths for the entire fleet.
+
+<figure style="margin:1em 0; display:flex; justify-content:center; flex-direction:column; align-items:center;">
+  <img src="{{ '/assets/images/graph_theory/warehouse.jpg' | relative_url }}"
+       alt="Autonomous mobile robots in a warehouse"
+       style="width:100%; max-width:760px; height:auto; border-radius:6px;">
+  <figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+    <!-- Autonomous robots navigating aisles modeled as a grid graph. <br> -->
+    <small>Image source: <a href="https://www.guidanceautomation.com/5-ways-robotic-automation-can-improve-your-warehouse-efficiency/" target="_blank" rel="noopener">Guidance Automation</a>.</small>
+  </figcaption>
+</figure>
+
+
+
+---
+
+# Chapter 2. Basic Definitions
 
 ## 1.1 Graphs
 
@@ -189,107 +251,294 @@ A graph is said to be connected if, for every pair of vertices $u$ and $v$, ther
 Otherwise, the graph is disconnected, meaning that it consists of multiple connected components that are isolated from one another.  
 Connectivity plays a central role in determining whether traversal or communication between parts of the graph is possible.
 
-<div class="mcq" id="mcq-g1">
-  <h4>Quiz 1 — Based on the graph below, select the correct statements.</h4>
-  <p>
-    <img src="{{ '/assets/images/graph_theory/graph_connected_weighted.png' | relative_url }}" alt="Connected weighted graph" style="max-width:520px;width:100%;border:1px solid #e5e7eb;border-radius:8px;">
-  </p>
-  <div class="options">
-    <label><input type="radio" name="g1-w" value="weighted"> Weighted</label>
-    <label><input type="radio" name="g1-w" value="unweighted"> Unweighted</label>
+
+<div class="assignment" markdown="1">
+<strong>Quiz.</strong>
+  <div class="mcq" id="mcq-g1">
+    <h4>Based on the graph below, select the correct statements.</h4>
+    <p>
+      <img src="{{ '/assets/images/graph_theory/graph_connected_weighted.png' | relative_url }}" alt="Connected weighted graph" style="max-width:520px;width:100%;border:1px solid #e5e7eb;border-radius:8px;">
+    </p>
+    <div class="options">
+      <label><input type="radio" name="g1-w" value="weighted"> Weighted</label>
+      <label><input type="radio" name="g1-w" value="unweighted"> Unweighted</label>
+    </div>
+    <div class="options">
+      <label><input type="radio" name="g1-c" value="connected"> Connected</label>
+      <label><input type="radio" name="g1-c" value="disconnected"> Disconnected</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkG1()">Check</button>
+    </div>
+    <div class="result" id="g1-result"></div>
   </div>
-  <div class="options">
-    <label><input type="radio" name="g1-c" value="connected"> Connected</label>
-    <label><input type="radio" name="g1-c" value="disconnected"> Disconnected</label>
+
+  <div class="mcq" id="mcq-g2">
+    <h4>Based on the graph below, select the correct statements.</h4>
+    <p>
+      <img src="{{ '/assets/images/graph_theory/graph_disconnected_unweighted.png' | relative_url }}" alt="Disconnected unweighted graph" style="max-width:520px;width:100%;border:1px solid #e5e7eb;border-radius:8px;">
+    </p>
+    <div class="options">
+      <label><input type="radio" name="g2-w" value="weighted"> Weighted</label>
+      <label><input type="radio" name="g2-w" value="unweighted"> Unweighted</label>
+    </div>
+    <div class="options">
+      <label><input type="radio" name="g2-c" value="connected"> Connected</label>
+      <label><input type="radio" name="g2-c" value="disconnected"> Disconnected</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkG2()">Check</button>
+    </div>
+    <div class="result" id="g2-result"></div>
   </div>
-  <div class="actions">
-    <button onclick="checkG1()">Check</button>
+
+  <script>
+  function pick(name) {
+    const xs = document.querySelectorAll(`input[name="${name}"]`);
+    for (const x of xs) if (x.checked) return x.value;
+    return null;
+  }
+  function mark(el, ok) {
+    el.textContent = ok ? "Correct ✅" : "Try again ❌";
+    el.parentElement.classList.toggle("correct", ok);
+    el.parentElement.classList.toggle("incorrect", !ok);
+  }
+  function checkG1() {
+    const w = pick("g1-w");
+    const c = pick("g1-c");
+    const ok = (w === "weighted") && (c === "connected");
+    mark(document.getElementById("g1-result"), ok);
+  }
+  function checkG2() {
+    const w = pick("g2-w");
+    const c = pick("g2-c");
+    const ok = (w === "unweighted") && (c === "disconnected");
+    mark(document.getElementById("g2-result"), ok);
+  }
+  </script>
+
+  <div class="mcq" id="mcq-dir1">
+    <h4>  Is this graph directed or undirected?</h4>
+    <p>
+      <img src="{{ '/assets/images/graph_theory/graph_directed.png' | relative_url }}" alt="Directed graph"
+          style="max-width:520px;width:100%;border:1px solid #e5e7eb;border-radius:8px;">
+    </p>
+    <div class="options">
+      <label><input type="radio" name="dir1" value="directed"> Directed</label>
+      <label><input type="radio" name="dir1" value="undirected"> Undirected</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkDir1()">Check</button>
+    </div>
+    <div class="result" id="dir1-result"></div>
   </div>
-  <div class="result" id="g1-result"></div>
+
+  <script>
+  function pick(name) {
+    const xs = document.querySelectorAll(`input[name="${name}"]`);
+    for (const x of xs) if (x.checked) return x.value;
+    return null;
+  }
+  function mark(el, ok) {
+    el.textContent = ok ? "Correct ✅" : "Try again ❌";
+    el.parentElement.classList.toggle("correct", ok);
+    el.parentElement.classList.toggle("incorrect", !ok);
+  }
+  function checkDir1() {
+    const v = pick("dir1");
+    const ok = (v === "directed");
+    mark(document.getElementById("dir1-result"), ok);
+  }
+  </script>
 </div>
-
-<div class="mcq" id="mcq-g2">
-  <h4>Quiz 2 — Based on the graph below, select the correct statements.</h4>
-  <p>
-    <img src="{{ '/assets/images/graph_theory/graph_disconnected_unweighted.png' | relative_url }}" alt="Disconnected unweighted graph" style="max-width:520px;width:100%;border:1px solid #e5e7eb;border-radius:8px;">
-  </p>
-  <div class="options">
-    <label><input type="radio" name="g2-w" value="weighted"> Weighted</label>
-    <label><input type="radio" name="g2-w" value="unweighted"> Unweighted</label>
-  </div>
-  <div class="options">
-    <label><input type="radio" name="g2-c" value="connected"> Connected</label>
-    <label><input type="radio" name="g2-c" value="disconnected"> Disconnected</label>
-  </div>
-  <div class="actions">
-    <button onclick="checkG2()">Check</button>
-  </div>
-  <div class="result" id="g2-result"></div>
-</div>
-
-<script>
-function pick(name) {
-  const xs = document.querySelectorAll(`input[name="${name}"]`);
-  for (const x of xs) if (x.checked) return x.value;
-  return null;
-}
-function mark(el, ok) {
-  el.textContent = ok ? "Correct ✅" : "Try again ❌";
-  el.parentElement.classList.toggle("correct", ok);
-  el.parentElement.classList.toggle("incorrect", !ok);
-}
-function checkG1() {
-  const w = pick("g1-w");
-  const c = pick("g1-c");
-  const ok = (w === "weighted") && (c === "connected");
-  mark(document.getElementById("g1-result"), ok);
-}
-function checkG2() {
-  const w = pick("g2-w");
-  const c = pick("g2-c");
-  const ok = (w === "unweighted") && (c === "disconnected");
-  mark(document.getElementById("g2-result"), ok);
-}
-</script>
-
-<div class="mcq" id="mcq-dir1">
-  <h4>Quiz — Is this graph directed or undirected?</h4>
-  <p>
-    <img src="{{ '/assets/images/graph_theory/graph_directed.png' | relative_url }}" alt="Directed graph"
-         style="max-width:520px;width:100%;border:1px solid #e5e7eb;border-radius:8px;">
-  </p>
-  <div class="options">
-    <label><input type="radio" name="dir1" value="directed"> Directed</label>
-    <label><input type="radio" name="dir1" value="undirected"> Undirected</label>
-  </div>
-  <div class="actions">
-    <button onclick="checkDir1()">Check</button>
-  </div>
-  <div class="result" id="dir1-result"></div>
-</div>
-
-<script>
-function pick(name) {
-  const xs = document.querySelectorAll(`input[name="${name}"]`);
-  for (const x of xs) if (x.checked) return x.value;
-  return null;
-}
-function mark(el, ok) {
-  el.textContent = ok ? "Correct ✅" : "Try again ❌";
-  el.parentElement.classList.toggle("correct", ok);
-  el.parentElement.classList.toggle("incorrect", !ok);
-}
-function checkDir1() {
-  const v = pick("dir1");
-  const ok = (v === "directed");
-  mark(document.getElementById("dir1-result"), ok);
-}
-</script>
 
 
 ---
+# Chapter 3: Graph Representations
 
-# Chapter 2. Traversal and Search
+Before we can run algorithms like BFS or Dijkstra, we must represent the abstract concept of a graph $G = (V, E)$ in a computer’s memory. The choice of representation is a fundamental design decision that has a major impact on both runtime and memory usage.
+
+A representation is a data structure that allows us to store vertices and edges and perform key operations such as:
+
+- Checking if an edge $(u, v)$ exists  
+- Finding all neighbors of a vertex $v$  
+- Adding or removing vertices and edges  
+- Storing and retrieving edge weights
+
+We will explore the three most common methods:
+
+1. Adjacency Matrix  
+2. Adjacency List  
+3. Edge List
+
+---
+
+## 3.1 Adjacency Matrix
+
+An adjacency matrix represents a graph with $V$ vertices as a $V \times V$ matrix (a 2D array) of booleans or weights. For any two vertices $i$ and $j$, the entry $A[i, j]$ stores information about the edge $(i, j)$:
+
+$$
+A[i, j] = 
+\begin{cases}
+w(i, j), & \text{if edge } (i, j) \in E \\ <br>
+\infty\ \text{(or 0 for unweighted)}, & \text{otherwise}
+\end{cases}
+$$
+
+For an undirected graph, the matrix is symmetric, meaning $A[i, j] = A[j, i]$.
+
+<div class="example" markdown="1">
+
+<strong> Example. </strong> Consider this simple weighted, undirected graph:
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/graph_connected_weighted.png' | relative_url }}" 
+       alt="Simple 4-node weighted graph" width="400">
+</p>
+
+Its adjacency matrix representation (using $\infty$ for non-edges) would be:
+
+$$
+A =
+\begin{bmatrix}
+ & \mathbf{A} & \mathbf{B} & \mathbf{C} & \mathbf{D} & \mathbf{E} \\ <br>
+\mathbf{A} & 0 & 2.0 & 1.5 & \infty & \infty \\ <br>
+\mathbf{B} & 2.0 & 0 & \infty & 3.0 & \infty \\ <br>
+\mathbf{C} & 1.5 & \infty & 0 & 2.5 & 1.0 \\ <br>
+\mathbf{D} & \infty & 3.0 & 2.5 & 0 & 4.0 \\ <br>
+\mathbf{E} & \infty & \infty & 1.0 & 4.0 & 0
+\end{bmatrix}
+$$
+
+</div>
+
+### Analysis
+
+**Pros**
+
+- Fast edge lookup: Checking if an edge $(i, j)$ exists or finding its weight is $O(1)$.  
+- Simple updates: Adding or removing an edge is $O(1)$.
+
+**Cons**
+
+- High space complexity: Requires $O(V^2)$ space regardless of how many edges exist.  
+- Inefficient for sparse graphs:
+  Example with $V = 10{,}000$ vertices and each connected to $k = 15$ neighbors:  
+  $E \approx V \cdot k / 2 = 75{,}000$ edges.  
+  The matrix stores $V^2 = 10{,}000^2 = 10^8$ entries — over 99.9% are $\infty$.  
+- Slow neighbor iteration: To find all neighbors of vertex $i$, you must scan its entire row ($O(V)$).
+
+---
+
+## 3.2 Adjacency List
+
+An adjacency list is the most common representation for sparse graphs. It consists of an array (or map) of $V$ lists. The list at index $i$ stores all neighbors of vertex $i$. For a weighted graph, each entry stores both the neighbor ID and the edge weight.
+
+<div class="example" markdown="1">
+
+<strong> Example. </strong> Consider the following graph:
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/graph_4node_weighted.png' | relative_url }}" 
+       alt="Simple 4-node weighted graph" width="400">
+</p>
+
+Adjacency list representation:
+
+$$
+\begin{aligned}
+A &\rightarrow [(B,\, 1.0),\; (C,\, 2.5)] \\ <br>
+B &\rightarrow [(A,\, 1.0),\; (C,\, 1.8)] \\ <br>
+C &\rightarrow [(A,\, 2.5),\; (B,\, 1.8),\; (D,\, 3.2)] \\ <br>
+D &\rightarrow [(C,\, 3.2)]
+\end{aligned}
+$$
+
+</div>
+
+### Analysis
+
+**Pros**
+
+- Space-efficient: $O(V + E)$ total space.  
+- Fast neighbor iteration: $O(\text{degree}(i))$, ideal for BFS/Dijkstra.
+
+**Cons**
+
+- Slower edge lookup: To check if $(i, j)$ exists, you must scan vertex $i$’s list ($O(\text{degree}(i))$).
+
+---
+
+## 3.3 Edge List
+
+An edge list is the simplest of all representations.  
+It is a single list (or array) containing all edges in the graph.  
+For a weighted graph, each entry is a tuple $(u, v, w)$.
+
+<div class="example" markdown="1">
+
+<strong>Example. </strong> Consider the following graph:
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/graph_5node_weighted.png' | relative_url }}" 
+       alt="Simple 4-node weighted graph" width="400">
+</p>
+
+Edge list representation:
+
+
+$$
+E = [
+(A,\, B,\, 2.2),\;
+(A,\, D,\, 3.1),\;
+(B,\, C,\, 1.7),\;
+(C,\, D,\, 2.8),\;
+(C,\, E,\, 1.5),\;
+(D,\, E,\, 2.3)
+]
+$$
+
+
+</div>
+
+### Analysis
+
+**Pros**
+
+- Very simple: Minimal implementation complexity.  
+- Space-efficient: $O(E)$.  
+- Ideal for edge-based algorithms such as Kruskal’s Minimum Spanning Tree.
+
+**Cons**
+
+- Slow neighbor iteration: Finding all neighbors of $i$ requires scanning all $E$ edges ($O(E)$).  
+- Slow node-centric operations: Adding nodes or checking degrees is inefficient.
+
+---
+
+## 3.4 Summary and Comparison
+
+The best representation depends entirely on the graph’s density and the operations you need.
+
+| **Operation** | **Adjacency Matrix** | **Adjacency List** | **Edge List** |
+|:--------------|:-------------------:|:------------------:|:--------------:|
+| **Space** | $O(V^2)$ | $O(V + E)$ | $O(E)$ |
+| **Find neighbors of $v$** | $O(V)$ | $O(\text{degree}(v))$ | $O(E)$ |
+| **Check if edge $(u,v)$ exists** | $O(1)$ | $O(\text{degree}(u))$ | $O(E)$ |
+| **Add edge** | $O(1)$ | $O(1)$ | $O(1)$ |
+| **Remove edge $(u,v)$** | $O(1)$ | $O(\text{degree}(u))$ | $O(E)$ |
+
+---
+
+### Summary Takeaway
+
+- Use **Adjacency Matrix** for **dense** graphs or frequent edge lookups.  
+- Use **Adjacency List** for **sparse** graphs and search algorithms (BFS, Dijkstra, A*).  
+- Use **Edge List** for **edge-sorted** or **edge-centric** algorithms (Kruskal, clustering, etc.).
+
+---
+
+# Chapter 4. Traversal and Search
 
 Once a graph is defined, we can explore it systematically using *search algorithms*. Traversal algorithms visit nodes according to specific rules, allowing us to enumerate vertices, discover components, or find optimal paths between nodes. Although many variants exist, two of the most fundamental search paradigms are breadth-first and depth-first exploration.
 
@@ -386,7 +635,177 @@ The two most classical algorithms for finding shortest paths are *Dijkstra’s a
 
 ---
 
-### Dijkstra’s Algorithm (1959)
+<!-- ## Coding Exercise: Implement DFS and Visualize the Traversal
+
+{% raw %}
+<!-- ====== CDNs (include ONCE per page) ====== -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/monokai.css">
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.js"></script>
+
+<style>
+.exercise-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 14px;
+  background: #fff;
+}
+.CodeMirror {
+  height: 260px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin: 10px 0 6px;
+  flex-wrap: wrap;
+}
+.btn {
+  padding: 6px 12px;
+  border: 1px solid #111827;
+  border-radius: 6px;
+  background: #111827;
+  color: #fff;
+  cursor: pointer;
+}
+.btn.alt {
+  background: #065f46;
+  border-color: #065f46;
+}
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.outbox {
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 10px;
+}
+.outbox img { max-width: 100%; display: block; }
+.muted { color: #6b7280; font-size: 0.9em; }
+#solution-box-dfs {
+  display: none;
+  margin-top: 8px;
+  border-left: 3px solid #22c55e;
+  background: #f0fdf4;
+  padding: 10px;
+  border-radius: 6px;
+}
+</style>
+
+## Coding Exercise: Implement DFS and Visualize the Traversal
+
+In this exercise, you’ll implement an **iterative DFS** on a fixed undirected graph and visualize:
+- the **DFS tree** (thick black edges),
+- the **non-tree edges** (light gray),
+- and the **discovery order** above each node.
+
+
+<div class="exercise-card">
+  <textarea id="code-dfs">def dfs_order(G, start):&#10;    &#34;&#34;&#34;&#10;    Implement Depth-First Search on the given undirected NetworkX graph G,&#10;    starting from node `start`.&#10;&#10;    Return:&#10;      order  : list of nodes in discovery order&#10;      parent : dict mapping node -&gt; its parent in the DFS tree (start has None)&#10;&#10;    Hints:&#10;      - Use an explicit stack (list) for iterative DFS.&#10;      - When visiting a node for the first time, record its parent and append it to &#39;order&#39;.&#10;      - Push neighbors in a consistent order (e.g., sorted) to get deterministic output.&#10;    &#34;&#34;&#34;&#10;    order = []&#10;    parent = {start: None}&#10;    visited = set()&#10;&#10;    # TODO: replace with your DFS&#10;    # stack = [(start, None)]&#10;    # while stack:&#10;    #     node, par = stack.pop()&#10;    #     if node in visited:&#10;    #         continue&#10;    #     visited.add(node)&#10;    #     parent[node] = par&#10;    #     order.append(node)&#10;    #     # push neighbors in reverse-sorted order so the smallest is processed first&#10;    #     for nb in sorted(G.neighbors(node), reverse=True):&#10;    #         if nb not in visited:&#10;    #             stack.append((nb, node))&#10;&#10;    return order, parent&#10;</textarea>
+
+  <div class="toolbar">
+    <label>Start node:
+      <select id="start-node">
+        <option>A</option>
+        <option selected>B</option>
+        <option>C</option>
+        <option>D</option>
+        <option>E</option>
+      </select>
+    </label>
+    <button id="run-dfs" class="btn">Run ▶</button>
+    <button id="show-solution-dfs" class="btn alt">Show Solution 💡</button>
+    <span id="status-dfs" class="muted"></span>
+  </div>
+
+  <div id="solution-box-dfs">
+    <b>✅ Reference Solution:</b>
+    <pre style="white-space: pre-wrap; font-size:13px; background:#fff; padding:8px; border-radius:5px; border:1px solid #ddd;">
+def dfs_order(G, start):
+    order = []
+    parent = {start: None}
+    visited = set()
+    stack = [(start, None)]
+    while stack:
+        node, par = stack.pop()
+        if node in visited:
+            continue
+        visited.add(node)
+        parent[node] = par
+        order.append(node)
+        # deterministic neighbor order
+        for nb in sorted(G.neighbors(node), reverse=True):
+            if nb not in visited:
+                stack.append((nb, node))
+    return order, parent
+    </pre>
+  </div>
+
+  <div class="outbox">
+    <div class="muted">Output:</div>
+    <img id="plot-dfs" alt="DFS visualization will appear here">
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  // 1) Initialize CodeMirror on the correct textarea
+  const cm = CodeMirror.fromTextArea(document.getElementById("code-dfs"), {
+    mode: "python",
+    theme: "monokai",
+    lineNumbers: true,
+    indentUnit: 4,
+    tabSize: 4,
+    lineWrapping: true
+  });
+
+  // 2) Load Pyodide + packages
+  const pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/" });
+  await pyodide.loadPackage(["matplotlib", "networkx"]);
+
+  // 3) Hook up UI
+  const status = document.getElementById("status-dfs");
+  const img = document.getElementById("plot-dfs");
+  const startSel = document.getElementById("start-node");
+  const showBtn = document.getElementById("show-solution-dfs");
+  const solBox = document.getElementById("solution-box-dfs");
+  const runBtn = document.getElementById("run-dfs");
+
+  showBtn.addEventListener("click", () => {
+    const vis = solBox.style.display === "block";
+    solBox.style.display = vis ? "none" : "block";
+    showBtn.textContent = vis ? "Show Solution 💡" : "Hide Solution ✖️";
+  });
+
+  runBtn.addEventListener("click", async () => {
+    runBtn.disabled = true; status.textContent = "Running…";
+    const startNode = startSel.value;
+    const codeUser = cm.getValue();
+
+    const script = `import matplotlib\nmatplotlib.use("Agg")\nimport matplotlib.pyplot as plt\nimport networkx as nx\nfrom io import BytesIO\nimport base64\n\n# ---------- Hidden: build a fixed graph ----------\nG = nx.Graph()\nG.add_edges_from([\n\t("A","B"), ("A","C"),\n\t("B","C"), ("B","D"),\n\t("C","D"), ("C","E"),\n\t("D","E")\n])\npos = {\n\t"A": (-1.0,  1.0),\n\t"B": (-1.0, -0.5),\n\t"C": ( 0.0,  0.0),\n\t"D": ( 1.0, -0.5),\n\t"E": ( 2.0, -1.0)\n}\n\n# ---------- Student function ----------\n${codeUser}\n\n# ---------- Run DFS ----------\nstart = "${startNode}"\norder, parent = dfs_order(G, start)\n\n# DFS tree edges (undirected, unique)\ntree_edges = []\nfor v, p in parent.items():\n\tif p is not None and G.has_edge(v, p):\n\t\ta, b = sorted((v, p))\n\t\tif (a, b) not in tree_edges:\n\t\t\ttree_edges.append((a, b))\n\n# ---------- Render ----------\nfig, ax = plt.subplots(figsize=(6.4, 4.4), dpi=150)\nax.axis('off')\n\n# Base graph\nnx.draw_networkx_edges(G, pos, width=1.6, edge_color="#bdbdbd", ax=ax)\n\n# Non-tree edges\nnon_tree = [e for e in G.edges() if tuple(sorted(e)) not in tree_edges]\nif non_tree:\n\tnx.draw_networkx_edges(G, pos, edgelist=non_tree, width=1.8, edge_color="#9e9e9e", ax=ax)\n\n# Tree edges\nif tree_edges:\n\tnx.draw_networkx_edges(G, pos, edgelist=tree_edges, width=3.0, edge_color="black", ax=ax)\n\n# Nodes\nnx.draw_networkx_nodes(G, pos, node_color="white", edgecolors="black",\n\t\t\t\t   node_size=1400, linewidths=2.4, ax=ax)\nnx.draw_networkx_labels(G, pos, font_size=14, font_weight="bold", ax=ax)\n\n# Discovery order labels\nfor i, v in enumerate(order, start=1):\n\tx, y = pos[v]\n\tax.annotate(str(i), xy=(x, y), xycoords='data',\n\t\t\ttextcoords='offset points', xytext=(0, 22),\n\t\t\tha='center', va='bottom', fontsize=11,\n\t\t\tcolor="#222",\n\t\t\tbbox=dict(boxstyle="round,pad=0.25", facecolor='white',\n\t\t\t\t\t  edgecolor='none', alpha=0.9))\n\n# Export PNG -> base64\nfrom matplotlib.transforms import Bbox\nplt.tight_layout()\nbuf = BytesIO()\nplt.savefig(buf, format="png", dpi=150, bbox_inches="tight")\nplt.close(fig)\n\"data:image/png;base64,\" + base64.b64encode(buf.getvalue()).decode()\n`.trim();
+
+    try {
+      const dataURL = await pyodide.runPythonAsync(script);
+      img.src = dataURL;
+      status.textContent = "✅ Success";
+    } catch (err) {
+      console.error(err);
+      status.textContent = "⚠️ " + err;
+    } finally {
+      runBtn.disabled = false;
+    }
+  });
+});
+</script>
+{% endraw %} -->
+
+
+---
+
+### Dijkstra’s Algorithm (1959) [<a href="#ref1">1</a>]
 
 Dijkstra’s algorithm generalizes BFS to weighted graphs by always expanding the vertex with the lowest cumulative cost from the start.  
 It maintains a *priority queue* of vertices, ordered by their current best-known distance.  
@@ -430,7 +849,7 @@ For dense graphs, where $E$ grows quadratically with $V$, the complexity approac
 
 ---
 
-### A-Star (A*) Search (1968)
+### A-Star (A*) Search (1968) [<a href="#ref2">2</a>]
 
 A\* extends Dijkstra’s algorithm by adding a heuristic function $h(v)$ that estimates the remaining cost from a vertex $v$ to the goal. This heuristic guides the search toward promising directions, potentially reducing the number of expanded nodes.
 
@@ -472,17 +891,118 @@ When $h(v) = 0$ for all vertices, A\* reduces to Dijkstra’s algorithm. When $h
 
 Together, BFS, DFS, Dijkstra, and A\* form the foundation of graph search theory, illustrating how the structure of a graph and the information available about costs or heuristics influence the efficiency and guarantees of traversal algorithms.
 
+---
+<div class="assignment" markdown="1">
+
+### Exercise 2: Tracing Dijkstra's Algorithm
+
+Consider the following weighted graph, with start node A.
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/dijkstra_exercise.png' | relative_url }}" alt="A simple weighted graph for Dijkstra exercise" width="450">
+</p>
+
+Trace Dijkstra's algorithm. Fill out a table showing the `dist` and `parent` for each node, and list the order in which nodes are `EXTRACT-MIN`ed from the priority queue.
+
+<details markdown="1"><summary>Solution</summary>
+
+![Dijkstra]({{ '/assets/images/graph_theory/dijkstra_animation.gif' | relative_url }})
+
+Priority Queue (Q): `[ (A, 0) ]`
+
+1. Extract: A (dist=0)  
+   - Visit B: `dist[B] = 2`, `parent[B] = A` → Add (B, 2)  
+   - Visit C: `dist[C] = 5`, `parent[C] = A` → Add (C, 5)  
+   - Q = `[ (B, 2), (C, 5) ]`
+
+2. Extract: B (dist=2)  
+   - Visit C: `2 + 2 = 4 < 5` → Update `dist[C] = 4`, `parent[C] = B`  
+   - Visit D: `2 + 6 = 8` → Add (D, 8)  
+   - Q = `[ (C, 4), (D, 8) ]`
+
+3. Extract: C (dist=4)  
+   - Visit D: `4 + 1 = 5 < 8` → Update `dist[D] = 5`, `parent[D] = C`  
+   - Q = `[ (D, 5) ]`
+
+4. Extract: D (dist=5)  
+   - Visit E: `5 + 1 = 6 < 10` → Update `dist[E] = 6`, `parent[E] = D`  
+   - Q = `[ (E, 6) ]`
+
+5. Extract: E (dist=6)  
+   - Q = `[ ]` (empty)
+
+Final State:
+
+| Node | dist | parent |
+|:-----|:----:|:------:|
+| A    | 0    | NIL    |
+| B    | 2    | A      |
+| C    | 4    | B      |
+| D    | 5    | C      |
+| E    | 6    | D      |
+
+Extraction Order: A, B, C, D, E
+
+
+
+</details>
+</div>
+
+
+<div class="assignment" markdown="1">
+### Exercise 3: A* vs. Dijkstra
+
+Now, use the same graph from the previous exercise. We want to find a path from A to E. We are given the following admissible heuristic values $h(v)$:
+
+| Node | $h(v)$ (Est. cost to E) |
+|:-----|:-----------------------:|
+| A    | 5                       |
+| B    | 4                       |
+| C    | 2                       |
+| D    | 1                       |
+| E    | 0                       |
+
+Trace the A\* algorithm. What is the $f(v) = g(v) + h(v)$ value for each node when it is extracted? Notice which nodes Dijkstra expanded that A\* did not need to (or vice-versa).
+
+<details markdown="1"><summary>Solution</summary>
+* `g[v]` is cost-from-start (same as `dist` in Dijkstra).
+* `f[v]` is priority `g[v] + h(v)`.
+
+Priority Queue (OPEN): `[ (A, f=5) ]` (g=0, h=5)
+
+1.  Extract: A (g=0, f=5)
+    * Visit B: `g[B]` = 2. `f[B]` = `g[B] + h(B)` = 2 + 4 = 6. Add (B, 6) to Q.
+    * Visit C: `g[C]` = 5. `f[C]` = `g[C] + h(C)` = 5 + 2 = 7. Add (C, 7) to Q.
+    * **Q:** `[ (B, 6), (C, 7) ]`
+
+2.  Extract: B (g=2, f=6)
+    * Visit C: `g = 2 + 2 = 4`. This is `< 5`.
+        * Update `g[C]` = 4. `f[C]` = 4 + 2 = 6. DECREASE-KEY(C, 6).
+    * Visit D: `g = 2 + 6 = 8`.
+        * `g[D]` = 8. `f[D]` = 8 + 1 = 9. Add (D, 9) to Q.
+    * **Q:** `[ (C, 6), (D, 9) ]`
+
+3.  Extract: C (g=4, f=6)
+    * Visit D: `g = 4 + 1 = 5`. This is `< 8`.
+        * Update `g[D]` = 5. `f[D]` = 5 + 1 = 6. DECREASE-KEY(D, 6).
+    * **Q:** `[ (D, 6)`
+
+4.  Extract: D (g=5, f=6)
+    * Visit E: `g = 5 + 1 = 6`. This is `< 10`.
+        * Update `g[E]` = 6. `f[E]` = 6 + 0 = 6. DECREASE-KEY(E, 6).
+    * **Q:** `[ (E, 6) ]`
+
+5. Extract: E (g=6, f=6)
+    * **Goal Reached!** Return path E $\to$ D $\to$ C $\to$ B $\to$ A.
+
+**Observation:** The final path and costs are identical. The *order* of exploration was A, B, C, D, E. In this specific case, the heuristic was good enough to guide the search along the optimal path, but it didn't save any expansions because the "cheapest-first" path (A-B-C-D-E) also happened to be the one Dijkstra would have explored.
+</details>
+</div>
 
 ---
 
 ## References
 
-<!-- add references -->
-
-<!-- 1. Dijkstra, E. W. (1959). *A Note on Two Problems in Connexion with Graphs.* Numerische Mathematik.  
-2. Hart, P. E., Nilsson, N. J., Raphael, B. (1968). *A Formal Basis for the Heuristic Determination of Minimum Cost Paths.* IEEE Trans. Syst. Sci. Cybern.  
-3. Canny, J. (1988). *The Complexity of Robot Motion Planning.* MIT Press.  
-4. LaValle, S. M. (2006). *Planning Algorithms.* Cambridge University Press.  
-5. Choset, H. et al. (2005). *Principles of Robot Motion.* MIT Press.  
-6. Orthey, A., Chamzas, C., Kavraki, L. E. (2023). *Sampling-Based Motion Planning: A Comparative Review.* arXiv:2309.13119 [cs.RO]. -->
-
+1.  <a id="ref1"></a>Dijkstra, E. W. (1959). *A note on two problems in connexion with graphs.* Numerische Mathematik, 1(1), 269–271.
+2.  <a id="ref2"></a>Hart, P. E., Nilsson, N. J., & Raphael, B. (1968). *A Formal Basis for the Heuristic Determination of Minimum Cost Paths.* IEEE Transactions on Systems Science and Cybernetics, 4(2), 100–107.
+3. <a id="ref3"></a>Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). *Introduction to Algorithms* (4th ed.). MIT Press.

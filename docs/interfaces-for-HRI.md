@@ -4,6 +4,39 @@ parent: Courses
 layout: default
 nav_order: 7
 ---
+
+
+<!-- Link external JavaScript file -->
+<script src="questions.js"></script>
+
+<a name="top"></a>
+
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color:rgb(0, 0, 0); /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  #back-to-top:hover {
+    opacity: 1;
+  }
+</style>
+
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
+
 # Interfaces for Human-Robot Interaction
 
 *Table of Contents*
@@ -129,12 +162,14 @@ In the right example, the user controls the robot to pick up different objects. 
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
-Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and is easily adaptable for controlling a 6-DOF robotic arm in both position and orientation. This interface can be easily integrated into a wide range of applications.
+Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and can be easily integrated into a wide range of applications.
 <br>
 Using a joystick often requires both hands. This depends on the specific type of joystick, but it is often necessary to use one hand to control translation and the other to control orientation. Furthermore, joysticks are limited in what can be transferred: forces cannot be transmitted; only displacements and speeds are conveyed. (It is still a step forward compared to tablets, as the range of teachable actions increases; though this comes at the cost of reduced user-friendliness.) Moreover, the performance of this interface depends on the user’s point of view. The user must be positioned to have a clear view of the scene; for example, if the user is behind the robot, visibility is greatly reduced. (Comparing to tablet interfaces, tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.) Finally, joystick interfaces are sensitive to the user’s experience level. They tend to be less user-friendly than tablets and often require some training before they can be used effectively.
 
+<!--
 > - **Pros:** 
 > + Can communicate the desired motion in 3D or even 6D, easily amenable to control 6DOFs robot arm in position and orientation 
+-->
 
 <p align="center">
   <img src="https://iliad.stanford.edu/images/posts/losey2019controlling/image11.gif" width="600" height="338"/>
@@ -142,6 +177,7 @@ Using a joystick often requires both hands. This depends on the specific type of
 
 <sub>Losey, Dylan P., et al. "Controlling assistive robots with learned latent actions." 2020 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2020. Video Source: [https://iliad.stanford.edu/research/interactions](https://iliad.stanford.edu/research/interactions)</sub>
 
+<!--
 > +  User-friendly
 > +  Cheap
 > +  Easily integrable for a vast range of applications
@@ -151,8 +187,9 @@ Using a joystick often requires both hands. This depends on the specific type of
 > - Limited in what can be transferred: Force can't be transfeered, it is only displacement and speed that are transferred. (Note that it is still one step forward compared to tablets; there is an increase in the number of things that can be taught, which on the other hand results in being a bit less user-friendly.)
 > - Depends on the point of view of the user: The user should be well placed to have a relatively good view. For example, if the user is behind the robot, she/he can't see much (A positive point about tablets is that a rendering of the scene, viewed from robot's point of view, is provided).
 > - Sensitive to experience of teacher: It is a bit less user-firendly compared to tablets and often requires a bit of training before usage.
+-->
 
-Inverse kinematics can present challenges in teleoperation. The user may command an infeasible motion—for example, a rapid rotation that violates the robot’s joint limits. In such cases, an alternative path must be computed. Consequently, the user needs to learn how to operate the robot effectively.
+Inverse kinematics can present challenges in teleoperation. The user may command an infeasible motion; for example, a rapid rotation that violates the robot’s joint limits. In such cases, an alternative path must be computed. Consequently, the user needs to learn how to operate the robot effectively.
 <br>
 On the other hand, teleoperation offers a significant advantage: the user can teach robots that are entirely different from themselves. A good example of this is teaching drones.
 
@@ -166,61 +203,86 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
 
 
 <!-- Conceputal Questions -->
-<details markdown="2">
-  <summary>Conceptual Questions</summary>
+<details open markdown="2">
+<summary>Conceptual Questions</summary>
 
-  <p><strong>Question 1: Compared to tablets, joysticks are more user-friendly.</strong></p>
-  <form id="q1">
-    <input type="radio" name="q1" value="True"> True<br>
-    <input type="radio" name="q1" value="False"> False<br>
-    <button type="button"
-      onclick="checkTrueFalse('q1', 'False', 
-        'Correct! Tablets are more user-friendly.',
-        'Incorrect. Using a tablet is more intuitive than using a joystick. Consequently, tablets are more user-friendly.')">
-      Check Answer
-    </button>
-    <p id="q1-feedback" style="margin-top: 10px; padding: 10px; border-radius: 5px;"></p>
-  </form>
+<!-- Question 1 -->
+<p><strong>Question 1: Compared to tablets, joysticks are more sensitive to the teacher's experience.</strong></p>
+<form id="q1">
+  <input type="radio" name="q1" value="True"> True<br>
+  <input type="radio" name="q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1', 'True', 
+      'Correct! Joysticks are less user-friendly and require more trianing and experience before usage.',
+      'Incorrect. Using a tablet is more intuitive than using a joystick. The user can control for more DOFs with a joystick, which comes at the cost of being less user-friendly and requiring more training and experience.')">
+    Check Answer
+  </button>
+  <p id="q1-feedback"></p>
+</form>
 
-  </details>
+<!-- Question 2 -->
+<p><strong>Question 2: A 3-DOF joystick can be a proper interface to control for position and orientation of a 6-DOF robotic arm. </strong></p>
+<form id="q2">
+  <input type="radio" name="q2" value="True"> True<br>
+  <input type="radio" name="q2" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q2', 'False', 
+      'Correct! The proper interface here is a 6-DOF joystick, which can control for both position and orientation of the 6-DOF robotic arm.',
+      'Incorrect. A 6-DOF joystick is required here, as the goal is to control for both position and orientation of a 6-DOF arm.')">
+    Check Answer
+  </button>
+  <p id="q2-feedback"></p>
+</form>
 
-  <script>
-    // This function handles the logic and applies inline styles for feedback.
-    function checkTrueFalse(formId, correctAnswer, correctMsg, incorrectMsg) {
-        const form = document.getElementById(formId);
-        // Look for the input where the name matches the formId (e.g., name="q1" if formId="q1")
-        const selected = form.querySelector('input[name="' + formId + '"]:checked');
-        const feedbackElement = document.getElementById(formId + '-feedback');
+<!-- Question 3 -->
+<p><strong>Question 3: Since joysticks can control for both position and oreintation of the end-effector, encompassing all the degrees of freedom, they are not limited in what can be transferred.</strong></p>
+<form id="q3">
+  <input type="radio" name="q3" value="True"> True<br>
+  <input type="radio" name="q3" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q3', 'False', 
+      'Correct! Forces cannot be transmitted',
+      'Incorrect. Although all degrees of freedom of the end-effector are covered, forces still can not be transmitted.')">
+    Check Answer
+  </button>
+  <p id="q3-feedback"></p>
+</form>
 
-        // Reset previous feedback styles
-        feedbackElement.style.backgroundColor = '';
-        feedbackElement.style.border = '';
-        feedbackElement.style.color = 'inherit';
+<!-- Question 4 -->
+<p><strong>Question 4: Despite tablets, joysticks don't rely on internal inverse kinematics controllers, since they control at joint level.</strong></p>
+<form id="q4">
+  <input type="radio" name="q4" value="True"> True<br>
+  <input type="radio" name="q4" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q4', 'False', 
+      'Correct! Both tablets and joysticks do not control at joint level and rely on internal inverse kinematics controllers. ',
+      'Incorrect. Joysticks do not directly control the joints, they control for the position and orientation of the end-effector. Consequently, they rely on internal inverse kinematics controllers.')">
+    Check Answer
+  </button>
+  <p id="q4-feedback"></p>
+</form>
 
-        if (!selected) {
-            feedbackElement.textContent = 'Please select an answer.';
-            feedbackElement.style.color = '#dc3545';
-            feedbackElement.style.border = '1px solid transparent';
-            return;
-        }
+<!-- Question 5 -->
+<p><strong>Question 5: Which of the following is a disadvantage of joysticks compared to tablets?</strong></p>
+<form id="q5-fk">
+  <input type="radio" name="q5-fk" value="option1"> limited in what can be transferred<br>
+  <input type="radio" name="q5-fk" value="option2"> dependence on the point of view of the user<br>
+  <input type="radio" name="q5-fk" value="option3"> both of the above options<br>
 
-        const userChoice = selected.value;
+  <button type="button" onclick="checkMCQ('q5-fk', 'option2',
+    'Correct! Tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.',
+    'Incorrect. Although joysticks are limited in what can be transferred, they can still do better than tablets. (They can communicate the desired motion even in 6D.)')">
+    Check Answer
+  </button>
 
-        if (userChoice === correctAnswer) {
-            feedbackElement.textContent = correctMsg;
-            // Simple inline green styling
-            feedbackElement.style.backgroundColor = '#d4edda';
-            feedbackElement.style.border = '1px solid #155724';
-            feedbackElement.style.color = '#155724';
-        } else {
-            feedbackElement.textContent = incorrectMsg;
-            // Simple inline red styling
-            feedbackElement.style.backgroundColor = '#f8d7da';
-            feedbackElement.style.border = '1px solid #721c24';
-            feedbackElement.style.color = '#721c24';
-        }
-    }
-</script>
+  <p id="q5-fk-feedback"></p>
+</form>
+
+</details>
+
+<script src="quiz.js"></script>
+
+  
 
 ##### **1.3. Exoskeletons**
 

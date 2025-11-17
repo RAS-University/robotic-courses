@@ -639,72 +639,64 @@ The two most classical algorithms for finding shortest paths are *Dijkstra’s a
 
 {% raw %}
 <!-- ====== CDNs (include ONCE per page) ====== -->
+
+
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/monokai.css">
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.js"></script>
 
 <style>
-.exercise-card {
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 14px;
-  background: #fff;
-}
-.CodeMirror {
-  height: 260px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 14px;
-}
-.toolbar {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  margin: 10px 0 6px;
-  flex-wrap: wrap;
-}
-.btn {
-  padding: 6px 12px;
-  border: 1px solid #111827;
-  border-radius: 6px;
-  background: #111827;
-  color: #fff;
-  cursor: pointer;
-}
-.btn.alt {
-  background: #065f46;
-  border-color: #065f46;
-}
-.btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.outbox {
-  border: 1px dashed #cbd5e1;
-  border-radius: 10px;
-  padding: 10px;
-}
-.outbox img { max-width: 100%; display: block; }
-.muted { color: #6b7280; font-size: 0.9em; }
-#solution-box-dfs {
-  display: none;
-  margin-top: 8px;
-  border-left: 3px solid #22c55e;
-  background: #f0fdf4;
-  padding: 10px;
-  border-radius: 6px;
-}
+.exercise-card {border:1px solid #e5e7eb;border-radius:10px;padding:14px;background:#fff;}
+.CodeMirror {height:260px;border:1px solid #d1d5db;border-radius:8px;font-size:14px;}
+.toolbar{display:flex;gap:12px;align-items:center;margin:10px 0 6px;}
+.btn{padding:6px 12px;border:1px solid #111827;border-radius:6px;background:#111827;color:#fff;cursor:pointer;}
+.btn:disabled{opacity:.6;cursor:not-allowed;}
+.outbox{border:1px dashed #cbd5e1;border-radius:10px;padding:10px;}
+.outbox img{max-width:100%;display:block;}
+.muted{color:#6b7280;font-size:.9em;}
+#solution-box{display:none;margin-top:8px;border-left:3px solid #22c55e;background:#f0fdf4;padding:10px;border-radius:6px;}
 </style>
 
-## Coding Exercise: Implement DFS and Visualize the Traversal
+<!-- ================== Load Pyodide & CodeMirror ================== -->
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/monokai.css">
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.js"></script>
 
-In this exercise, you’ll implement an **iterative DFS** on a fixed undirected graph and visualize:
-- the **DFS tree** (thick black edges),
-- the **non-tree edges** (light gray),
-- and the **discovery order** above each node.
+
+## Coding Exercise 2: DFS Traversal and Tree Construction
+
+In this exercise, you will implement an iterative Depth-First Search (DFS) on a fixed undirected graph:
+
+```python
+def dfs_order(G, start)
+```
+
+Your function should explore the graph starting from the node `start` and return:
+
+- `order`: a list of nodes in the order they are first discovered,  
+- `parent`: a dictionary mapping each node to its parent in the DFS tree  
+  (the start node should have `parent[start] = None`)
+
+After you implement the function, click **Run ▶** below to animate your DFS traversal.  
+The visualization will show:
+
+- **red edges** for the growing DFS tree,  
+- **light-gray edges** for non-tree edges,  
+- a **green start node**,  
+- the **current node** highlighted during traversal,  
+- and the **discovery order** displayed above each visited node.
+
+<details> <summary><strong>💡 Hints</strong></summary> <ul> <li> Use a Python <em>list</em> as a stack to implement DFS iteratively: push nodes onto the stack, and pop from the end. </li> <li> When you first pop a node from the stack, mark it as visited, record its parent, and append it to <code>order</code>. </li> <li> To ensure deterministic behavior, push neighbors in a <code>sorted(..., reverse=True)</code> order so that the smallest neighbor is explored first. </li> <li> Only push neighbors onto the stack if they have not yet been visited. </li> </ul> </details>
 
 
 <div class="exercise-card">
-  <textarea id="code-dfs">def dfs_order(G, start):&#10;    &#34;&#34;&#34;&#10;    Implement Depth-First Search on the given undirected NetworkX graph G,&#10;    starting from node `start`.&#10;&#10;    Return:&#10;      order  : list of nodes in discovery order&#10;      parent : dict mapping node -&gt; its parent in the DFS tree (start has None)&#10;&#10;    Hints:&#10;      - Use an explicit stack (list) for iterative DFS.&#10;      - When visiting a node for the first time, record its parent and append it to &#39;order&#39;.&#10;      - Push neighbors in a consistent order (e.g., sorted) to get deterministic output.&#10;    &#34;&#34;&#34;&#10;    order = []&#10;    parent = {start: None}&#10;    visited = set()&#10;&#10;    # TODO: replace with your DFS&#10;    # stack = [(start, None)]&#10;    # while stack:&#10;    #     node, par = stack.pop()&#10;    #     if node in visited:&#10;    #         continue&#10;    #     visited.add(node)&#10;    #     parent[node] = par&#10;    #     order.append(node)&#10;    #     # push neighbors in reverse-sorted order so the smallest is processed first&#10;    #     for nb in sorted(G.neighbors(node), reverse=True):&#10;    #         if nb not in visited:&#10;    #             stack.append((nb, node))&#10;&#10;    return order, parent&#10;</textarea>
+  <textarea id="code">def dfs_order(G, start):&#10;&#9;"""&#10;&#9;Implement Depth-First Search on the given undirected NetworkX graph G,&#10;&#9;starting from node `start`.&#10;&#10;&#9;Return:&#10;&#9;&#9;order  : list of nodes in discovery order&#10;&#9;&#9;parent : dict mapping node -&gt; its parent in the DFS tree (start has None)&#10;&#10;&#9;Hints:&#10;&#9;&#9;- Use an explicit stack (list) for iterative DFS.&#10;&#9;&#9;- When visiting a node for the first time, record its parent and append it to 'order'.&#10;&#9;&#9;- Push neighbors in a consistent order (e.g., sorted) to get deterministic output.&#10;&#9;"""&#10;&#9;order = []&#10;&#9;parent = {start: None}&#10;&#9;visited = set()&#10;&#10;&#9;# TODO: replace with your DFS&#10;&#10;&#9;return order, parent&#10;</textarea>
+
+
 
   <div class="toolbar">
     <label>Start node:
@@ -714,14 +706,17 @@ In this exercise, you’ll implement an **iterative DFS** on a fixed undirected 
         <option>C</option>
         <option>D</option>
         <option>E</option>
+        <option>E</option>
+        <option>F</option>
+        <option>G</option>
       </select>
     </label>
-    <button id="run-dfs" class="btn">Run ▶</button>
-    <button id="show-solution-dfs" class="btn alt">Show Solution 💡</button>
-    <span id="status-dfs" class="muted"></span>
+    <button id="run" class="btn">Run ▶</button>
+    <button id="show-solution" class="btn">Show Solution 💡</button>
+    <span id="status" class="muted"></span>
   </div>
 
-  <div id="solution-box-dfs">
+  <div id="solution-box">
     <b>✅ Reference Solution:</b>
     <pre style="white-space: pre-wrap; font-size:13px; background:#fff; padding:8px; border-radius:5px; border:1px solid #ddd;">
 def dfs_order(G, start):
@@ -746,46 +741,40 @@ def dfs_order(G, start):
 
   <div class="outbox">
     <div class="muted">Output:</div>
-    <img id="plot-dfs" alt="DFS visualization will appear here">
+    <img id="plot" alt="DFS visualization will appear here">
   </div>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", async () => {
-  // 1) Initialize CodeMirror on the correct textarea
-  const cm = CodeMirror.fromTextArea(document.getElementById("code-dfs"), {
-    mode: "python",
-    theme: "monokai",
-    lineNumbers: true,
-    indentUnit: 4,
-    tabSize: 4,
-    lineWrapping: true
+  const editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+    mode: "python", theme: "monokai", lineNumbers: true, indentUnit: 4, tabSize: 4, lineWrapping: true
   });
 
-  // 2) Load Pyodide + packages
   const pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.26.1/full/" });
-  await pyodide.loadPackage(["matplotlib", "networkx"]);
+  await pyodide.loadPackage(["numpy", "matplotlib", "micropip"]);
+  await pyodide.runPythonAsync(`import micropip; await micropip.install("networkx"); await micropip.install("imageio")`);
 
-  // 3) Hook up UI
-  const status = document.getElementById("status-dfs");
-  const img = document.getElementById("plot-dfs");
-  const startSel = document.getElementById("start-node");
-  const showBtn = document.getElementById("show-solution-dfs");
-  const solBox = document.getElementById("solution-box-dfs");
-  const runBtn = document.getElementById("run-dfs");
+  const runBtn = document.getElementById("run");
+  const showBtn = document.getElementById("show-solution");
+  const solutionBox = document.getElementById("solution-box");
+  const img = document.getElementById("plot");
+  const status = document.getElementById("status");
 
   showBtn.addEventListener("click", () => {
-    const vis = solBox.style.display === "block";
-    solBox.style.display = vis ? "none" : "block";
-    showBtn.textContent = vis ? "Show Solution 💡" : "Hide Solution ✖️";
+    const visible = solutionBox.style.display === "block";
+    solutionBox.style.display = visible ? "none" : "block";
+    showBtn.textContent = visible ? "Show Solution 💡" : "Hide Solution ✖️";
   });
+  const startSel = document.getElementById("start-node");
 
   runBtn.addEventListener("click", async () => {
     runBtn.disabled = true; status.textContent = "Running…";
     const startNode = startSel.value;
-    const codeUser = cm.getValue();
+    const codeUser = editor.getValue();
 
-    const script = `import matplotlib\nmatplotlib.use("Agg")\nimport matplotlib.pyplot as plt\nimport networkx as nx\nfrom io import BytesIO\nimport base64\n\n# ---------- Hidden: build a fixed graph ----------\nG = nx.Graph()\nG.add_edges_from([\n\t("A","B"), ("A","C"),\n\t("B","C"), ("B","D"),\n\t("C","D"), ("C","E"),\n\t("D","E")\n])\npos = {\n\t"A": (-1.0,  1.0),\n\t"B": (-1.0, -0.5),\n\t"C": ( 0.0,  0.0),\n\t"D": ( 1.0, -0.5),\n\t"E": ( 2.0, -1.0)\n}\n\n# ---------- Student function ----------\n${codeUser}\n\n# ---------- Run DFS ----------\nstart = "${startNode}"\norder, parent = dfs_order(G, start)\n\n# DFS tree edges (undirected, unique)\ntree_edges = []\nfor v, p in parent.items():\n\tif p is not None and G.has_edge(v, p):\n\t\ta, b = sorted((v, p))\n\t\tif (a, b) not in tree_edges:\n\t\t\ttree_edges.append((a, b))\n\n# ---------- Render ----------\nfig, ax = plt.subplots(figsize=(6.4, 4.4), dpi=150)\nax.axis('off')\n\n# Base graph\nnx.draw_networkx_edges(G, pos, width=1.6, edge_color="#bdbdbd", ax=ax)\n\n# Non-tree edges\nnon_tree = [e for e in G.edges() if tuple(sorted(e)) not in tree_edges]\nif non_tree:\n\tnx.draw_networkx_edges(G, pos, edgelist=non_tree, width=1.8, edge_color="#9e9e9e", ax=ax)\n\n# Tree edges\nif tree_edges:\n\tnx.draw_networkx_edges(G, pos, edgelist=tree_edges, width=3.0, edge_color="black", ax=ax)\n\n# Nodes\nnx.draw_networkx_nodes(G, pos, node_color="white", edgecolors="black",\n\t\t\t\t   node_size=1400, linewidths=2.4, ax=ax)\nnx.draw_networkx_labels(G, pos, font_size=14, font_weight="bold", ax=ax)\n\n# Discovery order labels\nfor i, v in enumerate(order, start=1):\n\tx, y = pos[v]\n\tax.annotate(str(i), xy=(x, y), xycoords='data',\n\t\t\ttextcoords='offset points', xytext=(0, 22),\n\t\t\tha='center', va='bottom', fontsize=11,\n\t\t\tcolor="#222",\n\t\t\tbbox=dict(boxstyle="round,pad=0.25", facecolor='white',\n\t\t\t\t\t  edgecolor='none', alpha=0.9))\n\n# Export PNG -> base64\nfrom matplotlib.transforms import Bbox\nplt.tight_layout()\nbuf = BytesIO()\nplt.savefig(buf, format="png", dpi=150, bbox_inches="tight")\nplt.close(fig)\n\"data:image/png;base64,\" + base64.b64encode(buf.getvalue()).decode()\n`.trim();
+    const script = `import matplotlib\nmatplotlib.use("Agg")\nimport matplotlib.pyplot as plt\nimport networkx as nx\nfrom io import BytesIO\nimport base64\nfrom collections import deque\nimport imageio.v2 as imageio\n\n# ---------- Hidden: build a larger graph (8 nodes) ----------\nG = nx.Graph()\nG.add_edges_from([\n\t("A","B"), ("A","C"),\n\t("B","C"), ("B","D"),\n\t("C","D"),\n\t("D","E"),\n\t("E","F"), ("F","G"), ("G","H"),\n\t("C","F"), ("D","G")\n])\npos = {\n\t"A": (-2.0,  1.4),\n\t"B": (-2.0, -0.3),\n\t"C": (-0.7,  0.6),\n\t"D": ( 0.8, -0.4),\n\t"E": ( 2.0, -1.0),\n\t"F": ( 0.0,  1.5),\n\t"G": ( 1.5,  1.0),\n\t"H": ( 3.0,  0.7)\n}\n\n# ---------- Student function ----------\n${codeUser}\n\n# ---------- Run DFS ----------\nstart = "${startNode}"\norder, parent = dfs_order(G, start)\n\nresult = None\n\nif not order:\n\tfig, ax = plt.subplots(figsize=(9.0, 6.5), dpi=150)\n\tax.axis('off')\n\tbuf = BytesIO()\n\tplt.savefig(buf, format=\"png\", dpi=150)\n\tplt.close(fig)\n\tresult = \"data:image/png;base64,\" + base64.b64encode(buf.getvalue()).decode()\nelse:\n\ttree_edges_full = []\n\tfor v, p in parent.items():\n\t\tif p is not None and G.has_edge(v, p):\n\t\t\ta, b = sorted((v, p))\n\t\t\tif (a, b) not in tree_edges_full:\n\t\t\t\ttree_edges_full.append((a, b))\n\n\tdisc_index = {v: i + 1 for i, v in enumerate(order)}\n\n\tframes = []\n\n\tfor step in range(1, len(order) + 1):\n\t\tvisited_step = set(order[:step])\n\t\tcurr = order[step - 1]\n\n\t\ttree_edges_step = []\n\t\tfor v in visited_step:\n\t\t\tp = parent.get(v, None)\n\t\t\tif p is not None and G.has_edge(v, p):\n\t\t\t\ta, b = sorted((v, p))\n\t\t\t\tif (a, b) not in tree_edges_step:\n\t\t\t\t\ttree_edges_step.append((a, b))\n\n\t\tfig, ax = plt.subplots(figsize=(9.0, 6.5), dpi=150)\n\t\tax.axis('off')\n\n\t\t# Base graph\n\t\tnx.draw_networkx_edges(G, pos, width=1.6, edge_color=\"#d0d0d0\", ax=ax)\n\n\t\tnon_tree = [e for e in G.edges() if tuple(sorted(e)) not in tree_edges_step]\n\t\tif non_tree:\n\t\t\tnx.draw_networkx_edges(G, pos, edgelist=non_tree, width=1.8, edge_color=\"#b0b0b0\", ax=ax)\n\n\t\tif tree_edges_step:\n\t\t\tnx.draw_networkx_edges(G, pos, edgelist=tree_edges_step, width=3.0, edge_color=\"red\", ax=ax)\n\n\t\tnode_colors = []\n\t\tfor v in G.nodes():\n\t\t\tif v == start:\n\t\t\t\tnode_colors.append(\"#22c55e\")\n\t\t\telif v == curr:\n\t\t\t\tnode_colors.append(\"#facc15\")\n\t\t\telif v in visited_step:\n\t\t\t\tnode_colors.append(\"white\")\n\t\t\telse:\n\t\t\t\tnode_colors.append(\"#e5e7eb\")\n\n\t\tnx.draw_networkx_nodes(G, pos,\n\t\t\tnode_color=node_colors,\n\t\t\tedgecolors=\"black\",\n\t\t\tnode_size=1600,\n\t\t\tlinewidths=2.4,\n\t\t\tax=ax)\n\n\t\tnx.draw_networkx_labels(G, pos, font_size=16, font_weight=\"bold\", ax=ax)\n\n\t\tfor v in visited_step:\n\t\t\ti = disc_index[v]\n\t\t\tx, y = pos[v]\n\t\t\tax.annotate(\n\t\t\t\tstr(i),\n\t\t\t\txy=(x, y),\n\t\t\t\txycoords='data',\n\t\t\t\ttextcoords='offset points', xytext=(0, 28),\n\t\t\t\tha='center', va='bottom', fontsize=13,\n\t\t\t\tcolor=\"#222\",\n\t\t\t\tbbox=dict(boxstyle=\"round,pad=0.25\", facecolor='white', edgecolor='none', alpha=0.9))\n\n\t\tbuf = BytesIO()\n\t\tplt.savefig(buf, format=\"png\", dpi=150)\n\t\tplt.close(fig)\n\t\tbuf.seek(0)\n\t\tframes.append(imageio.imread(buf))\n\n\tgif_buf = BytesIO()\n\t# slower animation: 1.0 sec per frame\n\timageio.mimsave(gif_buf, frames, format=\"GIF\", duration=1.0)\n\tgif_buf.seek(0)\n\tresult = \"data:image/gif;base64,\" + base64.b64encode(gif_buf.getvalue()).decode()\n\nresult
+`.trim();
 
     try {
       const dataURL = await pyodide.runPythonAsync(script);
@@ -800,7 +789,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 });
 </script>
-{% endraw %} -->
+{% endraw %}
 
 
 ---
@@ -997,6 +986,28 @@ Priority Queue (OPEN): `[ (A, f=5) ]` (g=0, h=5)
 
 **Observation:** The final path and costs are identical. The *order* of exploration was A, B, C, D, E. In this specific case, the heuristic was good enough to guide the search along the optimal path, but it didn't save any expansions because the "cheapest-first" path (A-B-C-D-E) also happened to be the one Dijkstra would have explored.
 </details>
+</div>
+
+---
+
+### Traversal Cheat Sheet
+
+The following table summarizes the core properties of the traversal algorithms introduced so far.
+
+| Algorithm | Works on weighted? | Finds shortest path? | Typical data structure | Time complexity (unweighted) |
+| :--- | :--- | :--- | :--- | :--- |
+| **BFS** | No (unweighted only) | Yes, fewest edges | Queue | $\mathcal{O}(V + E)$ |
+| **DFS** | Yes (ignores weights) | No (arbitrary path) | Stack (or recursion) | $\mathcal{O}(V + E)$ |
+| **Dijkstra** | Yes (positive weights) | Yes, minimum total cost | Priority queue | $\mathcal{O}((V + E)\log V)$ |
+| **A\*** | Yes (positive weights) | Yes (with admissible heuristic) | Priority queue | $\mathcal{O}((V + E)\log V)$ in practice, often fewer expansions |
+
+<div class="note" markdown="1">
+**Rule of thumb.**
+
+- Use **BFS** if all edges have equal cost and you only care about fewest steps.
+- Use **Dijkstra** if edges have different positive costs and no heuristic is available.
+- Use **A\*** if you have a good heuristic and want to guide the search.
+- Use **DFS** when you care about exploring structure (components, cycles) rather than finding shortest paths.
 </div>
 
 ---

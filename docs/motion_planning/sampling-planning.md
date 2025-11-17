@@ -1562,6 +1562,8 @@ The resulting planner is asymptotically optimal, meaning that as the number of s
 
 ---
 
+---
+
 #### Intuition and Key Ideas
 
 RRT\* follows the same exploratory logic as RRT — sampling random configurations and incrementally growing a tree that covers the free configuration space.  
@@ -1607,12 +1609,105 @@ Through repeated sampling and local rewiring, RRT\* progressively smooths out th
 
 ---
 
-## Discussion: The Price of Optimality
+### Extending PRM Toward Optimality: PRM*
 
-- **RRT** is fast. It finds a solution and stops. It is great for quickly checking if a path exists.
-- **RRT\*** is slow. It never stops; it just keeps improving. The *ChooseParent* and *Rewire* steps require many more nearest-neighbor searches and collision checks than RRT. However, the path it finds continuously gets better, eventually converging to the true, shortest path.
+The primary limitation of the classic Probabilistic Roadmap (PRM) algorithm is its lack of guaranteed optimality. The connection rule based on a fixed number of neighbors ($k$) prevents the graph from fully exploring longer, potentially more optimal connections. The resulting feasible path is often suboptimal, limited by the sparse, static structure of the roadmap.
+
+*PRM\** addresses this by modifying the construction phase to guarantee asymptotic optimality, ensuring the path cost converges to the true optimal cost as the number of samples increases.
+
+The guarantee of optimality in PRM\* comes from replacing the fixed $k$-Nearest Neighbors rule with a dynamic, shrinking search radius $r(n)$. This change ensures that new, shorter connections can be established across the entire free space as the roadmap grows, continuously refining the path toward the optimum.
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> PRM* Neighbor Search Radius
+
+PRM\* connects a new sample $q_{\text{new}}$ to all previously sampled nodes $q \in V$ that lie within a radius $r(n)$, where the radius is given by:
+
+$$
+r(n) = \gamma \left(\frac{\log n}{n}\right)^{1/d}
+$$
+
+where:
+* $\boldsymbol{n}$: The current number of samples (nodes) in the graph.
+* $\boldsymbol{d}$: The dimension of the configuration space, $\mathcal{C}$.
+* $\boldsymbol{\gamma}$: A constant, $\gamma > \gamma^\star$, selected to satisfy the theoretical optimality guarantees.
+</div>
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 3:</strong> PRM* — Optimal Roadmap Construction  
+
+<pre>
+<strong>procedure</strong> BUILD-PRM*(num_samples)
+    G.initialize()
+    
+    <strong>for</strong> n = 1 <strong>to</strong> num_samples <strong>do</strong>
+        q_rand ← sample from 𝒞_free
+        V.add(q_rand)
+
+        r_n ← r(n)     // γ (log n / n)^{1/d}
+        N_near ← NearNodes(q_rand, V, radius = r_n)
+
+        <strong>for each</strong> q_near <strong>in</strong> N_near <strong>do</strong>
+            <strong>if</strong> LocalPlanner(q_rand, q_near) is collision-free <strong>then</strong>
+                E.add((q_rand, q_near))
+
+    <strong>return</strong> G = (V, E)
+</pre>
+
+📘 *Reference:* Karaman & Frazzoli, *Sampling-based Algorithms for Optimal Motion Planning*, Algorithm 1 (PRM*)[<a href="#ref8">8</a>].
+</div>
+<!-- 
+#### Theoretical Basis for Asymptotic Optimality
+
+The mathematical structure of $r(n)$ is crucial for balancing the planner's two requirements:
+
+* **Sparsity & Efficiency ($n$ term):** The term $\left(\frac{1}{n}\right)^{1/d}$ ensures the radius eventually shrinks, which prevents the graph from becoming fully connected (a complete graph) and keeps the computational complexity manageable.
+* **Global Optimality ($\log n$ term):** The $\log n$ term ensures the radius shrinks slowly enough that every configuration $q \in \mathcal{C}_{\text{free}}$ is eventually connected to its neighbors through the shortest possible path. This guarantees that the optimal path will eventually be included in the graph.
+
+<div class="definition" markdown=1>
+<strong>Theorem. </strong> Asymptotic Optimality of PRM\*
+
+PRM\* is both **probabilistically complete** and **asymptotically optimal**. This means that if a path exists, the planner will eventually find one, and as the number of samples $n$ approaches infinity, the cost of the path found, $C(n)$, converges almost surely to the cost of the optimal path, $C(\tau^\star)$.
+$$
+\lim_{n \to \infty} C(n) = C(\tau^\star) \quad \text{(a.s.)}
+$$
+
+</div> -->
+<figure style="margin:1.2em 0;">
+  <div style="display:flex; gap:12px; align-items:flex-start; justify-content:center; flex-wrap:wrap;">
+
+    <div style="flex:1 1 360px; max-width:600px; text-align:center;">
+      <img src="{{ '/assets/images/sampling_based_planning/prm2.gif' | relative_url }}" alt="PRM building a tree" style="width:100%; height:auto; border-radius:6px;" />
+      <figcaption style="margin-top:6px; color:#555; font-size:0.9em;">
+        <b>PRM</b>
+      </figcaption>
+    </div>
+
+    <div style="flex:1 1 360px; max-width:600px; text-align:center;">
+      <img src="{{ '/assets/images/sampling_based_planning/prmstar.gif' | relative_url }}" alt="PRM* building and shortest path" style="width:100%; height:auto; border-radius:6px;" />
+      <figcaption style="margin-top:6px; color:#555; font-size:0.9em;">
+        <b>PRM*</b>
+      </figcaption>
+    </div>
+  </div>
+
+  <figcaption style="text-align:center; margin-top:10px; color:#555; font-size:0.95em;">
+    <b>Figure.</b> Side-by-side comparison of <i>PRM</i> and <i>PRM*</i> on the same map.
+  </figcaption>
+</figure>
 
 ---
+
+## Discussion: The Price of Optimality
+
+- **PRM** is fast. It connects each sample to a fixed number of neighbors and quickly produces a feasible roadmap.
+- **PRM\*** is slower. It uses a growing connection radius, requiring many more neighbor checks. But as samples increase, its paths converge to the optimal one.
+
+- **RRT** is fast. It finds a feasible path quickly and stops, making it ideal for fast exploration.
+- **RRT\*** is slow. It keeps refining the tree using *ChooseParent* and *Rewire*, performing many more nearest-neighbor and collision checks. Over time, it converges to the true optimal path.
+
+---
+
 ## Exercises
 
 <div class="assignment" markdown="1">
@@ -1737,7 +1832,23 @@ The path through $ q_{\text{new}} $ increases the total cost, so the existing pa
 </details>
 </div>
 
+---
 
+## Summary Table: PRM vs PRM* vs RRT vs RRT*
+
+| Planner | Structure | Query Type | Optimal? | Convergence | Best Use |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **PRM** | Graph | Multi-query | ❌ No | Feasible only | Static maps, many queries |
+| **PRM\*** | Graph | Multi-query | ✅ Yes | Asymptotic optimum | Offline optimal planning |
+| **RRT** | Tree | Single-query | ❌ No | Feasible only | Fast single-shot planning |
+| **RRT\*** | Tree | Single-query | ✅ Yes | Asymptotic optimum | Optimal single-query |
+
+### Rules of thumb
+
+* Use **PRM** when: many queries, static environment.
+* Use **RRT** when: you need *one quick feasible path*.
+* Use **RRT\*** when: quality matters and time isn't critical.
+* Use **PRM\*** when: you are building a high-quality global map (e.g., industrial cells).
 
 ---
 # Final Project

@@ -10,6 +10,7 @@ nav_order: 7
 {:toc}
 
 ## 1. Prerequisites
+Kinematics, Dynamics, linear algebra, pid control,  
 
 ## 2. General Motivation
 
@@ -20,33 +21,53 @@ nav_order: 7
 
 #### Coordinate System and Transformation
 Attitude representation: inertial frame, roll, pitch, yaw
-
-<span style="color: red;">Question: Other mathematical tools would be: linear algebra, control theory basics, optimization techniques. But there are other modules about it/ are prerequesites, so probably not present here?</span>
+<!-- 
+<span style="color: red;">Question: Other mathematical tools would be: linear algebra, control theory basics, optimization techniques. But there are other modules about it/ are prerequesites, so probably not present here?</span> -->
 
 ### Chapter 1 : System Components
 
-#### Frame
+#### Frame/Airframe
+Fuselage, arms and landing gear, duct.
+
 material, weight, flexibility
 
-#### Sensors and Actuators
-IMU, gyroscope, magnetometers, pressure sensors, airspeed sensors, GPS, camera, lidar, types of actuators (servo, dc)
+#### Actuators
+types of actuators (servo, dc)  
+brushless motors, max current/power, motor efficiency  
+electronic speed controllers (ESC)
 
-#### Communication Systems
-R/C receiver, wifi, 5G
+#### Propellers
+Type, chord length, moment of inertia, number of blades, material (safe rotation rate before deformation), efficiency (propeller specific thrust)
 
 #### Power System
 Battery types and management
+voltage, discharge capacity, internal resistance, discharge rate, energy density
 
-#### Propellers
+#### Sensors/Perception
+IMU, gyroscope, magnetometers, pressure sensors, airspeed sensors, GPS, camera, lidar, 
+
+#### Communication Systems
+R/C receiver: frequency, modulation, channels, remote control distance,  
+wifi, 5G
+
+Ground Control Station
 
 #### Autopilot
-Microncontroller & attitude sensors
+Microncontroller & attitude sensors to control attitude, position and trajectory  
+GPS, IMU, barometer, ultrasonic
 
-### Chapter 2 : Dynamics of multirotor UAV's
+### Chapter 2: Design of multirotor
 
-*Flying dynamics*:
+configuration, angle of propellers, size and maneuverability, position of coG, position of sensors/autopilot, drag impact from fuselage, vibration, noise
 
-As mentioned above, the bottleneck for quadcopters in the 20th century was the unprecise control of motor speeds. But how can a quadrotor take-off, hover, turn and move forward?
+Types of multirotors:  
+Quadrotor, hexrotor, octorotor, redundant systems
+
+### Chapter 3: Dynamics of multirotor UAV's
+
+#### Remote Control
+
+As mentioned before, the bottleneck for quadcopters in the 20th century was the imprecise control of motor speeds. What are the conditions on the individual motors for a quadrotor to take-off, hover, turn and move forward?
 
 ![video](https://www.youtube.com/watch?v=C0KBu2ihp-s)
 ><sub>Drones flight dynamics. Video from Sabin Civil Engineering available at: https://www.youtube.com/watch?v=C0KBu2ihp-s</sub>
@@ -59,28 +80,54 @@ As mentioned above, the bottleneck for quadcopters in the 20th century was the u
 
 > Movement in 3D space for quadcopter is initiated by changing the rotation speeds of some of the propellers. To generate a **pitch** movement front rotor speeds are decreased and back rotor speeds increased, which will tilt the drone forward (or vie-versa to tilt backward). If now the rotor speeds are again balanced, the lift force has an angle to the gravitational force and the non-parallel part is a thrust moving the drone forwards. The same principle applies to create a **roll** movement and move sideways. Finally to create a **yaw** rotation, the speeds of clockwise and anticlockwise rotors are adapted to rotate the drone to the left or right.
 
-#### Types of Multirotors
-Quadrotor, hexrotor, octorotor, redundant systems
+#### Modeling?
+propeller modeling, motor modeling, esc modeling, battery modeling  
+flight time, max payload, max flight speed
 
 #### Kinematics of Multirotors
+Body Frame, World Frame  
+
+Attitude representation:
 Euler Angles, rotation matrices, quaternions
+
+Exercises: Body Frame to World Frame, Transformation from Euler Angles -> rotation matrix -> quaternions
 
 #### Dynamic Modeling
 Forces and Moments
 
 #### Aerodynamics
-Thrust generation from rotors, dynamics and power consumption
+Thrust generation from rotors, dynamics and power consumption, drag model
+
+### Chapter 4: Measurement Model and State Estimation
+
+#### Observability
+
+#### Sensor Fusion/Kalman Filter
+Classic/Extended Kalman Filter
+
+#### State Estimation
+Attitude Estimation
+
+Position Estimation
+
+Velocity Estimation
+
+### Chapter 5: Control of non-linear underactuated systems and reference trajectory generation
 
 #### Control Allocation
+Position Control, Velocity Control, Attitude, Rate control
 Cascaded Controller
 
-### Chapter 3 : Control of non-linear underactuated systems and reference trajectory generation
+#### Motion Planning
+Path planning
 
-#### Disturbance Rejection
+Trajectory planning
 
-### Chapter 4 : Control of fully-actuated and morphing UAV's
+<!-- #### Disturbance Rejection -->
 
-### Chapter 5 : Control for physical interaction of UAV's
+<!-- ### Chapter 4 : Control of fully-actuated and morphing UAV's
+
+### Chapter 5 : Control for physical interaction of UAV's -->
 <!--Decompose the course into chapters
 
 You can start with following resources:

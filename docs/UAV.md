@@ -823,7 +823,12 @@ Watch the following video to see how the magnitude of these forces are changing 
 ><sub>4 Forces on Aircraft during the Take-off. Available at: https://www.youtube.com/watch?v=BxOeuovzT88</sub>
 
 ## Chapter 2 : Drone Types and Use Case
-In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs in three big groups: *rotorcrafts*, *fixed wing drones* and *flapping wing robots*. Then we will finish with a short discussion about morphing drones.
+In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs in three big groups: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing robots*. 
+
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/drone_types.png" alt="Overview of UAV categories" style="width: 90%; height: auto;">
+  <p style="font-size: small;">Overview over the three main drone types: <it>multirotor drone</it>, <it>flapping-wing drone</it> and <it>fixed-wing drone</it>. </p>
+</div>
 
 <div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
   <strong>Disclaimer:</strong> While there are fundamental differences between the three drone types, there is a big number of drones combining principles from different types. There exist bird inspired fixed wing drones, hybrid fixed wing rotorcrafts or morphing rotorcrafts etc... 
@@ -881,7 +886,7 @@ Due to the difficulty of simultaneously controlling four motor speeds for a huma
 
 </div>
 
-The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually. Those processors are usually referred to as autopilot.
+The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually. The processors doing this job are usually referred to as autopilot.
 
 <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 280px;">
@@ -1005,12 +1010,6 @@ Drones form an integral part of modern warfare. Most of them being fixed wing dr
 
 #### Challenges
 While the market and the innovation of multirotor drones grew exponentially over the past decade, there is still a lot of research going on, aiming to make drones more versatile and efficient. We want to provide below a non-exhaustive list with ongoing challenges.
-<!-- Agile, Efficience and autonomous
-Manipulation in Air
-squeezing through thight spaces
-landing on uneven surfaces
-swarm
-obstacle avoidance -->
 
 1. <ins>Agility, Efficiency, and Autonomy</ins><br>
   <em>Goals:</em>  
@@ -1045,10 +1044,15 @@ obstacle avoidance -->
 
 Addressing these challenges to improve drone safety, functionality and to expand their application is question of current research.
 
+### Questions
+TODO...
+
 ### 2.2 Flapping Wings:
-A flapping wing drone is an aircraft where lift and thrust generation and maneuvers are obtained by the actuation of flapping wings. They seek to imitate the flapping-wing flight of birds, bats and insects and are also known as ornithopters. 
+A flapping wing drone is an aircraft where lift and thrust generation and maneuvers are obtained by the actuation of flapping wings. They seek to imitate the flapping-wing flight of birds, bats and insects and are also known as ornithopter. 
 
 Flapping-wing robots can be split into three groups based on their size and weight: _large-scale_ over 100g, _small-scale_ between 1g and 100g and _insect-size_ flappers below 1g. Despite the weight the different flapping-wing systems differ in the frequency of flapping, which is faster for small- and insect-scale robots, their hover capacity which decreases or vanishes for large-scale systems and their type of actuation used which usually are conventional electric motors for large-scale system and electro-static actuators for insect-scale systems.
+
+While bird-inspired flapping wing drones usually incoorporate a tail providing lateral control surfaces used for stability and maneuverability, most insect-inspired flapping wing drones do not have a tail.
 
 #### History
 
@@ -1076,11 +1080,11 @@ Flapping-wing drones have roots in early aviation, as the most intuitive approac
   </div>
 </div>
 
-But the modern era of flapping-wing drones started in the late 20th century with the advancements in materials science and lightweight electric motors allowing for smaller insect- and bird-scale robots. Until today it is mainly a research topic with potential applications in agriculture, search-and-rescue and environmental monitoring.
+But the modern era of flapping-wing drones started in the late 20th century with the advancements in materials science and lightweight electric motors allowing for smaller insect- and bird-scale robots. Until today it is mainly a research topic with potential applications in agriculture, search-and-rescue, entertainement and environmental monitoring.
 
 You might now rightfully ask yourself: Why with the maturity of very efficient fixed wing drones and very agile multirotor drones is the research nowadays still interested in flapping wing robots?
 
-Well there are several interesting opportunities when working with flapping wing drones. From a neuroscience point of view, FWFR serve as a robotic platform to explore control algorithms used by birds and insect, offering insights into biological flight. Aerodynamically, flapping wings offer an advantage at over fixed wings or propeller at small scale who lose efficiency at due to low Reynolds numbers. Lastly, oscillating wing motion produces less noise than fast spinning propellers and producing a more natural sound that tends to have a higher acceptance in human environments.
+Well there are several interesting opportunities when working with flapping wing drones. From a neuroscience point of view, FWFR serve as a robotic platform to explore control algorithms used by birds and insect, offering insights into biological flight. Aerodynamically, flapping wings offer an advantage over fixed wings or propeller at small scale which lose efficiency due to low Reynolds numbers. Lastly, oscillating wing motion produces less noise than fast spinning propellers and producing a more natural sound that tends to have a higher acceptance in human environments.
 
 #### Bird-inspired Flapping-Wing Robots
 
@@ -1090,7 +1094,7 @@ Bird inspired flapping-wing robots produce lift and thrust by flapping their win
 ![video](https://www.youtube.com/watch?v=Ra6I6svXQPg)
 ><sub>How sparrowhawks catch garden birds. Agile maneuvers of a hawk in slow motion. Available at: https://www.youtube.com/watch?v=Ra6I6svXQPg</sub>
 
-There are several challenges when trying to mimick a bird with a robot. An obvious one is to replicate the agile flying maneuvers which require a complex wing and tail mechanismn to achieve multiple degree of freedoms together with robust control algorithmns in a complex aerodynamical regime. Additionally, long-range flights require a hybrid strategy allowing to change between flapping and gliding modes. Another major challenge is the trade-off between a lightweight robot with yet powerful actuators, capable of providing sufficient force and torque. Despite thath, specific maneuvers like take-off and landing are a big challenge for flapping robots.
+There are several challenges when trying to mimick a bird with a robot. An obvious one is to replicate the agile flying maneuvers which require a complex wing and tail mechanismn to achieve multiple degree of freedoms together with robust control algorithmns in a complex aerodynamical regime. Additionally, long-range flights require a hybrid strategy allowing to change between flapping and gliding modes. Another major challenge is the trade-off between a lightweight robot with yet powerful actuators, capable of providing sufficient force and torque. Despite that, specific maneuvers like take-off and landing are a big challenge for flapping robots.
 
 Below you find some the key characteristics for bird-insipired flapping-wing robots:
 - forward flight
@@ -1281,37 +1285,263 @@ Before showing you a few examples of existing robots, the main characteristics o
 
 </div>
 
+### Questions
+TODO...
+
 ### 2.3 Fixed wing drones
-A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They must move forward to generate lift and can thus not take off vertically. 
-![video](https://youtu.be/pz4SqIvoyO8?si=tcYfG70DWBQ8RylY&t=9)
-><sub>Sensefly Ebee X. Available at: https://youtu.be/pz4SqIvoyO8?si=tcYfG70DWBQ8RylY&t=9</sub>
+A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
 
 - higher lift to drag ratio than multicopters --> energetically more efficient
-- fuselage contributes to lift generation and provides space for carge
+- fuselage contributes to lift generation and provides space for cargo
 - less agile than multicopters
 
-*History*:
+#### Design Principles
+<div style="margin-bottom: 15px; text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/NASA-Glenn-Airplane-Parts.jpg" alt="DJI mini pro 5 - a small consumer camera drone." style="width: 70%; height: auto;">
+  <p style="font-size: small;">Airplane parts and control surfaces definition. Image from <a href="https://www1.grc.nasa.gov/wp-content/uploads/NASA-Glenn-Airplane-Parts-2.pdf" target="_blank">Glenn Research Center</a></p>
+</div>
 
-First human gliding flight by George Cayley in 1852, where he identified the four forces lift, weight, drag and thrust. After him Otto Lilienthal (1860-1896) built and flew thousands of gliders, which allowed him to formulate the first equations of aerodynamics. Later the Wright brothers made flight steerable by adding lateral control surfaces and made the first engine powered flight in 1903. Afterwards during the World War I, there was rapid development due to the military use. Since then fixed-wing aircrafts are indispensable for civil and military aviation. 
+To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image below shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft.
+
+<ins>Wing Geometry:</ins>  
+The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the section about aerodynamic lift, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  
+Despite the pressure drag (also form drag) and friction drag (also parasite drag), there exists a commonly used third type of drag: <em>induced drag</em>. Induced drag is drag that is <it>"induced"</it> by the lift generation. The high pressure difference between the top and bottom of the wing during lift generation, causes air to <it>"spill"</it> around the wing. This in turn, causes vortex generation leading to an increase in the total drag.
+<div style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/wing_geometry.svg" alt="Illustration of aircraft with swept and tapered wings." style="width: 50%; height: auto;">
+  <p style="font-size: small;">Illustration of aircraft with swept and tapered wings.</p>
+</div>
 
 
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
+<div style="flex: 1; min-width: 400px;">
+  <p>The aspect ratio is defined as:
+  </p>
+
+  \(AR = \frac{s^2}{A} = \frac{s}{c}\)
+
+  <p>
+    where:<br>
+    \( s \): span [m] <br>
+    \( A \): wing area [m²] <br>
+    \( c \): chord length [m]
+  </p>
+
+  <p>
+      The <strong>aspect ratio</strong> (AR) of a wing is an important aerodynamic parameter that influences the efficiency (lift to drag ratio) of a wing. 
+    A high aspect ratio reduces induced drag and generally leads to a higher lift-to-drag ratio, and a better glide angle. 
+    Gliders, for instance, have wings with high aspect ratios (usually around 30). 
+  </p>
+</div>
+
+  <div style="flex: 3; min-width: 200px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/aspect_ratio_effect.png" 
+         alt="Effect of different aspect ratios on lift coefficient." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      Effect of different aspect ratios on lift coefficient. Schema from
+      <a href="https://soaneemrana.org/onewebmedia/AIRCRAFT%20DESIGN%20%3B%20A%20Conceptual%20Approach%20BY%20DANIEL%20P%20RAYMER.pdf" target="_blank">Raymer, 1992, Aircraft design: a conceptual approach</a>.
+    </p>
+  </div>
+</div>
+
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
+
+<div style="flex: 1; min-width: 300px;">
+  <p>
+    <strong>Wing sweep</strong> is the angle between the quarter-chord-line and the plane's longitidunal axis. Swept wings are primarily used for transonic and supersonic aircrafts as it efficiently delays shock wave formation. By reducing the component of airflow perpendicular to the leading edge, the <em>effective Mach number</em> experienced by the wing is decreased, allowing higher flight speeds before reaching critical Mach conditions.
+  </p>
+
+</div>
+</div>
 
 
-### 2.4 Morphing drones 
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
 
-Fixed wing drones that can change shape of the wings, or rotorcrafts that can change frame morphology to pass through narrow gaps
+  <div style="flex: 3; min-width: 250px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/taper_ratio_lift.png" 
+         alt="Effect of taper ratio on lif distribution along the span compared to optimal elliptical distribution." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      Effect of taper ratio on lif distribution along the span compared to optimal elliptical distribution. Schema from
+      <a href="https://soaneemrana.org/onewebmedia/AIRCRAFT%20DESIGN%20%3B%20A%20Conceptual%20Approach%20BY%20DANIEL%20P%20RAYMER.pdf" target="_blank">Raymer, 1992, Aircraft design: a conceptual approach</a>.
+    </p>
+  </div>
 
-➖adds mechanical complexity
+<div style="flex: 1; min-width: 300px;">
+  <p>
+    <strong>Taper ratio</strong> is defined as the ratio of the tip chord length to the root chord length:
+  </p>
+
+  \(\lambda = \frac{c_t}{c_r}\)
+
+  <p>
+    where:<br>
+    \( \lambda \): taper ratio<br>
+    \( c_t \): tip chord length [m]<br>
+    \( c_r \): root chord length [m]
+  </p>
+</div>
+</div>
+<p>
+  Tapering is used to improve the <em>lift-to-drag ratio</em> and achieve a lift distribution closer to the ideal <it>elliptical distribution</it>, which minimizes induced drag. An elliptical lift distribution provides the best aerodynamic efficiency but is difficult and expensive to manufacture due to complex wing shapes.  
+  A properly designed tapered wing can approximate this behavior, reducing excessive lift near the wingtips 
+  and improving overall efficiency of up to 6%.
+</p>
+
+
+<div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
+
+<div style="flex: 1; min-width: 300px;">
+  <p>
+    <strong>Wing tips</strong> offer another way to reduce induced drag by preventing high-pressure air from beneath the wing to flow around the tip toward the low-pressure region above the wing.  
+    Various wing tip configurations - such as <em>sharp</em>, <em>cut-off</em>, <em>hoerner</em>, or <em>winglets</em> - are used to reduce the energy lost in vortex formation and thus decrease induced drag. The worst case aerodynamically is a simple rounded wing tip, which allows the air to "escape" easily around the tip.
+  </p>
+</div>
+
+  <div style="flex: 3; min-width: 250px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/wing_tips.png" 
+         alt="Different wing tips to prevent vortex formation and reduce induced drag." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      Different wing tips to prevent vortex formation and reduce induced drag. Illustration from
+      <a href="https://soaneemrana.org/onewebmedia/AIRCRAFT%20DESIGN%20%3B%20A%20Conceptual%20Approach%20BY%20DANIEL%20P%20RAYMER.pdf" target="_blank">Raymer, 1992, Aircraft design: a conceptual approach</a>.
+    </p>
+  </div>
+</div>
+
+- dihedral angle  
+Balances at what angle of attack an aircraft is longitidunal stable.
+
+
+<ins>Control Surfaces:</ins>  
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">
+  <div style="flex: 1; max-width: 60%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/aircraft_axis.jpg" alt="The yaw, roll and pitch axis of an aircraft." style="width: 90%; height: auto;">
+    <p style="font-size: small;">Three priniciple axis of an aircraft: Roll, Pitch and Yaw.<a href="https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/aircraft-rotations/" target="_blank">Glenn Research Center</a></p>
+  </div>
+
+  <div style="flex: 1; max-width: 40%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Aileron_yaw.gif" 
+         alt="Illustration of yaw movement of an aircraft with rudder." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      A change in yaw of the aircraft is achieved by deflecting the rudder on the tail to the right or left.
+      <a href="https://commons.wikimedia.org/wiki/File:Rollpitchyawplain.png" target="_blank">Glenn Research Center, NASA</a>.
+    </p>
+  </div>
+</div>
+
+To understand the rotations of an aircraft we must first define the different axes. The __yaw axis__ is defined to be perpendicular to the wings and point downwards from the center of gravity of the plane. A yaw motion is a movement of the nose of the aircraft from side to side.  
+The __pitch axis__ is perpendicular to the yaw axis and is parallel to the plane of the wings and directed towards the right wing tip. A pitch motion is an up or down movement of the nose of the aircraft.  
+Fianlly, the __roll axis__ is perpendicular to the other two axes and is directed towards the nose of the aircraft. A rolling motion is an up and down movement of the wing tips of the aircraft.
+
+In flight, rotations are produced with the use of control surfaces which are located around the aircraft. By deflecting a control surface an aerodynamical force acts on it which induces a torque around the center of gravity of the plane.  
+A _yaw motion_ is created by turning the rudder to the left or right which as a result turns the plane to the right or left.  
+The _pitch_ of the aircraft is changed by deflecting the elevators at the tail: if they are deflected downards, the camber increases leading to an increase in the lift force at the tail, which in turn pitches the nose of the plane downwards.  
+Similarily, a _roll rotation_ is achieved with the ailerons of the wings. By tilting the aileron of one wing downwards while tilting the one of the other wing upwards, the lift of the two wings is no longer balanced which leads to a roll motion.
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">
+  <div style="flex: 1; max-width: 40%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Aileron_pitch.gif" 
+         alt="Illustration of pitch movement of aircraft using elevators." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      A change in pitch of the aircraft is achieved by deflecting the elevators up or down.
+      <a href="https://commons.wikimedia.org/wiki/File:Rollpitchyawplain.png#/media/File:Aileron_pitch.gif" target="_blank">Glenn Research Center, NASA</a>.
+    </p>
+  </div>
+
+  <div style="flex: 1; max-width: 40%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Aileron_roll.gif" 
+         alt="Illustration of roll movement of an aircraft with ailerons." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      A change in roll of the aircraft is achieved by deflecting the ailerons on the wings in opposite direction up or down.
+      <a href="https://commons.wikimedia.org/wiki/File:Rollpitchyawplain.png" target="_blank">Glenn Research Center, NASA</a>.
+    </p>
+  </div>
+</div>
+
+
+<ins>Propulsion:</ins>  
+To generate lift, a fixed-wing aircraft needs to generate thrust. While big aircrafts usually use a type of jet engine to produce thrust, smaller aircrafts and UAVs often use propellers for their thrust generation. Although less efficient at high speed, they are easier to implement and offer equal efficiency at lower speeds where most fixed-wing UAVs operate.
+
+<ins>Launch and Recovery:</ins>  
+Since stand-alone fixed-wing aircraft are not capable to to vertical take-off and landing (VTOL), their take-off and landing is more complex than for rotorcrafts. Big fixed-wing aircraft almost always use a runway to build up enough speed to produce enough lift to take off. A runway is also used for the landing to deaccelerate once the wheels touched the ground.  
+Smaller fixed-wing drones usually require a smaller take-off speed. While a lot of them are launched by throwing them in the air by hand, there are some which make use of catapult to generate take-off. To recover smaller fixed-wing drones and UAVs they usually land on their belly.
+
+#### History
+
+The history of modern havier-than-air flight starts in the late 18th century with George Cayley from York, England. Recognised by many as "The Father of Aeronautics" he successfully identified in 1799 the four forces: lift, weight, drag and thrust and how they are linked together. Towards the end of his life, in 1852, he created a glider that successfully did the first human gliding flight.
+
+In the second half of the 19th century the German Otto Lilienthal made thousands of repeated human gliding flights. He is known for having formulated the first aerodynamic equations before he died in 1896 from injuries as a result of a crash from 15 meters during one of his flights.
+
+The early history of aviation ends with the famous Wright brothers at the beginning of the 20th century where they made the first recognised _"sustained and controlled heavier-than-air powered flight"_. It was them who made airplanes steerable by adding lateral control surfaces and laid the foundation for the developments towards modern aviation in the 20th century.
+
+![video](https://www.youtube.com/watch?v=W6y3bsBXrHc)
+><sub>Early Flight Vintage Films. Footage of failed flight attempts and the successful flights of the Wright Brothers (last clip). Available at: https://www.youtube.com/watch?v=W6y3bsBXrHc</sub>
+
+In the decades that followed, driven by rapid innovation, aviation transformed from dangerous experiments to a cornerstone of our modern society. The development of lightweight, durable materials, new propulsion systems, and aerodynamic improvements to wing and aircraft design enabled aircraft to fly farther, faster, and higher. The two world wars acted as accelerators of innovation, leading to more powerful engines, higher payloads, jet engines, and the first all-metal aircraft, among other things. Today, fixed-wing aircraft are used in a variety of areas, from large civil aircraft up to fighter jets. 
+
+<div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">
+  <div style="flex: 1; max-width: 50%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/Sukhoi_T-50_Maksimov.jpg" 
+         alt="A modern fighter Jet the Sukhoi Su-57 of the Russian Air Force. Photograph taken by Maxim Maksimov." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      A modern fighter Jet the Sukhoi Su-57 of the Russian Air Force. Photograph taken by Maxim Maksimov. 
+      <a href="https://commons.wikimedia.org/wiki/File:Sukhoi_T-50_Maksimov.jpg" target="_blank">Wikimedia</a>.
+    </p>
+  </div>
+
+  <div style="flex: 1; max-width: 50%;">
+    <img src="{{ site.baseurl }}/assets/images/uav/British_Airways_A320.jpg" 
+         alt="An Airbus A320 from the British Airways while landing at Zurich Airport." 
+         style="width: 100%; height: auto;">
+    <p style="font-size: small;">
+      An Airbus A320 from the British Airways while landing at Zurich Airport. One of the most used civil airplanes today.
+      <a href="https://commons.wikimedia.org/wiki/File:British_Airways_A320-232_G-EUYC_ZRH_2025.jpg" target="_blank">Wikimedia</a>.
+    </p>
+  </div>
+</div>
+
+While big fixed-wing aircrafts offer a big variety of interesting designs, we want to focus here on UAVs.  
+Unmanned fixed-wing aircrafts already had their beginning during World War I with unmanned remotely controlled aircrafts over radio-frequency. In 1917 the British developped their first UAV *Aerial Target* around the same time as the US the *Kettering Bug* - a forerunner of modern-day missiles. Since then fixed-wing UAVs became important for military and civil use, where they often cover similar fields of applications. Their main use case is in long-range missions in surveillance and mapping.
+
+#### Applications
+
+1. Mapping surveying
+2. Surveillance and Security
+3. Agriculture
+4. environmental monitoring
+5. Disaster management
+6. Cargo & delivery
+
+#### Challenges
+1. VTOL capabilities
+2. autonomous navigation
+3. Energy management
+4. miniaturization
+5. Safety and Airspace integration
+
+<!-- ### 2.4 Morphing drones 
+
+Fixed wing drones that can change shape of the wings, or rotorcrafts that can change frame morphology to pass through narrow gaps and have efficient flight in different flight regimes.
+
+➖adds mechanical complexity -->
 
 
 ## Chapter 3 : Cost and Benefits
 
-Most commercial drones are small (<1kg), but depending on principle offer different applications. Different architectures bring more autonomy, stability or maneuverability. The below graphic shows an interesting relationship between range and weight of the aircrafts. While very small-scale drones are almost exclusively flapping-wing drones, their flight time is also short. For long range flights, fixed wing aircrafts achieve by far the greatest autonomy. Rotorcrafts are covering the space in between: mid-range flights and small (<1kg) mid-sized drones.
+Most commercial drones are small (<1kg), but depending on their principle they offer different applications. Different architectures bring more autonomy, stability or maneuverability. The below graphic shows an interesting relationship between range and weight of the aircrafts. While very small-scale drones are almost exclusively flapping-wing drones, their flight time is also short. For long range flights, fixed wing aircrafts achieve by far the greatest autonomy. Rotorcrafts are covering the space in between: mid-range flights and small (<1kg) mid-sized drones.
 
 <div style="float: left; margin-right: 15px; text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/uav/dronetype_flighttime_weight.webp" alt="Drone types against flight time and weight" style="width: 600px; height: auto;">
   <p style="font-size: small;">The figure shows different drone types and compares flight time against weight. From <a href="https://www.nature.com/articles/nature14542/figures/3" target="_blank">Floreano & Woods, Nature 2015, Fig. 3</a></p>
 </div>
+
+### Questions
+TODO...
 
 ## Additional Resources
 
@@ -1320,5 +1550,8 @@ This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL
 
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
+Raymer, D. P. (1992). Aircraft design: A conceptual approach (2. ed). American Institute of Aeronautics and Astronautics.
+
+
 
 

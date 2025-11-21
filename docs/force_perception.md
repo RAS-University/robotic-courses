@@ -102,6 +102,7 @@ author: Mael Studer (EPFL)
 
 - closed-loop control page (controller definition)
 - (read course about sensors and sensing)
+- basics in electronics (resistance, capacitance, etc.)
 
 ---
 
@@ -173,7 +174,7 @@ Example of Reaction: Arm Massage by Robot
 ><sub>*Example of Reaction: Handshake between Human and Robot. Available on [YouTube](https://www.youtube.com/watch?v=TFwVKe3W41Y)*</sub>
 -->
 
-Some promising fields in which force perception is used are biomedical robotics (e.g. surgical robotics -> link to page), rehabilitation (e.g. exoskeletons -> link to page) or humanoids (link to humanoids page).
+Some promising fields in which force perception is used are biomedical robotics (e.g. [Surgical Robots](surgical)), rehabilitation (e.g. exoskeletons -> link to page, not created yet) or humanoids (link to humanoids page, not created yet).
 
 > On this page, the terms *sense of touch*, *tactile sensing* and *force perception* refer to the robot’s ability to perceive and interpret physical interaction.
 
@@ -325,12 +326,92 @@ Finally, we will address how tactile information is processed and how sensor loc
 
 ### Chapter 2 : Tactile Sensors
 
+<!--
 -> From simple tactile sensors (yes or no / logic high or low) to more sophisticated ones.
 -> different working principles
+-->
 
 #### 2.1 Resistive Sensors
 
-detect force by change in resistance of material (tactile sensing 5.2.1)
+There are two types of resistive tactile sensors: those that determine the contact location and those that determine the contact force or pressure.  
+First, we will take a closer look at resistive sensors of the first type, how resistive technology can be used to determine where a contact happened on a surface.  
+Then, we will move on to sensors of the second type and see how resistive technology is used to measure force.
+
+- **Type 1: Determine contact location**  
+
+*1/ Single-strip resistive sensor:*  
+
+Resistive tactile sensors are usually made of two sheets coated with a resistive material, placed one on top of the other. The two layers are separated by microspheres so that they remain electrically isolated from each other. When an object touches the sensor, the pressure brings both layers into contact. This configuration can be seen in panel (a) of the figure below (with one layer shown in green and the second layer in grey).  
+
+To determine the contact location, we need to extract both the x- and y-coordinates. This is done by energising the layers one at a time. A uniform voltage \(V_x\) is applied along the first resistive layer (never both layers simultaneously), while the second layer is connected in a high-impedance (Hi-Z) configuration, able to read the voltage output. Because the Hi-Z connection draws almost no current, it does not disturb the voltage distribution on the active layer. This setup corresponds to panel (b).  
+
+The contact between the sheets acts as the slider of a linear potentiometer (for more information about potentiometers refer to [Sensors and Sensing](new-sensors-for-robotics)). The resistance in the first layer depends on where along the strip the contact occurs. The voltage at the contact point is transferred through the second layer and thus provides the x-coordinate. Similarly, the x-coordinate is obtained by applying a uniform voltage $V_y$ to the second layer and leaving the first layer in Hi-Z, as shown in panel (c).  
+The measured output voltages are the result of a voltage divider. The simplified expressions are:  
+
+$$
+V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x
+$$
+
+$$
+V_{y,\text{out}} = \frac{R_{y2}}{R_{y1} + R_{y2}} \, V_y
+$$
+
+where $R_{x1}$ and $R_{x2}$ are the resistances from the contact point to the left and right boundaries of the x-layer, and $R_{y1}$ and $R_{y2}$ are the equivalent resistances on the y-layer (panel (d)). Panels (e) and (f) show the equivalent electrical circuits when the x- and y-layers are energised.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor.png' }}"
+       width="640px"
+       alt="Analog resistive strip sensor schematic">
+  <figcaption>
+    <sub><i>
+      Figure 1: Schematic of analog resistive touch sensing
+      (<a href="https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20">Springer Handbook of Robotics</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+In practice, the sensor switches rapidly between measuring the x- and y-coordinates. The layers are energised one after the other at a high frequency, making the switching imperceptible to a human user (response can be provided in 10ms or faster). But this approach has an important drawback: it cannot distinguish multiple simultaneous touch points, which is why multi-strip resistive sensors are used.
+
+(add exercise using the voltage formulas)
+
+*2/ Multi-strip resistive sensor:*  
+
+As in the single-strip version, the multi-strip resistive sensor also consists of two resistive layers and the measuring principle remains the same. However, each layer is divided into multiple strips along its length, as can be seen in the figure below. In this configuration, multiple simultaneous contacts can be detected, as each strip provides its own independent measurement. Because the strips are narrow, the output voltage of a given strip depends on the contact position aswell as on the contact width.
+
+The output voltage for a single strip is given by:
+
+$$
+V_{\text{out}} = \frac{l_x + \frac{w}{2}}{L - \frac{w}{2}} \, V_{\text{ref}}
+$$
+
+where  
+- $l_x$ is the distance from the left boundary of the strip to the **centre** of the applied contact
+- $w$ is the **width** of the contact area (for example, the width of a fingertip)
+- $L$ is the **total** length of the strip
+- $V_{\text{ref}}$ is the applied reference voltage
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/multi-strip-resistive-sensor.png' }}"
+       width="640px"
+       alt="Multi-strip analog resistive sensor schematic">
+  <figcaption>
+    <sub><i>
+      Figure 2: Schematic of multi-strip analog resistive touch sensing
+      (<a href="https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20">Springer Handbook of Robotics</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+Now, instead of performing only one measurement per layer, we need to make $n$ separate measurements for all $n$ strips. If the layers are divided into strips in both directions, this increases the total number of measurements from $2$ to $2n$. As a result, scanning the entire sensor becomes more time-consuming.  
+
+In addition, the wiring complexity increases. While the single-strip version requires only four connection wires, the multi-strip version needs $2+2n$ wires: one for $V_{\text{ref}}$, one for the ground and $n$ measurement wires for each of the two stripped layers. The wiring complexity issue will be addressed later.
+
+(add exercise using the voltage formula)
+
+- **Type 2: Determine applied force or pressure**  
+
+As seen in the [Sensors and Sensing](new-sensors-for-robotics) course, in piezoresistive materials the intrinsic resistance varies with applied pressure.
+
 
 #### 2.2 Capacitive Sensors
 
@@ -356,12 +437,24 @@ tactile sensing 5.2.7 – 5.2.8
 
 ### Chapter 3: Advanced Tactile Sensors
 
+Now that we have seen different tactile sensing technologies, let’s take a closer look at some more advanced tactile sensors.
+
+When used in robotics, tactile sensors often need to cover broad areas. This can be challenging, as the surfaces where the sensors must be attached can have many different shapes (cylindrical, spherical, etc.). To cover these surfaces in the best possible way, tactile sensing grids need to be flexible (for cylindrical surfaces) or even stretchable (for spherical surfaces). The difference between flexible and stretchable lies in the fact that a flexible sensor can bend, whereas a stretchable sensor can both bend and expand (i.e. become longer). Below are some examples of flexible and stretchable tactile sensors.
+
+Lastly, there also exist alternative ways to sense touch. One advanced tactile sensing technique makes use of vision. These vision-based tactile sensors are presented below.
+
 #### 3.1 Flexible Tactile Sensors
 
 -> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
 -> have a look at meta's fingertip tactile sensor
 
+In many applications, tactile sensors need to be
+
+<!--  tactile sensing chapter 4.4.1 -->
+
 #### 3.2 Stretchable Tactile Sensors
+
+<!--  tactile sensing chapter 4.4.3 -->
 
 #### 3.3 Vision-Based Tactile Sensors
 
@@ -372,9 +465,18 @@ tactile sensing 5.2.7 – 5.2.8
 
 ### Chapter 4 : Issues and Difficulties
 
--> tactile sensing chapter 4
+<!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) -->
 
-(is this worth a chapter or should it just be beneath the concerned parts)
+#### Wealth of Computation
+
+#### Wiring Complexity
+
+While integrating tactile sensors on a robot body, the wires that transmit the tactile data can be a big issue. The number of needed wires increases with the number of tactile sensors used. Often, the available space for wires is limited.
+
+<!-- 
+tactile sensing chapter 4.4.5
+emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
+-->
 
 add challenges of electronics: wiring, data transfer, power consumption  
 -> examples of how it is done today
@@ -383,13 +485,22 @@ add challenges of electronics: wiring, data transfer, power consumption
 
 ### Expectations of Tactile Systems
 
+#### Task Related Requirements
+
+The task that has to be executed by the robotic system defines what type of tactile sensor is implemented in it.
+
+
+<!-- 
+The following expectations are specifically for humanoid applications -> make more general.
+These requirements are more general stuff about sensors, not specifically about tactile sensors
+
 #### Limited Space
 
 Tactile systems are most often placed in areas of the robot where space is limited, typically on a finger. Therefore, it is desirable to use multifunctional sensors, for example sensors that can detect not only tactile but also thermal properties.
 
 #### Spatial Resolution
 
-The resolution of a tactile sensing array does not need to be the same across all locations. For example, a tactile sensor on a fingertip needs to be more sensitive than one on the shoulder, and should therefore contain more elements in its sensing grid.
+The resolution of a tactile sensing array does not need to be the same across all locations. For example, a tactile sensor on a fingertip needs to be more sensitive than one on the shoulder and should therefore contain more elements in its sensing grid.
 
 #### Sensing Range and Directionality
 
@@ -398,6 +509,7 @@ Depending on its application, a tactile sensor should be able to detect forces o
 #### Reaction Time
 
 When a tactile sensor is used for controlling a robot, it must provide feedback quickly in order to enable real-time reactions.
+-->
 
 ---
 
@@ -420,9 +532,20 @@ add the challenges that come with the sensor location (integrated into skin surf
 
 ---
 
-QUESTIONS:  
+### Chapter 6 : Exercices
 
--  
+<!-- add exercices
+look at Aude's propositions on slack
+Take same robot examples as in the kinematics course (delta ...) so that the student can work on the basis he already has
+1/ Knowing the different tactile sensors from above, where should the sensor be placed if we wish F/T control of robot to lift object up and down (joint, wrist)
+2/ ... push object
+3/ peg in a hole
+4/ ...
+-->
+
+---
+
+QUESTIONS:  
 
 -  
 
@@ -450,6 +573,7 @@ QUESTIONS:
 
 
 <!--  
+Initial comments:
 
 Review means to perceive touch/force: list sensors from force measurement at joint versus along link, start with 3D force sensors and 6D force/torque sensors, move to tactile sensors (traditional rigid capacitive ones) to more advanced tactile sensors (bendable, stretchable and their applications), cover also new vision-based tactile sensors making a link to page on vision.
 

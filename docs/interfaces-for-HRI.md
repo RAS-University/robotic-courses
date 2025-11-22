@@ -9,33 +9,6 @@ nav_order: 7
 <!-- Link external JavaScript file -->
 <script src="questions.js"></script>
 
-<a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
-<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
-
 
 # Interfaces for Human-Robot Interaction
 
@@ -213,8 +186,8 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
   <input type="radio" name="q1" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q1', 'True', 
-      'Correct! Joysticks are less user-friendly and require more trianing and experience before usage.',
-      'Incorrect. Using a tablet is more intuitive than using a joystick. The user can control for more DOFs with a joystick, which comes at the cost of being less user-friendly and requiring more training and experience.')">
+      'Correct answer! Joysticks are less user-friendly and require more trianing and experience before usage.',
+      'Incorrect answer! Using a tablet is more intuitive than using a joystick. The user can control for more DOFs with a joystick, which comes at the cost of being less user-friendly and requiring more training and experience.')">
     Check Answer
   </button>
   <p id="q1-feedback"></p>
@@ -227,8 +200,8 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
   <input type="radio" name="q2" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q2', 'False', 
-      'Correct! The proper interface here is a 6-DOF joystick, which can control for both position and orientation of the 6-DOF robotic arm.',
-      'Incorrect. A 6-DOF joystick is required here, as the goal is to control for both position and orientation of a 6-DOF arm.')">
+      'Correct answer! The proper interface here is a 6-DOF joystick, which can control for both position and orientation of the 6-DOF robotic arm.',
+      'Incorrect answer! A 6-DOF joystick is required here, as the goal is to control for both position and orientation of a 6-DOF arm.')">
     Check Answer
   </button>
   <p id="q2-feedback"></p>
@@ -241,8 +214,8 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
   <input type="radio" name="q3" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q3', 'False', 
-      'Correct! Forces cannot be transmitted',
-      'Incorrect. Although all degrees of freedom of the end-effector are covered, forces still can not be transmitted.')">
+      'Correct answer! Forces cannot be transmitted',
+      'Incorrect answer! Although all degrees of freedom of the end-effector are covered, forces still can not be transmitted.')">
     Check Answer
   </button>
   <p id="q3-feedback"></p>
@@ -255,8 +228,8 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
   <input type="radio" name="q4" value="False"> False<br>
   <button type="button"
     onclick="checkTrueFalse('q4', 'False', 
-      'Correct! Both tablets and joysticks do not control at joint level and rely on internal inverse kinematics controllers. ',
-      'Incorrect. Joysticks do not directly control the joints, they control for the position and orientation of the end-effector. Consequently, they rely on internal inverse kinematics controllers.')">
+      'Correct answer! Both tablets and joysticks do not control at joint level and rely on internal inverse kinematics controllers. ',
+      'Incorrect answer! Joysticks do not directly control the joints, they control for the position and orientation of the end-effector. Consequently, they rely on internal inverse kinematics controllers.')">
     Check Answer
   </button>
   <p id="q4-feedback"></p>
@@ -270,8 +243,8 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
   <input type="radio" name="q5-fk" value="option3"> both of the above options<br>
 
   <button type="button" onclick="checkMCQ('q5-fk', 'option2',
-    'Correct! Tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.',
-    'Incorrect. Although joysticks are limited in what can be transferred, they can still do better than tablets. (They can communicate the desired motion even in 6D.)')">
+    'Correct answer! Tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.',
+    'Incorrect answer! Although joysticks are limited in what can be transferred, they can still do better than tablets. (They can communicate the desired motion even in 6D.)')">
     Check Answer
   </button>
 
@@ -286,7 +259,54 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
 
 ##### **1.3. Exoskeletons**
 
-In exoskeletons, there is a direct mapping between your body (arms or legs) and the robot's body. In the video below, the user is guiding the robot's arms directly with his arms. The advantage as an interface is that using exoskeletons, the user can control the joints directly. User has control for cartesian position and orientation of each joint. Mentioning the disadvantages, most exoskeletones are heavy and cumbersome. With the advancements in materials and motors, there is hope for this problem to be tackled; resulting in increased popularity of exoskeletones. Another problem with exoskeletone is that it is designed for an sepcific user size and user strenght, making it not fit for everybody. Some of the exoskeletones (note that this is not the case for all exoskeletones), render the force at contact, meaning that when the robot is imposed to some force in touch, the user also senses some force. In this case, the question is which force does the user sense? Is it only the force at the end point or other areas are also included? For example, if the robot hits something at the elbow, does the user sense this force at her/his elbow? Rendering this in real time is still difficult and challenging. However, exoskeletones can be very useful if these challenges are overcome.
+In exoskeletons, there is a direct mapping between the user’s body (arms or legs) and the robot’s body. For example, in the video below, the user guides the robot’s arms directly with their own arms. The advantage of this interface is that, by using exoskeletons, the user can control the joints directly. The user has control over the Cartesian position and orientation of each joint.
+<br>
+Some exoskeletons (though not all) render the contact forces, meaning that when the robot experiences a force during contact, the user also senses a corresponding force. In this case, the question arises: Which force does the user actually sense? Is it only the force at the end effector, or are forces at other parts of the robot also conveyed? For example, if the robot impacts something with its elbow, does the user feel this force at their own elbow? Rendering such feedback in real time is still difficult and challenging.
+<br>
+Regarding disadvantages, most exoskeletons are heavy and cumbersome. With advancements in materials and actuators, there is hope that this issue will be mitigated, leading to increased adoption of exoskeletons. Another limitation is that an exoskeleton is typically designed for a specific user’s size and strength, making it unsuitable for everyone. However, exoskeletons can be extremely useful if these challenges are addressed.
+
+
+<!-- Conceputal Questions -->
+<details open markdown="3">
+<summary>Conceptual Questions</summary>
+
+
+<!-- Question 1 -->
+<p><strong>Question 1: Which of the following statements is true?</strong></p>
+<form id="q1-fk">
+  <input type="radio" name="q1-fk" value="option1"> Exoskeletons rely on internal inverse kinematics controllers.<br>
+  <input type="radio" name="q1-fk" value="option2"> The dynamics of motion is conveyed directly in exoskeletons.<br>
+
+  <button type="button" onclick="checkMCQ('q1-fk', 'option2',
+    'Correct answer! There is a direct mapping between the user\'s body and the robot\'s body and the joints are controlled directly.',
+    'Incorrect answer! Using exoskeletons, joints are controlled directly and there is no need for the internal inverse kinematics controllers.')">
+    Check Answer
+  </button>
+
+  <p id="q1-fk-feedback"></p>
+</form>
+
+
+<!-- Question 2 -->
+<p><strong>Question 2: Which of the following statements is false?</strong></p>
+<form id="q2-fk">
+  <input type="radio" name="q2-fk" value="option1"> No rendering of the scene can be provided for the user through exoskeletons.<br>
+  <input type="radio" name="q2-fk" value="option2"> An exoskeletons is designed for a specific size and does not fit everybody.<br>
+
+  <button type="button" onclick="checkMCQ('q2-fk', 'option1',
+    'Correct answer! Some exoskeletons can actually provide rendering of the contact forces.',
+    'Incorrect answer! Exoskeletons are designed for specific user characteristics and do not fit all sizes and strengths.')">
+    Check Answer
+  </button>
+
+  <p id="q2-fk-feedback"></p>
+</form>
+
+</details>
+
+<script src="quiz.js"></script>
+
+<!--
 > + **Pros:** 
 > + Conveys directly the dynamics of the motion (embodied transmission)
 > + Allows to control all joints as well as movement in Cartesian space
@@ -295,19 +315,66 @@ In exoskeletons, there is a direct mapping between your body (arms or legs) and 
 > - Heavy, cumbersome
 > - Does not fit all sizes and strengths
 > - Does not convey nor render forces at contact
+-->
+
+<br>
 
 <p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/pFnSl6oOLco" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>Capio Upper Body Exoskeleton for Teleoperation by the DFKI GmbH Robotics Innovation Center. YouTube video, Nov 2012. </sub>
+<br>
 
 ##### **1.4. Telepresence**
-There are situations where it is necessary to teleoperate and not send a human agent directly. Examples of such situations are operations in radioactive environments, search and rescue operations or any other operations in dangerous environments. However, to teleoperate in such situations, it is important to be very precise and careful. As a result, it is necessary to render some aspects of the environment for the user. Here come the challenges in communications, i.e., delays. More distance between the robot and the user results in longer delays. Hours of delays in communication can happen in space missions in which the robot is teleoperated from the earth.These are the issues that we must tackle in this field. <br>
-In the example below, the surgeon is not directly operating on the patient; he is doing it through an interface. This interface is the da Vinci surgical robot. These operations are fairly frequent these days. Advantages of such systmes are that the user should not be present on site and can do the task remotely. In cases of surgery, a very expert surgeon can perform the operation from her/his own office on a patient who can be in another region of the world. Consequently, it is more efficient, more secure, etc. However, it relies on good rendering of the environment. <br>
+There are situations where it is necessary to teleoperate a robot instead of sending a human operator directly. Examples include operations in radioactive environments, search-and-rescue missions, or any other tasks carried out in dangerous settings. However, teleoperation in such situations requires great precision and care. As a result, it becomes necessary to render certain aspects of the environment for the operator. This introduces communication challenges, i.e. delays. Greater distance between the robot and the operator results in longer delays. Delays of several hours can occur in space missions where a robot is teleoperated from Earth. These are issues that must be addressed in this field.
+<br>
+In the example below, the surgeon is not operating directly on the patient; instead, the procedure is performed through an interface; the da Vinci surgical robot. Such operations have become fairly common today. These systems offer several advantages: the operator does not need to be physically present on site and can perform tasks remotely. In the case of surgery, an expert surgeon can carry out a procedure from their own office on a patient located in another region of the world. Consequently, this approach can be more efficient, safer, and more flexible. However, it relies heavily on high-quality rendering of the environment.
+<br>
 In terms of rendering the environment, it is interesting to note that nowadays, surgeons are only provided with a two-dimensional visual rendering of the scene. However, by moving the camera and instruments, surgeons actully build a three-dimensional model of the scene in their minds and map it to the two-dimensional provided rendering. They are not provided with feedback on forces. They cut the tissues and move things without sensing the force applied. This can be important in the sense that how deep the cut should be. Moreover, some tissues may be stiffer than other tissues. Such surgeons have the ability to map their visual observations such as deformations of the tissues to perception of force, thanks to their skill and expertise. However, there can be mistakes and providing richer renderings of the scenes can help in this regard.
+<br>
 In such operations, delays in transmissions can be incredibly determinal. In fact, one of the most important topics in this research area is how to compensate for these delays to make sure the controller is stable. To make this challenge clearer, imagine that the surgeon is applying some force, in order for the force to be transmitted. Even if the surgeon perceives the force and senses a resistance, by the time she/he senses the resistance, she/he continues moving. Then, once sensed, the surgeon starts reacting and for example decreases the force, however, it may be too late. In such scenario, the closed loop control system is completely unstable.
 
+
+<!-- Conceputal Questions -->
+<details open markdown="4">
+<summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: Despite all facilities telepresence provides, it is not yet possible to perform tasks when fully remote due to communication problems.</strong></p>
+<form id="q1">
+  <input type="radio" name="q1" value="True"> True<br>
+  <input type="radio" name="q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1', 'False', 
+      'Correct answer! Telepresence enables to perform tasks when remote. Da Vinci Surgical robot is the great example which is widely used nowadays.',
+      'Incorrect answer! Although challenges in communications, i.e. delays, can be detrimental in telepresence, it is successful used worldwide.')">
+    Check Answer
+  </button>
+  <p id="q1-feedback"></p>
+</form>
+
+
+<!-- Question 2 -->
+<p><strong>Question 2: What is the most challenging issue in telepresence?</strong></p>
+<form id="q2-fk">
+  <input type="radio" name="q2-fk" value="option1"> Delays in transmission can be determinal if the task is rapid, leading to unstable control loop.<br>
+  <input type="radio" name="q2-fk" value="option2"> A very good visual rendering of the scene must be provided to the user, as she/he is not present in the scene.<br>
+
+  <button type="button" onclick="checkMCQ('q2-fk', 'option1',
+    'Correct answer! The most challenging issue in telepresence is the delay in transmissions.',
+    'Incorrect answer! Although it is important to provide a good rendering of the scene in telepresence, it is not as critical as the delays in transmissions.')">
+    Check Answer
+  </button>
+
+  <p id="q2-fk-feedback"></p>
+</form>
+
+</details>
+
+<script src="quiz.js"></script>
+
+<!--
 > + **Pros:** 
 > + Enables to perform tasks when remote
 > + Can offer a more efficient and more secure mean to intervene (in disastrous or dangerous environments)
@@ -316,6 +383,7 @@ In such operations, delays in transmissions can be incredibly determinal. In fac
 > - Need to provide good visual rendering of the scene
 > - Delays in transmission can be detrimental if task is too rapid
 > - Force not always (well) rendered
+-->
 
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/Davinci.jpg" alt="Davinci Surgical Robot" width="600" height="338">

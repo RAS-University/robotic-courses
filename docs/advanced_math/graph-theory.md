@@ -116,6 +116,183 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 <!-- - Collision checking in robot environments -->
 
 ---
+### Asymptotic Notation Refresher
+
+When we analyze graph algorithms, we usually care about how the running time grows with the input size $n$ as $n \to \infty$. We compare functions like $f(n)$ and $g(n)$ using the following notations:
+
+#### Big-O, Big-Omega, Big-Theta
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> **Big-O** — *asymptotic upper bound*  
+
+A function $ f(n) $ is in $ O(g(n)) $ if there exist constants $ c > 0 $ and $ n_0 $ such that  
+$$
+0 \le f(n) \le c\, g(n) \quad \text{for all } n \ge n_0 .
+$$
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/big0.webp' | relative_url }}" 
+       alt="Big-O" 
+       width="350">
+</p>
+
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Image source: 
+    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
+      Programiz – Asymptotic Notations
+    </a>.
+  </small>
+</figcaption>
+
+
+> Intuition: $f$ does not grow faster than $g$, up to constant factors.
+
+
+---
+
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> **Big-Omega** — *asymptotic lower bound*
+
+A function $ f(n) $ is in $ \Omega(g(n)) $ if there exist constants $ c > 0 $ and $ n_0 $ such that  
+$$
+0 \le c\, g(n) \le f(n) \quad \text{for all } n \ge n_0 .
+$$
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/omega.webp' | relative_url }}" 
+       alt="Omega" 
+       width="350">
+</p>
+
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Image source: 
+    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
+      Programiz – Asymptotic Notations
+    </a>.
+  </small>
+</figcaption>
+
+> Intuition: $f$ does not grow slower than $g$.
+
+---
+
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> **Big-Theta** — *tight bound*
+
+A function $ f(n) $ is in $ \Theta(g(n)) $ if  
+$$
+f(n) = O(g(n)) \quad \text{and} \quad f(n) = \Omega(g(n)).
+$$
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/theta.webp' | relative_url }}" 
+       alt="Theta" 
+       width="350">
+</p>
+
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Image source: 
+    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
+      Programiz – Asymptotic Notations
+    </a>.
+  </small>
+</figcaption>
+
+> Intuition: $f$ and $g$ grow at the same rate (up to constant factors).
+
+---
+
+
+### Quick Examples
+
+- $ n^2 = O(n^3) $.  
+- $ n^3 = \Omega(n^2) $.  
+- $ 3n^2 + 5n + 7 = \Theta(n^2) $ (same growth rate as $ n^2 $).  
+
+We will use these notations throughout to describe the time and space complexity of graph algorithms such as BFS, DFS, Dijkstra, and A\*.
+
+---
+
+
+<div class="assignment" markdown="1">
+<strong>Quiz.</strong>
+  <div class="mcq" id="mcq-asy1">
+    For f(n) = 3n^2 + 5n and g(n) = n^3, which statement is correct?
+    <div class="options">
+      <label><input type="radio" name="asy1" value="O"> f(n) ∈ O(n^3)</label>
+      <label><input type="radio" name="asy1" value="Omega"> f(n) ∈ Ω(n^3)</label>
+      <label><input type="radio" name="asy1" value="Theta"> f(n) ∈ Θ(n^3)</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkAsy1()">Check</button>
+    </div>
+    <div class="result" id="asy1-result"></div>
+  </div>
+
+  <div class="mcq" id="mcq-asy2">
+    Which notation gives a tight asymptotic bound on f(n)?
+    <div class="options">
+      <label><input type="radio" name="asy2" value="O"> Big-O</label>
+      <label><input type="radio" name="asy2" value="Omega"> Big-Omega</label>
+      <label><input type="radio" name="asy2" value="Theta"> Big-Theta</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkAsy2()">Check</button>
+    </div>
+    <div class="result" id="asy2-result"></div>
+  </div>
+
+  <div class="mcq" id="mcq-asy3">
+    For f(n) = n^3 + 2n and g(n) = n^2, which statement is correct?
+    <div class="options">
+      <label><input type="radio" name="asy3" value="O"> f(n) ∈ O(n^2)</label>
+      <label><input type="radio" name="asy3" value="Omega"> f(n) ∈ Ω(n^2)</label>
+      <label><input type="radio" name="asy3" value="Theta"> f(n) ∈ Θ(n^2)</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkAsy3()">Check</button>
+    </div>
+    <div class="result" id="asy3-result"></div>
+  </div>
+  <script>
+  function pick(name) {
+    const xs = document.querySelectorAll(`input[name="${name}"]`);
+    for (const x of xs) if (x.checked) return x.value;
+    return null;
+  }
+  function mark(el, ok) {
+    el.textContent = ok ? "Correct ✅" : "Try again ❌";
+    el.parentElement.classList.toggle("correct", ok);
+    el.parentElement.classList.toggle("incorrect", !ok);
+  }
+  function checkAsy1() {
+    const v = pick("asy1");
+    const ok = (v === "O");
+    mark(document.getElementById("asy1-result"), ok);
+  }
+  function checkAsy2() {
+    const v = pick("asy2");
+    const ok = (v === "Theta");
+    mark(document.getElementById("asy2-result"), ok);
+  }
+  function checkAsy3() {
+    const v = pick("asy3");
+    const ok = (v === "Omega");
+    mark(document.getElementById("asy3-result"), ok);
+  }
+  </script>
+
+</div>
+
+
 ---
 
 ## Chapter 1: Motivation
@@ -159,7 +336,7 @@ Autonomous robots navigating a warehouse are another classic example. We can mod
 
 # Chapter 2. Basic Definitions
 
-## 1.1 Graphs
+## 2.1 Graphs
 
 A graph is one of the simplest and most powerful mathematical abstractions used to represent relationships between entities.  
 Formally, a graph is an ordered pair
@@ -219,7 +396,7 @@ out-degree = 2 (to A, D).
 
 ---
 
-## 1.2 Weighted Graphs
+## 2.2 Weighted Graphs
 
 Many problems require not only knowing whether two vertices are connected, but also how *costly* that connection is.  
 A weighted graph extends the definition of $G = (V, E)$ by associating a real-valued weight function
@@ -236,7 +413,7 @@ A path connecting two vertices may exist, but the one with minimal total weight 
 
 ---
 
-## 1.3 Paths and Connectivity
+## 2.3 Paths and Connectivity
 
 A path in a graph is a finite sequence of vertices
 
@@ -535,6 +712,138 @@ The best representation depends entirely on the graph’s density and the operat
 - Use **Adjacency Matrix** for **dense** graphs or frequent edge lookups.  
 - Use **Adjacency List** for **sparse** graphs and search algorithms (BFS, Dijkstra, A*).  
 - Use **Edge List** for **edge-sorted** or **edge-centric** algorithms (Kruskal, clustering, etc.).
+
+---
+<div class="assignment" markdown="1">
+
+### Exercise: Graph Representation in Real-World Scenarios
+
+For each scenario, consider the nature of the graph (directed/undirected, weighted/unweighted), its density (E vs. V2), and the most frequent operation required by the system.
+
+---
+
+## 1. The Global Flight Network ✈️
+
+Imagine building a system for a flight search engine (like Google Flights or Skyscanner).
+
+- **Vertices** (V): Every major international airport (around 10,000 to 20,000 worldwide).
+
+- **Edges** (E): A direct commercial flight route between two airports.
+
+- **Weights**: Flight time and/or ticket cost.
+
+- **System Goal**: The main operation is finding the shortest path (fewest layovers or cheapest route) between two airports.
+
+*Guiding Questions*:
+
+- Is this graph likely sparse or dense? *Hint: Does every airport have a direct flight to every other major airport?*
+
+- What is the complexity of V? Is it large, making O(V2) space prohibitive?
+
+- The core algorithm (like Dijkstra's) relies heavily on finding all neighbors of a current airport. Which representation is fastest for this operation?
+
+- **Conclusion**: Which representation is the best fit?
+
+<details markdown="1"><summary>Hints</summary>
+
+Airports form a sparse network because very few airports have direct flights to most others.  
+With ~10k–20k airports, V² becomes extremely large.  
+Shortest-path algorithms frequently require scanning all outgoing edges from a node.
+
+</details>
+
+<details markdown="1"><summary>Solution</summary>
+
+The graph is sparse: each airport connects only to a small subset of all airports.  
+Storing O(V²) is too large for V≈20,000, so an adjacency matrix is impractical.  
+Since shortest-path algorithms repeatedly need to find all neighbors of a node, adjacency lists provide fast neighbor iteration.  
+**Conclusion:** Use an **adjacency list** representation.
+
+</details>
+
+---
+
+## 2. A Social Media "Friend" Graph 🫂
+
+Imagine a system (like Facebook) that stores the connections between its users in a major city.
+
+- **Vertices** (V): Users in the city (e.g., 500,000 users).
+
+- **Edges** (E): A "friend" connection between two users (undirected).
+
+- **Weights**: Unweighted (or maybe a metric of interaction frequency).
+- **System Goal**: The main operation is quickly checking if two specific users are direct friends to filter content or display a profile.
+
+*Guiding Questions*:
+
+- With V=500,000, V2 is an enormous number (2.5×1011). *Is O(V2) space feasible for your memory budget?*
+
+- While the graph is sparse overall (most users don't know most other users), the primary operation is checking for a specific edge (u,v).
+
+- Which representation provides an O(1) time complexity for the most frequent operation (edge lookup)?
+
+- **Conclusion**: If space is limited by O(V+E), how do you achieve the fastest lookup? *Hint: Consider using a Hash Map/Set structure within an Adjacency List to improve lookup time from O(degree(u)) to O(1) on average.*
+
+<details markdown="1"><summary>Hints</summary>
+
+V² is far too large to store for 500k users.  
+Pure adjacency lists make checking if (u,v) exists O(degree(u)).  
+Hash sets inside adjacency lists allow average O(1) edge existence checks.
+
+</details>
+
+<details markdown="1"><summary>Solution</summary>
+
+The graph is sparse, and O(V²) memory is completely infeasible.  
+The main operation is checking whether two users are directly connected.  
+An adjacency list with each user's neighbors stored in a hash set gives O(1) expected lookup time, while keeping O(V+E) memory usage.  
+**Conclusion:** Use **adjacency lists** augmented with hash sets.
+
+</details>
+
+---
+
+## 3. A Chip Design Interconnect microchip 📐
+
+Imagine modeling the metal wire connections (nets) on a microchip layout for routing algorithms.
+
+- **Vertices** (V): Metal contact points (pins) on the chip (e.g., V=1000).
+
+- **Edges** (E): A physical wire connection between two pins.
+
+- **Weights**: Wire resistance/capacitance.
+
+- **System Goal**: Analyzing signal integrity often requires repeated matrix multiplications (to find all paths of length k) or quickly assessing all possible connections.
+
+*Guiding Questions*:
+
+- With V=1000, what is the size of V2? (1,000,000). Is this space feasible?
+
+- In a typical chip design, the wires are laid out densely, often meaning a high percentage of pins are connected to a high percentage of other pins, or the analysis requires considering every pair.
+
+- The ability to perform O(1) edge lookups is often critical.
+
+- **Conclusion**: Which representation is best when V is relatively small (making O(V2) space acceptable) and the need for O(1) edge lookup is paramount, or when using matrix-based algorithms (like Floyd-Warshall or matrix exponentiation)?
+
+<details markdown="1"><summary>Hints</summary>
+
+For V=1000, a V² matrix has 1 million entries, which is easily storable.  
+Dense operations and algorithms like Floyd–Warshall work best with adjacency matrices.  
+Matrices give O(1) edge lookups.
+
+</details>
+
+<details markdown="1"><summary>Solution</summary>
+
+With V=1000, storing O(V²) is perfectly feasible.  
+Chip connections are often dense, or the algorithms used require dense matrix operations.  
+Constant-time edge lookup is important, and matrix-based algorithms operate naturally on adjacency matrices.  
+**Conclusion:** Use an **adjacency matrix** representation.
+
+</details>
+
+</div>
+
 
 ---
 
@@ -875,6 +1184,18 @@ The algorithm always expands the vertex with the lowest $f(v)$. If the heuristic
 </pre>
 </div>
 When $h(v) = 0$ for all vertices, A\* reduces to Dijkstra’s algorithm. When $h$ is perfectly accurate, the algorithm expands only the nodes along the optimal path.
+
+![The hidden beauty of the A* algorithm](https://www.youtube.com/watch?v=A60q6dcoCjw)
+><sub>*The hidden beauty of the A\* algorithm. YouTube video by Polylog, Jan 20, 2023. Available at: https://www.youtube.com/watch?v=A60q6dcoCjw*</sub>
+
+<div class="note">
+    This video presents A* through the powerful idea of potential reweighting: the algorithm is shown to behave exactly like Dijkstra's algorithm running on a conceptually modified graph . In this modified graph, a heuristic (or "potential") is used to calculate new edge costs, making paths leading toward the goal "downhill" (shorter) and paths leading away "uphill" (longer). Crucially, this potential must satisfy admissibility (never overestimating the true cost) and consistency, which ensures that the reweighted edges remain non-negative, a condition that preserves all shortest paths and is essential for Dijkstra's priority-queue search to work correctly. By successfully biasing the exploration without sacrificing optimality, A* provides the speed and focused search direction that makes it highly effective in real-world applications like map navigation and robot path planning.
+    <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
+        Source: Polylog — YouTube  
+        <a href="https://www.youtube.com/watch?v=A60q6dcoCjw" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
+    </div>
+</div>
+
 
 ---
 

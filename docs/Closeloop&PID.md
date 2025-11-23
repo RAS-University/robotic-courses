@@ -1,6 +1,6 @@
 ---
 title: Close-loop Control and PID
-parent: Courses
+parent: Courses, Nonlinear Control
 layout: default
 math: mathjax
 author: Salim Boussofara (EPFL)

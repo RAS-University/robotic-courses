@@ -84,7 +84,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 {% include_relative adv_kin.md %}
 
 **Chapter 6: Advanced Control**
--  [Robust Control](nonlinearcontrol) - In progress
+-  [Robust Control](robustControl) - In progress
 -  [Nonlinear Control](nonlinearcontrol) - In progress
   
 **Chapter 7: Manipulation**

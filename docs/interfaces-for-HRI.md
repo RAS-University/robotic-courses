@@ -4,6 +4,12 @@ parent: Courses
 layout: default
 nav_order: 7
 ---
+
+
+<!-- Link external JavaScript file -->
+<script src="questions.js"></script>
+
+
 # Interfaces for Human-Robot Interaction
 
 *Table of Contents*
@@ -57,30 +63,27 @@ Our main motivation is to transmit skills to robots so they can perform differen
 
 ### Chapter 1: Types of Interfaces
 
-How we gather data from humans to teach the robots revolves around three main themes:
+The interfaces we use to gather data from humans for teaching the robots revolve around three main themes:
 > - **Teleoperation:** User controls the robot through the interface and teleoperates the robot with some distance.
 > - **Kinesthetic Teaching:** User physically moves the robot (like how it is done while teaching a child or teaching a sport).
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
-Each of these methods has its own advantages and disadvantages. We will go through each of them in more detail.
+Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
 #### **1. Tele-operation:**
-In tele-operation, users control robots using some **interface** to perform the task. The quality of learning and performance is sensitive to: **1.Interface Design** and **2. Teacher Experience**.
-This means that the person who teleoperates needs to be good at it and understand the device he/she is using. As a result, the research today follows two main trends. In the first trend, the interface used is simple so that it doesn’t require much pretraining for usage, however, this results in limited capacity in what can be taught to the robot. In the second trend, a complex interface is designed. It takes time for the human to train himself/herself in good use of the interface, but very complex things can be taught to the robot. 
+In tele-operation, users control robots using some interface to perform the task from some **distance**. The quality of learning and performance is sensitive to: **1.Interface Design** and **2. Teacher Experience**.
+This means that the person teleoperating the robot needs to be skilled and understand the device they are using. As a result, current research follows two main trends. In the first trend, the interface is simple and requires little pretraining, but this limits what can be taught to the robot. In the second trend, a more complex interface is designed. It takes time for the human to learn to use it effectively, but it allows for teaching the robot more complex tasks.
 
 ##### **1.1. Graphical user interface/Tablet**
-The simplest interface that can be used is a tablet. It was used back in the 90s; it is becoming more complex with the increased capacity of today’s tablets. However, it is still a simple system. The user can communicate the desired motion by mimicking the motion on the tablet, or desired target.
+The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
+<br>
+Tablets have been used since the 1990s, and they have become more capable with the advancements of modern devices. Yet, they remain a simple system. The user can communicate the desired motion by mimicking it on the tablet or by indicating a desired target.
+<br>
+In addition to planar displacements, planar rotation can also be provided by rotating the tablet. As a result, all three degrees of planar movement can be represented through a tablet interface, allowing certain motions to be effectively conveyed this way. However, since the displacement is confined to a plane, the overall field of motion is limited. Consequently, a tablet interface remains restricted in what it can transfer. In the end, the field of motion provided by this interface is quite reduced.
+<br>
+In the left example, the user operates the robotic hand using a tablet interface. The opening and closing of all the fingers can be controlled, and the movement of the user’s hand on the tablet is directly translated to the robotic hand.
+<br>
+In the right example, the user controls the robot to pick up different objects. The robot’s point of view is rendered on the interface, providing a visual representation of the scene on the tablet.
 
-> + **Pros:** 
-> +User-friendly: Almost everybody knows how to work with a tablet these days.
-> + Cheap
-> + Easily integrable to existing set-up: It can be posted even on smart cellphones which is something almost everybody owns these days.
-
-> - **Cons:** 
-> + Limited in what can be transferred (displacement is in a plane and therefore the field of motion is reduced.)
-
-In the left example, the user is driving the robotic hand using a tablet interface. Opening and closing of all the fingers can be controlled. The movement of the user’s hand on the tablet interface is directly translated to a robotic hand.
-In the right example, the user can drive the robot to pick up different objects. The vision from the robot’s standpoint is rendered to the interface (a rendering of the scene onto the tablet).
-In addition to the planar displacements, planar rotation can also be provided by rotating the tablet. As a result, all the three dimensions of planar movement can be provided in a tablet interface. Although some desired motions can be provided this way, it is limited in what can be transferred in general. In the end, the field of motion is very reduced in this interface. 
 
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
@@ -93,12 +96,53 @@ In addition to the planar displacements, planar rotation can also be provided by
   </div>
 </div>
 
+<!-- Conceputal Exercise -->
+<details markdown="1">
+  <summary>Conceptual Exercise</summary>
+
+<p><strong>Drag and drop each feature into the correct box. Advantages and Disadvantages of using a Tablet/GUI for Human-Robot Interaction:</strong></p>
+
+
+<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/interfaces-for-HRI/Drag&DropStyle.css">
+
+<div class="all-items-container" id="items-to-drag">
+  <div class="drag-item" draggable="true" id="item-1" data-correct-zone="Pros">User-friendly</div>
+  <div class="drag-item" draggable="true" id="item-2" data-correct-zone="Cons">Limited in what can be transferred</div>
+  <div class="drag-item" draggable="true" id="item-3" data-correct-zone="Pros">Cheap</div>
+  <div class="drag-item" draggable="true" id="item-4" data-correct-zone="Pros">Easily integrable to existing set-ups</div>
+</div>
+
+<div class="drag-container">
+  <div class="drop-zone" id="pros-zone" data-zone-type="Pros">
+    <h4>✅ ADVANTAGES (PROS)</h4>
+  </div>
+  <div class="drop-zone" id="cons-zone" data-zone-type="Cons">
+    <h4>❌ DISADVANTAGES (CONS)</h4>
+  </div>
+</div>
+
+<div class="button-group">
+  <button id="check-button" class="action-button">Check Answers</button>
+  <button id="reset-button" class="action-button">Reset</button>
+</div>
+
+<script src="{{ site.baseurl }}/assets/js/interfaces-for-HRI/Drag&Drop.js"></script>
+
+</details>
+
+
 ##### **1.2. Joysticks**
 
-The user controls the robot's end-effector through a 3DOFs or 6DOFs joystick. In a 6DOF joystick, both position and orientation of the end-effector, which includes all the degrees of freedom of the end-effector, are controlled by the user. Note that the user is not controling the joints, she/he is controling the translation and orientation of the end-effector, which allows to control implictly for the tool that is being held. This is possible using inverse kinematics (the user relies on the internal controller of the system to do the inverse kinematics).
+With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
+<br>
+Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and can be easily integrated into a wide range of applications.
+<br>
+Using a joystick often requires both hands. This depends on the specific type of joystick, but it is often necessary to use one hand to control translation and the other to control orientation. Furthermore, joysticks are limited in what can be transferred: forces cannot be transmitted; only displacements and speeds are conveyed. (It is still a step forward compared to tablets, as the range of teachable actions increases; though this comes at the cost of reduced user-friendliness.) Moreover, the performance of this interface depends on the user’s point of view. The user must be positioned to have a clear view of the scene; for example, if the user is behind the robot, visibility is greatly reduced. (Comparing to tablet interfaces, tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.) Finally, joystick interfaces are sensitive to the user’s experience level. They tend to be less user-friendly than tablets and often require some training before they can be used effectively.
 
+<!--
 > - **Pros:** 
 > + Can communicate the desired motion in 3D or even 6D, easily amenable to control 6DOFs robot arm in position and orientation 
+-->
 
 <p align="center">
   <img src="https://iliad.stanford.edu/images/posts/losey2019controlling/image11.gif" width="600" height="338"/>
@@ -106,6 +150,7 @@ The user controls the robot's end-effector through a 3DOFs or 6DOFs joystick. In
 
 <sub>Losey, Dylan P., et al. "Controlling assistive robots with learned latent actions." 2020 IEEE International Conference on Robotics and Automation (ICRA). IEEE, 2020. Video Source: [https://iliad.stanford.edu/research/interactions](https://iliad.stanford.edu/research/interactions)</sub>
 
+<!--
 > +  User-friendly
 > +  Cheap
 > +  Easily integrable for a vast range of applications
@@ -115,8 +160,11 @@ The user controls the robot's end-effector through a 3DOFs or 6DOFs joystick. In
 > - Limited in what can be transferred: Force can't be transfeered, it is only displacement and speed that are transferred. (Note that it is still one step forward compared to tablets; there is an increase in the number of things that can be taught, which on the other hand results in being a bit less user-friendly.)
 > - Depends on the point of view of the user: The user should be well placed to have a relatively good view. For example, if the user is behind the robot, she/he can't see much (A positive point about tablets is that a rendering of the scene, viewed from robot's point of view, is provided).
 > - Sensitive to experience of teacher: It is a bit less user-firendly compared to tablets and often requires a bit of training before usage.
+-->
 
-The inverse kinematics can be an issue when it comes to teleoperation. The user may ask for an infeasible motion, for example, a very quick rotation that violates the joint limits. In such cases, an alternative path should be found. As a result, the user has to learn how to use the robot. On the other hand, there is a very nice advantage in teleoperation; the user can teach robots that are completely different from she/he. A good example of this is teaching drones.
+Inverse kinematics can present challenges in teleoperation. The user may command an infeasible motion; for example, a rapid rotation that violates the robot’s joint limits. In such cases, an alternative path must be computed. Consequently, the user needs to learn how to operate the robot effectively.
+<br>
+On the other hand, teleoperation offers a significant advantage: the user can teach robots that are entirely different from themselves. A good example of this is teaching drones.
 
 <p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/M-QUkgk3HyE" frameborder="0" allowfullscreen></iframe>
@@ -124,11 +172,141 @@ The inverse kinematics can be an issue when it comes to teleoperation. The user 
 
 ><sub>A. Ng, A. Coates, M. Diel, V. Ganapathi, J. Schulte, B. Tse, E. Berger, E. Liang, Inverted autonomous helicopter flight via reinforcement learning, in: International Symposium on Experimental Robotics, 2004. </sub>
 
-In the example above, a helicopter is taught to perform very complex manuevers. There exists an underlying controller which stabilizes the helicopter (this is a pre-exsisting controller for stabilization and is not trained). The training is on the very complex trajectory. Since it is desired to control for position and oreintation, 6DOF joystick is a proper tool. They rely on an underlying controller which can solve for a lot of issues that humans can't control. Stabilization and inverse kinematics are the examples. In this case, a very experienced and skilled teacher is required to teach the robot such complex manuvers.
+In the example above, a helicopter is taught to perform very complex maneuvers. An underlying controller is used to stabilize the helicopter; this is a pre-existing stabilization controller and is not part of the training process. The training instead focuses on learning the complex trajectory. Since both position and orientation need to be controlled, a 6-DOF joystick is an appropriate tool. The system relies on the underlying controller to handle many aspects that humans can not control directly, such as stabilization and inverse kinematics. In this case, a highly experienced and skilled operator is required to teach the robot such complex maneuvers.
+
+
+<!-- Conceputal Questions -->
+<details open markdown="2">
+<summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: Compared to tablets, joysticks are more sensitive to the teacher's experience.</strong></p>
+<form id="q1">
+  <input type="radio" name="q1" value="True"> True<br>
+  <input type="radio" name="q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1', 'True', 
+      'Correct answer! Joysticks are less user-friendly and require more trianing and experience before usage.',
+      'Incorrect answer! Using a tablet is more intuitive than using a joystick. The user can control for more DOFs with a joystick, which comes at the cost of being less user-friendly and requiring more training and experience.')">
+    Check Answer
+  </button>
+  <p id="q1-feedback"></p>
+</form>
+
+<!-- Question 2 -->
+<p><strong>Question 2: A 3-DOF joystick can be a proper interface to control for position and orientation of a 6-DOF robotic arm. </strong></p>
+<form id="q2">
+  <input type="radio" name="q2" value="True"> True<br>
+  <input type="radio" name="q2" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q2', 'False', 
+      'Correct answer! The proper interface here is a 6-DOF joystick, which can control for both position and orientation of the 6-DOF robotic arm.',
+      'Incorrect answer! A 6-DOF joystick is required here, as the goal is to control for both position and orientation of a 6-DOF arm.')">
+    Check Answer
+  </button>
+  <p id="q2-feedback"></p>
+</form>
+
+<!-- Question 3 -->
+<p><strong>Question 3: Since joysticks can control for both position and oreintation of the end-effector, encompassing all the degrees of freedom, they are not limited in what can be transferred.</strong></p>
+<form id="q3">
+  <input type="radio" name="q3" value="True"> True<br>
+  <input type="radio" name="q3" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q3', 'False', 
+      'Correct answer! Forces cannot be transmitted',
+      'Incorrect answer! Although all degrees of freedom of the end-effector are covered, forces still can not be transmitted.')">
+    Check Answer
+  </button>
+  <p id="q3-feedback"></p>
+</form>
+
+<!-- Question 4 -->
+<p><strong>Question 4: Despite tablets, joysticks don't rely on internal inverse kinematics controllers, since they control at joint level.</strong></p>
+<form id="q4">
+  <input type="radio" name="q4" value="True"> True<br>
+  <input type="radio" name="q4" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q4', 'False', 
+      'Correct answer! Both tablets and joysticks do not control at joint level and rely on internal inverse kinematics controllers. ',
+      'Incorrect answer! Joysticks do not directly control the joints, they control for the position and orientation of the end-effector. Consequently, they rely on internal inverse kinematics controllers.')">
+    Check Answer
+  </button>
+  <p id="q4-feedback"></p>
+</form>
+
+<!-- Question 5 -->
+<p><strong>Question 5: Which of the following is a disadvantage of joysticks compared to tablets?</strong></p>
+<form id="q5-fk">
+  <input type="radio" name="q5-fk" value="option1"> limited in what can be transferred<br>
+  <input type="radio" name="q5-fk" value="option2"> dependence on the point of view of the user<br>
+  <input type="radio" name="q5-fk" value="option3"> both of the above options<br>
+
+  <button type="button" onclick="checkMCQ('q5-fk', 'option2',
+    'Correct answer! Tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.',
+    'Incorrect answer! Although joysticks are limited in what can be transferred, they can still do better than tablets. (They can communicate the desired motion even in 6D.)')">
+    Check Answer
+  </button>
+
+  <p id="q5-fk-feedback"></p>
+</form>
+
+</details>
+
+<script src="quiz.js"></script>
+
+  
 
 ##### **1.3. Exoskeletons**
 
-In exoskeletons, there is a direct mapping between your body (arms or legs) and the robot's body. In the video below, the user is guiding the robot's arms directly with his arms. The advantage as an interface is that using exoskeletons, the user can control the joints directly. User has control for cartesian position and orientation of each joint. Mentioning the disadvantages, most exoskeletones are heavy and cumbersome. With the advancements in materials and motors, there is hope for this problem to be tackled; resulting in increased popularity of exoskeletones. Another problem with exoskeletone is that it is designed for an sepcific user size and user strenght, making it not fit for everybody. Some of the exoskeletones (note that this is not the case for all exoskeletones), render the force at contact, meaning that when the robot is imposed to some force in touch, the user also senses some force. In this case, the question is which force does the user sense? Is it only the force at the end point or other areas are also included? For example, if the robot hits something at the elbow, does the user sense this force at her/his elbow? Rendering this in real time is still difficult and challenging. However, exoskeletones can be very useful if these challenges are overcome.
+In exoskeletons, there is a direct mapping between the user’s body (arms or legs) and the robot’s body. For example, in the video below, the user guides the robot’s arms directly with their own arms. The advantage of this interface is that, by using exoskeletons, the user can control the joints directly. The user has control over the Cartesian position and orientation of each joint.
+<br>
+Some exoskeletons (though not all) render the contact forces, meaning that when the robot experiences a force during contact, the user also senses a corresponding force. In this case, the question arises: Which force does the user actually sense? Is it only the force at the end effector, or are forces at other parts of the robot also conveyed? For example, if the robot impacts something with its elbow, does the user feel this force at their own elbow? Rendering such feedback in real time is still difficult and challenging.
+<br>
+Regarding disadvantages, most exoskeletons are heavy and cumbersome. With advancements in materials and actuators, there is hope that this issue will be mitigated, leading to increased adoption of exoskeletons. Another limitation is that an exoskeleton is typically designed for a specific user’s size and strength, making it unsuitable for everyone. However, exoskeletons can be extremely useful if these challenges are addressed.
+
+
+<!-- Conceputal Questions -->
+<details open markdown="3">
+<summary>Conceptual Questions</summary>
+
+
+<!-- Question 1 -->
+<p><strong>Question 1: Which of the following statements is true?</strong></p>
+<form id="q1-fk">
+  <input type="radio" name="q1-fk" value="option1"> Exoskeletons rely on internal inverse kinematics controllers.<br>
+  <input type="radio" name="q1-fk" value="option2"> The dynamics of motion is conveyed directly in exoskeletons.<br>
+
+  <button type="button" onclick="checkMCQ('q1-fk', 'option2',
+    'Correct answer! There is a direct mapping between the user\'s body and the robot\'s body and the joints are controlled directly.',
+    'Incorrect answer! Using exoskeletons, joints are controlled directly and there is no need for the internal inverse kinematics controllers.')">
+    Check Answer
+  </button>
+
+  <p id="q1-fk-feedback"></p>
+</form>
+
+
+<!-- Question 2 -->
+<p><strong>Question 2: Which of the following statements is false?</strong></p>
+<form id="q2-fk">
+  <input type="radio" name="q2-fk" value="option1"> No rendering of the scene can be provided for the user through exoskeletons.<br>
+  <input type="radio" name="q2-fk" value="option2"> An exoskeletons is designed for a specific size and does not fit everybody.<br>
+
+  <button type="button" onclick="checkMCQ('q2-fk', 'option1',
+    'Correct answer! Some exoskeletons can actually provide rendering of the contact forces.',
+    'Incorrect answer! Exoskeletons are designed for specific user characteristics and do not fit all sizes and strengths.')">
+    Check Answer
+  </button>
+
+  <p id="q2-fk-feedback"></p>
+</form>
+
+</details>
+
+<script src="quiz.js"></script>
+
+<!--
 > + **Pros:** 
 > + Conveys directly the dynamics of the motion (embodied transmission)
 > + Allows to control all joints as well as movement in Cartesian space
@@ -137,19 +315,66 @@ In exoskeletons, there is a direct mapping between your body (arms or legs) and 
 > - Heavy, cumbersome
 > - Does not fit all sizes and strengths
 > - Does not convey nor render forces at contact
+-->
+
+<br>
 
 <p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/pFnSl6oOLco" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>Capio Upper Body Exoskeleton for Teleoperation by the DFKI GmbH Robotics Innovation Center. YouTube video, Nov 2012. </sub>
+<br>
 
 ##### **1.4. Telepresence**
-There are situations where it is necessary to teleoperate and not send a human agent directly. Examples of such situations are operations in radioactive environments, search and rescue operations or any other operations in dangerous environments. However, to teleoperate in such situations, it is important to be very precise and careful. As a result, it is necessary to render some aspects of the environment for the user. Here come the challenges in communications, i.e., delays. More distance between the robot and the user results in longer delays. Hours of delays in communication can happen in space missions in which the robot is teleoperated from the earth.These are the issues that we must tackle in this field. <br>
-In the example below, the surgeon is not directly operating on the patient; he is doing it through an interface. This interface is the da Vinci surgical robot. These operations are fairly frequent these days. Advantages of such systmes are that the user should not be present on site and can do the task remotely. In cases of surgery, a very expert surgeon can perform the operation from her/his own office on a patient who can be in another region of the world. Consequently, it is more efficient, more secure, etc. However, it relies on good rendering of the environment. <br>
+There are situations where it is necessary to teleoperate a robot instead of sending a human operator directly. Examples include operations in radioactive environments, search-and-rescue missions, or any other tasks carried out in dangerous settings. However, teleoperation in such situations requires great precision and care. As a result, it becomes necessary to render certain aspects of the environment for the operator. This introduces communication challenges, i.e. delays. Greater distance between the robot and the operator results in longer delays. Delays of several hours can occur in space missions where a robot is teleoperated from Earth. These are issues that must be addressed in this field.
+<br>
+In the example below, the surgeon is not operating directly on the patient; instead, the procedure is performed through an interface; the da Vinci surgical robot. Such operations have become fairly common today. These systems offer several advantages: the operator does not need to be physically present on site and can perform tasks remotely. In the case of surgery, an expert surgeon can carry out a procedure from their own office on a patient located in another region of the world. Consequently, this approach can be more efficient, safer, and more flexible. However, it relies heavily on high-quality rendering of the environment.
+<br>
 In terms of rendering the environment, it is interesting to note that nowadays, surgeons are only provided with a two-dimensional visual rendering of the scene. However, by moving the camera and instruments, surgeons actully build a three-dimensional model of the scene in their minds and map it to the two-dimensional provided rendering. They are not provided with feedback on forces. They cut the tissues and move things without sensing the force applied. This can be important in the sense that how deep the cut should be. Moreover, some tissues may be stiffer than other tissues. Such surgeons have the ability to map their visual observations such as deformations of the tissues to perception of force, thanks to their skill and expertise. However, there can be mistakes and providing richer renderings of the scenes can help in this regard.
+<br>
 In such operations, delays in transmissions can be incredibly determinal. In fact, one of the most important topics in this research area is how to compensate for these delays to make sure the controller is stable. To make this challenge clearer, imagine that the surgeon is applying some force, in order for the force to be transmitted. Even if the surgeon perceives the force and senses a resistance, by the time she/he senses the resistance, she/he continues moving. Then, once sensed, the surgeon starts reacting and for example decreases the force, however, it may be too late. In such scenario, the closed loop control system is completely unstable.
 
+
+<!-- Conceputal Questions -->
+<details open markdown="4">
+<summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: Despite all facilities telepresence provides, it is not yet possible to perform tasks when fully remote due to communication problems.</strong></p>
+<form id="q1">
+  <input type="radio" name="q1" value="True"> True<br>
+  <input type="radio" name="q1" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1', 'False', 
+      'Correct answer! Telepresence enables to perform tasks when remote. Da Vinci Surgical robot is the great example which is widely used nowadays.',
+      'Incorrect answer! Although challenges in communications, i.e. delays, can be detrimental in telepresence, it is successful used worldwide.')">
+    Check Answer
+  </button>
+  <p id="q1-feedback"></p>
+</form>
+
+
+<!-- Question 2 -->
+<p><strong>Question 2: What is the most challenging issue in telepresence?</strong></p>
+<form id="q2-fk">
+  <input type="radio" name="q2-fk" value="option1"> Delays in transmission can be determinal if the task is rapid, leading to unstable control loop.<br>
+  <input type="radio" name="q2-fk" value="option2"> A very good visual rendering of the scene must be provided to the user, as she/he is not present in the scene.<br>
+
+  <button type="button" onclick="checkMCQ('q2-fk', 'option1',
+    'Correct answer! The most challenging issue in telepresence is the delay in transmissions.',
+    'Incorrect answer! Although it is important to provide a good rendering of the scene in telepresence, it is not as critical as the delays in transmissions.')">
+    Check Answer
+  </button>
+
+  <p id="q2-fk-feedback"></p>
+</form>
+
+</details>
+
+<script src="quiz.js"></script>
+
+<!--
 > + **Pros:** 
 > + Enables to perform tasks when remote
 > + Can offer a more efficient and more secure mean to intervene (in disastrous or dangerous environments)
@@ -158,6 +383,7 @@ In such operations, delays in transmissions can be incredibly determinal. In fac
 > - Need to provide good visual rendering of the scene
 > - Delays in transmission can be detrimental if task is too rapid
 > - Force not always (well) rendered
+-->
 
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/Davinci.jpg" alt="Davinci Surgical Robot" width="600" height="338">

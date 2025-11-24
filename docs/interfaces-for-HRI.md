@@ -660,7 +660,7 @@ Another disadvantage is that the setup can be slow, as live analysis of camera i
 
 
 ##### **3.2. Motion Capture Systems**
-In motion capture systems, markers attached to body parts are tracked by infrared cameras at high resolution. These systems directly convey the dynamics of the motion (embodied transmission). In the example below, observational learning is performed for full-body motion. These systems allow control of all joints. An interesting aspect, as seen in the example, is that the human and the robot can be of different sizes. The rendering is done at the joint level: the human’s joints correspond to the robot’s joints, and the mapping between them is accessible.
+In motion capture systems, markers attached to body parts are tracked by infrared cameras at high resolution. These systems directly convey the dynamics of the motion (embodied transmission). In the example below, observational learning is performed for full-body motion. These systems allow control of all joints. An interesting aspect, as seen in the example below, is that the human and the robot can be of different sizes. Control is done at the joint level: the human’s joints correspond to the robot’s joints, and the mapping between them is accessible.
 
 <!--
 > + **Pros:** 
@@ -674,24 +674,13 @@ In motion capture systems, markers attached to body parts are tracked by infrare
 -->
 
 <p align="center">
-  <video width="600" height="338" controls>
-    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/MotionCapture1.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</p>
-
-><sub>LASA Lab / EPFL</sub>
-
-Another very popular and more practical method is to use a motion sensor. In this case, markers are tracked by cameras, which are usually infrared-based. The translation and rotation of the marker are mapped to the translation and rotation of the robot’s endpoint. This allows the user to guide the robot’s position from a distance. This method can be quite accurate.
-
-<p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/ggLge1Rw2z4?t=79" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>C. Stanton, A. Bogdanovych, E. Ratanasena: Teleoperation of a humanoid robot using full-body motion capture, example movements, and machine learning. In proceedings of Australasian Conference on Robotics and Automation (ACRA 2012), Wellington, New Zealand, 3-5 December 2012. 
 YouTube video, Feb 2012. </sub>
 
-The previous setting can be extended to more complex problems. In the example below, the user is wearing a marker-based system that tracks the full motion of the arm as well as the fingers. These motions are directly mapped onto the robot. This setup still requires the user to wear a device. It is not as heavy as an exoskeleton, but it is also not as ideal as wearing nothing and relying solely on an external camera system. To achieve such a setup, cameras must be placed around the entire room and must track motion at very high resolution. Moreover, the system is marker-based, which means tracking is lost as soon as markers become obstructed.
+Another very popular and more practical method is to use a motion sensor. In this case, markers are tracked by cameras, which are usually infrared-based. The translation and rotation of the marker are mapped to the translation and rotation of the robot’s endpoint. This allows the user to guide the robot’s position from a distance. This method can be quite accurate.
 
 <p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/LM4rDfW8-TU" frameborder="0" allowfullscreen></iframe>
@@ -701,14 +690,25 @@ The previous setting can be extended to more complex problems. In the example be
 System built on the HAL Robotics Framework streaming packages with a flexible interface to easily replace the sensors.
  YouTube video, Jun 2019. </sub>
 
-In both vision systems and motion capture systems, obstruction results in the loss of data. Research is being conducted on compensating for this loss in order to interpolate between the available data points. If you are gathering data in this way, you must be aware that some interpolation has occurred during data transmission. As a result, the data you obtain cannot be fully trusted. Another issue with this type of system is that it does not fit all body sizes and strengths. Furthermore, it neither conveys nor renders forces at contact.
+The previous setting can be extended to more complex problems. In the example below, the user is wearing a marker-based system that tracks the full motion of the arm as well as the fingers. These motions are directly mapped onto the robot. This setup still requires the user to wear a device. It is not as heavy as an exoskeleton, but it is also not as ideal as wearing nothing and relying solely on an external camera system. To achieve such a setup, cameras must be placed around the entire room and must track motion at very high resolution. Moreover, the system is marker-based, which means tracking is lost as soon as markers become obstructed.
+
+<p align="center">
+  <video width="600" height="338" controls>
+    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/MotionCapture1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+><sub>LASA Lab / EPFL</sub>
+
+In both vision systems and motion capture systems, obstruction results in the loss of data. Research is being conducted on compensating for this loss in order to interpolate between the available data points. If you are gathering data in this way, you must be aware that some interpolation has occurred during data transmission. As a result, the data you obtain can not be fully trusted. Another issue with this type of system is that it does not fit all body sizes and strengths. Furthermore, it neither conveys nor renders forces at contact.
 
 <br>
 
 ### **Chapter 2: Challenges**
 
 #### **1. Correspondence Problem**
-The main difficulty in teaching a robot is that human bodies and robotic bodies differ dramatically. Even when a robot resembles a human, its body does not have the same range or dynamics of motion. Differences exist in kinematics of joints: while humans benefit from ball joints, most robots do not. Differences also arise at the actuator level. Our muscles behave differently from most robotic motors, and the control mechanisms are not the same. The acceleration profiles of actuators vary as well. Humans can sometimes produce much higher accelerations; as a result, actions that are dynamically feasible for us, such as reaching out very quickly, may be impossible for a robot. Conversely, robots can sometimes perform actions that the human body cannot, such as moving at a constant velocity. Additionally, humans have limited ranges of motion in their kinematics.
+The main difficulty in teaching a robot is that human bodies and robotic bodies differ dramatically. Even when a robot resembles a human, its body does not have the same range or dynamics of motion. Differences exist in kinematics of joints: while humans benefit from ball joints, most robots do not. Differences also arise at the actuator level. Our muscles behave differently from most robotic motors, and the control mechanisms are not the same. The acceleration profiles of actuators vary as well. Humans can sometimes produce much higher accelerations; as a result, actions that are dynamically feasible for us, such as reaching out very quickly, may be impossible for a robot. Conversely, robots can sometimes perform actions that the human body can not, such as moving at a constant velocity. Additionally, humans have limited ranges of motion in their kinematics.
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
   <div style="display: flex; justify-content: space-between; gap: 10px; width: 100%;">
@@ -724,7 +724,10 @@ The main difficulty in teaching a robot is that human bodies and robotic bodies 
   </div>
 </div>
 
-We humans and robots also differ at the sensor level. Robots do not perceive things like we do. Sonars, infrared sensors and lasers are common on robots and easier to process than information from cameras. Humans have different sensors, located in different places and with different densities. This becomes more of an issue when we want the end user to understand what a robot can do. To make this clearer, consider the example where an end user wants to understand how an autonomous car drives. In this case, the user should understand what the car sees. The car sees with Lidars. However, Lidars and human eyes are very different. Lots of effort should be done here in order to render this for the human, so that she/he can understand what the car can see. Moreover, humans should also understand what the car can not see. As pedestrians, humans should be aware of the situations when they can not be detected by these systems. While you are more visible in light clothes rather than dark ones for human eyes, in the case of Lidars, it is not the color of your clothes; it is the reflectiveness of the material of your clothes that makes you visible or not.
+Humans and robots also differ at the sensor level. Robots do not perceive the world the way we do. Sonars, infrared sensors, and lasers are common on robots and are easier to process than information from cameras. Humans, on the other hand, have different types of sensors, located in different places and with different densities. This becomes an issue when we want an end user to understand what a robot can perceive.
+<br>
+To make this clearer, consider the example of an end user who wants to understand how an autonomous car drives. In this case, the user needs to understand what the car “sees.” The car perceives its environment using LiDARs, but LiDARs and human eyes are very different. A great deal of effort is required to render this information in a way that humans can understand, so that they can appreciate what the car is able to see. Moreover, humans also need to understand what the car cannot see. As pedestrians, people should be aware of situations in which they might not be detected by these systems. For example, while wearing light-colored clothing makes you more visible to human eyes, visibility to LiDAR does not depend on color; it depends on the reflectiveness of the material. Clothing that reflects LiDAR signals well makes you visible, whereas non-reflective materials can make you hard to detect.
+
 
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceSensor.png" alt="Correspondence Problem, Sensors" width="600" height="338">
@@ -732,7 +735,7 @@ We humans and robots also differ at the sensor level. Robots do not perceive thi
   <em>Robots do not perceive things like we do.</em>
 </p>
 
-It is very difficult to teach a robot! Teachers need to train themselves on how to guide the robots before actually training the robots. These robots are generally much bigger than humans, their limbs are bigger. 
+It is very difficult to teach a robot. In fact, instructors must first train themselves on how to guide the robot before they can effectively train it. These robots are generally much larger than humans, and their limbs are bigger and heavier, which adds another layer of complexity to the teaching process.
 
 <p align="center">
   <video width="600" height="338" controls>
@@ -744,7 +747,7 @@ It is very difficult to teach a robot! Teachers need to train themselves on how 
 ><sub>LASA Lab / EPFL</sub>
 
 #### **2. Learning is Data-Sensitive**
-Learning is data-sensitive. This is the biggest problem we have! Teaching a task will differ depending on the kinematics and dynamics of the robot; the same motion in Cartesian space will lead to different trajectories in joint space. If one robot with a particular kinematics is trained, this doesn't necessarily transfer well to another robot. For example, the training may have been done on a robot with six degrees of freedom. If it is required to transfer this knowledge to another robot with seven degrees of freedom, it is going to be problematic. Even if there are two robotics arm with the same degrees of freedom (for example 7), where one has a high payload and the other has a low payload, they do not share the same dynamics of motion.
+Learning is data-sensitive. This is the biggest problem we have! Teaching a task will differ depending on the kinematics and dynamics of the robot; the same motion in Cartesian space will produce different trajectories in joint space. If one robot with a particular kinematics is trained, this does not necessarily transfer well to another robot. For example, the training may have been done on a robot with six degrees of freedom. If it is then required to transfer this knowledge to a robot with seven degrees of freedom, this becomes problematic. Even if there are two robotic arms with the same number of degrees of freedom (for example, seven), where one has a high payload capacity and the other has a low payload capacity, they do not share the same dynamics of motion.
 
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
@@ -759,7 +762,7 @@ Learning is data-sensitive. This is the biggest problem we have! Teaching a task
   </div>
 </div>
 
-Data is environment-dependent. In the videos below, a successful example of training in different environments is shown. However, it doesn't always work like this. The task here is to open the tray of a printer. This is an interesting task because static friction is present to some point. Then, it gives up and gets replaced by kinetic friction. The robot has to adapt to this and it is not aware of when the friction will give up. A 7 DOF robotic arm is trained to this task at EPFL. This has been transferred nicely to a robot that looks compeletely different, a humanoid, at AIST/JRL in Japan.
+Data is environment-dependent. In the videos below, a successful example of training across different environments is shown. However, this is not always the case. The task here is to open the tray of a printer. This is an interesting task because static friction is present up to a certain point; then it gives way and is replaced by kinetic friction. The robot must adapt to this transition, and it is not aware of when the friction will give up. A 7-DOF robotic arm was trained for this task at EPFL. This training was successfully transferred to a completely different robot, a humanoid, at AIST/JRL in Japan.
 
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
@@ -781,7 +784,8 @@ Data is environment-dependent. In the videos below, a successful example of trai
 </div>
 
 #### **3. Variability in Task Definition**
-The key question here is: What does it mean to perform a task? There are multiple ways to accomplish a task. If a robot is trained to grate carrots, it depends on the grator. Moreover, it is not the same motion. It even depends on the carrot! As a result, it is not so easy to transmit skills across robots. Despite humans who are fairly good in transferring and generalizing, this is not the case for robots.
+The key question here is: What does it mean to perform a task? There are multiple ways to accomplish any given task. For example, if a robot is trained to grate carrots, its performance will depend on the grater being used. Moreover, the motion will not be the same in every case; it may even depend on the carrot itself! As a result, transmitting skills across different robots is not straightforward. Unlike humans, who are fairly good at transferring and generalizing skills, robots do not yet have this capability.
+
 
 <div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
   <div style="display: flex; justify-content: space-between; gap: 10px; width: 100%;">
@@ -798,7 +802,8 @@ The key question here is: What does it mean to perform a task? There are multipl
 </div>
 
 #### **4. Generalizing Control Law – Beyond the Demonstrations**
-Another important aspect is to be able to generalize. The robot should infer that the task is composed of sequence of actions. Each action is relative to the object the robot must manipulate; but as a priori, it should look at several predefined frames of reference. It is important for the robot to understand that it is not about where the objects are placed in space globally, but it's the relative positions and the relative forces that matters. There are multiple frames of reference assigned to the different objects in the scene and the robot should extract the knowledge of which of these frames matters when.
+Another important aspect is the ability to generalize. The robot should infer that a task is composed of a sequence of actions. Each action is relative to the object the robot must manipulate; however, it should initially consider several predefined frames of reference. It is important for the robot to understand that the task is not about the global placement of objects in space, but rather about their relative positions and the relative forces that matter. Multiple frames of reference are associated with the different objects in the scene, and the robot must learn which of these frames is relevant at each moment.
+
 
 <p align="center">
   <video width="600" height="338" controls>
@@ -810,6 +815,73 @@ Another important aspect is to be able to generalize. The robot should infer tha
 ><sub>LASA Lab / EPFL</sub>
 
 <br>
+
+
+<!-- Conceputal Questions -->
+<details open markdown="7">
+<summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: What are the main challenges in teaching robots through interfaces?</strong></p>
+<form id="q1-ch">
+  <input type="radio" name="q1-ch" value="option1"> Generalization, Data-sensitivity of learning <br>
+  <input type="radio" name="q1-ch" value="option2"> Correspondence problem, Variability in task definition<br>
+  <input type="radio" name="q1-ch" value="option3"> Correspondence problem, Generalization<br>
+  <input type="radio" name="q1-ch" value="option4"> All of the above<br>
+
+  <button type="button" onclick="checkMCQ('q1-ch', 'option4',
+    'Correct answer! All available options are considered as the main challenges in teaching robots through interfaces.',
+    'Incorrect answer! Try again.')">
+    Check Answer
+  </button>
+
+  <p id="q1-ch-feedback"></p>
+</form>
+
+
+<!-- Question 2 -->
+<p><strong>Question 2: At what level does the correspondence problem between humans and robots exist?</strong></p>
+<form id="q2-ch">
+  <input type="radio" name="q2-ch" value="option1"> Sensor level <br>
+  <input type="radio" name="q2-ch" value="option2"> Actuator level<br>
+  <input type="radio" name="q2-ch" value="option3"> Joint level<br>
+  <input type="radio" name="q2-ch" value="option4"> All of the above<br>
+
+  <button type="button" onclick="checkMCQ('q2-ch', 'option4',
+    'Correct answer!',
+    'Incorrect answer! Try again.')">
+    Check Answer
+  </button>
+
+  <p id="q2-ch-feedback"></p>
+</form>
+
+
+<!-- Question 3 -->
+<p><strong>Question 3: Choose the correct option.</strong></p>
+<form id="q3-ch">
+  <input type="radio" name="q3-ch" value="option1"> Humanoid robots necessarily have the same dynamics of motions as humans.<br>
+  <input type="radio" name="q3-ch" value="option2"> Once a robot is trained to accomplish a task, its performance is resistant to the changes of the environment.<br>
+  <input type="radio" name="q3-ch" value="option3"> Two robotic arms with the same number of degrees of freedom and different payload capacity do not share the same dynamics of motion.<br>
+  <input type="radio" name="q3-ch" value="option4"> All of the above<br>
+
+  <button type="button" onclick="checkMCQ('q3-ch', 'option3',
+    'Correct answer!',
+    'Incorrect answer! Try again.')">
+    Check Answer
+  </button>
+
+  <p id="q3-ch-feedback"></p>
+</form>
+
+
+</details>
+
+<script src="quiz.js"></script>
+
+<br>
+<br>
+
 
 ### Credits:
 <!-- List all the sources that you used to create the page   -->

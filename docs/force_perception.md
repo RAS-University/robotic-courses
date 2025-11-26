@@ -343,7 +343,7 @@ Then, we will move on to sensors of the second type and see how resistive techno
 
 Resistive tactile sensors are usually made of two sheets coated with a resistive material, placed one on top of the other. The two layers are separated by microspheres so that they remain electrically isolated from each other. When an object touches the sensor, the pressure brings both layers into contact. This configuration can be seen in panel (a) of the figure below (with one layer shown in green and the second layer in grey).  
 
-To determine the contact location, we need to extract both the x- and y-coordinates. This is done by energising the layers one at a time. A uniform voltage \(V_x\) is applied along the first resistive layer (never both layers simultaneously), while the second layer is connected in a high-impedance (Hi-Z) configuration, able to read the voltage output. Because the Hi-Z connection draws almost no current, it does not disturb the voltage distribution on the active layer. This setup corresponds to panel (b).  
+To determine the contact location, we need to extract both the x- and y-coordinates. This is done by energising the layers one at a time. A uniform voltage $V_x$ is applied along the first resistive layer (never both layers simultaneously), while the second layer is connected in a high-impedance (Hi-Z) configuration, able to read the voltage output. Because the Hi-Z connection draws almost no current, it does not disturb the voltage distribution on the active layer. This setup corresponds to panel (b).  
 
 The contact between the sheets acts as the slider of a linear potentiometer (for more information about potentiometers refer to [Sensors and Sensing](new-sensors-for-robotics)). The resistance in the first layer depends on where along the strip the contact occurs. The voltage at the contact point is transferred through the second layer and thus provides the x-coordinate. Similarly, the x-coordinate is obtained by applying a uniform voltage $V_y$ to the second layer and leaving the first layer in Hi-Z, as shown in panel (c).  
 The measured output voltages are the result of a voltage divider. The simplified expressions are:  
@@ -372,7 +372,41 @@ where $R_{x1}$ and $R_{x2}$ are the resistances from the contact point to the le
 
 In practice, the sensor switches rapidly between measuring the x- and y-coordinates. The layers are energised one after the other at a high frequency, making the switching imperceptible to a human user (response can be provided in 10ms or faster). But this approach has an important drawback: it cannot distinguish multiple simultaneous touch points, which is why multi-strip resistive sensors are used.
 
-(add exercise using the voltage formulas)
+Exercise: Determine the x-coordinate of the contact location
+
+A single-strip resistive sensor of total length $L = 100\ \text{mm}$ is energised with a voltage $V_x = 5\ \text{V}$. The measured output voltage is $ V_{x,\text{out}} = 2.3\ \text{V}$.  
+
+Compute the x-coordinate of the touch point (distance from the left boundary).  
+Hint: the resistance is proportional to length ($R_{x1} \propto x$).
+
+<details markdown="1">
+<summary>Solution</summary>
+
+As mentioned, the resistance is proportional to length for a **uniform** resistive strip. Therefore we have:
+
+- $R_{x1} \propto x$
+- $R_{x2} \propto L - x$
+
+We can replace these expressions in the formula seen above:
+
+$$
+V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x = \frac{L - x}{L} \, V_x
+$$
+
+Solve for x:
+
+$$
+x = L - L \frac{V_{x,\text{out}}}{V_x}
+$$
+
+Insert numerical values:
+
+$$
+x = 0.1 - 0.1 \cdot \frac{2.3}{5} = \boxed{0.054 \, \text{m}}
+$$
+
+**Answer:** the contact is located at **$x = 54\ \text{mm}$** from the left boundary.
+</details>
 
 *2/ Multi-strip resistive sensor:*  
 
@@ -406,7 +440,33 @@ Now, instead of performing only one measurement per layer, we need to make $n$ s
 
 In addition, the wiring complexity increases. While the single-strip version requires only four connection wires, the multi-strip version needs $2+2n$ wires: one for $V_{\text{ref}}$, one for the ground and $n$ measurement wires for each of the two stripped layers. The wiring complexity issue will be addressed later.
 
-(add exercise using the voltage formula)
+Exercise: Determine the contact width
+
+A single strip of length $L = 60\ \text{mm}$ is energised with $V_{\text{ref}} = 5\ \text{V}$. A fingertip presses at a position whose centre is located at $l_x = 25\ \text{mm}$ from the left border. The measured voltage is $V_{\text{out}} = 3.75\ \text{V}$
+Compute the contact width $w$.
+
+<details markdown="1">
+<summary>Solution</summary>
+
+Using the given formula:
+
+$$
+V_{\text{out}} = \frac{l_x+\frac{w}{2}}{L - \frac{w}{2}}\,V_{\text{ref}}
+$$
+
+Solve for $w$:
+
+$$
+w = 2 \cdot \frac{\frac{V_{\text{out}}}{V_{\text{ref}}} \cdot L - l_x}{1 + \frac{V_{\text{out}}}{V_{\text{ref}}}}
+$$
+
+Insert numerical values:
+
+$$
+w = 2 \cdot \frac{\frac{3.75}{5} \cdot 0.06 - 0.025}{1 + \frac{3.75}{5}} = \boxed{0.0229 \, \text{m}}
+$$
+
+</details>
 
 - **Type 2: Determine applied force or pressure**  
 
@@ -445,16 +505,63 @@ Lastly, there also exist alternative ways to sense touch. One advanced tactile s
 
 #### 3.1 Flexible Tactile Sensors
 
+Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
+
 -> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
 -> have a look at meta's fingertip tactile sensor
 
-In many applications, tactile sensors need to be
+<!--  tactile sensing chapter 4.4.1 
 
-<!--  tactile sensing chapter 4.4.1 -->
+**Piezoresistive Flexible Sensors**
+- CNT-based piezoresistive films on flexible substrates (e.g., CNT/TPU, CNT/PDMS).  
+- Graphene-based flexible piezoresistive layers.  
+- Silver, copper, or nickel nanoparticle inks printed on PET, PI, or paper.  
+- Polymer composites such as PLA–graphene printed as thin flexible layers.
+
+**Capacitive Flexible Sensors**
+- Parallel-plate capacitors printed on PET or PEN films.  
+- Inkjet-printed interdigitated capacitors on flexible substrates.  
+- PDMS microstructured dielectric layers cast with 3D-printed molds and laminated onto flexible substrates.
+
+**Piezoelectric Flexible Sensors**
+- PVDF or PVDF-TrFE printed films (inkjet or electrospun) on flexible PET/PEN substrates.  
+- Hybrid printed PVDF pressure sensors on flexible films.
+
+**Triboelectric Flexible Sensors**
+- 3D-printed triboelectric nanogenerators using flexible substrates such as ABS, PDMS, or paper.  
+- Printed electrodes + triboelectric polymer layers without stretchability.
+-->
 
 #### 3.2 Stretchable Tactile Sensors
 
-<!--  tactile sensing chapter 4.4.3 -->
+Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
+
+<!--  tactile sensing chapter 4.4.3 
+
+**Stretchable Piezoresistive Sensors**
+- CNT/PDMS and CNT/TPU stretchable nanocomposites.  
+- TPU/carbon-black/NaCl printable stretchable composites.  
+- Silver nanoparticle + CNT elastomer composites.  
+- Graphene aerogel stretchable sensors (often serpentine or 3D-printed).  
+- Crack-induced Ag nanowire stretchable networks.  
+- Printed liquid-metal (EGaIn) microchannels or LM-paste-based strain sensors.  
+- Multicore–shell coaxially printed stretchable fibers (ionic liquid core + elastomer shell).
+
+**Stretchable Capacitive Sensors**
+- Stretchable dielectric elastomers (Ecoflex, PDMS) with printed stretchable electrodes (AgNW, CNT).  
+- CNT/PDMS stretchable capacitive taxels.  
+- Fully stretchable e-skin combining capacitive pressure + strain sensing.  
+- Hybrid 3D-printed elastomer + silver-flake capacitive arrays.
+
+**Stretchable Piezoelectric Sensors**
+- PVDF nano/microfibers printed on wavy or buckled elastomeric substrates (prestretch-release method).  
+- Self-powered piezoelectric stretchable pressure sensors.
+
+**Stretchable Triboelectric Sensors**
+- Fully 3D-printed ultraflexible triboelectric nanogenerators.  
+- Stretchable triboelectric films combined with hydrogels or PDMS layers.
+
+-->
 
 #### 3.3 Vision-Based Tactile Sensors
 
@@ -483,14 +590,13 @@ add challenges of electronics: wiring, data transfer, power consumption
 
 ---
 
+<!-- 
 ### Expectations of Tactile Systems
 
 #### Task Related Requirements
 
 The task that has to be executed by the robotic system defines what type of tactile sensor is implemented in it.
 
-
-<!-- 
 The following expectations are specifically for humanoid applications -> make more general.
 These requirements are more general stuff about sensors, not specifically about tactile sensors
 

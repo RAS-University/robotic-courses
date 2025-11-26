@@ -1,6 +1,6 @@
 ---
-title: Model predictive Control
-parent: Courses
+title: Model predictive Control 
+parent: Courses Nonlinear Control
 layout: default
 nav_order: 7
 author: Julian Ruiz Rodriguez (EPFL)
@@ -598,7 +598,7 @@ Now that we have set up the optimization problem for the Linear Quadratic Regula
   \]
 </div>
 
-It is beyound the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
+It is beyond the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
 <div>
   \[
     u(t) = -Kx(t) \tag{1.2.1} \label{eq:feedback_law_riccati}
@@ -641,8 +641,8 @@ Where $p(t)$ is the position of the block, $\dot{p}(t)$ is the velocity and $\dd
 Let define the state and control vectors as:
 <div>
 \[
-x(t) = \begin{bmatrix} p(t) \\\\ \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
-/]
+x(t) = \begin{bmatrix} p(t) \\ \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
+\]
 </div>
 With:
 - $x(t) \in \mathbb{R}^2$ because there are **two states**: position and velocity.  
@@ -794,28 +794,30 @@ $$
 $$
 V_{T+1}(x) = x^\top P_t x
 $$
-We will show that $V_t(x)=x^\top P_tx$ and derive a formula for $P_t$
-<div>
-\[
-\begin{align}
-V_t(x) &= x^\top Q x + \min_{u}\left(u^\top R u + V_{T+1}(Ax+Bu)\right) \\
-&= x^\top Q x + \min_{u}\left(u^\top R u + (Ax+Bu)^\top P_{T+1}(Ax+Bu)\right) \\
-&= x^\top Q x + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u 
-          + 2 B^\top P_{T+1} A x + x^\top A^\top P_{T+1} A x\right) \\
-&= x^\top Q x + x^\top A^\top P_{T+1} A x 
-          + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u + 2 B^\top P_{T+1} A x\right) \\
-&= x^\top\left(Q+A^\top P_{T+1} A\right)x 
-          + x^\top A P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1}\left(R+B^\top P_{T+1} B\right) \\
-&\quad \left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x 
-      - 2 x^\top A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x \\
-&= x^\top\left(Q + A^\top P_{T+1} A 
-          - A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A\right) x \\
-V_t(x) &= x^\top P_t x
-\end{align}
-\]
-</div>
+On can show that $V_t(x)=x^\top P_tx$ (see proof in the note below) and then derive a formula for $P_t$
 
 <details markdown="1">
+  <summary><strong>Proof that $V_t(x)=x^\top P_t x$</strong></summary>
+  <div>
+    \[
+    \begin{align}
+    V_t(x) &= x^\top Q x + \min_{u}\left(u^\top R u + V_{T+1}(Ax+Bu)\right) \\
+    &= x^\top Q x + \min_{u}\left(u^\top R u + (Ax+Bu)^\top P_{T+1}(Ax+Bu)\right) \\
+    &= x^\top Q x + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u 
+              + 2 B^\top P_{T+1} A x + x^\top A^\top P_{T+1} A x\right) \\
+    &= x^\top Q x + x^\top A^\top P_{T+1} A x 
+              + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u + 2 B^\top P_{T+1} A x\right) \\
+    &= x^\top\left(Q+A^\top P_{T+1} A\right)x 
+              + x^\top A P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1}\left(R+B^\top P_{T+1} B\right) \\
+    &\quad \left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x 
+          - 2 x^\top A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x \\
+    &= x^\top\left(Q + A^\top P_{T+1} A 
+              - A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A\right) x \\
+    V_t(x) &= x^\top P_t x
+    \end{align}
+    \]
+  </div>
+  <details markdown="1">
   <summary><strong>How to remove $\min_{u}(\cdots)$</strong></summary>
   <div>
     We use the gradient to find the minimum for $u$, denoted $u^*$:
@@ -827,6 +829,7 @@ V_t(x) &= x^\top P_t x
     \]
   </div>
 </details>
+</details>
 
 <div class="formula-window">
   This derivation allowed to find an optimal feedback control:
@@ -837,7 +840,7 @@ V_t(x) &= x^\top P_t x
   \[
   P_{t-1}=Q+A^\top P_{T+1}A - A^\top P_{T+1}B\left(R+B^\top P_{T+1}B\right)^{-1}B^\top P_{T+1}A
   \]
-  For $t\to -\infty$, $P_t$ converges to a constant matrix $P$, the solution of the **discrete-time algebraic Riccati equation** (DARE):
+  For $t\to -\infty$, $P_t$ converges to a constant matrix $P$, the solution of the <strong>discrete-time algebraic Riccati equation</strong> (DARE):
   \[
   P=Q+A^\top PA - A^\top PB\left(R+B^\top PB\right)^{-1}B^\top PA
   \]

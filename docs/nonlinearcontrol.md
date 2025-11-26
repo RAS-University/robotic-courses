@@ -58,12 +58,7 @@ author: Julian Ruiz Rodriguez (EPFL)
     background: #f8f9fa;
     padding: 1em;
   }
-  .formula-window{
-    border-left: 4px solid #E7250C; 
-    background: #f8f9fa; 
-    padding: 1em;
-  }
-.lemma-window {
+.thm-window {
   border: 2px solid #e7260c;   /* Red outline */
   border-radius: 10px;         /* Rounded edges */
   background: #ffffff;         /* Clean white background */
@@ -72,12 +67,41 @@ author: Julian Ruiz Rodriguez (EPFL)
   padding: 1em 1.2em;          /* Add padding for readability */
   box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
 }
-.lemma-title {
+.thm-title {
   font-weight: bold;           
   font-size: 1em;              /* Same size as normal text */
   background: none;            /* Remove red background */
   color: #e7260c;              /* Make text red to match the outline */
   margin-bottom: 0.5em;        /* Add spacing after the title */
+}
+.proof {
+  position: relative;  /* Add this if missing */
+  padding-right: 1.6em; /* Space for the QED symbol */
+  margin-top: .8em;
+  margin-bottom: .8em;
+}
+.proof .qed {
+  position: absolute;
+  right: 0;  /* Align fully to the right edge of the proof container */
+  top: 0.2em;
+  font-size: 0.95em;
+  color: #333;
+}
+.def-title {
+  font-weight: bold;           
+  font-size: 1em;              /* Same size as normal text */
+  background: none;            /* Remove red background */
+  color: #FC814A;              /* Make text red to match the outline */
+  margin-bottom: 0.5em;        /* Add spacing after the title */
+}
+.def-window {
+  border: 2px solid #FC814A;   /* Red outline */
+  border-radius: 10px;         /* Rounded edges */
+  background: #ffffff;         /* Clean white background */
+  width: 725px;
+  margin: 2em auto;
+  padding: 1em 1.2em;          /* Add padding for readability */
+  box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
 }
  .remark-window {
   border: 2px solid #4F3DDB;   /* Red outline */
@@ -343,8 +367,8 @@ This chapter introduces the fundamental definitions and mathematical principles 
 
 A **linear system** is one in which the relationship between the input signal $u(t)$ and the output signal $y(t)$ satisfies the **principle of superposition**. This property implies that the response to a combination of inputs is equal to the combination of the corresponding individual responses.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_1.1">Definition 1.1 — Superposition Principle</div>
+<div class="def-window">
+  <div class="def-title" id="def_1.1">Definition 1.1 — Superposition Principle</div>
   <div>
   Consider two input signals \( u_1(t) \) and \( u_2(t) \), producing the corresponding outputs \( y_1(t) \) and \( y_2(t) \).  
   The system satisfies the superposition principle if the response to the sum of the inputs \( u(t) = u_1(t) + u_2(t) \) is the sum of the individual responses:
@@ -359,8 +383,8 @@ In other words, if an input $u(t)$ produces an output $y(t)$, then applying $\al
 
 This leads to the general definition of a linear system:
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_1.2">Definition 1.2 — Linear System</div>
+<div class="def-window">
+  <div class="def-title" id="def_1.2">Definition 1.2 — Linear System</div>
   <div>
   A system is said to be <strong>linear</strong> if and only if it satisfies both the properties of <strong>additivity</strong> and <strong>homogeneity</strong>, i.e., if it obeys the superposition principle.
   </div>
@@ -642,8 +666,8 @@ Where $A$ is the system matrix. The trajectories of this system in the phase pla
 
 A limit cycle is a closed trajectory in the phase plane that represents a periodic solution of a dynamical system. Limit cycles are important in the study of nonlinear systems because they can indicate the presence of stable or unstable oscillatory behavior. To be considered a limit cycle, a trajectory must be isolated, meaning that there are no other closed trajectories in its immediate vicinity. Taking again the mass-spring system as an example, we can observe that the trajectories in the phase plane are closed curves, however, they are not isolated since there are infinitely many closed trajectories corresponding to different initial conditions. Therefore, the mass-spring system does not exhibit limit cycles.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_2.1">Definition 2.1 - Limit Cycle</div>
+<div class="def-window">
+  <div class="def-title" id="def_2.1">Definition 2.1 - Limit Cycle</div>
   <div>
   A system $\dot{x} = f(x)$ has a limit cycle $\mathcal{C}$ if there exists a range of time $[t_0, t_0+T]$ and a starting point $x(t_0) \in \mathcal{C}$ such that the solution of the system $\mathcal{X}(x_0, t)$, with initial condition $\mathcal{X}(x_0, t_0) = x_0$, satisfies:
   <ul>
@@ -671,8 +695,8 @@ Limit cycles can be classified into three types based on their stability propert
 
 The index is a topological properties of systems in the phase plane. It allows to determine the necessary existence of limit cycles in a given region of the phase plane and gives information on the stability of an enclosed fixed point.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_2.2">Definition 2.2 - Index of a point of the phase plane</div>
+<div class="def-window">
+  <div class="def-title" id="def_2.2">Definition 2.2 - Index of a point of the phase plane</div>
   <div>
   In order to compute the index of a point $P$ in the phase plane, one must choose:
   <ul>
@@ -705,8 +729,8 @@ The index is a topological properties of systems in the phase plane. It allows t
 
 An index can be calculated for each of the fixed points in the phase plane mentioned in Section 2.3. Independently of their stability properties, nodes centers and foci have an index of +1, while saddle points have an index of -1. We introduce the notation $N$ and $S$ respectively the number of nodes (including centers and foci) and the number of saddle points in a given closed curve $\Omega$. The following theorem holds:
 
-<div class="lemma-window">
-  <div class="lemma-title" id="thm_2.1">Theorem 2.2 - Poincaré Index theorem</div>
+<div class="thm-window">
+  <div class="thm-title" id="thm_2.1">Theorem 2.1 - Poincaré Index theorem</div>
   <div>
   Consider $N$ the number of nodes (including centers and foci) and $S$ the number of saddle points in a closed curve $\Omega$. If a limit cycle exists, the singular points ($\bar{x}$ s.t. $f(\bar{x})=0$) inside the curve $\Omega$ satisfy $N = S+1$.
   </div>
@@ -720,8 +744,8 @@ $$
 \dot{x}_2=f_2(x_1, x_2)\tag{2.2}\label{eq_2.2}
 $$
 
-<div class="lemma-window">
-  <div class="lemma-title" id="thm_2.2">Theorem 2.1 - Bendixson Theorem</div>
+<div class="thm-window">
+  <div class="thm-title" id="thm_2.2">Theorem 2.2 - Bendixson Theorem</div>
   <div>
   For a system defined by equations \eqref{eq_2.1} and \eqref{eq_2.2}, no limit cycle can exists in the region $\Omega$ of the phase plane where the $\tfrac{\partial f_1}{\partial x_1} + \tfrac{\partial f_2}{\partial x_2}$ do not change sign and is not equal to zero.
   </div>
@@ -1279,7 +1303,7 @@ with
 \]
 </div>
 
-The principal drawback of this decomposition is that it involves an infinite number of harmonics, which can be computationally intensive. However, in many practical cases, the first harmonic (i.e., $l=1$) provides a good approximation of the output signal. It is also important to note that teh components $a_0$, $a_l$ and $b_l$ depend on the amplitude $A$ and the angular frequency $\omega$ of the input signal. Formally, we should write $a_0(A,\omega)$, $a_l(A,\omega)$ and $b_l(A,\omega)$, but in order to improve the readability, we will continue to use $a_0$, $a_1$ and $b_1$ without the mention of the amplitude and pulsation dependency.
+The principal drawback of this decomposition is that it involves an infinite number of harmonics, which can be computationally intensive. However, in many practical cases, the first harmonic (i.e., $l=1$) provides a good approximation of the output signal. It is also important to note that the components $a_0$, $a_l$ and $b_l$ depend on the amplitude $A$ and the angular frequency $\omega$ of the input signal. Formally, we should write $a_0(A,\omega)$, $a_l(A,\omega)$ and $b_l(A,\omega)$, but in order to improve the readability, we will continue to use $a_0$, $a_1$ and $b_1$ without the mention of the amplitude and pulsation dependency.
 
 Using only the first harmonic, we can approximate the output of the nonlinearity as:
 $$
@@ -1295,7 +1319,7 @@ Where the amplitude $M$ and phase $\alpha$ are given by the coefficients $a_1$ a
   \]
 </div>
 
-When the nonlinearity is perfectly symmetric ($a_0 = 0$) teh equivalent gain can be expressed as: 
+When the nonlinearity is perfectly symmetric ($a_0 = 0$) the equivalent gain can be expressed as: 
 $$
 N(A, \omega) = M \frac{e^{j\omega t + \alpha}}{Ae^{j\omega t}}=\frac{M}{A}e^{j\alpha}=\frac{1}{A}(b_1+ja_1)
 $$
@@ -1618,8 +1642,8 @@ To visualize equation \eqref{eq:limit_cycle_9} geometrically, we can use a Nyqui
 
 **Nyquist theorem**
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_3.1">Definition 3.1 - Nyquist criterion</div>
+<div class="def-window">
+  <div class="def-title" id="def_3.1">Definition 3.1 - Nyquist criterion</div>
   <div>
     Consider a closed-loop system composed of a the open-loop gain $G(s)H(s)$. In order to determine the stability of the closed-loop system, we can use the Nyquist criterion, which states that:
     <ul>
@@ -1634,8 +1658,8 @@ To visualize equation \eqref{eq:limit_cycle_9} geometrically, we can use a Nyqui
 
 When there is a constant gain $K$, the theorem can be applied directly by looking at the point $-1/K$ as follow:
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_3.2">Definition 3.2 - Nyquist criterion (for constant gain $K$)</div>
+<div class="def-window">
+  <div class="def-title" id="def_3.2">Definition 3.2 - Nyquist criterion (for constant gain $K$)</div>
   <div>
     Consider a closed-loop system composed of a the open-loop gain $G(s)H(s)$. In order to determine the stability of the closed-loop system, we can use the Nyquist criterion, which states that:
     <ul>
@@ -1738,14 +1762,14 @@ Consider the following nonlinear dynamical system:
 
 We use generally the terms *time-varying* and *time-invariant* systems to classify linear systems, depending on whether the matrix $A$ varies with time or not. The same classification can be applied to nonlinear systems, where the terms are replaced by *autonomous* and *non-autonomous* systems. 
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.1">Definition 4.1 - Autonomous System</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.1">Definition 4.1 - Autonomous System</div>
   <div>
   The nonlinear system \eqref{eq:nonlinear_system} is said to be autonomous if the function $f$ does not depend explicitly on time, i.e., $f=f(x)$. Otherwise, the system is called non-autonomous, and the function $f$ depends explicitly on time, i.e., $f=f(x,t)$.
   </div>
 </div>
 
-Strictly speaking, all physical systems are non-autonomous, as they are influenced by external time-varying factors. This concept is an idealized notion, like teh concept of linearity. However, many systems can be approximated as autonomous within a certain operating range or time frame, due to the important time scale of their varying parameters, making the analysis of autonomous systems highly relevant in practice.
+Strictly speaking, all physical systems are non-autonomous, as they are influenced by external time-varying factors. This concept is an idealized notion, like the concept of linearity. However, many systems can be approximated as autonomous within a certain operating range or time frame, due to the important time scale of their varying parameters, making the analysis of autonomous systems highly relevant in practice.
 
 It is important to note that the definition of autonomous systems presented here is made on the **closed-loop dynamics**. Indeed, a control system being composed of a plant and a controller, even if the open-loop system is non-autonomous (e.g., due to time-varying inputs or parameters), the closed-loop system can be designed to be autonomous through appropriate feedback control strategies.
 
@@ -1755,8 +1779,8 @@ The principal difference between autonomous and non-autonomous systems lies in t
 
 The equilibrium point, also known as fixed point or critical point, of a dynamical system is a state where the system doesn't continue evolve over time. 
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.2">Definition 4.2 - Equilibrium</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.2">Definition 4.2 - Equilibrium</div>
   <div>
   Consider the system \eqref{eq:nonlinear_system}, where $x \in \mathbb{R}^n$ is the state and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function. A point $\bar{x} \in \mathbb{R}^n$ is called an equilibrium point of the system if:
   \[
@@ -1786,8 +1810,8 @@ This system have a unique equilibrium point at the origin ($\bar{x} = 0$), unles
 
 All along this lecture, we mentioned a system being stable or unstable for a trajectory staying close or diverging from an equilibrium point. However, we did not give a formal definition of what is meant by "closeness". 
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.3">Definition 4.3 - Notion of distance</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.3">Definition 4.3 - Notion of distance</div>
   <div>
   A vectorial space $\mathcal{V}$ is said to be a normed vectorial space if there exists a function $\lVert \cdot \rVert: \mathcal{V} \rightarrow \mathbb{R}_{\geq 0}$, called a norm, that satisfies the following properties:
   <ul>
@@ -1809,8 +1833,8 @@ In that vectorial space, the distance between two points $x_1$ and $x_2$ is defi
 
 From the beginning of this lecture, we used the term *stability* in a general sense, as a kind of well-behavedness of the system around a desired operating point. However, as nonlinear systems can exhibit a wide range of complex behaviors, this simple concept of stability needs to be refined and formalized, such as the concept of asymptotic stability, exponential stability or global stability (which will actually be developed in section [4.4](#44-global-and-local-stability-analysis)). In this section, we will formally define these different notions of stability for autonomous systems and explain their practical meanings.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.4">Definition 4.4 - Formal definition of Stability </div>
+<div class="def-window">
+  <div class="def-title" id="def_4.4">Definition 4.4 - Formal definition of Stability </div>
   <div>
   Consider a system described by the ordinary differential equation $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function, with the initial condition $x(0) = x_0$ and the equilibrium point $x=0$. The solution for a time $t \in \mathbb{R}^+$ is denoted by $\mathcal{X}(x_0, t)$.
 
@@ -1858,8 +1882,8 @@ Nonetheless, these trajectories do not diverge to infinity; instead, they conver
 
 This example highlights the nuanced nature of stability in nonlinear systems, and thus shows that in many engineering application, Lyapunov stability alone may be insufficient to fully characterize the system's behavior. For instance, in safety-critical applications, it is often necessary to ensure that the system not only remains stable but also converges to a desired state or operates within specific bounds. This leads to the consideration of stronger notions of stability, which bring us to the first refinement of Lyapunov stability: **asymptotic stability**.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.5">Definition 4.5 - Asymptotic Stability</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.5">Definition 4.5 - Asymptotic Stability</div>
   <div>
   Consider a system described by the ordinary differential equation $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function, with the initial condition $x(0) = x_0$ and the equilibrium point $x=0$. The solution for a time $t \in \mathbb{R}^+$ is denoted by $\mathcal{X}(x_0, t)$.
 
@@ -1886,8 +1910,8 @@ As you can see on [Figure 4.2](#fig_4.2_vinograd_asymptotic_stability), the equi
 
 To address these limitations, we introduce the concept of **exponential stability**, which provides a stronger form of stability that ensures not only convergence to the equilibrium point but also a specific rate of convergence. This will allow us to estimate how quickly the system returns to equilibrium after a disturbance, which is crucial for many control applications.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.6">Definition 4.6 - Exponential Stability</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.6">Definition 4.6 - Exponential Stability</div>
   <div>
   Consider a system described by the ordinary differential equation $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function, with the initial condition $x(0) = x_0$ and the equilibrium point $x=0$. The solution for a time $t \in \mathbb{R}^+$ is denoted by $\mathcal{X}(x_0, t)$.
 
@@ -1907,8 +1931,8 @@ The **Lyapunov direct method** is a fundamental tool for studying the stability 
 
 Lyapunov extended this physical intuition to general nonlinear systems by introducing the concept of a **Lyapunov function**: a scalar-valued function that acts as an abstract measure of “energy.” Instead of representing physical energy, a Lyapunov function captures the system’s tendency to move toward or away from an equilibrium point. By analyzing how this function evolves along system trajectories, we gain insight into stability properties without solving the system explicitly.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.7">Definition 4.7 - Lyapunov observation</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.7">Definition 4.7 - Lyapunov observation</div>
   The behavior of a system is <strong>stable</strong> if the energy $E$ decreases over time, is conserved and is minimal at the equilibrium point.<br>
   However, the behavior is <strong>unstable</strong> if the energy $E$ increases over time or is not minimal at the equilibrium point.
 </div>
@@ -1920,11 +1944,9 @@ Lyapunov extended this physical intuition to general nonlinear systems by introd
 </div>
 
 Let us consider the nonlinear system described by a mass-damper-string system, as shown on [Figure 4.3](#fig_4.3_mass_damper_spring_system). The dynamics of this system can be described by the second-order differential equation:
-<div>
-\[
+$$
   m \ddot{x} + b |\dot{x}|\dot{x} + k_0 x + k_1 x^3 = 0
-\]
-</div>
+$$
 
 where:
 - $m$ is the mass,
@@ -1955,21 +1977,21 @@ The rate of change of the mechanical energy can be computed as $\dot{V}(x)$, thu
 
 Taking a generalization of the mass-damper-string system to any nonlinear system, we can define Lyapunov direct method. The basic procedure involves generating a scalar 'energy-like' function $V(x)$ for the dynamical system and analyzing its properties to infer stability. In that way, we can draw conclusions about the system's stability without using the difficult stability definitions or solving the system explicitly.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.8">Definition 4.8 - Positive definite functions</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.8">Definition 4.8 - Positive definite functions</div>
   A scalar function $f: \mathbb{R}^n \rightarrow \mathbb{R}$ is said to be <strong>positive definite</strong> if: 
   \[f(0) = 0 \quad \text{and} \quad f(x) > 0, \quad \forall x \neq 0 \]
 </div>
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.9">Definition 4.9 - Lyapunov candidate</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.9">Definition 4.9 - Lyapunov candidate</div>
   A continuous positive definite scalar function, denoted as $V: \mathbb{R}^n \rightarrow \mathbb{R}$, is called a <strong>Lyapunov candidate</strong>.
 </div>
 
 As mentioned in our example of the mass-damper-string system, when a system is stable, its energy decreases over time or stay constant. Thus, we will want the Lyapunov candidate function to have a non-positive time derivative along the system trajectories. 
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.10">Definition 4.10 - Lyapunov function</div>
+<div class="def-window">
+  <div class="def-title" id="def_4.10">Definition 4.10 - Lyapunov function</div>
   A Lyapunov function is a Lyapunov candidate $V(x)$, meaning a continuous function $V: \mathbb{R}^n \rightarrow \mathbb{R}$ such that:
   \[V(x) > 0, \quad \forall x \neq 0 \quad \text{and} \quad V(x) = 0 \;\; x = 0\]
   and has the additional property: 
@@ -1978,15 +2000,23 @@ As mentioned in our example of the mass-damper-string system, when a system is s
 
 We can now state the Lyapunov's direct method theorem, which provides sufficient conditions for stability and asymptotic stability based on the properties of a Lyapunov candidate function.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="theorem_4.1">Theorem 4.1 - Lyapunov's second method (also called Direct Method)</div>
+<div class="thm-window">
+  <div class="thm-title" id="theorem_4.1">Theorem 4.1 - Lyapunov's second method (also called Direct Method)</div>
   Consider the autonomous system $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function. If this system admits a Lyapunov function $V(x)$ as defined in <a href="#def_4.10">4.10</a>, then this system is stable. Moreover, if the the time derivative of the Lyapunov function $\dot{V}(x) < 0 \quad \forall x \neq 0$, then the system is asymptotically stable.
 </div>
 
 <div class="studyCase-window">
   <div class="studyCase-title" id="studyCase_4.1">Study Case - Robot</div>
-  To illustrate the application of Lyapunov's direct method, let's consider a simple robotic system with nonlinear dynamics. The robot have a set amount of joints, leading to $n$ degrees of freedom. Each joints is actuated by a motor, resulting in a motion along teh corresponding axis.<br>
-  <br>In the control theory of linear systems, we often use proportional (P), proportional-derivative (PD), or proportional-integral-derivative (PID) controllers to regulate the position of the robot's joints (see course on <a href="Closeloop&PID">closed loop control</a>). Here we will focus on a PD controller, which is commonly used for its simplicity and effectiveness in many applications. The PD controller can be expressed as:
+  To illustrate the application of Lyapunov's direct method, let's consider a simple robotic system with nonlinear dynamics. The robot have a set amount of joints, leading to $n$ degrees of freedom. Each joints is actuated by a motor, resulting in a motion along the corresponding axis.<br>
+
+  <div class="images" style="justify-content:center; text-align:center; margin-top:10px; margin-bottom:10px;">
+    <figure id="fig_4.4_robot_system">
+      <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch4_robot_study_case.jpeg" alt="Robot System" width="400"/>
+      <figcaption style="text-align: center;"><strong>Figure 4.4:</strong> Simple robotic system with $n$ degrees of freedom</figcaption>
+    </figure>
+  </div>
+
+  In the control theory of linear systems, we often use proportional (P), proportional-derivative (PD), or proportional-integral-derivative (PID) controllers to regulate the position of the robot's joints (see course on <a href="Closeloop&PID">closed loop control</a>). Here we will focus on a PD controller, which is commonly used for its simplicity and effectiveness in many applications. The PD controller can be expressed as:
   <div>
   \[
     \tau = -K_p (q - q_d) - K_d \dot{q} \tag{4.3}\label{eq:PD_controller}
@@ -1994,9 +2024,9 @@ We can now state the Lyapunov's direct method theorem, which provides sufficient
   </div>
   where:
   <ul>
-  <li>$\tau$ is the vector of control torques applied to the joints,</li>
-  <li>$q$ is the vector of joint positions,</li>
-  <li>$q_d$ is the desired joint position vector,</li>
+  <li>$\tau \in \mathbb{R}^{1\times n}$ is the vector of control torques applied to the joints,</li>
+  <li>$q \in \mathbb{R}^{1\times n}$ is the vector of joint positions,</li>
+  <li>$q_d \in \mathbb{R}^{1\times n}$ is the desired joint position vector,</li>
   <li>$K_p$ and $K_d$ are positive definite gain matrices for the proportional and derivative terms, respectively.</li>
   </ul>
 
@@ -2041,8 +2071,8 @@ In the previous sections, we discussed various notions of stability for nonlinea
 
 ### Local Stability
 
-<div class="lemma-window">
-  <div class="lemma-title" id="theorem_4.2">Theorem 4.2 - Local Stability</div>
+<div class="thm-window">
+  <div class="thm-title" id="theorem_4.2">Theorem 4.2 - Local Stability</div>
   If, in a ball $\mathcal{B}_{R_0}$, there exist a scalar function $V(x)$ with continuous first partial derivatives such that:
   <ul>
   <li>$V(x)>0$ ($\forall x \in \mathcal{B}_{R_0}, x \neq 0$) and $V(0)=0$,</li>
@@ -2051,20 +2081,18 @@ In the previous sections, we discussed various notions of stability for nonlinea
   Then the equilibrium point $x=0$ of the system $\dot{x} = f(x)$ is stable. Moreover, if $\dot{V}(x) < 0$ ($\forall x \in \mathcal{B}_{R_0}, x \neq 0$), then the equilibrium point is asymptotically stable.
 </div>
 
-**Proof**
+<div class="proof">
+  <strong>Proof</strong><br>
+  All along this proof we will make the distinction between ball and sphere, where the ball represents the set of points whose distance to the center is less than or equal to a given radius, while the sphere represents the set of points whose distance to the center is exactly equal to that radius.
 
-All along this proof we will make the distinction between ball and sphere, where the ball represents the set of points whose distance to the center is less than or equal to a given radius, while the sphere represents the set of points whose distance to the center is exactly equal to that radius.
-
-<div class="lemma-window">
-  <div class="lemma-title" id="def_4.11">Definition 4.11 - Ball and Sphere</div>
-  A <i>sphere</i> of radius $r$ is denoted as $\mathcal{S}_r$ and a <i>ball</i> of same radius is denoted as $\mathcal{B}_r$:
-  \begin{align*}
-    \mathcal{S}_r &= \{ x \in \mathbb{R}^n \mid \lVert x \rVert = r \} \\
-    \mathcal{B}_r &= \{ x \in \mathbb{R}^n \mid \lVert x \rVert < r \}
-  \end{align*} 
-</div> 
-
-<div>
+  <div class="def-window">
+    <div class="def-title" id="def_4.11">Definition 4.11 - Ball and Sphere</div>
+    A <i>sphere</i> of radius $r$ is denoted as $\mathcal{S}_r$ and a <i>ball</i> of same radius is denoted as $\mathcal{B}_r$:
+    \begin{align*}
+      \mathcal{S}_r &= \{ x \in \mathbb{R}^n \mid \lVert x \rVert = r \} \\
+      \mathcal{B}_r &= \{ x \in \mathbb{R}^n \mid \lVert x \rVert < r \}
+    \end{align*} 
+  </div>
 
   In order to prove stability, we need to show that for any radius $R > 0$, there exists a smaller radius $r > 0$ such that if the initial condition $x_0$ is within the ball $\mathcal{B}_r$, then the trajectory $\mathcal{X}(x_0, t)$ remains within the ball $\mathcal{B}_R$ for all future time $t \ge 0$. 
 
@@ -2077,43 +2105,44 @@ All along this proof we will make the distinction between ball and sphere, where
   Let's assume now that $\dot{V}(x) < 0$ for all $x \in \mathcal{B}_{R_0}$, $x \neq 0$ and show asymptotic stability, by contradiction. Suppose there exists an initial condition $x_0$ within the ball $\mathcal{B}_r$ as constructed above. Then the trajectories $\mathcal{X}(x_0, t)$ remain within the ball $\mathcal{B}_R$ for all future time $t \ge 0$. Since $V(x)$ is lower bounded and decreases continually along the trajectories, it must converge to some limit $L$ such that $L \geq 0$ as $t \to +\infty$, $V(x) \geq L$. 
   
   Then, since $V(x)$ is continuous and $V(0)=0$, there exist a ball $\mathcal{B}_{r_0}$ that the system never reach. However, since $\dot{V}(x) < 0$ for all $x \neq 0$, the trajectory cannot remain in any region where $V(x)$ is greater than $L$ without eventually decreasing below $L$. This leads to a contradiction, as it implies that the trajectory must eventually enter the ball $\mathcal{B}_{r_0}$, where $V(x)$ would be less than $L$. Therefore, the only consistent conclusion is that the trajectory must converge to the equilibrium point $x = 0$ as $t \to +\infty$. This establishes the asymptotic stability of the equilibrium point.
-</div>
 
-<div class="images" style="justify-content:center; text-align:center;">
-  <figure id="fig_4.4_local_stability_proof">
-    <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch4_proof_local_stab.png" alt="Local Stability Proof" width="600"/>
-    <figcaption style="text-align: center;"><strong>Figure 4.4:</strong> Illustration of the proof of local stability</figcaption>
-  </figure>
+
+  <div class="images" style="justify-content:center; text-align:center;">
+    <figure id="fig_4.4_local_stability_proof">
+      <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch4_proof_local_stab.png" alt="Local Stability Proof" width="600"/>
+      <figcaption style="text-align: center;"><strong>Figure 4.4:</strong> Illustration of the proof of local stability</figcaption>
+    </figure>
+  </div>
+  <div style="text-align: right; margin-top: 0.5em;">□</div>
 </div>
 
 ### Global Stability
 
 In order to assert *global stability* of the system, one might naturally think of extending the local stability theorem by requiring the ball $\mathcal{B}_{R_0}$ to cover the entire state space $\mathbb{R}^n$. However, this approach is not sufficient to guarantee global stability. The key reason is that even if a Lyapunov function satisfies the conditions of local stability everywhere in the state space, it does not necessarily imply that all trajectories will converge to the equilibrium point from any initial condition. An additional requirement is needed to ensure that the Lyapunov function grows unbounded as the state moves away from the equilibrium point. This ensures that trajectories starting far from the equilibrium will still be drawn back toward it. We formalize this idea in the following theorem:
 
-<div class="lemma-window">
-  <div class="lemma-title" id="theorem_4.3">Theorem 4.3 - Global Stability</div>
+<div class="thm-window">
+  <div class="thm-title" id="theorem_4.3">Theorem 4.3 - Global Stability</div>
   If there exist a scalar function $V(x)$ with continuous first partial derivatives such that:
   <ul>
   <li>$V(x)>0$ ($\forall x \in \mathbb{R}^n, x \neq 0$) and $V(0)=0$,</li>
   <li>$\lVert x \rVert \to +\infty \Rightarrow V(x) \to +\infty$,</li>
-  <li>$\dot{V}(x) < 0, \forall x \neq = 0$.</li>
+  <li>$\dot{V}(x) < 0, \forall x \neq 0$.</li>
   </ul>
   Then the equilibrium point $x=0$ of the system $\dot{x} = f(x)$ is <strong>globally asymptotically stable</strong>.
 </div>
 
-**Proof**
 
-The proof of global asymptotic stability is the same as in the local case, by noticing that the radial unboundedness of $V(x)$, combined with the negative definiteness of $\dot{V}(x)$, implies that, given any initial condition $x_0 \in \mathbb{R}^n$, the trajectories $\mathcal{X}(x_0, t)$ will remain in the bounded region defined by $V(x) \leq V(x_0)$ for all future time $t \ge 0$.
+<div class="proof">
+  <strong>Proof</strong><br>
+  The proof of global asymptotic stability is the same as in the local case, by noticing that the radial unboundedness of $V(x)$, combined with the negative definiteness of $\dot{V}(x)$, implies that, given any initial condition $x_0 \in \mathbb{R}^n$, the trajectories $\mathcal{X}(x_0, t)$ will remain in the bounded region defined by $V(x) \leq V(x_0)$ for all future time $t \ge 0$.
+  <div style="text-align: right; margin-top: 0.5em;">□</div>
+</div>
 
 <div class="remark-window">
   <div class="remark-title" id="remark_4.4">Remark 4.4 - Choice of Lyapunov functions</div>
-  Many different Lyapunov functions can be constructed for a given system. For instance, if $V$ is a Lyapunov function, for a given system, so is :
-  \[
-    V_1 = \rho V^\alpha
-  \]
-  where $\rho > 0$ is a constant and $\alpha \geq 1$ is a scalar. Indeed, the properties of positive definiteness and radial unboundedness are preserved, as well as the sign of the time derivative $\dot{V}_1$.<br>
+  Many different Lyapunov functions can be constructed for a given system. For instance, if $V$ is a Lyapunov function, for a given system, so is $V_1 = \rho V^\alpha$, where $\rho > 0$ is a constant and $\alpha \geq 1$ is a scalar. Indeed, the properties of positive definiteness and radial unboundedness are preserved, as well as the sign of the time derivative $\dot{V}_1$.<br>
 
-  More importantly, the choice of Lyapunov function is not unique, and different functions may provide different insights into the system's stability properties. The selection of an appropriate Lyapunov function often depends on the specific characteristics of the system being analyzed and may require creativity and intuition. Consider for instance the following pendulum system:
+  <br>More importantly, the choice of Lyapunov function is not unique, and different functions may provide different insights into the system's stability properties. The selection of an appropriate Lyapunov function often depends on the specific characteristics of the system being analyzed and may require creativity and intuition. Consider for instance the following pendulum system:
   \[
     \ddot{\theta} + \dot{\theta} + \sin(\theta) = 0
   \]
@@ -2131,18 +2160,288 @@ The proof of global asymptotic stability is the same as in the local case, by no
   \]
   However, this second Lyapunov function has the added benefit the $\dot{V_1}$ is actually negative definite, and therefor it can be used to prove asymptotic stability of the equilibrium point at $\theta = 0$.<br>
 
-  Along the same line, it is important to note that the theorems in Lyapunov's analysis presented earlier are all sufficient theorems. If for a given system and a particular choice of Lyapunov function candidate $V$, the conditions on $\dot{V}$ are not satisfied, one cannot conclude on the stability or instability of the system. In such cases, it may be necessary to explore alternative Lyapunov function candidates. 
+  <br>Along the same line, it is important to note that the theorems in Lyapunov's analysis presented earlier are all <i>sufficient</i> theorems. If for a given system and a particular choice of Lyapunov function candidate $V$, the conditions on $\dot{V}$ are not satisfied, one cannot conclude on the stability or instability of the system. In such cases, it may be necessary to explore alternative Lyapunov function candidates. 
 </div>
 
 ---
 
 ## 4.5: LaSalle's Invariance Principle
 
+It is possible to relax the condition on the time derivative of the Lyapunov function $\dot{V}(x)$ in order to prove asymptotic stability. Indeed, in this section, we will show which supplementary conditions can be added to Lyapunov's direct method in order to conclude on asymptotic stability, even when $\dot{V}(x) \leq 0$. Moreover, this approach will also relax the conditions on the positive definiteness of the Lyapunov function $V(x)$. Doing so will give us a criterion to prove asymptotic convergence, equally for equilibrium points and for limit cicles, however this theorem will not be a proof of Lyapunov stability anymore.
 
+Before stating LaSalle's invariance principle, we need to define the concept of invariant set. This set will represent the combination of all points in the state space where, for a given system dynamics, the trajectories remain indefenetly in that set.
+
+<div class="def-window">
+  <div class="def-title" id="def_4.12">Definition 4.12 - Invariant set</div>
+  Consider an autonomous system with dynamics $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function. The <b>invariant set</b> $\mathcal{I}$ is defined as the set of of initial conditions $x_0$ such that the corresponding trajectories $\mathcal{X}(x_0, t)$ remain in $\mathcal{I}$ for all future time $t \geq 0$.
+  \[
+    \mathcal{I} = \{ x_0 \in \mathbb{R}^n \mid \mathcal{X}(x_0, t) \in \mathcal{I}, \forall t \geq 0 \}
+  \]
+</div>
+
+*For more details on invariant sets, please refer to the section on [Invariant Sets](MPC#22-invariant-sets) from the lecture on MPC.*
+
+In parallel to invariant sets, we can also define a set containing all points where the time derivative of a given Lyapunov function is equal to zero. This set will be useful in the statement of LaSalle's invariance principle since we try to extand the asymptotic stabilisty analysis to the case where $\dot{V}(x) \leq 0$, which means we need to include only the case $\dot{V}(x)=0$ compared to our previous analysis. This set is denoted as $\mathcal{V}$ and defined as follows:
+<div>
+\[\mathcal{V} = \{ x \in \mathbb{R}^n \mid \dot{V}(x) = 0 \} \cap \Omega\]
+</div>
+where $\Omega$ is a compact invariant set for the system. Be careful that the set $\mathcal{V}$ is not necessarily invariant.
+
+<div class="thm-window">
+  <div class="thm-title" id="theorem_4.4">Theorem 4.4 - LaSalle's Invariance Theorem</div>
+  Consider a continuous function $V: \mathbb{R}^n \rightarrow \mathbb{R}$ and an autonomous dynamical system $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function. If the sets $\Omega$, $\mathcal{V}$ and $\mathcal{I}$ are defined and follow the properties:
+  <ol>
+  <li>$\Omega$ is a compact set (closed and borned) and is invariant for the system
+  \[\boxed{x_0\in\Omega\Rightarrow\mathcal{X}(x_0,t)\in\Omega\quad\forall t\geq 0}\]</li>
+  <li>In the set $\Omega$, the function $V(x)$ is such that:
+  \[\boxed{\forall x \in \Omega, \dot{V}(x) := \tfrac{\partial V}{\partial x}f \leq 0 }\]</li>
+  <li>The set $\mathcal{V}$ is defined as the set of points in $\Omega$ where $\dot{V}(x) = 0$:
+  \[\boxed{\mathcal{V} = \{ x \in \Omega \mid \dot{V}(x) = 0 \}}\]</li>
+  <li>The set $\mathcal{I}$ is the largest invariant among the set contained in $\mathcal{V}$:
+  \[\boxed{\mathcal{I} \subseteq \mathcal{V}\quad \forall x \in\mathcal{I}\Rightarrow\mathcal{X}(x,t)\in\mathcal{I}\quad\forall t\geq 0}\]</li>
+  </ol>
+  Then, for any initial condition $x_0 \in \Omega$, the trajectory $\mathcal{X}(x_0, t)$ asymptotically approaches the set $\mathcal{I}$ as $t \to +\infty$.
+  \[\forall x_0 \in \Omega \Rightarrow \mathcal{X}(x_0, t) \to \mathcal{I} \; \text{as} \; t \to +\infty\]
+</div>
+  
+**Example: simple pendulum**
+
+Consider the simple pendulum system, comprised of a mass $m$ attached to a rod of unit length, swinging under the influence of gravity and subject to a viscous force proportional to its angular velocity. From basic mechanical principles, the dynamics of this system are described by the second-order differential equation:
+
+<div>
+\[
+m\ddot{\theta} + b\dot{\theta} + mg\sin(\theta) = 0
+\]
+</div>
+
+where:
+- $\theta$ is the angular displacement of the pendulum from the vertical position,
+- $b$ is the damping coefficient,
+- $g$ is the acceleration due to gravity.
+
+To analyze the stability of this system using LaSalle’s invariance principle, we first rewrite the second-order equation as a first-order system by defining the state vector $x = [\theta, \dot{\theta}]^\top$. The state-space representation becomes:
+
+<div>
+\[
+\begin{aligned}
+\dot{x}_1 &= x_2 \\
+\dot{x}_2 &= -\frac{b}{m}x_2 - g\sin(x_1)
+\end{aligned}
+\]
+</div>
+
+<div class="images" style="justify-content:center; text-align:center;">
+  <figure id="fig_4.5_pendulum_system">
+    <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/ch4_pendul.jpeg" alt="Pendulum System" width="150"/>
+    <figcaption style="text-align: center;"><strong>Figure 4.5:</strong> Simple pendulum system</figcaption>
+  </figure>
+</div>
+
+We would like to analyze the stability of the equilibrium point at $\theta = 0$ (the downward position). A natural Lyapunov function for this system is the total mechanical energy:
+
+<div>
+\[
+\begin{aligned}
+V(x) &= E_c + E_p \\
+     &= \tfrac{1}{2} m x_2^2 + mg\big(1 - \cos(x_1)\big)
+\end{aligned}
+\]
+</div>
+
+This function is positive for all $x$ except when $1-\cos(x_1)=0$, which occurs at $x_1 = 0$ (the downward position) and at $x_1 = 2k\pi$ for any integer $k$ (the upright positions).
+
+Next, we compute the time derivative of $V(x)$ along system trajectories:
+
+<div>
+\[
+\begin{aligned}
+\dot{V}(x) &= \frac{\partial V}{\partial x}\,\dot{x} \\
+&= mx_2\dot{x}_2 + mg\sin(x_1)\dot{x}_1 \\
+&= mx_2\left(-\frac{b}{m}x_2 - g\sin(x_1)\right) + mg\sin(x_1)x_2 \\
+&= -b x_2^2 \le 0.
+\end{aligned}
+\]
+</div>
+
+Thus, near the equilibrium point $\theta = 0$, the Lyapunov function satisfies:
+1. $V(x) = 0$ at $x = 0$,
+2. $V(x) > 0$ for all $x \neq 0$,
+3. $\dot{V}(x) \le 0$ for all $x$.
+
+From Lyapunov’s direct method, we can conclude that the equilibrium at $\theta = 0$ is locally stable. However, because $\dot{V}(x) = 0$ whenever $x_2 = 0$, we cannot conclude asymptotic stability from Lyapunov’s theorem alone. To proceed further, we apply LaSalle’s invariance principle.
+
+First, consider the set $\mathcal{V}$ where $\dot{V}(x) = 0$. This occurs whenever $x_2 = 0$, regardless of the value of $x_1$. Hence:
+
+<div>
+\[\mathcal{V} = \{x \in \mathbb{R}^2 \mid x_2 = 0 \}\]
+</div>
+
+which corresponds to the horizontal axis in the state space.
+
+Next, we determine the largest invariant subset $\mathcal{I} \subseteq \mathcal{V}$. When $x_2 = 0$, the system dynamics reduce to:
+
+<div>
+\[
+\begin{aligned}
+\dot{x}_1 &= 0, \\
+\dot{x}_2 &= - g\sin(x_1).
+\end{aligned}
+\]
+</div>
+
+To remain in $\mathcal{V}$ and be invariant, we must also have $\dot{x}_2 = 0$, which requires $\sin(x_1)=0$, leading to $x_1 = k\pi$ for any integer $k$. Thus,
+
+<div>
+\[\mathcal{I} = \{(\theta,\dot{\theta}) \mid \dot{\theta}=0,\; \theta = k\pi,\; k\in\mathbb{Z}\}\]
+</div>
+
+Applying LaSalle’s invariance principle, we now distinguish two cases:
+
+**Case 1 — No damping ($b=0$)**
+
+The system is conservative, and $\dot{V}(x) = 0$ everywhere. Trajectories remain on the level sets of the energy function and exhibit periodic motion around the equilibrium. The system is locally stable but not asymptotically stable, since trajectories do not converge.
+
+**Case 2 — With damping ($b>0$)**
+
+In this case, $\dot{V}(x)$ is negative semidefinite, and trajectories decrease in energy. Because the pendulum has saddle points at $\theta = 2k\pi+\pi$, separatrices appear in the phase portrait, enclosing a compact region around the downward equilibrium. Any level set of the Lyapunov function inside this region (e.g., $V(x) \le mg - \epsilon$) forms a compact invariant set:
+
+<div>
+\[
+\Omega_{mg-\epsilon} = \{ x \in \mathbb{R}^2 \mid V(x) \le mg-\epsilon,\; x_1 \in (-\pi, \pi) \}
+\]
+</div>
+
+Within this set, all trajectories converge to $\theta = 0$ because of damping. Thus, the downward equilibrium is **locally asymptotically stable** within $\Omega_{mg-\epsilon}$.
+
+Finally, even though LaSalle’s invariance principle allows us to conclude local asymptotic stability of the downward equilibrium, we cannot extend this to global asymptotic stability. The presence of multiple invariant sets, the upright equilibria at $\theta = 2k\pi+\pi$, prevents all trajectories from converging to $\theta = 0$ from arbitrary initial conditions. While every trajectory eventually converges to an equilibrium point, LaSalle’s principle and the Lyapunov function alone do not determine which equilibrium will be reached from a given initial state.
 
 ---
 
 ## 4.6: Lyapunov Functions Construction
+
+Until now, in order to work with a Lyapunov function, we had to propose a candidate function $V(x)$ and then proceed through trial and error or construction and correction to verify if it satisfied the conditions to be clasified as a lyapunov function. The issue with this approach is that one needs to have some intuition on the system dynamics in order to propose a relevant Lyapunov function candidate. However, there exists systematic methods to construct Lyapunov candidats for specific classes of systems. In this section, we will focus on one of those methods, the first one help us know if a particular Lyapunov candidat is indeed leading to a Lyapunov function. 
+
+### Krasovskii's Method
+
+<div class="thm-window">
+  <div class="thm-title" id="theorem_4.5">Theorem 4.5 - Krasovskii's Method</div>
+  Consider the autonomous system $\dot{x} = f(x)$, where $x \in \mathbb{R}^n$ is the state vector and $f: \mathbb{R}^n \rightarrow \mathbb{R}^n$ is a continuous function, with the equilibrium point being at the origin $f(0) = 0$. Let define the matrix $A(x)$ as the Jacobian of $f(x)$:
+  \[A(x) = \dfrac{\partial f}{\partial x}\]
+  If there exists on open set $\Omega \subseteq \mathbb{R}^N$ containing the origin, such that the matrix $F(x)=A(x) + A^\top(x) < 0$ is negative definite $\forall x\neq 0, x \in \Omega$ (i.e. $x^\top F(x) x < 0 $), then a Lyapunov function for the system is given by:
+  \[V(x) = f^\top(x) f(x)\]
+  and the equilibrium point $x=0$ is asymptotically stable. Additionally, if $\Omega = \mathbb{R}^n$ and $V(x) \to +\infty$ as $\lVert x \rVert \to +\infty$, then the equilibrium point is globally asymptotically stable.
+</div>
+
+<div class="proof">
+  <strong>Proof</strong><br>
+  First, let's verify that the negative definiteness of $F(x)$ implies that $f(x) \neq 0$ for all $x \neq 0$. Since the square matrix $F(x)$ is negative definite for non-zero $x$, one can show that the Jacobian matrix $A(x)$ is invertible, by contradiction. Indeed, if there existed a non-zero vector $v$ such that $A(x)v = 0$, then we would have:
+
+  \[v^\top F(x) v = 2 v^\top A(x)v + v^\top A^\top(x)v\]
+
+  which contradicts the negative definiteness of $F(x)$. Therefore, $A(x)$ is invertible for all $x \neq 0$, which implies that $f(x) \neq 0$ for all $x \neq 0$.This also implies that the equilibrium point is unique in $\Omega$.
+
+  We can now proceed to show the asymptotic stability of the equilibrium point using the proposed Lyapunov function $V(x) = f^\top(x) f(x)$. First, we note that $V(x)$ is positive definite since $f(x) \neq 0$ for all $x \neq 0$ and $V(0) = 0$. Next, we compute the time derivative of $V(x)$ along the system trajectories, using the fact that $\dot{f}(x) = A(x)f(x)$:
+  
+  \[\dot{V}(x) = f^\top \dot{f} + \dot{f}^\top f = f^\top A f + f^\top A^\top f = f^\top F f\]
+  
+
+  The negative definiteness of $F(x)$ implies that $\dot{V}(x) < 0$ for all $x \neq 0$. Therefore, by Lyapunov's direct method, the equilibrium point $x = 0$ is asymptotically stable.
+
+  <div style="text-align: right; margin-top: 0.5em;">□</div>
+</div>
+
+While the use of the Krasovskii's model theorem is straightforward, it is limited to systems where the Jacobian matrix $A(x)$ can be computed and satisfies the negative definiteness condition. In addition, for system of higher dimensions, verifying the negative definiteness of $F(x)$ for all $x$ can be computationally intensive. 
+
+Thus a generalization of this method exists and is as follows:
+
+<div class="thm-window">
+  <div class="thm-title" id="theorem_4.6">Theorem 4.6 - Generalized Krasovskii's Theorem</div>
+  Consider the same system as in <a href="#theorem_4.5">Theorem 4.5</a>, if there exists $\Omega \subseteq \mathbb{R}^n$, and $P>0$ and $\exists Q>0$ two positive definite matrices such that $\forall x \neq 0, x \in \Omega$, the it is true that:
+  \[F(x)=A^\top(x) P + P A(x) = -Q < 0 \]
+  is a negative definite matrix, then a Lyapunov function for the system is given by:
+  \[V(x) = f^\top(x) P f(x) \]
+  and the equilibrium point $x=0$ is asymptotically stable. Additionally, if $\Omega = \mathbb{R}^n$ and $V(x) \to +\infty$ as $\lVert x \rVert \to +\infty$, then the equilibrium point is globally asymptotically stable.
+</div>
+
+<div class="proof">
+  <strong>Proof</strong><br>
+  The proof follows the same structure as that of <a href="#theorem_4.5">Theorem 4.5</a>. First, we verify that $f(x) \neq 0$ for all $x \neq 0$ in $\Omega$, using the negative definiteness of $F(x)$ to show that $A(x)$ is invertible. Next, we define the Lyapunov function $V(x) = f^\top(x) P f(x)$, which is positive definite since $P > 0$ and $f(x) \neq 0$ for all $x \neq 0$. 
+
+  We then compute the time derivative of $V(x)$ along the system trajectories:
+
+  \[\dot{V}(x) = f^\top P \dot{f} + \dot{f}^\top P f = f^\top P A f + f^\top A^\top P f = f^\top F f -  f^\top Q f\]
+
+  The negative definiteness of $F(x)$ and the positive definiteness of $Q$ imply that $\dot{V}(x) < 0$ for all $x \neq 0$. Therefore, by Lyapunov's direct method, the equilibrium point $x = 0$ is asymptotically stable. Additionally, if $\Omega = \mathbb{R}^n$ and $V(x) \to +\infty$ as $\lVert x \rVert \to +\infty$, then the equilibrium point is globally asymptotically stable.
+  <div style="text-align: right; margin-top: 0.5em;">□</div>
+</div>
+
+### Variable Gradient Method
+
+If we know the Lyapunove function $V(x)$ and its gradient $\nabla V(x)$, we can use the variable gradient method as a formal approach to constructing Lyapunov functions. For low order systems, this method sometimes lead to the succesful construction of a Lyapunov function. 
+
+To start, let us note the following relationship between the time derivative of the Lyapunov function and its gradient:
+<div>
+\[\dot{V}(x) = \nabla V(x)^\top f(x)\]
+</div>
+where $\nabla V(x) = \left[\frac{\partial V}{\partial x_1}, \frac{\partial V}{\partial x_2}, \ldots, \frac{\partial V}{\partial x_n}\right]^\top$. In order to recover a unique scalar function $V(x)$ from its gradient $\nabla V(x)$, the gradient must satisfy the following condition:
+<div>
+\[\dfrac{\partial \nabla V_i}{\partial x_j} = \dfrac{\partial \nabla V_j}{\partial x_i} \quad \forall i,j = 1, \ldots, n\]
+</div>
+For a two-dimensional system, this condition reduces to:
+<div>
+\[\dfrac{\partial \nabla V_1}{\partial x_2} = \dfrac{\partial \nabla V_2}{\partial x_1}\]
+</div>
+While respecting the above conditions, we can propose a parametric form for the gradient $\nabla V(x)$, to make $\dot{V}(x)$ negative definite: 
+<div>
+\[\dot{V} = \nabla V f < 0\]
+</div>
+
+Since satisfaction of this conditions implies that the integration relust is independent of the integration path, it is usually convenient to obtain $V(x)$ by integrating along a path which is parallel to each axis in turn:
+<div>
+\[V(x) = \int_0^{x_1} \nabla V_1(\zeta_1, 0, \ldots, 0) d\zeta_1 + \int_0^{x_2} \nabla V_2(x_1, \zeta_2, 0, \ldots, 0) d\zeta_2 + \ldots + \int_0^{x_n} \nabla V_n(x_1, x_2, \ldots, \zeta_n) d\zeta_n\]
+</div>
+
+**Example:**
+
+Let us use the variable gradient method to construct a Lyapunov function for the following system:
+<div>
+\begin{align*}
+\dot{x}_1 &= -2x_1 \\
+\dot{x_2} &= -2x_2+2x_1x_2^2
+\end{align*}
+</div>
+We assume the gradient of the Lyapunov function has the following parametric form:
+<div>
+\begin{align*}
+\nabla V_1(x) &= a_{11} x_1 + a_{12} x_2 \\
+\nabla V_2(x) &= a_{21} x_1 + a_{22} x_2
+\end{align*}
+</div>
+where $a_{ij}$ are unknown parameters to be determined. The condition for the gradient to be integrable gives:
+<div>
+\[\dfrac{\partial \nabla V_1}{\partial x_2} = \dfrac{\partial \nabla V_2}{\partial x_1}\]
+\[\Rightarrow a_{12} = a_{21}\]
+</div>
+If whe chose the following values for the parameters:
+<div>
+\[a_{11} = a_{22} = 1, \quad a_{12} = a_{21} = 0,\]
+</div>
+then the gradient becomes:
+<div>
+\begin{align*}
+\nabla V_1(x) &= x_1 \\
+\nabla V_2(x) &= x_2
+\end{align*}
+</div>
+and the time derivative of the Lyapunov function is:
+<div>
+\[\dot{V}(x)=\nabla V \dot{x} = -2x_1^2-2x_2^2(1-x_1x_2)\]
+</div>
+which is negative definite in the region $\mathcal{D} = \{x \in \mathbb{R}^2 \mid x_1x_2 < 1\}$. Finally, we can compute the Lyapunov function by integrating the gradient:
+<div>
+\[V(x) = \int_0^{x_1} x_1dx_1 + \int_0^{x_2} x_2 dx_2 = \dfrac{1}{2} x_1^2 + \dfrac{1}{2} x_2^2\]
+</div>
+Which is positive semi definite, thus the Lyapunov function $V(x) = \frac{1}{2} x_1^2 + \frac{1}{2} x_2^2$ proves that the equilibrium point at the origin is locally asymptotically stable within the region $\mathcal{D}$.
 
 ---
 

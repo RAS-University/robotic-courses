@@ -118,6 +118,12 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 ---
 ### Asymptotic Notation Refresher
 
+Suppose we double the number of intersections in a city map. Will our shortest-path algorithm become twice as slow? Four times? Or barely slower at all? Questions like these arise constantly in graph-based planning, and answering them requires a scale-independent way of describing algorithmic growth.
+
+Asymptotic notation provides this perspective. By focusing on how running time behaves as the graph size grows, rather than on machine-specific measurements, we obtain a clear and comparable description of algorithmic efficiency.
+
+---
+
 When we analyze graph algorithms, we usually care about how the running time grows with the input size $n$ as $n \to \infty$. We compare functions like $f(n)$ and $g(n)$ using the following notations:
 
 #### Big-O, Big-Omega, Big-Theta
@@ -149,6 +155,7 @@ $$
 
 > Intuition: $f$ does not grow faster than $g$, up to constant factors.
 
+While Big-O describes an upper bound, it does not tell us whether the function ever grows faster than the comparison. To capture that aspect, we use Big-Omega.
 
 ---
 
@@ -179,6 +186,8 @@ $$
 
 > Intuition: $f$ does not grow slower than $g$.
 
+Neither an upper nor a lower bound alone gives the full picture. When both coincide, we obtain a tight characterization, expressed using Big-Theta.
+
 ---
 
 
@@ -207,6 +216,8 @@ $$
 </figcaption>
 
 > Intuition: $f$ and $g$ grow at the same rate (up to constant factors).
+
+The three notations form a hierarchy of expressiveness. Together, they let us distinguish between algorithms that merely avoid worst-case blowup and those that are genuinely efficient across all input sizes.
 
 ---
 
@@ -292,12 +303,14 @@ We will use these notations throughout to describe the time and space complexity
 
 </div>
 
+With these tools in hand, we can now analyze the complexity of the graph algorithms introduced throughout this chapter.
 
 ---
 
 ## Chapter 1: Motivation
+Before introducing formal definitions, it is useful to understand why graphs arise so naturally in robotics and algorithmic reasoning. Many real-world systems, from transportation to autonomous navigation, can be expressed as collections of states and possible transitions. Graph theory provides the mathematical language for studying these relationships and describing how information or motion can flow through a system.
 
-Graph theory provides the mathematical foundation for reasoning about motion planning. When a robot navigates through an environment, its possible configurations and the feasible transitions between them naturally form a graph. Each node represents a state of the system, and each edge corresponds to a feasible transition. Planning then becomes the task of finding a path through this graph that connects an initial configuration to a goal configuration while respecting certain constraints such as feasibility or optimality.
+When a robot navigates an environment, its possible configurations and feasible transitions form exactly such a graph: each node represents a state, and each edge represents a valid move. Motion planning then becomes the problem of finding a path in this graph from an initial configuration to a goal while satisfying feasibility or optimality constraints.
 
 ### Example 1: GPS Navigation
 
@@ -330,11 +343,17 @@ Autonomous robots navigating a warehouse are another classic example. We can mod
   </figcaption>
 </figure>
 
+---
 
+These examples highlight how diverse systems can be described using the same graph abstraction. To work with such systems rigorously, we next introduce precise definitions for graphs, edges, weights, and paths, forming the mathematical foundation used throughout the rest of this material.
 
 ---
 
 # Chapter 2. Basic Definitions
+
+To formalize the intuitions built from real-world examples, we now introduce the core definitions of graph theory. These definitions establish the vocabulary used for describing connectivity, relationships, and structure within a system, and they serve as the basis for later algorithmic analysis.
+
+---
 
 ## 2.1 Graphs
 
@@ -529,9 +548,14 @@ Connectivity plays a central role in determining whether traversal or communicat
   </script>
 </div>
 
+---
+
+In summary, this chapter introduced the essential components of a graph, vertices, edges, weights, and paths, and showed how these elements encode the structure of a system. With these definitions established, we can now examine how graphs are represented inside a computer, an important consideration for the efficiency of search and planning algorithms.
 
 ---
 # Chapter 3: Graph Representations
+
+Once a graph is defined mathematically, the next question is how to store it efficiently in a computer. Different applications require different operations, fast lookups, memory-efficient storage, or quick neighbor traversal, and the chosen data structure strongly influences algorithmic performance. This chapter compares the three standard representations used in practice.
 
 Before we can run algorithms like BFS or Dijkstra, we must represent the abstract concept of a graph $G = (V, E)$ in a computer’s memory. The choice of representation is a fundamental design decision that has a major impact on both runtime and memory usage.
 
@@ -706,6 +730,9 @@ The best representation depends entirely on the graph’s density and the operat
 | **Remove edge $(u,v)$** | $O(1)$ | $O(\text{degree}(u))$ | $O(E)$ |
 
 ---
+Choosing the right representation is a crucial design decision, as it determines which graph algorithms can run efficiently. With a representation selected, we can now study how to explore, traverse, and search graphs using systematic algorithms.
+
+---
 
 ### Summary Takeaway
 
@@ -849,12 +876,13 @@ Constant-time edge lookup is important, and matrix-based algorithms operate natu
 
 # Chapter 4. Traversal and Search
 
+Graph traversal algorithms reveal the structure of a graph by visiting vertices according to specific rules. These methods form the backbone of motion planning, routing, and connectivity analysis. In this chapter, we examine several classical strategies, starting from uninformed exploration and progressing toward informed, cost-aware search.
 Once a graph is defined, we can explore it systematically using *search algorithms*. Traversal algorithms visit nodes according to specific rules, allowing us to enumerate vertices, discover components, or find optimal paths between nodes. Although many variants exist, two of the most fundamental search paradigms are breadth-first and depth-first exploration.
 
 ---
 
 ## 2.1 Breadth-First Search (BFS)
-
+We begin with the simplest form of systematic exploration, which visits nodes in increasing order of distance.
 Breadth-First Search explores a graph in layers, visiting all vertices at distance one from the starting node before proceeding to vertices at distance two, and so on. This systematic expansion guarantees that the first time a vertex is reached, it is reached via the shortest possible path in terms of edge count.  
 
 The algorithm maintains a queue of vertices to be explored. When a vertex is dequeued, all of its unvisited neighbors are enqueued for later exploration. The process continues until the queue is empty or a target vertex is reached.
@@ -976,7 +1004,7 @@ The two most classical algorithms for finding shortest paths are *Dijkstra’s a
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.js"></script>
 
 
-## Coding Exercise 2: DFS Traversal and Tree Construction
+## Coding Exercise 1: DFS Traversal and Tree Construction
 
 In this exercise, you will implement an iterative Depth-First Search (DFS) on a fixed undirected graph:
 
@@ -1104,6 +1132,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 ---
 
 ### Dijkstra’s Algorithm (1959) [<a href="#ref1">1</a>]
+BFS and DFS operate under the assumption that all edges have equal cost or that costs are irrelevant. In many real systems, maps, robot motion, energy usage, transitions have different weights. Dijkstra’s algorithm extends the ideas of BFS to handle weighted graphs optimally.
 
 Dijkstra’s algorithm generalizes BFS to weighted graphs by always expanding the vertex with the lowest cumulative cost from the start.  
 It maintains a *priority queue* of vertices, ordered by their current best-known distance.  
@@ -1148,6 +1177,8 @@ For dense graphs, where $E$ grows quadratically with $V$, the complexity approac
 ---
 
 ### A-Star (A*) Search (1968) [<a href="#ref2">2</a>]
+
+While Dijkstra’s algorithm finds optimal paths in weighted graphs, it does so without any knowledge of the goal’s location. In many applications, we can estimate how promising a particular direction might be. A* search incorporates this information through heuristics, guiding the algorithm toward the goal more efficiently.
 
 A\* extends Dijkstra’s algorithm by adding a heuristic function $h(v)$ that estimates the remaining cost from a vertex $v$ to the goal. This heuristic guides the search toward promising directions, potentially reducing the number of expanded nodes.
 
@@ -1332,9 +1363,18 @@ The following table summarizes the core properties of the traversal algorithms i
 </div>
 
 ---
+Together, BFS, DFS, Dijkstra, and A* illustrate a progression from uninformed to informed search. As we refine our knowledge about the environment, edge costs, heuristic estimates, the algorithms become increasingly efficient while still guaranteeing correctness under appropriate conditions.
+
+---
 
 ## References
 
 1.  <a id="ref1"></a>Dijkstra, E. W. (1959). *A note on two problems in connexion with graphs.* Numerische Mathematik, 1(1), 269–271.
 2.  <a id="ref2"></a>Hart, P. E., Nilsson, N. J., & Raphael, B. (1968). *A Formal Basis for the Heuristic Determination of Minimum Cost Paths.* IEEE Transactions on Systems Science and Cybernetics, 4(2), 100–107.
 3. <a id="ref3"></a>Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). *Introduction to Algorithms* (4th ed.). MIT Press.
+
+---
+
+### Credits:
+
+This course page was created by **Hanka Goralija, EPFL** under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**. 

@@ -67,7 +67,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 ## Prerequisites
 - [Basic probability theory](../mathematical-foundation)
 - [Robot kinematics and configuration space](../kinematics)
-- [Graph search algorithms](../graph-theory)
+- [Graph search algorithms](../advanced_math/graph-theory)
 <!-- - Collision checking in robot environments -->
 
 ---
@@ -114,7 +114,7 @@ If edges are ordered pairs $(u,v)$, the graph is directed.
 </div>
 
 
-
+This abstraction is visualized below, showing how a continuous physical space is transformed into a discrete network of nodes and connections:
 
 ![Building a Graph]({{ '/assets/images/sampling_based_planning/build_graph.gif' | relative_url }})
 
@@ -179,7 +179,7 @@ F(q) = - \nabla U(q)
 so the robot moves in the direction of steepest descent of the potential field.
 </div>
 
-
+The resulting movement, which behaves like a ball rolling down a contoured surface, is illustrated in the animation below:
 ![Potential Fields]({{ '/assets/images/sampling_based_planning/potential.gif' | relative_url }})
 
 This worked well for simple, open environments. However, in a maze, the robot could easily get stuck in a dead-end (a "local minimum") without ever reaching the goal. It was a step forward in creating dynamic motion, but it wasn't a reliable planner.
@@ -196,9 +196,10 @@ The most successful solution returned to our graph representation. If the maze i
 Let's make our maze more interesting. Imagine some floor tiles are sand, taking more energy to cross. We can represent this by making our graph weighted—an edge over pavement might have a weight of 1, while an edge over sand has a weight of 5. Now, we don't just want any path; we want the cheapest path. Dijkstra's Algorithm is the classic and definitive solution for this. It operates by starting at starting point and exploring outwards like a ripple in a pond. Crucially, it always expands from the vertex that has the lowest total cost discovered so far. It meticulously builds a map of the cheapest way to get to every reachable vertex from the start and doesn't stop until it has found the cheapest path to the goal. The result is a guaranteed optimal path in terms of total weight. Its weakness is that it's "uninformed" - it explores in all directions equally, because it has no sense of direction. 
 
 Its complexity is described as `O(E + V log V)`, meaning its runtime depends on the number of edges `E` and vertices `V` in the graph. For a grid, this is very efficient. But as we'll see, for more complex problems, creating the graph itself is the real challenge.
+The process of Dijkstra's algorithm meticulously expanding outward from the start node is demonstrated in the visualization below:
 ![Dijkstra's shortest path]({{ '/assets/images/sampling_based_planning/dijkstra.gif' | relative_url }})
 
-(For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../graph-theory))
+(For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../advanced_math/graph-theory))
 
 ## Final step: The Limits of Grids and the Curse of Dimensionality
 
@@ -342,7 +343,7 @@ Question for Students: "If a robot arm has 6 joints, and we want to represent ea
 
 Since we can't possibly map out the entire C-space, what if we don't even try? This is the fundamental shift in thinking that leads to Sampling-Based Motion Planning (SBMP). Instead of exhaustively checking every possible location, we can simply generate random configurations in the C-space and check if they are valid (i.e., not in collision).
 
-The core intuition is that if we take enough random samples, we can build a sparse but effective map that captures the essential connectivity of the free space. We don't need to know about every single point; we just need to know enough to find a way from start to goal. This approach trades the guarantee of finding the absolute best path for the ability to find a feasible path, quickly, in incredibly complex, high-dimensional spaces. Early on, these planners proved their power by solving highly constrained problems that were previously intractable, such as the famous "alpha puzzle"
+The core intuition is that if we take enough random samples, we can build a sparse but effective map that captures the essential connectivity of the free space. We don't need to know about every single point; we just need to know enough to find a way from start to goal. This approach trades the guarantee of finding the absolute best path for the ability to find a feasible path, quickly, in incredibly complex, high-dimensional spaces. Early on, these planners proved their power by solving highly constrained problems that were previously intractable, such as the famous "alpha puzzle":
 
 <video width="600" autoplay loop muted playsinline controls>
   <source src="{{ '/assets/videos/sampling_planning/alpha_puzzle.mp4' | relative_url }}" type="video/mp4">
@@ -376,6 +377,8 @@ $$
 where $d(\cdot,\cdot)$ is a valid metric in the configuration space.
 </div>
 
+---
+
 ### Distance Metrics: Workspace vs Configuration Space
 
 ![Metrics in Configuration space](https://www.youtube.com/watch?v=B8I43AEerUU&list=PLYZT24lofrjXcuu1iBNWu-NprW2wZD3zu&index=46)
@@ -388,6 +391,8 @@ where $d(\cdot,\cdot)$ is a valid metric in the configuration space.
         <a href="https://www.youtube.com/watch?v=B8I43AEerUU&list=PLYZT24lofrjXcuu1iBNWu-NprW2wZD3zu&index=46" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
     </div>
 </div>
+
+---
 
 The most straightforward method is *unbiased (uniform) sampling*, which draws configurations from the C-space such that each has an equal probability of being chosen.  
 
@@ -899,7 +904,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 </style>
 
-## 2: Collision-Checking Graph Building
+## Coding Exercise 2: Collision-Checking Graph Building
 
 In this exercise, you will implement a function to build a **collision-free graph** connecting sampled configurations in a 2D maze:
 
@@ -1119,6 +1124,40 @@ PRM operates in two distinct phases. The first is the Construction Phase, where 
 6. **Repeat.**  
    Iterate steps 1–5 for a fixed number of samples (or until a stopping criterion is met) to  gradually build a rich network that captures the connectivity of the robot's free space.
 
+The pseudocode below follows this logic line by line: it starts by initializing an empty graph, then iteratively performs sampling, collision-checking, neighbor search, and local connections.
+
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 1:</strong> Basic PRM
+
+<pre>
+<strong>procedure</strong> BUILD-ROADMAP(num_samples)
+    G ← (V, E) with V = ∅, E = ∅               <em>▷ Initialize empty</em> roadmap:
+                                               <em>▷ V = vertices (samples), </em>
+                                                <em>E = edges (connections)</em>
+
+    <strong>for</strong> i = 1 <strong>to</strong> num_samples <strong>do</strong>                <em>▷ Repeat construction steps</em>
+        q_rand ← sample from 𝒞_free            <em>▷ Step 1: draw a</em> random 
+                                            <em>collision-free configuration</em>
+        V.add(q_rand)                          <em>▷ Step 2: add it as a new vertex</em>
+
+        N(q_rand) ← k-nearest neighbors of q_rand in V  
+                                               <em>▷ Step 3: find its k closest existing </em>
+                                              <em>vertices</em>
+
+        <strong>for each</strong> q_near <strong>in</strong> N(q_rand) <strong>do</strong>        <em>▷ Attempt local connections</em>
+            <strong>if</strong> LocalPlanner(q_rand, q_near) is collision-free <strong>then</strong>
+                                              <em>▷ Step 4: check straight-line validity</em>
+                E.add((q_rand, q_near))       <em>▷ Step 5: add an undirected edge</em>
+
+    <strong>return</strong> G                                  <em>▷ Return the completed roadmap</em>
+</pre>
+
+📘 *Reference:* Orthey et al., <em>Sampling-Based Motion Planning: A Comparative Review</em>, Algorithm 1 (PRM)[<a href="#ref1">1</a>].
+</div>
+
+
 
 
 ---
@@ -1145,6 +1184,18 @@ Now that we have our roadmap, solving a specific problem is easy.
 
 A major strength of PRM is that if we get a new query (e.g., move from $q_{\text{start}}$ to a new $q_{\text{goal}_2}$), we only need to repeat this trivial query phase, the expensive map construction is already done.  
 
+
+---
+The animation below provides a visual walkthrough of the PRM construction phase, showing how random samples are converted into a connected graph, it then follows with the query phase, resulting in complete path from start to goal:
+
+<figure style="text-align:center;">
+  <img src="{{ '/assets/images/sampling_based_planning/prm.gif' | relative_url }}" 
+       alt=" PRM algorithm building a roadmap in a 2D maze." 
+       width="100%">
+  <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
+    <strong>Figure.</strong>  PRM algorithm building a roadmap in a 2D maze.
+  </figcaption>
+</figure>
 <!-- ---
 
 <div class="note" markdown="1">
@@ -1154,41 +1205,7 @@ In contrast, algorithms like **RRT** are *single-query*: they focus on solving o
 </div> -->
 
 ---
-<figure style="text-align:center;">
-  <img src="{{ '/assets/images/sampling_based_planning/prm.gif' | relative_url }}" 
-       alt=" PRM algorithm building a roadmap in a 2D maze." 
-       width="100%">
-  <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
-    <strong>Figure.</strong>  PRM algorithm building a roadmap in a 2D maze.
-  </figcaption>
-</figure>
 
-
----
-
-
-<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
-
-<strong>Algorithm 1:</strong> Basic PRM  
-
-<pre>
-<strong>procedure</strong> BUILD-ROADMAP(num_samples)
-    G ← (V, E) with V = ∅, E = ∅
-    <strong>for</strong> i = 1 <strong>to</strong> num_samples <strong>do</strong>
-        q_rand ← sample from 𝒞_free
-        V.add(q_rand)
-        N(q_rand) ← k-nearest neighbors of q_rand in V
-        <strong>for each</strong> q_near <strong>in</strong> N(q_rand) <strong>do</strong>
-            <strong>if</strong> LocalPlanner(q_rand, q_near) is collision-free <strong>then</strong>
-                E.add((q_rand, q_near))
-    <strong>return</strong> G
-</pre>
-
-
-📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 1 (PRM)[<a href="#ref1">1</a>].
-</div>
-
----
 
 
 ![PRM: Probabilistic Roadmap Method in 3D and with 7-DOF robot arm](https://www.youtube.com/watch?v=tlFVbHENPCI&t=568s)
@@ -1296,7 +1313,6 @@ The growth heuristic is simple and powerful:
 4. The local planner checks if the small path segment from $q_{\text{near}}$ to $q_{\text{new}}$ is collision-free.  
    If it is, $q_{\text{new}}$ is added to the tree as a new vertex with an edge connecting it back to $q_{\text{near}}$.  
 
----
 
 <div class="note" markdown="1">
 <strong>Quick Fact — Voronoi Regions and Exploration Bias</strong>  
@@ -1327,8 +1343,44 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
 </div>
 
 
+---
+
+To summarize, RRT repeatedly samples a random configuration, finds the closest tree node, takes a small step toward the sample, and adds this new point if the short motion is collision-free. The pseudocode below follows this logic line by line.
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 2:</strong> Basic RRT
+
+<pre>
+<strong>procedure</strong> BUILD-RRT(q_start)
+    T.initialize(q_start)                   <em>▷ Initialize the tree T with the </em>
+                                            <em>  start configuration q_start</em>
+                                            <em>  as its root node</em>
+
+    <strong>for</strong> i = 1 <strong>to</strong> num_iterations <strong>do</strong>          <em>▷ Grow the tree by repeating </em>
+                                            <em>the expansion</em>
+        q_rand ← sample from 𝒞              <em>▷ Step 1: sample a random configuration</em>
+                                            <em>  anywhere in the full C-space</em>
+        q_near ← NearestNode(q_rand, T)     <em>▷ Step 2: find the node in T whose </em>
+                                            <em>  configuration is closest to q_rand</em>
+        q_new ← Extend(q_near, q_rand)      <em>▷ Step 3: move a small step ε from q_near </em>
+                                            <em> toward q_rand to create a candidate</em>
+                                            <em> node q_new</em>
+        <strong>if</strong> LocalPlanner(q_near, q_new) is collision-free <strong>then</strong>
+                                            <em>▷ Step 4: check that the short motion  </em>
+                                            <em>from q_near to q_new is collision-free</em>
+            T.add_node(q_new)               <em>▷ Add q_new as a new vertex in the tree</em>
+            T.add_edge(q_near, q_new)       <em>▷ Connect q_new back to its parent q_near</em>
+
+    <strong>return</strong> T                                <em>▷ Return the final exploration tree</em>
+</pre>
+
+📘 *Reference:* Orthey et al., <em>Sampling-Based Motion Planning: A Comparative Review</em>, Algorithm 2 (RRT)[<a href="#ref1">1</a>].
+</div>
 
 ---
+
+The following animation provides a visual walkthrough of the RRT graph building and path finding:
 
 <figure style="text-align:center;">
   <img src="{{ '/assets/images/sampling_based_planning/rrt.gif' | relative_url }}" 
@@ -1338,26 +1390,7 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
     <strong>Figure.</strong>  RRT algorithm in a 2D maze.
   </figcaption>
 </figure>
----
-<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
 
-<strong>Algorithm 2:</strong> Basic RRT  
-
-<pre>
-<strong>procedure</strong> BUILD-RRT(q_start)
-    T.initialize(q_start)
-    <strong>for</strong> i = 1 <strong>to</strong> num_iterations <strong>do</strong>
-        q_rand ← sample from 𝒞
-        q_near ← NearestNode(q_rand, T)
-        q_new ← Extend(q_near, q_rand)
-        <strong>if</strong> LocalPlanner(q_near, q_new) is collision-free <strong>then</strong>
-            T.add_node(q_new)
-            T.add_edge(q_near, q_new)
-    <strong>return</strong> T
-</pre>
-
-📘 *Reference:* Orthey et al., *Sampling-Based Motion Planning: A Comparative Review*, Algorithm 2 (RRT)[<a href="#ref1">1</a>].
-</div>
 
 ---
 
@@ -1367,7 +1400,7 @@ This natural bias drives the RRT to expand into large, unexplored regions — th
 
 
 <div class="note">
-    Provides an intuitive and animated explanation of Random Trees, RRT, and RRT\*. The video contrasts how random expansion, nearest-neighbor growth, and rewiring lead to increasingly efficient exploration and smoother paths. It also demonstrates goal bias, optimization through rewiring, and the differences between single-query (RRT) and multi-query (PRM) planning.
+    Video provides an intuitive and animated explanation of Random Trees, RRT, and RRT*. The video contrasts how random expansion, nearest-neighbor growth, and rewiring lead to increasingly efficient exploration and smoother paths. It also demonstrates goal bias, optimization through rewiring, and the differences between single-query (RRT) and multi-query (PRM) planning.
     <div style="font-size: 0.85em; color: #555; margin-top: 0.5em;">
         Source: Aaron Becker - YouTube  
         <a href="https://www.youtube.com/watch?v=Ob3BIJkQJEw" target="_blank" style="color: #2a7ae2; text-decoration: underline; margin-left: 8px;">Watch here</a>
@@ -1464,20 +1497,26 @@ The simplest and most common post-processing technique is path shortcutting. The
 
 <strong>Algorithm 3:</strong> Path Shortcutting  
 
+
 <pre>
 <strong>procedure</strong> SHORTCUT-PATH(path)
-    <strong>for</strong> i = 1 <strong>to</strong> N_ITERATIONS <strong>do</strong>
-        // 1. Pick two random points on the path
+    <strong>for</strong> i = 1 <strong>to</strong> N_ITERATIONS <strong>do</strong>               <em>▷ Repeat many shortcut attempts</em>
+
         t1, t2 ← RandomTimes(path) with t1 < t2
-        q1 ← path(t1)
-        q2 ← path(t2)
+                                               <em>▷ Step 1: pick two random arc-length</em>
+                                               <em>  positions along the current path</em>
+        q1 ← path(t1)                          <em>▷ Evaluate the first point</em>
+        q2 ← path(t2)                          <em>▷ Evaluate the second point</em>
 
-        // 2. Try to connect them with a local planner
         <strong>if</strong> LocalPlanner(q1, q2) is collision-free <strong>then</strong>
-            // 3. Replace the old segment with the shortcut
-            path.replace(from=q1, to=q2, with=NewSegment(q1, q2))
+                                               <em>▷ Step 2: check whether a straight-line</em>
+                                               <em>  shortcut between q1 and q2 is valid</em>
 
-    <strong>return</strong> path
+            path.replace(from=q1, to=q2, with=NewSegment(q1, q2))
+                                               <em>▷ Step 3: shorten the path by replacing</em>
+                                               <em>  the old section with this shortcut</em>
+
+    <strong>return</strong> path                                <em>▷ Return the smoothed path</em>
 </pre>
 </div>
 
@@ -1521,46 +1560,6 @@ The resulting planner is asymptotically optimal, meaning that as the number of s
 
 ---
 
-<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
-
-<strong>Algorithm 4:</strong> RRT* — Optimal Tree-Growing Planner  
-
-<pre>
-<strong>procedure</strong> BUILD-RRT*(q_start)
-    T.initialize(q_start)
-    <strong>for</strong> i = 1 <strong>to</strong> num_iterations <strong>do</strong>
-        q_rand ← sample from 𝒞
-        q_near ← NearestNode(q_rand, T)
-        q_new  ← Extend(q_near, q_rand)
-
-        <strong>if</strong> LocalPlanner(q_near, q_new) is collision-free <strong>then</strong>
-            N_near ← NearNodes(q_new, T, radius=r(n))
-            
-            // --- ChooseParent: locally optimal insertion ---
-            q_min ← q_near
-            c_min ← Cost(q_near) + Cost(q_near, q_new)
-            <strong>for each</strong> q_neighbor <strong>in</strong> N_near <strong>do</strong>
-                c_new ← Cost(q_neighbor) + Cost(q_neighbor, q_new)
-                <strong>if</strong> c_new < c_min <strong>and</strong> LocalPlanner(q_neighbor, q_new) <strong>then</strong>
-                    q_min ← q_neighbor
-                    c_min ← c_new
-            T.add_node(q_new)
-            T.add_edge(q_min, q_new)
-
-            // --- Rewire: locally optimal tree repair ---
-            <strong>for each</strong> q_neighbor <strong>in</strong> N_near <strong>do</strong>
-                c_old ← Cost(q_neighbor)
-                c_new ← Cost(q_new) + Cost(q_new, q_neighbor)
-                <strong>if</strong> c_new < c_old <strong>and</strong> LocalPlanner(q_new, q_neighbor) <strong>then</strong>
-                    T.rewire(q_neighbor, new_parent=q_new)
-
-    <strong>return</strong> T
-</pre>
-
-📘 *Reference:* Karaman & Frazzoli, *Sampling-based Algorithms for Optimal Motion Planning*, Algorithm 2 (RRT\*)[<a href="#ref8">8</a>].
-</div>
-
----
 
 ---
 
@@ -1578,8 +1577,64 @@ However, instead of greedily attaching each new node to its nearest neighbor, it
    RRT\* checks whether connecting any nearby node *through* $q_{\text{new}}$ would yield a cheaper total cost.  
    If so, it “rewires” that neighbor to use $q_{\text{new}}$ as its new parent, effectively reshaping the tree toward a more optimal structure.
 
+
+The pseudocode below follows this logic line by line.
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 4:</strong> RRT* — Optimal Tree-Growing Planner  
+
+<pre>
+<strong>procedure</strong> BUILD-RRT*(q_start)
+    T.initialize(q_start)                      <em>▷ Start tree with q_start</em>
+
+    <strong>for</strong> i = 1 <strong>to</strong> num_iterations <strong>do</strong>             <em>▷ Grow the tree</em>
+        q_rand ← sample from 𝒞                 <em>▷ Random configuration</em>
+        q_near ← NearestNode(q_rand, T)        <em>▷ Nearest existing node</em>
+        q_new  ← Extend(q_near, q_rand)        <em>▷ Step toward q_rand</em>
+
+        <strong>if</strong> LocalPlanner(q_near, q_new) is collision-free <strong>then</strong>
+                                               <em>▷ Add only if short step is valid</em>
+
+            N_near ← NearNodes(q_new, T, radius=r(n))
+                                               <em>▷ Nearby nodes within radius r(n)</em>
+
+            // --- ChooseParent: locally optimal insertion ---
+            q_min ← q_near                     <em>▷ Default parent</em>
+            c_min ← Cost(q_near) + Cost(q_near, q_new)
+                                               <em>▷ Cost via q_near</em>
+
+            <strong>for each</strong> q_neighbor <strong>in</strong> N_near <strong>do</strong>
+                c_new ← Cost(q_neighbor) + Cost(q_neighbor, q_new)
+                                               <em>▷ Try cheaper parent</em>
+                <strong>if</strong> c_new < c_min <strong>and</strong>
+                   LocalPlanner(q_neighbor, q_new) <strong>then</strong>
+                                               <em>▷ Only if edge is valid</em>
+                    q_min ← q_neighbor
+                    c_min ← c_new
+
+            T.add_node(q_new)                  <em>▷ Insert q_new</em>
+            T.add_edge(q_min, q_new)           <em>▷ Connect to best parent</em>
+
+            // --- Rewire: locally optimal tree repair ---
+            <strong>for each</strong> q_neighbor <strong>in</strong> N_near <strong>do</strong>
+                c_old ← Cost(q_neighbor)       <em>▷ Old cost</em>
+                c_new ← Cost(q_new) + Cost(q_new, q_neighbor)
+                                               <em>▷ Cost via q_new</em>
+                <strong>if</strong> c_new < c_old <strong>and</strong>
+                   LocalPlanner(q_new, q_neighbor) <strong>then</strong>
+                                               <em>▷ Rewire if shorter and valid</em>
+                    T.rewire(q_neighbor, new_parent=q_new)
+
+    <strong>return</strong> T                                  <em>▷ Return optimal tree</em>
+</pre>
+
+📘 *Reference:* Karaman & Frazzoli, <em>Sampling-based Algorithms for Optimal Motion Planning</em>,  
+Algorithm 2 (RRT\*)[<a href="#ref8">8</a>].
+</div>
+
 The search radius $r(n)$ gradually decreases with the number of samples $n$, ensuring both convergence and computational tractability.  
-Through repeated sampling and local rewiring, RRT\* progressively smooths out the tree, pulling all feasible paths toward the globally optimal solution.
+Through repeated sampling and local rewiring, RRT\* progressively smooths out the tree, pulling all feasible paths toward the globally optimal solution:
 
 
 <figure style="margin:1.2em 0;">
@@ -1615,7 +1670,41 @@ The primary limitation of the classic Probabilistic Roadmap (PRM) algorithm is i
 
 *PRM\** addresses this by modifying the construction phase to guarantee asymptotic optimality, ensuring the path cost converges to the true optimal cost as the number of samples increases.
 
-The guarantee of optimality in PRM\* comes from replacing the fixed $k$-Nearest Neighbors rule with a dynamic, shrinking search radius $r(n)$. This change ensures that new, shorter connections can be established across the entire free space as the roadmap grows, continuously refining the path toward the optimum.
+The guarantee of optimality in PRM\* comes from replacing the fixed $k$-Nearest Neighbors rule with a dynamic, shrinking search radius $r(n)$, as shown in the following pseudocode:
+
+
+<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
+
+<strong>Algorithm 5:</strong> PRM* — Optimal Roadmap Construction  
+
+
+<pre>
+<strong>procedure</strong> BUILD-PRM*(num_samples)
+    G.initialize()                            <em>▷ Create empty graph G = (V, E)</em>
+
+    <strong>for</strong> n = 1 <strong>to</strong> num_samples <strong>do</strong>               <em>▷ Add samples one by one</em>
+        q_rand ← sample from 𝒞_free           <em>▷ Step 1: draw a collision-free sample</em>
+        V.add(q_rand)                         <em>▷ Add new vertex to the roadmap</em>
+
+        r_n ← r(n)                            <em>▷ Step 2: connection radius</em>
+                                              <em>   r(n) = γ (log n / n)^(1/d)</em>
+
+        N_near ← NearNodes(q_rand, V, radius=r_n)
+                                              <em>▷ Step 3: all neighbors within r_n</em>
+
+        <strong>for each</strong> q_near <strong>in</strong> N_near <strong>do</strong>          <em>▷ Try to connect nearby vertices</em>
+            <strong>if</strong> LocalPlanner(q_rand, q_near) is collision-free <strong>then</strong>
+                                              <em>▷ Step 4: check if the straight segment</em>
+                                              <em>   between q_rand and q_near is valid</em>
+                E.add((q_rand, q_near))       <em>▷ Step 5: add undirected edge</em>
+
+    <strong>return</strong> G = (V, E)                         <em>▷ Final optimal roadmap</em>
+</pre>
+
+📘 *Reference:* Karaman & Frazzoli, <em>Sampling-based Algorithms for Optimal Motion Planning</em>[<a href="#ref8">8</a>].
+</div>
+
+This change ensures that new, shorter connections can be established across the entire free space as the roadmap grows, continuously refining the path toward the optimum.
 
 <div class="definition" markdown=1>
 <strong>Definition.</strong> PRM* Neighbor Search Radius
@@ -1632,30 +1721,6 @@ where:
 * $\boldsymbol{\gamma}$: A constant, $\gamma > \gamma^\star$, selected to satisfy the theoretical optimality guarantees.
 </div>
 
-<div style="border-left:4px solid #16a34a;background:#ecfdf5;padding:14px 18px;border-radius:6px;margin:1.2em 0;font-family:JetBrains Mono,Menlo,monospace;font-size:14px;line-height:1.55;" markdown="1">
-
-<strong>Algorithm 3:</strong> PRM* — Optimal Roadmap Construction  
-
-<pre>
-<strong>procedure</strong> BUILD-PRM*(num_samples)
-    G.initialize()
-    
-    <strong>for</strong> n = 1 <strong>to</strong> num_samples <strong>do</strong>
-        q_rand ← sample from 𝒞_free
-        V.add(q_rand)
-
-        r_n ← r(n)     // γ (log n / n)^{1/d}
-        N_near ← NearNodes(q_rand, V, radius = r_n)
-
-        <strong>for each</strong> q_near <strong>in</strong> N_near <strong>do</strong>
-            <strong>if</strong> LocalPlanner(q_rand, q_near) is collision-free <strong>then</strong>
-                E.add((q_rand, q_near))
-
-    <strong>return</strong> G = (V, E)
-</pre>
-
-📘 *Reference:* Karaman & Frazzoli, *Sampling-based Algorithms for Optimal Motion Planning*, Algorithm 1 (PRM*)[<a href="#ref8">8</a>].
-</div>
 <!-- 
 #### Theoretical Basis for Asymptotic Optimality
 
@@ -1673,6 +1738,9 @@ $$
 $$
 
 </div> -->
+
+The animation below showcases the performance difference between the standard PRM algorithm and its asymptotically optimal variant, PRM*:
+
 <figure style="margin:1.2em 0;">
   <div style="display:flex; gap:12px; align-items:flex-start; justify-content:center; flex-wrap:wrap;">
 
@@ -1883,3 +1951,10 @@ The path through $ q_{\text{new}} $ increases the total cost, so the existing pa
 11. <a id="ref11"></a>LaValle, S. M. (1998). *Rapidly-exploring random trees: A new tool for path planning.* Technical Report TR 98-11, Computer Science Department, Iowa State University.
 
 12. <a id="ref12"></a>Geraerts, R., & Overmars, M. H. (2007). *Creating high-quality paths for motion planning.* International Journal of Robotics Research, 26(8), 845–863.
+
+
+---
+
+### Credits:
+
+This course page was created by **Hanka Goralija, EPFL** under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**. 

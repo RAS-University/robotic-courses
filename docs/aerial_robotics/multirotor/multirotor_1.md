@@ -22,12 +22,13 @@ Kinematics, Dynamics, linear algebra, pid control, mpc, sensors and sensing
 
 ## 2. General Motivation
 
+Since the 2000's market for consumer quadcopters grows in a high speed. While the first available drones were difficult to control and tend to crash, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
+This module about multicopters aims to provide you with the tools to model, simulate and control a multirotor drone. For the sake of simplicity all the steps will be shown on a quadcopter but are extendable to other multirotor drone configurations. At the end of the module there is a big simulation exercise where you will need to control a drone to fly through gates as fast as possible. For this we will introduce the mathematical language for drone modeling to then later model a drone, derive the dynamics of a drone and finally present control strategies.
+
+This page will establish the different reference frames needed to describe the position of a drone in 3D space and give a short refresher on how rotations in the 3d space are described mathematically.
+
 
 ## Chapter 0 : Mathematical tools for modelling and control of UAV's
-
-<div class="note-box">
-  <strong>Objective:</strong> Introduce language and math notations for future chapters.
-</div>
 
 ### Coordinate System 
 In order to control a drone we need to describe the position and orientation of the drone relative to a fixed frame. In this module we use the ENU convention which is standard in robotics.
@@ -156,15 +157,50 @@ $$
   <script type="math/tex; mode=display">\|\mathbf{q}\| = \sqrt{q_w^2 + q_x^2 + q_y^2 + q_z^2} = 1</script>
 </div>
 
-**Rotating a Vector**  
-To rotate a vector $\mathbf{p}_B$ (point in body frame) to $\mathbf{p}_W$ (world frame) using quaternions, we first treat the vector $\mathbf{p}$ as a "pure quaternion" (where the scalar part is 0): $\mathbf{p}' = [0, \mathbf{p}_B]^T$.
+**Rotating a Vector**
+To rotate a vector $\mathbf{p}_B$ (point in body frame) to $\mathbf{p}_W$ (world frame) using quaternions, we first treat the vector $\mathbf{p}$ as a "pure quaternion" (where the scalar part is 0).
+
+<div class="note-box">
+<strong>Definition:</strong> For a vector $\mathbf{p} = [x, y, z]^T$, the pure quaternion is defined as $\mathbf{p}' = [\mathbf{p}, 0]^T$.
+</div>
+
 The rotation is performed using the **Hamilton product** (denoted by $\otimes$) and the conjugate $\mathbf{q}^*$:
 
 <script type="math/tex; mode=display">
 \mathbf{p}_{W}' = \mathbf{q} \otimes \mathbf{p}_{B}' \otimes \mathbf{q}^*
 </script>
 
-Where the conjugate and inverse is $\mathbf{q}^* = \mathbf{q}^{-1} =[-\mathbf{q}_v, q_w]^T$.
+Where the conjugate is $\mathbf{q}^* = [-\mathbf{q}_v, q_w]^T$.
+
+_The Hamilton Product:_  
+The Hamilton product of two quaternions $\mathbf{q}$ and $\mathbf{p}$ is determined by the distributive law and the fundamental rules of the basis elements:
+<script type="math/tex; mode=display">
+i^2 = j^2 = k^2 = ijk = -1
+</script>
+
+By expanding the product $\mathbf{q} \otimes \mathbf{p} = (q_w + q_x i + q_y j + q_z k)(p_w + p_x i + p_y j + p_z k)$, we obtain:
+
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf{q} \otimes \mathbf{p} &= (q_w p_w - q_x p_x - q_y p_y - q_z p_z) \\
+&+ (q_w p_x + q_x p_w + q_y p_z - q_z p_y)\mathbf{i} \\
+&+ (q_w p_y - q_x p_z + q_y p_w + q_z p_x)\mathbf{j} \\
+&+ (q_w p_z + q_x p_y - q_y p_x + q_z p_w)\mathbf{k}
+\end{aligned}
+</script>
+
+_Compact Vector Form:_  
+A more concise way to express this product is using the scalar and vector parts. Given $\mathbf{q} = [\mathbf{q}_v, q_w]^T$ and $\mathbf{p} = [\mathbf{p}_v, p_w]^T$:
+
+<script type="math/tex; mode=display">
+\mathbf{q} \otimes \mathbf{p} =
+\begin{bmatrix}
+q_w \mathbf{p}_v + p_w \mathbf{q}_v + \mathbf{q}_v \times \mathbf{p}_v \\
+q_w p_w - \mathbf{q}_v \cdot \mathbf{p}_v
+\end{bmatrix}
+</script>
+
+This vector form is particularly useful for implementation in code.
 
 
 
@@ -178,6 +214,8 @@ Unlike Euler angles, composing rotations with quaternions is straightforward and
 **Drawbacks**:
 - **Double Cover**: The quaternions $\mathbf{q}$ and $-\mathbf{q}$ represent the exact same rotation. This can cause control issues if the controller tries to take the "long way around" to get to the negative quaternion.
 - **Visualization**: Unlike Euler angles ($30^\circ$ roll), quaternions are not human-readable. You cannot look at $[0.707, 0, 0.707, 0]$ and immediately visualize the orientation without calculation.
+
+Due to these two points we will continue to use rotation matrices for the rest of this module. Quaternions remain nevertheless a powerful mathematical tool.
 
 
 <div class="note-box">
@@ -193,7 +231,7 @@ Unlike Euler angles, composing rotations with quaternions is straightforward and
 
 ### Exercises
 
-**EXERCISE 1:**
+**Exercise 1:**
 Prove that the following expression is indeed independent of $\delta$:
 <script type="math/tex; mode=display">
   R = R_\psi(\delta) R_\theta(\pi/2) R_\phi(\alpha + \delta)
@@ -238,10 +276,113 @@ $$
 $$
 
 The result is **independent from $\delta$**, proving the claim.
+</details>
 
+**Exercise 2:**
+
+Imagine a mapping drone flying horizontally over a field to map crops. A 3D camera is rigidly mounted on the drone's body to point straight down. We detect a Point of Interest (**POI**) in the camera's frame ($\mathcal{C}$) and want to find its global position in the World Frame ($\mathcal{W}$) to create a map of the field.
+
+_Camera Reference Frame Definition ($\mathcal{C}$)_:  
+The camera frame is a standard right-handed frame fixed at the camera's optical center:
+* **$\mathbf{x}_{\mathcal{C}}$:** Points to the image sensor's **right**.
+* **$\mathbf{y}_{\mathcal{C}}$:** Points to the image sensor's **bottom**.
+* **$\mathbf{z}_{\mathcal{C}}$:** Is perpendicular to the image sensor's plane pointing **forward** .
+
+Refer to the drawing below.
+<div style="margin-bottom: 15px; text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/multirotor/chapter0_ex2_all.svg" alt="Illustration of the camera position on the drone used for exercise 2." style="width: 70%; height: auto;">
+  <p style="font-size: small;">Drawing of the camera positioned on the drone.</p>
+</div>
+
+_Given Information:_
+
+1.  **POI position in Camera Frame:** <script type="math/tex; mode=display">\mathbf{p}_{\mathcal{C},POI} = [x_{\mathcal{C}}, y_{\mathcal{C}}, z_{\mathcal{C}}]^T = [0.5m, 0m, 4m]^T</script>.
+2.  **Camera position in Body Frame:** <script type="math/tex; mode=display">\mathbf{p}_{\mathcal{B}, \mathcal{C}} = [x_{\mathcal{B}}, y_{\mathcal{B}}, z_{\mathcal{B}}]^T</script> (Offset from the drone's center of mass to the camera's origin). Refer to the drawing and take $a=b=0.1m$.
+3.  **Drone position in World Frame:** <script type="math/tex; mode=display">\mathbf{p}_{\mathcal{W}, \mathcal{B}} = [x_{\mathcal{W}}, y_{\mathcal{W}}, z_{\mathcal{W}}]^T = [50m, 20m, 6m]^T</script>
+4.  **Drone orientation (Yaw) in World Frame:** <script type="math/tex; mode=display">\psi = 30°</script>
+<div class="note-box">
+<strong>Assumption:</strong> The drone is flying completely horizontally, hence: <script type="math/tex; mode=display">\phi = 0, \theta = 0</script>.
+</div>
+
+_Task:_
+Find the total position of the POI in the World Frame, $\mathbf{p}_{\mathcal{W}, POI}$, as a function of the given parameters.
+
+<details markdown="1">
+<summary>Hints</summary>
+
+<details markdown="1">
+<summary>Hint 1</summary>
+
+Start by understanding the transformation chain. The total transformation involves three steps:
+1. Rotate the point from the Camera frame to the Body frame using $R_{\mathcal{C}}^{\mathcal{B}}$.
+2. Add the offset $\mathbf{p}_{B, C}$ to account for the camera's position relative to the drone's center of mass.
+3. Rotate the result from the Body frame to the World frame using $R_{\mathcal{B}}^{\mathcal{W}}$ and add the drone's position $\mathbf{p}_{\mathcal{W}, \mathcal{B}}$ in the World frame.
 
 </details>
 
+<details markdown="1">
+<summary>Hint 2</summary>
+
+To calculate $R_{\mathcal{C}}^{\mathcal{B}}$, express the basis vectors of the Camera frame $\mathbf{x}_C, \mathbf{y}_C, \mathbf{z}_C$ in terms of the Body frame. Use the given definitions of the Camera frame axes relative to the Body frame.
+
+</details>
+
+<details markdown="1">
+<summary>Hint 3</summary>
+
+For $R_{\mathcal{B}}^{\mathcal{W}}$, since $\phi = 0$ and $\theta = 0$, the rotation matrix simplifies to a pure yaw rotation around the Z-axis:
+<script type="math/tex; mode=display">
+R_\psi =
+\begin{bmatrix}
+cos(\psi) & -sin(\psi) & 0 \\
+sin(\psi) & cos(\psi) & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+</script>
+Substitute the given yaw angle $\psi$ to compute the matrix.
+
+</details>
+
+</details>
+
+<details markdown="1">
+<summary>Solution</summary>
+We have:
+<script type="math/tex; mode=display">
+  \mathbf{p}_{C, POI} = \begin{bmatrix}0.5m\\0m\\4m \end{bmatrix}, \mathbf{p}_{B, C} = \begin{bmatrix}0.1m\\0m\\-0.1m\end{bmatrix},
+</script>
+
+<script type="math/tex; mode=display">
+R_{\mathcal{C}}^{\mathcal{B}} =
+\begin{bmatrix}
+0 & -1 & 0 \\
+-1 & 0 & 0 \\
+0 & 0 & -1
+\end{bmatrix}
+</script>
+
+This gives us the POI expressed in the Body frame:
+<script type="math/tex; mode=display">
+  \mathbf{p}_{B, POI} = \mathbf{p_{B, C}} + R_{\mathcal{C}}^{\mathcal{B}} \quad \mathbf{p}_{C, POI} = \begin{bmatrix}0.1m\\-0.5m\\-4.1m \end{bmatrix}
+</script>
+
+For $\psi=30°$ we get:
+
+<script type="math/tex; mode=display">
+R_{\mathcal{B}}^{\mathcal{W}} =
+\begin{bmatrix}
+cos(30) & -sin(30) & 0 \\
+sin(30) & cos(30) & 0 \\
+0 & 0 & 1
+\end{bmatrix}
+</script>
+
+Leading to the **final result**:
+<script type="math/tex; mode=display">
+  \mathbf{p}_{W, POI} = \mathbf{p_{W, B}} + R_{\mathcal{B}}^{\mathcal{W}} \quad \mathbf{p}_{B, POI} = \begin{bmatrix}50.34m\\19.62m\\1.9m \end{bmatrix}
+</script>
+
+</details>
 
 ### Other prerequisites
 Link to other foundations that are needed such as mpc, optimization and

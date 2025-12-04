@@ -96,8 +96,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Whole-Body Control](wholebody)
 
 **Chapter 9: Aerial Robotics**
--  [Unmanned Aerial Vehicles](UAV) - In progress
--  [Multirotor](multirotor) - In progress
+{% include_relative aerial.md %}
 -  [Aerial Manipulation](aerialmanip)
 -  [Collective](aerialmanip)
 -  [Vision for UAVs](vision_UAV)

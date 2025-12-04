@@ -1,0 +1,56 @@
+---
+title: Multirotor
+parent: Courses
+layout: default
+nav_order: 7
+# math: mathjax
+---
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+<link rel="stylesheet" href="../styles.css">
+
+<a href="/docs/aerial_robotics/multirotor/multirotor_4" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+
+<a href="/docs/aerial_robotics/multirotor/multirotor_6" id="go-to-next" title="Go to Next Chapter">➡​</a>
+
+# Multirotor Drones: Chapter 4
+
+- Table of Contents
+{:toc}
+
+## 1. Prerequisites
+Kinematics, Dynamics, linear algebra, pid control, mpc, sensors and sensing 
+
+## 2. General Motivation
+
+## Chapter 4: Measurement Model and State Estimation
+<div class="note-box">
+  <strong>Objective:</strong> Estimate the true state of the drone ($\mathbf{x}$) from noisy sensor measurements ($\mathbf{y}$).
+</div>
+ 
+### 4.1 Observability
+
+### 4.2 Sensor Fusion/Kalman Filter
+Classic/Extended Kalman Filter
+
+### 4.3 State Estimation of Drones
+Attitude Estimation
+
+Position Estimation
+
+Velocity Estimation
+
+### 4.4 Visual Inertial Odometry (VIO):
+GPS-denied navigation  
+pipeline  
+challenges
+
+## Additional Resources
+
+### Credits:
+<!-- List all the sources that you used to create the page   -->
+
+### Additional Resources:
+<!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
+
+

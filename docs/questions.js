@@ -95,37 +95,6 @@ function checkMCQ(questionId, correctAnswer, correctMessage, incorrectMessage) {
     }
   }
 
-  function checkMultipleAnswers(questionId, correctAnswers, correctMessage, incorrectMessage) {
-  const options = document.getElementsByName(questionId);
-  let selectedValues = [];
-
-  for (let i = 0; i < options.length; i++) {
-    if (options[i].checked) {
-      selectedValues.push(options[i].value);
-    }
-  }
-
-  const feedback = document.getElementById(questionId + '-feedback');
-
-  if (selectedValues.length === 0) {
-    feedback.textContent = "Please select at least one option.";
-    feedback.style.color = "red";
-    return;
-  }
-
-  // Check if the selected options match exactly the correct answers
-  if (
-    selectedValues.length === correctAnswers.length &&
-    selectedValues.every(value => correctAnswers.includes(value))
-  ) {
-    feedback.textContent = correctMessage;
-    feedback.style.color = "green";
-  } else {
-    feedback.textContent = incorrectMessage;
-    feedback.style.color = "red";
-  }
-}
-
   // Function to toggle the answer visibility for each question
   function showAnswer(questionId) {
     var answerDiv = document.getElementById("answer-" + questionId);
@@ -154,15 +123,17 @@ function checkMultipleAnswers(questionId, correctAnswers, correctMessage, incorr
     return;
   }
 
-  // Check if selected options exactly match the correct answers
-  if (
-    selectedValues.length === correctAnswers.length &&
-    selectedValues.every(value => correctAnswers.includes(value))
-  ) {
-    feedback.innerHTML = correctMessage; // <-- use innerHTML here
+  const correctCount = selectedValues.filter(value => correctAnswers.includes(value)).length;
+  const incorrectCount = selectedValues.length - correctCount;
+
+  if (correctCount === correctAnswers.length && incorrectCount === 0) {
+    feedback.innerHTML = correctMessage; // All correct
     feedback.style.color = "green";
+  } else if (correctCount > 0) {
+    feedback.innerHTML = `<strong>Partially correct!</strong> You selected ${correctCount} out of ${correctAnswers.length} correct answers.`;
+    feedback.style.color = "orange"; // Partially correct
   } else {
-    feedback.innerHTML = incorrectMessage; // <-- and here as well
+    feedback.innerHTML = incorrectMessage; // None correct
     feedback.style.color = "red";
   }
 }

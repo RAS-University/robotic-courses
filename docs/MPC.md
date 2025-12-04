@@ -1,6 +1,6 @@
 ---
-title: Model predictive Control
-parent: Courses
+title: Model predictive Control 
+parent: Courses Nonlinear Control
 layout: default
 nav_order: 7
 author: Julian Ruiz Rodriguez (EPFL)
@@ -39,14 +39,38 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
     padding: 1em;
   }
 
-  .lemma-window{
-    border-left: 4px solid #e7260cb6; 
-    border-radius: 10px;
-    background: #f8f9fa; 
-    width: 700px;
-    margin: 2em auto;
-    box-shadow: 0 2px 8px rgba(226, 42, 60, 0.08);
-  }
+.lemma-window {
+  border: 2px solid #e7260c;   /* Red outline */
+  border-radius: 10px;         /* Rounded edges */
+  background: #ffffff;         /* Clean white background */
+  width: 725px;
+  margin: 2em auto;
+  padding: 1em 1.2em;          /* Add padding for readability */
+  box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
+}
+.lemma-title {
+  font-weight: bold;           
+  font-size: 1em;              /* Same size as normal text */
+  background: none;            /* Remove red background */
+  color: #e7260c;              /* Make text red to match the outline */
+  margin-bottom: 0.5em;        /* Add spacing after the title */
+}
+ .remark-window {
+  border: 2px solid #4F3DDB;   /* Red outline */
+  border-radius: 10px;         /* Rounded edges */
+  background: #ffffff;         /* Clean white background */
+  width: 725px;
+  margin: 2em auto;
+  padding: 1em 1.2em;          /* Add padding for readability */
+  box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
+}
+.remark-title {
+  font-weight: bold;           
+  font-size: 1em;              /* Same size as normal text */
+  background: none;            /* Remove red background */
+  color: #4F3DDB;              /* Make text red to match the outline */
+  margin-bottom: 0.5em;        /* Add spacing after the title */
+}
 
   .tab-window {
     border: 2px solid #4F3DDB;
@@ -86,15 +110,6 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
     border-top-right-radius: 5px;
   }
 
-  .lemma-title {
-    background: #e7260cb6; 
-    padding: 0.5em; 
-    font-size: 1.2em; 
-    font-weight: bold; 
-    color: #f8f9fa; 
-    border-top-left-radius: 5px; 
-    border-top-right-radius: 5px;
-  }
 
   .tab-header {
     display: flex;
@@ -102,13 +117,6 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
   }
 
   .quizz-header {
-    display: flex; 
-    align-items: center; 
-    gap: 16px; 
-    margin-bottom: 12px;
-  }
-
-  .lemma-header {
     display: flex; 
     align-items: center; 
     gap: 16px; 
@@ -369,7 +377,7 @@ With $A \in \mathbb{R}^{n \times n}$ the state matrix and $B \in \mathbb{R}^{n \
 
 <div class="lemma-window">
   <div class="lemma-title" id="cost-func">LQR cost function</div>
-  <div style="padding: 1.5em;">
+  <div>
   In this context, we formulate a cost function for our optimization problem (continuous time):
   \[
   J(x(t),u(t)) = \int_0^\infty \left( x(t)^\top Q x(t) + u(t)^\top R u(t) \right) dt \tag{1.1.2} \label{eq:cost_func_ct}
@@ -444,7 +452,7 @@ The next step is to formulate the optimization problem, which consists in findin
 
 <div class="lemma-window">
   <div class="lemma-title" id="value-func">Value function</div>
-  <div style="padding: 1.5em;">
+  <div>
 
   The value function for a continuous time system $V(x)$ is defined as the minimum cost-to-go, starting from state $x$ at time $t$:
 
@@ -590,7 +598,7 @@ Now that we have set up the optimization problem for the Linear Quadratic Regula
   \]
 </div>
 
-It is beyound the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
+It is beyond the scope of this lecture to derive the solution of this optimization problem, but the optimal control law is given by a state feedback law of the form:
 <div>
   \[
     u(t) = -Kx(t) \tag{1.2.1} \label{eq:feedback_law_riccati}
@@ -611,7 +619,7 @@ If we look back only at \eqref{eq:feedback_law_riccati}, we can see that it is o
 
 <div class="lemma-window">
   <div class="lemma-title">Procedure to solve LQR problems</div>
-  <div style="padding: 1.5em;">
+  <div>
     <ol>
       <li>Define the system dynamics: $A$, $B$ (known from the plant)</li>
       <li>Define the cost function weights: $Q$, $R$ (tuning parameters)</li>
@@ -623,37 +631,47 @@ If we look back only at \eqref{eq:feedback_law_riccati}, we can see that it is o
 </div>
 
 Let take an example to illustrate the procedure. Consider a mass damper system, in which a mass $m$ is on a smooth surface (ice for example) and there is some viscous damping with coefficient c between the surface and the block. We will only consider the horizontal position and velocity of the block as states, and a unique control input which is a force $F(t)$ that we can apply to the block. The dynamics of this system are given by newton's second law of motion:
-$$
+<div>
+\[
 m\ddot{p}(t) = F(t) - c\dot{p}(t)
-$$
+\]
+</div>
 Where $p(t)$ is the position of the block, $\dot{p}(t)$ is the velocity and $\ddot{p}(t)$ is the acceleration.
 
 Let define the state and control vectors as:
-$$
-x(t) = \begin{bmatrix} p(t) \\\\ \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
-$$
+<div>
+\[
+x(t) = \begin{bmatrix} p(t) \\ \dot{p}(t) \end{bmatrix}, \quad u(t) = \begin{bmatrix} F(t) \end{bmatrix}
+\]
+</div>
 With:
 - $x(t) \in \mathbb{R}^2$ because there are **two states**: position and velocity.  
 - $u(t) \in \mathbb{R}^1$ because there is a **single control input**, the force $F(t)$.
 
 We can rewrite the dynamics in state-space form as:
-$$
-\dot{x}(t) = Ax+Bu= \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{c}{m} \end{bmatrix} x(t) + \begin{bmatrix} 0 \\\\ \frac{1}{m} \end{bmatrix} u(t)
-$$
+<div>
+\[
+\dot{x}(t) = Ax+Bu= \begin{bmatrix} 0 & 1 \\ 0 & -\frac{c}{m} \end{bmatrix} x(t) + \begin{bmatrix} 0 \\ \frac{1}{m} \end{bmatrix} u(t)
+\]
+</div>
 With:
 - $A$ is $2\times 2$ because it maps a 2-dimensional state to a 2-dimensional derivative.  
 - $B$ is $2\times 1$ because it maps a single input to the 2-dimensional state derivative.
 
 Let's choose some numerical values for the parameters: $m = 1$ and $c = 0.2$. Thus the matrices $A$ and $B$ are given by:
-$$
-A = \begin{bmatrix} 0 & 1 \\\\ 0 & -\frac{1}{5} \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\\\ 1 \end{bmatrix}
-$$
+<div>
+\[
+A = \begin{bmatrix} 0 & 1 \\ 0 & -\frac{1}{5} \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\]
+</div>
 With this, we completed the first step of the procedure.
 
 In step two, we need to define the cost function weights $Q$ and $R$. Let's choose:
-$$
-Q = \begin{bmatrix} 1 & 0 \\\\ 0 & 1 \end{bmatrix}, \quad R = \begin{bmatrix} 0.01 \end{bmatrix}
-$$
+<div>
+\[
+  Q = \begin{bmatrix} 1 & 0 \\ 0 & 1 \end{bmatrix}, \quad R = \begin{bmatrix} 0.01 \end{bmatrix}
+\]
+</div>
 With:
 - $Q$ must be $2 \times 2$ to match the 2-dimensional state vector $x(t)$.  
 - $R$ must be $1 \times 1$ to match the 1-dimensional control vector $u(t)$.
@@ -666,7 +684,11 @@ In Mathematica, we need to use function like `Transpose`, `Simplify`, and `Inver
 
 In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^\top S$. Then, we can analyze the closed-loop system dynamics given by $\dot{x}(t) = (A - BK)x(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
 
-_Note: Mathematically, all the solutions for $S$ are valid, but from an engineering perspective, we are only interested in the solution that yield a stable system._
+<div class="remark-window">
+  <div class="remark-title">Remark</div>
+  Mathematically, all the solutions for $S$ are valid, but from an engineering perspective, we are only interested in the solution that yield a stable system.
+</div>
+
 
 From running the calculations in Mathematica, we find that the gain matrix $K$ is given by:
 $$
@@ -772,28 +794,30 @@ $$
 $$
 V_{T+1}(x) = x^\top P_t x
 $$
-We will show that $V_t(x)=x^\top P_tx$ and derive a formula for $P_t$
-<div>
-\[
-\begin{align}
-V_t(x) &= x^\top Q x + \min_{u}\left(u^\top R u + V_{T+1}(Ax+Bu)\right) \\
-&= x^\top Q x + \min_{u}\left(u^\top R u + (Ax+Bu)^\top P_{T+1}(Ax+Bu)\right) \\
-&= x^\top Q x + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u 
-          + 2 B^\top P_{T+1} A x + x^\top A^\top P_{T+1} A x\right) \\
-&= x^\top Q x + x^\top A^\top P_{T+1} A x 
-          + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u + 2 B^\top P_{T+1} A x\right) \\
-&= x^\top\left(Q+A^\top P_{T+1} A\right)x 
-          + x^\top A P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1}\left(R+B^\top P_{T+1} B\right) \\
-&\quad \left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x 
-      - 2 x^\top A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x \\
-&= x^\top\left(Q + A^\top P_{T+1} A 
-          - A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A\right) x \\
-V_t(x) &= x^\top P_t x
-\end{align}
-\]
-</div>
+On can show that $V_t(x)=x^\top P_tx$ (see proof in the note below) and then derive a formula for $P_t$
 
 <details markdown="1">
+  <summary><strong>Proof that $V_t(x)=x^\top P_t x$</strong></summary>
+  <div>
+    \[
+    \begin{align}
+    V_t(x) &= x^\top Q x + \min_{u}\left(u^\top R u + V_{T+1}(Ax+Bu)\right) \\
+    &= x^\top Q x + \min_{u}\left(u^\top R u + (Ax+Bu)^\top P_{T+1}(Ax+Bu)\right) \\
+    &= x^\top Q x + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u 
+              + 2 B^\top P_{T+1} A x + x^\top A^\top P_{T+1} A x\right) \\
+    &= x^\top Q x + x^\top A^\top P_{T+1} A x 
+              + \min_{u}\left(u^\top\left(R+B^\top P_{T+1} B\right)u + 2 B^\top P_{T+1} A x\right) \\
+    &= x^\top\left(Q+A^\top P_{T+1} A\right)x 
+              + x^\top A P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1}\left(R+B^\top P_{T+1} B\right) \\
+    &\quad \left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x 
+          - 2 x^\top A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A x \\
+    &= x^\top\left(Q + A^\top P_{T+1} A 
+              - A^\top P_{T+1} B\left(R+B^\top P_{T+1} B\right)^{-1} B^\top P_{T+1} A\right) x \\
+    V_t(x) &= x^\top P_t x
+    \end{align}
+    \]
+  </div>
+  <details markdown="1">
   <summary><strong>How to remove $\min_{u}(\cdots)$</strong></summary>
   <div>
     We use the gradient to find the minimum for $u$, denoted $u^*$:
@@ -805,6 +829,7 @@ V_t(x) &= x^\top P_t x
     \]
   </div>
 </details>
+</details>
 
 <div class="formula-window">
   This derivation allowed to find an optimal feedback control:
@@ -815,7 +840,7 @@ V_t(x) &= x^\top P_t x
   \[
   P_{t-1}=Q+A^\top P_{T+1}A - A^\top P_{T+1}B\left(R+B^\top P_{T+1}B\right)^{-1}B^\top P_{T+1}A
   \]
-  For $t\to -\infty$, $P_t$ converges to a constant matrix $P$, the solution of the **discrete-time algebraic Riccati equation** (DARE):
+  For $t\to -\infty$, $P_t$ converges to a constant matrix $P$, the solution of the <strong>discrete-time algebraic Riccati equation</strong> (DARE):
   \[
   P=Q+A^\top PA - A^\top PB\left(R+B^\top PB\right)^{-1}B^\top PA
   \]
@@ -864,7 +889,7 @@ The system is controllable if the controllability matrix $\mathcal{C}$ has full 
 
 <div class="lemma-window">
   <div class="lemma-title" id="HPB-controllability">Hautus for controllability</div>
-  <div style="padding: 1.5em;">
+  <div>
     Another way to check if a system is controllable is with the <strong>Popov-Belevitch-Hautus (PBH) test</strong>. The PBH test states that the system is controllable if and only if
     
     \[
@@ -920,7 +945,7 @@ The system is observable if the observability matrix $\mathcal{O}$ has full colu
 
 <div class="lemma-window">
   <div class="lemma-title" id="HPB-observability">Hautus for observability</div>
-  <div style="padding: 1.5em;">
+  <div>
     The same way as for controllability, we can use the <strong>Popov-Belevitch-Hautus (PBH) test</strong> to check if a system is observable. The PBH test states that the system is observable if and only if
     
     \[
@@ -1368,7 +1393,7 @@ In this chapter we study MPC for the case when the state is known. This case is 
 
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-1-positive-invariant">Definition 2.1: Positively invariant set</div>
-  <div style="padding: 1.5em;">
+  <div>
     A set $\mathcal{X} \subseteq \mathbb{R}^{n_x}$ is positively invariant under the dynamics defined by
     \[
       u_{k} = K x_{k}, \quad k = N, N+1, \cdots \tag{2.2.1} \label{eq:u_control}
@@ -1390,7 +1415,7 @@ The invariant set will provide a set of initial states for which the trajectorie
 
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-2-max-positive-invariant">Definition 2.2: Maximal positively invariant set</div>
-  <div style="padding: 1.5em;">
+  <div>
     The maximal positively invariant (MPI) set under the dynamics of \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} is the union of all sets that are positively invariant under these dynamics and constraints. We will denote this set as $\mathcal{X}_\infty$ of $\mathcal{X}^{\text{MPI}}$.
   </div>
 </div>
@@ -1403,7 +1428,7 @@ The invariant set will provide a set of initial states for which the trajectorie
 
 <div class="lemma-window">
   <div class="lemma-title" id="th-2-1">Theorem 2.1</div>
-  <div style="padding: 1.5em;">
+  <div>
   The MPI set for the dynamics defined by \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} can be expressed
   \[
     \mathcal{X}  \: \colon =  \{ x \: \colon \: (F+GK)\Phi^i x \leq \mathbf{1}, \quad i=0, \cdots, v\} \tag{2.2.4} \label{eq:mpi_set}
@@ -1444,7 +1469,7 @@ The invariant set will provide a set of initial states for which the trajectorie
 
 <div class="lemma-window">
   <div class="lemma-title" id="def-2-3-pre-set">Pre Set</div>
-  <div style="padding: 1.5em;">
+  <div>
   Given a set $\mathcal{X}$ and the system describe by the dynamic \eqref{eq:constraints}, the <strong>pre-set</strong> of $\mathcal{X}$ is the of states that evolve into the target set $\mathcal{X}$ in one step:
   \[
     \text{pre}(\mathcal{X}) \: \colon = \{x \: \mid \: (Fx+Bu)\in\mathcal{X}\}
@@ -1485,7 +1510,7 @@ Consider the phase diagram below, which shows the target set $T$, the pre-set of
 
 <div class="lemma-window">
   <div class="lemma-title">Theorem 2.2: Geometric condition for invariance</div>
-  <div style="padding: 1.5em;">
+  <div>
   A set $\mathcal{X}$ is positively invariant under the dynamics defined by \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} if and only if $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$.
   </div>
 </div>
@@ -1522,7 +1547,7 @@ _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\te
 
 <div class="lemma-window">
   <div class="lemma-title">Control invariant set</div>
-  <div style="padding: 1.5em;">
+  <div>
   A set $\mathcal{C} \in \mathbb{X}$ is said to be a controlled invariant set if 
   \[
     x_i \in \mathcal{C} \quad \exists u_i \in \mathbb{U} \text{ such that } f(x_i,u_i)\in \mathcal{C} \quad \text{for all } x_i \in \mathbb{N}^+
@@ -1534,7 +1559,7 @@ This defines the states for which there exist a **controller** that will satisfy
 
 <div class="lemma-window">
   <div class="lemma-title">Maximal control invariant set</div>
-  <div style="padding: 1.5em;">
+  <div>
   The set $\mathcal{C}_\infty$ is said to be the maximal control invariant set for the system $x^+=f(x,u)$ subject to the constraints $(x,u)\in \mathbb{X}\times\mathbb{U}$ if it is control invariant and contains all control invariant sets contained in $\mathbb{X}$.
   </div>
 </div>
@@ -1609,7 +1634,7 @@ that minimizes the cost function while satisfying the system dynamics and constr
 The optimal control problem is defined as follows:
 <div class="lemma-window">
   <div class="lemma-title">Infinite horizon optimal control problem</div>
-  <div style="padding: 1.5em;">
+  <div>
     \[
       \tag{2.3.3} \label{eq:infinite_horizon_ocp}
       \begin{aligned}
@@ -1658,7 +1683,7 @@ In this example we consider a simple linear system with a time horizon of 1 and 
 
 <div class="lemma-window">
   <div class="lemma-title">KKT conditions (only inequalities)</div>
-  <div style="padding: 1.5em;">
+  <div>
     The KKT conditions are given by
     <div>
     \[
@@ -1740,7 +1765,7 @@ The optimal control law is therefore given by
 
 <div class="lemma-window">
   <div class="lemma-title">Stable equilibrium</div>
-  <div style="padding: 1.5em;">
+  <div>
   The equilibrium point $x=0$ pf the system $x^+=f(x,u)$ is said to be stable if a small perturbation of the state perturbs the state trajectory in a continuous way. More formally:
 
   \[

@@ -172,7 +172,7 @@ function showTab(idx, windowId) {
 To get the most of this module, it is recommended that you have knowledge in:
 1. **Basic Mechanical Physics**
   - Newton's laws of motion, especially the third law of action and reaction. 
-  - Concepts of **moments** and **torques**.
+  - Principle and mathematics of computation of **forces** and **torques**.
 
 ## 2. General Motivation
 <div style="margin-bottom: 15px; text-align: center;">
@@ -1539,7 +1539,7 @@ TODO...
 ## Additional Resources
 
 ### Credits:
-This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**. 
+This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**. 
 
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->

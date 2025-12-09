@@ -59,17 +59,15 @@ If you are already a robotics expert—or an expert in another field simply curi
 **Chapter 0:** [Mathematical Foundation](mathematical-foundation) - In progress
 
 **Chapter 1: Basics of Motion Control**
--  [Kinematics](kinematics) - In progress
--  [Dynamics](dynamics) - In progress
+-  [Kinematics](kinematics)
+-  [Dynamics](dynamics)
 -  [System Identification](identification) - 
--  [Close-loop Control](Closeloop&PID) - In progress
--  [Model Predictive Control](MPC) - In progress
--  [Force Control](force-control) - In progress
+-  [Close-loop Control](Closeloop&PID)
 
 **Chapter 2: Sensing in Robotics**
--  [Sensors and Sensing](new-sensors-for-robotics) - In progress
--  [Vision](vision-for-robotics) - In progress
--  [Force Perception](force_perception) - In progress
+-  [Sensors and Sensing](new-sensors-for-robotics)
+-  [Vision](vision-for-robotics)
+-  [Force Perception](force_perception)
 
 **Chapter 3: Motion Planning and Navigation**
 {% include_relative motion_planning.md %}
@@ -82,18 +80,20 @@ If you are already a robotics expert—or an expert in another field simply curi
 {% include_relative adv_kin.md %}
 
 **Chapter 6: Advanced Control**
--  [Robust Control](robustControl) - In progress
--  [Nonlinear Control](nonlinearcontrol) - In progress
+-  [Robust Control](robustControl)
+-  [Nonlinear Control](nonlinearcontrol)
+-  [Model Predictive Control](MPC)
+-  [Force Control](force-control)
   
 **Chapter 7: Manipulation**
--  [Operational Space and Null Space Control](Null-Space) 
--  [Grasping](grasping)  - In progress
--  [Dexterous Manipulation](dexterousmanipulation) 
+-  [Operational Space and Null Space Control](Null-Space) - PENDING COMPLETION
+-  [Grasping](grasping)  - PENDING COMPLETION
+-  [Dexterous Manipulation](dexterousmanipulation) - PENDING COMPLETION
 
 **Chapter 8: Locomotion**
--  [Central Pattern Generator](wholebody)
--  [Stability](wholebody)
--  [Whole-Body Control](wholebody)
+-  [Central Pattern Generator](wholebody) - PENDING COMPLETION
+-  [Stability](wholebody) - PENDING COMPLETION
+-  [Whole-Body Control](wholebody) - PENDING COMPLETION
 
 **Chapter 9: Aerial Robotics**
 {% include_relative aerial.md %}

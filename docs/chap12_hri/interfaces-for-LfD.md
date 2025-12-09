@@ -45,12 +45,7 @@ nav_order: 7
   <iframe width="600" height="338" src="https://www.youtube.com/embed/FtjC-BXGgAE" frameborder="0" allowfullscreen></iframe>
 </p>
 
-><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements.
->Source: EPFL [LASA]([http://lasa.epfl.ch])) - YouTube video, Apr 2008.</sub>
-
-## 1. General Motivation
-
-[Learning from demonstration]([https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfDub.io/robotic-courses/docs/chap11_learning/LfD)) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**.
+><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA]([http://lasa.epfl.ch])) - YouTube video, Apr 2008.</sub>
 
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
@@ -58,23 +53,27 @@ nav_order: 7
 
 ><sub>S. M. Khansari-Zadeh, K. Kronander, and A. Billard, "Learning to playminigolf: A dynamical system-based approach," Adv. Robot., vol. 26,no. 17, pp. 1967–1993, 2012. [Online]. Available: [http://infoscience.epfl.ch/record/181052](http://infoscience.epfl.ch/record/181052)</sub>
 >
-><sub>Teaching a Robot to Play Golf
+><sub>Teaching a Robot to Play Golf. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA]([http://lasa.epfl.ch])) 
 
-## 2. Course Content
+## 12.1.1. General Motivation
 
-### Chapter 1: Types of Interfaces
+[Learning from demonstration]([https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfDub.io/robotic-courses/docs/chap11_learning/LfD)) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**.
 
-The interfaces we use to gather data from humans for teaching the robots revolve around three main themes:
+## 12.1.2. Course Content
+
+### Types of Interfaces
+
+Interfaces used to gather data from humans for teaching the robots revolve around three main themes:
 > - **Teleoperation:** User controls the robot through the interface and teleoperates the robot with some distance.
 > - **Kinesthetic Teaching:** User physically moves the robot (like how it is done while teaching a child or teaching a sport).
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
 Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
-#### **1. Tele-operation:**
+#### **A: Tele-operation:**
 In tele-operation, users control robots using some interface to perform the task from some **distance**. The quality of learning and performance is sensitive to: **1.Interface Design** and **2. Teacher Experience**.
 This means that the person teleoperating the robot needs to be skilled and understand the device they are using. As a result, current research follows two main trends. In the first trend, the interface is simple and requires little pretraining, but this limits what can be taught to the robot. In the second trend, a more complex interface is designed. It takes time for the human to learn to use it effectively, but it allows for teaching the robot more complex tasks.
 
-##### **1.1. Graphical user interface/Tablet**
+##### **B: Graphical user interface/Tablet**
 The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
 <br>
 Tablets have been used since the 1990s, and they have become more capable with the advancements of modern devices. Yet, they remain a simple system. The user can communicate the desired motion by mimicking it on the tablet or by indicating a desired target.
@@ -132,7 +131,7 @@ In the right example, the user controls the robot to pick up different objects. 
 </details>
 
 
-##### **1.2. Joysticks**
+##### **C: Joysticks**
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
@@ -904,6 +903,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

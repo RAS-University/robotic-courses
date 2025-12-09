@@ -85,8 +85,8 @@ In this chapter, you will explore different ways of representing positions and o
 ⚠️ **Note on Notation**: 
 >*Please be aware that notation, variable naming, and the style of writing equations may slightly differ between instructors. Always refer to the provided formulas and definitions in this course when working on assignments or exercises to avoid any confusion.*
 
-### Chapter 0 : General Concepts
-In this chapter we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
+### Section 3.0 : General Concepts
+In this section we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
 
 ---
 #### *Robot Structure:*
@@ -554,7 +554,7 @@ Observe that if the three prismatic joints and three revolute joints at the base
 
 ---
 
-### Chapter 1 : Introduction to Robotics | Kinematics & Modeling
+### Section 3.1 : Introduction to Robotics | Kinematics & Modeling
 
 Now that we have seen some basics notions, we move to an more in-depth exploration of kinematics and modeling. To start off, you may want to watch this short video that gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.
 
@@ -592,7 +592,7 @@ Now that we have seen some basics notions, we move to an more in-depth explorati
 
 ---
 
-### Chapter 2: Coordinate Transformations in 2D | Mapping {#chapter-1-coordinate-transformations-in-2D}
+### Section 3.2: Coordinate Transformations in 2D | Mapping {#chapter-1-coordinate-transformations-in-2D}
 
 In this chapter, we focus on 2D coordinate transformations—specifically, **pure translations** and **pure rotations** for planar (serial) robots.
 
@@ -818,7 +818,7 @@ For further understanding of the definition of **Homogeneous Transformation Matr
 
 --- 
 
-### Chapter 3: Forward Kinematics of robots | Planar 2D robots
+### Section 3.3: Forward Kinematics of robots | Planar 2D robots
 
 
 In robotics, understanding how each joint movement translates into precise actions is essential. 
@@ -832,9 +832,9 @@ Watch the following video for an intuitive overview of **forward kinematics** be
 
 ---
 
-### Chapter 4: Forward Kinematics (with solved examples) | Homogeneous Transformations 
+### Section 3.4: Forward Kinematics (with solved examples) | Homogeneous Transformations 
 
-Here you will see some examples of how to find this end effector positions in 2D using homogeneous transforms as we have seen in Chapter 1. 
+Here you will see some examples of how to find this end effector positions in 2D using homogeneous transforms as we have seen in Section 3.1. 
 
 ![examples](https://www.youtube.com/watch?v=mO7JJxaVtkE)
 > First solved example of how to find this end effector positions in 2D using homogeneous transforms
@@ -986,7 +986,7 @@ $$
 
 --- 
 
-### Chapter 4.5: Intro. to Quaternions 
+### Section 3.5: Introduction to Quaternions 
 
 <div style="float: left; margin-right: 15px; text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/kinematics/R.gif" alt="Quaternions Explained" style="width: 200px; height: auto;">
@@ -1316,7 +1316,7 @@ For further understanding of the definition of **Quaternions**, the following co
 
 ---
 
-### Chapter 5: Collision Detection using Homogeneous Transforms  
+### Section 3.6: Collision Detection using Homogeneous Transforms  
 
 In this chapter, we will explore how **collision detection** between robots can be performed using homogeneous transformations. 
 
@@ -1329,7 +1329,7 @@ Watch the following video to see this concept illustrated clearly:
 
 ---
 
-### Chapter 6: Inverse Kinematics of Robots
+### Section 3.7: Inverse Kinematics of Robots
 <!-- 
 Inversly as the forward kinematics, inverse kinematics (also called Indirect Geometric Model, IGM) allow us to find the values of the joint positions given the position and orientation of the end-effector relative to the base and the values of all the geometric link parameters. -->
 
@@ -1385,7 +1385,7 @@ Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below)
 - $x = L_1 \cos{\theta_1} + L_2 \cos{(\theta_1 + \theta_2)}$
 - $y = L_1 \sin{\theta_1} + L_2 \sin{(\theta_1 + \theta_2)}$
 
-*Hint: Use the trigonometric formulas for the sine and cosine of the sum of two angles, as well as the identity involving the sum of the squares of sine and cosine. Also, recall that we computed the forward kinematics in the exercise from Chapter 3.*
+*Hint: Use the trigonometric formulas for the sine and cosine of the sum of two angles, as well as the identity involving the sum of the squares of sine and cosine. Also, recall that we computed the forward kinematics in the exercise from Section 3.3
 
 <figure style="text-align:center;">
   <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 2">
@@ -1397,7 +1397,7 @@ Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below)
 <details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
 
-As we have seen on the exercise from Chapter 3, 
+As we have seen on the exercise from Section 3.3, 
 - $x = L_1 c_1 + L_2 c_{1+2}$
 - $y = L_1 s_1 + L_2 s_{1+2}$
 and we also know that:
@@ -1437,9 +1437,9 @@ $\boxed{\theta_1 = \arctan \frac{y}{x} - \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}}$
 
 ---
 
-### Chapter 7: Velocity Kinematics - Meet the Jacobian !
+### Section 3.8: Velocity Kinematics - Meet the Jacobian !
 
-Ready to dive deeper into robotics? This chapter introduces you to one of the coolest concepts in robot motion: the **Jacobian Matrix**! 
+Ready to dive deeper into robotics? This section introduces you to one of the coolest concepts in robot motion: the **Jacobian Matrix**! 
 
 Ever wondered how quickly and smoothly a robot is gripper moves in space? Here you will learn exactly how to calculate both the linear and angular velocities of a robot is end-effector. But that is not all—the Jacobian acts like a map , converting **joint velocities** into precise **end-effector movements**. Mastering it means you're unlocking a powerful tool that robotics experts use every day!
 
@@ -1683,7 +1683,7 @@ You can see this by visualization (imagine turntables at joints 1 and 3 and visu
 
 ---
 
-### Chapter 8: Robot Singularities & how to find them
+### Section 3.9: Robot Singularities & how to find them
 
 Singularities occur when a robot configuration causes it to lose the ability to move or become blocked in certain directions. Understanding and identifying these singularities is essential to safe and efficient robot operation.
 

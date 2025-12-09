@@ -1,6 +1,5 @@
-
 ---
-title: Path Planning with Analytical Guarantees
+title: Multirotor Drones
 parent: Courses
 layout: default
 math: mathjax
@@ -38,7 +37,7 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Path Planning with Analytical Guarantees 
+# Multirotor Drones 
 
 <!-- bundle exec jekyll serve -->
 
@@ -47,7 +46,7 @@ nav_order: 2
 
 ## 1. Prerequisites
 
-To get the most out of this Path Planning with Analytical Guarantees module, it’s helpful to have:
+To get the most out of this Multirotor Drones module, it’s helpful to have:
 
 ---
 
@@ -61,8 +60,6 @@ To get the most out of this Path Planning with Analytical Guarantees module, it�
 
 # **This page is currently under construction and will be published in summer 2026.**
 
-<!-- - [Section 6. Leveraging Kinematics with Policy-based Training](adv_kin/05_policy_training.md)
-- [Chapter 7. Path Planning for Redundant Robots](adv_kin/06_redundant_path_planning.md) -->
 
 
 ## Credits

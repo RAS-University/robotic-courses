@@ -59,15 +59,15 @@ If you are already a robotics expert—or an expert in another field simply curi
 **Chapter 0:** [Mathematical Foundation](mathematical-foundation) - In progress
 
 **Chapter 1: Basics of Motion Control**
--  [1.1 Kinematics](kinematics)
--  [1.2 Dynamics](dynamics)
--  [1.3 System Identification](identification)
--  [1.4 Close-loop Control](Closeloop&PID)
+-  [1.1 Kinematics](chap1_basic_motion_ctrl/kinematics)
+-  [1.2 Dynamics](chap1_basic_motion_ctrl/dynamics)
+-  [1.3 System Identification](chap1_basic_motion_ctrl/system_identification)
+-  [1.4 Close-loop Control](chap1_basic_motion_ctrl/Closeloop&PID)
 
 **Chapter 2: Sensing in Robotics**
--  [2.2 Sensors and Sensing](new-sensors-for-robotics)
--  [2.3 Vision](vision-for-robotics)
--  [2.4 Force Perception](force_perception)
+-  [2.2 Sensors and Sensing](chap2_sensing/new-sensors-for-robotics)
+-  [2.3 Vision](chap2_sensing/vision-for-robotics)
+-  [2.4 Force Perception](chap2_sensing/force_perception)
 
 **Chapter 3: Motion Planning and Navigation**
 - [3.1 Sampling-Based Planning](chap3_motion_planning/sampling-planning)
@@ -83,72 +83,72 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 
 **Chapter 5: Advanced Kinematics**
-- [5.1 Singularity analysis](chap5_adv_kin/01_singularity_analysis) - In Progress
+- [5.1 Singularity analysis](chap5_adv_kin/01_singularity_analysis) - In Progress / Needs unified structure 
 - [5.2 Cuspidal Robots](chap5_adv_kin/02_cuspidal) - In Progress
 - [5.3 Path Planning with Analytical Guarantees](chap5_adv_kin/03_path_analytical) - In Progress
 - [5.4 Conformal Geometric Algebra](chap5_adv_kin/04_cga) - In Progress
 
 **Chapter 6: Advanced Control**
--  [6.1 Robust Control](robustControl)
--  [6.2 Nonlinear Control](nonlinearcontrol)
--  [6.3 Model Predictive Control](MPC)
--  [6.4 Force Control](force-control)
+-  [6.1 Robust Control](chap6_advanced_ctrl/robustControl)
+-  [6.2 Nonlinear Control](chap6_advanced_ctrl/nonlinearcontrol)
+-  [6.3 Model Predictive Control](chap6_advanced_ctrl/MPC)
+-  [6.4 Force Control](chap6_advanced_ctrl/force-control)
   
 **Chapter 7: Manipulation** - PENDING COMPLETION
--  [7.1 Operational Space and Null Space Control](Null-Space) 
--  [7.2 Grasping](grasping) 
--  [7.3 Dexterous Manipulation](dexterousmanipulation) 
+-  [7.1 Operational Space and Null Space Control](chap7_manipulation/Null-Space) 
+-  [7.2 Grasping](chap7_manipulation/grasping) 
+-  [7.3 Dexterous Manipulation](chap7_manipulation/dexterousmanipulation) 
 
 **Chapter 8: Locomotion**  - PENDING COMPLETION
--  [8.1 Central Pattern Generator](wholebody)
--  [8.2 Stability](wholebody)
--  [8.3 Whole-Body Control](wholebody) 
+-  [8.1 Central Pattern Generator](chap8_locomotion/central_pattern_generator)
+-  [8.2 Stability](chap8_locomotion/stability)
+-  [8.3 Whole-Body Control](chap8_locomotion/whole_body_ctrl) 
 
 **Chapter 9: Aerial Robotics**
--  [9.1 Introduction to UAVs](aerialmanip) - In Progress  TODO
--  [9.2. Multirotor Drones](aerialmanip) - In Progress   TODO
--  [9.3 Aerial Manipulation](aerialmanip)
--  [9.4 Collective](aerialmanip)
--  [9.5 Vision for UAVs](vision_UAV)
+-  [9.1 Introduction to UAVs](chap9_aerial_robotics/aerial) - In Progress - Needs unified structure 
+-  [9.2. Multirotor Drones](chap9_aerial_robotics/aerial) - In Progress - Needs unified structure 
+-  [9.3 Aerial Manipulation](chap9_aerial_robotics/aerial_manipulation)
+-  [9.4 Collective](chap9_aerial_robotics/collective)
+-  [9.5 Vision for UAVs](chap9_aerial_robotics/vision_for_uavs)
 
-**Chapter 10: Robotic Application Domains Part - I**
+**Chapter 10: Robotic Application Domains Part - I**  - PENDING COMPLETION
 
--  [10.1 Humanoids](humanoids)
--  [10.2 Underwater Robotics](underwater)
--  [10.3 Space Exploration](space)
+-  [10.1 Humanoids](chap10_robotic_application_domain_I/humanoids)
+-  [10.2 Underwater Robotics](chap10_robotic_application_domain_I/underwater_robotics)
+-  [10.3 Space Exploration](chap10_robotic_application_domain_I/space_exploration)
 
 
 # Robotics Advanced Topics II# 
 
 **Chapter 11: Robot Learning** 
--  [11.1 Learning from Demonstration](LfD) 
--  [11.2 Reinforcement Learning](RL) - NOT STARTED YET
--  [11.3 End-to-End Learning](End-to-End) - NOT STARTED YET
--  [11.4 Sim-to-Real and Back](Sim-to-Real) - NOT STARTED YET
--  [11.5 Active Learning](Active) - NOT STARTED YET
--  [11.6 Constraint Learning](Constraint) - NOT STARTED YET
--  [11.7 Transfer Learning](Transfer) - NOT STARTED YET
+-  [11.1 Learning from Demonstration](chap11_learning/LfD) 
+-  [11.2 Reinforcement Learning](chap11_learning/RL) - NOT STARTED YET
+-  [11.3 End-to-End Learning](chap11_learning/End-to-End) - NOT STARTED YET
+-  [11.4 Sim-to-Real and Back](chap11_learning/Sim-to-Real) - NOT STARTED YET
+-  [11.5 Active Learning](chap11_learning/Active) - NOT STARTED YET
+-  [11.6 Constraint Learning](chap11_learning/Constraint) - NOT STARTED YET
+-  [11.7 Transfer Learning](chap11_learning/Transfer) - NOT STARTED YET
 
 **Chapter 12: Human-Robot Interaction**
--  [12.1 Interfaces for Human-Robot Interaction](interfaces-for-HRI) - In progress
--  [12.2 Haptics for Virtual Reality, Teleoperation and Prostheses](haptics-for-robotics) - In progress
--  [12.3 Safety in Design and Control](Safety)
--  [12.4 Shared-Control](Shared-Control)
--  [12.5 Cognitive Robotics](Social)
+-  [12.1 Interfaces for Human-Robot Interaction](chap12_hri/interfaces-for-HRI) - In progress
+-  [12.2 Haptics for Virtual Reality, Teleoperation and Prostheses](chap12_hri/haptics-for-robotics) - In progress
+-  [12.3 Safety in Design and Control](chap12_hri/Safety)
+-  [12.4 Shared-Control](chap12_hri/Shared-Control)
+-  [12.5 Cognitive Robotics](chap12_hri/Social)
 
-**Chapter 13: Soft Robotics**
--  [13.1 Materials](Materials)
--  [13.2 Design and Fabrication](Fabrication)
--  [13.3 Modeling and Control](Mod-Control)
--  [13.4 Hybrid Design](Hybrid)
+**Chapter 13: Soft Robotics**  - NOT STARTED YET
+-  [13.1 Materials](chap13_soft_robotics/Materials)
+-  [13.2 Design and Fabrication](chap13_soft_robotics/fabrication)
+-  [13.3 Modeling and Control](chap13_soft_robotics/modeling_ctrl)
+-  [13.4 Hybrid Design](chap13_soft_robotics/hybrid_design)
   
 **Chapter 14: Robotic Application Domains Part - II**
--  [14.1 Exoskeletons](Exoskeletons)
--  [14.2 Educational Robotics](Education)
--  [14.3 Surgical Robotics](surgical) - In Progress
--  [14.4 Micro-Robotics](Microrobots)
+-  [14.1 Exoskeletons](chap14_robotic_application_domain_II/Exoskeletons)
+-  [14.2 Educational Robotics](chap14_robotic_application_domain_II/Education)
+-  [14.3 Surgical Robotics](chap14_robotic_application_domain_II/surgical) - In Progress
+-  [14.4 Micro-Robotics](chap14_robotic_application_domain_II/Microrobots)
 
 **Chapter 15: Novel Trendy Research Areas in Robotics**
--  [15.1 Supernumerary Limbs](Supernumerary)
--  [15.2 Sustainable Robotics](Sustainable) - In Progress
--  [15.3 Robotics and Arts](Arts)
+-  [15.1 Supernumerary Limbs](chap15_novel_trend/Supernumerary)
+-  [15.2 Sustainable Robotics](chap15_novel_trend/Sustainable) - In Progress
+-  [15.3 Robotics and Arts](chap15_novel_trend/Arts)

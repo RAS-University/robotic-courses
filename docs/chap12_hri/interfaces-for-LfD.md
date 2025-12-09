@@ -61,8 +61,8 @@ Interfaces used to gather data from humans for teaching the robots revolve aroun
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
 Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
-#### 2.1.1 Tele-operation:**
-In teleoperation, users control robots remotely through a designated interface. The quality of both learning and task performance depends heavily on two factors: the _user-friendliness of the design_ of the interface and the _operator’s expertise_. Effective teleoperation requires that the human operator not only be skilled but also have a solid understanding of the device they are using. As such, the interface should be user friendly, while being effective, two goals that can be conflicting.
+#### 2.1.1 **Tele-operation:**
+In teleoperation, users control robots remotely through a designated interface. The quality of both learning and task performance depends heavily on two factors: the <ins>_user-friendliness of the design_</ins> of the interface and the <ins>_operator’s expertise_</ins>. Effective teleoperation requires that the human operator not only be skilled but also have a solid understanding of the device they are using. As such, the interface should be user friendly, while being effective, two goals that can be conflicting.
 
 As a result, current research has split into two main directions. The first focuses on developing simple interfaces that require little to no pretraining; however, these interfaces restrict the range and complexity of behaviors that can be taught to the robot. The second trend explores more sophisticated interfaces that offer greater expressive power. Although these interfaces demand more training time for the human operator, they enable the robot to learn significantly more complex tasks.
 
@@ -128,9 +128,9 @@ In the right example, the user controls the robot to pick up different objects. 
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
-*_Pros_*: Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and can be easily integrated into a wide range of applications.
+<ins>_Pros_</ins>: Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and can be easily integrated into a wide range of applications.
 <br>
-*_Cons_*: Using a joystick often requires both hands. This depends on the specific type of joystick, but it is often necessary to use one hand to control translation and the other to control orientation. Furthermore, joysticks are limited in what can be transferred: forces cannot be transmitted; only displacements and speeds are conveyed. (It is still a step forward compared to tablets, as the range of teachable actions increases; though this comes at the cost of reduced user-friendliness.) Moreover, the performance of this interface depends on the user’s point of view. The user must be positioned to have a clear view of the scene; for example, if the user is behind the robot, visibility is greatly reduced. (Comparing to tablet interfaces, tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.) Finally, joystick interfaces are sensitive to the user’s experience level. They tend to be less user-friendly than tablets and often require some training before they can be used effectively.
+<ins>_Cons_</ins>: Using a joystick often requires both hands. This depends on the specific type of joystick, but it is often necessary to use one hand to control translation and the other to control orientation. Furthermore, joysticks are limited in what can be transferred: forces cannot be transmitted; only displacements and speeds are conveyed. (It is still a step forward compared to tablets, as the range of teachable actions increases; though this comes at the cost of reduced user-friendliness.) Moreover, the performance of this interface depends on the user’s point of view. The user must be positioned to have a clear view of the scene; for example, if the user is behind the robot, visibility is greatly reduced. (Comparing to tablet interfaces, tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.) Finally, joystick interfaces are sensitive to the user’s experience level. They tend to be less user-friendly than tablets and often require some training before they can be used effectively.
 
 <!--
 > - **Pros:** 
@@ -154,8 +154,7 @@ With this interface, the user controls the robot’s end-effector using a 3-DOF 
 > - Depends on the point of view of the user: The user should be well placed to have a relatively good view. For example, if the user is behind the robot, she/he can't see much (A positive point about tablets is that a rendering of the scene, viewed from robot's point of view, is provided).
 > - Sensitive to experience of teacher: It is a bit less user-firendly compared to tablets and often requires a bit of training before usage.
 -->
-
-When transfering motion via a joystick, one can transfer solely displacement in cartesian space, namely translation and rotation of the end-effector. For the robot to reproduce these require to solve the [inverse kinematics](kinematics). This can present challenges, as the user may command an infeasible motion; for example, a rapid rotation that violates the robot’s joint limits. In such cases, an alternative path must be computed. Consequently, the user needs to learn how to operate the robot effectively.
+Another limitation comes from the fact that, when transfering motion via a joystick, one can transfer solely displacement in cartesian space, namely translation and rotation of the end-effector. For the robot to reproduce these movements require to solve the [inverse kinematics](kinematics). This can present challenges, as the user may command an infeasible motion; for example, a rapid rotation that violates the robot’s joint limits. In such cases, an alternative path must be computed. Consequently, the user needs to learn how to operate the robot effectively.
 <br>
 On the other hand, teleoperation offers a significant advantage: the user can teach robots that are entirely different from themselves. A good example of this is teaching drones.
 
@@ -252,13 +251,13 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
 
 ##### **1.3. Exoskeletons**
 
-An exoskeleton consists of a wearable mechanism that can measure the displacement, and at times, the forces generated by the operator. The advantage of using exoskeleton to demonstrate a task, there is a direct mapping between the user’s body (arms or legs) and the robot’s body. For example, in the video below, the user guides the robot’s arms directly with their own arms. The advantage of this interface is that, by using exoskeletons, the user can control the joints directly. The user has control over the Cartesian position and orientation of each joint.
+An exoskeleton consists of a wearable mechanism that can measure the displacement, and at times, the forces generated by the operator. To demonstrate a task lies in that there is a direct mapping between the user’s body (arms or legs) and the robot’s body. For example, in the video below, the user guides the robot’s arms directly with their own arms. 
+
+<ins>_Pros_</ins>: The advantage of this interface is that, by using exoskeletons, the user can control the joints directly. The user has control over the Cartesian position and orientation of each joint.
 <br>
 Some exoskeletons (though not all) render the contact forces, meaning that when the robot experiences a force during contact, the user also senses a corresponding force. In this case, the question arises: Which force does the user actually sense? Is it only the force at the end effector, or are forces at other parts of the robot also conveyed? For example, if the robot impacts something with its elbow, does the user feel this force at their own elbow? Rendering such feedback in real time is still difficult and challenging.
 <br>
-Regarding disadvantages, most exoskeletons are heavy and cumbersome. With advancements in materials and actuators, there is hope that this issue will be mitigated, leading to increased adoption of exoskeletons. Another limitation is that an exoskeleton is typically designed for a specific user’s size and strength, making it unsuitable for everyone. However, exoskeletons can be extremely useful if these challenges are addressed.
-
-
+<ins>_Cons_</ins>: Regarding disadvantages, most exoskeletons are heavy and cumbersome. With advancements in materials and actuators, there is hope that this issue will be mitigated, leading to increased adoption of exoskeletons. Another limitation is that an exoskeleton is typically designed for a specific user’s size and strength, making it unsuitable for everyone. However, exoskeletons can be extremely useful if these challenges are addressed.
 <br>
 
 <p align="center">
@@ -903,6 +902,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

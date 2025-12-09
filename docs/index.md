@@ -85,15 +85,15 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [Model Predictive Control](MPC)
 -  [Force Control](force-control)
   
-**Chapter 7: Manipulation**
--  [Operational Space and Null Space Control](Null-Space) - PENDING COMPLETION
--  [Grasping](grasping)  - PENDING COMPLETION
--  [Dexterous Manipulation](dexterousmanipulation) - PENDING COMPLETION
+**Chapter 7: Manipulation** - PENDING COMPLETION
+-  [Operational Space and Null Space Control](Null-Space) 
+-  [Grasping](grasping) 
+-  [Dexterous Manipulation](dexterousmanipulation) 
 
-**Chapter 8: Locomotion**
--  [Central Pattern Generator](wholebody) - PENDING COMPLETION
--  [Stability](wholebody) - PENDING COMPLETION
--  [Whole-Body Control](wholebody) - PENDING COMPLETION
+**Chapter 8: Locomotion**  - PENDING COMPLETION
+-  [Central Pattern Generator](wholebody)
+-  [Stability](wholebody)
+-  [Whole-Body Control](wholebody) 
 
 **Chapter 9: Aerial Robotics**
 {% include_relative aerial.md %}
@@ -110,14 +110,14 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 # Robotics Advanced Topics II# 
 
-**Chapter 11: Robot Learning**
--  [Learning from Demonstration](LfD) - In progress
--  [Reinforcement Learning](RL)
--  [End-to-End Learning](End-to-End)
--  [Sim-to-Real and Back](Sim-to-Real)
--  [Active Learning](Active)
--  [Constraint Learning](Constraint)
--  [Transfer Learning](Transfer) - In progress
+**Chapter 11: Robot Learning** 
+-  [Learning from Demonstration](LfD) 
+-  [Reinforcement Learning](RL) - NOT STARTED YET
+-  [End-to-End Learning](End-to-End) - NOT STARTED YET
+-  [Sim-to-Real and Back](Sim-to-Real) - NOT STARTED YET
+-  [Active Learning](Active) - NOT STARTED YET
+-  [Constraint Learning](Constraint) - NOT STARTED YET
+-  [Transfer Learning](Transfer) - NOT STARTED YET
 
 **Chapter 12: Human-Robot Interaction**
 -  [Interfaces for Human-Robot Interaction](interfaces-for-HRI) - In progress

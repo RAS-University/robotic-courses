@@ -45,11 +45,12 @@ nav_order: 7
   <iframe width="600" height="338" src="https://www.youtube.com/embed/FtjC-BXGgAE" frameborder="0" allowfullscreen></iframe>
 </p>
 
-><sub>The Chief Cook Robot (short version): A humanoid robot learning to cook an omelet by whipping eggs, cutting ham and grating cheese. YouTube video, Apr 2008.</sub>
+><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements.
+>Source: EPFL [LASA]([http://lasa.epfl.ch])) - YouTube video, Apr 2008.</sub>
 
 ## 1. General Motivation
 
-Our main motivation is to transmit skills to robots so they can perform different tasks. We want to teach our robots how to carry out a task. The most trivial solution would be to teach the robot by moving it, just as we do with a baby. However, unlike with a baby, this is by no means trivial with a robot. This is because our bodies differ from robot bodies. As a result, to solve this discrepancy between the human body and the robot body, we need **interfaces**.
+[Learning from demonstration]([https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfDub.io/robotic-courses/docs/chap11_learning/LfD)) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**.
 
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
@@ -903,5 +904,6 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 

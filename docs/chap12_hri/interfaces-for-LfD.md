@@ -70,8 +70,9 @@ Interfaces used to gather data from humans for teaching the robots revolve aroun
 Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
 #### **A: Tele-operation:**
-In tele-operation, users control robots using some interface to perform the task from some **distance**. The quality of learning and performance is sensitive to: **1.Interface Design** and **2. Teacher Experience**.
-This means that the person teleoperating the robot needs to be skilled and understand the device they are using. As a result, current research follows two main trends. In the first trend, the interface is simple and requires little pretraining, but this limits what can be taught to the robot. In the second trend, a more complex interface is designed. It takes time for the human to learn to use it effectively, but it allows for teaching the robot more complex tasks.
+In teleoperation, users control robots remotely through a designated interface. The quality of both learning and task performance depends heavily on two factors: the _user-friendliness of the design_ of the interface and the _operator’s expertise_. Effective teleoperation requires that the human operator not only be skilled but also have a solid understanding of the device they are using. As such, the interface should be user friendly, while being effective, two goals that can be conflicting.
+
+As a result, current research has split into two main directions. The first focuses on developing simple interfaces that require little to no pretraining; however, these interfaces restrict the range and complexity of behaviors that can be taught to the robot. The second trend explores more sophisticated interfaces that offer greater expressive power. Although these interfaces demand more training time for the human operator, they enable the robot to learn significantly more complex tasks.
 
 ##### **B: Graphical user interface/Tablet**
 The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
@@ -903,6 +904,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

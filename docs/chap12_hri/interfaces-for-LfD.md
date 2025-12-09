@@ -49,7 +49,7 @@ nav_order: 7
 
 ## 1. General Motivation
 
-[Learning from demonstration]([https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfDub.io/robotic-courses/docs/chap11_learning/LfD)) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**.
+[Learning from demonstration] is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**. This chapter gives a brief overview of the various popular interfaces, underlying in each case the pros and cons of each interface.
 
 ## 2. Course Content
 
@@ -128,7 +128,7 @@ In the right example, the user controls the robot to pick up different objects. 
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
-Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and can be easily integrated into a wide range of applications.
+*Pros": Similar to tablets, joysticks are inexpensive and user-friendly. Although using a joystick may not feel as intuitive as using a tablet, it is still relatively easy to operate. A joystick can communicate the desired motion in 3D or even 6D and can be easily integrated into a wide range of applications.
 <br>
 Using a joystick often requires both hands. This depends on the specific type of joystick, but it is often necessary to use one hand to control translation and the other to control orientation. Furthermore, joysticks are limited in what can be transferred: forces cannot be transmitted; only displacements and speeds are conveyed. (It is still a step forward compared to tablets, as the range of teachable actions increases; though this comes at the cost of reduced user-friendliness.) Moreover, the performance of this interface depends on the user’s point of view. The user must be positioned to have a clear view of the scene; for example, if the user is behind the robot, visibility is greatly reduced. (Comparing to tablet interfaces, tablets have the advantage that they can display a rendering of the scene from the robot’s point of view.) Finally, joystick interfaces are sensitive to the user’s experience level. They tend to be less user-friendly than tablets and often require some training before they can be used effectively.
 
@@ -885,7 +885,7 @@ Another important aspect is the ability to generalize. The robot should infer th
 
 ### Credits:
 <!-- List all the sources that you used to create the page   -->
-This course page is based on the content of the second lecture (Lecture 02: Acquiring Data for Learning) of the course ["MICRO-462, Learning and Adaptive Control for Robots"](https://edu.epfl.ch/coursebook/fr/learning-and-adaptive-control-for-robots-MICRO-462), taught at EPFL by Professor [Aude Billard](https://people.epfl.ch/aude.billard).
+This course page is based on the content of the second lecture (Lecture 02: Acquiring Data for Learning) of the course ["MICRO-462, Learning and Adaptive Control for Robots"](https://edu.epfl.ch/coursebook/fr/learning-and-adaptive-control-for-robots-MICRO-462), taught at EPFL by Professor [Aude Billard](https://people.epfl.ch/aude.billard). It also benefitted from input from Dr. Ahalya Prabhakar.
 
 ### Resources:
 #### **Books**:
@@ -903,6 +903,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

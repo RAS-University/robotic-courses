@@ -1,5 +1,5 @@
 ---
-title: Interfaces for Human-Robot Interaction
+title: Interfaces for Learning from Human Demonstrations
 parent: Courses
 layout: default
 nav_order: 7
@@ -10,7 +10,7 @@ nav_order: 7
 <script src="questions.js"></script>
 
 
-# Interfaces for Human-Robot Interaction
+# Interfaces for Learning from Human Demonstrations
 
 *Table of Contents*
 
@@ -903,4 +903,5 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 

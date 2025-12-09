@@ -16,23 +16,23 @@ nav_order: 7
 
 - [1. General Motivation](#1-general-motivation)
 - [2. Course Content](#2-course-content)
-  - [Chapter 1: Types of Interfaces](#chapter-1-types-of-interfaces)
-    - [1. Tele-operation](#1-tele-operation)
-      - [1.1. Graphical User Interface / Tablet](#11-graphical-user-interfacetablet)
-      - [1.2. Joysticks](#12-joysticks)
-      - [1.3. Exoskeletons](#13-exoskeletons)
-      - [1.4. Telepresence](#14-telepresence)
-      - [1.5. Haptic Interfaces](#15-haptic-interfaces)
-      - [1.6. Haptic Devices & Teleoperation](#16-haptice-devices--teleoperation)
-    - [2. Kinesthetic Teaching](#2-kinesthetic-teaching)
-    - [3. Observational Learning](#3-observational-learning)
-      - [3.1. Vision Systems](#31-vision-systems)
-      - [3.2. Motion Capture Systems](#32-motion-capture-systems)
-  - [Chapter 2: Challenges](#chapter-2-challenges)
-    - [1. Correspondence Problem](#1-correspondence-problem)
-    - [2. Learning is Data-Sensitive](#2-learning-is-data-sensitive)
-    - [3. Variability in Task Definition](#3-variability-in-task-definition)
-    - [4. Generalizing Control Law – Beyond the Demonstrations](#4-generalizing-control-law--beyond-the-demonstrations)
+  - [2.1: Types of Interfaces](#chapter-1-types-of-interfaces)
+    - [2.1.1. Tele-operation](#1-tele-operation)
+      - [2.1.1.1. Graphical User Interface / Tablet](#11-graphical-user-interfacetablet)
+      - [2.1.1.2. Joysticks](#12-joysticks)
+      - [2.1.1.3. Exoskeletons](#13-exoskeletons)
+      - [2.1.1.4. Telepresence](#14-telepresence)
+      - [2.1.1.5. Haptic Interfaces](#15-haptic-interfaces)
+      - [2.1.1.6. Haptic Devices & Teleoperation](#16-haptice-devices--teleoperation)
+    - [2.2. Kinesthetic Teaching](#2-kinesthetic-teaching)
+    - [2.3. Observational Learning](#3-observational-learning)
+      - [2.3.1. Vision Systems](#31-vision-systems)
+      - [2.3.2. Motion Capture Systems](#32-motion-capture-systems)
+  - [3: Challenges](#chapter-2-challenges)
+    - [3.1. Correspondence Problem](#1-correspondence-problem)
+    - [3.2. Learning is Data-Sensitive](#2-learning-is-data-sensitive)
+    - [3.3. Variability in Task Definition](#3-variability-in-task-definition)
+    - [3.4. Generalizing Control Law – Beyond the Demonstrations](#4-generalizing-control-law--beyond-the-demonstrations)
 - [Credits](#credits)
 - [Resources](#resources)
   - [Books](#books)
@@ -47,21 +47,13 @@ nav_order: 7
 
 ><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA]([http://lasa.epfl.ch])) - YouTube video, Apr 2008.</sub>
 
-<p align="center">
-  <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
-</p>
-
-><sub>S. M. Khansari-Zadeh, K. Kronander, and A. Billard, "Learning to playminigolf: A dynamical system-based approach," Adv. Robot., vol. 26,no. 17, pp. 1967–1993, 2012. [Online]. Available: [http://infoscience.epfl.ch/record/181052](http://infoscience.epfl.ch/record/181052)</sub>
->
-><sub>Teaching a Robot to Play Golf. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA]([http://lasa.epfl.ch])) 
-
-## 12.1.1. General Motivation
+## 1. General Motivation
 
 [Learning from demonstration]([https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfDub.io/robotic-courses/docs/chap11_learning/LfD)) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**.
 
-## 12.1.2. Course Content
+## 2. Course Content
 
-### Types of Interfaces
+### 2.1 Types of Interfaces
 
 Interfaces used to gather data from humans for teaching the robots revolve around three main themes:
 > - **Teleoperation:** User controls the robot through the interface and teleoperates the robot with some distance.
@@ -69,12 +61,12 @@ Interfaces used to gather data from humans for teaching the robots revolve aroun
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
 Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
-#### **A: Tele-operation:**
+#### 2.1.1 Tele-operation:**
 In teleoperation, users control robots remotely through a designated interface. The quality of both learning and task performance depends heavily on two factors: the _user-friendliness of the design_ of the interface and the _operator’s expertise_. Effective teleoperation requires that the human operator not only be skilled but also have a solid understanding of the device they are using. As such, the interface should be user friendly, while being effective, two goals that can be conflicting.
 
 As a result, current research has split into two main directions. The first focuses on developing simple interfaces that require little to no pretraining; however, these interfaces restrict the range and complexity of behaviors that can be taught to the robot. The second trend explores more sophisticated interfaces that offer greater expressive power. Although these interfaces demand more training time for the human operator, they enable the robot to learn significantly more complex tasks.
 
-##### **B: Graphical user interface/Tablet**
+##### **2.1.2 Graphical user interface/Tablet**
 The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
 <br>
 Tablets have been used since the 1990s, and they have become more capable with the advancements of modern devices. Yet, they remain a simple system. The user can communicate the desired motion by mimicking it on the tablet or by indicating a desired target.
@@ -132,7 +124,7 @@ In the right example, the user controls the robot to pick up different objects. 
 </details>
 
 
-##### **C: Joysticks**
+##### **2.1.3: Joysticks**
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
@@ -525,6 +517,13 @@ Footage from Adam Savage's Tested + ShadowRobot Company and Syntouch. YouTube vi
 #### **2. Kinesthetic Teaching** 
 In kinesthetic teaching, the teacher physically moves the robot. This is possible due to the robot’s backdrivability. The robot is completely compliant to the user’s motion. The advantage is that the user interacts directly with the robot’s feasible workspace. Forces applied by the user are transmitted directly to the robot, and the user can directly sense the forces involved in the task. Once the user has trained the robot, the robot can then reproduce the task and generalize.
 <br>
+<p align="center">
+  <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
+</p>
+
+><sub>S. M. Khansari-Zadeh, K. Kronander, and A. Billard, "Learning to playminigolf: A dynamical system-based approach," Adv. Robot., vol. 26,no. 17, pp. 1967–1993, 2012. [Online]. Available: [http://infoscience.epfl.ch/record/181052](http://infoscience.epfl.ch/record/181052)</sub>
+>
+><sub>Teaching a Robot to Play Golf. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA]([http://lasa.epfl.ch])) 
 
 <!--
 > + **Pros:** 
@@ -904,6 +903,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

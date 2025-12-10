@@ -150,7 +150,7 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
   </button>
   <p id="q0-2-feedback"></p>
 </form>
-
+  
 <!-- Question 3 -->
 <p><strong>Question 3: Which robot behaviors are influenced by having a correct model of the robot and environment' dynamics?</strong></p>
 <form id="q0-3">
@@ -249,9 +249,11 @@ This equation is central to **model-based control**, **trajectory planning**, an
 We can use it in two ways:
 
 * ***Forward Dynamics::***
-**Given**: torques $\tau$  
+  <br>
+**Given**: torques $\tau$
+  <br>
 **Compute**: joint accelerations $\ddot{\theta}$ (→ then velocities and positions)
-
+  <p>
 This is used in **simulation** to see how a robot will move when forces are applied.
 
 $$

@@ -138,19 +138,19 @@ Full release is planned for the summer 2026.
 -  [12.4 Shared-Control](chap12_hri/Shared-Control) 
 -  [12.5 Cognitive Robotics](chap12_hri/Social) 
 
-**Chapter 13: Soft Robotics**  
+**Chapter 13: Soft Robotics** - Under Construction (release Summer 2026)
 -  [13.1 Materials](chap13_soft_robotics/Materials)
 -  [13.2 Design and Fabrication](chap13_soft_robotics/fabrication)
 -  [13.3 Modeling and Control](chap13_soft_robotics/modeling_ctrl)
 -  [13.4 Hybrid Design](chap13_soft_robotics/hybrid_design)
   
-**Chapter 14: Robotic Application Domains Part - II** 
+**Chapter 14: Robotic Application Domains Part - II** - Under Construction (release Summer 2026)
 -  [14.1 Exoskeletons](chap14_robotic_application_domain_II/Exoskeletons)
 -  [14.2 Educational Robotics](chap14_robotic_application_domain_II/Education)
--  [14.3 Surgical Robotics](chap14_robotic_application_domain_II/surgical)
+-  [14.3 Surgical Robotics](chap14_robotic_application_domain_II/surgical) - In Progress
 -  [14.4 Micro-Robotics](chap14_robotic_application_domain_II/Microrobots)
 
-**Chapter 15: Novel Trendy Research Areas in Robotics** 
+**Chapter 15: Novel Trendy Research Areas in Robotics** - Under Construction (release Summer 2026)
 -  [15.1 Supernumerary Limbs](chap15_novel_trend/Supernumerary)
 -  [15.2 Sustainable Robotics](chap15_novel_trend/Sustainable) 
 -  [15.3 Robotics and Arts](chap15_novel_trend/Arts)

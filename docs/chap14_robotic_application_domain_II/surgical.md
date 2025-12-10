@@ -37,14 +37,15 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Surgical Robotics 
+# 14.3 Surgical Robotics 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 0. Key terms
+## 14.3.1 Key terms
+
 No deep prerequisites here, this section is just to spark your curiosity and show what surgical robots can do.
 
 Before we dive in, have a look at the terms below. You will see them throughout the chapter and videos, and having them fresh in mind will make everything that follows much clearer!
@@ -60,7 +61,9 @@ Before we dive in, have a look at the terms below. You will see them throughout 
 
 ---
 
-## 1. What exactly *is* a Surgical Robot?
+## 14.3.2 Course Content
+
+### 14.3.2.1 What exactly *is* a Surgical Robot?
 
 Robotic surgery turns a surgeon’s hands into micron-level instruments. While the surgeon sits at a 3-D console, the robot scales big hand moves down to hair-thin motions, filters out tremor, and bends its “wrists” in ways no human wrist can. The payoff: cleaner cuts, steadier sutures, and faster healing for the patient.
 
@@ -73,7 +76,7 @@ To see that precision in action, watch the clip below, a surgical robot neatly s
 
 ---
 
-## 2. How Do Surgeons *Drive* the Robot?
+### 14.3.2.2 How Do Surgeons *Drive* the Robot?
 *(The steps below describe a **typical multi-arm, master-slave platform**—think da Vinci, Hugo, Versius, etc.)*
 
 1. **Console in, scalpel out** – The surgeon slips fingers into two pen-like master grips, peers into a magnified 3-D viewer, and rests feet on pedals, no handheld scalpels at the bedside.  
@@ -99,7 +102,7 @@ Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the coc
 
 ---
 
-## 3. Challenges of robotic-assisted surgery (RAS) adoption
+### 14.3.2.3 Challenges of robotic-assisted surgery (RAS) adoption
 
 | **Challenge Zone** | **Operational Impact** | **Representative Limitations** |
 |------------|------------------------|--------------------------------|
@@ -112,7 +115,7 @@ Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the coc
 
 ---
 
-## 4 Types of Surgical-Robot 
+### 14.3.2.4 Types of Surgical-Robot 
 
 No single robot can tackle *every* anatomy or access route, so the field has splintered into task-specific platforms.  
 A practical way to organise them is by **where they enter the body** and **what they must do once inside**:
@@ -138,9 +141,9 @@ If you want to explore more examples, head over to **[robots.sfits.ch](https://r
 
 ---
 
-## 5 News & Emerging Innovations
+### 14.3.2.5 News & Emerging Innovations
 
-### 5.1 Humans-in-the-Loop — For Now  
+#### Humans-in-the-Loop — For Now  
 Focus-group interviews suggest that clinicians are **eager for “light” autonomy** but demand an instant-override option:
   
 * **Assist, don’t replace** – surgeons are happy to let the robot hold tissue tension or re-centre the scope **as long as they remain in charge**.  
@@ -148,11 +151,11 @@ Focus-group interviews suggest that clinicians are **eager for “light” auton
 
 Result: current Research and Development focuses on **decision-support or task-support modules** rather than “driver-less” surgery.
 
-### 5.2 Stay on the Cutting Edge  
+#### Stay on the Cutting Edge  
 For real-time breakthroughs—autonomous suturing prototypes, first-in-human trials, clever camera algorithms—bookmark **[Surgical Robotics Technology › News](https://www.surgicalroboticstechnology.com/category/news/)**, this provides the latest news, events, products, technology and jobs from the Surgical Robotics industry.
 
 
-### 5.3 Spotlight Videos 
+#### Spotlight Videos 
 
 - [Will robots replace surgeons? Testing surgical robots, Robots in Japan](https://www.youtube.com/watch?v=OfX6qiJKDMk)  
   <sub>*YouTube, 14 Aug 2020 – https://www.youtube.com/watch?v=OfX6qiJKDMk*</sub>  
@@ -279,14 +282,14 @@ Other interesting videos
 
 -----------------------
 
-## Credit
+## 14.3.3 Credit
 
 This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
 -----------------------
 
 
-## Reference:
+## 14.3.4 Reference:
 
 1. <a id="ref1"></a>Morrell, A. L. G., Morrell-Junior, A. C., Morrell, A. G., Mendes, J. M. F., Tustumi, F., de Oliveira-e-Silva, L. G., & Morrell, A. (2021). *The history of robotic surgery and its evolution: when illusion becomes reality.* Revista do Colégio Brasileiro de Cirurgiões, 48, e20202798. https://doi.org/10.1590/0100-6991e-20202798  
 
@@ -302,3 +305,6 @@ This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**,
 
 
 *Last updated: June 26, 2025*
+---
+
+[Back to Top](#start)

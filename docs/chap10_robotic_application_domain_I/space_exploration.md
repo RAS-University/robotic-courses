@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Space Exploration 
+# 10.2 Space Exploration 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 10.2.1 Prerequisites
 
 To get the most out of this Space Exploration module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 10.2.2 General Motivation
 
 
-## 3. Course Content
+## 10.2.3 Course Content
 
-### Section 3.0 : General Concepts
+### 10.2.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 10.2.4 Credits
 
-## Ressources
+## 10.2.5 Ressources
 
 
 

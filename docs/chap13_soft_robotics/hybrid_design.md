@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Hybrid Design 
+# 13.4 Hybrid Design 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 13.4.1 Prerequisites
 
 To get the most out of this Hybrid Design module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 13.4.2 General Motivation
 
 
-## 3. Course Content
+## 13.4.3 Course Content
 
-### Section 3.0 : General Concepts
+### 13.4.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 13.4.4 Credits
 
-## Ressources
+## 13.4.5 Ressources
 
 
 

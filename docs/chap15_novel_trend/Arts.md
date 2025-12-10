@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Robotics and Arts 
+# 15.3 Robotics and Arts 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 15.3.1 Prerequisites
 
 To get the most out of this Robotics and Arts module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 15.3.2 General Motivation
 
 
-## 3. Course Content
+## 15.3.3 Course Content
 
-### Section 3.0 : General Concepts
+### 15.3.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 15.3.4 Credits
 
-## Ressources
+## 15.3.5 Ressources
 
 
 

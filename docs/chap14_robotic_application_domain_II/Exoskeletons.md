@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Exoskeletons 
+# 14.1 Exoskeletons 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 14.1.1 Prerequisites
 
 To get the most out of this Exoskeletons module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 14.1.2 General Motivation
 
 
-## 3. Course Content
+## 14.1.3 Course Content
 
-### Section 3.0 : General Concepts
+### 14.1.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 14.1.4 Credits
 
-## Ressources
+## 14.1.5 Ressources
 
 
 

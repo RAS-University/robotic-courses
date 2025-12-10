@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Supernumerary Limbs 
+# 15.1 Supernumerary Limbs 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 15.1.1 Prerequisites
 
 To get the most out of this Supernumerary Limbs module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 15.1.2 General Motivation
 
 
-## 3. Course Content
+## 15.1.3 Course Content
 
-### Section 3.0 : General Concepts
+### 15.1.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 15.1.4 Credits
 
-## Ressources
+## 15.1.5 Ressources
 
 
 

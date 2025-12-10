@@ -7,7 +7,7 @@ nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 <a name="top"></a>
 
@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Humanoids 
+# 10.1 Humanoids 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 10.1.1 Prerequisites
 
 To get the most out of this Humanoids module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 10.1.2 General Motivation
 
 
-## 3. Course Content
+## 10.1.3 Course Content
 
-### Section 3.0 : General Concepts
+### 10.1.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 10.1.4 Credits
 
-## Ressources
+## 10.1.5 Ressources
 
 
 

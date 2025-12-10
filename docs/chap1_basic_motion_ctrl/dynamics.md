@@ -5,7 +5,7 @@ layout: default
 nav_order: 3
 ---
 
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 <a name="top"></a>
 
@@ -34,7 +34,7 @@ nav_order: 3
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# Dynamics 
+# 1.2 Dynamics 
 
 
 <!-- bundle exec jekyll serve -->
@@ -42,14 +42,14 @@ nav_order: 3
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 1.2.1 Prerequisites
 To get the most out of this **Dynamics module**, it’s strongly recommended that you have already completed:
 
-1. **[Kinematics](kinematics)**  
+ **[Kinematics](kinematics)**  
 - A solid understanding of robot configurations, coordinate transformations and velocity kinematics.
 - Familiarity with forward and inverse kinematics, jacobians and joint-space vs task-space representations. 
 
-2. **Basic Mechanical Physics**
+ **Basic Mechanical Physics**
 - Newton’s laws of motion, especially **force = mass × acceleration (F = ma)**.
 - Concepts of **moment of inertia**, **torque**, and **rotational motion**.
 - Understanding of **Coriolis** and **centrifugal forces**, which play a key role in the equations of motion for moving reference frames like robotic arms.
@@ -59,7 +59,7 @@ These prerequisites are essential because dynamics connects the dots between mot
 
 ---
 
-## 2. General Motivation
+## 1.2.2 General Motivation
 
 
 How do robots jump over gaps, crawl under obstacles, or balance on one leg?
@@ -94,10 +94,10 @@ If you want to make robots that **move like athletes**, **adapt like animals**, 
 
 ---
 
-## 3. Course Content
+## 1.2.3 Course Content
 
 
-### Chapter 0: Why Dynamics?
+### 1.2.3.0: Why Dynamics?
 > - Motivation: Why kinematics is not enough  
 > - What dynamics adds: Forces, torques, and real-world behavior  
 > - Examples: Balancing, jumping, slipping, and interacting with the world
@@ -172,7 +172,7 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
 
 ---
 
-### Chapter 1 (Part1): The Lagrangian Formulation of Dynamics 
+### 1.2.3.1 (Part1): The Lagrangian Formulation of Dynamics 
 > - Generalized coordinates and velocities  
 > - Kinetic and potential energy of robotic systems  
 > - Euler–Lagrange equations  
@@ -190,7 +190,7 @@ Here two key modeling approaches are compared:
 
 1. **Lagrangian Formulation**: a **variational method** based on the robot’s **kinetic** and **potential energy**. It gives us compact, system-wide equations without dealing with forces on each individual link.
 
-2. **Newton–Euler Formulation** [(see Chapter 3.1)](#ch3-single): a **force-based method** applying **Newton’s second law** $ F = ma $ and torque equations link by link. It's more direct but less elegant for complex systems.
+2. **Newton–Euler Formulation** [(see section 1.2.3.3 (part 1))](#ch3-single): a **force-based method** applying **Newton’s second law** $ F = ma $ and torque equations link by link. It's more direct but less elegant for complex systems.
 
 ---
 
@@ -324,7 +324,7 @@ You can think of forward and inverse dynamics like this:
 
 ---
 
-### Chapter 1 (Part2): The Lagrangian Formulation of Dynamics 
+### 1.2.3.1 (Part2): The Lagrangian Formulation of Dynamics 
 ![Lagrangian Part 2](https://www.youtube.com/watch?v=BjD-pL819LA)  
 ><sub>Modern Robotics, Chapter 8.1: Lagrangian Formulation of Dynamics (Part 2 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=BjD-pL819LA</sub>
 
@@ -595,7 +595,7 @@ One of these components is $\mathcal{L}^{1} = m\,\dot{\theta}_1\,\dot{\theta}_2\
 
 **(a)** Find the joint torques $ \tau_1 $ and $ \tau_2 $ corresponding to the component $ \mathcal{L}^{1} $.
 
-**(b)** (See Chapter 2 if necessary) Write the $2\times2$ mass matrix $M^{1}(\theta)$, the velocity-product vector $c^{1}(\theta,\dot{\theta})$, and the gravity vector $g^{1}(\theta)$ corresponding to $\mathcal{L}^{1}$.
+**(b)** (See [Section 1.2.3.2](#ch2-mass-mx) if necessary) Write the $2\times2$ mass matrix $M^{1}(\theta)$, the velocity-product vector $c^{1}(\theta,\dot{\theta})$, and the gravity vector $g^{1}(\theta)$ corresponding to $\mathcal{L}^{1}$.
 (Notice that $M = M^{1} + M^{2} + M^{3} + \cdots$, $c = c^{1} + c^{2} + c^{3} + \cdots$, and $g = g^{1} + g^{2} + g^{3} + \cdots$.)
 
 <details markdown="1">
@@ -760,7 +760,7 @@ $$
 
 ---
 
-### Chapter 2: Understanding the Mass Matrix
+### 1.2.3.2: Understanding the Mass Matrix {#ch2-mass-mx}
 > - Deriving the mass matrix from kinetic energy  
 > - Properties: Symmetry, positive-definiteness, configuration dependence  
 > - Example: Two-link planar robot
@@ -820,7 +820,7 @@ Where:
 
 #### SUMMARY
 
-After this chapter, you should have a solid understanding of the structure of a robot’s dynamic model:
+After this section, you should have a solid understanding of the structure of a robot’s dynamic model:
 
 $$
 \tau = M(\theta)\ddot{\theta} + c(\theta, \dot{\theta}) + g(\theta)
@@ -1018,7 +1018,7 @@ The mass matrix \$M(\theta)\$ is diagonal, so the principal axes of the ellipse 
 
 ---
 
-### Chapter 3 (Part1): Dynamics of a Single Rigid Body {#ch3-single}
+### 1.2.3.3 (Part1): Dynamics of a Single Rigid Body {#ch3-single}
 > - Newton-Euler equations for a free rigid body  
 > - Linear and angular momentum  
 > - Inertia tensor and spatial representation
@@ -1026,7 +1026,7 @@ The mass matrix \$M(\theta)\$ is diagonal, so the principal axes of the ellipse 
 ![dyn of single rigid body 1](https://www.youtube.com/watch?v=9pdqePt1Nbg)  
 ><sub>Modern Robotics, Chapter 8.2: Dynamics of a Single Rigid Body (Part 1 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=7PFQou5l9do</sub>
 
-This chapter introduces the **Newton–Euler method** for modeling the dynamics of a rigid body, the foundation for building full robot dynamics. Unlike the Lagrangian approach, which uses energy, the Newton–Euler formulation is built directly from:
+This section introduces the **Newton–Euler method** for modeling the dynamics of a rigid body, the foundation for building full robot dynamics. Unlike the Lagrangian approach, which uses energy, the Newton–Euler formulation is built directly from:
 
 > **Force = mass × acceleration**  
 > **Torque = moment of inertia × angular acceleration**
@@ -1154,7 +1154,7 @@ Just like joint-space kinetic energy used the mass matrix, rotational energy use
   \boxed{m_b = I_b \dot{\omega}_b + \omega_b \times (I_b \omega_b)}
   $$
 
-These equations form the **building blocks** for modeling full robot dynamics using recursive Newton–Euler algorithms in later chapters.
+These equations form the **building blocks** for modeling full robot dynamics using recursive Newton–Euler algorithms in later sections.
 
 
 <details markdown="1">
@@ -1242,7 +1242,7 @@ These equations form the **building blocks** for modeling full robot dynamics us
 
 </details>
 
-### Chapter 3 (Part2): Dynamics of a Single Rigid Body – Spatial Inertia and Equations of Motion
+### 1.2.3.3 (Part2): Dynamics of a Single Rigid Body – Spatial Inertia and Equations of Motion
 
 ![dyn of single rigid body 2](https://www.youtube.com/watch?v=2rUWVdslaI4)  
 ><sub>Modern Robotics, Chapter 8.2: Dynamics of a Single Rigid Body (Part 2 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=2rUWVdslaI4</sub>
@@ -1531,7 +1531,7 @@ $$
 
 ---
 
-### Chapter 4: Inverse Dynamics with Newton-Euler
+### 1.2.3.4: Inverse Dynamics with Newton-Euler
 > - Recursive Newton-Euler algorithm  
 > - Computing joint torques given a motion  
 > - Efficiency advantages for real-time control
@@ -1726,7 +1726,7 @@ Link $i$ of an open-chain robot has two frames attached to it, a frame ${b}$ at 
   </figcaption>
 </figure>
 
-You are teaching **Newton–Euler inverse dynamics**, and you are using the **2R robot** from the beginning of Chapter 8 (see also **Figure 8.6**) as an example. Each link has length $L_i$ and the mass of each link is $m_i$, concentrated at a point at the end of the link. You already know the correct dynamics from the Lagrangian derivation. Now you will show how to arrive at the same answer using Newton–Euler. Go through the method step by step, showing intermediate results if it is helpful.
+You are teaching **Newton–Euler inverse dynamics**, and you are using the **2R robot** from the beginning of section 1.2.3.8 (see also **Figure 8.6**) as an example. Each link has length $L_i$ and the mass of each link is $m_i$, concentrated at a point at the end of the link. You already know the correct dynamics from the Lagrangian derivation. Now you will show how to arrive at the same answer using Newton–Euler. Go through the method step by step, showing intermediate results if it is helpful.
 
 **(a)** Give $M_i$, $M_{i-1,i}$, $A_i$, $S_i$, $g$, $\mathcal{G}_i$, $\mathcal{V}_0$, $\dot{\mathcal{V}}_0$. 
 > *You can assume the frame ${3}$ is coincident with ${2}$ and $\mathcal{F}_{\text{tip}}$ is zero.*
@@ -1937,7 +1937,7 @@ Second term: The joint angle $\theta_2$ of joint 2 is generally not constant and
 
 ---
 
-### Chapter 5: Forward Dynamics of Open Chains
+### 1.2.3.5: Forward Dynamics of Open Chains
 > - Computing motion from applied torques  
 > - Articulated body algorithm (brief overview)  
 > - Simulation pipelines
@@ -2099,7 +2099,7 @@ With no friction, total mechanical **energy** (kinetic + potential) should remai
 </details>
 
 
-### Chapter 6: Task-Space Dynamics
+### 1.2.3.6: Task-Space Dynamics
 
 > - Mapping dynamics from joint space to end-effector (operational) space  
 > - Operational space inertia matrix  
@@ -2399,7 +2399,7 @@ The apparent mass at the end-effector in the radial ($x$) direction is $m_2$, i.
 
 ---
 
-### Chapter 7: Constrained Dynamics
+### 1.2.3.7: Constrained Dynamics
 > - Dealing with closed kinematic chains and contact  
 > - Constraint forces and Lagrange multipliers  
 > - Applications in legged robots and grasping
@@ -2579,7 +2579,7 @@ Constraint dynamics lets us model and control robots that must simultaneously **
 
 ---
 
-### Chapter 8: Actuation, Gearing & Friction
+### 1.2.3.8: Actuation, Gearing & Friction
 > - Modeling motors and gear ratios  
 > - Viscous and Coulomb friction  
 > - Backdrivability and actuator limitations
@@ -2731,7 +2731,7 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 
 ---
 
-## Mathematical Development Questions
+## 1.2.4 Mathematical Development Questions
 
 For additional practice and deeper derivations, see the **PDF:** [Modern Robotics – Practice Exercises](https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf). The **dynamics problems begin on page 55**, and the **solutions are on page 62**.
 
@@ -2744,13 +2744,13 @@ Additional exam-level exercises covering other chapters of the book [Modern Robo
 
 ---
 
-## Credits
+## 1.2.5 Credits
 
 This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
 ---
 
-## Additional Resources
+## 1.2.6 Additional Resources
 
 ### Books
 - <a id="ref1"></a> [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.

@@ -66,9 +66,9 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [1.4 Close-loop Control](chap1_basic_motion_ctrl/Closeloop&PID)
 
 **Chapter 2: Sensing in Robotics**
--  [2.2 Sensors and Sensing](chap2_sensing/new-sensors-for-robotics)
--  [2.3 Vision](chap2_sensing/vision-for-robotics)
--  [2.4 Force Perception](chap2_sensing/force_perception)
+-  [2.1 Sensors and Sensing](chap2_sensing/new-sensors-for-robotics)
+-  [2.2 Vision](chap2_sensing/vision-for-robotics)
+-  [2.3 Force Perception](chap2_sensing/force_perception)
 
 **Chapter 3: Motion Planning and Navigation**
 - [3.1 Sampling-Based Planning](chap3_motion_planning/sampling-planning)

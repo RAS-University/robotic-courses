@@ -7,7 +7,7 @@ nav_order: 7
 
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 
 # Interfaces for Learning from Human Demonstrations

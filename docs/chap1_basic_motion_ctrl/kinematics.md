@@ -7,7 +7,7 @@ nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 <a name="top"></a>
 
@@ -37,33 +37,33 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Kinematics 
+# 1.1 Kinematics 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 1.1.1 Prerequisites
 To get the most out of this Kinematics module, it’s helpful to have:
 
-1. **Basic Mathematics**  
+ **Basic Mathematics**  
    - Familiarity with **[trigonometry](mathematical-foundation)** (sine, cosine, angle addition formulas).  
    - Understanding of **[linear algebra](mathematical-foundation)** (vectors, matrices, basic matrix operations).  
    - Comfort with **[calculus](mathematical-foundation)** (especially differentiation), which is useful for topics like velocity kinematics and the Jacobian.
 
-2. **Fundamental Physics or Mechanics**  
+ **Fundamental Physics or Mechanics**  
    - Basic concepts of **rigid-body motion** (translational and rotational movement).  
    - General understanding of **forces** and **torques** can be helpful, though kinematics itself does not address them directly.
 
 While you don’t need to be an expert in any one of these areas, having a comfortable grasp of each will make your study of kinematics more productive and enjoyable.
 
-3. ⚠️ **Note on Course Level** 
+ ⚠️ **Note on Course Level** 
 >*This is a basic course on kinematics. Readers, interested in latest advances on kinematic control, should complete their training with the <a href="https://ras-university.github.io/robotic-courses/docs/singularities"> advanced kinematics module</a> treating singularities and other advanced kinematics analysis.*
 
 ---
 
-## 2. General Motivation
+## 1.1.2 General Motivation
 
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
 ><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
@@ -80,12 +80,12 @@ In this chapter, you will explore different ways of representing positions and o
 
 ---
 
-## 3. Course Content
+## 1.1.3 Course Content
 
 ⚠️ **Note on Notation**: 
 >*Please be aware that notation, variable naming, and the style of writing equations may slightly differ between instructors. Always refer to the provided formulas and definitions in this course when working on assignments or exercises to avoid any confusion.*
 
-### Section 3.0 : General Concepts
+### 1.1.3.0 : General Concepts
 In this section we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
 
 ---
@@ -554,7 +554,7 @@ Observe that if the three prismatic joints and three revolute joints at the base
 
 ---
 
-### Section 3.1 : Introduction to Robotics | Kinematics & Modeling
+### 1.1.3.1 : Introduction to Robotics | Kinematics & Modeling
 
 Now that we have seen some basics notions, we move to an more in-depth exploration of kinematics and modeling. To start off, you may want to watch this short video that gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.
 
@@ -592,7 +592,7 @@ Now that we have seen some basics notions, we move to an more in-depth explorati
 
 ---
 
-### Section 3.2: Coordinate Transformations in 2D | Mapping {#chapter-1-coordinate-transformations-in-2D}
+### 1.1.3.2: Coordinate Transformations in 2D | Mapping {#chapter-1-coordinate-transformations-in-2D}
 
 In this chapter, we focus on 2D coordinate transformations—specifically, **pure translations** and **pure rotations** for planar (serial) robots.
 
@@ -818,7 +818,7 @@ For further understanding of the definition of **Homogeneous Transformation Matr
 
 --- 
 
-### Section 3.3: Forward Kinematics of robots | Planar 2D robots
+### 1.1.3.3: Forward Kinematics of robots | Planar 2D robots
 
 
 In robotics, understanding how each joint movement translates into precise actions is essential. 
@@ -832,9 +832,9 @@ Watch the following video for an intuitive overview of **forward kinematics** be
 
 ---
 
-### Section 3.4: Forward Kinematics (with solved examples) | Homogeneous Transformations 
+### 1.1.3.4: Forward Kinematics (with solved examples) | Homogeneous Transformations 
 
-Here you will see some examples of how to find this end effector positions in 2D using homogeneous transforms as we have seen in Section 3.1. 
+Here you will see some examples of how to find this end effector positions in 2D using homogeneous transforms as we have seen in Section 1.1.3.1. 
 
 ![examples](https://www.youtube.com/watch?v=mO7JJxaVtkE)
 > First solved example of how to find this end effector positions in 2D using homogeneous transforms
@@ -986,7 +986,7 @@ $$
 
 --- 
 
-### Section 3.5: Introduction to Quaternions 
+### 1.1.3.5: Introduction to Quaternions 
 
 <div style="float: left; margin-right: 15px; text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/kinematics/R.gif" alt="Quaternions Explained" style="width: 200px; height: auto;">
@@ -1316,7 +1316,7 @@ For further understanding of the definition of **Quaternions**, the following co
 
 ---
 
-### Section 3.6: Collision Detection using Homogeneous Transforms  
+### 1.1.3.6: Collision Detection using Homogeneous Transforms  
 
 In this chapter, we will explore how **collision detection** between robots can be performed using homogeneous transformations. 
 
@@ -1329,7 +1329,7 @@ Watch the following video to see this concept illustrated clearly:
 
 ---
 
-### Section 3.7: Inverse Kinematics of Robots
+### 1.1.3.7: Inverse Kinematics of Robots
 <!-- 
 Inversly as the forward kinematics, inverse kinematics (also called Indirect Geometric Model, IGM) allow us to find the values of the joint positions given the position and orientation of the end-effector relative to the base and the values of all the geometric link parameters. -->
 
@@ -1385,7 +1385,7 @@ Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below)
 - $x = L_1 \cos{\theta_1} + L_2 \cos{(\theta_1 + \theta_2)}$
 - $y = L_1 \sin{\theta_1} + L_2 \sin{(\theta_1 + \theta_2)}$
 
-*Hint: Use the trigonometric formulas for the sine and cosine of the sum of two angles, as well as the identity involving the sum of the squares of sine and cosine. Also, recall that we computed the forward kinematics in the exercise from Section 3.3
+*Hint: Use the trigonometric formulas for the sine and cosine of the sum of two angles, as well as the identity involving the sum of the squares of sine and cosine. Also, recall that we computed the forward kinematics in the exercise from Section 1.1.3.3
 
 <figure style="text-align:center;">
   <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 2">
@@ -1397,7 +1397,7 @@ Find the IGM (Inverse geometric model) of a 2DOF planar robot (see figure below)
 <details markdown="1">
 <summary><strong>Click here for Solutions</strong></summary>
 
-As we have seen on the exercise from Section 3.3, 
+As we have seen on the exercise from Section 1.1.3.3, 
 - $x = L_1 c_1 + L_2 c_{1+2}$
 - $y = L_1 s_1 + L_2 s_{1+2}$
 and we also know that:
@@ -1437,7 +1437,7 @@ $\boxed{\theta_1 = \arctan \frac{y}{x} - \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}}$
 
 ---
 
-### Section 3.8: Velocity Kinematics - Meet the Jacobian !
+### 1.1.3.8: Velocity Kinematics - Meet the Jacobian !
 
 Ready to dive deeper into robotics? This section introduces you to one of the coolest concepts in robot motion: the **Jacobian Matrix**! 
 
@@ -1683,7 +1683,7 @@ You can see this by visualization (imagine turntables at joints 1 and 3 and visu
 
 ---
 
-### Section 3.9: Robot Singularities & how to find them
+### 1.1.3.9: Robot Singularities & how to find them
 
 Singularities occur when a robot configuration causes it to lose the ability to move or become blocked in certain directions. Understanding and identifying these singularities is essential to safe and efficient robot operation.
 
@@ -2035,7 +2035,7 @@ For further understanding of the definition of **Singularities**, the following 
 
 ---
 
-## Programming
+## 1.1.4 Programming
 
 Let is move on to maybe the most exciting part: applying the kinematics concepts you have learned in code and seeing your robot working right in front of you!
 
@@ -2123,7 +2123,7 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 <!-- STILL TO DO, enlever les trucs sur la video et checker les figures, exsol_chap4.png ou 6  est bizarre  -->
 
-## Credits
+## 1.1.5 Credits
 
 This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
@@ -2143,7 +2143,7 @@ Once you’ve grasped the basics, you can further strengthen your understanding 
 
 For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html), Professor of Mechanical Engineering at Northwestern University. These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials. -->
 
-## Ressources
+## 1.1.6 Ressources
 
 ### Books
 - [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.

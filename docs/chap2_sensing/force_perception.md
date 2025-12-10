@@ -7,7 +7,7 @@ author: Mael Studer (EPFL)
 ---
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 <!-- Back-To-Top Button -->
 <a name="top"></a>
@@ -89,14 +89,14 @@ author: Mael Studer (EPFL)
 
 </details>
 
-# Force Perception (in Robotics)
+# 2.3 Force Perception (in Robotics)
 
 - Table of Contents
 {:toc}
 
 ---
 
-## 1. Prerequisites
+## 2.3.1 Prerequisites
 
 ⚠️ Adapt in the end ⚠️
 
@@ -107,7 +107,7 @@ author: Mael Studer (EPFL)
 
 ---
 
-## 2. General Motivation
+## 2.3.2 General Motivation
 
 Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to vision page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
 
@@ -246,7 +246,7 @@ Some promising fields in which force perception is used are biomedical robotics 
 
 ---
 
-## 3. Course Content
+## 2.3.3 Course Content
 
 Now that we have seen **why** robots need a sense of touch, we can dive into **how** force perception is implemented.
 
@@ -283,26 +283,26 @@ Finally, we will address how tactile information is processed and how sensor loc
 
 ⚠️ Adapt in the end ⚠️
 
-- **Chapter 1: Force/Torque Sensing**  
+- **Section 2.2.3.1: Force/Torque Sensing**  
   Introduction to F/T sensing methods.
 
-- **Chapter 2: Tactile Sensing**  
+- **Section 2.2.3.2: Tactile Sensing**  
   Overview of the main tactile sensing principles (resistive, capacitive, piezoelectric, optical, magnetic, etc.) and their mechanical implementations (rigid, flexible, compliant, stretchable).
 
-- **Chapter 3: Advanced Tactile Sensing**  
+- **Section 2.2.3.3: Advanced Tactile Sensing**  
   Presentation of flexible, stretchable and vision-based tactile sensors.
 
-- **Chapter 4: Information Processing**  
+- **Section 2.2.3.4: Information Processing**  
   Discussion of how tactile data are acquired, including the challenges related to wiring, data rate and power consumption.
 
 <!--
-- **Chapter 5: Sensor Location and Integration**  
+- **Section 2.2.3.5: Sensor Location and Integration**  
   Summary of where sensors are typically placed (in joints, links, or fingertips) and how placement affects measurement quality and task performance.
 -->
 
 ---
 
-### Chapter 1 : Force/Torque Sensing
+### 2.2.3.1 : Force/Torque Sensing
 
 Main ref: [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
 
@@ -476,7 +476,7 @@ $$
 
 ---
 
-#### 1.2 Sensorless Force/Torque Estimation  
+#### Sensorless Force/Torque Estimation  
 
 It is also possible to determine external forces and torques without embedding dedicated sensors. This **sensorless** method relies on the robot’s internal data (available without special hardware), such as the amount of current drawn by its motors. In most motors, the generated torque is proportional to the motor current. By comparing the **actual torque** output (derived from current) with the **theoretically required torque**, it is possible to determine the existence and magnitude of an external force.
 
@@ -726,9 +726,9 @@ In the following research, Iskandar, Albu-Schäffer and Dietrich introduce an **
 
 ---
 
-### Chapter 2 : Tactile Sensing
+### 2.2.3.2 : Tactile Sensing
 
-#### 2.1 Resistive Sensors
+#### Resistive Sensors
 
 There are two types of resistive tactile sensors: those that determine the contact location and those that determine the contact force or pressure.  
 First, we will take a closer look at resistive sensors of the first type, how resistive technology can be used to determine where a contact happened on a surface.  
@@ -1078,7 +1078,7 @@ What does a larger value of $V_{x,\text{out}}$ indicate?** (single answer possib
 
 ---
 
-#### 2.2 Capacitive Sensors
+#### Capacitive Sensors
 
 **Capacitive tactile sensors** make use of the fact that the electrical capacitance between two conductive electrodes changes when the geometry of the capacitor is modified. When a force or pressure is applied on the surface of the sensor, the deformation of the structure leads to a measurable **variation of capacitance**. This variation is then used to estimate the contact force or to detect touch.
 
@@ -1361,25 +1361,25 @@ By the way, most touch screens use the mutual-capacitance principle. Ever wonder
 
 ---
 
-#### 2.3 Piezoelectric Sensors
+#### Piezoelectric Sensors
 
 generate charge proportional to applied forces (tactile sensing 5.2.)
 
-#### 2.4 Optical Sensors
+#### Optical Sensors
 
 tactile sensing 5.2.3
 
-#### 2.5 Magnetism-based Sensors
+#### Magnetism-based Sensors
 
 tactile sensing 5.2.4
 
-#### 2.6 Electrorheological / Magnetorheological
+#### Electrorheological / Magnetorheological
 
 tactile sensing 5.2.7 – 5.2.8
 
 ---
 
-### Chapter 3: Advanced Tactile Sensing
+### 2.2.3.3: Advanced Tactile Sensing
 
 Now that we have seen different tactile sensing technologies, let’s take a closer look at some more advanced tactile sensors.
 
@@ -1387,7 +1387,7 @@ When used in robotics, tactile sensors often need to cover broad areas. This can
 
 Lastly, there also exist alternative ways to sense touch. One advanced tactile sensing technique makes use of vision. These vision-based tactile sensors are presented below.
 
-#### 3.1 Flexible Tactile Sensors
+#### Flexible Tactile Sensors
 
 Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
 
@@ -1416,7 +1416,7 @@ Flexible tactile sensors are those that **bend** but do not undergo large tensil
 - Printed electrodes + triboelectric polymer layers without stretchability.
 -->
 
-#### 3.2 Stretchable Tactile Sensors
+#### Stretchable Tactile Sensors
 
 Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
 
@@ -1447,14 +1447,14 @@ Stretchable tactile sensors must withstand **large strain** (tens to hundreds of
 
 -->
 
-#### 3.3 Vision-Based Tactile Sensors
+#### Vision-Based Tactile Sensors
 
 -> make link to vision course
 -> video from TEDX MIT, guy explains how his vision based tactile sensor works
 
 ---
 
-### Chapter 4 : Issues and Difficulties
+### 2.2.3.4 : Issues and Difficulties
 
 <!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) -->
 
@@ -1503,28 +1503,28 @@ When a tactile sensor is used for controlling a robot, it must provide feedback 
 <!--
 ---
 
-### Chapter 5 : Sensor Location
+### 2.2.3.5 : Sensor Location
 
-#### 5.1 Joint
+#### Joint
 
 -> encoder, potentiometer, motor-current, etc.
 
-#### 5.2 Links
+#### Links
 
-#### 5.2 Tip
+#### Tip
 
 -> tactile arrays, 6D F/T sensors, etc.
 
-#### 5.3 Challenges  
+#### Challenges  
 
 add the challenges that come with the sensor location (integrated into skin surfaces, adequate friction to handle objects securely, robust enough to survive repeated impacts, etc.)  
--> these are task related challenges (chapter 4 tactile sensing)
+-> these are task related challenges (section 4 tactile sensing)
 -->
 
 <!-- 
 ---
 
-### Chapter 6 : Exercices
+### 2.2.3.6 : Exercices
 
 add exercices
 look at Aude's propositions on slack
@@ -1537,9 +1537,9 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 ---
 
-## Additional Resources
 
-### Credits
+
+## 2.3.4 Credits
 <!-- List all the sources that you used to create the page   -->
 
 - [Handbook of Robotics, Springer](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20) (Chapter 19. Force and Tactile Sensors)
@@ -1547,6 +1547,8 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 - [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5)
 
 - [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
+
+## 2.3.5 Additional Resources
 
 ### Videos
 

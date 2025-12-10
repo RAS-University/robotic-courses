@@ -5,9 +5,9 @@ layout: default
 ---
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
-# Vision for Robotics [In progress] {#start}
+# 2.2 Vision for Robotics [In progress] {#start}
 
 <a name="top"></a>
 
@@ -42,7 +42,7 @@ layout: default
 {:toc}
 
 
-## 1. Prerequisites
+## 2.2.1 Prerequisites
 To get the most out of this Vision for Robotics module, it’s helpful to have:
 
 **Basic Mathematics**  
@@ -56,7 +56,7 @@ If you'd like a refresher on linear algebra, the following YouTube series is an 
 
 - [Essence of linear algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) 
 
-## 2. General Motivation
+## 2.2.2 General Motivation
 
 Cameras have become one of the most accessible and data-rich sensors for robots, offering a wealth of visual information compared to traditional positioning or distance sensors. Advances in hardware and algorithms, such as RGB-D cameras and visual-inertial fusion techniques, have significantly improved robot perception. In navigation, robots use vision to detect obstacles, estimate trajectories, and build 3D maps of their environment. For grasping, visual data helps identify objects, estimate their pose, and determine how to interact with them. The following sections will explore the geometric foundations of 3D vision and its applications in robotic grasping.
 
@@ -64,12 +64,12 @@ The following videos demonstrate an application of vision in robotics.
 
 ![](https://www.youtube.com/watch?v=GkM4n7RgGaw)
 
-## 3. Course Content
+## 2.2.3 Course Content
 
-### Chapter 0 : Introduction
+### 2.2.3.0 : Introduction
 Welcome to this introduction on how a camera projects the three-dimensional (3D) world onto a two-dimensional (2D) image plane. We will discuss how to describe a point in 3D space with respect to a camera coordinate system and how these 3D points get projected into pixel coordinates on an image. We will then move on to intrinsic calibration and the issue of lens distortion.
 
-By the end of this chapter, you should understand:
+By the end of this section, you should understand:
 
 - How a 3D point is projected onto a 2D image plane using the pinhole camera model.
 
@@ -132,10 +132,10 @@ Here are 2 introduction videos to help understand the core problem.
 
 </details>
 
-### Chapter 1.1 : Geometric Vision {#chapter-1-vision}
+### 2.2.3.1.1 : Geometric Vision {#section-1-vision}
 
 Before we dive into algorithms and code, we first need a picture of how geometry, cameras, and images fit together.
-This chapter lays that foundation. We will
+This section lays that foundation. We will
 
 - build the two coordinate systems every vision problem starts with (world vs camera).
 
@@ -260,7 +260,7 @@ Let’s break down these parameters:
 
 4. $(c_u, c_v)$: The principal point, or image center. It is where the optical axis (the camera’s $Z$-axis) intersects the image plane, expressed in pixel coordinates.
 
-These parameters are called the *intrinsic parameters* of the camera. Determining them precisely is known as **intrinsic calibration** (How to find them will be seen in the next chapter )
+These parameters are called the *intrinsic parameters* of the camera. Determining them precisely is known as **intrinsic calibration** (How to find them will be seen in the next section)
 <details markdown="1">
   <summary>Conceptual questions</summary>
 
@@ -426,7 +426,7 @@ This is critical for many robotic tasks such as *navigation*, *obstacle avoidanc
 
 ---
 
-### Chapter 1.2 : Calibration
+### 2.2.3.1.2 : Calibration
 
 Camera **calibration** is the process by which we determine a camera’s **intrinsic** parameters (like focal length, principal point, and distortion coefficients) and **extrinsic** parameters (its position and orientation with respect to some world reference). A well-calibrated camera allows us to accurately map between real-world 3D coordinates and 2D image pixels, which is essential for tasks like navigation, 3D reconstruction, and robotic grasping.
 
@@ -700,7 +700,7 @@ onclick="
 
 </details>
 
-### Chapter 1.3 : Pose estimation or PNP
+### 2.2.3.1.3 : Pose estimation or PNP
 
 Once a camera is calibrated (i.e., we know its **intrinsic** parameters and can handle or correct for any lens distortion), we can tackle the problem of finding the camera’s **extrinsic** parameters (its rotation and translation) relative to known objects or landmarks in the world. This is often referred to as the **Pose Estimation** problem.
 
@@ -875,7 +875,7 @@ $$
 
 ---
 
-### Chapter 1.4 : Triangulation
+### 2.2.3.1.4 : Triangulation
 
 >**Goal of this section**
 >Show how a single 3-D point can be re-built from (at least) two calibrated images by intersecting the two sight-rays that go through the image measurements.
@@ -1060,7 +1060,7 @@ Build $A$, run SVD $\Rightarrow$ $X\approx(0,0,1.0)$ m in the left-camera frame.
 
 ---
 
-### Chapter 1.5 : Moving Stereo {#chapter-1-moving-stereo}
+### 2.2.3.1.5 : Moving Stereo {#section-1-moving-stereo}
 >**Goal of this section**
 >A **stereo rig** gives you two eyes on the world.  
 A **moving stereo rig** (left camera $c_\ell$, right camera $c_r$) straps those eyes to a robot that **moves**.  
@@ -1228,9 +1228,9 @@ A rigid stereo pair that <em>moves</em> gives you the best of two worlds:
 By tying them together through **absolute orientation**, a robot can track its 6-D pose and build a consis
 
 
-### Chapter 1.6 : Structure from Motion
+### 2.2.3.1.6 : Structure from Motion
 
-See corresponding chapter in the PDF [*Springer Handbook of Robotics*](#chapter-1-vision)
+See corresponding chapter in the PDF [*Springer Handbook of Robotics*](#section-1-vision)
 
 ## Programming
 

@@ -5,7 +5,7 @@ layout: default
 math: mathjax
 ---
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 #Force Control
 <a name="top"></a>
 

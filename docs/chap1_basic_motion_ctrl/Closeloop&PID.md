@@ -5,7 +5,7 @@ layout: default
 math: mathjax
 author: Salim Boussofara (EPFL)
 ---
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 
 <style>
@@ -69,13 +69,15 @@ author: Salim Boussofara (EPFL)
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
+# 1.4 Close-loop Control and PID 
+
 - Table of Contents
 {:toc}
 
 
 <!--This guide explores the fundamental principles of control systems, with a particular focus on the widely adopted Proportional-Integral-Derivative (PID) controller. We will delve into how these controllers manage, command, and regulate system behavior, making precise and predictable operations possible across various applications in robotics and beyond. The aim is to provide a solid foundation for understanding how systems achieve desired outputs by actively controlling inputs based on feedback.-->
 
-# Prerequisites
+## 1.4.1 Prerequisites
 * Linear Algebra
 * Classical mechanics
 * Control theory:
@@ -90,7 +92,7 @@ author: Salim Boussofara (EPFL)
 
 A typical task might involve a robotic arm moving from point A to point B in an empty space, or a system maintaining a precise temperature. In such scenarios, the focus is entirely on the system's kinematic and dynamic accuracy in achieving its desired position, velocity, or other controlled variable.-->
 
-# Motivation
+## 1.4.2 Motivation
 ![Overview](https://www.youtube.com/watch?v=UR0hOmjaHp0)
 > <sub>*PID Control - A Brief Introduction. YouTube video. Available at: https://www.youtube.com/watch?v=UR0hOmjaHp0*</sub>  
 
@@ -103,7 +105,9 @@ Among all feedback controllers, the PID (Proportional-Integral-Derivative) is th
 
 Over the course of this lesson, you will learn how each of these components works and how to combine them to obtain the desired behavior from any system.
 
-# Chapter 1: Open-loop vs closed-loop control systems
+## 1.4.3 Course Content
+
+### 1.4.3.1: Open-loop vs closed-loop control systems
 
 <!--
 ![Control Systems + TP by Colin Jones (45 min)](https://www.youtube.com/watch?v=IClLushtEMA&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=32)  
@@ -480,7 +484,7 @@ const correctMappingControlTypes = {
 
 </details>
 
-## Requirements of feedback control
+#### Requirements of feedback control
 
 Feedback control is essential to achieve high-performance and reliable system operation. Several key requirements underscore its importance:
 
@@ -656,7 +660,7 @@ To analyze and characterize the behavior of control systems, various standard in
 | Unit Parabolic $t^2/2$   | $1/s^3$                    | A signal that increases quadratically with time, used for testing tracking capabilities under accelerating inputs. |
 -->
 
-# Chapter 2: Proportional, Integral and Derivative actions
+### 1.4.3.2: Proportional, Integral and Derivative actions
 
 But what exactly lies inside the **controller**, the *black box* of a feedback system?
 
@@ -708,7 +712,7 @@ This equation might look intimidating at first, but its concept is quite straigh
 
 Each component of the PID acts independently, in the sense that each one computes its own output contribution toward achieving the desired response. The three components are, then, added together to give the controller’s output. Each one fulfills a certain function and improves a certain part of the response. And when the three components work together in the right proportion, they achieve great performance.
 
-## Chapter 2.1: Proportional (P) control
+#### Proportional (P) control
 
 ![Proportional control (6 min)](https://www.youtube.com/watch?v=_VzHpLjKeZ8&start=544&end=903)  
 > <sub>*Lum, C. (2023) Control Theory: Proportional Integral Derivative (PID) Control. YouTube video, May. Available at: https://www.youtube.com/watch?v=_VzHpLjKeZ8&t=544s*</sub>  
@@ -749,7 +753,7 @@ where:
   *Units depend on the actuator input* (e.g. voltage $\mathrm{V}$, force $\mathrm{N}$, or torque $\mathrm{Nm}$)
 
 
-### Hands-on exercise: Exploring proportional control
+##### Hands-on exercise: Exploring proportional control
 
 Let's use an interactive simulation to understand the behavior and limitations of proportional control. It shows a typical second-order system with a pure delay of 1 step driven by a PID controller.
   <details markdown='1'>
@@ -855,7 +859,7 @@ Your task is to vary the value of the proportional gain $(K_p)$. You can, for ex
 
 </details>
 
-### Conclusions from the Exercise
+##### Conclusions from the Exercise
 
 Based on your observations from the simulation, you should have identified the great influence of the proportional gain $K_p$ as well as the following properties and limitations of proportional control:
 
@@ -996,7 +1000,7 @@ This exercise demonstrates that while proportional control provides an immediate
 </details>
 
 
-## Chapter 2.2: Integral (I) action
+#### Integral (I) action
 ![Integral control (10 min)](https://www.youtube.com/watch?v=_VzHpLjKeZ8&start=903&end=1470)  
 > <sub>*Lum, C. (2023) Control Theory: Proportional Integral Derivative (PID) Control. YouTube video, May. Available at: https://www.youtube.com/watch?v=_VzHpLjKeZ8&t=903s*</sub>  
 >
@@ -1047,7 +1051,7 @@ If a steady-state error $e_0$ exists (i.e., $e_0 \neq 0$), the integral term $\i
 Conceptually, integral action can be viewed as an automatic mechanism that continuously adjusts the bias term $u_b$ of a proportional controller until the error is nulled.
 -->
 
-### Hands-on exercise: Exploring integral control
+##### Hands-on exercise: Exploring integral control
 Let's use again the interactive simulation to understand the behavior and limitations of integral control. 
 
 It shows a typical [second-order system](#second-order) with a pure delay of 1 step driven by a PID controller. In the plot, three signals are displayed to help visualize the closed-loop dynamics and the role of the controller.  
@@ -1089,7 +1093,7 @@ Your task is to gradually increase the value of the integral gain $K_i$ while ke
   > The system output quickly rises, overshoots the setpoint, and goes through a damped oscillatory phase before settling exactly at the reference with no steady-state error. Compared to the P controller, the addition of the integral term eliminates the offset. The control signal starts with high amplitude, oscillates similarly to the output, and eventually stabilizes at a higher constant value than in the P case, reflecting the accumulated integral action needed to maintain zero error. 
 </details>
 
-### Conclusions from the Exercise
+##### Conclusions from the Exercise
 Based on your observations from the simulation, and consistent with the principles of integral action, you should have identified the following:
 
 * **Elimination of steady-state error:** The primary and most significant role of integral action is to eliminate steady-state error. If a steady-state error $e_0$ exists (i.e., $e_0 \neq 0$), the integral term $\int e(\tau)d\tau$ will continuously accumulate this error. This accumulation will cause the control signal u(t) to continuously increase (if $e_0 > 0$) or decrease (if $e\_0 \< 0$). This adjustment continues until the error itself becomes zero. As long as there is any persistent error, the integral term will keep pushing the control signal, thereby ensuring that the system eventually settles precisely at the setpoint with no offset. Conceptually, integral action can be viewed as an automatic mechanism that reacts to the memory of past errors by continuously adjusting the bias term $u_b$ of a proportional controller until the error is nulled.
@@ -1263,7 +1267,7 @@ The denominator is $T_i s^2 + (\alpha T_i + \beta K_p T_i) s + \beta K_p$. There
 </details>
 
 
-## Chapter 2.3: Derivative (D) action
+#### Derivative (D) action
 
 ![Derivative control (6 min)](https://www.youtube.com/watch?v=_VzHpLjKeZ8&start=1489&end=1841)  
 > <sub>*Lum, C. (2023) Control Theory: Proportional Integral Derivative (PID) Control. YouTube video, May. Available at: https://www.youtube.com/watch?v=_VzHpLjKeZ8&t=1489s*</sub>  
@@ -1318,7 +1322,7 @@ As demonstrated in simulations, incorporating derivative action adds significant
 -->
 
 
-### Hands-on Exercise: Exploring derivative control
+##### Hands-on Exercise: Exploring derivative control
 Let's use again the interactive simulation to understand the behavior and limitations of derivative control.
 It shows a typical [second-order system](#second-order)  with a pure delay of 1 step driven by a PID controller.
 In the plot, three signals are displayed to help visualize the closed-loop dynamics and the role of the controller.  
@@ -1361,7 +1365,7 @@ Your task is to gradually increase the value of the derivative gain $K_d$ while 
   > The output rises quickly and overshoots slightly, but settles much faster than in the P or PI cases, with reduced oscillations. However, it does not reach the setpoint, there's still steady-state error. The control signal shows a sharp peak at the beginning, reflecting the derivative action responding to the rapid change in error, then decays smoothly and stabilizes.
 </details>
 
-### Conclusions from the Exercise
+##### Conclusions from the Exercise
 Based on your observations from the simulation, and consistent with the principles of derivative action, you should have identified the following:
 
 * **Improvement in stability and damping:** Derivative action effectively improves the closed-loop stability and enhances the speed of response by anticipating future errors. It achieves this by acting based on the rate of change of the error signal. Derivative action can be intuitively understood as a form of predictive control. By sensing how quickly the error is changing, the controller can predict what the error will be in the near future (e.g., through linear extrapolation of the error curve, as shown below). This anticipation allows the controller to apply a corrective control action even before the full magnitude of the error manifests. This predictive capability helps to effectively damp oscillations, reduce overshoot, and improve the overall transient response, thereby significantly enhancing system stability. As demonstrated in simulations, incorporating derivative action adds significant damping to the system, which helps reduce oscillations and minimize overshoot. The derivative component improves the overall response of many systems for moderate values of $K_d$.
@@ -1392,7 +1396,7 @@ Historically, derivative action, like integral action, was often implemented usi
 >
 > *This video gives a clear math view of PD control. It derives the closed-loop transfer function for a classical example of a simple DC motor and shows, step by step, how the derivative time $T_d$ shows up in the damping term. It also explains how the derivative is done in practice and why this matters for noise. This complements the intuitive notes above with an equation-based perspective.*
 
-### How does the derivative action introduce damping ?
+##### How does the derivative action introduce damping ?
 
 We, again, consider a simple **DC motor** as the plant to be controlled.  
 Its dynamics can be expressed in terms of **angular velocity** $\omega(t)$ and **shaft position** $\theta(t)$:  
@@ -1493,7 +1497,7 @@ At low frequency it behaves like a derivative; at high frequency the gain **satu
 </details>
 
 
-## Chapter 2.4: The full PID controller
+#### The full PID controller
 
 ![This short video (9 min)](https://www.youtube.com/watch?v=wkfEZmsQqiA&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y&index=1)  
 ><sub>*Brian Douglas (n.d.) Introduction to Control Systems. YouTube video. Available at: https://www.youtube.com/watch?v=wkfEZmsQqiA*</sub>  
@@ -1546,7 +1550,7 @@ Another very intuitive way to perceive the three components involved in a PID co
 > * The derivative (D) component acts like a damper (or viscous fluid). It resists the rate of change of motion (error), providing a damping effect.
 > * The integral (I) component is harder to visualize but it is vaguely analogized to a inertia/momentum. It accumulates past error, steadily increasing its pull or push to eliminate any persistent offset, much like accumulated momentum continues to move an object even when the initial force is removed. This persistent action ensures that the system eventually settles precisely at the setpoint, taking over the control authority once the error becomes zero.
 
-### Hands-on Exercise: Exploring PID controller
+##### Hands-on Exercise: Exploring PID controller
 Now that you fully understand the individual effects of each component of the PID controller, let's go back to the simulation and tune the different gains. Try to identify the values that achieve the best performance in terms of:
 
 * **Rise Time**: The output should reach the vicinity of the setpoint as quickly as possible.
@@ -1590,8 +1594,9 @@ Now that you fully understand the individual effects of each component of the PI
 </details>
 
 
-## Chapter 2.5: Summary exercises
-### 2.5.1 Conceptual exercise
+#### Summary exercises
+
+##### Conceptual exercise
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -1875,7 +1880,7 @@ function checkMultipleMCQs() {
 </details>
 -->
 
-### 2.5.2 Programming exercise: implementing a PID control loop
+##### Programming exercise: implementing a PID control loop
 
 You are asked to complete a simple PID control loop that runs every `dt` seconds. The loop computes the **error**, its **derivative**, and **integral**, and then combines them to compute a control output `u`.
 
@@ -2149,12 +2154,12 @@ Also, one should mention that, in this course, the focus was put on explaining t
 
 
 
-# Chapter 3: Practical implementation considerations for PID control
+### 1.4.3.3: Practical implementation considerations for PID control
 
 
 Effectively implementing PID controllers in real-world systems goes beyond theoretical understanding and requires careful consideration of several practical aspects.
 
-## Chapter 3.1: PID gain tuning
+#### PID gain tuning
 As you have already experienced in the simulations, obtaining the desired response from a PID controller is not a trivial task. Even if the simulated system is simple, with no measurement noise and only a pure time delay, finding a set of parameters that yield a satisfactory response requires careful effort. It is therefore natural to expect that, in real-world applications, the problem becomes even more complex.  
 
 The difficulty lies in the fact that the three parameters of the controller, $K_p$, $K_i$, and $K_d$, do not act independently. Instead, they strongly influence one another and the overall response is always the result of their combined effect. For example, increasing the proportional gain may improve the speed of the response but also amplify oscillations, which then require an adjustment of the derivative gain for damping, while the integral gain might simultaneously introduce long-term stability issues. Thus, it is not sufficient to adjust each of them in isolation. Rather, there exists a certain zone within the three-dimensional parameter space where the behavior of the controller is acceptable, and navigating towards this zone is the main challenge of tuning.  
@@ -2208,7 +2213,7 @@ Alternatively, from the gains perspective, one begins by increasing the proporti
 These two viewpoints are equivalent and complementary. The choice between them depends on the tools at hand and on the familiarity of the engineer with time- or frequency-domain reasoning.
 </details>
 
-### Chapter 3.1.1: Empirical tuning
+##### Empirical tuning
 
 ![Empirical PID Gain Tuning](https://www.youtube.com/watch?v=uXnDwojRb1g)  
 <sub>*This video demonstrates a hands-on procedure for adjusting the three gains step by step, while observing the effect on the system’s response.*</sub>  
@@ -2221,7 +2226,7 @@ Finally, derivative action is added to provide damping. This reduces overshoot a
 
 This is the method that you most probably have implemented when doing the simulation exercise. Though iterative, it is straightforward and builds valuable intuition. However, it may take considerable time to converge to acceptable performance, and if applied carelessly on hardware, it can stress the actuators or destabilize the system.
 
-### Chapter 3.1.2: Rule-based techniques  
+##### Rule-based techniques  
 
 Although empirical tuning provides an intuitive understanding of how each term of the PID controller affects the response, it is neither efficient nor reliable in many practical situations. The iterative trial-and-error process may require significant time, and the final result often depends on the skill and experience of the engineer. Moreover, manual tuning may lead to aggressive parameter values that cause actuator saturation or unstable oscillations. To overcome these limitations, **rule-based tuning methods** have been developed. These methods are based on systematic procedures derived from empirical observations and experimental studies, and they provide reproducible results with less effort.  
 
@@ -2375,7 +2380,7 @@ As given in the question $K_u = 8.556$, from the [closed-loop Ziegler Nichols ta
 Other classical rule-based tuning methods also exist. **Cohen–Coon**, for instance, offers more nuanced formulas that account for the ratio of dead time to time constant, making it better suited for systems where the delay is a significant fraction of the dynamics. You can explore these methods in depth in this excellent resource: [PID Tuning via Classical Methods](https://eng.libretexts.org/Bookshelves/Industrial_and_Systems_Engineering/Chemical_Process_Dynamics_and_Controls_(Woolf)/09%3A_Proportional-Integral-Derivative_(PID)_Control/9.03%3A_PID_Tuning_via_Classical_Methods)  
 
 
-## Chapter 3.2: Anti-windup
+#### Anti-windup
 
 ![Video](https://www.youtube.com/watch?v=NVLXCwc8HzM)
 > <sub>"Douglas, B. (2018) Anti-windup for PID Control | Understanding PID Control, Part 2. YouTube video, 5 June. Available at: https://www.youtube.com/watch?v=NVLXCwc8HzM"</sub>
@@ -2394,7 +2399,7 @@ Anti-windup mechanisms may seem like a secondary detail compared to the design o
 
 
 
-## Chapter 3.3: Noise filtering for derivative action  
+#### Noise filtering for derivative action  
 
 ![Video](https://www.youtube.com/watch?v=7dUVdrs1e18&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y&index=3)  
 > <sub>“Douglas, B. (2018) Filtering Derivative Action | Understanding PID Control, Part 3. YouTube video, 12 June. Available at: https://www.youtube.com/watch?v=7dUVdrs1e18”</sub>  
@@ -2452,7 +2457,7 @@ These considerations highlight that practical PID controllers must be carefully 
 </details>
  
 
-### Programming exercise: Make your PID more robust
+##### Programming exercise: Make your PID more robust
   ![Video](https://www.youtube.com/watch?v=La9vll93h44)
   > <sub>"Lynch, K. (2015) <i>Improving the basic PID control algorithm</i>. Northwestern Robotics. YouTube video, 8 December. Available at: https://www.youtube.com/watch?v=La9vll93h44"</sub>
   >
@@ -2680,7 +2685,7 @@ https://www.youtube.com/watch?v=tFVAaUcOm4I
 https://www.youtube.com/watch?v=wkfEZmsQqiA&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y
 -->
 
-# Do you want to try a more complex simulation ?
+### 1.4.3.4 Do you want to try a more complex simulation ?
 
 For those who enjoyed experimenting with the simple second-order system, here is a chance to push things further.  
 This interactive **cart–pole PID balancer** lets you test your controller design on a much more challenging system: balancing an inverted pendulum.  
@@ -2695,7 +2700,7 @@ This interactive **cart–pole PID balancer** lets you test your controller desi
 The appeal of this simulation is that it exposes you to **many parameters** you can tune in real time: PID gains, cart mass, pole length, and more. Each change produces an immediate and often dramatic effect on stability.  
 It is not only fun to play with, but also an excellent way to build intuition about how parameter choices interact with system dynamics in a real-world–like scenario.  
 
-# Do you want to implement a real project ?
+### 1.4.3.5 Do you want to implement a real project ?
 ![PID Control Explained: The Ultimate Guide from Basics to Implementation](https://www.youtube.com/watch?v=osd7jbJpGLA)  
 > <sub>*Circuit Helper (2024). PID Control Explained: The Ultimate Guide from Basics to Implementation. YouTube video, Dec. Available at: https://www.youtube.com/watch?v=osd7jbJpGLA*</sub>  
 >
@@ -2719,7 +2724,7 @@ This is your opportunity to take the concepts you’ve mastered and transform th
     });
 </script>
 
-# Credits  
+## 1.5 Credits  
 
 This course was created by **Salim Boussofara, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
@@ -2732,3 +2737,5 @@ It makes use of selected material from:
 
 It has also been inspired by: 
 - A. Karimi, Feedback Control Systems, Lecture notes for Control Systems and Discrete-Time Control, EPFL, Fall 2022.
+
+## 1.6 Ressources 

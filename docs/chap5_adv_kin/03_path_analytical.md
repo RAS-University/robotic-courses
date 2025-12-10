@@ -8,7 +8,7 @@ nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
 <a name="top"></a>
 

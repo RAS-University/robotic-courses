@@ -5,9 +5,9 @@ layout: default
 ---
 
 <!-- Link external JavaScript file -->
-<script src="questions.js"></script>
+<script src="../questions.js"></script>
 
-# Sensors and Sensing in Robotics [In progress]
+# 2.1 Sensors and Sensing in Robotics [In progress]
 
 
 <a name="top"></a>
@@ -43,11 +43,11 @@ layout: default
 
 ---
 
-## 1. Prerequisites
+## 2.1.1 Prerequisites
 This page does not require any specific prerequisite, outside knowing what a robot consists of.
 ---
 
-## 2. General Motivation
+## 2.1.2 General Motivation
 
 <!--![](https://www.youtube.com/watch?v=KdNqmxu_V4A)
 ><sub>HBFS Line Follower - Next Generation of Robots. YouTube video, April 2018. Available at: https://www.youtube.com/watch?v=KdNqmxu_V4A</sub>
@@ -154,8 +154,9 @@ An industrial robot arm tasked to manover a shovel must be endowed with motor en
 A humanoid robot may be tasked to interact with its environment in more ways than would an industrial robot. In addition to motor encoders, force/torque and tactile sensors, it needs an IMU to measure its global orientation in space. Cameras and microphones are, on the other hand, crucial to allow the robot to interact in human-inhabited environments. 
 
 ---
+## 2.1.3 Course Content
 
-## Chapter 0: What is a sensor
+### 2.1.3.0: What is a sensor
 {: #ch0 }
 
 A **sensor** is a device that detects or measures a physical property, the **measurand** (e.g., distance, light, temperature, pressure, motion), and converts it into a signal that can be read, interpreted, and used by a computer.
@@ -187,7 +188,7 @@ In robotics, sensors are essential because they provide the link between the rob
 
 ---
 
-### 0.1 The Ideal Sensor
+#### The Ideal Sensor
 
 To understand real sensors, it helps to imagine the **ideal sensor**, a theoretical device that:
 
@@ -209,7 +210,7 @@ The ideal sensor doesn’t exist, but it’s a useful reference. When engineers 
 
 ---
 
-### 0.2 Sensor imperfections 
+#### Sensor imperfections 
 
 Real sensors are always imperfect. They come with **limitations** and **trade-offs**, such as:
 
@@ -456,11 +457,11 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 
 ---
 
-## Chapter 1: Characteristics of Sensors
+### 2.1.3.1: Characteristics of Sensors
 {: #ch1 }
 
 
-### 1.1 Units & Scales
+#### Units & Scales
 
 Every sensor output is ultimately expressed in a **physical unit** defined by the International System of Units (SI).
 
@@ -481,7 +482,7 @@ For robots, it’s important to always check what units a sensor outputs and whe
 
 ---
 
-### 1.2 Measurement Range
+#### Measurement Range
 
 *Range* is the interval $$[x_{\min},\,x_{\max}]$$ within which the sensor maintains its specified performance.
 
@@ -497,7 +498,7 @@ Key rules:
 
 ---
 
-### 1.3 Resolution
+#### Resolution
 
 Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect.
 
@@ -514,7 +515,7 @@ A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the s
 
 ---
 
-### 1.4 Accuracy & Precision
+#### Accuracy & Precision
 
 When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
 
@@ -562,7 +563,7 @@ The dartboard analogy below is a classic way to illustrate this difference:
 
 ---
 
-### 1.5 Noise
+#### Noise
 
 *Noise* is any undesired variation added to a measurement. It limits how well we can estimate the true value, even when the sensor is otherwise “perfect.”
 
@@ -620,7 +621,7 @@ Zeroing and multi-point calibration (to remove bias and correct scale), improved
 
 ---
 
-### 1.6 Response Time & Bandwidth
+#### Response Time & Bandwidth
 
 A sensor’s **dynamic performance** determines how well it tracks changes over time. Two core notions are used:
 
@@ -1051,7 +1052,7 @@ $$
 
 ---
 
-## Chapter 2: Proprioceptive Sensors
+### 2.1.3.2: Proprioceptive Sensors
 {: #ch2 }
 
 Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene). 
@@ -1092,13 +1093,13 @@ Proprioceptive and exteroceptive sensing form two complementary views of a robot
 
 Together, these two sensing modalities provide the foundation for robust robotic behavior: proprioceptive sensors keep the robot stable and aware of itself, while exteroceptive sensors keep it situated and responsive to the world.
 
-### 2.1 Odometry
+#### Odometry
 {: #ch2-odom }
 
 *Odometry* estimates a robot’s change in pose by integrating *proprioceptive* motion measurements over time (e.g., wheel/track motion, joint motion, IMU). Historically known as *dead reckoning*, odometry develops a kinematic model relating actuator motions to body motion, then integrates that model to produce pose as a function of time. Errors from modeling and sensing accumulate and must be managed or corrected with additional measurements.
 
 
-#### Differential-drive wheel odometry 
+##### Differential-drive wheel odometry 
 {: .no_toc }
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Differential_drive.png)
 ><sub>Differential drive kinematics. Source : Springer Handbook of Robotics, Chapter : 20.1</sub>
@@ -1153,7 +1154,7 @@ $$
 
 ---
 
-#### Calibration & error sources (typical)
+##### Calibration & error sources (typical)
 {: .no_toc }
 - **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
 - **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
@@ -1165,7 +1166,7 @@ $$
 
 ---
 
-#### Odometry in the estimation stack
+##### Odometry in the estimation stack
 {: .no_toc }
 Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
 
@@ -1326,7 +1327,7 @@ Odometry turns local actuator/IMU readings into an integrated pose estimate usin
 
 ---
 
-### 2.2 Rotary & Linear Position Sensing (Encoders & Potentiometers)
+#### Rotary & Linear Position Sensing (Encoders & Potentiometers)
 
 Position sensing provides joint/shaft angle and linear travel for feedback control, odometry, and safety. Common technologies include **incremental encoders**, **absolute encoders**, **resolvers/synchros**, and **potentiometers**. Selection should be guided by the characteristics in Ch. 1 (range, resolution, accuracy, noise, bandwidth/latency) and by mechanical integration constraints.
 
@@ -1637,9 +1638,9 @@ which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text
 
 ---
 
-### 2.3 : Inertial Sensing
+#### Inertial Sensing
 
-#### Gyroscopic Systems
+##### Gyroscopic Systems
 
 The goal of gyroscopic systems is to measure changes in vehicle orientation by taking advantage of physical laws that produce predictable effects under rotation. Effectively they measure how fast a robot is rotating about an axis (angular rate). By **integrating** this rate, we can track changes in orientation over time. In practice, every real gyro has noise and bias, so orientation from pure integration will drift and must be calibrated and often fused with other sensors. 
 
@@ -1649,9 +1650,9 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 
 ---
 
-### Main classes of gyroscopes
+#### Main classes of gyroscopes
 
-#### 1) Mechanical gyroscopes and gyrocompasses
+##### 1) Mechanical gyroscopes and gyrocompasses
 
 * **Principle.** Gyroscopes and gyrocompasses rely on the principle of the  **conservation of angular momentum** $L=I\omega$. Angular momentum is the tendency of a rotating object to keep rotating at the same angular speed about the same axis of rotation in the absence of an external torque. A rapidly spinning rotor maintains its orientation; torques cause **precession** perpendicular to both spin and applied torque. Classical **gyrocompasses** exploit precession with a pendulous weight and damping so the spin axis aligns with true north in the Earth frame. 
 * **Notes for robots.** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
@@ -1659,7 +1660,7 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/gyrocompas.png)
 ><sub>Simple gyrocompass. (a) Pendulus gyro. (b) Precessional motion. Source: Springer Handbook of Robotics, Chapter 20.1</sub>
 
-#### 2) Optical gyroscopes
+##### 2) Optical gyroscopes
 
 * **Principle (Sagnac effect).** Send light both ways around a closed loop (see Fig below) of length $D=2\pi R$. If the loop is stationary, both pulses traverse the same distance at speed $c$ and arrive together after
 $$
@@ -1691,7 +1692,7 @@ This $\Delta t$ is what RLGs and FOGs convert into a measurable phase or frequen
 
 Fiber-optic gyros (FOG) use long polarization-maintaining fiber loops; ring-laser gyros (RLG) use a laser cavity and measure the beat frequency between the two standing waves. Optical gyros are accurate, with no spinning mass. 
 
-#### 3) MEMS (micro-electromechanical) gyroscopes
+##### 3) MEMS (micro-electromechanical) gyroscopes
 
 * **Principle (Coriolis).** A vibrating proof mass with velocity $\mathbf{v}$ inside a frame rotating at rate $\boldsymbol{\Omega}$ experiences **Coriolis acceleration**. Coriolis acceleration is the apparent acceleration that arises in a rotating frame of references. Suppose that an object moves along a straight line in a rotating frame of reference. To an outside observer in an inertial frame the object’s path is curved, thus there must be some force acting on the object to maintain the straight line motion as viewed by the rotating observer. An object moving in a straight line with local velocity $\mathbf{v}$ in a frame rotating at rate $\boldsymbol{\Omega}$ relative to an inertial frame will experience a Coriolis acceleration given by : 
   $$
@@ -1706,7 +1707,7 @@ Wine-glass resonator gyroscopes use the effect of Coriolis forces on the positio
 
 ---
 
-### What gyros actually deliver
+#### What gyros actually deliver
 
 * **Rate gyros (RG).** Output angular **rate** $\dot{\theta}$ directly.
 * **Rate-integrating gyros (RIG).** Internally integrate to report **angle**, though most robotic pipelines still integrate rate in software to keep timing consistent with other sensors. 
@@ -1716,7 +1717,7 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-### Important Performance metrics of Inertial measurement units
+#### Important Performance metrics of Inertial measurement units
 
 * **Bias repeatability / stability.** How much the zero-rate output wanders over time at constant conditions; dominates long-term drift. 
 * **Angle Random Walk (ARW).** Noise-induced angle error growth when integrating rate; sets short-term orientation precision. 
@@ -1724,7 +1725,7 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-### Practical selection and integration tips
+#### Practical selection and integration tips
 
 * **Match range and bandwidth to dynamics.** Choose full-scale so saturation is unlikely during worst maneuvers, and pick bandwidth high enough for control needs without excessive noise or latency.
 * **Mounting and alignment.** Keep axes orthogonal, rigidly mount near the robot’s center to reduce vibration coupling, and include axis misalignment in calibration.
@@ -1836,7 +1837,7 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-#### Accelerometer
+##### Accelerometer
 {:.no_toc}
 
 Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
@@ -1985,13 +1986,13 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 ---
 
 
-### 2.4 Force, Torque, and Strain Sensing
+#### Force, Torque, and Strain Sensing
 
 Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
 ---
 
-#### Measurement Location: From Effort to Contact
+##### Measurement Location: From Effort to Contact
 
 * **Actuator effort (motor current).** In many electric drives, torque is approximately proportional to current, $\tau \approx k_t I$. This relationship is useful for fast inner-loop control, however, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
 * **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
@@ -1999,7 +2000,7 @@ Force, torque, and strain sensing enable a robot to perceive its own interaction
 
 ---
 
-#### Actuator effort: motor current as a torque sensor
+##### Actuator effort: motor current as a torque sensor
 
 In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor.
 
@@ -2035,16 +2036,16 @@ If precise low-force regulation, contact transients, or model uncertainties domi
 
 ---
 
-#### Strain-based sensing
+##### Strain-based sensing
 
 Strain-based sensing measures tiny elastic deformations in a compliant mechanical element and infers the applied force or torque through a known stiffness model. It is the workhorse behind joint torque sensors, six-axis wrist force–torque (F/T) sensors, weigh-scale load cells, and many tactile skins.
 
-##### What is measured
+###### What is measured
 
 * **Strain** is the relative change in length, $\varepsilon = \Delta L / L$ (unitless). In metals operating in the linear elastic regime, stress $\sigma$ and strain relate by $\sigma = E \varepsilon$, where $E$ is Young’s modulus.
 * **Strain gauges** convert strain to an electrical signal. The most common are metal-foil resistive gauges; alternatives include piezoresistive silicon and piezoelectric ceramics.
 
-##### Core transducer physics
+###### Core transducer physics
 
 * **Foil (resistive) strain gauges.** Electrical resistance $R$ changes approximately linearly with strain:
   $$
@@ -2054,7 +2055,7 @@ Strain-based sensing measures tiny elastic deformations in a compliant mechanica
 * **Piezoresistive silicon.** Doped silicon has a larger effective gauge factor (10–150), enabling compact, low-noise sensors, often integrated on diaphragms or micro-flexures.
 * **Piezoelectric.** Generates charge proportional to dynamic strain. Very high bandwidth but poor at true DC; best for vibration or impact sensing (dynamic tactile).
 
-##### From strain to force/torque
+###### From strain to force/torque
 
 A compliant element (beam, ring, cross-shape, diaphragm, or torsion tube) concentrates strain where gauges are placed. With a linear elastic model,
 $$
@@ -2062,7 +2063,7 @@ $$
 $$
 where $\mathbf{v}$ collects bridge voltages, $\mathbf{w} = [F_x, F_y, F_z, \tau_x, \tau_y, \tau_z]^\top$ is the wrench (forces and torques) at a reference point, $\mathbf{S}$ is the sensitivity matrix determined by geometry and gauge placement, and $\mathbf{b}$ is an offset. Calibration identifies $\mathbf{S}$ (and $\mathbf{b}$) by applying known loads and solving a linear regression; the inverse then maps voltages back to forces and torques.
 
-##### Bridge circuits and signal conditioning
+###### Bridge circuits and signal conditioning
 
 * **Wheatstone bridge.** Gauges are wired as quarter-, half-, or full-bridges. Full-bridges place gauges in tension and compression, doubling sensitivity and providing temperature compensation.
 * **Excitation.** Constant-voltage (e.g., $V_\mathrm{ex}=2$–10 V) is common; constant-current can reduce self-heating drift.
@@ -2140,7 +2141,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-## Chapter 3: Exteroceptive Sensors
+### 2.1.3.3: Exteroceptive Sensors
 
 - Contact sensors (switch, bumper, capacitive touch)
 - Rangefinders: IR, ultrasonic, time‑of‑flight (ToF)
@@ -2152,7 +2153,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-## Chapter 4: Multisensor Data Fusion
+### 2.1.3.4: Multisensor Data Fusion
 
 - Probabilistic grids
 - The Kalman Filter
@@ -2160,7 +2161,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-## Chapter 5: Sensor Selection and Integration
+### 2.1.3.5: Sensor Selection and Integration
 
 - Defining requirements
 - Mechanical, electrical & software integration
@@ -2171,11 +2172,12 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-## Programming
+### 2.1.3.6 Programming
 
 ---
+## 2.1.4 Credits
 
-## Ressources
+## 2.1.5  Ressources
 
 ### Books
 

@@ -18,12 +18,12 @@ nav_order: 7
     - [2.2.1. Graphical User Interface / Tablet](#11-graphical-user-interfacetablet)
     - [2.2.2. Joysticks](#12-joysticks)
     - [2.2.3. Exoskeletons](#13-exoskeletons)
-    - [2.2.4. Telepresence](#14-telepresence)
     - [2.2.5. Haptic Interfaces](#15-haptic-interfaces)
   - [2.3. Kinesthetic Teaching](#2-kinesthetic-teaching)
   - [2.4. Observational Learning](#3-observational-learning)
     - [2.4.1. Vision Systems](#31-vision-systems)
-   - [2.4.2. Motion Capture Systems](#32-motion-capture-systems)
+    - [2.4.2. Motion Capture Systems](#32-motion-capture-systems)
+  - [2.5 Applications for Telepresence](#14-telepresence)
 - [Credits](#credits)
 - [Resources](#resources)
   - [Books](#books)
@@ -627,7 +627,7 @@ In both vision systems and motion capture systems, obstruction results in the lo
 
 <br>
 
-##### **2.2.4. Applications for Telepresence**
+##### **2.4. Applications for Telepresence**
 The interfaces we listed above can be used also in a larger context, not necessarily aimed at teaching robots. One such example is telepresence, namely to enable a human operator to perform tasks remotely via a robotic systems. Examples include operations in radioactive environments, search-and-rescue missions, or any other tasks carried out in dangerous settings. 
 <br>
 Teleoperation in such situations requires great precision and care. As a result, it becomes necessary to render certain aspects of the environment for the operator. This introduces communication challenges, i.e. delays. Greater distance between the robot and the operator results in longer delays. Delays of several hours can occur in space missions where a robot is teleoperated from Earth. These are issues that must be addressed in this field.
@@ -720,6 +720,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

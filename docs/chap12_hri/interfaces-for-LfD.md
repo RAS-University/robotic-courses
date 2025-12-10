@@ -5,34 +5,25 @@ layout: default
 nav_order: 7
 ---
 
-
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
-
 
 # Interfaces for Learning from Human Demonstrations
 
 *Table of Contents*
-
 - [1. General Motivation](#1-general-motivation)
 - [2. Course Content](#2-course-content)
   - [2.1: Types of Interfaces](#chapter-1-types-of-interfaces)
-    - [2.1.1. Tele-operation](#1-tele-operation)
-      - [2.1.1.1. Graphical User Interface / Tablet](#11-graphical-user-interfacetablet)
-      - [2.1.1.2. Joysticks](#12-joysticks)
-      - [2.1.1.3. Exoskeletons](#13-exoskeletons)
-      - [2.1.1.4. Telepresence](#14-telepresence)
-      - [2.1.1.5. Haptic Interfaces](#15-haptic-interfaces)
-      - [2.1.1.6. Haptic Devices & Teleoperation](#16-haptice-devices--teleoperation)
-    - [2.2. Kinesthetic Teaching](#2-kinesthetic-teaching)
-    - [2.3. Observational Learning](#3-observational-learning)
-      - [2.3.1. Vision Systems](#31-vision-systems)
-      - [2.3.2. Motion Capture Systems](#32-motion-capture-systems)
-  - [3: Challenges](#chapter-2-challenges)
-    - [3.1. Correspondence Problem](#1-correspondence-problem)
-    - [3.2. Learning is Data-Sensitive](#2-learning-is-data-sensitive)
-    - [3.3. Variability in Task Definition](#3-variability-in-task-definition)
-    - [3.4. Generalizing Control Law – Beyond the Demonstrations](#4-generalizing-control-law--beyond-the-demonstrations)
+  - [2.2. Tele-operation](#1-tele-operation)
+    - [2.2.1. Graphical User Interface / Tablet](#11-graphical-user-interfacetablet)
+    - [2.2.2. Joysticks](#12-joysticks)
+    - [2.2.3. Exoskeletons](#13-exoskeletons)
+    - [2.2.4. Telepresence](#14-telepresence)
+    - [2.2.5. Haptic Interfaces](#15-haptic-interfaces)
+  - [2.3. Kinesthetic Teaching](#2-kinesthetic-teaching)
+  - [2.4. Observational Learning](#3-observational-learning)
+    - [2.4.1. Vision Systems](#31-vision-systems)
+   - [2.4.2. Motion Capture Systems](#32-motion-capture-systems)
 - [Credits](#credits)
 - [Resources](#resources)
   - [Books](#books)
@@ -48,8 +39,8 @@ nav_order: 7
 ><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA]([http://lasa.epfl.ch])) - YouTube video, Apr 2008.</sub>
 
 ## 1. General Motivation
-
-[Learning from demonstration] is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *correspondence problem*. To solve this discrepancy between the human body and the robot body, we need **interfaces**. This chapter gives a brief overview of the various popular interfaces, underlying in each case the pros and cons of each interface.
+[
+Learning from demonstration]([url](https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfD)) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *[correspondence problem]([url](https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfD#challenges-of-learning-from-demonstration))*. To solve this discrepancy between the human body and the robot body, we need **interfaces**. This course gives a brief overview of the various popular interfaces, underlying in each case the pros and cons of each interface.
 
 ## 2. Course Content
 
@@ -61,12 +52,12 @@ Interfaces used to gather data from humans for teaching the robots revolve aroun
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
 Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
-#### 2.1.1 **Tele-operation:**
+#### 2.2 **Tele-operation:**
 In teleoperation, users control robots remotely through a designated interface. The quality of both learning and task performance depends heavily on two factors: the <ins>_user-friendliness of the design_</ins> of the interface and the <ins>_operator’s expertise_</ins>. Effective teleoperation requires that the human operator not only be skilled but also have a solid understanding of the device they are using. As such, the interface should be user friendly, while being effective, two goals that can be conflicting.
 
 As a result, current research has split into two main directions. The first focuses on developing simple interfaces that require little to no pretraining; however, these interfaces restrict the range and complexity of behaviors that can be taught to the robot. The second trend explores more sophisticated interfaces that offer greater expressive power. Although these interfaces demand more training time for the human operator, they enable the robot to learn significantly more complex tasks.
 
-##### **2.1.1.1 Graphical user interface/Tablet**
+##### **2.2.1 Graphical user interface/Tablet**
 The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
 <br>
 Tablets have been used since the 1990s, and they have become more capable with the advancements of modern devices. Yet, they remain a simple system. The user can communicate the desired motion by mimicking it on the tablet or by indicating a desired target.
@@ -124,7 +115,7 @@ In the right example, the user controls the robot to pick up different objects. 
 </details>
 
 
-##### **2.1.1.2 Joysticks**
+##### **2.2.2 Joysticks**
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
@@ -249,7 +240,7 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
 
 <br>
 
-##### **1.3. Exoskeletons**
+##### **2.2.3. Exoskeletons**
 
 An exoskeleton consists of a wearable mechanism that can measure the displacement, and at times, the forces generated by the operator. To demonstrate a task lies in that there is a direct mapping between the user’s body (arms or legs) and the robot’s body. For example, in the video below, the user guides the robot’s arms directly with their own arms. 
 
@@ -322,81 +313,7 @@ Some exoskeletons (though not all) render the contact forces, meaning that when 
 
 <br>
 
-##### **1.4. Telepresence**
-There are situations where it is necessary to teleoperate a robot instead of sending a human operator directly. Examples include operations in radioactive environments, search-and-rescue missions, or any other tasks carried out in dangerous settings. However, teleoperation in such situations requires great precision and care. As a result, it becomes necessary to render certain aspects of the environment for the operator. This introduces communication challenges, i.e. delays. Greater distance between the robot and the operator results in longer delays. Delays of several hours can occur in space missions where a robot is teleoperated from Earth. These are issues that must be addressed in this field.
-<br>
-In the example below, the surgeon is not operating directly on the patient; instead, the procedure is performed through an interface; the da Vinci surgical robot. Such operations have become fairly common today. These systems offer several advantages: the operator does not need to be physically present on site and can perform tasks remotely. In the case of surgery, an expert surgeon can carry out a procedure from their own office on a patient located in another region of the world. Consequently, this approach can be more efficient and safer. However, it relies heavily on high-quality rendering of the environment.
-<br>
-Regarding rendering the environment, it is interesting to note that surgeons today typically receive only a two-dimensional visual representation of the scene. Nevertheless, by moving the camera and instruments, they construct a three-dimensional model of the environment in their minds and map it onto the provided 2D imagery. They are not given force feedback; they cut tissues and move things without sensing the applied force. This can be critical; for example, when determining how deep a cut should be. Moreover, some tissues are stiffer than others. Skilled surgeons infer force information from visual observations, such as from tissue deformation, thanks to their expertise. However, mistakes can occur, and providing richer renderings of the scene could help reduce these mistakes.
-<br>
-In such operations, transmission delays can be extremely detrimental. In fact, one of the most important research challenges in this field is determining how to compensate for these delays to ensure controller stability. To illustrate this, imagine a surgeon applying a force: even if they eventually perceive a resistance as feedback, by the time the feedback reaches them, they will have continued moving. Once the resistance is sensed and the surgeon begins to react, such as by reducing the force, it may already be too late. In such a scenario, the closed-loop control system becomes completely unstable.
-
-
-<br>
-<p align="center">
-  <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/Davinci.jpg" alt="Davinci Surgical Robot" width="600" height="338">
-</p>
-
-><sub>Davinci Surgical Robot</sub>
-<br>
-
-
-<!-- Conceputal Questions -->
-<details open markdown="4">
-<summary>Conceptual Questions</summary>
-
-
-<!-- Question 1 -->
-<p><strong>Question 1: Despite all the facilities telepresence provides, it is not yet possible to perform tasks fully remotely due to communication problems.</strong></p>
-<form id="q1-tele">
-  <input type="radio" name="q1-tele" value="True"> True<br>
-  <input type="radio" name="q1-tele" value="False"> False<br>
-  <button type="button"
-    onclick="checkTrueFalse('q1-tele', 'False', 
-      'Correct answer! Telepresence enables tasks to be performed remotely. The da Vinci surgical robot is a great example that is widely used today.',
-      'Incorrect answer! Although communication challenges, such as delays, can be detrimental in telepresence, it is successfully used worldwide.')">
-    Check Answer
-  </button>
-  <p id="q1-tele-feedback"></p>
-</form>
-
-
-<!-- Question 2 -->
-<p><strong>Question 2: What is the most challenging issue in telepresence?</strong></p>
-<form id="q2-tele">
-  <input type="radio" name="q2-tele" value="option1"> Delays in transmission can be determinal if the task is rapid, leading to an unstable control loop.<br>
-  <input type="radio" name="q2-tele" value="option2"> A very good visual rendering of the scene must be provided to the user, as she/he is not present in the environment.<br>
-
-  <button type="button" onclick="checkMCQ('q2-tele', 'option1',
-    'Correct answer! Delays in transmission can lead to unstable behavior.',
-    'Incorrect answer! Although it is important to provide a good rendering of the scene in telepresence, it is not as critical as the delays in transmission.')">
-    Check Answer
-  </button>
-
-  <p id="q2-tele-feedback"></p>
-</form>
-
-
-</details>
-
-<script src="quiz.js"></script>
-
-
-<!--
-> + **Pros:** 
-> + Enables to perform tasks when remote
-> + Can offer a more efficient and more secure mean to intervene (in disastrous or dangerous environments)
-
-> - **Cons:**
-> - Need to provide good visual rendering of the scene
-> - Delays in transmission can be detrimental if task is too rapid
-> - Force not always (well) rendered
--->
-
-
-<br>
-
-##### **1.5. Haptic interfaces**
+##### **2.2.4. Haptic interfaces**
 Haptic interfaces transmit the forces applied by the user so they can be executed at the end effector. They also render the forces perceived by the robot back to the user. In the video below, a typical haptic device can be seen. This device is one of the earliest models, allowing the user to control the position and orientation of the endpoint, as well as the force. Thus, it both transmits and renders force.
 <br>
 This device operates as a closed-loop system and introduces delays. The delay depends first on the distance between the user and the endpoint, and second on the type of communication used. Typically, this delay ranges between 100 ms and 400 ms. However, it can be much longer depending on the distance. Such delays can lead to incorrect responses and unstable behavior.
@@ -484,7 +401,7 @@ This device operates as a closed-loop system and introduces delays. The delay de
 
 <br>
 
-##### **1.6. Haptice Devices & Teleoperation**
+
 New finger-based haptic devices leverage the sense of touch, using sensors mounted on robotic fingers to perceive contact and render it through a hand exoskeleton. In this setup, two robotic hands are equipped with tactile sensors. The touch perceived at the endpoint is rendered through the exoskeleton worn by the user. This exoskeleton allows the user to precisely control each individual finger and to sense touch at the fingertips. As a result, this device offers higher resolution and is closer to natural human touch.
 <br>
 While force rendering occurs only at the fingertips in this system, some tasks—such as grasping or manipulating objects—require force rendering over a larger area of the hand. For example, moving an object within the hand requires rendering forces on the interior surfaces. If preventing the object from slipping is necessary, this rendering must occur within milliseconds. Consequently, delays become a significant issue when it comes to reliable manipulation.
@@ -513,8 +430,13 @@ Footage from Adam Savage's Tested + ShadowRobot Company and Syntouch. YouTube vi
 
 <br>
 
-#### **2. Kinesthetic Teaching** 
+#### **2.3 Kinesthetic Teaching** 
 In kinesthetic teaching, the teacher physically moves the robot. This is possible due to the robot’s backdrivability. The robot is completely compliant to the user’s motion. The advantage is that the user interacts directly with the robot’s feasible workspace. Forces applied by the user are transmitted directly to the robot, and the user can directly sense the forces involved in the task. Once the user has trained the robot, the robot can then reproduce the task and generalize.
+<br>
+Kinesthetic teaching is particularly well suited for transmitting information about tasks that require accurate force control. The forces applied by the user are transmitted directly to the robot, and the user can directly sense the forces involved in the task.
+<br>
+Kinesthetic teaching is also useful when training robots that differ significantly from the human body, such as industrial robot arms. It helps resolve part of the correspondence problem, as the teacher or operator is forced to adapt their movements to the robot’s feasible workspace. Note that when the robot is trained through passive compliant motion, there is a risk that the teacher shows movement with a speed or acceleration that cannot be matched by the robot, as it may exceed the robot's joints' acceleration bounds.
+
 <br>
 <p align="center">
   <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/TeachRobotGolf.jpg" alt="Teaching a Robot to Play Golf" width="600" height="338">
@@ -608,8 +530,8 @@ Regarding the limitations, it is still cumbersome. The user, with only two arms,
 <script src="quiz.js"></script>
 
 
-#### **3. Observational Learning:**
-##### **3.1. Vision Systems**
+#### **2.4. Observational Learning:**
+##### **2.4.1. Vision Systems**
 In vision systems, RGB-D cameras are used and body motion is reconstructed automatically. In the example below, the motion of a human hand is tracked. The hand’s motion is reconstructed at high speed and transmitted directly to the robot. This is advantageous because the user does not need to wear any equipment; they simply demonstrate the tasks by performing them. This allows users to perform tasks in a natural manner. It is one of the ideal approaches because it does not require complex hardware; essentially only a camera is needed.
 <br>
 The difficulty lies in interpreting the scene from the camera’s point of view, making the challenge primarily algorithmic. Another issue is that the user must learn which motions are transmitted accurately and which are not. There is no force rendering in this setup. The system is purely visual, but it can still be quite powerful.
@@ -658,7 +580,7 @@ Another disadvantage is that the setup can be slow, as live analysis of camera i
 <script src="quiz.js"></script>
 
 
-##### **3.2. Motion Capture Systems**
+##### **2.4.2. Motion Capture Systems**
 In motion capture systems, markers attached to body parts are tracked by infrared cameras at high resolution. These systems directly convey the dynamics of the motion (embodied transmission). In the example below, observational learning is performed for full-body motion. These systems allow control of all joints. An interesting aspect, as seen in the example below, is that the human and the robot can be of different sizes. Control is done at the joint level: the human’s joints correspond to the robot’s joints, and the mapping between them is accessible.
 
 <!--
@@ -678,7 +600,7 @@ In motion capture systems, markers attached to body parts are tracked by infrare
 
 ><sub>C. Stanton, A. Bogdanovych, E. Ratanasena: Teleoperation of a humanoid robot using full-body motion capture, example movements, and machine learning. In proceedings of Australasian Conference on Robotics and Automation (ACRA 2012), Wellington, New Zealand, 3-5 December 2012. 
 YouTube video, Feb 2012. </sub>
-
+<br>
 Another very popular and more practical method is to use a motion sensor. In this case, markers are tracked by cameras, which are usually infrared-based. The translation and rotation of the marker are mapped to the translation and rotation of the robot’s endpoint. This allows the user to guide the robot’s position from a distance. This method can be quite accurate.
 
 <p align="center">
@@ -702,175 +624,62 @@ The previous setting can be extended to more complex problems. In the example be
 
 In both vision systems and motion capture systems, obstruction results in the loss of data. Research is being conducted on compensating for this loss in order to interpolate between the available data points. If you are gathering data in this way, you must be aware that some interpolation has occurred during data transmission. As a result, the data you obtain can not be fully trusted. Another issue with this type of system is that it does not fit all body sizes and strengths. Furthermore, it neither conveys nor renders forces at contact.
 
-<br>
-
-### **Chapter 2: Challenges**
-
-#### **1. Correspondence Problem**
-The main difficulty in teaching a robot is that human bodies and robotic bodies differ dramatically. Even when a robot resembles a human, its body does not have the same range or dynamics of motion. Differences exist in kinematics of joints: while humans benefit from ball joints, most robots do not. Differences also arise at the actuator level. Our muscles behave differently from most robotic motors, and the control mechanisms are not the same. The acceleration profiles of actuators vary as well. Humans can sometimes produce much higher accelerations; as a result, actions that are dynamically feasible for us, such as reaching out very quickly, may be impossible for a robot. Conversely, robots can sometimes perform actions that the human body can not, such as moving at a constant velocity. Additionally, humans have limited ranges of motion in their kinematics.
-
-<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-  <div style="display: flex; justify-content: space-between; gap: 10px; width: 100%;">
-    <div style="width: 48%;">
-      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceBody1.png" alt="Image 1" style="width: 100%; height: 300px; object-fit: cover;">
-    </div>
-    <div style="width: 48%;">
-      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceBody2.png" alt="Image 2" style="width: 100%; height: 300px; object-fit: cover;">
-    </div>
-  </div>
-  <div style="text-align: center; font-style: italic; max-width: 80%;">
-    Even when the robot looks more like the human, its body does not have the same range and dynamics of motion.
-  </div>
-</div>
-
-Humans and robots also differ at the sensor level. Robots do not perceive the world the way we do. Sonars, infrared sensors, and lasers are common on robots and are easier to process than information from cameras. Humans, on the other hand, have different types of sensors, located in different places and with different densities. This becomes an issue when we want an end user to understand what a robot can perceive.
-<br>
-To make this clearer, consider the example of an end user who wants to understand how an autonomous car drives. In this case, the user needs to understand what the car “sees.” The car perceives its environment using LiDARs, but LiDARs and human eyes are very different. A great deal of effort is required to render this information in a way that humans can understand, so that they can appreciate what the car is able to see. Moreover, humans also need to understand what the car cannot see. As pedestrians, people should be aware of situations in which they might not be detected by these systems. For example, while wearing light-colored clothing makes you more visible to human eyes, visibility to LiDAR does not depend on color; it depends on the reflectiveness of the material. Clothing that reflects LiDAR signals well makes you visible, whereas non-reflective materials can make you hard to detect.
-
-
-<p align="center">
-  <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceSensor.png" alt="Correspondence Problem, Sensors" width="600" height="338">
-  <br>
-  <em>Robots do not perceive things like we do.</em>
-</p>
-
-It is very difficult to teach a robot. In fact, instructors must first train themselves on how to guide the robot before they can effectively train it. These robots are generally much larger than humans, and their limbs are bigger and heavier, which adds another layer of complexity to the teaching process.
-
-<p align="center">
-  <video width="600" height="338" controls>
-    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/Correspondence.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</p>
-
-><sub>LASA Lab / EPFL</sub>
-
-#### **2. Learning is Data-Sensitive**
-Learning is data-sensitive. This is the biggest problem we have! Teaching a task will differ depending on the kinematics and dynamics of the robot; the same motion in Cartesian space will produce different trajectories in joint space. If one robot with a particular kinematics is trained, this does not necessarily transfer well to another robot. For example, the training may have been done on a robot with six degrees of freedom. If it is then required to transfer this knowledge to a robot with seven degrees of freedom, this becomes problematic. Even if there are two robotic arms with the same number of degrees of freedom (for example, seven), where one has a high payload capacity and the other has a low payload capacity, they do not share the same dynamics of motion.
-
-<div style="display: flex; justify-content: space-between; gap: 10px;">
-  <div style="width: 48%;">
-    <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/6DOF.jpg" alt="Image 1" style="width: 100%; height: 300px; object-fit: contain;">
-    <br>
-    <sub>UR5: 6DOF</sub>
-  </div>
-  <div style="width: 48%;">
-    <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/7DOF.jpg" alt="Image 2" style="width: 100%; height: 300px; object-fit: contain;">
-    <br>
-    <sub>Franka Panda: 7DOF</sub>
-  </div>
-</div>
-
-Data is environment-dependent. In the videos below, a successful example of training across different environments is shown. However, this is not always the case. The task here is to open the tray of a printer. This is an interesting task because static friction is present up to a certain point; then it gives way and is replaced by kinetic friction. The robot must adapt to this transition, and it is not aware of when the friction will give up. A 7-DOF robotic arm was trained for this task at EPFL. This training was successfully transferred to a completely different robot, a humanoid, at AIST/JRL in Japan.
-
-<div style="display: flex; justify-content: space-between; gap: 10px;">
-  <div style="width: 48%;">
-    <video controls style="width: 100%; height: 300px; object-fit: cover;">
-      <source src="/assets/videos/interfaces-for-HRI/ArmEPFL.mp4" type="video/webm">
-      Your browser does not support the video tag.
-    </video>
-    <br>
-    <sub>Model Learned at EPFL</sub>
-  </div>
-  <div style="width: 48%;">
-    <video controls style="width: 100%; height: 300px; object-fit: cover;">
-      <source src="/assets/videos/interfaces-for-HRI/HumanoidJapan.mp4" type="video/webm">
-      Your browser does not support the video tag.
-    </video>
-    <br>
-    <sub>Model transferred at AIST/JRL</sub>
-  </div>
-</div>
-
-#### **3. Variability in Task Definition**
-The key question here is: What does it mean to perform a task? There are multiple ways to accomplish any given task. For example, if a robot is trained to grate carrots, its performance will depend on the grater being used. Moreover, the motion will not be the same in every case; it may even depend on the carrot itself! As a result, transmitting skills across different robots is not straightforward. Unlike humans, who are fairly good at transferring and generalizing skills, robots do not yet have this capability.
-
-
-<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
-  <div style="display: flex; justify-content: space-between; gap: 10px; width: 100%;">
-    <div style="width: 48%;">
-      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/GratingCarrot1.jpg" alt="Image 1" style="width: 100%; height: 300px; object-fit: cover;">
-    </div>
-    <div style="width: 48%;">
-      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/GratingCarrot2.jpg" alt="Image 2" style="width: 100%; height: 300px; object-fit: cover;">
-    </div>
-  </div>
-  <div style="text-align: center; font-style: italic; max-width: 80%;">
-    Multiple ways to accomplish a task: Multiple Motions, Multiple Tools
-  </div>
-</div>
-
-#### **4. Generalizing Control Law – Beyond the Demonstrations**
-Another important aspect is the ability to generalize. The robot should infer that a task is composed of a sequence of actions. Each action is relative to the object the robot must manipulate; however, it should initially consider several predefined frames of reference. It is important for the robot to understand that the task is not about the global placement of objects in space, but rather about their relative positions and the relative forces that matter. Multiple frames of reference are associated with the different objects in the scene, and the robot must learn which of these frames is relevant at each moment.
-
-
-<p align="center">
-  <video width="600" height="338" controls>
-    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/Generalization.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</p>
-
-><sub>LASA Lab / EPFL</sub>
 
 <br>
+
+##### **2.2.4. Applications for Telepresence**
+The interfaces we listed above can be used also in a larger context, not necessarily aimed at teaching robots. One such example is telepresence, namely to enable a human operator to perform tasks remotely via a robotic systems. Examples include operations in radioactive environments, search-and-rescue missions, or any other tasks carried out in dangerous settings. 
+<br>
+Teleoperation in such situations requires great precision and care. As a result, it becomes necessary to render certain aspects of the environment for the operator. This introduces communication challenges, i.e. delays. Greater distance between the robot and the operator results in longer delays. Delays of several hours can occur in space missions where a robot is teleoperated from Earth. These are issues that must be addressed in this field.
+<br>
+In the example below, the surgeon is not operating directly on the patient; instead, the procedure is performed through an interface; the da Vinci surgical robot. Such operations have become fairly common today. These systems offer several advantages: the operator does not need to be physically present on site and can perform tasks remotely. In the case of surgery, an expert surgeon can carry out a procedure from their own office on a patient located in another region of the world. Consequently, this approach can be more efficient and safer. However, it relies heavily on high-quality rendering of the environment.
+
+<br>
+<p align="center">
+  <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/Davinci.jpg" alt="Davinci Surgical Robot" width="600" height="338">
+</p>
+
+><sub>Davinci Surgical Robot</sub>
+
+<br>
+Regarding rendering the environment, it is interesting to note that surgeons today typically receive only a two-dimensional visual representation of the scene. Nevertheless, by moving the camera and instruments, they construct a three-dimensional model of the environment in their minds and map it onto the provided 2D imagery. They are not given force feedback; they cut tissues and move things without sensing the applied force. This can be critical; for example, when determining how deep a cut should be. Moreover, some tissues are stiffer than others. Skilled surgeons infer force information from visual observations, such as from tissue deformation, thanks to their expertise. However, mistakes can occur, and providing richer renderings of the scene could help reduce these mistakes.
+<br>
+In such operations, transmission delays can be extremely detrimental. In fact, one of the most important research challenges in this field is determining how to compensate for these delays to ensure controller stability. To illustrate this, imagine a surgeon applying a force: even if they eventually perceive a resistance as feedback, by the time the feedback reaches them, they will have continued moving. Once the resistance is sensed and the surgeon begins to react, such as by reducing the force, it may already be too late. In such a scenario, the closed-loop control system becomes completely unstable.
 
 
 <!-- Conceputal Questions -->
-<details open markdown="7">
+<details open markdown="4">
 <summary>Conceptual Questions</summary>
 
+
 <!-- Question 1 -->
-<p><strong>Question 1: What are the main challenges in teaching robots through interfaces?</strong></p>
-<form id="q1-ch">
-  <input type="radio" name="q1-ch" value="option1"> Generalization, Data-sensitivity of learning <br>
-  <input type="radio" name="q1-ch" value="option2"> Correspondence problem, Variability in task definition<br>
-  <input type="radio" name="q1-ch" value="option3"> Correspondence problem, Generalization<br>
-  <input type="radio" name="q1-ch" value="option4"> All of the above<br>
-
-  <button type="button" onclick="checkMCQ('q1-ch', 'option4',
-    'Correct answer! All available options are considered as the main challenges in teaching robots through interfaces.',
-    'Incorrect answer! Try again.')">
-    Check Answer
-  </button>
-
-  <p id="q1-ch-feedback"></p>
+<p><strong>Question 1: Despite all the facilities telepresence provides, it is not yet possible to perform tasks fully remotely due to communication problems.</strong></p>
+<form id="q1-tele">
+  <input type="radio" name="q1-tele" value="True"> True<br>
+  <input type="radio" name="q1-tele" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q1-tele', 'False', 
+      'Correct answer! Telepresence enables tasks to be performed remotely. The da Vinci surgical robot is a great example that is widely used today.',
+      'Incorrect answer! Although communication challenges, such as delays, can be detrimental in telepresence, it is successfully used worldwide.')">
+    Check Answer
+  </button>
+  <p id="q1-tele-feedback"></p>
 </form>
 
 
 <!-- Question 2 -->
-<p><strong>Question 2: At what level does the correspondence problem between humans and robots exist?</strong></p>
-<form id="q2-ch">
-  <input type="radio" name="q2-ch" value="option1"> Sensor level <br>
-  <input type="radio" name="q2-ch" value="option2"> Actuator level<br>
-  <input type="radio" name="q2-ch" value="option3"> Joint level<br>
-  <input type="radio" name="q2-ch" value="option4"> All of the above<br>
+<p><strong>Question 2: What is the most challenging issue in telepresence?</strong></p>
+<form id="q2-tele">
+  <input type="radio" name="q2-tele" value="option1"> Delays in transmission can be determinal if the task is rapid, leading to an unstable control loop.<br>
+  <input type="radio" name="q2-tele" value="option2"> A very good visual rendering of the scene must be provided to the user, as she/he is not present in the environment.<br>
 
-  <button type="button" onclick="checkMCQ('q2-ch', 'option4',
-    'Correct answer!',
-    'Incorrect answer! Try again.')">
+  <button type="button" onclick="checkMCQ('q2-tele', 'option1',
+    'Correct answer! Delays in transmission can lead to unstable behavior.',
+    'Incorrect answer! Although it is important to provide a good rendering of the scene in telepresence, it is not as critical as the delays in transmission.')">
     Check Answer
   </button>
 
-  <p id="q2-ch-feedback"></p>
-</form>
-
-
-<!-- Question 3 -->
-<p><strong>Question 3: Choose the correct option.</strong></p>
-<form id="q3-ch">
-  <input type="radio" name="q3-ch" value="option1"> Humanoid robots necessarily have the same dynamics of motions as humans.<br>
-  <input type="radio" name="q3-ch" value="option2"> Once a robot is trained to accomplish a task, its performance is resistant to the changes of the environment.<br>
-  <input type="radio" name="q3-ch" value="option3"> Two robotic arms with the same number of degrees of freedom and different payload capacity do not share the same dynamics of motion.<br>
-  <input type="radio" name="q3-ch" value="option4"> All of the above<br>
-
-  <button type="button" onclick="checkMCQ('q3-ch', 'option3',
-    'Correct answer!',
-    'Incorrect answer! Try again.')">
-    Check Answer
-  </button>
-
-  <p id="q3-ch-feedback"></p>
+  <p id="q2-tele-feedback"></p>
 </form>
 
 
@@ -878,8 +687,17 @@ Another important aspect is the ability to generalize. The robot should infer th
 
 <script src="quiz.js"></script>
 
-<br>
-<br>
+
+<!--
+> + **Pros:** 
+> + Enables to perform tasks when remote
+> + Can offer a more efficient and more secure mean to intervene (in disastrous or dangerous environments)
+
+> - **Cons:**
+> - Need to provide good visual rendering of the scene
+> - Delays in transmission can be detrimental if task is too rapid
+> - Force not always (well) rendered
+-->
 
 
 ### Credits:
@@ -902,6 +720,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

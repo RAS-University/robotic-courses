@@ -610,6 +610,66 @@ Another important aspect is the ability to generalize. The robot should infer th
   </video>
 </p>
 
+
+
+<!-- Conceputal Questions -->
+<details open markdown="7">
+<summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: What are the main challenges in teaching robots through interfaces?</strong></p>
+<form id="q1-ch">
+  <input type="radio" name="q1-ch" value="option1"> Generalization, Data-sensitivity of learning <br>
+  <input type="radio" name="q1-ch" value="option2"> Correspondence problem, Variability in task definition<br>
+  <input type="radio" name="q1-ch" value="option3"> Correspondence problem, Generalization<br>
+  <input type="radio" name="q1-ch" value="option4"> All of the above<br>
+
+  <button type="button" onclick="checkMCQ('q1-ch', 'option4',
+    'Correct answer! All available options are considered as the main challenges in teaching robots through interfaces.',
+    'Incorrect answer! Try again.')">
+    Check Answer
+  </button>
+
+  <p id="q1-ch-feedback"></p>
+</form>
+
+
+<!-- Question 2 -->
+<p><strong>Question 2: At what level does the correspondence problem between humans and robots exist?</strong></p>
+<form id="q2-ch">
+  <input type="radio" name="q2-ch" value="option1"> Sensor level <br>
+  <input type="radio" name="q2-ch" value="option2"> Actuator level<br>
+  <input type="radio" name="q2-ch" value="option3"> Joint level<br>
+  <input type="radio" name="q2-ch" value="option4"> All of the above<br>
+
+  <button type="button" onclick="checkMCQ('q2-ch', 'option4',
+    'Correct answer!',
+    'Incorrect answer! Try again.')">
+    Check Answer
+  </button>
+
+  <p id="q2-ch-feedback"></p>
+</form>
+
+
+<!-- Question 3 -->
+<p><strong>Question 3: Choose the correct option.</strong></p>
+<form id="q3-ch">
+  <input type="radio" name="q3-ch" value="option1"> Humanoid robots necessarily have the same dynamics of motions as humans.<br>
+  <input type="radio" name="q3-ch" value="option2"> Once a robot is trained to accomplish a task, its performance is resistant to the changes of the environment.<br>
+  <input type="radio" name="q3-ch" value="option3"> Two robotic arms with the same number of degrees of freedom and different payload capacity do not share the same dynamics of motion.<br>
+  <input type="radio" name="q3-ch" value="option4"> All of the above<br>
+
+  <button type="button" onclick="checkMCQ('q3-ch', 'option3',
+    'Correct answer!',
+    'Incorrect answer! Try again.')">
+    Check Answer
+  </button>
+
+  <p id="q3-ch-feedback"></p>
+</form>
+
+
 # LfD Methods Overview
 
 In this section, we will go over some of the current methods, and categories of methods, both historical methods and in the state-of-the-art LfD research. We will provide a brief overview of the methods with citations and resources for further inquiry in each section. 

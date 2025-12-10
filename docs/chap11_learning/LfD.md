@@ -8,7 +8,7 @@ math: mathjax
 <script src="questions.js"></script>
 
 # Learning from Demonstration {#start}
-By Ahalya Prabhakar 
+By [Ahalya Prabhakar]([[url](https://robotics.sydney.edu.au/our-people/)]) 
 <a name="top"></a>
 
 <style>

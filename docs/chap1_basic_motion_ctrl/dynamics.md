@@ -43,7 +43,7 @@ nav_order: 3
 {:toc}
 
 ## 1.2.1 Prerequisites
-To get the most out of this **Dynamics module**, it’s strongly recommended that you have already completed:
+To get the most out of this **Dynamics module**, it is strongly recommended that you have already completed the course:
 
  **[Kinematics](kinematics)**  
 - A solid understanding of robot configurations, coordinate transformations and velocity kinematics.

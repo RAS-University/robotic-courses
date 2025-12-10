@@ -6,11 +6,6 @@ nav_order: 7
 author: Julian Ruiz Rodriguez (EPFL)
 ---
 
-<h1 style="font-size: 3em; text-align: center;">Model Predictive Control</h1>
-<p style="text-align: center; font-style: italic; font-size: 1em; color: #555;">
-“Feedback: because the universe refuses to wait for you to get it right.”
-</p>
-
 <!-- # Model predictive Control -->
 
 <!--Decompose the course into chapters
@@ -218,7 +213,36 @@ MathJax.Hub.Config({
 });
 </script>
 
-# Prerequisites
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color:rgb(0, 0, 0); /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  #back-to-top:hover {
+    opacity: 1;
+  }
+</style>
+
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
+# 6.3 Model Predictive Control
+
+*Feedback: because the universe refuses to wait for you to get it right.*
+
+## 6.3.1 Prerequisites
 
 * Linear Algebra
 * Differential equations
@@ -237,7 +261,7 @@ MathJax.Hub.Config({
 
 ---
 
-# Notations
+## 6.3.2 Notations
 
 <!-- ## Mathematical notation -->
 
@@ -296,7 +320,7 @@ Throughout this lecture notes, we will use the following subscripts, superscript
 
 ---
 
-# Motivation
+## 6.3.3 General Motivation
 
 <!-- Introduce limitation of "classical feedback control" and the need for more, -->
 
@@ -310,7 +334,9 @@ MPC has found applications in various fields, including chemical process control
 
 ---
 
-# Chapter 1: Introduction to MPC
+## 6.3.4 Course Content
+
+### 6.3.4.1: Introduction to MPC
 
 [See notations](#notations)
 
@@ -318,7 +344,7 @@ In control theory, we usually talk about controllers and regulators. A controlle
 
 ---
 
-## 1.1: Linear Quadratic Regulator (LQR)
+#### Linear Quadratic Regulator (LQR)
 
 In this introductory chapter, we will explore a specific type of regulator known as the Linear Quadratic Regulator (LQR). The LQR is a fundamental concept in control theory that provides an optimal solution for controlling linear systems with quadratic cost functions. We will delve into the mathematical formulation of LQR, its properties, and its applications in various engineering fields. To help illustrate these concepts, we will refer to a video lecture by Christopher Lum, which provides a comprehensive overview of LQR.
 
@@ -566,7 +592,7 @@ Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporat
 
 ---
 
-## 1.2: The Riccati Equation
+#### The Riccati Equation
 
 <iframe width="735" height="413"
   src="https://www.youtube.com/embed/wEevt2a4SKI?si=jZOiS9c6RWdX-cTm?&start=2497"
@@ -706,7 +732,7 @@ $$
 
 ---
 
-## 1.3: Dynamic Programming
+#### Dynamic Programming
 
 In the previous video, we used the continuous-time algebraic Riccati equation (CARE) to solve the Linear Quadratic Regulator (LQR) problem. However, the derivation of the Riccati equation from the LQR problem was not covered in detail. Here, we will look at the discrete-time version of the LQR problem and derive the discrete-time Riccati equation (DARE) using **Dynamic programming**.
 
@@ -848,7 +874,7 @@ On can show that $V_t(x)=x^\top P_tx$ (see proof in the note below) and then der
 
 ---
 
-## 1.4: Controllability and Observability
+#### Controllability and Observability
 
 **Controllability**
 
@@ -967,7 +993,7 @@ We assume that the reader is familiar with the concepts of a random variable, pr
 
 ---
 
-## Exercises
+#### Exercises
 
 [See notations](#notations)
 
@@ -1371,11 +1397,11 @@ $$
 
 ---
 
-# Chapter 2: Classical MPC
+### 6.3.4.2 Classical MPC
 
 [See notations](#notations)
 
-## 2.1: Introduction
+#### Introduction
 
 Model Predictive Control (MPC) is an advanced method of process control that has been widely adopted in various industries due to its ability to handle multivariable control problems with constraints. The core idea of MPC is to use a model of the system to predict future behavior and optimize control actions over a finite time horizon.
 
@@ -1387,7 +1413,7 @@ In this chapter we study MPC for the case when the state is known. This case is 
 
 ---
 
-## 2.2: Invariant Sets
+#### Invariant Sets
 
 **Invariance**
 
@@ -1589,7 +1615,7 @@ That's where MPC comes into play, we will use MPC to approximate the control inv
 
 ---
 
-## 2.3: Model Predictive Control
+#### Model Predictive Control
 
 To study model predictive control, we consider the following system dynamics
 <div>
@@ -1759,7 +1785,7 @@ The optimal control law is therefore given by
 
 ---
 
-## 2.4: Stability and Convergence
+#### Stability and Convergence
 
 <!-- ### Lyapunov analysis -->
 
@@ -1782,11 +1808,11 @@ The optimal control law is therefore given by
 
 ---
 
-## 2.5: Examples of MPC
+#### Examples of MPC
 
 ---
 
-## Exercises
+#### Exercises
 [See notations](#notations)
 
 **Exercise 2.1: Maximum invariant**
@@ -1845,63 +1871,60 @@ $$
 
 ---
 
-# Chapter 3: Robust MPC
+### 6.3.4.3: Robust MPC  - In Progress
 [See notations](#notations)
 
 ---
 
-## 3.1: Introduction
+#### Introduction
 
 ---
 
-## 3.2: A Game Theoretic Approach
+#### A Game Theoretic Approach
 
 ---
 
-## 3.3: Prediction Dynamics in Robust MPC
+#### Prediction Dynamics in Robust MPC
 
 ---
 
-## 3.4: Robust Min-Max MPC
+#### Robust Min-Max MPC
 
 ---
 
-## 3.5: To go further - Tube MPC
+#### To go further - Tube MPC
 
 ---
 
-## Exercises
+#### Exercises
 [See notations](#notations)
 
 ---
 
-# Chapter 4: Economic MPC
+### 6.3.4.4: Economic MPC  - In Progress
 [See notations](#notations)
 
 ---
 
-## Stage cost
+#### Stage cost
 
 ---
 
-## Horizon
+#### Horizon
 
 ---
 
-## Economic MPC vs MPC
+#### Economic MPC vs MPC
 
 ---
 
-## Exercises
+#### Exercises
 [See notations](#notations)
 
 ---
 
-# Additional Resources
 
----
-
-## Credits:
+## 6.3.4 Credits
 <!-- List all the sources that you used to create the page   -->
 
 - Saverio Bolognani's lectures: **Computational Control** at ETH Zurich in spring 2024
@@ -1909,6 +1932,12 @@ $$
 - **Model Predictive Control: Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
 - **Model Predictive Control: Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)
 - **An Introduction to Optimization** Edwin K.P Chong, Stanislaw H. Zak, 2th Edition, available for free [here](https://www.gipsa-lab.grenoble-inp.fr/~ahmad.hably/Documents/IntroOptimization.pdf)
+
+---
+
+## 6.3.5 Additional Resources  - In Progress
+
+---
 
 <!-- ### Additional Resources: -->
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->

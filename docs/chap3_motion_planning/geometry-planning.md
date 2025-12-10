@@ -7,23 +7,48 @@ math: mathjax
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
-# Diffeomorphism {#start}
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color:rgb(0, 0, 0); /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  #back-to-top:hover {
+    opacity: 1;
+  }
+</style>
+
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
+# 3.2 Diffeomorphism {#start}
 
 - Table of Contents
 {:toc}
 
 
 
-### Books
+## 3.2.1 Books
 
 - [Springer Handbook of Robotics ](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_9) (Chapter 9. Force Control)
 
 
-## Prerequisites
+## 3.2.2 Prerequisites
 * Basic knowledge of robotics kinematics and dynamics
 * Control theory..............
 
-## Motivation
+## 3.2.3 General Motivation
 ![Overview](https://youtu.be/mGuDXlZEoSc)
 
 In **motion control** problems, the robot's objective is to follow a predefined trajectory as accurately as possible — regardless of contact with the environment. This is suitable for free-space movements where external forces are negligible or undesirable. While the premise of motion control might be basic in nature, it is a fundamental part of any higher-level robot manipulation. 
@@ -126,7 +151,9 @@ const correctMapping = {
 
 </details>
 
-## Chapter 1 : Interaction control overview
+## 3.2.4 Course Content
+
+### 3.2.4.1 : Interaction control overview
 While motion control focuses on following a desired trajectory regardless of external contact, force control aims to regulate how much force is exchanged between the robot and its environment. This raises a fundamental question: how does the robot respond to forces during contact? There are two broad paradigms for addressing this:
 
 * **Passive interaction control**: The trajectory of the end-effector is driven by the interaction forces due to the inherent nature or compliance of the robot (i.e., internally, such as joints, servo, joints, etc.). In passive control, the end-effector’s motion naturally deflects under force, as in soft robots. But, this lacks flexibility (every specific task might require a special end-effector to be designed and it can also have position and orientation deviations)​ and high contact forces could occur because there is no force measurement. 
@@ -137,7 +164,7 @@ While motion control focuses on following a desired trajectory regardless of ext
     
     ![Illustrative video](https://www.youtube.com/watch?v=7Nvlki1xo-c)	
 
-### Mathematical foundation
+#### Mathematical foundation
 ![Kevin Lynch](https://youtu.be/M1U629sREiY?si=De33y2G69TbPp6_q)
 
 At a quasi-static level (i.e., for slow or stationary motions), the joint torques $\tau$ are related to the end-effector contact force $F_{\text{tip}}$ by the following fundamental equation:
@@ -257,10 +284,10 @@ const correctMapping2 = {
 
 </details>
 
-## Chapter 2: Active interaction control
+### 3.2.4.2: Active interaction control
 Active interaction control strategies can be grouped into two categories: those performing indirect force control and those performing direct force control. The main difference is that indirect methods regulate interaction forces through motion behaviors — without explicitly closing a force feedback loop — whereas direct force control explicitly commands and tracks contact forces through sensor-based feedback.
 
-### Chapter 2.1 : Indirect Force Control
+#### 3.2.4.2.1 : Indirect Force Control
 
 Indirect force control strategies achieve force regulation by modulating the robot’s motion response rather than directly commanding forces. The robot behaves like a virtual mechanical system (typically a mass-spring-damper) so that when it is pushed, it responds with motion that generates restoring forces, just like a compliant structure would. 
 
@@ -286,7 +313,7 @@ If you're unfamiliar with what it means for a system to be passive, this short v
 ![This short video (7 min)](https://youtu.be/Vz5c3il0Dys)
 > This short video by Polytech Montréal gives a concise and intuitive introduction to these concepts. It explores the dynamic relationship between force and motion, and shows how this relationship — known as **mechanical impedance** — underlies both impedance and admittance control. If you're unfamiliar with these terms, watch this first — it sets the stage for what follows.
 
-#### Chapter 2.1.1: Mechanical Impedance - the shared foundation
+##### Mechanical Impedance - the shared foundation
 At the core of both impedance and admittance control lies the idea of **mechanical impedance**. It describes how a physical system resists motion when subjected to a force. Unlike static stiffness (which links force to displacement), impedance captures **dynamic behavior** — how velocity (or acceleration) influences the force a system generates or absorbs.
 
 Mathematically, the impedance $Z$ relates the force $F$ to the velocity $v$ of a system $F = Z v$
@@ -304,7 +331,7 @@ From this shared foundation, two distinct approaches emerge:
 - In **impedance control**, we specify the mechanical impedance and **generate force** in response to motion.
 - In **admittance control**, we specify the inverse behavior — the mechanical admittance — and **generate motion** in response to force.
 
-#### **Chapter 2.1.2 : Impedance control**
+##### **Impedance control**
 
 Impedance control is a strategy where the robot is made to replicate the behaviour of a mechanical system, usually a combination of **mass, spring, and damper**, designed to resist motion when subjected to a force. We do not directly command the contact force, but rather define how the robot should respond when force is applied to it by dynamically adjusting the virtual inertia, damping and stiffness of the robot
 
@@ -432,7 +459,7 @@ Thus, impedance is not constant — it changes with the rate of motion, which is
 
 
 
-#### **Chapter 2.1.3: Admittance control**
+##### **Admittance control**
 It is conceptually the dual of impedance. 
 In impedance control, we define how much force the robot should apply in response to a deviation in motion. In admittance control, it’s the opposite: we measure an external force and compute how much the robot should move to accommodate that force.
 Rather than generating force commands from motion errors, admittance control takes a force input and outputs a position or velocity adjustment. It creates a compliant behavior by letting the robot “yield” in a controlled way. Practically, the robot is typically position-controlled at its core, but an outer loop takes the force error and computes a small shift in the commanded position (or trajectory) to relieve or accommodate that force​. For instance, if a force of 10N is pushing the robot off its path, an admittance controller might say “yield by 1 mm” (depending on a compliance setting) – effectively, the robot moves slightly until the force reduces. 
@@ -532,7 +559,7 @@ In other words, stiffness control tries to cancel out the gravity and any other 
 [2.1 Programming Exercise : Impedance controller](https://learningadaptivereactiverobotcontrol.github.io/book-website.io//documentation/L9-Impedance.html)
 </details>
 
-### Chapter 2.2: Direct Force Control
+#### 3.2.4.2.2: Direct Force Control
 
 Direct force control uses explicit feedback from the interaction with the environment to regulate the forces applied by the robot. Based on this contact force, the controller adjusts the robot’s joint torques or positions to achieve a desired force profile necessary to complete a task.
 
@@ -561,7 +588,7 @@ Here’s how it behaves:
 
 This is a basic example. In more complex tasks, we often need to control motion along some axes and force along others, depending on environmental constraints. This leads naturally to **hybrid force/motion control**, which generates position commands in unconstrained directions and force commands in constrained ones.
 
-#### **Chapter 2.2.1: Hybrid Force/Motion Control**
+##### **Hybrid Force/Motion Control**
 ![Intuition](https://www.youtube.com/watch?v=BXu9C3joUSk)	
 
 The aim of hybrid force/motion control is to split up simultaneous control of both end-effector motion and contact forces into two separate decoupled but coordinated subproblems
@@ -804,7 +831,7 @@ his lecture dives deeper into the theoretical formulation behind hybrid force/mo
 </details>
 
 
-# Programming
+## 3.2.4.3 Programming
 Now that you’ve explored the theory behind interaction control, it’s time to bring it to life in simulation. You’ll get hands-on experience applying active force control to a simplified robot model — and see how your controller responds to real-time contact dynamics.
 *(Please refer to the **Install Webots** section if you haven't installed it yet.)*
 
@@ -837,7 +864,7 @@ Follow the guidance in the controller's code. It already includes comments and `
 You can run the simulation directly in Webots to see how your controller performs.
 This exercise is a great opportunity to test real-time interaction with the environment — and to get a feel for how force control works in practice.
 
-# Summary
+## 3.2.4.4 Summary
 
 <html lang="en">
 <head>
@@ -1005,7 +1032,7 @@ This exercise is a great opportunity to test real-time interaction with the envi
 
 
 
-# Final Project
+## 3.2.4.5 Final Project
 [Complete project with hardware and software implementation in python](https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master)
 
 ### Want to learn more ? --> Free Online Courses
@@ -1017,6 +1044,10 @@ If you’re interested in a deeper, structured exploration of force control, hyb
 - [Lecture 13 - MIT 6.881 (Robotic Manipulation), Fall 2020 - Force Control (part 2)](https://www.youtube.com/watch?v=WX03NqnKVywl)
 
 
+
+## 3.2.5 Credits
+
+## 3.2.6 Ressources
 
 
 [Back to Top](#start)

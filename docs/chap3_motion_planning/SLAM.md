@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Simultaneous Localization and Mapping (SLAM) 
+# 3.4 Simultaneous Localization and Mapping (SLAM) 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 3.4.1 Prerequisites
 
 To get the most out of this Simultaneous Localization and Mapping (SLAM) module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 3.4.2 General Motivation
 
 
-## 3. Course Content
+## 3.4.3 Course Content
 
-### Section 3.0 : General Concepts
+### 3.4.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 3.4.4 Credits
 
-## Ressources
+## 3.4.5 Ressources
 
 
 

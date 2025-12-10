@@ -85,7 +85,32 @@ math: mathjax
 code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 </style>
 
-# Graph Theory
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color:rgb(0, 0, 0); /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  #back-to-top:hover {
+    opacity: 1;
+  }
+</style>
+
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
+# 4.1 Graph Theory
 - Table of Contents
 {:toc}
 
@@ -103,7 +128,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 ---
 
-## Prerequisites
+## 4.1.1 Prerequisites
 - **Basic Set Theory**  
   Sets, subsets, unions, intersections, Cartesian products, and relations.
 - **Data Structures**  
@@ -307,7 +332,9 @@ With these tools in hand, we can now analyze the complexity of the graph algorit
 
 ---
 
-## Chapter 1: Motivation
+
+## 4.1.2 General Motivation
+
 Before introducing formal definitions, it is useful to understand why graphs arise so naturally in robotics and algorithmic reasoning. Many real-world systems, from transportation to autonomous navigation, can be expressed as collections of states and possible transitions. Graph theory provides the mathematical language for studying these relationships and describing how information or motion can flow through a system.
 
 When a robot navigates an environment, its possible configurations and feasible transitions form exactly such a graph: each node represents a state, and each edge represents a valid move. Motion planning then becomes the problem of finding a path in this graph from an initial configuration to a goal while satisfying feasibility or optimality constraints.
@@ -349,13 +376,17 @@ These examples highlight how diverse systems can be described using the same gra
 
 ---
 
-# Chapter 2. Basic Definitions
+
+
+## 4.1.3 Course Content
+
+### 4.1.3.1 Basic Definitions
 
 To formalize the intuitions built from real-world examples, we now introduce the core definitions of graph theory. These definitions establish the vocabulary used for describing connectivity, relationships, and structure within a system, and they serve as the basis for later algorithmic analysis.
 
 ---
 
-## 2.1 Graphs
+#### Graphs
 
 A graph is one of the simplest and most powerful mathematical abstractions used to represent relationships between entities.  
 Formally, a graph is an ordered pair
@@ -377,7 +408,7 @@ In directed graphs, we often distinguish between the in-degree and out-degree, r
 
 <div class="assignment" markdown="1">
 
-### Exercise 1 — In-degree and Out-degree
+##### Exercise 1 — In-degree and Out-degree
 
 Consider the directed graph shown below:
 
@@ -415,7 +446,7 @@ out-degree = 2 (to A, D).
 
 ---
 
-## 2.2 Weighted Graphs
+#### Weighted Graphs
 
 Many problems require not only knowing whether two vertices are connected, but also how *costly* that connection is.  
 A weighted graph extends the definition of $G = (V, E)$ by associating a real-valued weight function
@@ -432,7 +463,7 @@ A path connecting two vertices may exist, but the one with minimal total weight 
 
 ---
 
-## 2.3 Paths and Connectivity
+#### Paths and Connectivity
 
 A path in a graph is a finite sequence of vertices
 
@@ -553,7 +584,8 @@ Connectivity plays a central role in determining whether traversal or communicat
 In summary, this chapter introduced the essential components of a graph, vertices, edges, weights, and paths, and showed how these elements encode the structure of a system. With these definitions established, we can now examine how graphs are represented inside a computer, an important consideration for the efficiency of search and planning algorithms.
 
 ---
-# Chapter 3: Graph Representations
+
+### 4.1.3.2 Graph Representations
 
 Once a graph is defined mathematically, the next question is how to store it efficiently in a computer. Different applications require different operations, fast lookups, memory-efficient storage, or quick neighbor traversal, and the chosen data structure strongly influences algorithmic performance. This chapter compares the three standard representations used in practice.
 
@@ -574,7 +606,7 @@ We will explore the three most common methods:
 
 ---
 
-## 3.1 Adjacency Matrix
+#### Adjacency Matrix
 
 An adjacency matrix represents a graph with $V$ vertices as a $V \times V$ matrix (a 2D array) of booleans or weights. For any two vertices $i$ and $j$, the entry $A[i, j]$ stores information about the edge $(i, j)$:
 
@@ -613,7 +645,7 @@ $$
 
 </div>
 
-### Analysis
+##### Analysis
 
 **Pros**
 
@@ -631,7 +663,7 @@ $$
 
 ---
 
-## 3.2 Adjacency List
+#### Adjacency List
 
 An adjacency list is the most common representation for sparse graphs. It consists of an array (or map) of $V$ lists. The list at index $i$ stores all neighbors of vertex $i$. For a weighted graph, each entry stores both the neighbor ID and the edge weight.
 
@@ -657,7 +689,7 @@ $$
 
 </div>
 
-### Analysis
+##### Analysis
 
 **Pros**
 
@@ -670,7 +702,7 @@ $$
 
 ---
 
-## 3.3 Edge List
+#### Edge List
 
 An edge list is the simplest of all representations.  
 It is a single list (or array) containing all edges in the graph.  
@@ -702,7 +734,7 @@ $$
 
 </div>
 
-### Analysis
+##### Analysis
 
 **Pros**
 
@@ -717,7 +749,7 @@ $$
 
 ---
 
-## 3.4 Summary and Comparison
+#### Summary and Comparison
 
 The best representation depends entirely on the graph’s density and the operations you need.
 
@@ -734,7 +766,7 @@ Choosing the right representation is a crucial design decision, as it determines
 
 ---
 
-### Summary Takeaway
+##### Summary Takeaway
 
 - Use **Adjacency Matrix** for **dense** graphs or frequent edge lookups.  
 - Use **Adjacency List** for **sparse** graphs and search algorithms (BFS, Dijkstra, A*).  
@@ -743,13 +775,13 @@ Choosing the right representation is a crucial design decision, as it determines
 ---
 <div class="assignment" markdown="1">
 
-### Exercise: Graph Representation in Real-World Scenarios
+##### Exercise: Graph Representation in Real-World Scenarios
 
 For each scenario, consider the nature of the graph (directed/undirected, weighted/unweighted), its density (E vs. V2), and the most frequent operation required by the system.
 
 ---
 
-## 1. The Global Flight Network ✈️
+**1. The Global Flight Network ✈️**
 
 Imagine building a system for a flight search engine (like Google Flights or Skyscanner).
 
@@ -790,7 +822,7 @@ Since shortest-path algorithms repeatedly need to find all neighbors of a node, 
 
 ---
 
-## 2. A Social Media "Friend" Graph 🫂
+**2. A Social Media "Friend" Graph 🫂**
 
 Imagine a system (like Facebook) that stores the connections between its users in a major city.
 
@@ -830,7 +862,7 @@ An adjacency list with each user's neighbors stored in a hash set gives O(1) exp
 
 ---
 
-## 3. A Chip Design Interconnect microchip 📐
+**3. A Chip Design Interconnect microchip 📐**
 
 Imagine modeling the metal wire connections (nets) on a microchip layout for routing algorithms.
 
@@ -874,14 +906,14 @@ Constant-time edge lookup is important, and matrix-based algorithms operate natu
 
 ---
 
-# Chapter 4. Traversal and Search
+### 4.1.3.3 Traversal and Search
 
 Graph traversal algorithms reveal the structure of a graph by visiting vertices according to specific rules. These methods form the backbone of motion planning, routing, and connectivity analysis. In this chapter, we examine several classical strategies, starting from uninformed exploration and progressing toward informed, cost-aware search.
 Once a graph is defined, we can explore it systematically using *search algorithms*. Traversal algorithms visit nodes according to specific rules, allowing us to enumerate vertices, discover components, or find optimal paths between nodes. Although many variants exist, two of the most fundamental search paradigms are breadth-first and depth-first exploration.
 
 ---
 
-## 2.1 Breadth-First Search (BFS)
+#### Breadth-First Search (BFS)
 We begin with the simplest form of systematic exploration, which visits nodes in increasing order of distance.
 Breadth-First Search explores a graph in layers, visiting all vertices at distance one from the starting node before proceeding to vertices at distance two, and so on. This systematic expansion guarantees that the first time a vertex is reached, it is reached via the shortest possible path in terms of edge count.  
 
@@ -928,7 +960,7 @@ The array `parent` records the predecessor of each vertex along the discovered p
 
 ---
 
-## 2.2 Depth-First Search (DFS)
+#### Depth-First Search (DFS)
 
 While BFS explores in expanding layers, Depth-First Search follows a single branch of the graph as far as possible before backtracking.  
 It uses a stack (either explicit or via recursion) to remember the path being followed.  
@@ -959,7 +991,7 @@ By changing the order in which neighbors are pushed onto the stack, DFS can yiel
 
 ---
 
-## 2.3 Shortest Paths in Weighted Graphs
+#### Shortest Paths in Weighted Graphs
 
 In graphs where edges carry positive weights, we are often interested in the shortest path between two vertices, that is, the path with the minimal total cost.  
 For a path $P = (v_0, v_1, \ldots, v_k)$, its cost is given by
@@ -1004,7 +1036,7 @@ The two most classical algorithms for finding shortest paths are *Dijkstra’s a
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/python/python.js"></script>
 
 
-## Coding Exercise 1: DFS Traversal and Tree Construction
+#### Coding Exercise 1: DFS Traversal and Tree Construction
 
 In this exercise, you will implement an iterative Depth-First Search (DFS) on a fixed undirected graph:
 
@@ -1131,7 +1163,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 ---
 
-### Dijkstra’s Algorithm (1959) [<a href="#ref1">1</a>]
+##### Dijkstra’s Algorithm (1959) [<a href="#ref1">1</a>]
 BFS and DFS operate under the assumption that all edges have equal cost or that costs are irrelevant. In many real systems, maps, robot motion, energy usage, transitions have different weights. Dijkstra’s algorithm extends the ideas of BFS to handle weighted graphs optimally.
 
 Dijkstra’s algorithm generalizes BFS to weighted graphs by always expanding the vertex with the lowest cumulative cost from the start.  
@@ -1176,7 +1208,7 @@ For dense graphs, where $E$ grows quadratically with $V$, the complexity approac
 
 ---
 
-### A-Star (A*) Search (1968) [<a href="#ref2">2</a>]
+##### A-Star (A*) Search (1968) [<a href="#ref2">2</a>]
 
 While Dijkstra’s algorithm finds optimal paths in weighted graphs, it does so without any knowledge of the goal’s location. In many applications, we can estimate how promising a particular direction might be. A* search incorporates this information through heuristics, guiding the algorithm toward the goal more efficiently.
 
@@ -1235,7 +1267,7 @@ Together, BFS, DFS, Dijkstra, and A\* form the foundation of graph search theory
 ---
 <div class="assignment" markdown="1">
 
-### Exercise 2: Tracing Dijkstra's Algorithm
+##### Exercise 2: Tracing Dijkstra's Algorithm
 
 Consider the following weighted graph, with start node A.
 
@@ -1291,7 +1323,8 @@ Extraction Order: A, B, C, D, E
 
 
 <div class="assignment" markdown="1">
-### Exercise 3: A* vs. Dijkstra
+
+##### Exercise 3: A* vs. Dijkstra
 
 Now, use the same graph from the previous exercise. We want to find a path from A to E. We are given the following admissible heuristic values $h(v)$:
 
@@ -1342,7 +1375,7 @@ Priority Queue (OPEN): `[ (A, f=5) ]` (g=0, h=5)
 
 ---
 
-### Traversal Cheat Sheet
+##### Traversal Cheat Sheet
 
 The following table summarizes the core properties of the traversal algorithms introduced so far.
 
@@ -1367,14 +1400,16 @@ Together, BFS, DFS, Dijkstra, and A* illustrate a progression from uninformed to
 
 ---
 
-## References
+## 4.1.4 Credits:
+
+This course page was created by **Hanka Goralija, EPFL** under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**.
+
+## 4.1.5  References
 
 1.  <a id="ref1"></a>Dijkstra, E. W. (1959). *A note on two problems in connexion with graphs.* Numerische Mathematik, 1(1), 269–271.
 2.  <a id="ref2"></a>Hart, P. E., Nilsson, N. J., & Raphael, B. (1968). *A Formal Basis for the Heuristic Determination of Minimum Cost Paths.* IEEE Transactions on Systems Science and Cybernetics, 4(2), 100–107.
 3. <a id="ref3"></a>Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2022). *Introduction to Algorithms* (4th ed.). MIT Press.
 
 ---
-
-### Credits:
-
-This course page was created by **Hanka Goralija, EPFL** under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**. 
+ 
+[Back to Top](#start)

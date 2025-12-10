@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Operational Space and Null Space Control 
+# 7.1 Operational Space and Null Space Control 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 7.1.1 Prerequisites
 
 To get the most out of this Operational Space and Null Space Control module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 7.1.2 General Motivation
 
 
-## 3. Course Content
+## 7.1.3 Course Content
 
-### Section 3.0 : General Concepts
+### 7.1.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 7.1.4 Credits
 
-## Ressources
+## 7.1.5 Ressources
 
 
 

@@ -7,8 +7,6 @@ nav_order: 7
 author: Julian Ruiz Rodriguez (EPFL)
 ---
 
-<h1 style="font-size: 3em; text-align: center;">Nonlinear Control</h1>
-
 - Table of Contents
 {:toc}
 
@@ -276,6 +274,31 @@ author: Julian Ruiz Rodriguez (EPFL)
 }
 </style>
 
+<style>
+  #back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color:rgb(0, 0, 0); /* Green background */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+
+  #back-to-top:hover {
+    opacity: 1;
+  }
+</style>
+
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
 <script>
 function showTab(idx, windowId) {
   var windowElem = document.getElementById(windowId);
@@ -322,7 +345,10 @@ function dropBank(ev) {
 }
 </script>
 
-# Prerequisites
+
+# 6.2 System Identification 
+
+## 6.2.1 Prerequisites
 <!-- List courses required for this, including all course of Chapter 1 coming prior to this one, hence close-loop control, MPC, etc.  -->
 * Linear Algebra
 * Differential Equations
@@ -333,7 +359,7 @@ function dropBank(ev) {
   - Controllability/observability
 
 ---
-# Motivation
+## 6.2.2 General Motivation
 
 The study of **nonlinear control** focuses on the analysis and design of control systems that exhibit nonlinear behavior, that is, systems in which one or more components do not obey the principle of superposition. In such systems, the relationship between input and output is not simply proportional, and as a result, linear control theory no longer provides accurate predictions or guarantees of stability.
 
@@ -355,15 +381,16 @@ Nonlinear control is, therefore, an essential field within modern control theory
 By embracing the nonlinear nature of these systems, engineers and researchers can design controllers that are more **accurate, robust, and efficient**, ultimately extending the reach of control theory to a much broader class of real-world problems.
 
 ---
+## 6.2.3 Course Content
 
-# Chapter 1: System Definitions
+### 6.2.3.1: System Definitions
 
 Before diving into nonlinear control, it is essential to establish a clear understanding of the basic notions of **system behavior**, particularly the distinction between **linear** and **nonlinear** systems.  
 This chapter introduces the fundamental definitions and mathematical principles that form the foundation of system analysis.
 
 ---
 
-## 1.1: Superposition Principle
+#### Superposition Principle
 
 A **linear system** is one in which the relationship between the input signal $u(t)$ and the output signal $y(t)$ satisfies the **principle of superposition**. This property implies that the response to a combination of inputs is equal to the combination of the corresponding individual responses.
 
@@ -395,7 +422,7 @@ Such systems cannot be analyzed using the tools of linear system theory and form
 
 ---
 
-## 1.2: Nonlinearities
+#### Nonlinearities
 
 Nonlinearities can be classified in two categories, *inherent (natural)* or *intentional (artificial)*.
 
@@ -405,7 +432,7 @@ Nonlinearities can also be classified mathematically, as **continuous** or **dis
 
 ---
 
-## 1.3: Non-Symmetrical Unit Response
+#### Non-Symmetrical Unit Response
 
 To better illustrate the fundamental difference between linear and nonlinear systems, let us compare their responses to simple step inputs.
 
@@ -436,7 +463,7 @@ This simple comparison demonstrates how nonlinearity can lead to qualitative dif
 
 ---
 
-## 1.4: Multiple Equilibrium Points
+#### Multiple Equilibrium Points
 
 Nonlinear systems can exhibit **multiple equilibrium points**, which are states where the system remains constant over time. This is in contrast to typical linear systems, which usually have a single equilibrium point. A classical example is a system with a **cubic nonlinearity**:
 
@@ -464,7 +491,7 @@ From the simulations, we observe that the system has two equilibrium points at $
 
 ---
 
-## 1.5: Chaos
+#### Chaos
 
 In a linear system, a small change in initial conditions results in a proportionally small change in the system response. Nonlinear systems, however, can exhibit **chaos**, where tiny differences in initial conditions lead to drastically different trajectories.
 
@@ -501,7 +528,7 @@ The following Veritasium video provides an intuitive introduction to **chaos and
 
 ---
 
-## Exercises
+#### Exercises
 
 **1.1: System analysis**
 
@@ -528,7 +555,7 @@ $$
 
 ---
 
-# Chapter 2: Phase Plane Analysis
+### 6.2.3.2: Phase Plane Analysis
 
 Phase plane analysis is a graphical method used to study the behavior of nonlinear dynamical systems. It involves plotting the system's state variables against each other in a two-dimensional plane, known as the phase plane. This technique provides insights into the system's stability, equilibrium points, and overall dynamics.
 
@@ -545,7 +572,7 @@ In this chapter, we will study several methods for analyzing nonlinear systems i
 
 ---
 
-## 2.1: Concepts of Phase Plane Analysis
+#### Concepts of Phase Plane Analysis
 
 The phase plane method is concerned with the study of two-dimensional autonomous systems of the form:
 
@@ -602,7 +629,7 @@ One can also use numerical methods to plot the phase plane trajectories for vari
 
 ---
 
-## 2.2: The Isoclines Method
+#### The Isoclines Method
 
 The vector field analysis is based on a arbitrary grid of points in the phase plane. At each point $(x_1, x_2)$, a vector is drawn with components $(\dot{x}_1, \dot{x}_2)$. This vector represents the direction and magnitude of the system's state change at that point. The idea behind the isoclines method is to find if there are several points in the phase plane, along which the vector calculation is simplified. For example, we can look for points where the vector has a constant direction or magnitude. By varying the constant value, we can draw back the vector field in the phase plane. Hence, from our system of differential equations $\dot{x}_1 = f_1(x_1, x_2)$ and $\dot{x}_2 = f_2(x_1, x_2)$, eliminating the time dependency, we can write:
 $$
@@ -628,7 +655,7 @@ With $\alpha=1$, we get the isocline $x_2 = -x_1$, which is represented by the b
 
 ---
 
-## 2.3: Equilibrium Points and Stability
+#### Equilibrium Points and Stability
 
 We can represent the second order system as follows:
 
@@ -662,7 +689,7 @@ Where $A$ is the system matrix. The trajectories of this system in the phase pla
 
 ---
 
-## 2.4: Limit Cycles
+#### Limit Cycles
 
 A limit cycle is a closed trajectory in the phase plane that represents a periodic solution of a dynamical system. Limit cycles are important in the study of nonlinear systems because they can indicate the presence of stable or unstable oscillatory behavior. To be considered a limit cycle, a trajectory must be isolated, meaning that there are no other closed trajectories in its immediate vicinity. Taking again the mass-spring system as an example, we can observe that the trajectories in the phase plane are closed curves, however, they are not isolated since there are infinitely many closed trajectories corresponding to different initial conditions. Therefore, the mass-spring system does not exhibit limit cycles.
 
@@ -691,7 +718,7 @@ Limit cycles can be classified into three types based on their stability propert
 
 ---
 
-## 2.5: Index 
+#### Index 
 
 The index is a topological properties of systems in the phase plane. It allows to determine the necessary existence of limit cycles in a given region of the phase plane and gives information on the stability of an enclosed fixed point.
 
@@ -753,7 +780,7 @@ $$
 
 ---
 
-## Exercises
+#### Exercises
 
 <div class="formula-window">
   <em>Disclaimer: Solutions are provided for self-assessment purposes only. It is recommended to attempt solving the exercises independently before consulting the solutions.</em>
@@ -1213,7 +1240,7 @@ Consider the following nonlinear system:
 
 ---
 
-# Chapter 3: First Harmonics Method
+### 6.2.3.3 First Harmonics Method
 
 In this chapter, we will explore the First Harmonics Method, understanding its principles and applications in analyzing nonlinear systems. This method can be applied on a restricted class of nonlinear systems, but nonetheless frequently encountered in practice. The importance of this class of systems lies in the imperfections of real-world actuators, which often exhibit nonlinear behaviors such as saturation, dead zones, and hysteresis. These nonlinearities do not disappear when the system is linearized around an equilibrium point, making it essential to consider them in control design and analysis
 
@@ -1223,7 +1250,7 @@ In this part, we will only consider static nonlinearities, meaning that the nonl
 
 ---
 
-## 3.1: Static Nonlinearity
+#### Static Nonlinearity
 
 We consider a SISO nonlinear system represented in the block diagram below ([Figure 3.1](#fig_3.1_block_diagram)), where a nonlinearity $N.L.$ is placed in series with a linear time-invariant (LTI) system $G(s)$. We call $u$ the input of the nonlinearity, $y$ its output, which is also the input pf the LTI system $G(s)$, and $z$ its the output.
 
@@ -1275,7 +1302,7 @@ The goal is to determine a complex gain $N$ that approximates the behavior of th
 
 ---
 
-## 3.2: First Harmonic
+#### First Harmonic
 
 As previously mentioned, it is not optimal to determine the equivalent gain $N$ using simulations and a trial-and-error approach, especially when $N$ depends on the amplitude $A$ and the angular frequency $\omega$. To address this issue, we can formulate a method to compute $N$ analytically.
 
@@ -1376,7 +1403,7 @@ for $\gamma=\arcsin(a/A)$, you can find bellow the graph of $N$ for the coeffici
 
 ---
 
-## 3.3: Types of Nonlinearities
+#### Types of Nonlinearities
 
 In this section, we introduce several common types of nonlinearities found in control systems, including the **Saturation**, **Dead Zone**, **Relay**, and **Hysteresis** nonlinearities. We begin with the **Saturation**, as many of the others can be derived from it as a fundamental building block.
 
@@ -1570,7 +1597,7 @@ b_1 &= \dfrac{Ak}{\pi}\left[\dfrac{\pi}{2} - \arcsin\!\left(\dfrac{2\delta}{A} -
 
 ---
 
-## 3.4: Closed-loop Stability and Limit Cycles
+#### Closed-loop Stability and Limit Cycles
 
 We propose now to analyze the first harmonic method in a closed-loop configuration. We consider the following block diagram ([Figure 3.7](#fig_3.7_closed_loop_block_diagram)), where a static nonlinearity $N.L.$ is placed in the feedback loop of an LTI system $G(s)$.
 
@@ -1674,7 +1701,7 @@ When there is a constant gain $K$, the theorem can be applied directly by lookin
 
 ---
 
-## Exercises
+#### Exercises
 
 **3.1: Demonstration of the First Harmonic Method**
 
@@ -1735,7 +1762,7 @@ You can proceed in the following way:
 
 ---
 
-# Chapter 4: Lyapunov Stability
+### 3.2.3.4: Lyapunov Stability
 
 In control theory and dynamical systems, understanding whether a system remains stable under small disturbances is of fundamental importance. The concept of *stability* defines how a system behaves when perturbed — whether it returns to its equilibrium, deviates further, or oscillates around it. One of the most powerful and general approaches to analyze stability without explicitly solving the system’s differential equations is the **Lyapunov method**.
 
@@ -1749,7 +1776,7 @@ Lyapunov’s methods come in two main forms:
 
 ---
 
-## 4.1: Equilibrium Points and Linear Systems
+#### Equilibrium Points and Linear Systems
 
 Consider the following nonlinear dynamical system:
 <div>
@@ -1829,7 +1856,7 @@ In that vectorial space, the distance between two points $x_1$ and $x_2$ is defi
 
 ---
 
-## 4.2: Concept of Stability
+#### Concept of Stability
 
 From the beginning of this lecture, we used the term *stability* in a general sense, as a kind of well-behavedness of the system around a desired operating point. However, as nonlinear systems can exhibit a wide range of complex behaviors, this simple concept of stability needs to be refined and formalized, such as the concept of asymptotic stability, exponential stability or global stability (which will actually be developed in section [4.4](#44-global-and-local-stability-analysis)). In this section, we will formally define these different notions of stability for autonomous systems and explain their practical meanings.
 
@@ -1925,7 +1952,7 @@ To address these limitations, we introduce the concept of **exponential stabilit
 
 ---
 
-## 4.3: Lyapunov's Direct Method
+#### Lyapunov's Direct Method
 
 The **Lyapunov direct method** is a fundamental tool for studying the stability of equilibrium points in nonlinear dynamical systems without requiring explicit solutions of the differential equations. The underlying idea is inspired by the analysis of **energy** in mechanical and electrical systems. In those settings, one typically observes that if the total energy of a system **decreases over time**, the system naturally evolves toward a resting state—an equilibrium.
 
@@ -2065,11 +2092,11 @@ We can now state the Lyapunov's direct method theorem, which provides sufficient
 
 ---
 
-## 4.4: Local and Global Stability Analysis
+#### Local and Global Stability Analysis
 
 In the previous sections, we discussed various notions of stability for nonlinear systems, including Lyapunov stability, asymptotic stability, and exponential stability. However, these definitions often depend on the region of the state space being considered. This leads us to distinguish between **local stability** and **global stability**.
 
-### Local Stability
+##### Local Stability
 
 <div class="thm-window">
   <div class="thm-title" id="theorem_4.2">Theorem 4.2 - Local Stability</div>
@@ -2116,7 +2143,7 @@ In the previous sections, we discussed various notions of stability for nonlinea
   <div style="text-align: right; margin-top: 0.5em;">□</div>
 </div>
 
-### Global Stability
+##### Global Stability
 
 In order to assert *global stability* of the system, one might naturally think of extending the local stability theorem by requiring the ball $\mathcal{B}_{R_0}$ to cover the entire state space $\mathbb{R}^n$. However, this approach is not sufficient to guarantee global stability. The key reason is that even if a Lyapunov function satisfies the conditions of local stability everywhere in the state space, it does not necessarily imply that all trajectories will converge to the equilibrium point from any initial condition. An additional requirement is needed to ensure that the Lyapunov function grows unbounded as the state moves away from the equilibrium point. This ensures that trajectories starting far from the equilibrium will still be drawn back toward it. We formalize this idea in the following theorem:
 
@@ -2165,7 +2192,7 @@ In order to assert *global stability* of the system, one might naturally think o
 
 ---
 
-## 4.5: LaSalle's Invariance Principle
+#### LaSalle's Invariance Principle
 
 It is possible to relax the condition on the time derivative of the Lyapunov function $\dot{V}(x)$ in order to prove asymptotic stability. Indeed, in this section, we will show which supplementary conditions can be added to Lyapunov's direct method in order to conclude on asymptotic stability, even when $\dot{V}(x) \leq 0$. Moreover, this approach will also relax the conditions on the positive definiteness of the Lyapunov function $V(x)$. Doing so will give us a criterion to prove asymptotic convergence, equally for equilibrium points and for limit cicles, however this theorem will not be a proof of Lyapunov stability anymore.
 
@@ -2317,11 +2344,11 @@ Finally, even though LaSalle’s invariance principle allows us to conclude loca
 
 ---
 
-## 4.6: Lyapunov Functions Construction
+#### Lyapunov Functions Construction
 
 Until now, in order to work with a Lyapunov function, we had to propose a candidate function $V(x)$ and then proceed through trial and error or construction and correction to verify if it satisfied the conditions to be clasified as a lyapunov function. The issue with this approach is that one needs to have some intuition on the system dynamics in order to propose a relevant Lyapunov function candidate. However, there exists systematic methods to construct Lyapunov candidats for specific classes of systems. In this section, we will focus on one of those methods, the first one help us know if a particular Lyapunov candidat is indeed leading to a Lyapunov function. 
 
-### Krasovskii's Method
+##### Krasovskii's Method
 
 <div class="thm-window">
   <div class="thm-title" id="theorem_4.5">Theorem 4.5 - Krasovskii's Method</div>
@@ -2375,7 +2402,7 @@ Thus a generalization of this method exists and is as follows:
   <div style="text-align: right; margin-top: 0.5em;">□</div>
 </div>
 
-### Variable Gradient Method
+##### Variable Gradient Method
 
 If we know the Lyapunove function $V(x)$ and its gradient $\nabla V(x)$, we can use the variable gradient method as a formal approach to constructing Lyapunov functions. For low order systems, this method sometimes lead to the succesful construction of a Lyapunov function. 
 
@@ -2445,7 +2472,7 @@ Which is positive semi definite, thus the Lyapunov function $V(x) = \frac{1}{2} 
 
 ---
 
-## Exercises
+#### Exercises
 
 **Stability and Lyapunov equation**
 
@@ -2667,11 +2694,11 @@ where $p = [p_{11}, p_{12}, p_{12}, p_{22}]^\top$ and $q = [1, 0, 0, 1]^\top$.</
 
 ---
 
-# Chapter ?: Frobenius Theorem
+### 3.2.3.5: Frobenius Theorem
 
 ---
 
-# Chapter ?: Control Design Methods
+### 3.2.3.6: Control Design Methods
 
 ---
 
@@ -2697,14 +2724,14 @@ Then move to
 It would be good to also have a section on nonlinear MPC (but could be moved to MPC)
 -->
 
-## Additional Resources
-https://hankyang.seas.harvard.edu/OptimalControlEstimation/stability.html
-
-### Credits:
+## 3.2.4 Credits:
 - Slotine's Nonlinear Control Book and Lectures: https://web.mit.edu/nsl/www/videos/lectures.html
 - Philippe Müllhaupt's lecture: **Nonlinear Control Course (ME-523)** at EPFL in Autumn 2024
 - **Introduction à l'analyse et à la commande des systems non linéaires** textbook by Philippe Müllhaupt, first edition (french)
 
-### Additional Resources:
-<!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->
+## 3.2.5 Resources
+https://hankyang.seas.harvard.edu/OptimalControlEstimation/stability.html
 
+---
+
+[Back to Top](#start)

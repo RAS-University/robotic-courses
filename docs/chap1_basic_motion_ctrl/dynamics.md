@@ -2769,3 +2769,5 @@ This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**,
   Dynamics exercises start on **p. 55**; solutions on **p. 62**.  
   [https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf](https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf)
 
+
+[Back to Top](#start)

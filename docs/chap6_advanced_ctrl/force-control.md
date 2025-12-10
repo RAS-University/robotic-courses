@@ -6,7 +6,7 @@ math: mathjax
 ---
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
-#Force Control
+
 <a name="top"></a>
 
 <style>
@@ -35,11 +35,12 @@ math: mathjax
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
+# 6.4 Force Control
 
 - Table of Contents
 {:toc}
 
-# Prerequisites
+## 6.4.1 Prerequisites
 * Linear Algebra and multivariable calculus
 * Classical mechanics
 * Control theory:
@@ -50,7 +51,7 @@ math: mathjax
   - Joint-space vs. task-space 
   - Kinematics and dynamics
 
-# Motivation
+## 6.4.2 General Motivation
 ![Overview](https://youtu.be/mGuDXlZEoSc)
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 11.1: Control System Overview. YouTube video, 16 March. Available at: https://www.youtube.com/watch?v=mGuDXlZEoSc*</sub>
 >
@@ -160,7 +161,9 @@ const correctMapping = {
 
 </details>
 
-# Chapter 1 : Interaction control overview
+## 6.4.3 Course Content
+
+### 6.4.3.1 : Interaction control overview
 While motion control focuses on following a desired trajectory regardless of external contact, force control aims to regulate how much force is exchanged between the robot and its environment. This raises a fundamental question: how does the robot respond to forces during contact? There are two broad paradigms for addressing this:
 
 * **Passive interaction control:** The trajectory of the end-effector is driven by the interaction forces due to the inherent nature or compliance of the robot (i.e., internally, such as joints, servo, joints, etc.). In passive control, the end-effector’s motion naturally deflects under force, as in soft robots. But, this lacks flexibility (every specific task might require a special end-effector to be designed and it can also have position and orientation deviations)​ and high contact forces could occur because there is no force measurement. 
@@ -271,7 +274,7 @@ const correctMapping2 = {
 
 </details>
 
-### Mathematical Foundation
+#### Mathematical Foundation
 *Note: The following builds upon the equation derived in the Dynamics chapter of this course.* 
 
 $$
@@ -442,10 +445,10 @@ $$
 </details>
 
 
-# Chapter 2: Active interaction control
+### 6.4.3.2: Active interaction control
 Active interaction control strategies can be grouped into two categories: those performing indirect force control and those performing direct force control. The main difference is that indirect methods regulate interaction forces through motion behaviors without explicitly closing a force feedback loop whereas direct force control explicitly commands and tracks contact forces through sensor-based feedback.
 
-## Chapter 2.1 : Indirect Force Control
+#### Indirect Force Control
 
 Indirect force control strategies achieve force regulation by modulating the robot’s motion response rather than directly commanding forces. The robot behaves like a virtual mechanical system (typically a mass-spring-damper) so that when it is pushed, it responds with motion that generates restoring forces, just like a compliant structure would. 
 
@@ -486,7 +489,7 @@ If you're unfamiliar with what it means for a system to be passive, this short v
 >
 > *This short video by Polytech Montréal gives a concise and intuitive introduction to these concepts. It explores the dynamic relationship between force and motion, and shows how this relationship — known as **mechanical impedance** — underlies both impedance and admittance control. If you're unfamiliar with these terms, watch this first — it sets the stage for what follows.*
 
-### Chapter 2.1.1: Mechanical Impedance - the shared foundation
+##### Mechanical Impedance - the shared foundation
 At the core of both impedance and admittance control lies the idea of **mechanical impedance**. It describes how a physical system resists motion when subjected to a force. Unlike static stiffness (which links force to displacement), impedance captures **dynamic behavior**, i.e. how velocity (or acceleration) influences the force a system generates or absorbs.
 
 Mathematically, **impedance** $\boldsymbol{Z}$ defines a dynamic relationship between the **force** $\boldsymbol{F}$ and the **velocity** $\boldsymbol{v}$:
@@ -511,7 +514,7 @@ From this shared foundation, two distinct approaches emerge:
 - In **impedance control**, we specify the mechanical impedance and **generate force** in response to motion.
 - In **admittance control**, we specify the inverse behavior — the mechanical admittance — and **generate motion** in response to force.
 
-### Chapter 2.1.2 : Impedance control
+##### Impedance control
 
 Impedance control is a strategy where the robot is made to replicate the behaviour of a mechanical system, usually a combination of **mass, spring, and damper**, designed to resist motion when subjected to a force. We do not directly command the contact force, but rather define how the robot should respond when force is applied to it by dynamically adjusting the virtual inertia, damping and stiffness of the robot
 
@@ -840,7 +843,7 @@ The impedance model described earlier defines how the robot should react to exte
 
 
 
-### Chapter 2.1.3: Admittance control
+##### Admittance control
 It is conceptually the dual of impedance. 
 In impedance control, we define how much force the robot should apply in response to a deviation in motion. In admittance control, it’s the opposite: we measure an external force and compute how much the robot should move to accommodate that force.
 Rather than generating force commands from motion errors, admittance control takes a force input and outputs a position or velocity adjustment. It creates a compliant behavior by letting the robot “yield” in a controlled way. Practically, the robot is typically position-controlled at its core, but an outer loop takes the force error and computes a small shift in the commanded position (or trajectory) to relieve or accommodate that force​. For instance, if a force of 10N is pushing the robot off its path, an admittance controller might say “yield by 1 mm” (depending on a compliance setting) – effectively, the robot moves slightly until the force reduces. 
@@ -1007,7 +1010,7 @@ Both impedance and admittance achieve force indirectly by shaping how the robot 
 </details>
 -->
 
-## Chapter 2.2: Direct Force Control
+#### Direct Force Control
 
 Direct force control uses explicit feedback from the interaction with the environment to regulate the forces applied by the robot. Based on this contact force, the controller adjusts the robot’s joint torques or positions to achieve a desired force profile necessary to complete a task.
 
@@ -1036,7 +1039,7 @@ Here’s how it behaves:
 
 This is a basic example. In more complex tasks, we often need to control motion along some axes and force along others, depending on environmental constraints. This leads naturally to **hybrid force/motion control**, which generates position commands in unconstrained directions and force commands in constrained ones.
 
-### Chapter 2.2.1: Hybrid Force/Motion Control
+##### Hybrid Force/Motion Control
 ![Intuition](https://www.youtube.com/watch?v=BXu9C3joUSk)	
 ><em><sub>Magic Marks (2021) Architecture of Hybrid Position/Force Control System | Industrial Automation & Robotics. YouTube video, 22 March. Available at: https://www.youtube.com/watch?v=BXu9C3joUSk</sub></em>
 >
@@ -1417,11 +1420,11 @@ direction which is nominally constrained in motion)
 </details>
 
 
-# Programming exercise
+### 6.4.3.3 Programming exercise
 Now that you’ve explored the theory behind interaction control, it’s time to bring it to life in simulation. You’ll get hands-on experience applying active force control to a simplified robot model — and see how your controller responds to real-time contact dynamics.
 *(Please refer to the **Install Webots** section if you haven't installed it yet.)*
 
-### Setup your environment
+#### Setup your environment
 Head to the following page:
 
 🔗 [Boom Monopod Simulation](https://courses.ideate.cmu.edu/16-375/f2024/text/simulations/boom-monopod.html)
@@ -1440,7 +1443,7 @@ The system consists of a 1-DOF leg mounted on a boom that moves only vertically.
 </figure>
 
 
-### Exercise 1: Baseline Passive Behavior
+#### Exercise 1: Baseline Passive Behavior
 
 **Goal:** Understand passive compliance in action.<br>
 **Task:** Examine the given code and answer the following questions:
@@ -1569,7 +1572,7 @@ self.leg_actuator.setForce(impedance_force)
 -->
 
 
-# Summary exercise
+### 6.4.3.4 Summary exercise
 
 <html lang="en">
 <head>
@@ -1733,7 +1736,7 @@ self.leg_actuator.setForce(impedance_force)
 </body>
 </html>
 
-# Do you want to implement a real project ?
+### 6.4.3.5 Do you want to implement a real project ?
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/Force/github.jpg" alt="https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master">
   <figcaption><em>Robotic Arm Hybrid Position Force Control<br><sub>Chen, S. (n.d.) 2-Linkages Robotic Arm Hybrid Position/Force Control. GitHub repository. Available at: https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control</sub></em></figcaption>
@@ -1741,7 +1744,7 @@ self.leg_actuator.setForce(impedance_force)
 
 For those interested in applying the concepts introduced in this course, the [2-Linkages Robotic Arm Hybrid Position/Force Control project](https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master) provides an example of a system simple enough to be designed and implemented independently. It illustrates how hybrid position/force control can be realized on a basic two-joint robotic arm, offering a concrete starting point for translating theoretical knowledge into hands-on experimentation.
 
-# Credits  
+## 6.4.4 Credits  
 
 This course was created by Salim Boussofara and Aude Billard, and funded by **IEEE RAS** and **EPFL**.  
 
@@ -1756,7 +1759,9 @@ It has also been inspired by:
 
 
 
-# Want to learn more ? --> Free Online Courses
+## 6.4.5 Ressources
+**Want to learn more ? --> Free Online Courses**
+
 If you’re interested in a deeper exploration of force control, hybrid control, and interaction dynamics, check out this excellent university-level material:
 -  [Chapter 2.12](https://ocw.mit.edu/courses/2-12-introduction-to-robotics-fall-2005/127c560e6052cb02ed3f7adc8d3c1512_chapter9.pdf#:~:text=accommodate%20the%20pressure%20with%20which,former%20is%20x%20and%20y) of MIT's Introduction to Robotics (2.12) —> A thorough breakdown of hybrid position/force control, compliance modeling, and the math behind force regulation during interaction
 

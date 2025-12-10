@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Robust Control 
+# 6.1 Robust Control 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 6.1.1 Prerequisites
 
 To get the most out of this Robust Control module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 6.1.2 General Motivation
 
 
-## 3. Course Content
+## 6.1.3 Course Content
 
-### Section 3.0 : General Concepts
+### 6.1.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 6.1.4 Credits
 
-## Ressources
+## 6.1.5 Ressources
 
 
 

@@ -74,28 +74,30 @@ If you are already a robotics expert—or an expert in another field simply curi
 - [3.1 Sampling-Based Planning](chap3_motion_planning/sampling-planning)
 - [3.2 Geometric Methods for Planning](chap3_motion_planning/geometry-planning)
 - [3.3 Dynamical Systems-Based Planning](chap3_motion_planning/DS-planning)
-- [3.4 Simultaneous Localization and Mapping (SLAM)](chap3_motion_planning/SLAM)
+- [3.4 Simultaneous Localization and Mapping (SLAM)](chap3_motion_planning/SLAM) - Under Construction (release Summer 2026)
+
+
 
 # Robotics Advanced Topics I# 
 **Chapter 4: Advanced Mathematical Foundations**
 - [4.1 Graph Theory](chap4_advanced_math/graph-theory)
-- [4.2 Group Theory](chap4_advanced_math/group-theory)
-- [4.3 Dual Quaternions](chap4_advanced_math/dual-quaternions)
+- [4.2 Group Theory](chap4_advanced_math/group-theory) - Under Construction (release Summer 2026)
+- [4.3 Dual Quaternions](chap4_advanced_math/dual-quaternions) - Under Construction (release Summer 2026)
 
 **Chapter 5: Advanced Kinematics**
 - [5.1 Singularity analysis](chap5_adv_kin/01_singularity_analysis) - In Progress / Needs unified structure 
-- [5.2 Cuspidal Robots](chap5_adv_kin/02_cuspidal)
-- [5.3 Path Planning with Analytical Guarantees](chap5_adv_kin/03_path_analytical) 
-- [5.4 Conformal Geometric Algebra](chap5_adv_kin/04_cga)
+- [5.2 Cuspidal Robots](chap5_adv_kin/02_cuspidal) - Under Construction (release Summer 2026)
+- [5.3 Path Planning with Analytical Guarantees](chap5_adv_kin/03_path_analytical)  - Under Construction (release Summer 2026)
+- [5.4 Conformal Geometric Algebra](chap5_adv_kin/04_cga) - Under Construction (release Summer 2026)
 
 **Chapter 6: Advanced Control**
--  [6.1 Robust Control](chap6_advanced_ctrl/robustControl)
--  [6.2 Nonlinear Control](chap6_advanced_ctrl/nonlinearcontrol)
+-  [6.1 Robust Control](chap6_advanced_ctrl/robustControl) - Under Construction (release Summer 2026)
+-  [6.2 Nonlinear Control](chap6_advanced_ctrl/nonlinearcontrol) - In Progress
 -  [6.3 Model Predictive Control](chap6_advanced_ctrl/MPC)
 -  [6.4 Force Control](chap6_advanced_ctrl/force-control)
   
 **Chapter 7: Manipulation** - Under Construction (release Summer 2026)
--  [7.1 Operational Space and Null Space Control](chap7_manipulation/Null-Space) 
+-  [7.1 Operational Space and Null Space Control](chap7_manipulation/Null-Space)
 -  [7.2 Grasping](chap7_manipulation/grasping) 
 -  [7.3 Dexterous Manipulation](chap7_manipulation/dexterousmanipulation) 
 

@@ -132,7 +132,7 @@ Here are 2 introduction videos to help understand the core problem.
 
 </details>
 
-### 2.2.3.1.1 : Geometric Vision {#section-1-vision}
+### 2.2.3.1 : Geometric Vision {#section-1-vision}
 
 Before we dive into algorithms and code, we first need a picture of how geometry, cameras, and images fit together.
 This section lays that foundation. We will
@@ -426,7 +426,7 @@ This is critical for many robotic tasks such as *navigation*, *obstacle avoidanc
 
 ---
 
-### 2.2.3.1.2 : Calibration
+### 2.2.3.2 : Calibration
 
 Camera **calibration** is the process by which we determine a camera’s **intrinsic** parameters (like focal length, principal point, and distortion coefficients) and **extrinsic** parameters (its position and orientation with respect to some world reference). A well-calibrated camera allows us to accurately map between real-world 3D coordinates and 2D image pixels, which is essential for tasks like navigation, 3D reconstruction, and robotic grasping.
 
@@ -700,7 +700,7 @@ onclick="
 
 </details>
 
-### 2.2.3.1.3 : Pose estimation or PNP
+### 2.2.3.3 : Pose estimation or PNP
 
 Once a camera is calibrated (i.e., we know its **intrinsic** parameters and can handle or correct for any lens distortion), we can tackle the problem of finding the camera’s **extrinsic** parameters (its rotation and translation) relative to known objects or landmarks in the world. This is often referred to as the **Pose Estimation** problem.
 
@@ -875,7 +875,7 @@ $$
 
 ---
 
-### 2.2.3.1.4 : Triangulation
+### 2.2.3.4 : Triangulation
 
 >**Goal of this section**
 >Show how a single 3-D point can be re-built from (at least) two calibrated images by intersecting the two sight-rays that go through the image measurements.
@@ -1060,7 +1060,7 @@ Build $A$, run SVD $\Rightarrow$ $X\approx(0,0,1.0)$ m in the left-camera frame.
 
 ---
 
-### 2.2.3.1.5 : Moving Stereo {#section-1-moving-stereo}
+### 2.2.3.5 : Moving Stereo {#section-1-moving-stereo}
 >**Goal of this section**
 >A **stereo rig** gives you two eyes on the world.  
 A **moving stereo rig** (left camera $c_\ell$, right camera $c_r$) straps those eyes to a robot that **moves**.  
@@ -1228,18 +1228,18 @@ A rigid stereo pair that <em>moves</em> gives you the best of two worlds:
 By tying them together through **absolute orientation**, a robot can track its 6-D pose and build a consis
 
 
-### 2.2.3.1.6 : Structure from Motion
+### 2.2.3.6 : Structure from Motion
 
 See corresponding chapter in the PDF [*Springer Handbook of Robotics*](#section-1-vision)
 
-## Programming
+### 2.2.3.7 Programming
 
 Let's move on to maybe the most exciting part: applying the Vision concepts you've learned in code and seeing your robot working right in front of you!
 
 *(Please refer to the **Install Webots** section if you haven't installed it yet.)*
 
 
-### Step 1: Setup your environment
+#### Step 1: Setup your environment
 
 1. 📁 [Download the `irb` folder]({{ site.baseurl }}/assets/downloads/kinematics/irb_2025.zip)
 2. Extract the downloaded `.zip` file.
@@ -1248,7 +1248,7 @@ Let's move on to maybe the most exciting part: applying the Vision concepts you'
 
 
 
-### Step 2: Let's start coding!
+#### Step 2: Let's start coding!
 
 Once successfully opened, your robot and its environment should appear, as illustrated in the screenshot below:
 
@@ -1261,9 +1261,9 @@ Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Bu
 
 **Good luck and have fun!**
 
-## Exercise
+### 2.2.3.8 Exercise
 
-### Exercise 1
+#### Exercise 1
 
 - Determine the Intrinsic Parameter Matrix (𝑲) of a digital camera with an image size 640×480 pixels and a horizontal field of view of 90°
 - Assume square pixels and the principal point as the center of the diagonals
@@ -1279,8 +1279,9 @@ Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Bu
 
 </details>
 
+## 2.2.4 Credits
 
-## Ressources
+## 2.2.5 Ressources
 
 ### Books
 
@@ -1307,7 +1308,7 @@ Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Bu
 - [Computer Vision](http://www.vision.rwth-aachen.de/course/11/) (RWTH Aachen)
 
 
-## Additional content
+## 2.2.6 Additional content
 
 ### Camera Notation Tutorial
 

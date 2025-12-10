@@ -92,7 +92,7 @@ author: Salim Boussofara (EPFL)
 
 A typical task might involve a robotic arm moving from point A to point B in an empty space, or a system maintaining a precise temperature. In such scenarios, the focus is entirely on the system's kinematic and dynamic accuracy in achieving its desired position, velocity, or other controlled variable.-->
 
-## 1.4.2 Motivation
+## 1.4.2 General Motivation
 ![Overview](https://www.youtube.com/watch?v=UR0hOmjaHp0)
 > <sub>*PID Control - A Brief Introduction. YouTube video. Available at: https://www.youtube.com/watch?v=UR0hOmjaHp0*</sub>  
 
@@ -2724,7 +2724,7 @@ This is your opportunity to take the concepts you’ve mastered and transform th
     });
 </script>
 
-## 1.5 Credits  
+## 1.4.4 Credits  
 
 This course was created by **Salim Boussofara, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
@@ -2738,4 +2738,7 @@ It makes use of selected material from:
 It has also been inspired by: 
 - A. Karimi, Feedback Control Systems, Lecture notes for Control Systems and Discrete-Time Control, EPFL, Fall 2022.
 
-## 1.6 Ressources 
+## 1.4.5 Ressources 
+
+
+[Back to Top](#start)

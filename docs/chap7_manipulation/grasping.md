@@ -3,10 +3,11 @@ title: Grasping
 parent: Courses
 layout: default
 math: mathjax
+nav_order: 2
 ---
+
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
-
 
 <a name="top"></a>
 
@@ -34,3 +35,40 @@ math: mathjax
 </style>
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
+
+# 7.2 Grasping
+
+<!-- bundle exec jekyll serve -->
+
+- Table of Contents
+{:toc}
+
+## 7.2.1 Prerequisites
+
+To get the most out of this Graspingmodule, it’s helpful to have:
+
+---
+
+## 7.2.2 General Motivation
+
+
+## 7.2.3 Course Content
+
+### 7.2.3.0 : General Concepts
+
+
+# **This page is currently under construction and will be published in summer 2026.**
+
+
+
+## 7.2.4 Credits
+
+## 7.2.5 Ressources
+
+
+
+
+---
+
+[Back to Top](#start)

@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Cuspidal Robots 
+# 5.2 Cuspidal Robots 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 5.2.1 Prerequisites
 
 To get the most out of this Cuspidal Robots module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 5.2.2 General Motivation
 
 
-## 3. Course Content
+## 5.3.3 Course Content
 
-### Section 3.0 : General Concepts
+### 5.2.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 5.2.4 Credits
 
-## Ressources
+## 5.2.5 Ressources
 
 
 

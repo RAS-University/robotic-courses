@@ -37,34 +37,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Whole-Body Control 
+# 8.3 Whole-Body Control 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 8.3.1 Prerequisites
 
 To get the most out of this Whole-Body Control module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 8.3.2 General Motivation
 
 
-## 3. Course Content
+## 8.3.3 Course Content
 
-### Section 3.0 : General Concepts
+### 8.3.3.0 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 8.3.4 Credits
 
-## Ressources
+## 8.3.5 Ressources
 
 
 

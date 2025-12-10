@@ -8,7 +8,7 @@ math: mathjax
 <script src="../questions.js"></script>
 
 # Learning from Demonstration {#start}
-By [Ahalya Prabhakar]([[url](https://robotics.sydney.edu.au/our-people/)]) 
+By [Ahalya Prabhakar]([[url](https://robotics.sydney.edu.au/our-people/)]) and [Aude Billard]([url](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en)) 
 <a name="top"></a>
 
 <style>
@@ -516,7 +516,33 @@ Expert Demonstrations <b>(purple)</b> are gathered for robot to learn a task rep
 # Challenges of Learning from Demonstration 
 Below, we list some of the basic questions and considerations that we encounter in most LfD problems: 
 ## Correspondence Problem 
-The correspondence problem refers to the problem of relating and learning an appropriate optimal behavior, or state-action mapping, when the kinematics and dynamics of the demonstrator differ from the robot. This problem is specific to cases of observational learning, when the robot must learn from observations of demonstrations, rather than demonstrations performed directly on the robotic system, as with kinesthetic and teleoperation demonstrations. In addition to differences in kinematics and dynamics between the demonstrator and the robotic system, sensor differences between the two can make generating effective mappings challenging. Humans primarily use vision for observations--- which camera sensors that match when recording observations. Robotic systems, on the other hand, may additionally use other sensor types, including sonars, infrared sensors, lasers, that can be easier to process than camera sensor data. 
+<!--The correspondence problem refers to the problem of relating and learning an appropriate optimal behavior, or state-action mapping, when the kinematics and dynamics of the demonstrator differ from the robot. This problem is specific to cases of observational learning, when the robot must learn from observations of demonstrations, rather than demonstrations performed directly on the robotic system, as with kinesthetic and teleoperation demonstrations. In addition to differences in kinematics and dynamics between the demonstrator and the robotic system, sensor differences between the two can make generating effective mappings challenging. Humans primarily use vision for observations--- which camera sensors that match when recording observations. Robotic systems, on the other hand, may additionally use other sensor types, including sonars, infrared sensors, lasers, that can be easier to process than camera sensor data. -->
+
+The main difficulty in teaching a robot is that human bodies and robotic bodies differ dramatically. Even when a robot resembles a human, its body does not have the same range or dynamics of motion. Differences exist in kinematics of joints: while humans benefit from ball joints, most robots do not. Differences also arise at the actuator level. Our muscles behave differently from most robotic motors, and the control mechanisms are not the same. The acceleration profiles of actuators vary as well. Humans can sometimes produce much higher accelerations; as a result, actions that are dynamically feasible for us, such as reaching out very quickly, may be impossible for a robot. Conversely, robots can sometimes perform actions that the human body can not, such as moving at a constant velocity. Additionally, humans have limited ranges of motion in their kinematics.
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+  <div style="display: flex; justify-content: space-between; gap: 10px; width: 100%;">
+    <div style="width: 48%;">
+      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceBody1.png" alt="Image 1" style="width: 100%; height: 300px; object-fit: cover;">
+    </div>
+    <div style="width: 48%;">
+      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceBody2.png" alt="Image 2" style="width: 100%; height: 300px; object-fit: cover;">
+    </div>
+  </div>
+  <div style="text-align: center; font-style: italic; max-width: 80%;">
+    Even when the robot looks more like the human, its body does not have the same range and dynamics of motion.
+  </div>
+</div>
+
+Humans and robots also differ in ther sensing perception. Robots do not perceive the world the way we do. Sonars, infrared sensors, and lasers are common on robots and are easier to process than information from cameras. Humans, on the other hand, have different types of sensors, located in different places and with different densities. This becomes an issue when we want an end user to understand what a robot can perceive.
+<br>
+
+<p align="center">
+  <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/CorrespondenceSensor.png" alt="Correspondence Problem, Sensors" width="600" height="338">
+  <br>
+  <em>Robots do not perceive things like we do.</em>
+</p>
+
 
 ## Data Sensitivity
 An additional consideration in LfD methods is data sensitivity. Optimal policies/motion plans learned are specific to the robot systems (and corresponding dynamics) of that system. As such, even robotic arms that have different dynamics and degrees of freedom, transfer learning methods are needed to convert learned policies from one system to another. In addition, data is environment specific--- particularly relevant when the task involves interacting with and/or manipulating the environment, such as in pick-and-place tasks. Different methods address these issues in different ways, as discussed further below, but some general approaches involve learning task objectives or task features that are specific to the task but can be generalized to different robotic systems and environments. 
@@ -529,11 +555,60 @@ An additional consideration in LfD methods is data sensitivity. Optimal policies
 Two common robot arms (<b>Left:</b> Universal Robots UR5 6DOF Robot, <b>Right:</b> Franka Emika Research 3 7DOF robot) used for manipulation have different degrees of freedom and dynamics making demonstration data transfer between systems challenging. 
 </p>
 
+Another challenge relates to the fact that data is environment-dependent. In the videos below, a successful example of training across different environments is shown. However, this is not always the case. The task here is to open the tray of a printer. This is an interesting task because static friction is present up to a certain point; then it gives way and is replaced by kinetic friction. The robot must adapt to this transition, and it is not aware of when the friction will give up. A 7-DOF robotic arm was trained for this task at EPFL. This training was successfully transferred to a completely different robot, a humanoid, at AIST/JRL in Japan.
+
+<div style="display: flex; justify-content: space-between; gap: 10px;">
+  <div style="width: 48%;">
+    <video controls style="width: 100%; height: 300px; object-fit: cover;">
+      <source src="/assets/videos/interfaces-for-HRI/ArmEPFL.mp4" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+    <br>
+    <sub>Model Learned at EPFL</sub>
+  </div>
+  <div style="width: 48%;">
+    <video controls style="width: 100%; height: 300px; object-fit: cover;">
+      <source src="/assets/videos/interfaces-for-HRI/HumanoidJapan.mp4" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+    <br>
+    <sub>Model transferred at AIST/JRL</sub>
+  </div>
+</div>
+
+
 ## Task Variability
 One of the challenges of learning to perform a task successfully from demonstration is deciding what to learn. For many tasks, there can be multiple ways and motions to accomplish the task. In addition, different tasks can be accomplished using different tools, or forms of the same tools. Deciding what is most useful to learn about the task--- whether it is joint trajectories, end-effector trajectories, task features, objective functions, etc.--- is a crucial consideration in efficiently learning task encodings from demonstrations that can be generalized to new states, robotic systems, and environments.
 
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 10px;">
+  <div style="display: flex; justify-content: space-between; gap: 10px; width: 100%;">
+    <div style="width: 48%;">
+      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/GratingCarrot1.jpg" alt="Image 1" style="width: 100%; height: 300px; object-fit: cover;">
+    </div>
+    <div style="width: 48%;">
+      <img src="{{ site.baseurl }}/assets/images/Interfaces_for_HRI/GratingCarrot2.jpg" alt="Image 2" style="width: 100%; height: 300px; object-fit: cover;">
+    </div>
+  </div>
+  <div style="text-align: center; font-style: italic; max-width: 80%;">
+    Multiple ways to accomplish a task: Multiple Motions, Multiple Tools
+  </div>
+</div>
+
+
 ## Demonstrator Quality
 Another consideration for learning from human demonstrations is demonstrator quality. Many LfD methods operate on the assumption that the demonstrations are provided by an **expert demonstrator**--- and as such, the demonstrations (and learned policy) are optimal. However, in many cases, the demonstrator may not provide optimal actions. In cases where the human is interacting with the robotic system to provide demonstrations, through kinesthetic teaching or teleoperation, suboptimality can be due to unfamiliarity with the system or its dynamics. In the case of observational learning, where the robot is directly observing human demonstrations, this may be due to noisy or suboptimal human behaviors. It can also be due to differences in human and robot behaviors, where optimality in human actions is different from optimality in robot behaviors, for example due to differences in their dynamics. Current LfD research methods seek to solve this issue, often through the combination of preference-based learning methods with demonstration quality ranking. 
+
+ Generalizing Control Law – Beyond the Demonstrations**
+Another important aspect is the ability to generalize. The robot should infer that a task is composed of a sequence of actions. Each action is relative to the object the robot must manipulate; however, it should initially consider several predefined frames of reference. It is important for the robot to understand that the task is not about the global placement of objects in space, but rather about their relative positions and the relative forces that matter. Multiple frames of reference are associated with the different objects in the scene, and the robot must learn which of these frames is relevant at each moment.
+
+
+<p align="center">
+  <video width="600" height="338" controls>
+    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/Generalization.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
 
 # LfD Methods Overview
 

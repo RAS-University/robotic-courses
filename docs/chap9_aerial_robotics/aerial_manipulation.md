@@ -1,6 +1,6 @@
 ---
 title: 9.3 Aerial Manipulation
-parent: "Chapter 9: Locomotion"
+parent: "Chapter 9: Aerial Robotics"
 has_children: false
 nav_order: 3
 layout: default

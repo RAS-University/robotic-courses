@@ -1,6 +1,6 @@
 ---
 title: Multirotor
-parent: "Chapter 9: Locomotion"
+parent: "Chapter 9: Aerial Robotics"
 layout: default
 nav_order: 7
 # math: mathjax

@@ -1,6 +1,6 @@
 ---
 title: 9.5 Vision for UAVs
-parent: "Chapter 9: Locomotion"
+parent: "Chapter 9: Aerial Robotics"
 has_children: false
 nav_order: 5
 layout: default

@@ -1,6 +1,6 @@
 ---
 title: 9.4 Collective
-parent: "Chapter 9: Locomotion"
+parent: "Chapter 9: Aerial Robotics"
 has_children: false
 nav_order: 4
 layout: default

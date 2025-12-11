@@ -1,6 +1,6 @@
 ---
 title: "Chapter 3: Motion Planning and Navigation"
-parent: Courses
+parent: "Robotics Foundation"
 has_children: true
 nav_order: 3
 layout: default

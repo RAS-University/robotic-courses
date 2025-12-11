@@ -1,6 +1,6 @@
 ---
 title: "Chapter 11: Robot Learning"
-parent: Courses
+parent: "Robotics Advanced Topics II"
 has_children: true
 nav_order: 11
 layout: default

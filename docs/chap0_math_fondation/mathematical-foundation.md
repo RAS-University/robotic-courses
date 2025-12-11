@@ -1,6 +1,6 @@
 ---
 title: "Chapter 0: Mathematical Foundation"
-parent: Courses
+parent: "Robotics Foundation"
 has_children: false
 layout: default
 math: mathjax

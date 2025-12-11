@@ -164,7 +164,7 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
       {
         'A': 'Partially Correct! Drawing on paper requires to compensate for the friction on the paper and the weight of the pen.',
         'B': 'Correct! Lifting an object requires calculating torque and motor force – core to dynamics - to compensate for the object s weight and ensure that it does not slip from the grip.',
-        'C': 'Correct! Turning on a light requires to apply the right amount of force – core to dynamics - to let the switch move.',
+        'D': 'Correct! Turning on a light requires to apply the right amount of force – core to dynamics - to let the switch move.',
         },
       'Incorrect. Think about which action requires real effort or force.'
     )">
@@ -786,13 +786,13 @@ In this video, we focus on gaining a deeper **intuition and mathematical underst
 For a point mass:
 
 $$
-K = \frac{1}{2} m v^2
+E_K = \frac{1}{2} m v^2
 $$
 
 But for a robot with multiple joints, the **kinetic energy** is expressed in joint coordinates as:
 
 $$
-K = \frac{1}{2} \dot{\theta}^\top M(\theta) \dot{\theta}
+E_K = \frac{1}{2} \dot{\theta}^\top M(\theta) \dot{\theta}
 $$
 
 Where:
@@ -894,7 +894,7 @@ By understanding the mass matrix $M(\theta)$, you're one step closer to simulati
 </form>
 
 <!-- Question 4 -->
-<p><strong>Question 4: What does this expression represent? <br> $K = \frac{1}{2} \dot{\theta}^\top M(\theta) \dot{\theta}$</strong></p>
+<p><strong>Question 4: What does this expression represent? <br> $E_K = \frac{1}{2} \dot{\theta}^\top M(\theta) \dot{\theta}$</strong></p>
 <form id="q2-4">
   <input type="radio" name="q2-4" value="A"> The robot’s total potential energy<br>
   <input type="radio" name="q2-4" value="B"> The torque needed to lift the robot<br>
@@ -1128,7 +1128,7 @@ $$
 Rotational kinetic energy in frame `{b}`:
 
 $$
-K = \frac{1}{2} \omega_b^\top I_b \omega_b
+E_K = \frac{1}{2} \omega_b^\top I_b \omega_b
 $$
 
 Just like joint-space kinetic energy used the mass matrix, rotational energy uses the **inertia matrix**.
@@ -1289,7 +1289,7 @@ Where:
 The **kinetic energy** of the rigid body becomes:
 
 $$
-K = \frac{1}{2} V_b^T G_b V_b
+E_K = \frac{1}{2} V_b^T G_b V_b
 $$
 
 ---
@@ -2618,7 +2618,7 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 * Rotor spins **$G$ times faster** than the link.  
 * Rotor kinetic energy  
   $$
-  K_{\text{rotor}}=\tfrac12 \, I_{\text{rotor}}\,(G\,\dot{\theta})^{2}
+  E_K_{\text{rotor}}=\tfrac12 \, I_{\text{rotor}}\,(G\,\dot{\theta})^{2}
   \;=\;\tfrac12\,(G^{2}I_{\text{rotor}})\,\dot{\theta}^{2}
   $$
 * **Apparent inertia** about the joint axis is $G^{2}I_{\text{rotor}}$.  
@@ -2753,7 +2753,7 @@ Additional exam-level exercises covering other chapters of the book [Modern Robo
 
 ## 1.2.5 Credits
 
-This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
+This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, under supervision of [Aude Billard](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en&oi=ao), and funded by **IEEE RAS** and **EPFL**. We thank [Kevin Lynch](https://robotics.northwestern.edu/people/profiles/faculty/lynch-kevin.html) for agreeing to use material of his course. 
 
 ---
 

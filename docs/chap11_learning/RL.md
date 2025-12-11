@@ -1,9 +1,10 @@
 ---
-title: Reinforcement Learning
-parent: Courses
+title: 11.2 Reinforcement Learning
+parent: "Chapter 11: Robot Learning"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,9 +1,10 @@
 ---
-title: Simultaneous Localization and Mapping (SLAM)
-parent: Courses
+title: 3.4 Simultaneous Localization and Mapping (SLAM)
+parent: "Chapter 3: Motion Planning and Navigation"
+nav_order: 4
 layout: default
+has_children: false
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

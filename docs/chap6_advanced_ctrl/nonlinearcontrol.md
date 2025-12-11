@@ -1,9 +1,9 @@
 ---
-title: Nonlinear Control
-parent: Courses
-has_children: true
+title: 6.2 Nonlinear Control
+parent: "Chapter 6: Advanced Control"
+has_children: false
+nav_order: 2
 layout: default
-nav_order: 7
 author: Julian Ruiz Rodriguez (EPFL)
 ---
 

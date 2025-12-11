@@ -1,9 +1,10 @@
 ---
-title: Cuspidal Robots
-parent: Courses
+title: 5.2 Cuspidal Robots
+parent: "Chapter 5: Advanced Kinematics"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

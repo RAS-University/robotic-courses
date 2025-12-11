@@ -1,8 +1,9 @@
 ---
-title: Close-loop Control and PID
-parent: Courses, Nonlinear Control
+title: 1.4 Close-loop Control and PID
+parent: "Chapter 1: Basics of Motion Control"
 layout: default
 math: mathjax
+nav_order: 4
 author: Salim Boussofara (EPFL)
 ---
 <script src="../questions.js"></script>

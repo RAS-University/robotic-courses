@@ -1,6 +1,6 @@
 ---
 title: Unmanned Aerial Vehicles
-parent: Courses
+parent: "Chapter 9: Locomotion"
 layout: default
 nav_order: 7
 ---

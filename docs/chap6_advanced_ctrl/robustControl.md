@@ -1,9 +1,10 @@
 ---
-title: Robust Control
-parent: Courses
+title: 6.1 Robust Control
+parent: "Chapter 6: Advanced Control"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,9 +1,9 @@
 ---
-title: Kinematics
-parent: Courses
+title: 1.1 Kinematics
+parent: "Chapter 1: Basics of Motion Control"
 layout: default
 math: mathjax
-nav_order: 2
+nav_order: 1
 ---
 
 <!-- Link external JavaScript file -->

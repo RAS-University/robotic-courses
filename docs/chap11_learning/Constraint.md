@@ -1,9 +1,10 @@
 ---
-title: Constraint Learning
-parent: Courses
+title: 11.6 Constraint Learning
+parent: "Chapter 11: Robot Learning"
+has_children: false
+nav_order: 6
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->
@@ -37,34 +38,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Constraint Learning 
+# 11.6 Constraint Learning 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 11.6.1 Prerequisites
 
 To get the most out of this Constraint Learning module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 11.6.2 General Motivation
 
 
-## 3. Course Content
+## 11.6.3 Course Content
 
-### Section 3.0 : General Concepts
+### 11.6.3.1 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 11.6.4 Credits
 
-## Ressources
+## 11.6.5 Ressources
 
 
 

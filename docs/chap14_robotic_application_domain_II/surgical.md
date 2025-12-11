@@ -1,9 +1,10 @@
 ---
-title: Surgical Robots
-parent: Courses
+title: 14.3 Surgical Robots
+parent: "Chapter 14: Robotic Application Domains Part - II"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

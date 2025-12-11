@@ -1,9 +1,10 @@
 ---
-title: Design and Fabrication
-parent: Courses
+title: 13.2 Design and Fabrication
+parent: "Chapter 13: Soft Robotics"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,9 +1,10 @@
 ---
-title: Modeling and Control
-parent: Courses
+title: 13.3 Modeling and Control
+parent: "Chapter 13: Soft Robotics"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

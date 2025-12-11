@@ -1,9 +1,10 @@
 ---
-title: Conformal Geometric Algebra
-parent: Courses
+title: 5.4 Conformal Geometric Algebra
+parent: "Chapter 5: Advanced Kinematics"
+has_children: false
+nav_order: 4
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

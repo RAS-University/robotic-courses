@@ -1,9 +1,10 @@
 ---
-title: Shared-Control
-parent: Courses
+title: 12.4 Shared-Control
+parent: "Chapter 12: Human-Robot Interaction"
+has_children: false
+nav_order: 4
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

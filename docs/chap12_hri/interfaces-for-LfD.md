@@ -1,8 +1,10 @@
 ---
-title: Interfaces for Learning from Human Demonstrations
-parent: Courses
+title: 12.1 Interfaces for Learning from Human Demonstrations
+parent: "Chapter 12: Human-Robot Interaction"
+has_children: false
+nav_order: 1
 layout: default
-nav_order: 7
+math: mathjax
 ---
 
 <!-- Link external JavaScript file -->

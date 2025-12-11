@@ -1,9 +1,10 @@
 ---
-title: Multirotor Drones
-parent: Courses
+title: 9.2 Multirotor Drones
+parent: "Chapter 9: Locomotion"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

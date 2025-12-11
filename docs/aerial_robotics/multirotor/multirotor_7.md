@@ -1,6 +1,6 @@
 ---
 title: Multirotor7
-parent: Courses
+parent: "Chapter 9: Locomotion"
 layout: default
 toc: true             # <--- ENABLE TOC GENERATION
 toc_label: On This Page # <--- Custom title for the sidebar

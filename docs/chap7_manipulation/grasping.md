@@ -1,9 +1,10 @@
 ---
-title: Grasping
-parent: Courses
+title: 7.2 Grasping
+parent: "Chapter 7: Manipulation"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

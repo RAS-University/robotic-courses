@@ -1,9 +1,10 @@
 ---
-title: Operational Space and Null Space Control
-parent: Courses
+title: 7.1 Operational Space and Null Space Control
+parent: "Chapter 7: Manipulation"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

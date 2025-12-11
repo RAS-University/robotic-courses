@@ -1,9 +1,10 @@
 ---
-title: Vision for UAVs
-parent: Courses
+title: 9.5 Vision for UAVs
+parent: "Chapter 9: Locomotion"
+has_children: false
+nav_order: 5
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

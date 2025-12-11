@@ -1,9 +1,10 @@
 ---
-title: Educational Robotics
-parent: Courses
+title: 14.2 Educational Robotics
+parent: "Chapter 14: Robotic Application Domains Part - II"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

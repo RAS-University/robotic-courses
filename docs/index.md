@@ -1,6 +1,6 @@
 ---
 title: Courses
-has_children: false
+has_children: true
 nav_order: 2
 layout: default
 ---
@@ -56,7 +56,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 # Robotics Foundation# 
 
-**Chapter 0:** [Mathematical Foundation](mathematical-foundation)
+**Chapter 0:** [Mathematical Foundation](chap0_math_fondation/mathematical-foundation)
 
 
 **Chapter 1: Basics of Motion Control**

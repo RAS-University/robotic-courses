@@ -1,9 +1,10 @@
 ---
-title: Robotics and Arts
-parent: Courses
+title: 15.3 Robotics and Arts
+parent: "Chapter 15: Novel Trendy Research Areas in Robotics"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

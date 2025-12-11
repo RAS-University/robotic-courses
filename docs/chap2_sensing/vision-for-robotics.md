@@ -1,6 +1,9 @@
 ---
-title: Vision for Robotics
-parent: Courses
+title: 2.2 Vision for Robotics
+parent: "Chapter 2: Sensing in Robotics"
+layout: default
+has_children: false
+nav_order: 2
 layout: default
 ---
 

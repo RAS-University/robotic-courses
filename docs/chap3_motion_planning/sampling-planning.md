@@ -1,7 +1,9 @@
 ---
-title: Sampling-Based Planning
-parent: Courses
+title: 3.1 Sampling-Based Planning
+parent: "Chapter 3: Motion Planning and Navigation"
+nav_order: 1
 layout: default
+has_children: false
 math: mathjax
 ---
 <style>

@@ -1,9 +1,10 @@
 ---
-title: Whole-Body Control
-parent: Courses
+title: 8.3 Whole-Body Control
+parent: "Chapter 8: Locomotion"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

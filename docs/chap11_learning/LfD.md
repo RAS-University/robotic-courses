@@ -1,6 +1,8 @@
 ---
-title: Learning from Demonstrations
-parent: Courses
+title: 11.1 Learning from Demonstrations
+parent: "Chapter 11: Robot Learning"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
 ---

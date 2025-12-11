@@ -1,9 +1,10 @@
 ---
-title: Dexterous Manipulation
-parent: Courses
+title: 7.3 Dexterous Manipulation
+parent: "Chapter 7: Manipulation"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

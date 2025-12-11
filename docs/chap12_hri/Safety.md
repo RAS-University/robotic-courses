@@ -1,9 +1,10 @@
 ---
-title: Safety in Design and Control
-parent: Courses
+title: 12.3 Safety in Design and Control
+parent: "Chapter 12: Human-Robot Interaction"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

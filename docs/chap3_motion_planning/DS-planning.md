@@ -1,7 +1,9 @@
 ---
-title: DS-planning
-parent: Courses
+title: 3.3 DS-planning
+parent: "Chapter 3: Motion Planning and Navigation"
+nav_order: 3
 layout: default
+has_children: false
 math: mathjax
 ---
 <!-- Link external JavaScript file -->

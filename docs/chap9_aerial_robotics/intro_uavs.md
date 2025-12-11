@@ -1,9 +1,10 @@
 ---
-title: Introduction to UAVs
-parent: Courses
+title: 9.1 Introduction to UAVs
+parent: "Chapter 9: Locomotion"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,9 +1,10 @@
 ---
-title: Group Theory
-parent: Courses
+title: 4.2 Group Theory
+parent: "Chapter 4: Advanced Mathematical Foundations"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

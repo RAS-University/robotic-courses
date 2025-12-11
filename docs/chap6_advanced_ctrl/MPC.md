@@ -1,8 +1,9 @@
 ---
-title: Model predictive Control 
-parent: Courses Nonlinear Control
+title: 6.3 Model predictive Control 
+parent: "Chapter 6: Advanced Control"
+has_children: false
+nav_order: 3
 layout: default
-nav_order: 7
 author: Julian Ruiz Rodriguez (EPFL)
 ---
 

@@ -1,9 +1,10 @@
 ---
-title: Central Pattern Generator
-parent: Courses
+title: 8.1 Central Pattern Generator
+parent: "Chapter 8: Locomotion"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

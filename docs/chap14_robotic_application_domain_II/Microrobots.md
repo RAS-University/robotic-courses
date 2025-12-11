@@ -1,9 +1,10 @@
 ---
-title: Micro-Robotics
-parent: Courses
+title: 14.4 Micro-Robotics
+parent: "Chapter 14: Robotic Application Domains Part - II"
+has_children: false
+nav_order: 4
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

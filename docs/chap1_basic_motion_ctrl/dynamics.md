@@ -1,8 +1,9 @@
 ---
-title: Dynamics
-parent: Courses
+title: 1.2 Dynamics
+parent: "Chapter 1: Basics of Motion Control"
+has_children: false
 layout: default
-nav_order: 3
+nav_order: 2
 ---
 
 <script src="../questions.js"></script>

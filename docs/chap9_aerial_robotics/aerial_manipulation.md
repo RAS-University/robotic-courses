@@ -1,9 +1,10 @@
 ---
-title: Aerial Manipulation
-parent: Courses
+title: 9.3 Aerial Manipulation
+parent: "Chapter 9: Locomotion"
+has_children: false
+nav_order: 3
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

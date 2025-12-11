@@ -1,9 +1,10 @@
 ---
-title: Collective
-parent: Courses
+title: 9.4 Collective
+parent: "Chapter 9: Locomotion"
+has_children: false
+nav_order: 4
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

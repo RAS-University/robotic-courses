@@ -1,9 +1,10 @@
 ---
-title: Underwater Robotics
-parent: Courses
+title: 10.2 Underwater Robotics
+parent: "Chapter 10: Robotic Application Domains Part - I"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

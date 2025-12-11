@@ -1,9 +1,10 @@
 ---
-title: Humanoids
-parent: Courses
+title: 10.1 Humanoids
+parent: "Chapter 10: Robotic Application Domains Part - I"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,9 +1,10 @@
 ---
-title: Active Learning
-parent: Courses
+title: 11.5 Active Learning
+parent: "Chapter 11: Robot Learning"
+has_children: false
+nav_order: 5
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->
@@ -37,34 +38,34 @@ nav_order: 2
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Active Learning 
+# 11.5 Active Learning 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 1. Prerequisites
+## 11.5.1 Prerequisites
 
 To get the most out of this Active Learning module, it’s helpful to have:
 
 ---
 
-## 2. General Motivation
+## 11.5.2 General Motivation
 
 
-## 3. Course Content
+## 11.5.3 Course Content
 
-### Section 3.0 : General Concepts
+### 11.5.3.1 : General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**
 
 
 
-## Credits
+## 11.5.4 Credits
 
-## Ressources
+## 11.5.5 Ressources
 
 
 

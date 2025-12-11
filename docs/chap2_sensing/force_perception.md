@@ -1,8 +1,9 @@
 ---
-title: Force Perception 
-parent: Courses
+title: 2.3 Force Perception 
+parent: "Chapter 2: Sensing in Robotics"
+has_children: false
+nav_order: 3
 layout: default
-nav_order: 7
 author: Mael Studer (EPFL)
 ---
 

@@ -1,9 +1,10 @@
 ---
-title: Materials
-parent: Courses
+title: 13.1 Materials
+parent: "Chapter 13: Soft Robotics"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,7 +1,7 @@
 ---
-title: Mathematical Foundation
+title: "Chapter 0: Mathematical Foundation"
 parent: Courses
-has_children: true
+has_children: false
 layout: default
 math: mathjax
 nav_order: 0

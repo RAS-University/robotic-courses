@@ -1,6 +1,8 @@
 ---
-title: Graph Theory
-parent: Course
+title: 4.1 Graph Theory
+parent: "Chapter 4: Advanced Mathematical Foundations"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
 ---

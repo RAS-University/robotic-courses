@@ -1,9 +1,10 @@
 ---
-title: Sim-to-Real and Back
-parent: Courses
+title: 11.4 Sim-to-Real and Back
+parent: "Chapter 11: Robot Learning"
+has_children: false
+nav_order: 4
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,9 +1,10 @@
 ---
-title: Supernumerary Limbs
-parent: Courses
+title: 15.1 Supernumerary Limbs
+parent: "Chapter 15: Novel Trendy Research Areas in Robotics"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,10 +1,10 @@
 ---
-title: "Chapter 1. Singularity analysis"
+title: "5.1 Singularity analysis"
+parent: "Chapter 5: Advanced Kinematics"
+has_children: false
+nav_order: 1
 layout: default
 math: mathjax
-grand_parent: Courses
-parent: Advanced Kinematics
-nav_order: 1
 ---
 
 - [Section 1. Introduction to singularities](singularities/01_introduction)

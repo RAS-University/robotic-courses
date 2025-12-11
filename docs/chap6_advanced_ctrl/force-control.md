@@ -1,6 +1,8 @@
 ---
-title: Force control
-parent: Courses
+title: 6.4 Force control
+parent: "Chapter 6: Advanced Control"
+has_children: false
+nav_order: 4
 layout: default
 math: mathjax
 ---

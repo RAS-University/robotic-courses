@@ -1,9 +1,10 @@
 ---
-title: Stability
-parent: Courses
+title: 8.2 Stability
+parent: "Chapter 8: Locomotion"
+has_children: false
+nav_order: 2
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

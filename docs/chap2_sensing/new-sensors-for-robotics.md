@@ -1,6 +1,8 @@
 ---
-title: Sensors and Sensing in Robotics
-parent: Courses
+title: 2.1 Sensors and Sensing in Robotics
+parent: "Chapter 2: Sensing in Robotics"
+has_children: false
+nav_order: 1
 layout: default
 ---
 

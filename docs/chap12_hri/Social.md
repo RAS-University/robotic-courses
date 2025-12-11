@@ -1,9 +1,10 @@
 ---
-title: Cognitive Robotics
-parent: Courses
+title: 12.5 Cognitive Robotics
+parent: "Chapter 12: Human-Robot Interaction"
+has_children: false
+nav_order: 5
 layout: default
 math: mathjax
-nav_order: 2
 ---
 
 <!-- Link external JavaScript file -->

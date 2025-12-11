@@ -651,7 +651,7 @@ $$
 Link 1:
 
 $$
-\mathcal K_1
+\mathcal E_{K_1}
 = \tfrac12 m_1(\dot x_1^2+\dot y_1^2) + \tfrac12 I_1 \dot\theta_1^{\,2}
 = \tfrac12 (I_1+m_1L_1^{\,2})\,\dot\theta_1^{\,2}.
 $$
@@ -659,7 +659,7 @@ $$
 Link 2:
 
 $$
-\mathcal K_2
+\mathcal E_{K_2}
 = \tfrac12 m_2(\dot x_2^2+\dot y_2^2) + \tfrac12 I_2 \dot\theta_1^{\,2}
 = \tfrac12\left( (I_2+m_2\theta_2^{\,2})\,\dot\theta_1^{\,2} + m_2\dot\theta_2^{\,2} \right).
 $$

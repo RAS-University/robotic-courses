@@ -72,7 +72,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 **Chapter 3: Motion Planning and Navigation**
 - [3.1 Sampling-Based Planning](chap3_motion_planning/sampling-planning)
-- [3.2 Geometric Methods for Planning](chap3_motion_planning/geometry-planning)
+- [3.2 Geometric Methods for Planning](chap3_motion_planning/geometry-planning) - Under Construction (release Summer 2026)
 - [3.3 Dynamical Systems-Based Planning](chap3_motion_planning/DS-planning)
 - [3.4 Simultaneous Localization and Mapping (SLAM)](chap3_motion_planning/SLAM) - Under Construction (release Summer 2026)
 

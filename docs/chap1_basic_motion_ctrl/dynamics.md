@@ -212,7 +212,7 @@ $$
 $$
 
 Where:
-- $K$: Kinetic energy  
+- $E_K$: Kinetic energy  
 - $P$: Potential energy  
 - $\theta$: Generalized coordinates (e.g., joint angles)  
 - $\dot{\theta}$: Generalized velocities
@@ -558,11 +558,11 @@ Find $(x_i(\theta), y_i(\theta))$ and their time derivatives $(\dot{x}_i, \dot{y
 Write the potential energy of each link, $P_1$ and $P_2$, using the joint variables $\theta$.
 
 **(c)**
-Write the kinetic energy of each link, $K_1$ and $K_2$.
+Write the kinetic energy of each link, $E_{K_1}$ and $E_{K_2}$.
 Use the planar rigid–body formula
 
 $$
-K \;=\; \tfrac{1}{2}\,m\,v^2 \;+\; \tfrac{1}{2}\,I\,\omega^2,
+E_K \;=\; \tfrac{1}{2}\,m\,v^2 \;+\; \tfrac{1}{2}\,I\,\omega^2,
 $$
 
 where $m$ is the mass, $v$ is the scalar linear velocity at the CoM, $\omega$ is the scalar angular velocity, and $I$ is the scalar inertia of the rigid body about its CoM.

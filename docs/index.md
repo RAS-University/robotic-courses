@@ -40,6 +40,14 @@ layout: default
 .ak-drop[open] summary::before { content: "▾"; }
 </style>
 
+<style>
+  /* Hide the theme-generated "Table of contents" that appears right after the page <hr> */
+  hr + h2.text-delta,
+  hr + h2.text-delta + ul {
+    display: none;
+  }
+</style>
+
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 # Robotics Courses 
@@ -54,7 +62,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 ## Table of Contents 📚
 
-# Robotics Foundation# 
+# Robotics Foundation
 
 **Chapter 0:** [Mathematical Foundation](chap0_math_fondation/mathematical-foundation)
 
@@ -78,7 +86,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 
 
 
-# Robotics Advanced Topics I# 
+# Robotics Advanced Topics I
 **Chapter 4: Advanced Mathematical Foundations**
 - [4.1 Graph Theory](chap4_advanced_math/graph-theory)
 - [4.2 Group Theory](chap4_advanced_math/group-theory) - Under Construction (release Summer 2026)
@@ -118,7 +126,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 -  [10.2 Underwater Robotics](chap10_robotic_application_domain_I/underwater_robotics)
 -  [10.3 Space Exploration](chap10_robotic_application_domain_I/space_exploration)
 
-# Robotics Advanced Topics II# 
+# Robotics Advanced Topics II
 The Advanced Topic II pages are under Construction. Pages will be continuously updated.
 Full release is planned for the summer 2026.
 

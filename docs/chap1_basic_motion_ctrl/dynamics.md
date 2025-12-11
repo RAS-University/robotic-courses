@@ -159,13 +159,15 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
   <input type="radio" name="q0-3" value="C"> Solving a maze<br>
   <input type="radio" name="q0-3" value="D"> Turning on a light<br>
   <button type="button"
-    onclick="checkTrueFalse('q0-3', 'A', 
-      'Partially Correct! Drawing on paper requires to compensate for the friction on the paper and the weight of the pen.',
-                            'q0-3', 'B', 
-      'Correct! Lifting an object requires calculating torque and motor force – core to dynamics - to compensate for the object's weight and ensure that it does not slip from the grip.',
-                            'q0-3', 'C', 
-      'Correct! Turning on a light requires to apply the right amount of force – core to dynamics - to let the switch move.',
-      'Incorrect. Think about which action requires real effort or force.')">
+    onclick="checkMultipleTrueFalseRadio(
+      'q0-3',
+      {
+        'A': 'Partially Correct! Drawing on paper requires to compensate for the friction on the paper and the weight of the pen.',
+        'B': 'Correct! Lifting an object requires calculating torque and motor force – core to dynamics - to compensate for the object s weight and ensure that it does not slip from the grip.',
+        'C': 'Correct! Turning on a light requires to apply the right amount of force – core to dynamics - to let the switch move.',
+        },
+      'Incorrect. Think about which action requires real effort or force.'
+    )">
     Check Answer
   </button>
   <p id="q0-3-feedback"></p>

@@ -1,2 +1,0 @@
-- [Section 6. Leveraging Kinematics with Policy-based Training](adv_kin/05_policy_training.md)
-- [Chapter 7. Path Planning for Redundant Robots](adv_kin/06_redundant_path_planning.md)

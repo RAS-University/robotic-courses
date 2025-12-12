@@ -1,8 +1,8 @@
 ---
-title: Unmanned Aerial Vehicles
-parent: Courses
+title: "9.2 Different Drone Types"
+parent: "Chapter 9: Aerial Robotics"
 layout: default
-nav_order: 7
+nav_order: 2
 ---
 
 <script src="../../questions.js"></script>

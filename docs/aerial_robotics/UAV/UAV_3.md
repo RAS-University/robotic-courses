@@ -1,8 +1,8 @@
 ---
-title: Unmanned Aerial Vehicles
-parent: Courses
+title: "9.3 Cost and Benefits"
+parent: "Chapter 9: Aerial Robotics"
 layout: default
-nav_order: 7
+nav_order: 3
 ---
 
 <script src="../../questions.js"></script>

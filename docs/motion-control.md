@@ -1,9 +1,11 @@
----
+<!-- ---
 title: Motion Control
 parent: Courses
 layout: default
 math: mathjax
----
+--- -->
+
+<!-- TODO: Is this page used? -->
 
 
 # Motion Control {#start}

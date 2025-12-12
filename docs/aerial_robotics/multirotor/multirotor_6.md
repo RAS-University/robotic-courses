@@ -1,6 +1,6 @@
 ---
 title: Multirotor
-parent: Courses
+parent: "Chapter 9: Aerial Robotics"
 layout: default
 nav_order: 7
 # math: mathjax

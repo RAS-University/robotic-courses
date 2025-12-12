@@ -280,7 +280,7 @@ function checkDropdownAnswers(feedbackId) {
 function checkRobotStructure() {
   const correctMapping = {
     "serial-zone": ["open-chain", "serially-linked"],
-    "parallel-zone": ["closed-chain", "fixed-motors"]
+    "parallel-zone": ["closed-chain"]
   };
 
   let totalCorrect = 0;

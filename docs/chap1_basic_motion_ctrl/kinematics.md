@@ -72,32 +72,35 @@ Have you ever watched a precision robot—like the <a href="https://en.wikipedia
 
 Kinematics, often referred to as the “**geometry of movement**,” is the study of *how bodies move in space without considering the forces or torques causing the motion*. By focusing on the geometry and arrangement of joints, links, and end-effectors, kinematics allows us to:
 
-- ***Predict and Control Robot Positions***: For instance, a robotic arm used in an assembly line must position its **end-effector** (tip of the arm) at **exact points in space**. Kinematics equations compute a correspondence between a **robot joint configuration** (particular choice of value for each joint angle) and a specific position and orientation of the end-effector. This is necessary to translate a desired carthesian location for the robot is tip into a set of robot is joint values.
+- ***Predict and Control Robot Positions***: For instance, a robotic arm used in an assembly line must position its **end-effector** (tip of the arm) at **exact points in space**. Kinematics provides the  correspondence between a **robot joint configuration** (particular choice of value for each joint angle) and a specific position and orientation of the end-effector. This is necessary to translate a desired position and orientation of the robot end-effector in Cartesian space (think of translation along and rotation about x, y, z axes) to a set of robot joint values (think of set of values in radians).
 
-- ***Backbone to Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions. Kinematics is the back bone to all standard and advanced path planning techniques. Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, it is necessary to design the robot is kinematic structure to ensure that the path will be **kinematically feasible**, namely that it will satisfy the robot is mechanical constraints.
+- ***Backbone to Path Planning***: From pick-and-place tasks to drawing complex shapes, kinematics helps in **calculating paths**, ensuring the robot can move smoothly from one point to another without collisions or awkward joint motions. Kinematics is the back bone to all standard and advanced path planning techniques. Whether it’s a Delta robot on a factory floor or a humanoid robot in a research lab, it is necessary to design the robot and its kinematic structure to ensure that the path will be **kinematically feasible**, namely that it will satisfy the robot's mechanical constraints.
 
 In this chapter, you will explore different ways of representing positions and orientations in 3D space, understand the kinematics behind common robotic arms, and learn a systematic way to map your robot’s geometry into kinematic equations to enable control. By mastering kinematics, you’ll have a strong foundation for starting your journey into controling robots. 
 
 ---
 
-## 1.1.3 Course Content
+## 1.1.3 General Concepts
 
 ⚠️ **Note on Notation**: 
 >*Please be aware that notation, variable naming, and the style of writing equations may slightly differ between instructors. Always refer to the provided formulas and definitions in this course when working on assignments or exercises to avoid any confusion.*
 
-### 1.1.3.0 : General Concepts
 In this section we are first going to learn how to represent robots, what is a joint, degrees of freedom, etc. before diving into specific transformations (2D coordinate transformations, rotation matrices, homogeneous matrices) to link conceptual kinematic description of a robot to mathematical formalisms.
 
 ---
-#### *Robot Structure:*
+### *Robot Structure:*
 
-A traditional (rigid) robot is composed of a series of ***links***, attached to one another by ***joints***. The links move around the joints. 
+A rigid-body robot is composed of a series of ***rigid-links***, attached to one another by ***joints***. The joints allow a relative motion between links. 
 
-The simplest of these joint-based linkage consists of attaching in sequence two links. This is what we refer to as ***revolute*** joint, also called ***hinge*** joint. It is also referred to as the elbow joint as it bears some vague resemblance to the attachment of the upeer and lower human arms. 
+The simplest of these joint-based linkage is the ***revolute*** joint, also called ***hinge*** joint. This allows a link to rotate with respect to the previous link it is connected to.
 
 In place of enabling the links to rotate around the joint, the joint can also allow the links to slide along each other. One then refers to these links as ***prismatic*** joint, also called a sliding or linear joint. 
 
-More interesting are joints that enable either the links to do more than one motion type (combining translation and rotation) or enable to connect three or more links simultaneously. The ***helical*** or ***screw*** joint allows simultaneous rotation and translation about a screw axis. The ***spherical*** joint, also called a ball-and-socket joint, enables rotation along three axes. 
+Joints can also enable either links to do more than one motion type (combining translation and rotation) or enable to connect three or more links simultaneously. The ***helical*** or ***screw*** joint allows simultaneous rotation and translation about a screw axis. The ***spherical*** joint, also called a ball-and-socket joint, enables rotation along three axes. 
+
+<!-- The number of motions a body can perform independently is termed as its degrees of freedom (dof). In a 3-dimensional cartesian space, we have upto six degrees of freedom, three related to translations and three related to rotations. Every motion in the 3-dimensional Cartesian space can be written as a combination of these six motions. -->
+
+For our discussion in this chapter we will limit ourselves to simple joints with a single type of motion such as revolute joints or prismatic joints.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/joints.png' }}" width="500px" alt="Joints">
@@ -106,22 +109,22 @@ More interesting are joints that enable either the links to do more than one mot
   </figcaption>
 </figure>
 
-#### *Serial vs. Parallel robots*
+### *Serial vs. Parallel robots*
 
-Among the various configurations in which mechanical components can be arranged, two key topologies are particularly significant in robotics:
+Among the various configurations in which mechanical components can be arranged, two key architectures are particularly common in robotics:
 - ***Serial Chains***: These consist of a series of rigid links connected sequentially by joints. Each link (except the first and last) is connected to exactly two other links. Serial chains are commonly seen in robotic arms.
 - ***Fully Parallel Mechanisms***: These mechanisms have two primary components (often the base and the end-effector) connected by multiple independent chains. Each of these connecting chains itself typically forms a serial structure. An example is the Delta robot used in high-speed pick-and-place tasks.
 
-For a visual comparison of these two robot types, watch the following short video:
+For a visual comparison of these two robot types, refer to the following video:
 ![serial_parallel](https://www.youtube.com/watch?v=3fbmguBgVPA)
-><sub>*Video showing the differnece between Parallel (left) and Serial (right) robot. YouTube video, 13 juin 2019. Available at: https://www.youtube.com/watch?v=3fbmguBgVPA*</sub>
+><sub>*Video showing the difference between Parallel (left) and Serial (right) robots. YouTube video, 13 juin 2019. Available at: https://www.youtube.com/watch?v=3fbmguBgVPA*</sub>
 >
 
 <!-- Conceputal questions -->
 <details markdown="1">
   <summary>Conceptual Questions</summary>
 
-<p><strong>Question 1: Drag each characteristic to the correct robot category (2 per category):</strong></p>
+<p><strong>Question 1: Drag each characteristic to the correct robot category:</strong></p>
 
 <style>
   .drag-container {
@@ -138,7 +141,17 @@ For a visual comparison of these two robot types, watch the following short vide
     min-height: 150px;
     width: 45%;
     background-color: #f9f9f9;
+    text-align: center;          /* centers the h3 text */
+    display: flex;               /* centers content within the zone */
+    flex-direction: column;
+    align-items: center;         /* horizontal centering */
+    justify-content: center;
   }
+
+.drop-zone img{
+  display: block;
+  margin: 0 auto 10px;         /* keeps spacing below image */
+}
 
   .drag-item {
     background-color: #e3e3e3;
@@ -166,7 +179,7 @@ For a visual comparison of these two robot types, watch the following short vide
   <!-- Serial Robot Zone -->
   <div class="drop-zone" id="serial-zone" ondrop="drop(event)" ondragover="allowDrop(event)">
     <h3>Serial Robot</h3>
-    <img src="{{ site.baseurl }}/assets/images/kinematics/serial.jpg" alt="Serial Robot" width="100%" style="max-width:90px; margin-bottom:10px;">
+    <img src="{{ site.baseurl }}/assets/images/kinematics/serial.jpg" alt="Serial Robot" width="100%" style="max-width:90px; margin-bottom:10px">
   </div>
 
   <!-- Parallel Robot Zone -->
@@ -177,19 +190,18 @@ For a visual comparison of these two robot types, watch the following short vide
 
 </div>
 
-<!-- Draggable items -->
+<!-- First question -->
 <div class="drag-container" id="drag-items">
   <div class="drag-item" id="open-chain" draggable="true" ondragstart="drag(event)">Open kinematic chain</div>
   <div class="drag-item" id="serially-linked" draggable="true" ondragstart="drag(event)">Three serially linked segments</div>
   <div class="drag-item" id="closed-chain" draggable="true" ondragstart="drag(event)">Closed kinematic chain robots</div>
-  <div class="drag-item" id="fixed-motors" draggable="true" ondragstart="drag(event)">Two fixed bases</div>
 </div>
 
 <button class="check-button" onclick="checkRobotStructure()">Check Answer</button>
 <div class="feedback" id="robot-feedback"></div>
 
 
-<!-- First question  -->
+<!-- Second question  -->
 <p><strong>Question 2: A serial robot is a closed kinematic chain structure</strong></p>
 <form id="q1">
   <input type="radio" name="q1" value="True"> True<br>
@@ -203,8 +215,20 @@ For a visual comparison of these two robot types, watch the following short vide
   <p id="q1-feedback"></p>
 </form>
 
-<!-- Second question  -->
-<p><strong>Question 3: Parallel robots are designed to move parrallel to a plane.</strong></p>
+<!-- Third question  -->
+<p><strong>Question 3: In a parallel robot, the end-effector (moving platform) is connected to the base by multiple kinematic chains (legs) in parallel.</strong></p>
+<form id="q3">
+  <input type="radio" name="q3" value="True"> True<br>
+  <input type="radio" name="q3" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('q3', 'True', 
+      'Correct! Parallel robots use multiple legs connecting the base to a moving platform, often giving high stiffness and accuracy.',
+      'Incorrect. A parallel robot has several kinematic chains (legs) supporting the same moving platform, not a single serial chain.')">
+    Check Answer
+  </button>
+  <p id="q3-feedback"></p>
+</form>
+<!-- <p><strong>Question 3: Parallel robots are designed to move parrallel to a plane.</strong></p>
 <form id="q2">
   <input type="radio" name="q2" value="True"> True<br>
   <input type="radio" name="q2" value="False"> False<br>
@@ -215,7 +239,7 @@ For a visual comparison of these two robot types, watch the following short vide
     Check Answer
   </button>
   <p id="q2-feedback"></p>
-</form>
+</form> -->
 
 <!-- Third question  
 <p><strong>Question 4: A parallel robot is a structure characterized by a closed kinematic loop</strong></p>
@@ -236,7 +260,7 @@ For a visual comparison of these two robot types, watch the following short vide
 
 ---
 
-#### *Drawing kinematic diagrams*
+### *Drawing kinematic diagrams*
 In robotics, accurately representing the structure of robots (left image below) through **kinematic diagrams** (right image below) is crucial. These diagrams help us clearly visualize joints, links, and their connections.
 
 <figure style="text-align: center;">
@@ -260,7 +284,7 @@ Here is a video explaining the step-by-step procedure to draw the kinematic diag
     Your browser does not support the video tag.
   </video>
   <figcaption style="margin-top: 8px; font-style: italic;">
-    Video: Step-by-step procedure to draw the kinematic diagram (created by author).
+    Video: Step-by-step procedure to draw the kinematic diagram (created by Shujiro Shobayashi).
   </figcaption>
 </figure>
 
@@ -352,7 +376,7 @@ Give it a try !
 
 ---
 
-#### *Formalism*
+### *Formalism*
 
 The structure of the robot determines entirely its mobility. For instance, the extent by which one link can move it determined by the extent to which it can rotate or slide only the joints it is attached to. The length of the robot is links and the range of motion at each joint determines the volume of the space surrounding the robot that can be reached or travelled through by the robot. To analyse this volume of motion is crucial. For instance, when controling robots tasked to pick and place objects, it allows to determine the regions the robot can reach the object successfully. It also enables to determine the regions of the space free of robot, and hence safe for humans to move around. To control robots, it is hence crucial to be able to express mathematically the range of motion it can do. We refer to this as the robot is structural mobility. 
 
@@ -402,7 +426,7 @@ The number of direction of motion enabled at a joint is described by the number 
 
 ---
 
-#### *Grübler’s formula and its application*
+### *Grübler’s formula and its application*
 ***Grübler’s formula*** is a powerful tool to quickly calculate the DOFs of mechanisms, especially useful for complex robot configurations:
 $$
 \boxed{ \text{DoF} = m(N - 1 - J) + \sum_{i=1}^{J} \text{f}_i }

@@ -18,7 +18,25 @@ nav_order: 7
 {:toc}
 
 ## 1. Prerequisites
-Kinematics, Dynamics, linear algebra, pid control, mpc, sensors and sensing 
+1. **Basic Mathematics**  
+  - trigonometry
+  - linear algebra (vectors, matrices and basic matrix operations)
+
+2. **Kinematics**  
+  - coordinate transformations and rotation matrices
+
+3. **Dynamics**  
+  Analysis of forces and their effects on motion, crucial for modeling and simulating drone behavior.
+
+4. **PID Control**  
+  Basics of Control Theory. Stability, Controllability etc.
+
+5. **Model Predictive Control (MPC)**  
+  In the last chapter we will use mpc to control the drone. Previous knowledge is needed.
+
+6. **Sensors and Sensing**  
+  Understanding the role of sensors like IMUs, GPS, and cameras in perceiving the environment and providing feedback for control. Have an idea about sensor fusion algorithms, especially the Kalman Filter. 
+
 
 ## 2. General Motivation
 
@@ -391,8 +409,12 @@ Link to other foundations that are needed such as mpc, optimization and
 
 ### Credits:
 <!-- List all the sources that you used to create the page   -->
+This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.
+
+This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
 
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
+[Introduction to Multicopter Design and Control (Quan Quan)](https://link.springer.com/book/10.1007/978-981-10-3382-7)- Textbook offering a systematic overview over multicopters from basic design guidelines to high-level control. 
 
 

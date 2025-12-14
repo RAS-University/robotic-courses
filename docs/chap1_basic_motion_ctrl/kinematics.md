@@ -378,14 +378,14 @@ Give it a try !
 
 ### *Formalism*
 
-The structure of the robot determines entirely its mobility. For instance, the extent by which one link can move it determined by the extent to which it can rotate or slide only the joints it is attached to. The length of the robot is links and the range of motion at each joint determines the volume of the space surrounding the robot that can be reached or travelled through by the robot. To analyse this volume of motion is crucial. For instance, when controling robots tasked to pick and place objects, it allows to determine the regions the robot can reach the object successfully. It also enables to determine the regions of the space free of robot, and hence safe for humans to move around. To control robots, it is hence crucial to be able to express mathematically the range of motion it can do. We refer to this as the robot is structural mobility. 
+The structure of the robot determines entirely its mobility. For instance, the extent by which one link can move it determined by the extent to which it can rotate or slide only the joints it is attached to. The length of the robot's links and the range of motion at each joint determines the volume of the space surrounding the robot that can be reached or travelled through by the robot. To analyse this volume of motion is crucial. For instance, when controling robots tasked to pick and place objects, it allows to determine the regions the robot can reach the object successfully. It also enables to determine the regions of the space free of robot, and hence safe for humans to move around. To control robots, it is hence crucial to be able to express mathematically the range of motion it can do. We refer to this as the robot's structural mobility. 
 
 The first key mathematical notion you must get accustomed to is the notion of:
 - ***Degrees of Freedom (DoF):*** it refers to the number of independent parameters required to completely specify the position and orientation of a robot or its parts in space. For instance, a rigid body in three-dimensional space has six degrees of freedom—three translational (moving along the x, y, and z axes) and three rotational (rotating around these axes).
 
 The state and structural mobility of the robot are expressed through its:
-- ***Configuration***: consists of a the set of parameters that completely specifies the position and orientation of every robot is link. It is usually represented as a vector of joint angles. For instance, the two-link serial robot we saw earlier on is entirely specify by two scalars, denoting the two angles formed by the two joints with their based and with one another.  
-- ***Configuration space (called C-space)*** is the space of all configurations that can be adopted by the robot.
+- ***Configuration***: consists of a the set of parameters that completely specifies the position and orientation of every robot's link. For revolute(or prismatic)-jointed robots, it is represented as a vector of joint angles(or lengths). For instance, the two-link serial robot (2R-arm) we saw earlier can be described by two scalars, denoting the two angles formed by the two links with the preceding link.  
+- ***Configuration space (called C-space)*** is the space of all configurations that can be reached by the robot.
 
 See next a video that introduce this formalism:
 
@@ -411,9 +411,21 @@ $$
 $$
 
 
-The number of direction of motion enabled at a joint is described by the number of DoFs associetd to the joint. For instance, revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple DoFs. The cylindrical joint (C) has two DoFs and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three DoFs. 
+The number of direction of motion enabled at a joint is described by the number of DoFs associetd to the joint. For instance, revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple DoFs. The cylindrical joint (C) has two DoFs and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three DoFs. To understand the following table, recall that a planar motion has 3 Dof (2 translations and one rotation) while in spatial motion we have 6 DoF.
 
+| Joint type       | DoF (f) | Constraints (c) between two planar rigid bodies | Constraints (c) between two spatial rigid bodies |
+|------------------|:------:|:-----------------------------------------------:|:------------------------------------------------:|
+| Revolute (R)     |   1    |                        2                        |                        5                         |
+| Prismatic (P)    |   1    |                        2                        |                        5                         |
+| Helical (H)      |   1    |                       N/A                       |                        5                         |
+| Cylindrical (C)  |   2    |                       N/A                       |                        4                         |
+| Universal (U)    |   2    |                       N/A                       |                        4                         |
+| Spherical (S)    |   3    |                       N/A                       |                        3                         |
 
+> **Note.** The counts agree with the mobility relation \( f + c = m \), where \( m = 3 \) for planar motion and \( m = 6 \) for spatial motion (assuming independent constraints).
+
+<!-- To understand the following table, recall that planar motion has 3 DoF (2 translations and 1 rotation), while spatial motion has 6 DoF. -->
+<!-- 
 | Joint type       | dof \( f \) | Constraints \( c \) between two planar rigid bodies | Constraints \( c \) between two spatial rigid bodies |
 |------------------|-------------|-----------------------------------------------------|------------------------------------------------------|
 | Revolute (R)     | 1           | 2                                                   | 5                                                    |
@@ -421,7 +433,7 @@ The number of direction of motion enabled at a joint is described by the number 
 | Helical (H)      | 1           | N/A                                                 | 5                                                    |
 | Cylindrical (C)  | 2           | N/A                                                 | 4                                                    |
 | Universal (U)    | 2           | N/A                                                 | 4                                                    |
-| Spherical (S)    | 3           | N/A                                                 | 3                                                    |
+| Spherical (S)    | 3           | N/A                                                 | 3                                                    | -->
 
 
 ---
@@ -433,7 +445,7 @@ $$
 $$
 
 Where:
-- $m$ is the number of DoFs of the robot is body in space (e.g., $m = 3$ if robot is constrained to move in translation only, such as so called planar robots, $m = 6$ for robots that can both translate and rotate in space).
+- $m$ is the number of DoFs of the robot's body in space (e.g., $m = 3$ if robot is constrained to move in translation only, such as so called planar robots, $m = 6$ for robots that can both translate and rotate in space).
 - $N$ is the number of links (including the frame).
 - $J$ is the number of joints.
 - $f_i$ is the number of DoFs permitted at each joint $i$.
@@ -491,7 +503,7 @@ $$
 
 Where, $ lo $ is the number of closed kinematic loops. -->
 
-Let is try to compute the DoF of the robot we have seen before:
+Let's try to compute the DoF of the robot we have seen before:
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine.png' }}" width="200px" alt="Kine">
   <figcaption style="margin-top: 8px; font-style: italic;">
@@ -580,7 +592,7 @@ Observe that if the three prismatic joints and three revolute joints at the base
 
 ### 1.1.3.1 : Introduction to Robotics | Kinematics & Modeling
 
-Now that we have seen some basics notions, we move to an more in-depth exploration of kinematics and modeling. To start off, you may want to watch this short video that gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.
+Now that we have seen some basics notions, we move to an more in-depth exploration of kinematics and modeling. To start off, you may want to watch this short video that gives you an introduction of the meaning of kinematics and modeling.
 
 ![Robotics 101: Full course for beginners](https://www.youtube.com/watch?v=K_xIJBlbjg4)
 > This video gives you an introduction of the meaning of kinematics and modeling and will present you how his videos will be strucured.
@@ -598,8 +610,8 @@ Now that we have seen some basics notions, we move to an more in-depth explorati
 <!-- First question  -->
 <p><strong>Question 1: Forward kinematics (FK) allows to compute...</strong></p>
 <form id="q2-fk">
-  <input type="radio" name="q2-fk" value="option1"> the position/orientation of the robot is end-effector from given robot is joint configuration<br>
-  <input type="radio" name="q2-fk" value="option2"> the robot is joint configuration from the robot is end-effector position and orientation<br>
+  <input type="radio" name="q2-fk" value="option1"> the position/orientation of the robot's end-effector from given robot's joint configuration<br>
+  <input type="radio" name="q2-fk" value="option2"> the robot's joint configuration from the robot's end-effector position and orientation<br>
   <input type="radio" name="q2-fk" value="option3"> neither of these two<br>
 
   <button type="button" onclick="checkMCQ('q2-fk', 'option1',
@@ -618,7 +630,7 @@ Now that we have seen some basics notions, we move to an more in-depth explorati
 
 ### 1.1.3.2: Coordinate Transformations in 2D | Mapping {#chapter-1-coordinate-transformations-in-2D}
 
-In this chapter, we focus on 2D coordinate transformations—specifically, **pure translations** and **pure rotations** for planar (serial) robots.
+In this chapter, we focus on 2D coordinate transformations, specifically, **pure translations** and **pure rotations** for planar (serial) robots.
 
 ![Coordinate Transformations in 2D : Mapping Part 1](https://www.youtube.com/watch?v=H_94DTWd8ck)
 > This video gives you an introduction to 2D translations and rotations.
@@ -757,7 +769,7 @@ $$
 
 ---
 
-5: Let is proceed step by step: 
+5: Let's proceed step by step: 
 
 * Homogeneous matrix of a pure translation:
 $$
@@ -870,7 +882,7 @@ Here you will see some examples of how to find this end effector positions in 2D
 >
 ><sub> Homogeneous Transformations (example 1) | Robotics 101. YouTube video, 12 June 2022. Available at: https://www.youtube.com/watch?v=zg5sS9LZGAM
 
-Now that we have seen how to compute forward kinematics using homogeneous transformations, let is explore **another insightful way** to approach planar rotations. Sometimes, it is more intuitive or practical to represent motion as rotation around an **arbitrary point \( p \)** rather than just around the origin.
+Now that we have seen how to compute forward kinematics using homogeneous transformations, let's explore **another insightful way** to approach planar rotations. Sometimes, it is more intuitive or practical to represent motion as rotation around an **arbitrary point \( p \)** rather than just around the origin.
 
 A rotation around an arbitrary point \( p \) can be expressed through three intuitive steps:
 
@@ -906,13 +918,13 @@ This expression clearly shows that:
 
 Understanding this concept is powerful because it provides deeper insight into robot movements, especially when dealing with practical scenarios involving complex rotations or articulations around joints positioned away from the base.
 
-Let is get familiriar with this type of method doing similar exercise:
+let's get familiriar with this type of method doing similar exercise:
 
 <!-- Mathematical Development Questions -->
 <details markdown="1">
   <summary>Mathematical Development Questions</summary>
 
-Let is consider this following robotic arm. Give the forward kinematic model that expresses the coordinates (x,y) of point P as a function of the joint coordinates $\theta_1$ and $\theta_2$
+let's consider this following robotic arm. Give the forward kinematic model that expresses the coordinates (x,y) of point P as a function of the joint coordinates $\theta_1$ and $\theta_2$
 
 <figure style="text-align:center;">
   <img src="{{ site.baseurl }}/assets/images/kinematics/ex1_chap4.png" width="450" height="auto" alt="Fig 1">
@@ -1017,9 +1029,9 @@ $$
   <p style="font-size: small;">Quaternions Explained</p>
 </div>
 
-While Euler angles and rotation matrices are common ways to describe rotations in robotics, they have some limitations, notably the phenomenon known as **gimbal lock**: phenomenon that occurs when using Euler angles (roll, pitch, yaw) to represent orientations or rotations, typically in three-dimensional space. It happens when two of the rotation axes align, causing the loss of one degree of rotational freedom. In simpler terms, you become unable to rotate around one particular axis because two axes have essentially "collapsed" into one. Here is very nice [video](https://www.youtube.com/watch?v=zc8b2Jo7mno) explaining this phenomeon.
+Representing orienattions is a very interesting problem. In robotics, Euler angles were used to represent orientation of the robot's end-effector. They are represented as an ordered set of rotations about X, Y or Z-axes (most commonly used is the Z-X-Z Euler angle representation). While Euler angles are common ways to describe rotations in robotics, they have some limitations, notably the phenomenon known as **gimbal lock**: phenomenon that occurs when using Euler angles (roll, pitch, yaw) to represent orientations or rotations, typically in three-dimensional space. It happens when two of the rotation axes align, causing the loss of one degree of rotational freedom. In simpler terms, you become unable to rotate around one particular axis because two axes have essentially "collapsed" into one. Here is a [video](https://www.youtube.com/watch?v=zc8b2Jo7mno) explaining this phenomeon.
 
-**Quaternions** are an elegant mathematical alternative for **representing 3D rotations**, avoiding issues like gimbal lock and allowing smooth rotational interpolations. They are widely used in robotics, computer graphics, and aerospace for their efficiency and accuracy in handling rotations.
+To avoid this representational singularity, we can use rotation matrices, axis-angle representation or **Quaternions**. All these representations are representation singularity-free. While rotation matrices require 6 independent parameters to represent the orientation, bot axis-angle and Quaternion representation need only 4. **Quaternions** are an elegant mathematical alternative for **representing 3D rotations**, avoiding issues like gimbal lock and allowing smooth rotational interpolations. They are widely used in robotics, computer graphics, and aerospace for their efficiency and accuracy in handling rotations.
 
 For an intuitive, visual understanding of quaternions, it is recommended to watch the following engaging videos from the channel **[3Blue1Brown](https://www.youtube.com/@3blue1brown)**:
 
@@ -1340,7 +1352,7 @@ For further understanding of the definition of **Quaternions**, the following co
 
 ---
 
-### 1.1.3.6: Collision Detection using Homogeneous Transforms  
+<!-- ### 1.1.3.6: Collision Detection using Homogeneous Transforms  
 
 In this chapter, we will explore how **collision detection** between robots can be performed using homogeneous transformations. 
 
@@ -1349,20 +1361,19 @@ Watch the following video to see this concept illustrated clearly:
 ![Homogeneous Transforms](https://www.youtube.com/watch?v=WQTnCIhkzNc)
 > Here, you will compute a new homogeneous transformation matrix that describes the relationship between two end-effectors, given two separate transformation matrices ($H_1$ and $H_2$). This new matrix will provide the relative distances $d_x$ and $d_y$ between the two end-effectors. When both $d_x$ and $d_y$ become zero, it indicates that the two robots are in collision.
 >
-><sub> Avoid Collision using Homogeneous Transformations | Robotics 101. YouTube video, 13 July 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc
+><sub> Avoid Collision using Homogeneous Transformations | Robotics 101. YouTube video, 13 July 2022. Available at: https://www.youtube.com/watch?v=WQTnCIhkzNc -->
 
 ---
 
-### 1.1.3.7: Inverse Kinematics of Robots
+### 1.1.3.6: Inverse Kinematics of Robots
 <!-- 
 Inversly as the forward kinematics, inverse kinematics (also called Indirect Geometric Model, IGM) allow us to find the values of the joint positions given the position and orientation of the end-effector relative to the base and the values of all the geometric link parameters. -->
 
-Inverse Kinematics (IK), also known as the **Indirect Geometric Model (IGM)**, allows us to determine the required joint positions (angles and link lengths) based on the desired position and orientation of the robot is end-effector, given the geometric parameters of its links. This process is essentially the opposite of forward kinematics.
+Inverse Kinematics (IK), also known as the **Indirect Geometric Model (IGM)**, allows us to determine the required joint positions (angles and link lengths) based on the desired position and orientation of the robot's end-effector, given the geometric parameters of its links. This process is essentially the opposite of forward kinematics.
 
-**What exactly is Inverse Kinematics, and how can we use it to move a robot from point A to point B?**  
-IK is one of the most intriguing and broadly used concepts in robotics. Simply put, inverse kinematics involves calculating the robot’s joint parameters (such as angles and link lengths) to position its end-effector precisely at a specified location and orientation.
-
-If you have a solid understanding of forward kinematics, inverse kinematics becomes straightforward and intuitive.
+**How can we use IK to move a robot from point A to point B?**  
+**Inverse Kinematics** is one of the most fundamental concepts in robotics that provides a map between the position and orientation of robt's end-effector and the different configurations that can achieve it.
+For serial robots, forward kinematics is a many-to-one map (i.e. many configurations may represent a single pose in Cartesian space). Inverse kinematics as the name suggests is  the inverse map (one-to-many) that maps a given pose of robot's end-effector to different configurations that can achieve it. In this course, we will introduce the inverse kinemtics of a very simple case of 6R robot. 
 
 Watch the following video for a clear introduction to inverse kinematics:
 
@@ -1461,11 +1472,11 @@ $\boxed{\theta_1 = \arctan \frac{y}{x} - \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}}$
 
 ---
 
-### 1.1.3.8: Velocity Kinematics - Meet the Jacobian !
+### 1.1.3.7: Velocity Kinematics - Meet the Jacobian !
 
 Ready to dive deeper into robotics? This section introduces you to one of the coolest concepts in robot motion: the **Jacobian Matrix**! 
 
-Ever wondered how quickly and smoothly a robot is gripper moves in space? Here you will learn exactly how to calculate both the linear and angular velocities of a robot is end-effector. But that is not all—the Jacobian acts like a map , converting **joint velocities** into precise **end-effector movements**. Mastering it means you're unlocking a powerful tool that robotics experts use every day!
+Ever wondered how quickly and smoothly a robot's gripper moves in space? Here you will learn exactly how to calculate both the linear and angular velocities of a robot's end-effector. But that is not all—the Jacobian acts like a map , converting **joint velocities** into precise **end-effector movements**. Mastering it means you're unlocking a powerful tool that robotics experts use every day!
 
 Watch the following video to get an understanding of velocity kinematics and the powerful Jacobian matrix:
 
@@ -1541,7 +1552,7 @@ Check it this video here:
 
 </details>
 
-Now that you have understood the exciting concept of the Jacobian, let is practice calculating it ourselves! Follow along with this detailed solved example in the video below, and then reinforce your skills with some hands-on exercises. Give it a try! 
+Now that you have understood the exciting concept of the Jacobian, let's practice calculating it ourselves! Follow along with this detailed solved example in the video below, and then reinforce your skills with some hands-on exercises. Give it a try! 
 
 ![how to find Jacobian Matrix](https://www.youtube.com/watch?v=EdvAHmIONMs)
 > Detailed example of how to solve jacobian Matrix
@@ -1724,7 +1735,7 @@ For *serial manipulators*, the singular positions result from the **loss of degr
   <summary>Conceptual Questions</summary>
 
 <!-- Question 1 -->
-<p><strong>Question 1: What condition must be satisfied to identify a robot is singularity ? det(J) = ...</strong></p>
+<p><strong>Question 1: What condition must be satisfied to identify a robot's singularity ? det(J) = ...</strong></p>
 <form id="q1-sing">
   <input type="radio" name="q1-sing" value="I"> Identity Matrix<br>
   <input type="radio" name="q1-sing" value="0"> 0<br>
@@ -2061,12 +2072,12 @@ For further understanding of the definition of **Singularities**, the following 
 
 ## 1.1.4 Programming
 
-Let is move on to maybe the most exciting part: applying the kinematics concepts you have learned in code and seeing your robot working right in front of you!
+let's move on to maybe the most exciting part: applying the kinematics concepts you have learned in code and seeing your robot working right in front of you!
 
 *(Please refer to the **Install Webots** section if you haven't installed it yet.)*
 
 
-## **Exercise 1: Dobot Pick-and-Place (Forward Kinematics)** Level: **
+## **Exercise 1: Dobot Pick-and-Place (Forward Kinematics)**
 
 ### Step 1: Setup your environment
 
@@ -2076,7 +2087,7 @@ Let is move on to maybe the most exciting part: applying the kinematics concepts
 4. Navigate to the extracted `dobot_2025/world` folder and select your `.wbt` file.
 
 
-### Step 2: Let is start coding!
+### Step 2: let's start coding!
 
 Once successfully opened, your robot and its environment should appear, as illustrated in the screenshot below:
 
@@ -2106,7 +2117,7 @@ After you have attempted the exercise and want to verify your solution, you can 
 
 ---
 
-## **Exercise 2: IRB Robot Inverse Kinematics (Using IKPy)** Level: *
+## **Exercise 2: IRB Robot Inverse Kinematics (Using IKPy)**
 
 ### Step 1: Coding 
 
@@ -2149,7 +2160,7 @@ If your code is correct, the robot arm will continuously attempt to reach the sp
 
 ## 1.1.5 Credits
 
-This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
+This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, revised by **Durgesh Haribhau Salunkhe, Postdoctoral Researcher, LASA lab, EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
 
 This course uses videos content shared by [Mohammad Zainullah Khan](https://www.zainullah.com/) and closely follows the structure, videos and exercises from [Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html) courses, with some additional videos and conceptual and mathematical exercises.
@@ -2167,7 +2178,7 @@ Once you’ve grasped the basics, you can further strengthen your understanding 
 
 For those looking to deepen their understanding or seeking clear explanations of more complex topics, we also suggest additional short and highly instructive videos by [Prof. Kevin Lynch](https://www.mccormick.northwestern.edu/research-faculty/directory/profiles/lynch-kevin.html), Professor of Mechanical Engineering at Northwestern University. These videos are based on the book "Modern Robotics:  Mechanics, Planning, and Control," by Kevin Lynch and Frank Park, Cambridge University Press 2017. See http://modernrobotics.org for information on the book, free software, and other materials. -->
 
-## 1.1.6 Ressources
+## 1.1.6 Resources
 
 ### Books
 - [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.

@@ -68,25 +68,26 @@ section: 3
 
 </details>
 
-# Force Perception (in Robotics)
+# 2.3 Force Perception (in Robotics)
 
 - Table of Contents
 {:toc}
 
 ---
 
-## Prerequisites
+## 2.3.1 Prerequisites
 
 ⚠️ Adapt in the end ⚠️
 
-- closed-loop control page (controller definition)
-- read course about sensors and sensing
-- read course about kinematics and dynamics
-- basics in electronics (resistance, capacitance, voltage-divider, etc.)
+- Closed-loop control page (controller definition)
+- Read course about sensors and sensing
+- Read course about kinematics and dynamics
+- Basics in electronics (resistance, capacitance, voltage-divider, etc.)
+- Basics in mechanics (Hooke's Law)
 
 ---
 
-## General Motivation
+## 2.3.2 General Motivation
 
 Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to vision page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
 
@@ -225,7 +226,7 @@ Some promising fields in which force perception is used are biomedical robotics 
 
 ---
 
-## Course Content
+## 2.3.3 Course Content
 
 Now that we have seen **why** robots need a sense of touch, we can dive into **how** force perception is implemented.
 
@@ -254,12 +255,6 @@ It is possible to distinguish two types of force perception based on where the s
 On this page, we will move gradually from **force feedback**, which describes interactions occurring at a single point, to **tactile feedback**, where sensing extends across a surface.  
 Although the examples shown in the introduction mainly focused on hands and fingertips, tactile sensing can be applied to the entire body of a robot. However, challenges such as wiring complexity and limited mechanical flexibility must also be addressed.
 
-<!-- This layout mirrors how robots evolve from simply feeling a global contact force to perceiving rich spatial details such as shape, texture and contact distribution. -->
-
-<!-- To explore this, we will start with the classical principles of **force/torque sensing**, then move on to **tactile sensors** and their different working principles.  
-Afterward, we will look at **advanced tactile technologies**, including flexible, stretchable, and vision-based sensors.  
-Finally, we will address how tactile information is processed and how sensor location within the robot influences performance and robustness. -->
-
 ⚠️ Adapt in the end ⚠️
 
 - **Section 2.2.3.1: Force/Torque Sensing**  
@@ -281,9 +276,11 @@ Finally, we will address how tactile information is processed and how sensor loc
 
 ---
 
-### Force/Torque Sensing
+### 2.2.3.1 : Force/Torque Sensing
 
+<!--
 Main ref: [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
+-->
 
 Let’s begin with a quick reminder of the **forces** and **torques** (also called moments) we want to measure. Force is given in Newtons [N] and produces linear movement, whereas torque is given in Newton-meters [Nm] and produces rotational movement. They are both **vector** quantities defined in 3D space, meaning they can be decomposed into components of the orthonormal basis of $\mathbb{R}^3$ (x, y, and z axis).
 
@@ -297,7 +294,7 @@ $$\text{Torque: } \mathbf{M} = (M_{x}, M_{y}, M_{z}) \in \mathbb{R}^3$$
   <figcaption>
     <sub><i>
       Figure 2: Forces and torques acting on sensor 
-      (<a href="https://ieeexplore.ieee.org/document/7992726">U. Kim et al., IEEE</a>)
+      (<a href="https://link.springer.com/chapter/10.1007/978-981-99-1509-5_32">Proceedings of International Conference on Data, Electronics and Computing, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -305,6 +302,31 @@ $$\text{Torque: } \mathbf{M} = (M_{x}, M_{y}, M_{z}) \in \mathbb{R}^3$$
 The goal of **force–torque (F/T) sensing** is to obtain a complete description of all forces and torques exchanged at the contact location. This is possible because the sum of all forces and the sum of all moments acting on the system must be equal to zero (in static equilibrium):
 
 $$ \sum \mathbf{F} = 0 \qquad \sum \mathbf{M} = 0 $$
+
+At this point, we can introduce the **wrench vector** $W$. It represents the complete mechanical interaction at the contact point, combining the force and torque vectors into a single vector in $\mathbb{R}^6$. The wrench is the unknown quantity to be determined in force–torque sensing.
+
+$$
+W =
+\begin{bmatrix}
+F_c \cr
+M_c
+\end{bmatrix}
+\in \mathbb{R}^6,
+\qquad
+F_c = \begin{bmatrix}
+F_x \cr
+F_y \cr
+F_z
+\end{bmatrix},
+\qquad
+M_c = \begin{bmatrix}
+M_x \cr
+M_y \cr
+M_z 
+\end{bmatrix}
+$$
+
+Where $F_c$ and $M_c$ are the force and moment vectors applied at the contact location.
 
 As described earlier, force-torque sensing in robotics relies on intrinsic sensors, which are **embedded** within the robot’s structure. In this chapter, we will have a look at two different F/T sensing approaches: first, dedicated **F/T sensors** that **directly** measure these quantities, and second, **sensorless methods** that estimate forces and torques **indirectly**.
 
@@ -317,13 +339,13 @@ As described earlier, force-torque sensing in robotics relies on intrinsic senso
 
 <form id="quiz-ft">
   <input type="checkbox" name="quiz-ft" value="option1">
-  A force is a vector in $\mathbb{R}^3$ that produces linear motion. <br>
+  Force is a vector in $\mathbb{R}^3$ that produces linear motion. <br>
 
   <input type="checkbox" name="quiz-ft" value="option2">
-  A torque is a rotational quantity measured in Newton-meters [Nm]. <br>
+  Torque is a rotational quantity measured in Newton-meters [Nm]. <br>
 
   <input type="checkbox" name="quiz-ft" value="option3">
-  A force belongs to $\mathbb{R}^6$ because it includes both translational and rotational components. <br>
+  Force belongs to $\mathbb{R}^6$ because it includes both translational and rotational components. <br>
 
   <input type="checkbox" name="quiz-ft" value="option4">
   Both force and torque can be decomposed into components along the three axes of $\mathbb{R}^3$. <br>
@@ -344,20 +366,20 @@ As described earlier, force-torque sensing in robotics relies on intrinsic senso
 
 ---
 
-#### 1.1 Force/Torque Sensors
+#### Force/Torque Sensors
 
-Force sensors are classified based on the number of axes (or degrees of freedom DOF) they measure.
+Force-torque sensors are classified based on the number of axes (or degrees of freedom DOF) they measure.
 
 - **Three-Dimensional Force Sensors (3DOF):**  
   These sensors measure **only forces**, not torques. They provide information about the three translational force components along the $x$, $y$ and $z$ axes. The corresponding wrench vector is:
 
   $$
-  W = [F_x, F_y, F_z]^T
+  W = [F_x, F_y, F_z]^T \in \mathbb{R}^3
   $$
 
   3DOF sensors are used when only translational forces matter. They are often mounted near the end-effector and can for example measure the weight of an object or detect simple contact with a surface.
 
-  <figure style="text-align: center;">
+<figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/3DOF-translation-forces.png' }}"
        width="420"
        alt="Translational forces acting on end-effector">
@@ -366,92 +388,123 @@ Force sensors are classified based on the number of axes (or degrees of freedom 
       Figure 3: Translational forces acting on end-effector. (a) diagonal force, (b) vertical force
     </i></sub>
   </figcaption>
-  </figure>
+</figure>
 
 - **Six-Dimensional Force/Torque Sensors (6DOF):**  
-  These sensors measure both forces and torques, covering the three translational and three rotational axes. Besides pushing or pulling forces, they can also measure bending and twisting effects. The wrench vector they measure is:
+  These sensors measure both **forces and torques**, covering the three translational and three rotational axes. Besides pushing or pulling forces, they can also measure bending and twisting effects. The wrench vector they measure is:
 
   $$
-  W = [F_x, F_y, F_z, M_x, M_y, M_z]^T
+  W = [F_x, F_y, F_z, M_x, M_y, M_z]^T \in \mathbb{R}^6
   $$
 
-**Mechanical Implementation and Sensing Principles**
+**Sensing Principle and Mechanical Implementation:**
 
-The fundamental principle behind the majority of F/T sensors is detecting strain within an elastic element (strain gauge). ...
+The sensing principle of force–torque sensors relies on detecting **strain** (deformation) in an elastic structure. When a force is applied, the elastic structure deforms and this deformation is converted into an electrical signal using strain gauges. By measuring the strain in the structure, the applied force can be determined using **Hooke’s law**. The detail of the mathematical model is shown later.
 
-<!--
-The elastic element is the component that responds directly to the force stimulus. Force measurement is achieved by converting the physical phenomenon—the change in resistance due to strain—into an electrical signal. This is done with the aim of ensuring the elastic element remains within the linear section of the stress-strain curve where Hooke’s law applies.
+Below are examples of elastic structures used in force-torque sensors:
 
-A typical force sensor combines this elastic element with a gauge (like a strain gauge) to measure the degree of compression or strain.
+1) Cross-Beam Structure:  
 
-The material most commonly used for sensing in F/T sensors is silicon, exploiting the piezoresistive effect (the change in resistance of silicon due to strain).
+  The elastic base is shaped like a **crossbar**, consisting of an **inner ring** (central hub) connected to the fixed **outer ring** by flexible supporting beams. The whole piece is machined out of a single piece of material, to ensure high stiffness and to avoid hysteresis.  
 
-The preferred mechanical designs, known as elastomers, include variations of cantilever beams in a cross-beam configuration and parallel structures:
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/cross-beam-structure.png' }}"
+       width="420"
+       alt="Cross-beam force/torque sensor structure with square and round base">
+  <figcaption>
+    <sub><i>
+      Figure 4: Cross-Beam force/torque sensor structure. (a) square base, (b) round base  
+      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al.</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
--->
+  When load is applied to the central hub, the **beams deform** depending on the force direction. Vertical forces ($F_z$) cause the beams to bend up or down, while shear forces and torques induce a complex combination of tension and compression across the different arms of the cross. Below we can observe the effect of a horizontal force $Fx$ and a torque $Mz$ acting on the central hub.
 
-Detail most common mechanical structures:
+<figure style="text-align: center;">
 
-1) Cross-Beam Structures:
+  <div style="display: flex; justify-content: center; gap: 20px;">
 
-<!--
-   - These structures are characterized by an elastic element shaped like a crossbar with strain gauges placed on the cross and flexible supporting beams.
-   - The structure often involves a fixed outer ring and an inner ring where external forces are applied, causing deformation.
-   - They are known for being compact and offering high stiffness due to their monolithic structure. However, they may suffer from coupling effects and are complex to manufacture.
-   - *Visual Reference:* The thesis references Figure 1.5, showing cross-shaped elastic elements. Figure 1.6 shows a finite element analysis of such an element.
--->
+  <div style="flex: 1;">
+    <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/cross-beam-structure-Fx.png' }}"
+         width="300"
+         alt="Deformation due to horizontal force Fx">
+    <figcaption>
+      <sub><i>
+        (a) Deformation due to horizontal force $F_x$
+      </i></sub>
+    </figcaption>
+  </div>
+  <div style="flex: 1;">
+    <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/cross-beam-structure-Mz.png' }}"
+         width="300"
+         alt="Deformation due to moment Mz">
+    <figcaption>
+      <sub><i>
+        (b) Deformation due to moment $M_z$
+      </i></sub>
+    </figcaption>
+  </div>
 
-2) Stewart Platform / Parallel Structures:
+  </div>
 
-<!--
-   - These structures originate from the Stewart platform mechanism.
-   - They consist of an upper platform (mobile platform) and a lower fixed base, connected by six or more elastic members (limbs or measuring branches).
-   - The sensor works by having an external load cause axial strain in the limbs, which is measured by strain gauges.
-   - Advantages include high stiffness due to load distribution and a compact radial structure.
-   - Miniature sensors (around 10 mm in diameter) have been developed using a monolithic Stewart platform structure with flexural joints, especially for applications like Minimally Invasive Robotic Surgery (MIRS).
-   - *Visual Reference:* Figure 3a in the review paper displays a Stewart platform structure. Figure 6a displays a monolithic Stewart platform structure.
--->
+  <figcaption style="margin-top: 8px;">
+    <sub><i>
+      Figure 5: Visualisation of the cross-beam structure deformation  
+      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al.</a>)
+    </i></sub>
+  </figcaption>
 
-**Measurement and Mathematical Model**
+</figure>
 
--> Explain how the value is obtained:
+  **Strain gauges** are directly bonded on the surfaces of the beams to measure their strain.  
 
-Force sensors do not measure force directly. Measuring force is the result of converting physical phenomena (like strain) into an electrical signal.
+2) Stewart Platform (Parallel Structure):  
 
-<!--
-The electrical signal derived from strain gauges (often arranged in a Wheatstone Bridge circuit) is related back to force using a calibration process. Since the design aims for linearity within the material’s operational range, a linear relationship is typically assumed for the mathematical model of the sensor.
+  This structure consists of an **upper mobile** platform and a **lower fixed** base connected by **six legs**. An example of a miniature stewart platform is shown in the next figure.
 
-The theoretical relationship between the force vector $F$ and the resulting strain vector $u$ (where $n$ is the number of strain points and $n \geq 6$) is defined by Hooke’s law:
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/stewart-platform-structure.png' }}"
+       width="240"
+       alt="Monolithic Stewart platform force/torque sensor structure with flexural joints">
+  <figcaption>
+    <sub><i>
+      Figure 6: Example of monolithic Stewart platform structure  
+      (<a href="https://ieeexplore.ieee.org/document/7279538">K. Li, B. Pan et al.</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+  This design distributes the applied load through the structure, causing primarily axial strain (tension or compression) along the longitudinal axis of the limbs. **Strain gauges** are bonded on both sides (front and back) of the legs connecting the two platforms to measure the strain.
+
+**Mathematical Model:**
+
+From the electrical signal obtained from the strain gauges, we can determine the forces and torques acting on the sensor.
+
+Let us first recall **Hooke’s law** in its **one-dimensional** form. It is stating that for an elastic element, the applied force is proportional to its deformation (like a spring):
 
 $$
-F = K \cdot u \quad (1)
+F = k \cdot u
 $$
 
-Where  
-- $F \in \mathbb{R}^6$ represents the force/moment vector,  
-- $K \in \mathbb{R}^{6 \times n}$ is the stiffness matrix,  
-- $u = [u_1, u_2, \dots, u_n]^T$ is the strain vector.
+where $F$ is the applied force, $u$ is the deformation and $k$ is the stiffness of the elastic element.  
 
-For calibration purposes, the relationship between the applied forces and torques ($f$) and the sensor’s raw measurements ($r$, typically in bit counts or voltage output) uses a linear approximation model that incorporates a calibration matrix and an offset.
+*Assumption: The elastic structure stays within the **linear region** of the stress–strain curve, where Hooke’s law applies. This linear relationship is assumed in the mathematical model.*
 
-The most used model for predicting the six-dimensional forces is:
+By extending Hooke’s law to **multiple dimensions**, we can write the relationship between the applied wrench $W$ and the measured strain vector $u$ as follows:
 
 $$
-\mathbf{f} = \mathbf{C}\mathbf{r} + \mathbf{o}
+W = K \cdot u
 $$
 
-In this equation:  
-- $f \in \mathbb{R}^6$ is the 6D force vector (forces and torques).  
-- $C \in \mathbb{R}^{6 \times m}$ is the calibration matrix (in N/bit).  
-- $r \in \mathbb{R}^m$ represents the raw measurements.  
-- $o \in \mathbb{R}^6$ is the offset (or bias) vector.
+where:
+- $W \in \mathbb{R}^6$ is the wrench vector (combining forces and torques)  
+- $K \in \mathbb{R}^{6 \times n}$ is the stiffness matrix of the elastic structure
+- $u = [u_1, u_2, \dots, u_n]^T$ is the vector of strain measurements
+- $n \geq 6$ is the number of strain sensing points (strain gauges)
 
-In the context of linear least-square decoupling used in static calibration, if the sensor output matrix is $U$ and the external load matrix is $F$ (where $k > 6$ is the number of external load components), the calibration matrix $C$ can be calculated as:
-
-$$
-C = F U^T (UU^T)^{-1} \quad (5)
-$$
--->
+The stiffness matrix $K$ depends on the geometry and material properties of the elastic structure.  
+In practice, $K$ is often determined **experimentally** during a **calibration procedure**, by applying known loads to the sensor and measuring the resulting strain.  
 
 ---
 
@@ -543,32 +596,7 @@ This Jacobian describes how a force applied at the contact point generates joint
 
 *3) Computing the contact force*  
 
-To compute the contact force, we need to define the wrench vector:
-
-$$
-W =
-\begin{bmatrix}
-F_c \cr
-M_c
-\end{bmatrix}
-\in \mathbb{R}^6,
-\qquad
-F_c = \begin{bmatrix}
-F_x \cr
-F_y \cr
-F_z
-\end{bmatrix},
-\qquad
-M_c = \begin{bmatrix}
-M_x \cr
-M_y \cr
-M_z 
-\end{bmatrix}
-$$
-
-$F_c$ and $M_c$ are the force and moment vectors applied at the contact location.
-
-Finally we can compute the wrench $W$ by resolving the following equation:
+Finally we can compute the wrench $W \in \mathbb{R}^6$ by resolving the following equation:
 
 $$
 \tau_{\text{ext}} = 
@@ -591,10 +619,10 @@ For example, for an $n$-joint robot, an input vector may look like:
 $$
 x_n = 
 \begin{bmatrix}
-I_1 \ldots I_n \\
-\theta_1 \ldots \theta_n \\
-\dot{\theta}_1 \ldots \dot{\theta}_n \\
-\ddot{\theta}_1 \ldots \ddot{\theta}_n
+I_1, \ldots, I_n, \\
+\theta_1, \ldots, \theta_n, \\
+\dot{\theta}_1, \ldots, \dot{\theta}_n, \\
+\ddot{\theta}_1, \ldots, \ddot{\theta}_n
 \end{bmatrix}^T
 $$
 
@@ -652,7 +680,7 @@ An example of such a neural network is shown in the figure below.
 Advantages and limitations of sensorless force-torque estimation:
 
 - **Advantages:**  
-  Avoids the cost of expensive F/T sensors and reduces hardware complexity
+  Avoids the cost of expensive F/T sensors and reduces hardware complexity.
 
 - **Limitations:**  
   Accuracy depends a lot on the used model precision and friction approximation.
@@ -705,7 +733,7 @@ In the following research, Iskandar, Albu-Schäffer and Dietrich introduce an **
 
 ---
 
-### Tactile Sensing
+### 2.2.3.2 : Tactile Sensing
 
 #### Resistive Sensors
 
@@ -873,29 +901,29 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
 
   <div style="display: flex; justify-content: center; gap: 20px;">
 
-    <div style="flex: 1;">
-      <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/fsr_schematic.png' }}"
-           width="300px"
-           alt="(a) Schematic structure of a force sensing resistor">
-      <figcaption>
-        <sub><i>
-          (a) Schematic of a FSR
-          (<a href="http://www.openmusiclabs.com/learning/sensors/fsr/index.html">OpenMusicLabs</a>)
-        </i></sub>
-      </figcaption>
-    </div>
+  <div style="flex: 1;">
+    <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/fsr_schematic.png' }}"
+         width="300px"
+         alt="(a) Schematic structure of a force sensing resistor">
+    <figcaption>
+      <sub><i>
+        (a) Schematic of a FSR
+        (<a href="http://www.openmusiclabs.com/learning/sensors/fsr/index.html">OpenMusicLabs</a>)
+      </i></sub>
+    </figcaption>
+  </div>
 
-    <div style="flex: 1;">
-      <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/fsr_interlink.png' }}"
-           width="300px"
-           alt="(b) Commercial Interlink FSR">
-      <figcaption>
-        <sub><i>
-          (b) Commercial FSR from Interlink Electronics  
-          (<a href="https://www.interlinkelectronics.com/fsr-400-series">FSR-400 Series</a>)
-        </i></sub>
-      </figcaption>
-    </div>
+  <div style="flex: 1;">
+    <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/fsr_interlink.png' }}"
+         width="300px"
+         alt="(b) Commercial Interlink FSR">
+    <figcaption>
+      <sub><i>
+        (b) Commercial FSR from Interlink Electronics  
+        (<a href="https://www.interlinkelectronics.com/fsr-400-series">FSR-400 Series</a>)
+      </i></sub>
+    </figcaption>
+  </div>
 
   </div>
 
@@ -1358,7 +1386,7 @@ tactile sensing 5.2.7 – 5.2.8
 
 ---
 
-### Advanced Tactile Sensing
+### 2.2.3.3: Advanced Tactile Sensing
 
 Now that we have seen different tactile sensing technologies, let’s take a closer look at some more advanced tactile sensors.
 
@@ -1433,7 +1461,7 @@ Stretchable tactile sensors must withstand **large strain** (tens to hundreds of
 
 ---
 
-### Issues and Difficulties
+### 2.2.3.4 : Issues and Difficulties
 
 <!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) -->
 
@@ -1518,7 +1546,7 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 
 
-## Credits
+## 2.3.4 Credits
 <!-- List all the sources that you used to create the page   -->
 
 - [Handbook of Robotics, Springer](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20) (Chapter 19. Force and Tactile Sensors)
@@ -1527,7 +1555,7 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 - [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
 
-## Additional Resources
+## 2.3.5 Additional Resources
 
 ### Videos
 

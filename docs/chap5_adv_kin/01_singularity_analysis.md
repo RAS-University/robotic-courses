@@ -3,9 +3,23 @@ title: "5.1 Singularity analysis"
 parent: "Chapter 5: Advanced Kinematics"
 has_children: false
 nav_order: 1
-layout: default
+layout: numbered
 math: mathjax
+chapter: 5
+section: 1
 ---
+<a name="top"></a>
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
+
+# Singularity analysis
+- Table of Contents
+{:toc}
+
+## Prerequisites
+## General Motivation
+## Course Content
+
+### General Concepts
 
 - [Section 1. Introduction to singularities](singularities/01_introduction)
 - [Section 2. Singularities in Parallel Robots: Screw Theory](singularities/02_serial_geometric)
@@ -26,3 +40,6 @@ math: mathjax
 - T. Yoshikawa, “Manipulability of Robotic Mechanisms,” IJRR, 1985.
 - R. Murray, Z. Li, S. Sastry, A Mathematical Introduction to Robotic Manipulation, CRC.
 
+## Credits
+
+## Ressources

@@ -2,7 +2,7 @@
 title: "Chapter 0: Mathematical Foundation"
 parent: "Robotics Foundation"
 has_children: false
-layout: default
+layout: numbered
 math: mathjax
 nav_order: 0
 ---

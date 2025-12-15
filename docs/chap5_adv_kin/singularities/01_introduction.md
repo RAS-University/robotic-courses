@@ -1,6 +1,6 @@
 ---
 title: "Section 1. Introduction to singularities"
-layout: default
+layout: numbered
 math: mathjax
 grand_parent: Courses
 parent: Advanced Kinematics

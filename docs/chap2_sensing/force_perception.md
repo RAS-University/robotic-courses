@@ -3,8 +3,10 @@ title: 2.3 Force Perception
 parent: "Chapter 2: Sensing in Robotics"
 has_children: false
 nav_order: 3
-layout: default
+layout: numbered
 author: Mael Studer (EPFL)
+chapter: 2
+section: 3
 ---
 
 <!-- Link external JavaScript file -->
@@ -12,30 +14,6 @@ author: Mael Studer (EPFL)
 
 <!-- Back-To-Top Button -->
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgba(0, 0, 0, 1);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 <!-- Question templates -->
@@ -90,14 +68,14 @@ author: Mael Studer (EPFL)
 
 </details>
 
-# 2.3 Force Perception (in Robotics)
+# Force Perception (in Robotics)
 
 - Table of Contents
 {:toc}
 
 ---
 
-## 2.3.1 Prerequisites
+## Prerequisites
 
 ⚠️ Adapt in the end ⚠️
 
@@ -108,7 +86,7 @@ author: Mael Studer (EPFL)
 
 ---
 
-## 2.3.2 General Motivation
+## General Motivation
 
 Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to vision page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
 
@@ -247,7 +225,7 @@ Some promising fields in which force perception is used are biomedical robotics 
 
 ---
 
-## 2.3.3 Course Content
+## Course Content
 
 Now that we have seen **why** robots need a sense of touch, we can dive into **how** force perception is implemented.
 
@@ -303,7 +281,7 @@ Finally, we will address how tactile information is processed and how sensor loc
 
 ---
 
-### 2.2.3.1 : Force/Torque Sensing
+### Force/Torque Sensing
 
 Main ref: [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
 
@@ -727,7 +705,7 @@ In the following research, Iskandar, Albu-Schäffer and Dietrich introduce an **
 
 ---
 
-### 2.2.3.2 : Tactile Sensing
+### Tactile Sensing
 
 #### Resistive Sensors
 
@@ -1380,7 +1358,7 @@ tactile sensing 5.2.7 – 5.2.8
 
 ---
 
-### 2.2.3.3: Advanced Tactile Sensing
+### Advanced Tactile Sensing
 
 Now that we have seen different tactile sensing technologies, let’s take a closer look at some more advanced tactile sensors.
 
@@ -1455,7 +1433,7 @@ Stretchable tactile sensors must withstand **large strain** (tens to hundreds of
 
 ---
 
-### 2.2.3.4 : Issues and Difficulties
+### Issues and Difficulties
 
 <!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) -->
 
@@ -1540,7 +1518,7 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 
 
-## 2.3.4 Credits
+## Credits
 <!-- List all the sources that you used to create the page   -->
 
 - [Handbook of Robotics, Springer](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20) (Chapter 19. Force and Tactile Sensors)
@@ -1549,7 +1527,7 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 - [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
 
-## 2.3.5 Additional Resources
+## Additional Resources
 
 ### Videos
 

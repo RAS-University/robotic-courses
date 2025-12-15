@@ -3,8 +3,10 @@ title: 4.1 Graph Theory
 parent: "Chapter 4: Advanced Mathematical Foundations"
 has_children: false
 nav_order: 1
-layout: default
+layout: numbered
 math: mathjax
+chapter: 4
+section: 1
 ---
 <style>
 .algorithm {
@@ -87,32 +89,9 @@ math: mathjax
 code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 </style>
 
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# 4.1 Graph Theory
+# Graph Theory
 - Table of Contents
 {:toc}
 
@@ -130,7 +109,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 ---
 
-## 4.1.1 Prerequisites
+## Prerequisites
 - **Basic Set Theory**  
   Sets, subsets, unions, intersections, Cartesian products, and relations.
 - **Data Structures**  
@@ -335,7 +314,7 @@ With these tools in hand, we can now analyze the complexity of the graph algorit
 ---
 
 
-## 4.1.2 General Motivation
+## General Motivation
 
 Before introducing formal definitions, it is useful to understand why graphs arise so naturally in robotics and algorithmic reasoning. Many real-world systems, from transportation to autonomous navigation, can be expressed as collections of states and possible transitions. Graph theory provides the mathematical language for studying these relationships and describing how information or motion can flow through a system.
 
@@ -380,9 +359,9 @@ These examples highlight how diverse systems can be described using the same gra
 
 
 
-## 4.1.3 Course Content
+## Course Content
 
-### 4.1.3.1 Basic Definitions
+### Basic Definitions
 
 To formalize the intuitions built from real-world examples, we now introduce the core definitions of graph theory. These definitions establish the vocabulary used for describing connectivity, relationships, and structure within a system, and they serve as the basis for later algorithmic analysis.
 
@@ -587,7 +566,7 @@ In summary, this chapter introduced the essential components of a graph, vertice
 
 ---
 
-### 4.1.3.2 Graph Representations
+### Graph Representations
 
 Once a graph is defined mathematically, the next question is how to store it efficiently in a computer. Different applications require different operations, fast lookups, memory-efficient storage, or quick neighbor traversal, and the chosen data structure strongly influences algorithmic performance. This chapter compares the three standard representations used in practice.
 
@@ -908,7 +887,7 @@ Constant-time edge lookup is important, and matrix-based algorithms operate natu
 
 ---
 
-### 4.1.3.3 Traversal and Search
+### Traversal and Search
 
 Graph traversal algorithms reveal the structure of a graph by visiting vertices according to specific rules. These methods form the backbone of motion planning, routing, and connectivity analysis. In this chapter, we examine several classical strategies, starting from uninformed exploration and progressing toward informed, cost-aware search.
 Once a graph is defined, we can explore it systematically using *search algorithms*. Traversal algorithms visit nodes according to specific rules, allowing us to enumerate vertices, discover components, or find optimal paths between nodes. Although many variants exist, two of the most fundamental search paradigms are breadth-first and depth-first exploration.
@@ -1402,11 +1381,11 @@ Together, BFS, DFS, Dijkstra, and A* illustrate a progression from uninformed to
 
 ---
 
-## 4.1.4 Credits:
+## Credits:
 
 This course page was created by **Hanka Goralija, EPFL** under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**.
 
-## 4.1.5  References
+## References
 
 1.  <a id="ref1"></a>Dijkstra, E. W. (1959). *A note on two problems in connexion with graphs.* Numerische Mathematik, 1(1), 269–271.
 2.  <a id="ref2"></a>Hart, P. E., Nilsson, N. J., & Raphael, B. (1968). *A Formal Basis for the Heuristic Determination of Minimum Cost Paths.* IEEE Transactions on Systems Science and Cybernetics, 4(2), 100–107.

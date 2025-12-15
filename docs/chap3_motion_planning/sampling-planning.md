@@ -2,9 +2,11 @@
 title: 3.1 Sampling-Based Planning
 parent: "Chapter 3: Motion Planning and Navigation"
 nav_order: 1
-layout: default
+layout: numbered
 has_children: false
 math: mathjax
+chapter: 3
+section: 1
 ---
 <style>
 .algorithm {
@@ -52,32 +54,9 @@ math: mathjax
 code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 </style>
 
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# 3.1 Sampling-Based Planning
+# Sampling-Based Planning
 - Table of Contents
 {:toc}
 
@@ -85,13 +64,13 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 
 
-## 3.1.1 Books
+## Books
 - *Planning Algorithms* – Steven LaValle (2006) [Free Online](http://lavalle.pl/planning/)
 - *Sampling-Based Motion Planning: A Comparative Review* – Andreas Orthey, Constantinos Chamzas, Lydia E. Kavraki, arXiv:2309.13119 [cs.RO], 2023. [arXiv link](https://arxiv.org/abs/2309.13119) 
 
 ---
 
-## 3.1.2 Prerequisites
+## Prerequisites
 - [Basic probability theory](../mathematical-foundation)
 - [Robot kinematics and configuration space](../kinematics)
 - [Graph search algorithms](../advanced_math/graph-theory)
@@ -99,11 +78,11 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 ---
 
-## 3.1.3 General Motivation
+## General Motivation
 
-## 3.1.4 Course Content
+## Course Content
 
-### 3.1.4.1: Introduction
+### Introduction
 <!-- ## The Planner's Mind - A Story of Representation -->
 
 At its heart, motion planning asks a simple question: how does a robot decide to move from point A to point B without hitting anything? While the question seems straightforward, the answer is profoundly complex. For a robot with many joints, the number of possible positions - its "configuration space" - is astronomically large. The key to solving this intractable problem lies not in brute force, but in intelligent representation: the art of simplifying a complex physical world into an abstract map that a computer can understand. To explore this foundational idea, we will begin with a classic, intuitive example: a small, wheeled robot navigating a 2D maze.
@@ -149,7 +128,7 @@ This abstraction is visualized below, showing how a continuous physical space is
 
 This is a monumental leap. The robot's problem is no longer about navigating a physical space; it's about finding a path within this abstract network. This representation is the common language for nearly all planning algorithms that follow.
 
-### 3.1.4.2: History of Sampling Motion Planning[<a href="#ref1">1</a>]
+### History of Sampling Motion Planning[<a href="#ref1">1</a>]
 
 With our graph representation in hand, we can now explore the history of motion planning, using our maze to understand how different strategies evolved.
 
@@ -368,7 +347,7 @@ Extend the 2-DoF results to a 4-DoF planar arm using the same $\Delta\theta=0.01
 
 Question for Students: "If a robot arm has 6 joints, and we want to represent each joint's position with 360 discrete steps (one for each degree), how many total cells would our grid have? Why is this a problem for a computer?" -->
 
-### 3.1.4.3: Sampling-Based Methods
+### Sampling-Based Methods
 
 Since we can't possibly map out the entire C-space, what if we don't even try? This is the fundamental shift in thinking that leads to Sampling-Based Motion Planning (SBMP). Instead of exhaustively checking every possible location, we can simply generate random configurations in the C-space and check if they are valid (i.e., not in collision).
 
@@ -1119,7 +1098,7 @@ We’ll also discuss different variations and extensions designed to improve per
 
 
 
-### 3.1.4.4: The Roadmap Approach: Probabilistic Roadmaps (PRM)
+### The Roadmap Approach: Probabilistic Roadmaps (PRM)
 
 The first major algorithm built on this sampling paradigm is the Probabilistic Roadmap (PRM)[<a href="#ref9">9</a>].  
 Its philosophy is simple and powerful: 
@@ -1322,7 +1301,7 @@ They are of the same order; tuning $k$ and $r$ offers similar densities with dif
 
 ---
 
-### 3.1.4.5: The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
+### The Tree-Growing Approach: Rapidly-Exploring Random Trees (RRT)
 
 What if we only need to find a single path quickly, and don’t want to spend time building a comprehensive map of the whole space? This is the problem the Rapidly-Exploring Random Tree (RRT)[<a href="#ref11">11</a>] algorithm solves. Its philosophy is: 
 
@@ -1503,7 +1482,7 @@ PRM builds a *roadmap* of the entire space; RRT grows a *tree* from the start.
 
 ---
 
-### 3.1.4.6: Planning for Optimality
+### Planning for Optimality
 
 The paths found by PRM and RRT are feasible, but they are rarely good. Due to their random nature, the resulting paths are often jagged, inefficient, and unnatural. In many applications, especially in robotics, finding a path that is short, smooth, or energy-efficient is just as important as finding a path at all.
 
@@ -1948,20 +1927,20 @@ The path through $ q_{\text{new}} $ increases the total cost, so the existing pa
 * Use **PRM\*** when: you are building a high-quality global map (e.g., industrial cells).
 
 ---
-### 3.1.4.7 Final Project
+### Final Project
 - Implement and compare RM, RRT, RRT on a chosen benchmark.  
 - Evaluate success rate, runtime, and path quality.  
 - Extend to one special case (kinodynamic, narrow passage, or uncertainty).  
 
 ---
 
-## 3.1.5 Credits:
+## Credits:
 
 This course page was created by **Hanka Goralija, EPFL** under the supervision of **Prof. Aude Billard**, and funded by **IEEE RAS** and **EPFL**.  
 
 ---
 
-## 3.1.6 References
+## References
 
 1. <a id="ref1"></a>Orthey, A., Chamzas, C., & Kavraki, L. E. (2023). *Sampling-Based Motion Planning: A Comparative Review.* arXiv preprint arXiv:2309.13119 [cs.RO]. Available at: [https://arxiv.org/abs/2309.13119](https://arxiv.org/abs/2309.13119)
 

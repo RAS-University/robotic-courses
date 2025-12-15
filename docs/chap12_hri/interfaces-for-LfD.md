@@ -3,16 +3,21 @@ title: 12.1 Interfaces for Learning from Human Demonstrations
 parent: "Chapter 12: Human-Robot Interaction"
 has_children: false
 nav_order: 1
-layout: default
+layout: numbered
 math: mathjax
+chapter: 12
+section: 1
 ---
 
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
+<a name="top"></a>
+<a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 # Interfaces for Learning from Human Demonstrations
-
-*Table of Contents*
+- Table of Contents
+{:toc}
+<!-- *Table of Contents*
 - [1. General Motivation](#1-general-motivation)
 - [2. Course Content](#2-course-content)
   - [2.1: Types of Interfaces](#chapter-1-types-of-interfaces)
@@ -30,7 +35,7 @@ math: mathjax
 - [Resources](#resources)
   - [Books](#books)
   - [Papers](#papers)
-- [Additional Resources](#additional-resources)
+- [Additional Resources](#additional-resources) -->
 
 <br>
 
@@ -40,13 +45,13 @@ math: mathjax
 
 ><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA](http://lasa.epfl.ch]) - YouTube video, Apr 2008.</sub>
 
-## 1. General Motivation
+## General Motivation
 [
 Learning from demonstration](https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfD) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *[correspondence problem](https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfD#challenges-of-learning-from-demonstration)*. To solve this discrepancy between the human body and the robot body, we need **interfaces**. This course gives a brief overview of the various popular interfaces, underlying in each case the pros and cons of each interface.
 
-## 2. Course Content
+## Course Content
 
-### 2.1 Types of Interfaces
+### Types of Interfaces
 
 Interfaces used to gather data from humans for teaching the robots revolve around three main themes:
 > - **Teleoperation:** User controls the robot through the interface and teleoperates the robot with some distance.
@@ -54,12 +59,12 @@ Interfaces used to gather data from humans for teaching the robots revolve aroun
 > - **Observational learning:** Robot learns from observation of the demonstration (not necessarily through vision systems like cameras but also through motion capture systems).
 Each of these methods has its own advantages and disadvantages. We will go through each of them in more details.
 
-#### 2.2 **Tele-operation:**
+### Tele-operation:
 In teleoperation, users control robots remotely through a designated interface. The quality of both learning and task performance depends heavily on two factors: the <ins>_user-friendliness of the design_</ins> of the interface and the <ins>_operator’s expertise_</ins>. Effective teleoperation requires that the human operator not only be skilled but also have a solid understanding of the device they are using. As such, the interface should be user friendly, while being effective, two goals that can be conflicting.
 
 As a result, current research has split into two main directions. The first focuses on developing simple interfaces that require little to no pretraining; however, these interfaces restrict the range and complexity of behaviors that can be taught to the robot. The second trend explores more sophisticated interfaces that offer greater expressive power. Although these interfaces demand more training time for the human operator, they enable the robot to learn significantly more complex tasks.
 
-##### **2.2.1 Graphical user interface/Tablet**
+#### Graphical user interface/Tablet
 The simplest interface that can be used is a tablet. It is very user-friendly, as almost everyone knows how to use one these days. Moreover, tablets are relatively inexpensive and can be easily integrated into existing setups. They can even come in the form of smartphones, which nearly everyone owns today.
 <br>
 Tablets have been used since the 1990s, and they have become more capable with the advancements of modern devices. Yet, they remain a simple system. The user can communicate the desired motion by mimicking it on the tablet or by indicating a desired target.
@@ -117,7 +122,7 @@ In the right example, the user controls the robot to pick up different objects. 
 </details>
 
 
-##### **2.2.2 Joysticks**
+#### Joysticks
 
 With this interface, the user controls the robot’s end-effector using a 3-DOF or 6-DOF joystick. With a 6-DOF joystick, both the position and orientation of the end-effector, encompassing all its degrees of freedom, are controlled by the user. Note that the user is not directly controlling the joints; instead, they control the translation and orientation of the end-effector, which implicitly allows control of the tool being held. This is achieved through inverse kinematics, as the user relies on the robot’s internal controller to perform the necessary inverse kinematics computations.
 <br>
@@ -242,7 +247,7 @@ In the example above, a helicopter is taught to perform very complex maneuvers. 
 
 <br>
 
-##### **2.2.3. Exoskeletons**
+#### Exoskeletons
 
 An exoskeleton consists of a wearable mechanism that can measure the displacement, and at times, the forces generated by the operator. To demonstrate a task lies in that there is a direct mapping between the user’s body (arms or legs) and the robot’s body. For example, in the video below, the user guides the robot’s arms directly with their own arms. 
 
@@ -315,7 +320,7 @@ Some exoskeletons (though not all) render the contact forces, meaning that when 
 
 <br>
 
-##### **2.2.4. Haptic interfaces**
+#### Haptic interfaces
 Haptic interfaces transmit the forces applied by the user so they can be executed at the end effector. They also render the forces perceived by the robot back to the user. In the video below, a typical haptic device can be seen. This device is one of the earliest models, allowing the user to control the position and orientation of the endpoint, as well as the force. Thus, it both transmits and renders force.
 <br>
 This device operates as a closed-loop system and introduces delays. The delay depends first on the distance between the user and the endpoint, and second on the type of communication used. Typically, this delay ranges between 100 ms and 400 ms. However, it can be much longer depending on the distance. Such delays can lead to incorrect responses and unstable behavior.
@@ -432,7 +437,7 @@ Footage from Adam Savage's Tested + ShadowRobot Company and Syntouch. YouTube vi
 
 <br>
 
-#### **2.3 Kinesthetic Teaching** 
+### Kinesthetic Teaching 
 In kinesthetic teaching, the teacher physically moves the robot. This is possible due to the robot’s backdrivability. The robot is completely compliant to the user’s motion. The advantage is that the user interacts directly with the robot’s feasible workspace. Forces applied by the user are transmitted directly to the robot, and the user can directly sense the forces involved in the task. Once the user has trained the robot, the robot can then reproduce the task and generalize.
 <br>
 Kinesthetic teaching is particularly well suited for transmitting information about tasks that require accurate force control. The forces applied by the user are transmitted directly to the robot, and the user can directly sense the forces involved in the task.
@@ -532,8 +537,8 @@ Regarding the limitations, it is still cumbersome. The user, with only two arms,
 <script src="quiz.js"></script>
 
 
-#### **2.4. Observational Learning:**
-##### **2.4.1. Vision Systems**
+### Observational Learning:
+#### Vision Systems
 In vision systems, RGB-D cameras are used and body motion is reconstructed automatically. In the example below, the motion of a human hand is tracked. The hand’s motion is reconstructed at high speed and transmitted directly to the robot. This is advantageous because the user does not need to wear any equipment; they simply demonstrate the tasks by performing them. This allows users to perform tasks in a natural manner. It is one of the ideal approaches because it does not require complex hardware; essentially only a camera is needed.
 <br>
 The difficulty lies in interpreting the scene from the camera’s point of view, making the challenge primarily algorithmic. Another issue is that the user must learn which motions are transmitted accurately and which are not. There is no force rendering in this setup. The system is purely visual, but it can still be quite powerful.
@@ -582,7 +587,7 @@ Another disadvantage is that the setup can be slow, as live analysis of camera i
 <script src="quiz.js"></script>
 
 
-##### **2.4.2. Motion Capture Systems**
+#### Motion Capture Systems
 In motion capture systems, markers attached to body parts are tracked by infrared cameras at high resolution. These systems directly convey the dynamics of the motion (embodied transmission). In the example below, observational learning is performed for full-body motion. These systems allow control of all joints. An interesting aspect, as seen in the example below, is that the human and the robot can be of different sizes. Control is done at the joint level: the human’s joints correspond to the robot’s joints, and the mapping between them is accessible.
 
 <!--
@@ -629,7 +634,7 @@ In both vision systems and motion capture systems, obstruction results in the lo
 
 <br>
 
-##### **2.4. Applications for Telepresence**
+### Applications for Telepresence
 The interfaces we listed above can be used also in a larger context, not necessarily aimed at teaching robots. One such example is telepresence, namely to enable a human operator to perform tasks remotely via a robotic systems. Examples include operations in radioactive environments, search-and-rescue missions, or any other tasks carried out in dangerous settings. 
 <br>
 Teleoperation in such situations requires great precision and care. As a result, it becomes necessary to render certain aspects of the environment for the operator. This introduces communication challenges, i.e. delays. Greater distance between the robot and the operator results in longer delays. Delays of several hours can occur in space missions where a robot is teleoperated from Earth. These are issues that must be addressed in this field.
@@ -702,15 +707,15 @@ In such operations, transmission delays can be extremely detrimental. In fact, o
 -->
 
 
-### Credits:
+## Credits:
 <!-- List all the sources that you used to create the page   -->
 This course page is based on the content of the second lecture (Lecture 02: Acquiring Data for Learning) of the course ["MICRO-462, Learning and Adaptive Control for Robots"](https://edu.epfl.ch/coursebook/fr/learning-and-adaptive-control-for-robots-MICRO-462), taught at EPFL by Professor [Aude Billard](https://people.epfl.ch/aude.billard). It also benefitted from input from Dr. Ahalya Prabhakar.
 
-### Resources:
-#### **Books**:
+## Resources:
+### Books:
 1. [Billard, A., Mirrazavi, S., & Figueroa, N. (2022). Learning for adaptive and reactive robot control: A dynamical systems approach. MIT Press.](https://mitpress.mit.edu/9780262046169/learning-for-adaptive-and-reactive-robot-control/)
 
-#### **Papers**:
+### Papers:
 1. S. M. Khansari-Zadeh, K. Kronander, and A. Billard, “Learning to playminigolf: A dynamical system-based approach,” Adv. Robot., vol. 26,no. 17, pp. 1967–1993, 2012. [Online]
 2. Yue Peng Toh, Shan Huang, Joy Lin, Maria Bajze, Garth Zeglin, Nancy S. Pollard (2012). Dexterous TeleManipulation With a Multi-Touch Interface. 2012 12th IEEE-RAS International Conference on Humanoid Robots, 8.
 3. P. Birkenkampf, D. Leidner and C. Borst, "A knowledge-driven shared autonomy human-robot interface for tablet computers," 2014 IEEE-RAS International Conference on Humanoid Robots, Madrid, Spain, 2014, pp. 152-159, doi: 10.1109/HUMANOIDS.2014.7041352.

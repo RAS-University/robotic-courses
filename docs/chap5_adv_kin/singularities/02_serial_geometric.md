@@ -1,6 +1,6 @@
 ---
 title: "Section 2. Singularity analysis in Serial Robots"
-layout: default
+layout: numbered
 math: mathjax
 grand_parent: Courses
 parent: Advanced Kinematics

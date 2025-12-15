@@ -3,46 +3,24 @@ title: 6.4 Force control
 parent: "Chapter 6: Advanced Control"
 has_children: false
 nav_order: 4
-layout: default
+layout: numbered
 math: mathjax
+chapter: 6
+section: 4
 ---
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# 6.4 Force Control
+# Force Control
 
 - Table of Contents
 {:toc}
 
-## 6.4.1 Prerequisites
+## Prerequisites
 * Linear Algebra and multivariable calculus
 * Classical mechanics
 * Control theory:
@@ -53,7 +31,7 @@ math: mathjax
   - Joint-space vs. task-space 
   - Kinematics and dynamics
 
-## 6.4.2 General Motivation
+## General Motivation
 ![Overview](https://youtu.be/mGuDXlZEoSc)
 ><sub>*Northwestern Robotics (2018) Modern Robotics, Chapter 11.1: Control System Overview. YouTube video, 16 March. Available at: https://www.youtube.com/watch?v=mGuDXlZEoSc*</sub>
 >
@@ -163,9 +141,9 @@ const correctMapping = {
 
 </details>
 
-## 6.4.3 Course Content
+## Course Content
 
-### 6.4.3.1 : Interaction control overview
+### Interaction control overview
 While motion control focuses on following a desired trajectory regardless of external contact, force control aims to regulate how much force is exchanged between the robot and its environment. This raises a fundamental question: how does the robot respond to forces during contact? There are two broad paradigms for addressing this:
 
 * **Passive interaction control:** The trajectory of the end-effector is driven by the interaction forces due to the inherent nature or compliance of the robot (i.e., internally, such as joints, servo, joints, etc.). In passive control, the end-effector’s motion naturally deflects under force, as in soft robots. But, this lacks flexibility (every specific task might require a special end-effector to be designed and it can also have position and orientation deviations)​ and high contact forces could occur because there is no force measurement. 
@@ -447,7 +425,7 @@ $$
 </details>
 
 
-### 6.4.3.2: Active interaction control
+### Active interaction control
 Active interaction control strategies can be grouped into two categories: those performing indirect force control and those performing direct force control. The main difference is that indirect methods regulate interaction forces through motion behaviors without explicitly closing a force feedback loop whereas direct force control explicitly commands and tracks contact forces through sensor-based feedback.
 
 #### Indirect Force Control
@@ -1422,7 +1400,7 @@ direction which is nominally constrained in motion)
 </details>
 
 
-### 6.4.3.3 Programming exercise
+### Programming exercise
 Now that you’ve explored the theory behind interaction control, it’s time to bring it to life in simulation. You’ll get hands-on experience applying active force control to a simplified robot model — and see how your controller responds to real-time contact dynamics.
 *(Please refer to the **Install Webots** section if you haven't installed it yet.)*
 
@@ -1574,7 +1552,7 @@ self.leg_actuator.setForce(impedance_force)
 -->
 
 
-### 6.4.3.4 Summary exercise
+### Summary exercise
 
 <html lang="en">
 <head>
@@ -1738,7 +1716,7 @@ self.leg_actuator.setForce(impedance_force)
 </body>
 </html>
 
-### 6.4.3.5 Do you want to implement a real project ?
+### Do you want to implement a real project ?
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/Force/github.jpg" alt="https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master">
   <figcaption><em>Robotic Arm Hybrid Position Force Control<br><sub>Chen, S. (n.d.) 2-Linkages Robotic Arm Hybrid Position/Force Control. GitHub repository. Available at: https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control</sub></em></figcaption>
@@ -1746,7 +1724,7 @@ self.leg_actuator.setForce(impedance_force)
 
 For those interested in applying the concepts introduced in this course, the [2-Linkages Robotic Arm Hybrid Position/Force Control project](https://github.com/SamoaChen/2-Linkages-Robotic-Arm-Hybrid-Position-Force-Control/tree/master) provides an example of a system simple enough to be designed and implemented independently. It illustrates how hybrid position/force control can be realized on a basic two-joint robotic arm, offering a concrete starting point for translating theoretical knowledge into hands-on experimentation.
 
-## 6.4.4 Credits  
+## Credits  
 
 This course was created by Salim Boussofara and Aude Billard, and funded by **IEEE RAS** and **EPFL**.  
 
@@ -1761,7 +1739,7 @@ It has also been inspired by:
 
 
 
-## 6.4.5 Ressources
+## Ressources
 **Want to learn more ? --> Free Online Courses**
 
 If you’re interested in a deeper exploration of force control, hybrid control, and interaction dynamics, check out this excellent university-level material:

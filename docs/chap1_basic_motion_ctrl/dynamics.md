@@ -2,40 +2,18 @@
 title: 1.2 Dynamics
 parent: "Chapter 1: Basics of Motion Control"
 has_children: false
-layout: default
+layout: numbered
 nav_order: 2
+chapter: 1
+section: 2
 ---
 
 <script src="../questions.js"></script>
 
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# 1.2 Dynamics 
+# Dynamics 
 
 
 <!-- bundle exec jekyll serve -->
@@ -43,7 +21,7 @@ nav_order: 2
 - Table of Contents
 {:toc}
 
-## 1.2.1 Prerequisites
+## Prerequisites
 To get the most out of this **Dynamics module**, it is strongly recommended that you have already completed the course:
 
  **[Kinematics](kinematics)**  
@@ -60,7 +38,7 @@ These prerequisites are essential because dynamics connects the dots between mot
 
 ---
 
-## 1.2.2 General Motivation
+## General Motivation
 
 
 How do robots jump over gaps, crawl under obstacles, or balance on one leg?
@@ -95,10 +73,10 @@ If you want to make robots that **move like athletes**, **adapt like animals**, 
 
 ---
 
-## 1.2.3 Course Content
+## Course Content
 
 
-### 1.2.3.0: Why Dynamics?
+### Why Dynamics?
 > - Motivation: Why kinematics is not enough  
 > - What dynamics adds: Forces, torques, and real-world behavior  
 > - Examples: Balancing, jumping, slipping, and interacting with the world
@@ -178,7 +156,7 @@ If kinematics gives us a **map**, dynamics gives us the **engine** that drives t
 
 ---
 
-### 1.2.3.1 (Part1): The Lagrangian Formulation of Dynamics 
+### (Part1) The Lagrangian Formulation of Dynamics 
 > - Generalized coordinates and velocities  
 > - Kinetic and potential energy of robotic systems  
 > - Euler–Lagrange equations  
@@ -332,7 +310,7 @@ You can think of forward and inverse dynamics like this:
 
 ---
 
-### 1.2.3.1 (Part2): The Lagrangian Formulation of Dynamics 
+### (Part2) The Lagrangian Formulation of Dynamics 
 ![Lagrangian Part 2](https://www.youtube.com/watch?v=BjD-pL819LA)  
 ><sub>Modern Robotics, Chapter 8.1: Lagrangian Formulation of Dynamics (Part 2 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=BjD-pL819LA</sub>
 
@@ -768,7 +746,7 @@ $$
 
 ---
 
-### 1.2.3.2: Understanding the Mass Matrix {#ch2-mass-mx}
+### Understanding the Mass Matrix {#ch2-mass-mx}
 > - Deriving the mass matrix from kinetic energy  
 > - Properties: Symmetry, positive-definiteness, configuration dependence  
 > - Example: Two-link planar robot
@@ -1026,7 +1004,7 @@ The mass matrix \$M(\theta)\$ is diagonal, so the principal axes of the ellipse 
 
 ---
 
-### 1.2.3.3 (Part1): Dynamics of a Single Rigid Body {#ch3-single}
+### (Part1) Dynamics of a Single Rigid Body {#ch3-single}
 > - Newton-Euler equations for a free rigid body  
 > - Linear and angular momentum  
 > - Inertia tensor and spatial representation
@@ -1250,7 +1228,7 @@ These equations form the **building blocks** for modeling full robot dynamics us
 
 </details>
 
-### 1.2.3.3 (Part2): Dynamics of a Single Rigid Body – Spatial Inertia and Equations of Motion
+### (Part2) Dynamics of a Single Rigid Body – Spatial Inertia and Equations of Motion
 
 ![dyn of single rigid body 2](https://www.youtube.com/watch?v=2rUWVdslaI4)  
 ><sub>Modern Robotics, Chapter 8.2: Dynamics of a Single Rigid Body (Part 2 of 2). YouTube video. Available at: https://www.youtube.com/watch?v=2rUWVdslaI4</sub>
@@ -1539,7 +1517,7 @@ $$
 
 ---
 
-### 1.2.3.4: Inverse Dynamics with Newton-Euler
+### Inverse Dynamics with Newton-Euler
 > - Recursive Newton-Euler algorithm  
 > - Computing joint torques given a motion  
 > - Efficiency advantages for real-time control
@@ -2407,7 +2385,7 @@ The apparent mass at the end-effector in the radial ($x$) direction is $m_2$, i.
 
 ---
 
-### 1.2.3.7: Constrained Dynamics
+### Constrained Dynamics
 > - Dealing with closed kinematic chains and contact  
 > - Constraint forces and Lagrange multipliers  
 > - Applications in legged robots and grasping
@@ -2587,7 +2565,7 @@ Constraint dynamics lets us model and control robots that must simultaneously **
 
 ---
 
-### 1.2.3.8: Actuation, Gearing & Friction
+### Actuation, Gearing & Friction
 > - Modeling motors and gear ratios  
 > - Viscous and Coulomb friction  
 > - Backdrivability and actuator limitations
@@ -2739,7 +2717,7 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 
 ---
 
-## 1.2.4 Mathematical Development Questions
+## Mathematical Development Questions
 
 For additional practice and deeper derivations, see the **PDF:** [Modern Robotics – Practice Exercises](https://hades.mech.northwestern.edu/images/e/ef/MR_practice_exercises.pdf). The **dynamics problems begin on page 55**, and the **solutions are on page 62**.
 
@@ -2752,13 +2730,13 @@ Additional exam-level exercises covering other chapters of the book [Modern Robo
 
 ---
 
-## 1.2.5 Credits
+## Credits
 
 This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, under supervision of [Aude Billard](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en&oi=ao), and funded by **IEEE RAS** and **EPFL**. We thank [Kevin Lynch](https://robotics.northwestern.edu/people/profiles/faculty/lynch-kevin.html) for agreeing to use material of his course. 
 
 ---
 
-## 1.2.6 Additional Resources
+## Additional Resources
 
 ### Books
 - <a id="ref1"></a> [Modern Robotics:  Mechanics, Planning, and Control](http://modernrobotics.org)," by Kevin Lynch and Frank Park, Cambridge University Press 2017.

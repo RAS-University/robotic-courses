@@ -1,10 +1,12 @@
 ---
 title: 1.4 Close-loop Control and PID
 parent: "Chapter 1: Basics of Motion Control"
-layout: default
+layout: numbered
 math: mathjax
 nav_order: 4
 author: Salim Boussofara (EPFL)
+chapter: 1
+section: 4
 ---
 <script src="../questions.js"></script>
 
@@ -70,7 +72,7 @@ author: Salim Boussofara (EPFL)
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# 1.4 Close-loop Control and PID 
+# Close-loop Control and PID 
 
 - Table of Contents
 {:toc}
@@ -78,7 +80,7 @@ author: Salim Boussofara (EPFL)
 
 <!--This guide explores the fundamental principles of control systems, with a particular focus on the widely adopted Proportional-Integral-Derivative (PID) controller. We will delve into how these controllers manage, command, and regulate system behavior, making precise and predictable operations possible across various applications in robotics and beyond. The aim is to provide a solid foundation for understanding how systems achieve desired outputs by actively controlling inputs based on feedback.-->
 
-## 1.4.1 Prerequisites
+## Prerequisites
 * Linear Algebra
 * Classical mechanics
 * Control theory:
@@ -93,7 +95,7 @@ author: Salim Boussofara (EPFL)
 
 A typical task might involve a robotic arm moving from point A to point B in an empty space, or a system maintaining a precise temperature. In such scenarios, the focus is entirely on the system's kinematic and dynamic accuracy in achieving its desired position, velocity, or other controlled variable.-->
 
-## 1.4.2 General Motivation
+## General Motivation
 ![Overview](https://www.youtube.com/watch?v=UR0hOmjaHp0)
 > <sub>*PID Control - A Brief Introduction. YouTube video. Available at: https://www.youtube.com/watch?v=UR0hOmjaHp0*</sub>  
 
@@ -106,9 +108,9 @@ Among all feedback controllers, the PID (Proportional-Integral-Derivative) is th
 
 Over the course of this lesson, you will learn how each of these components works and how to combine them to obtain the desired behavior from any system.
 
-## 1.4.3 Course Content
+## Course Content
 
-### 1.4.3.1: Open-loop vs closed-loop control systems
+### Open-loop vs closed-loop control systems
 
 <!--
 ![Control Systems + TP by Colin Jones (45 min)](https://www.youtube.com/watch?v=IClLushtEMA&list=PLG9XfFeUwHFxUAuQILIRvkwSuc3IfHt7A&index=32)  
@@ -661,7 +663,7 @@ To analyze and characterize the behavior of control systems, various standard in
 | Unit Parabolic $t^2/2$   | $1/s^3$                    | A signal that increases quadratically with time, used for testing tracking capabilities under accelerating inputs. |
 -->
 
-### 1.4.3.2: Proportional, Integral and Derivative actions
+### Proportional, Integral and Derivative actions
 
 But what exactly lies inside the **controller**, the *black box* of a feedback system?
 
@@ -2155,7 +2157,7 @@ Also, one should mention that, in this course, the focus was put on explaining t
 
 
 
-### 1.4.3.3: Practical implementation considerations for PID control
+### Practical implementation considerations for PID control
 
 
 Effectively implementing PID controllers in real-world systems goes beyond theoretical understanding and requires careful consideration of several practical aspects.
@@ -2686,7 +2688,7 @@ https://www.youtube.com/watch?v=tFVAaUcOm4I
 https://www.youtube.com/watch?v=wkfEZmsQqiA&list=PLn8PRpmsu08pQBgjxYFXSsODEF3Jqmm-y
 -->
 
-### 1.4.3.4 Do you want to try a more complex simulation ?
+### Do you want to try a more complex simulation ?
 
 For those who enjoyed experimenting with the simple second-order system, here is a chance to push things further.  
 This interactive **cart–pole PID balancer** lets you test your controller design on a much more challenging system: balancing an inverted pendulum.  
@@ -2701,7 +2703,7 @@ This interactive **cart–pole PID balancer** lets you test your controller desi
 The appeal of this simulation is that it exposes you to **many parameters** you can tune in real time: PID gains, cart mass, pole length, and more. Each change produces an immediate and often dramatic effect on stability.  
 It is not only fun to play with, but also an excellent way to build intuition about how parameter choices interact with system dynamics in a real-world–like scenario.  
 
-### 1.4.3.5 Do you want to implement a real project ?
+### Do you want to implement a real project ?
 ![PID Control Explained: The Ultimate Guide from Basics to Implementation](https://www.youtube.com/watch?v=osd7jbJpGLA)  
 > <sub>*Circuit Helper (2024). PID Control Explained: The Ultimate Guide from Basics to Implementation. YouTube video, Dec. Available at: https://www.youtube.com/watch?v=osd7jbJpGLA*</sub>  
 >
@@ -2725,7 +2727,7 @@ This is your opportunity to take the concepts you’ve mastered and transform th
     });
 </script>
 
-## 1.4.4 Credits  
+## Credits  
 
 This course was created by **Salim Boussofara, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
@@ -2739,7 +2741,7 @@ It makes use of selected material from:
 It has also been inspired by: 
 - A. Karimi, Feedback Control Systems, Lecture notes for Control Systems and Discrete-Time Control, EPFL, Fall 2022.
 
-## 1.4.5 Ressources 
+## Ressources 
 
 
 [Back to Top](#start)

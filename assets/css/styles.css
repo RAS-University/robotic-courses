@@ -1,10 +1,12 @@
+@import "numbered.css";
+
 .drag-container {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 16px;
 }
-  
+
 .drop-zone {
     border: 2px dashed #ccc;
     border-radius: 6px;
@@ -13,7 +15,7 @@
     width: 45%;
     background-color: #f9f9f9;
 }
-  
+
 .drag-item {
     background-color: #e3e3e3;
     padding: 8px 12px;
@@ -22,15 +24,36 @@
     user-select: none;
     margin: 4px;
 }
-  
+
 .check-button {
     margin-top: 10px;
     padding: 8px 12px;
     cursor: pointer;
 }
-  
+
 .feedback {
     margin-top: 10px;
     font-weight: bold;
 }
-  
+
+/* Back-to-top button styles (centralized) */
+#back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    z-index: 1000;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+#back-to-top:hover {
+    opacity: 1;
+}

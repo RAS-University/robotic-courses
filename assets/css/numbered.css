@@ -1,0 +1,46 @@
+/* Numbering styles scoped to pages using the `numbered` layout */
+.numbered h1::before {
+    content: counter(h1) "." counter(h2) " ";
+}
+
+.numbered h2 {
+    /* reset deeper counter when a new subsection starts */
+    counter-reset: h4;
+}
+
+.numbered h2::before {
+    /* increment subsection counter (h3) only */
+    counter-increment: h3;
+    content: counter(h1) "." counter(h2) "." counter(h3) " ";
+}
+
+.numbered h3 {
+    counter-reset: h4;
+}
+
+.numbered h3::before {
+    /* increment sub-subsection counter (h4) */
+    counter-increment: h4;
+    content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) " ";
+}
+
+/* When numbers are injected by JS, hide the old CSS::before content to prevent duplicates */
+.numbered.js-numbered h1::before,
+.numbered.js-numbered h2::before,
+.numbered.js-numbered h3::before {
+    content: none;
+}
+
+/* Visual style for numbers inserted into headings */
+.numbered .heading-number {
+    /* font-weight: 600; */
+    margin-right: .25rem;
+    color: inherit;
+}
+
+/* Keep TOC number styling consistent */
+.numbered .toc-number {
+    /* font-weight: 600; */
+    margin-right: .25rem;
+    color: inherit;
+}

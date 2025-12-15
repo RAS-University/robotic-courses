@@ -1,42 +1,20 @@
 ---
 title: 2.2 Vision for Robotics
 parent: "Chapter 2: Sensing in Robotics"
-layout: default
+layout: numbered
 has_children: false
 nav_order: 2
-layout: default
+layout: numbered
+chapter: 2
+section: 2
 ---
 
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
-# 2.2 Vision for Robotics [In progress] {#start}
+# Vision for Robotics [In progress] {#start}
 
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 ![img-description]({{ site.baseurl }}/assets/images/Vision/banner.png)
@@ -45,7 +23,7 @@ layout: default
 {:toc}
 
 
-## 2.2.1 Prerequisites
+## Prerequisites
 To get the most out of this Vision for Robotics module, it’s helpful to have:
 
 **Basic Mathematics**  
@@ -59,7 +37,7 @@ If you'd like a refresher on linear algebra, the following YouTube series is an 
 
 - [Essence of linear algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) 
 
-## 2.2.2 General Motivation
+## General Motivation
 
 Cameras have become one of the most accessible and data-rich sensors for robots, offering a wealth of visual information compared to traditional positioning or distance sensors. Advances in hardware and algorithms, such as RGB-D cameras and visual-inertial fusion techniques, have significantly improved robot perception. In navigation, robots use vision to detect obstacles, estimate trajectories, and build 3D maps of their environment. For grasping, visual data helps identify objects, estimate their pose, and determine how to interact with them. The following sections will explore the geometric foundations of 3D vision and its applications in robotic grasping.
 
@@ -67,9 +45,9 @@ The following videos demonstrate an application of vision in robotics.
 
 ![](https://www.youtube.com/watch?v=GkM4n7RgGaw)
 
-## 2.2.3 Course Content
+## Course Content
 
-### 2.2.3.0 : Introduction
+### Introduction
 Welcome to this introduction on how a camera projects the three-dimensional (3D) world onto a two-dimensional (2D) image plane. We will discuss how to describe a point in 3D space with respect to a camera coordinate system and how these 3D points get projected into pixel coordinates on an image. We will then move on to intrinsic calibration and the issue of lens distortion.
 
 By the end of this section, you should understand:
@@ -135,7 +113,7 @@ Here are 2 introduction videos to help understand the core problem.
 
 </details>
 
-### 2.2.3.1 : Geometric Vision {#section-1-vision}
+### Geometric Vision {#section-1-vision}
 
 Before we dive into algorithms and code, we first need a picture of how geometry, cameras, and images fit together.
 This section lays that foundation. We will
@@ -429,7 +407,7 @@ This is critical for many robotic tasks such as *navigation*, *obstacle avoidanc
 
 ---
 
-### 2.2.3.2 : Calibration
+### Calibration
 
 Camera **calibration** is the process by which we determine a camera’s **intrinsic** parameters (like focal length, principal point, and distortion coefficients) and **extrinsic** parameters (its position and orientation with respect to some world reference). A well-calibrated camera allows us to accurately map between real-world 3D coordinates and 2D image pixels, which is essential for tasks like navigation, 3D reconstruction, and robotic grasping.
 
@@ -703,7 +681,7 @@ onclick="
 
 </details>
 
-### 2.2.3.3 : Pose estimation or PNP
+### Pose estimation or PNP
 
 Once a camera is calibrated (i.e., we know its **intrinsic** parameters and can handle or correct for any lens distortion), we can tackle the problem of finding the camera’s **extrinsic** parameters (its rotation and translation) relative to known objects or landmarks in the world. This is often referred to as the **Pose Estimation** problem.
 
@@ -878,7 +856,7 @@ $$
 
 ---
 
-### 2.2.3.4 : Triangulation
+### Triangulation
 
 >**Goal of this section**
 >Show how a single 3-D point can be re-built from (at least) two calibrated images by intersecting the two sight-rays that go through the image measurements.
@@ -1063,7 +1041,7 @@ Build $A$, run SVD $\Rightarrow$ $X\approx(0,0,1.0)$ m in the left-camera frame.
 
 ---
 
-### 2.2.3.5 : Moving Stereo {#section-1-moving-stereo}
+### Moving Stereo {#section-1-moving-stereo}
 >**Goal of this section**
 >A **stereo rig** gives you two eyes on the world.  
 A **moving stereo rig** (left camera $c_\ell$, right camera $c_r$) straps those eyes to a robot that **moves**.  
@@ -1231,11 +1209,11 @@ A rigid stereo pair that <em>moves</em> gives you the best of two worlds:
 By tying them together through **absolute orientation**, a robot can track its 6-D pose and build a consis
 
 
-### 2.2.3.6 : Structure from Motion
+### Structure from Motion
 
 See corresponding chapter in the PDF [*Springer Handbook of Robotics*](#section-1-vision)
 
-### 2.2.3.7 Programming
+### Programming
 
 Let's move on to maybe the most exciting part: applying the Vision concepts you've learned in code and seeing your robot working right in front of you!
 
@@ -1264,7 +1242,7 @@ Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Bu
 
 **Good luck and have fun!**
 
-### 2.2.3.8 Exercise
+### Exercise
 
 #### Exercise 1
 
@@ -1282,9 +1260,9 @@ Once you've implemented all the "COMPLETE THIS LINE OF CODE" sections, click "Bu
 
 </details>
 
-## 2.2.4 Credits
+## Credits
 
-## 2.2.5 Ressources
+## Ressources
 
 ### Books
 

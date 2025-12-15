@@ -3,12 +3,12 @@ title: 6.2 Nonlinear Control
 parent: "Chapter 6: Advanced Control"
 has_children: false
 nav_order: 2
-layout: default
+layout: numbered
 author: Julian Ruiz Rodriguez (EPFL)
+chapter: 6
+section: 2
 ---
 
-- Table of Contents
-{:toc}
 
 <style>
   .chart-container {
@@ -274,29 +274,6 @@ author: Julian Ruiz Rodriguez (EPFL)
 }
 </style>
 
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 <script>
@@ -346,9 +323,12 @@ function dropBank(ev) {
 </script>
 
 
-# 6.2 System Identification 
+# System Identification 
 
-## 6.2.1 Prerequisites
+- Table of Contents
+{:toc}
+
+## Prerequisites
 <!-- List courses required for this, including all course of Chapter 1 coming prior to this one, hence close-loop control, MPC, etc.  -->
 * Linear Algebra
 * Differential Equations
@@ -359,7 +339,7 @@ function dropBank(ev) {
   - Controllability/observability
 
 ---
-## 6.2.2 General Motivation
+## General Motivation
 
 The study of **nonlinear control** focuses on the analysis and design of control systems that exhibit nonlinear behavior, that is, systems in which one or more components do not obey the principle of superposition. In such systems, the relationship between input and output is not simply proportional, and as a result, linear control theory no longer provides accurate predictions or guarantees of stability.
 
@@ -381,9 +361,9 @@ Nonlinear control is, therefore, an essential field within modern control theory
 By embracing the nonlinear nature of these systems, engineers and researchers can design controllers that are more **accurate, robust, and efficient**, ultimately extending the reach of control theory to a much broader class of real-world problems.
 
 ---
-## 6.2.3 Course Content
+## Course Content
 
-### 6.2.3.1: System Definitions
+### System Definitions
 
 Before diving into nonlinear control, it is essential to establish a clear understanding of the basic notions of **system behavior**, particularly the distinction between **linear** and **nonlinear** systems.  
 This chapter introduces the fundamental definitions and mathematical principles that form the foundation of system analysis.
@@ -555,7 +535,7 @@ $$
 
 ---
 
-### 6.2.3.2: Phase Plane Analysis
+### Phase Plane Analysis
 
 Phase plane analysis is a graphical method used to study the behavior of nonlinear dynamical systems. It involves plotting the system's state variables against each other in a two-dimensional plane, known as the phase plane. This technique provides insights into the system's stability, equilibrium points, and overall dynamics.
 
@@ -1240,7 +1220,7 @@ Consider the following nonlinear system:
 
 ---
 
-### 6.2.3.3 First Harmonics Method
+### First Harmonics Method
 
 In this chapter, we will explore the First Harmonics Method, understanding its principles and applications in analyzing nonlinear systems. This method can be applied on a restricted class of nonlinear systems, but nonetheless frequently encountered in practice. The importance of this class of systems lies in the imperfections of real-world actuators, which often exhibit nonlinear behaviors such as saturation, dead zones, and hysteresis. These nonlinearities do not disappear when the system is linearized around an equilibrium point, making it essential to consider them in control design and analysis
 
@@ -1762,7 +1742,7 @@ You can proceed in the following way:
 
 ---
 
-### 3.2.3.4: Lyapunov Stability
+### Lyapunov Stability
 
 In control theory and dynamical systems, understanding whether a system remains stable under small disturbances is of fundamental importance. The concept of *stability* defines how a system behaves when perturbed — whether it returns to its equilibrium, deviates further, or oscillates around it. One of the most powerful and general approaches to analyze stability without explicitly solving the system’s differential equations is the **Lyapunov method**.
 
@@ -2694,11 +2674,11 @@ where $p = [p_{11}, p_{12}, p_{12}, p_{22}]^\top$ and $q = [1, 0, 0, 1]^\top$.</
 
 ---
 
-### 3.2.3.5: Frobenius Theorem
+### Frobenius Theorem
 
 ---
 
-### 3.2.3.6: Control Design Methods
+### Control Design Methods
 
 ---
 
@@ -2724,12 +2704,12 @@ Then move to
 It would be good to also have a section on nonlinear MPC (but could be moved to MPC)
 -->
 
-## 3.2.4 Credits:
+## Credits:
 - Slotine's Nonlinear Control Book and Lectures: https://web.mit.edu/nsl/www/videos/lectures.html
 - Philippe Müllhaupt's lecture: **Nonlinear Control Course (ME-523)** at EPFL in Autumn 2024
 - **Introduction à l'analyse et à la commande des systems non linéaires** textbook by Philippe Müllhaupt, first edition (french)
 
-## 3.2.5 Resources
+## Resources
 https://hankyang.seas.harvard.edu/OptimalControlEstimation/stability.html
 
 ---

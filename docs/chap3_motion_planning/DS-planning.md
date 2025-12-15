@@ -2,50 +2,29 @@
 title: 3.3 DS-planning
 parent: "Chapter 3: Motion Planning and Navigation"
 nav_order: 3
-layout: default
+layout: numbered
 has_children: false
 math: mathjax
+chapter: 3
+section: 3
 ---
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# 3.3 Dynamical-Systems-Based Planning {#start}
+# Dynamical-Systems-Based Planning {#start}
 
 - Table of Contents
 {:toc}
 
-## 3.3.1 Prerequisites
+## Prerequisites
 * Basic knowledge of dynamical systems (DS)
 * Control theory, system stability
 * Diffeomorphic mapping
 
-## 3.3.2 General Motivation
+## General Motivation
 ![Overview](https://www.youtube.com/watch?v=7fKLhzgeBac&ab_channel=LASA)
 
 In **trajectory planning** problems, the robot’s objective is to generate smooth, stable, and goal-directed motions that can adapt to changes in the environment or task — beyond simply following a fixed path. This is where **dynamical systems (DS)** offer a powerful framework: instead of relying on time-parameterized trajectories, DS-based approaches define a continuous vector field that governs the robot’s motion toward a target.
@@ -130,9 +109,9 @@ const correctMapping = {
 
 </details>
 
-## 3.3.3 Course Content
+## Course Content
 
-### 3.3.3.1: Dynamical-Systems–Based Planning Overview
+### Dynamical-Systems–Based Planning Overview
 
 #### Motivation & Programming-by-Demonstration
 
@@ -179,7 +158,7 @@ To address this limitation, more recent approaches adopt **time-independent** mo
 
 ---
 
-### 3.3.3.2: Stability
+### Stability
 
 Within a dynamical systems (DS) framework, achieving system stability alongside accuracy is essential. As robots learn motor skills via imitation learning (IL), robustness becomes paramount: the controller must generalize reliably and continue to converge on the intended behavior despite disturbances or variations. To reinforce stability in DS, three primary approaches are typically employed: Lyapunov functions (LF), Contraction Theory (CT), and diffeomorphic transformations. Each of these methods strengthens the learning system’s resilience by mitigating deviations and external perturbations. In the following, we examine the fundamental principles of these three techniques and their roles in enhancing DS stability.
 
@@ -222,7 +201,7 @@ Diffeomorphisms, a key concept in differential geometry and topology, are smooth
 
 ---
 
-### 3.3.3.3: Diffeomorphic Mapping for DS
+### Diffeomorphic Mapping for DS
 
 Mapping a simple, hand-designed—but provably stable—DS through a smooth, bijective transformation (a **diffeomorphism**) allows one to inherit stability while recovering complex accuracy.
 
@@ -345,7 +324,7 @@ Although diffeomorphism is theoretically attractive, practical applications must
 
 ---
 
-### 3.3.3.4: State-of-the-Art Approaches to Training the Mapping
+### State-of-the-Art Approaches to Training the Mapping
 
 The current methods for computing diffeomorphisms are mainly flow-based approaches, which generate a series of transport equations to iteratively alter the spatial structure and design a cost function to ensure minimization of the deformation.
 
@@ -614,7 +593,7 @@ With our **tutorial code**, you can **inspect the mapping results** and the **DS
 </figure>
 ---
 
-### 3.3.3.5 Programming exercise for classical methods
+### Programming exercise for classical methods
 
 #### Tutroial code repository
 
@@ -715,13 +694,13 @@ pip install -r requirements.txt
 ```
 
 
-### 3.3.3.6 Want to implement a real project?
+### Want to implement a real project?
 
 [TODO]
 
-## 3.3.4 Credits
+## Credits
 
-## 3.3.5 References
+## References
 
 1. <a id="ref1"></a>Argall, B. D., Chernova, S., Veloso, M., & Browning, B. (2009). *A survey of robot learning from demonstration.* Robotics and Autonomous Systems, 57(5), 469–483.  
 2. <a id="ref2"></a>Khansari-Zadeh, S. M., & Billard, A. (2011). *Learning stable nonlinear dynamical systems with Gaussian mixture models.* IEEE Transactions on Robotics, 27(5), 943–957.  

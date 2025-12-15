@@ -3,49 +3,27 @@ title: 14.3 Surgical Robots
 parent: "Chapter 14: Robotic Application Domains Part - II"
 has_children: false
 nav_order: 3
-layout: default
+layout: numbered
 math: mathjax
+chapter: 14
+section: 3
 ---
 
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# 14.3 Surgical Robotics 
+# Surgical Robotics 
 
 <!-- bundle exec jekyll serve -->
 
 - Table of Contents
 {:toc}
 
-## 14.3.1 Key terms
+## Key terms
 
 No deep prerequisites here, this section is just to spark your curiosity and show what surgical robots can do.
 
@@ -62,9 +40,9 @@ Before we dive in, have a look at the terms below. You will see them throughout 
 
 ---
 
-## 14.3.2 Course Content
+## Course Content
 
-### 14.3.2.1 What exactly *is* a Surgical Robot?
+### What exactly *is* a Surgical Robot?
 
 Robotic surgery turns a surgeon’s hands into micron-level instruments. While the surgeon sits at a 3-D console, the robot scales big hand moves down to hair-thin motions, filters out tremor, and bends its “wrists” in ways no human wrist can. The payoff: cleaner cuts, steadier sutures, and faster healing for the patient.
 
@@ -77,7 +55,7 @@ To see that precision in action, watch the clip below, a surgical robot neatly s
 
 ---
 
-### 14.3.2.2 How Do Surgeons *Drive* the Robot?
+### How Do Surgeons *Drive* the Robot?
 *(The steps below describe a **typical multi-arm, master-slave platform**—think da Vinci, Hugo, Versius, etc.)*
 
 1. **Console in, scalpel out** – The surgeon slips fingers into two pen-like master grips, peers into a magnified 3-D viewer, and rests feet on pedals, no handheld scalpels at the bedside.  
@@ -103,7 +81,7 @@ Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the coc
 
 ---
 
-### 14.3.2.3 Challenges of robotic-assisted surgery (RAS) adoption
+### Challenges of robotic-assisted surgery (RAS) adoption
 
 | **Challenge Zone** | **Operational Impact** | **Representative Limitations** |
 |------------|------------------------|--------------------------------|
@@ -116,7 +94,7 @@ Follow up with this surgeon’s-eye view: Dr Mary Maish takes you inside the coc
 
 ---
 
-### 14.3.2.4 Types of Surgical-Robot 
+### Types of Surgical-Robot 
 
 No single robot can tackle *every* anatomy or access route, so the field has splintered into task-specific platforms.  
 A practical way to organise them is by **where they enter the body** and **what they must do once inside**:
@@ -142,7 +120,7 @@ If you want to explore more examples, head over to **[robots.sfits.ch](https://r
 
 ---
 
-### 14.3.2.5 News & Emerging Innovations
+### News & Emerging Innovations
 
 #### Humans-in-the-Loop — For Now  
 Focus-group interviews suggest that clinicians are **eager for “light” autonomy** but demand an instant-override option:
@@ -283,14 +261,14 @@ Other interesting videos
 
 -----------------------
 
-## 14.3.3 Credit
+## Credit
 
 This course page was created by **Shujiro Shobayashi, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.  
 
 -----------------------
 
 
-## 14.3.4 Reference:
+## Reference:
 
 1. <a id="ref1"></a>Morrell, A. L. G., Morrell-Junior, A. C., Morrell, A. G., Mendes, J. M. F., Tustumi, F., de Oliveira-e-Silva, L. G., & Morrell, A. (2021). *The history of robotic surgery and its evolution: when illusion becomes reality.* Revista do Colégio Brasileiro de Cirurgiões, 48, e20202798. https://doi.org/10.1590/0100-6991e-20202798  
 

@@ -3,8 +3,10 @@ title: 6.3 Model predictive Control
 parent: "Chapter 6: Advanced Control"
 has_children: false
 nav_order: 3
-layout: default
+layout: numbered
 author: Julian Ruiz Rodriguez (EPFL)
+chapter: 6
+section: 3
 ---
 
 <!-- # Model predictive Control -->
@@ -214,36 +216,13 @@ MathJax.Hub.Config({
 });
 </script>
 
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-# 6.3 Model Predictive Control
+# Model Predictive Control
 
 *Feedback: because the universe refuses to wait for you to get it right.*
 
-## 6.3.1 Prerequisites
+## Prerequisites
 
 * Linear Algebra
 * Differential equations
@@ -262,7 +241,7 @@ MathJax.Hub.Config({
 
 ---
 
-## 6.3.2 Notations
+## Notations
 
 <!-- ## Mathematical notation -->
 
@@ -321,7 +300,7 @@ Throughout this lecture notes, we will use the following subscripts, superscript
 
 ---
 
-## 6.3.3 General Motivation
+## General Motivation
 
 <!-- Introduce limitation of "classical feedback control" and the need for more, -->
 
@@ -335,9 +314,9 @@ MPC has found applications in various fields, including chemical process control
 
 ---
 
-## 6.3.4 Course Content
+## Course Content
 
-### 6.3.4.1: Introduction to MPC
+### Introduction to MPC
 
 [See notations](#notations)
 
@@ -1398,7 +1377,7 @@ $$
 
 ---
 
-### 6.3.4.2 Classical MPC
+### Classical MPC
 
 [See notations](#notations)
 
@@ -1872,7 +1851,7 @@ $$
 
 ---
 
-### 6.3.4.3: Robust MPC  - In Progress
+### Robust MPC  - In Progress
 [See notations](#notations)
 
 ---
@@ -1902,7 +1881,7 @@ $$
 
 ---
 
-### 6.3.4.4: Economic MPC  - In Progress
+### Economic MPC  - In Progress
 [See notations](#notations)
 
 ---
@@ -1925,7 +1904,7 @@ $$
 ---
 
 
-## 6.3.4 Credits
+## Credits
 <!-- List all the sources that you used to create the page   -->
 
 - Saverio Bolognani's lectures: **Computational Control** at ETH Zurich in spring 2024
@@ -1936,7 +1915,7 @@ $$
 
 ---
 
-## 6.3.5 Additional Resources  - In Progress
+## Additional Resources  - In Progress
 
 ---
 

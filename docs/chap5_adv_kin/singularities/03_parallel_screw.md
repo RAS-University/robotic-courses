@@ -1,7 +1,7 @@
 ---
 title: "Section 3: Singularities in Parallel Robots — Screw Theory"
 parent: "Advanced Kinematics"
-layout: default
+layout: numbered
 math: mathjax
 ---
 

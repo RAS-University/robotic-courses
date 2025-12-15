@@ -3,40 +3,18 @@ title: 2.1 Sensors and Sensing in Robotics
 parent: "Chapter 2: Sensing in Robotics"
 has_children: false
 nav_order: 1
-layout: default
+layout: numbered
+chapter: 2
+section: 1
 ---
 
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
-# 2.1 Sensors and Sensing in Robotics [In progress]
+# Sensors and Sensing in Robotics [In progress]
 
 
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
@@ -45,11 +23,11 @@ layout: default
 
 ---
 
-## 2.1.1 Prerequisites
+## Prerequisites
 This page does not require any specific prerequisite, outside knowing what a robot consists of.
 ---
 
-## 2.1.2 General Motivation
+## General Motivation
 
 <!--![](https://www.youtube.com/watch?v=KdNqmxu_V4A)
 ><sub>HBFS Line Follower - Next Generation of Robots. YouTube video, April 2018. Available at: https://www.youtube.com/watch?v=KdNqmxu_V4A</sub>
@@ -156,9 +134,9 @@ An industrial robot arm tasked to manover a shovel must be endowed with motor en
 A humanoid robot may be tasked to interact with its environment in more ways than would an industrial robot. In addition to motor encoders, force/torque and tactile sensors, it needs an IMU to measure its global orientation in space. Cameras and microphones are, on the other hand, crucial to allow the robot to interact in human-inhabited environments. 
 
 ---
-## 2.1.3 Course Content
+## Course Content
 
-### 2.1.3.0: What is a sensor
+### What is a sensor
 {: #ch0 }
 
 A **sensor** is a device that detects or measures a physical property, the **measurand** (e.g., distance, light, temperature, pressure, motion), and converts it into a signal that can be read, interpreted, and used by a computer.
@@ -459,7 +437,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 
 ---
 
-### 2.1.3.1: Characteristics of Sensors
+### Characteristics of Sensors
 {: #ch1 }
 
 
@@ -1054,7 +1032,7 @@ $$
 
 ---
 
-### 2.1.3.2: Proprioceptive Sensors
+### Proprioceptive Sensors
 {: #ch2 }
 
 Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene). 
@@ -2143,7 +2121,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-### 2.1.3.3: Exteroceptive Sensors
+### Exteroceptive Sensors
 
 - Contact sensors (switch, bumper, capacitive touch)
 - Rangefinders: IR, ultrasonic, time‑of‑flight (ToF)
@@ -2155,7 +2133,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-### 2.1.3.4: Multisensor Data Fusion
+### Multisensor Data Fusion
 
 - Probabilistic grids
 - The Kalman Filter
@@ -2163,7 +2141,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-### 2.1.3.5: Sensor Selection and Integration
+### Sensor Selection and Integration
 
 - Defining requirements
 - Mechanical, electrical & software integration
@@ -2174,12 +2152,12 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-### 2.1.3.6 Programming
+### Programming
 
 ---
-## 2.1.4 Credits
+## Credits
 
-## 2.1.5  Ressources
+##  Ressources
 
 ### Books
 

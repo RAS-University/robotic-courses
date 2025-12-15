@@ -3,8 +3,10 @@ title: 11.1 Learning from Demonstrations
 parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 1
-layout: default
+layout: numbered
 math: mathjax
+chapter: 11
+section: 1
 ---
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
@@ -12,30 +14,6 @@ math: mathjax
 # Learning from Demonstration {#start}
 By [Ahalya Prabhakar]([[url](https://robotics.sydney.edu.au/our-people/)]) and [Aude Billard]([url](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en)) 
 <a name="top"></a>
-
-<style>
-  #back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #back-to-top:hover {
-    opacity: 1;
-  }
-</style>
-
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
@@ -49,7 +27,7 @@ By [Ahalya Prabhakar]([[url](https://robotics.sydney.edu.au/our-people/)]) and [
   - Motion Planning and Optimal Control 
   - Basic Machine Learning and Reinforcement Learning
 
-# Motivation
+## Motivation
 
 Enabling robots to learn to autonomously perform new tasks from scratch (i.e., without any prior knowledge) can be extremely difficult, particularly when trying to encode complex behaviors into generalized controllers that can generate successful performance even from new states. To solve this, **Learning from Demonstration (LfD)** enables robots to learn how to autonomously perform a task by observing and imitating a set of successful, expert demonstrations.
 
@@ -60,13 +38,15 @@ Learning from demonstration encompasses a wide range of research topics and meth
 Before delving into details on the different types of methods, we will first cover some basics that applies to all methods. 
 
 
-# Foundations of Learning from Demonstration
+## Course Content
+
+### Foundations of Learning from Demonstration
 
 **LfD methods are primarily data-driven methods that seek to how to perform a task from observations of successful demonstrations.** They can do so either by directly learning a motion plan or policy, or inferring the task objective function which is then used to generate an optimal policy.
 
-## Basic LfD Formulation
+#### Basic LfD Formulation
 
-### Nomenclature and Notation
+##### Nomenclature and Notation
 
 Depending on whether the LFD problem is formulated from a optimal control (Pontryagin) or reinforcement learning (Bellman) perspective, the notation will differ, though they are analagous. Both notations are provided below: 
 <table>
@@ -133,7 +113,7 @@ Learning from demonstration methods use two main steps:
 
 If and how the method specifies the two phases of the data collection determines the following properties of the method.  
 
-## Data-Gathering Methods
+#### Data-Gathering Methods
 
 Because demonstration learning methods are fundamentally data-driven learning approaches, one of the main topics when designing LfD paradigms is data collection. Demonstration Data collection methods fall into three main categories, each with their own pros and cons: 
 * **Kinesthetic Teaching**: user physically moves the robot
@@ -141,7 +121,7 @@ Because demonstration learning methods are fundamentally data-driven learning ap
 * **Observational learning**: robot learns from observations of
 demonstration
 
-### Kinesthetic Teaching
+##### Kinesthetic Teaching
 
 <p style="width: 90%; margin: 0 auto; /* Center the paragraph if it's narrower than its container"> 
     <img src="{{ site.baseurl }}/assets/images/LfD/minigolf_kinesthetic.png" alt="Kinesthetic Teaching of Robot Demonstrations with a Robot Arm Playing Minigolf" title="Kinesthetic Teaching of Robot Demonstrations for Playing Minigolf" style="margin-bottom:10px;"> <br />
@@ -153,7 +133,7 @@ The first category of data collection is kinesthetic teaching methods, where the
 
 However, one of main drawbacks of kinesthetic teaching are that it can be cumbersome for the user to physically move the robot in the desired motion. Because the user needs two arms to move one robot arm, it can be challenging for the user to do so in a fluid motion and demonstrating bimanual tasks can be challenging. Dextrous manipulation tasks that require finger control can also be difficult to move and demonstrate in kinesthetic settings. Furthermore, it can be difficult or unintuitive for novice users to generate demonstrations, particularly for high degree of freedom (DOF) or complex dynamical systems. These dynamical systems can be difficult for users to relate to the kinematics and dynamics of the human motion, making generating desired robot motion difficult.
 
-### Teleoperation
+##### Teleoperation
 In teleoperation, the user controls the robotic system through an interface. Similar to kinesthetic teaching, the demonstrations directly record the robot states through its onboard sensors (e.g., joint angles and torques); however, the experimental design requires developing an interface from user inputs to robot motion and control. The ease of use of the robotic systems, and the resulting quality of the demonstration dataset, can be directly affected both by the user's experience with the teleoperated robotic system and the design of the interface. 
 
 These systems allow the demonstrator to control the robotic system from a distance or even remote locations, allowing users to not be physically present with the robot to provide demonstrations. In addition, these methods facilitate safe control for users when controlling heavy machinery that could be dangerous to users in close proximity, as well as enabling control for tasks where the robotic system needs to move over distances, such as when teaching motion patterns or navigation.   
@@ -184,7 +164,8 @@ Common interfaces for teleoperation include joysticks, graphical interfaces, hap
 Shadowing interfaces, including the <b>Left</b>: <a href="https://robotik.dfki-bremen.de/en/research/projects/capio"> Capio Dual-arm Exoskeleton </a> and <b>Right: </b> <a href="https://weart.it/haptic-vr-products/touchdiver-haptic-glove/"> WEART TouchDIVER G1 haptic glove</a>  shown here, require some form of mapping from the demonstration sensors to the robotic system during recording, so that the robotic system shadows the demonstrator’s motions and the robot motion is directly recorded as demonstrations.
 
 </p>
-### Observational Learning
+
+##### Observational Learning
 
 <p style="width: 90%; margin: 0 auto; /* Center the paragraph if it's narrower than its container"> 
 
@@ -427,14 +408,14 @@ const correctMapping = {
 
 </details>
 
-## Online vs. Offline Data Collection
+#### Online vs. Offline Data Collection
 
 One of the main distinguishing features of learning from demonstration methods is when the data collection occurs in the learning process--- i.e., whether it all happens prior to learning, or whether the learning method requires specification of the data collection. The two main categories are: 
 
 * **Offline Learning**: Demonstration dataset is pre-collected initially as prior knowledge and all learning is performed on this dataset, with no further information or data being gathered in the environment. 
 * **Online Learning**:  In Online learning (also called Interactive Learning),  demonstration data is collected with active interaction with the demonstrator. Some methods first use a precollected demonstration dataset for initial learning. The model is then updated and refined with interactions with the environment, often using expert feedback and corrections for generating additional demonstrations. Others directly interact with the demonstrator to collect all demonstrations. These can include methods with noise injection to encourage state space exploration or methods that actively query or interact with the user. 
 
-## Learning Goals
+#### Learning Goals
 
 Another distinctive feature for categorizing learning from demonstration methods is the **learning goal** of the method. Different methods extract different task representations from the demonstration set in order to ultimately generate a motion policy for robot task success. 
 
@@ -515,9 +496,9 @@ Expert Demonstrations <b>(purple)</b> are gathered for robot to learn a task rep
 
 </details>
 
-# Challenges of Learning from Demonstration 
+### Challenges of Learning from Demonstration 
 Below, we list some of the basic questions and considerations that we encounter in most LfD problems: 
-## Correspondence Problem 
+#### Correspondence Problem 
 <!--The correspondence problem refers to the problem of relating and learning an appropriate optimal behavior, or state-action mapping, when the kinematics and dynamics of the demonstrator differ from the robot. This problem is specific to cases of observational learning, when the robot must learn from observations of demonstrations, rather than demonstrations performed directly on the robotic system, as with kinesthetic and teleoperation demonstrations. In addition to differences in kinematics and dynamics between the demonstrator and the robotic system, sensor differences between the two can make generating effective mappings challenging. Humans primarily use vision for observations--- which camera sensors that match when recording observations. Robotic systems, on the other hand, may additionally use other sensor types, including sonars, infrared sensors, lasers, that can be easier to process than camera sensor data. -->
 
 The main difficulty in teaching a robot is that human bodies and robotic bodies differ dramatically. Even when a robot resembles a human, its body does not have the same range or dynamics of motion. Differences exist in kinematics of joints: while humans benefit from ball joints, most robots do not. Differences also arise at the actuator level. Our muscles behave differently from most robotic motors, and the control mechanisms are not the same. The acceleration profiles of actuators vary as well. Humans can sometimes produce much higher accelerations; as a result, actions that are dynamically feasible for us, such as reaching out very quickly, may be impossible for a robot. Conversely, robots can sometimes perform actions that the human body can not, such as moving at a constant velocity. Additionally, humans have limited ranges of motion in their kinematics.
@@ -546,7 +527,7 @@ Humans and robots also differ in ther sensing perception. Robots do not perceive
 </p>
 
 
-## Data Sensitivity
+#### Data Sensitivity
 An additional consideration in LfD methods is data sensitivity. Optimal policies/motion plans learned are specific to the robot systems (and corresponding dynamics) of that system. As such, even robotic arms that have different dynamics and degrees of freedom, transfer learning methods are needed to convert learned policies from one system to another. In addition, data is environment specific--- particularly relevant when the task involves interacting with and/or manipulating the environment, such as in pick-and-place tasks. Different methods address these issues in different ways, as discussed further below, but some general approaches involve learning task objectives or task features that are specific to the task but can be generalized to different robotic systems and environments. 
 
 
@@ -579,7 +560,7 @@ Another challenge relates to the fact that data is environment-dependent. In the
 </div>
 
 
-## Task Variability
+#### Task Variability
 One of the challenges of learning to perform a task successfully from demonstration is deciding what to learn. For many tasks, there can be multiple ways and motions to accomplish the task. In addition, different tasks can be accomplished using different tools, or forms of the same tools. Deciding what is most useful to learn about the task--- whether it is joint trajectories, end-effector trajectories, task features, objective functions, etc.--- is a crucial consideration in efficiently learning task encodings from demonstrations that can be generalized to new states, robotic systems, and environments.
 
 
@@ -598,10 +579,10 @@ One of the challenges of learning to perform a task successfully from demonstrat
 </div>
 
 
-## Demonstrator Quality
+#### Demonstrator Quality
 Another consideration for learning from human demonstrations is demonstrator quality. Many LfD methods operate on the assumption that the demonstrations are provided by an **expert demonstrator**--- and as such, the demonstrations (and learned policy) are optimal. However, in many cases, the demonstrator may not provide optimal actions. In cases where the human is interacting with the robotic system to provide demonstrations, through kinesthetic teaching or teleoperation, suboptimality can be due to unfamiliarity with the system or its dynamics. In the case of observational learning, where the robot is directly observing human demonstrations, this may be due to noisy or suboptimal human behaviors. It can also be due to differences in human and robot behaviors, where optimality in human actions is different from optimality in robot behaviors, for example due to differences in their dynamics. Current LfD research methods seek to solve this issue, often through the combination of preference-based learning methods with demonstration quality ranking. 
 
- Generalizing Control Law – Beyond the Demonstrations**
+** Generalizing Control Law – Beyond the Demonstrations**
 Another important aspect is the ability to generalize. The robot should infer that a task is composed of a sequence of actions. Each action is relative to the object the robot must manipulate; however, it should initially consider several predefined frames of reference. It is important for the robot to understand that the task is not about the global placement of objects in space, but rather about their relative positions and the relative forces that matter. Multiple frames of reference are associated with the different objects in the scene, and the robot must learn which of these frames is relevant at each moment.
 
 
@@ -670,9 +651,9 @@ Another important aspect is the ability to generalize. The robot should infer th
 
   <p id="q3-ch-feedback"></p>
 </form>
+</details>
 
-
-# LfD Methods Overview
+### LfD Methods Overview
 
 In this section, we will go over some of the current methods, and categories of methods, both historical methods and in the state-of-the-art LfD research. We will provide a brief overview of the methods with citations and resources for further inquiry in each section. 
 While we attempt to cover the most important or common methods here, please note that this is not a complete list of all LfD methods. For a deeper look into existing work, we recommend looking at the following survey papers on Learning from Demonstration methods: 
@@ -684,9 +665,9 @@ While we attempt to cover the most important or common methods here, please note
 
 The methods will be categorized based on their resulting learned output or learning goal as discussed above. 
 
-## Motion Policy Learning Methods
+### Motion Policy Learning Methods
 
-### Motion Primitives & Dynamical Systems
+#### Motion Primitives & Dynamical Systems
 Motion primitive methods learn robotic actions or motions from demonstrations. Fundamentally, each motion primitive encodes a movement that represents a particular action or skill, such as moving towards a target, screwing/unscrewing, grasping, etc. They typically reflect a motion from a start state to end state, and can be defined with respect only to the robot state (e.g. robot joint configuration) or in relation to goal state/task space (e.g. object state or target location). 
 
 One category of methods use **statistical modeling** to learn motions or encode robot skills. Some use spline-fitting techniques between relevant keyframes to generate desired trajectories, while others use Hidden Markov Models (HMMs), Gaussian Mixture Models (GMMs) and Gaussian Mixture Regression (GMR) to capture the temporal and spatial relations of the motion signals. These signals and their correlations can be described in joint space or task space. Some examples of these methods include:
@@ -738,7 +719,7 @@ K.Q. (eds.) Advances in Neural Information Processing Systems, vol. 26. (2013). 
 </details>
 
 
-### Behavior Cloning
+#### Behavior Cloning
 Behavior cloning approaches learn a policy function (state-action mapping) from a set of expert demonstrations. This uses supervised learning methods that minimize the difference between the learned policy and the expert demonstrations based on some metric, in order to imitate the expert. 
 
 <details markdown ="1">
@@ -756,7 +737,7 @@ Generative Adversarial Imitation Learning (GAIL) is an imitation learning method
 information processing systems 29 (2016) [Paper](https://papers.nips.cc/paper/6391-generative-adversarial-imitation-learning)
 </details>
 
-### Diffusion Policies 
+#### Diffusion Policies 
 Diffusion Policies are among the latest research thrusts in Behavior Cloning that learns a conditional denoising diffusion model---which encodes conditional action \emph{distribution}, generating a sequence of actions over time. Because the diffusion model represents a distribution of actions, these policies capture the multi-modality of human behaviors in demonstrations, demonstrating high performance for complex behaviors. Furthermore, these methods accommodate/utilize visuomotor policies, allowing them to generate action policies from visual feedback. For more information: https://diffusion-policy.cs.columbia.edu/
 
 <details markdown ="1">
@@ -766,9 +747,9 @@ Diffusion Policies are among the latest research thrusts in Behavior Cloning tha
 * Wang, Y., Zhang, Y., Huo, M., Tian, T., Zhang, X., Xie, Y., Xu, C., Ji, P., Zhan, W., Ding, M., et al.: Sparse diffusion policy: A sparse, reusable, and flexible policy for robot learning. In: Conference on Robot Learning, pp. 649–665 (2025). [Paper](https://proceedings.mlr.press/v270/wang25c.html)
 </details>
 
-## High-Level Task Plan
+### High-Level Task Plan
 These methods learn the highest-level abstraction of the task motion plan--- a set of actions that result in a successful performance. These can also include symbolic or specific keyframe states that result in task success. They require some definition of available motions or library of predefined skills or actions that can be combined into a higher-level task plan.
-### Programming by Demonstration and Symbolic Reasoning
+#### Programming by Demonstration and Symbolic Reasoning
 **Programming by Demonstration (PbD)** and symbolic reasoning, one of the first methods of demonstration learning falls under this category of learning. These methods learned a task motion plan that consisted of subgoals defined through motion primitives and key frames and a mapping that connected the different subgoals with transitions between each. Current research in PbD methods extend this work through automated and unstructured classification and learning of multistep motions, relying on Bayesian methods in combination with motion primitives. 
 <details markdown ="1">
   <summary><strong>Reference Papers</strong></summary>
@@ -779,7 +760,7 @@ Learning grounded finite-state representations from unstructured demonstrations.
 The International Journal of Robotics Research 34(2), 131–157 (2015). [DOI](https://doi.org/10.1177/0278364914554471)
 </details>
 
-### Multi-step Motion Planning
+#### Multi-step Motion Planning
 Other thrusts utilize methods from long-horizon or multistep motion planning, including **Integrated Task and Motion Planning (TAMP)** methods, **Skill Tree** construction  and **Temporal Logic** (e.g., LTL and STL) methods. 
 
 <details markdown ="1">
@@ -800,11 +781,11 @@ satisficing motion policies from demonstrations. Conference on Robot Learning
 using signal temporal logic in stochastic and continuous domains. IEEE Robotics and Automation Letters (RA-L) 6(4), 6250–6257 (2021) [DOI](https://doi.org/10.1109/LRA.2021.3092676)
 </details>
 
-## Task Representation Learning
+### Task Representation Learning
 
 These methods learn the **task objective**--- whether it be the cost function, reward function, relevant task features, or some other task representation. The goal of these methods rests on the idea that learning the task objective is the most concise and transferable understanding of task success. By extracting this, the robot will not only learn how to successfully accomplish the task, but also identify what relevant features leads to task success. This enables policy improvement as well as generalization across environments and robots. Once the task objective is learned, it can be combined with some form of policy generation, including reinforcement learning, optimal control, or planning/ trajectory optimization. One of the main challenges of these methods is that there are often many task objectives or reward functions that could generate the same behavior--- deciding which one is correct is one of the main challenges of these methods. Another is that these methods typically require some finite (predefined) list of possible features that could make up the reward function in order to be tractable. 
 
-### Inverse Optimal Control and Inverse Reinforcement Learning
+#### Inverse Optimal Control and Inverse Reinforcement Learning
 
 **Inverse Optimal Control (IOC)** learns a cost function, with respect to which the expert demonstrations would be optimal. Typically, these methods assuming the problem takes the form of a stable control system. First posed in 1964 by Kalman, current methods in IOC typically formulate the problem as some form of standard controls or optimization problem, or a stochastic control problem. While classical inverse optimal control problems learn from an optimal control signal, some methods are formulated to learn from data, such as demonstration trajectory signals or state-action pairs \cite{johnson2013inverse, dvijotham2010inverse, doerr2015direct, levine2012continuous, mombaur2010human, finn2016guided}. Note that these methods are often interchangeably called inverse reinforcement learning (IRL).
 <details markdown ="1">
@@ -850,9 +831,9 @@ forcement learning. International Conference on Intelligent Robots (2015). [Pape
 * Fu, Justin, Katie Luo, and Sergey Levine. "Learning Robust Rewards with Adverserial Inverse Reinforcement Learning." International Conference on Learning Representations. 2018. [Paper](https://arxiv.org/abs/1710.11248)
 </details>
 
-## Online/Interactive Learning Methods
+### Online/Interactive Learning Methods
 
-### Preference-Based Learning
+#### Preference-Based Learning
 **Preference-based learning** methods, also called **preference-based reinforcement learning (PbRL)** or **Reinforcement Learning from human feedback (RLHF)**, use human feedback on motion preference to inform learning. Common methods in preference-based IRL use user preferences to rank demonstrations or motion trajectories to inform reward-function learning. Other methods use user preferences or rankings to directly inform the policy learning. Both can incorporate methods from active learning for efficient querying to minimize the amount of feedback required to enable learning.
 <details markdown ="1">
   <summary><strong>Reference Papers</strong></summary>
@@ -878,7 +859,7 @@ tions. In: Proceedings of The 2nd Conference on Robot Learning. Proceedings of
 Machine Learning Research, vol. 87, pp. 519–528. [Paper](https://proceedings.mlr.press/v87/biyik18a.html) 
 </details>
 
-### DAgger (Dataset Aggregation)
+#### DAgger (Dataset Aggregation)
 With standard Offline Behavior Cloning approaches, policy errors compound as the robot acts sequentially and the robot state moves away from the distribution. **DAgger** is an online learning approach that actively queries an expert for corrective demonstrations to refine the learned policy, particularly when encountering out-of-distribution states. 
 
 <details markdown ="1">
@@ -886,25 +867,25 @@ With standard Offline Behavior Cloning approaches, policy errors compound as the
 * Ross, S., Gordon, G., Bagnell, D.: A reduction of imitation learning and structured prediction to no-regret online learning. In: Proceedings of the Fourteenth International Conference on Artificial Intelligence and Statistics, pp. 627–635 (2011). JMLR Workshop and Conference Proceedings. [Paper](https://proceedings.mlr.press/v15/ross11a.html)
 </details>
  
-### DART: Noise Injection for Robust Imitation Learning
+#### DART: Noise Injection for Robust Imitation Learning
 Behavior cloning errors compound when out-of-distribution, while online, active querying methods can be time-consuming for experts to generate sufficient data. **DART** is an offline learning approach that injects noise during the initial demonstration dataset collection itself in order to cover the full state space and generate demonstrator actions for recovery when moving away from expert trajectories. 
 <details markdown ="1">
   <summary><strong>Reference Paper</strong></summary>
 * Laskey, M., Lee, J., Fox, R., Dragan, A., Goldberg, K.: Dart: Noise injection for robust imitation learning. In: Conference on Robot Learning, pp. 143–156 (2017). [Paper](https://arxiv.org/abs/1703.09327)
 </details>
 
-# Simple Code Example
+### Simple Code Example
 To see a basic code example of Learning from Demonstration, follow the link below to see a Github Repository with a simple tutorial example of Dynamical-Systems (DS)-based Learning from Demonstration. 
 * Basic Tutorial Example: [https://github.com/apr600/lfd-tutorial](https://github.com/apr600/lfd-tutorial)
 
-# Want to Learn More? 
+### Want to Learn More? 
 
 For those interested in applying the concepts introduced in this course, the following list below include tutorials and resources for implementing and illustrating different Learning from Demonstration methods. 
 * **Dynamical Systems(DS)-based Learning from Demonstration**: [LFD-DS ICRA 2019 Tutorial](https://epfl-lasa.github.io/TutorialICRA2019.io/) provides lectures, slides and example code of DS-motion policy learning from demonstrations, using a GMM-based learning approach. It provides illustrative examples for a simple 2D system, for learning linear and non-linear trajectory behaviors. 
 * **Dynamic Motion Primitives(DMP)-based Learning from Demonstration**: [DMP Tutorial Survey and Code](https://doi.org/10.1177/02783649231201196). The following paper provides an overview and tutorial of Dynamic Movement Primitives and their corresponding LFD methods. It includes an introduction to the mathematical formulation of motion primitives and a literature survey of LFD methods using DMPs. It also includes references to available code implementations and includes additional open-source implementation for different DMP methods. Saveriano M, Abu-Dakka FJ, Kramberger A, Peternel L. Dynamic movement primitives in robotics: A tutorial survey. The International Journal of Robotics Research. 2023;42(13):1133-1184.
 * **Imitation Learning (IL)**: [ICML 2018 Imitation Learning Tutorial](https://sites.google.com/view/icml2018-imitation-learning/home) provides lectures on a broad overview of imitation learning techniques and recent applications. [IL Implementations (imitiation.readthedocs.io)](https://imitation.readthedocs.io/en/latest/) provides implementations of imitation and reward learning algorithms, including Behavior Cloning (BC), Max Causal Entropy IRL, DAgger, GAIL, and AIRL that are modular with an easy-to-use API and can be incorporated into standard imitation learning examples and comparisons. [IL Implementation Tutorial](https://github.com/tsmatz/imitation-learning-tutorials) provides example implementations to compare basic Imitation Learning algorithms, including Behavior Cloning (BC) and Inverse Reinforcement Learning (IRL) algorithms. Example algorithm implementations include BC, GAIL, DAgger, MaxEntIRL, and other IRL algorithms. All implementations are illustrated on the Gridworld Environment.  
 
-# References:
+## References:
 
 Reference papers have been included throughout the notes, with each corresponding section. For a complete list of all references, see below. 
 

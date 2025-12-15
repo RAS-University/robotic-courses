@@ -4,7 +4,7 @@ title: "Advanced Kinematics"
 
 parent: Courses
 
-layout: default
+layout: numbered
 
 math: mathjax
 

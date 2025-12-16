@@ -295,7 +295,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
   <input type="radio" name="ch0-q9" value="D"> Unlimited lifetime<br>
   <button type="button"
     onclick="checkTrueFalse('ch0-q5', 'A',
-      '✅ Correct! Performance depends on illumination—an environmental factor.',
+      '✅ Correct! Performance depends on illumination, an environmental factor.',
       '❌ Think about how lighting conditions affect the sensor.')">
     Check Answer
   </button>
@@ -495,7 +495,7 @@ A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the s
 
 ---
 
-#### Accuracy & Precision
+#### Accuracy & Precision
 
 When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
 
@@ -543,7 +543,7 @@ The dartboard analogy below is a classic way to illustrate this difference:
 
 ---
 
-#### Noise
+#### Noise
 
 *Noise* is any undesired variation added to a measurement. It limits how well we can estimate the true value, even when the sensor is otherwise “perfect.”
 
@@ -601,7 +601,7 @@ Zeroing and multi-point calibration (to remove bias and correct scale), improved
 
 ---
 
-#### Response Time & Bandwidth
+#### Response Time & Bandwidth
 
 A sensor’s **dynamic performance** determines how well it tracks changes over time. Two core notions are used:
 
@@ -1146,7 +1146,7 @@ $$
 
 ---
 
-##### Odometry in the estimation stack
+#### Odometry in the estimation stack
 {: .no_toc }
 Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
 
@@ -1630,9 +1630,10 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 
 ---
 
-#### Main classes of gyroscopes
+###### Main classes of gyroscopes
+{: .no_toc }
 
-##### 1) Mechanical gyroscopes and gyrocompasses
+**1) Mechanical gyroscopes and gyrocompasses**
 
 * **Principle.** Gyroscopes and gyrocompasses rely on the principle of the  **conservation of angular momentum** $L=I\omega$. Angular momentum is the tendency of a rotating object to keep rotating at the same angular speed about the same axis of rotation in the absence of an external torque. A rapidly spinning rotor maintains its orientation; torques cause **precession** perpendicular to both spin and applied torque. Classical **gyrocompasses** exploit precession with a pendulous weight and damping so the spin axis aligns with true north in the Earth frame. 
 * **Notes for robots.** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
@@ -1640,7 +1641,7 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/gyrocompas.png)
 ><sub>Simple gyrocompass. (a) Pendulus gyro. (b) Precessional motion. Source: Springer Handbook of Robotics, Chapter 20.1</sub>
 
-##### 2) Optical gyroscopes
+**2) Optical gyroscopes**
 
 * **Principle (Sagnac effect).** Send light both ways around a closed loop (see Fig below) of length $D=2\pi R$. If the loop is stationary, both pulses traverse the same distance at speed $c$ and arrive together after
 $$
@@ -1672,7 +1673,7 @@ This $\Delta t$ is what RLGs and FOGs convert into a measurable phase or frequen
 
 Fiber-optic gyros (FOG) use long polarization-maintaining fiber loops; ring-laser gyros (RLG) use a laser cavity and measure the beat frequency between the two standing waves. Optical gyros are accurate, with no spinning mass. 
 
-##### 3) MEMS (micro-electromechanical) gyroscopes
+**3) MEMS (micro-electromechanical) gyroscopes**
 
 * **Principle (Coriolis).** A vibrating proof mass with velocity $\mathbf{v}$ inside a frame rotating at rate $\boldsymbol{\Omega}$ experiences **Coriolis acceleration**. Coriolis acceleration is the apparent acceleration that arises in a rotating frame of references. Suppose that an object moves along a straight line in a rotating frame of reference. To an outside observer in an inertial frame the object’s path is curved, thus there must be some force acting on the object to maintain the straight line motion as viewed by the rotating observer. An object moving in a straight line with local velocity $\mathbf{v}$ in a frame rotating at rate $\boldsymbol{\Omega}$ relative to an inertial frame will experience a Coriolis acceleration given by : 
   $$
@@ -1687,7 +1688,8 @@ Wine-glass resonator gyroscopes use the effect of Coriolis forces on the positio
 
 ---
 
-#### What gyros actually deliver
+###### What gyros actually deliver
+{: .no_toc }
 
 * **Rate gyros (RG).** Output angular **rate** $\dot{\theta}$ directly.
 * **Rate-integrating gyros (RIG).** Internally integrate to report **angle**, though most robotic pipelines still integrate rate in software to keep timing consistent with other sensors. 
@@ -1697,7 +1699,8 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-#### Important Performance metrics of Inertial measurement units
+##### Important Performance metrics of Inertial measurement units
+{: .no_toc }
 
 * **Bias repeatability / stability.** How much the zero-rate output wanders over time at constant conditions; dominates long-term drift. 
 * **Angle Random Walk (ARW).** Noise-induced angle error growth when integrating rate; sets short-term orientation precision. 
@@ -1705,7 +1708,8 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-#### Practical selection and integration tips
+##### Practical selection and integration tips
+{: .no_toc }
 
 * **Match range and bandwidth to dynamics.** Choose full-scale so saturation is unlikely during worst maneuvers, and pick bandwidth high enough for control needs without excessive noise or latency.
 * **Mounting and alignment.** Keep axes orthogonal, rigidly mount near the robot’s center to reduce vibration coupling, and include axis misalignment in calibration.
@@ -1818,7 +1822,6 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 ---
 
 ##### Accelerometer
-{:.no_toc}
 
 Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
 
@@ -1965,14 +1968,14 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 
 ---
 
-
-#### Force, Torque, and Strain Sensing
+#### Force, Torque, and Strain Sensing
 
 Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
 ---
 
 ##### Measurement Location: From Effort to Contact
+{: .no_toc }
 
 * **Actuator effort (motor current).** In many electric drives, torque is approximately proportional to current, $\tau \approx k_t I$. This relationship is useful for fast inner-loop control, however, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
 * **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
@@ -1981,6 +1984,7 @@ Force, torque, and strain sensing enable a robot to perceive its own interaction
 ---
 
 ##### Actuator effort: motor current as a torque sensor
+{: .no_toc }
 
 In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor.
 
@@ -2017,15 +2021,18 @@ If precise low-force regulation, contact transients, or model uncertainties domi
 ---
 
 ##### Strain-based sensing
+{: .no_toc }
 
 Strain-based sensing measures tiny elastic deformations in a compliant mechanical element and infers the applied force or torque through a known stiffness model. It is the workhorse behind joint torque sensors, six-axis wrist force–torque (F/T) sensors, weigh-scale load cells, and many tactile skins.
 
-###### What is measured
+##### What is measured
+{: .no_toc }
 
 * **Strain** is the relative change in length, $\varepsilon = \Delta L / L$ (unitless). In metals operating in the linear elastic regime, stress $\sigma$ and strain relate by $\sigma = E \varepsilon$, where $E$ is Young’s modulus.
 * **Strain gauges** convert strain to an electrical signal. The most common are metal-foil resistive gauges; alternatives include piezoresistive silicon and piezoelectric ceramics.
 
-###### Core transducer physics
+##### Core transducer physics
+{: .no_toc }
 
 * **Foil (resistive) strain gauges.** Electrical resistance $R$ changes approximately linearly with strain:
   $$
@@ -2035,7 +2042,8 @@ Strain-based sensing measures tiny elastic deformations in a compliant mechanica
 * **Piezoresistive silicon.** Doped silicon has a larger effective gauge factor (10–150), enabling compact, low-noise sensors, often integrated on diaphragms or micro-flexures.
 * **Piezoelectric.** Generates charge proportional to dynamic strain. Very high bandwidth but poor at true DC; best for vibration or impact sensing (dynamic tactile).
 
-###### From strain to force/torque
+##### From strain to force/torque
+{: .no_toc }
 
 A compliant element (beam, ring, cross-shape, diaphragm, or torsion tube) concentrates strain where gauges are placed. With a linear elastic model,
 $$
@@ -2043,7 +2051,8 @@ $$
 $$
 where $\mathbf{v}$ collects bridge voltages, $\mathbf{w} = [F_x, F_y, F_z, \tau_x, \tau_y, \tau_z]^\top$ is the wrench (forces and torques) at a reference point, $\mathbf{S}$ is the sensitivity matrix determined by geometry and gauge placement, and $\mathbf{b}$ is an offset. Calibration identifies $\mathbf{S}$ (and $\mathbf{b}$) by applying known loads and solving a linear regression; the inverse then maps voltages back to forces and torques.
 
-###### Bridge circuits and signal conditioning
+##### Bridge circuits and signal conditioning
+{: .no_toc }
 
 * **Wheatstone bridge.** Gauges are wired as quarter-, half-, or full-bridges. Full-bridges place gauges in tension and compression, doubling sensitivity and providing temperature compensation.
 * **Excitation.** Constant-voltage (e.g., $V_\mathrm{ex}=2$–10 V) is common; constant-current can reduce self-heating drift.
@@ -2273,6 +2282,7 @@ Contact sensing spans a spectrum from simple “touch happened” signals to ric
 ---
 
 ##### Why contact sensing matters in practice
+{: .no_toc }
 
 * **Robust manipulation:** vision can suggest where an object is, but contact sensing confirms *when* the object is actually grasped, whether it is slipping, and how firmly it is held.
 * **Safe physical interaction:** contact sensors can trigger fast reflexes (stop, retract, compliant behavior) when unexpected contact occurs.
@@ -2282,6 +2292,7 @@ Contact sensing spans a spectrum from simple “touch happened” signals to ric
 ---
 
 ##### Practical design trade-offs
+{: .no_toc }
 
 When selecting or integrating a contact sensor, typical engineering trade-offs include:
 
@@ -2294,6 +2305,7 @@ When selecting or integrating a contact sensor, typical engineering trade-offs i
 ---
 
 ##### How contact sensing complements other exteroceptive sensors
+{: .no_toc }
 
 Contact sensing is often the “last meter” of perception: cameras and range sensors guide the robot toward a target, and contact sensors confirm and regulate the final interaction. A practical example is grasping: vision estimates an object pose and plans an approach, while tactile sensing confirms contact timing, corrects grasp alignment, and detects slip during lifting.
 
@@ -2400,7 +2412,7 @@ Contact sensing is often the “last meter” of perception: cameras and range s
 
 <details markdown="1">
   <summary>Further exploration</summary>
-* [Force Perception]({{ site.baseurl }}/docs/chap2_sensing/force_perception)
+* [Chapter 2.3 : Force Perception]({{ site.baseurl }}/docs/chap2_sensing/force_perception)
 * [Tactile sensor](https://en.wikipedia.org/wiki/Tactile_sensor)
 * [Force sensor](https://en.wikipedia.org/wiki/Force_sensor)
 * [Force sensing resistor](https://en.wikipedia.org/wiki/Force-sensing_resistor)
@@ -2435,6 +2447,7 @@ The key advantage of rangefinders is their ability to provide **absolute distanc
 ---
 
 ##### Types of Rangefinders
+{: .no_toc }
 
 Rangefinders come in various technologies, each with its strengths and limitations. The most common types include:
 
@@ -2445,6 +2458,7 @@ Rangefinders come in various technologies, each with its strengths and limitatio
 ---
 
 ##### Rangefinder Applications
+{: .no_toc }
 
 Rangefinders are utilized in a variety of tasks across different robotic applications:
 
@@ -2455,6 +2469,7 @@ Rangefinders are utilized in a variety of tasks across different robotic applica
 ---
 
 ##### Practical Design Trade-offs
+{: .no_toc }
 
 When selecting a rangefinder for a robot, there are several design considerations and trade-offs to take into account:
 
@@ -2466,6 +2481,7 @@ When selecting a rangefinder for a robot, there are several design consideration
 ---
 
 ##### Why Rangefinders Matter in Practice
+{: .no_toc }
 
 Rangefinders are essential for building an accurate and reliable model of the robot's surroundings. By providing real-time distance data, they allow the robot to make informed decisions about its movement and interactions. For example, LiDAR enables high-precision navigation in environments that are too complex or dynamic for simpler sensors like ultrasonic or IR rangefinders.
 
@@ -2606,6 +2622,7 @@ Robotics uses GNSS heavily in outdoor navigation because it provides a globally 
 ---
 
 ##### Core idea: position from time-of-flight
+{: .no_toc }
 
 GNSS works by measuring how long radio signals take to travel from satellites to a receiver. If signal propagation time were known perfectly, the distance to each satellite could be computed and the receiver position could be determined by **trilateration** (intersection of spheres in 3D). In practice, the receiver does not carry an atomic clock like the satellites do, so the measured distances are **pseudo-ranges** that include clock bias and other errors. 
 
@@ -2726,6 +2743,7 @@ This geometric requirement is why a minimum of four satellites is needed for a f
 ---
 
 ##### Satellite constellations and signals
+{: .no_toc }
 
 ![]({{ site.baseurl }}/assets/images/new_sensors/nastar_constellation.gif){: width="400" }
 
@@ -2809,6 +2827,7 @@ A key geometric idea is that accuracy depends not only on noise level, but also 
 ---
 
 ##### Performance, failure modes, and practical limitations
+{: .no_toc }
 
 **Baseline accuracy.** Under typical conditions and without specialized enhancements, standard GPS accuracy is on the order of **20 to 25 m horizontally** and about **43 m vertically**, with a typical fix rate of **1 Hz** (though faster or slower rates are possible). 
 
@@ -2888,34 +2907,35 @@ A key geometric idea is that accuracy depends not only on noise level, but also 
 ---
 
 ##### Augmentation and “enhanced GPS” options
+{: .no_toc }
 
 Many systems improve GNSS accuracy by providing external corrections or by using carrier-phase information.
 
-##### Satellite-based augmentation systems (SBAS)
+- **Satellite-based augmentation systems (SBAS)**
 
-A **satellite-based augmentation system (SBAS)** is an enhancement layer built on top of GNSS. SBAS uses a network of **ground reference stations** at precisely surveyed locations to monitor GNSS satellite signals. These stations estimate common error sources—such as satellite clock errors, orbit (ephemeris) errors, and ionospheric delay—and broadcast **correction messages** to users via geostationary satellites.
+A **satellite-based augmentation system (SBAS)** is an enhancement layer built on top of GNSS. SBAS uses a network of **ground reference stations** at precisely surveyed locations to monitor GNSS satellite signals. These stations estimate common error sources—such as satellite clock errors, orbit (ephemeris) errors, and ionospheric delay, and broadcast **correction messages** to users via geostationary satellites.
 
 One example of SBAS is the **Wide Area Augmentation System (WAAS)**, operated in North America. When SBAS corrections are available, horizontal positioning accuracy can improve from roughly **10–12 m** (standalone GPS) to about **1–2 m** within the system’s coverage region.
 
-##### Differential GPS (DGPS)
+- **Differential GPS (DGPS)**
 
 Differential GPS (DGPS) improves positioning accuracy by using a **reference receiver** placed at a precisely surveyed, fixed location. Because the true position of this reference is known, it can estimate the current GNSS errors affecting its measurements (such as satellite timing and atmospheric delays). These estimated errors are then transmitted to nearby robot receivers, which apply the same corrections to their own measurements.
 
 This approach works well only when the robot is **close to the reference station**, since many GNSS errors vary gradually with location. As the distance increases, the reference errors no longer match the robot’s local errors, and correction effectiveness decreases.
 
-##### Receiver Autonomous Integrity Monitoring (RAIM)
+- **Receiver Autonomous Integrity Monitoring (RAIM)**
 
 Receiver Autonomous Integrity Monitoring (RAIM) is a technique that allows a GNSS receiver to **detect faulty measurements** without relying on external corrections. The receiver computes multiple position solutions using different combinations of visible satellites and checks whether these solutions are mutually consistent.
 
 If one satellite is providing incorrect data, the solutions will disagree, allowing the receiver to detect (and sometimes exclude) the faulty measurement. RAIM requires **more satellites than the minimum needed for positioning**, since this redundancy is essential for consistency checks and integrity monitoring.
 
-##### Real-Time Kinematic positioning (RTK)
+- **Real-Time Kinematic positioning (RTK)**
 
 Real-Time Kinematic positioning (RTK) is a high-precision GNSS technique that uses not only the navigation code, but also the **carrier signal itself**. GNSS signals are transmitted as radio waves at a known frequency. This underlying radio wave is called the **carrier**, and its oscillation is much faster than the navigation code modulated on top of it.
 
 The **carrier phase** is the position within this repeating wave cycle (for example, whether the wave is at a peak, trough, or somewhere in between) when it arrives at the receiver. By tracking this phase very precisely, the receiver can measure changes in distance with **millimeter-level resolution**.
 
-However, the receiver does not know how many **full carrier wavelengths** lie between the satellite and the receiver—only the fractional part of the current wave cycle can be observed directly. Determining this unknown whole-number count is known as resolving the **integer ambiguity**.
+However, the receiver does not know how many **full carrier wavelengths** lie between the satellite and the receiver-only the fractional part of the current wave cycle can be observed directly. Determining this unknown whole-number count is known as resolving the **integer ambiguity**.
 
 RTK combines carrier-phase measurements with corrections from a nearby base station to determine this integer number of wavelengths. Once the integer ambiguity is resolved, the distance between satellite and receiver can be estimated with very high precision, enabling **centimeter-level horizontal positioning accuracy** under good signal conditions. This level of precision is why RTK is often referred to as “survey grade.”
 
@@ -2985,6 +3005,7 @@ RTK combines carrier-phase measurements with corrections from a nearby base stat
 
 
 ##### GNSS in a full navigation system: integration with IMU
+{: .no_toc }
 
 GNSS provides strong absolute position references but has three major limitations for robot state estimation:
 

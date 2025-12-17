@@ -1,10 +1,12 @@
 ---
-title: "Chapter 0: Mathematical Foundation"
-parent: "Robotics Foundation"
+title: "Mathematical Foundation"
+parent: "Chapter 0: Mathematical Foundation"
 has_children: false
 layout: numbered
 math: mathjax
 nav_order: 0
+chapter: 0
+section: 0
 publish: true
 ---
 

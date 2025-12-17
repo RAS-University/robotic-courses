@@ -21,8 +21,12 @@ section: 4
 {:toc}
 
 ## Prerequisites
+To be able to fully appreciate content of this lesson, it is expected that one has a solid understanding of:
+
 * Linear Algebra and multivariable calculus
 * Classical mechanics
+
+It is also expected that one has followed all lessons from [Chapter 1]:Basics of Motion Control(https://ras-university.github.io/robotic-courses/docs/chap1_basic_motion_ctrl/), and in particular, is familiar with the following concepts:
 * Control theory:
   - First- and second-order system response
   - Proportional, integral and derivative control

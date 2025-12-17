@@ -7,6 +7,7 @@ has_children: false
 math: mathjax
 chapter: 3
 section: 2
+publish: false
 ---
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>

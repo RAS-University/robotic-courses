@@ -1,9 +1,11 @@
 ---
-title: Multirotor
-parent: "Chapter 9: Aerial Robotics"
+title: 9.7 Control & Allocation
+parent: "Multirotor Drones"
 layout: default
 nav_order: 7
-# math: mathjax
+chapter: 9
+section: 7
+publish: false
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

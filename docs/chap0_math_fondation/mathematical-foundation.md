@@ -5,6 +5,7 @@ has_children: false
 layout: numbered
 math: mathjax
 nav_order: 0
+publish: true
 ---
 
 # Mathematical Foundation

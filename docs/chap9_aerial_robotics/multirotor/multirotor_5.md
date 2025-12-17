@@ -1,9 +1,11 @@
 ---
-title: Multirotor
-parent: "Chapter 9: Aerial Robotics"
+title: 9.8 Measurement Model and State Estimation
+parent: "Multirotor Drones"
 layout: default
-nav_order: 7
-# math: mathjax
+nav_order: 8
+chapter: 9
+section: 8
+publish: false
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

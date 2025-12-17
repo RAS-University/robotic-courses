@@ -6,6 +6,7 @@ math: mathjax
 nav_order: 3
 chapter: 1
 section: 3
+publish: false
 ---
 
 <!-- Link external JavaScript file -->

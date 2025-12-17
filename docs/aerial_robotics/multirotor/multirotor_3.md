@@ -62,20 +62,6 @@ Throughout this lecture notes, we will use the following subscripts, superscript
 
 
 
-- $x \in \mathbb{R}^{1\times n}$: vector $x$ of dimension $n$
-- $x_i$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$
-- $x_k$: value of $x$ at time step $k$ (discrete time)
-<!-- - $x_{i\mid k}$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$ at time step $k$ -->
-- $x^+$ or $x_{k+1}$: value of $x$ at next time step (discrete time)
-- $\dot{x}$: time derivative of $x$ (continuous time)
-- $x^*$: optimal value of $x$
-- $x^\top$: transpose of vector or matrix $x$
-- $\hat{x}$: estimate of variable $x$ (see chapter on [State Estimation](#-14-intro-to-state-estimation-))
-- $\hat{x}^-$: estimate of variable $x$ before measurement update
-- $\tilde{x}$: estimation error of variable $x$
-- $x_s$: steady state value of variable $x$
-
-
 ## Chapter 2: Modeling & Dynamics
 <div class="note-box">
   <strong>Objective:</strong> Derive Equations of motion relating torque and thrust to angular rates.

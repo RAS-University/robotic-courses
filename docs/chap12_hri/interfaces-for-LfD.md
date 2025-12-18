@@ -328,7 +328,7 @@ This device operates as a closed-loop system and introduces delays. The delay de
 <br>
 
 <p align="center">
-  <iframe width="600" height="338" src="[https://www.youtube.com/embed/FtjC-BXGgAE](https://youtu.be/yULQsB4XXn4)" frameborder="0" allowfullscreen></iframe>
+  <iframe width="600" height="338" src="https://youtu.be/yULQsB4XXn4" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>LASA / EPFL (Switzerland) - JRL / AIST (Japan). Source: EPFL [LASA](http://lasa.epfl.ch])</sub>
@@ -735,6 +735,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

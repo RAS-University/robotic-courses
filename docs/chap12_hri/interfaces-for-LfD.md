@@ -644,6 +644,13 @@ System built on the HAL Robotics Framework streaming packages with a flexible in
 The previous setting can be extended to more complex problems. In the example below, the user is wearing a marker-based system that tracks the full motion of the arm as well as the fingers. These motions are directly mapped onto the robot. This setup still requires the user to wear a device. It is not as heavy as an exoskeleton, but it is also not as ideal as wearing nothing and relying solely on an external camera system. To achieve such a setup, cameras must be placed around the entire room and must track motion at very high resolution. Moreover, the system is marker-based, which means tracking is lost as soon as markers become obstructed.
 
 <p align="center">
+  <iframe width="600" height="338" src="https://youtu.be/EUGeL9_ONvw" frameborder="0" allowfullscreen></iframe>
+</p>
+
+><sub>LASA Lab / EPFL</sub>
+
+<!--
+<p align="center">
   <video width="600" height="338" controls>
     <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/MotionCapture1.mp4" type="video/mp4">
     Your browser does not support the video tag.
@@ -651,6 +658,7 @@ The previous setting can be extended to more complex problems. In the example be
 </p>
 
 ><sub>LASA Lab / EPFL</sub>
+-->
 
 In both vision systems and motion capture systems, obstruction results in the loss of data. Research is being conducted on compensating for this loss in order to interpolate between the available data points. If you are gathering data in this way, you must be aware that some interpolation has occurred during data transmission. As a result, the data you obtain can not be fully trusted. Another issue with this type of system is that it does not fit all body sizes and strengths. Furthermore, it neither conveys nor renders forces at contact.
 
@@ -750,6 +758,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

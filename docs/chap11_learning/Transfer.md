@@ -7,6 +7,7 @@ layout: numbered
 math: mathjax
 chapter: 11
 section: 7
+publish: false
 ---
 
 <!-- Link external JavaScript file -->

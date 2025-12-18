@@ -1,10 +1,13 @@
 ---
-title: Multirotor7
-parent: "Chapter 9: Aerial Robotics"
+title: 9.10 Advanced Control (MPC)
+parent: "Multirotor Drones"
 layout: default
+nav_order: 10
+chapter: 9
+section: 10
+publish: false
 toc: true             # <--- ENABLE TOC GENERATION
 toc_label: On This Page # <--- Custom title for the sidebar
-nav_order: 7
 # math: mathjax
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>

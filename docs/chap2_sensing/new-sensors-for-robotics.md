@@ -295,7 +295,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
   <input type="radio" name="ch0-q9" value="D"> Unlimited lifetime<br>
   <button type="button"
     onclick="checkTrueFalse('ch0-q5', 'A',
-      '✅ Correct! Performance depends on illumination—an environmental factor.',
+      '✅ Correct! Performance depends on illumination, an environmental factor.',
       '❌ Think about how lighting conditions affect the sensor.')">
     Check Answer
   </button>
@@ -495,7 +495,7 @@ A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the s
 
 ---
 
-#### Accuracy & Precision
+#### Accuracy & Precision
 
 When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
 
@@ -543,7 +543,7 @@ The dartboard analogy below is a classic way to illustrate this difference:
 
 ---
 
-#### Noise
+#### Noise
 
 *Noise* is any undesired variation added to a measurement. It limits how well we can estimate the true value, even when the sensor is otherwise “perfect.”
 
@@ -601,7 +601,7 @@ Zeroing and multi-point calibration (to remove bias and correct scale), improved
 
 ---
 
-#### Response Time & Bandwidth
+#### Response Time & Bandwidth
 
 A sensor’s **dynamic performance** determines how well it tracks changes over time. Two core notions are used:
 
@@ -1146,7 +1146,7 @@ $$
 
 ---
 
-##### Odometry in the estimation stack
+#### Odometry in the estimation stack
 {: .no_toc }
 Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
 
@@ -1630,9 +1630,10 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 
 ---
 
-#### Main classes of gyroscopes
+###### Main classes of gyroscopes
+{: .no_toc }
 
-##### 1) Mechanical gyroscopes and gyrocompasses
+**1) Mechanical gyroscopes and gyrocompasses**
 
 * **Principle.** Gyroscopes and gyrocompasses rely on the principle of the  **conservation of angular momentum** $L=I\omega$. Angular momentum is the tendency of a rotating object to keep rotating at the same angular speed about the same axis of rotation in the absence of an external torque. A rapidly spinning rotor maintains its orientation; torques cause **precession** perpendicular to both spin and applied torque. Classical **gyrocompasses** exploit precession with a pendulous weight and damping so the spin axis aligns with true north in the Earth frame. 
 * **Notes for robots.** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
@@ -1640,7 +1641,7 @@ The goal of gyroscopic systems is to measure changes in vehicle orientation by t
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/gyrocompas.png)
 ><sub>Simple gyrocompass. (a) Pendulus gyro. (b) Precessional motion. Source: Springer Handbook of Robotics, Chapter 20.1</sub>
 
-##### 2) Optical gyroscopes
+**2) Optical gyroscopes**
 
 * **Principle (Sagnac effect).** Send light both ways around a closed loop (see Fig below) of length $D=2\pi R$. If the loop is stationary, both pulses traverse the same distance at speed $c$ and arrive together after
 $$
@@ -1672,7 +1673,7 @@ This $\Delta t$ is what RLGs and FOGs convert into a measurable phase or frequen
 
 Fiber-optic gyros (FOG) use long polarization-maintaining fiber loops; ring-laser gyros (RLG) use a laser cavity and measure the beat frequency between the two standing waves. Optical gyros are accurate, with no spinning mass. 
 
-##### 3) MEMS (micro-electromechanical) gyroscopes
+**3) MEMS (micro-electromechanical) gyroscopes**
 
 * **Principle (Coriolis).** A vibrating proof mass with velocity $\mathbf{v}$ inside a frame rotating at rate $\boldsymbol{\Omega}$ experiences **Coriolis acceleration**. Coriolis acceleration is the apparent acceleration that arises in a rotating frame of references. Suppose that an object moves along a straight line in a rotating frame of reference. To an outside observer in an inertial frame the object’s path is curved, thus there must be some force acting on the object to maintain the straight line motion as viewed by the rotating observer. An object moving in a straight line with local velocity $\mathbf{v}$ in a frame rotating at rate $\boldsymbol{\Omega}$ relative to an inertial frame will experience a Coriolis acceleration given by : 
   $$
@@ -1687,7 +1688,8 @@ Wine-glass resonator gyroscopes use the effect of Coriolis forces on the positio
 
 ---
 
-#### What gyros actually deliver
+###### What gyros actually deliver
+{: .no_toc }
 
 * **Rate gyros (RG).** Output angular **rate** $\dot{\theta}$ directly.
 * **Rate-integrating gyros (RIG).** Internally integrate to report **angle**, though most robotic pipelines still integrate rate in software to keep timing consistent with other sensors. 
@@ -1697,7 +1699,8 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-#### Important Performance metrics of Inertial measurement units
+##### Important Performance metrics of Inertial measurement units
+{: .no_toc }
 
 * **Bias repeatability / stability.** How much the zero-rate output wanders over time at constant conditions; dominates long-term drift. 
 * **Angle Random Walk (ARW).** Noise-induced angle error growth when integrating rate; sets short-term orientation precision. 
@@ -1705,7 +1708,8 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-#### Practical selection and integration tips
+##### Practical selection and integration tips
+{: .no_toc }
 
 * **Match range and bandwidth to dynamics.** Choose full-scale so saturation is unlikely during worst maneuvers, and pick bandwidth high enough for control needs without excessive noise or latency.
 * **Mounting and alignment.** Keep axes orthogonal, rigidly mount near the robot’s center to reduce vibration coupling, and include axis misalignment in calibration.
@@ -1818,7 +1822,6 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 ---
 
 ##### Accelerometer
-{:.no_toc}
 
 Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
 
@@ -1965,14 +1968,14 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 
 ---
 
-
-#### Force, Torque, and Strain Sensing
+#### Force, Torque, and Strain Sensing
 
 Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
 ---
 
 ##### Measurement Location: From Effort to Contact
+{: .no_toc }
 
 * **Actuator effort (motor current).** In many electric drives, torque is approximately proportional to current, $\tau \approx k_t I$. This relationship is useful for fast inner-loop control, however, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
 * **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
@@ -1981,6 +1984,7 @@ Force, torque, and strain sensing enable a robot to perceive its own interaction
 ---
 
 ##### Actuator effort: motor current as a torque sensor
+{: .no_toc }
 
 In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor.
 
@@ -2017,15 +2021,18 @@ If precise low-force regulation, contact transients, or model uncertainties domi
 ---
 
 ##### Strain-based sensing
+{: .no_toc }
 
 Strain-based sensing measures tiny elastic deformations in a compliant mechanical element and infers the applied force or torque through a known stiffness model. It is the workhorse behind joint torque sensors, six-axis wrist force–torque (F/T) sensors, weigh-scale load cells, and many tactile skins.
 
-###### What is measured
+##### What is measured
+{: .no_toc }
 
 * **Strain** is the relative change in length, $\varepsilon = \Delta L / L$ (unitless). In metals operating in the linear elastic regime, stress $\sigma$ and strain relate by $\sigma = E \varepsilon$, where $E$ is Young’s modulus.
 * **Strain gauges** convert strain to an electrical signal. The most common are metal-foil resistive gauges; alternatives include piezoresistive silicon and piezoelectric ceramics.
 
-###### Core transducer physics
+##### Core transducer physics
+{: .no_toc }
 
 * **Foil (resistive) strain gauges.** Electrical resistance $R$ changes approximately linearly with strain:
   $$
@@ -2035,7 +2042,8 @@ Strain-based sensing measures tiny elastic deformations in a compliant mechanica
 * **Piezoresistive silicon.** Doped silicon has a larger effective gauge factor (10–150), enabling compact, low-noise sensors, often integrated on diaphragms or micro-flexures.
 * **Piezoelectric.** Generates charge proportional to dynamic strain. Very high bandwidth but poor at true DC; best for vibration or impact sensing (dynamic tactile).
 
-###### From strain to force/torque
+##### From strain to force/torque
+{: .no_toc }
 
 A compliant element (beam, ring, cross-shape, diaphragm, or torsion tube) concentrates strain where gauges are placed. With a linear elastic model,
 $$
@@ -2043,7 +2051,8 @@ $$
 $$
 where $\mathbf{v}$ collects bridge voltages, $\mathbf{w} = [F_x, F_y, F_z, \tau_x, \tau_y, \tau_z]^\top$ is the wrench (forces and torques) at a reference point, $\mathbf{S}$ is the sensitivity matrix determined by geometry and gauge placement, and $\mathbf{b}$ is an offset. Calibration identifies $\mathbf{S}$ (and $\mathbf{b}$) by applying known loads and solving a linear regression; the inverse then maps voltages back to forces and torques.
 
-###### Bridge circuits and signal conditioning
+##### Bridge circuits and signal conditioning
+{: .no_toc }
 
 * **Wheatstone bridge.** Gauges are wired as quarter-, half-, or full-bridges. Full-bridges place gauges in tension and compression, doubling sensitivity and providing temperature compensation.
 * **Excitation.** Constant-voltage (e.g., $V_\mathrm{ex}=2$–10 V) is common; constant-current can reduce self-heating drift.
@@ -2123,12 +2132,1053 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ### Exteroceptive Sensors
 
-- Contact sensors (switch, bumper, capacitive touch)
-- Rangefinders: IR, ultrasonic, time‑of‑flight (ToF)
+{: #ch3 }
+
+Exteroceptive sensors provide the measurements that allow a robot to build an understanding of what surrounds it, not just what it is doing internally. This is the sensing foundation for tasks like avoiding obstacles, following corridors, recognizing objects, estimating position in a map, and adapting behavior to changing environments.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/icubsensors.png)
+><sub>This <a href="https://icub.iit.it/"> ICub Humanoid Robot</a> is endowed with high resolution binocular cameras for 3-dimensional rendering of the world and tactile sensors to perceive touch at its fingertips. All these sensors are necessary to reach and grab the red ball. Credit: EPFL/LASA Laboratory</sub>
+
+In the ICub humanoid robot shown in the image, the exteroceptive sensors complement the internal sensing used for control. Its RGB cameras provide rich visual information about nearby objects, their relative position in the scene, and motion cues from frame-to-frame changes. Its microphones provide auditory information, enabling detection and localization of sound sources (for example, a human voice or an alarm) and supporting interaction. Together, these exteroceptive sensors give the robot a more complete and task-relevant picture of the world around it, extending perception beyond what can be inferred from internal measurements alone.
+
+A key feature of exteroceptive sensing is that the raw signals often describe the world indirectly. A camera produces images, a range sensor produces distances, and a satellite receiver produces global position estimates. Turning these signals into actionable information usually requires a processing pipeline that may include filtering, feature extraction, geometric reasoning, and sometimes machine learning. As a result, exteroceptive sensing is typically more computationally demanding and more sensitive to measurement conditions than internal sensing.
+
+Exteroceptive sensors also come in a wide range of “data shapes” and trade-offs:
+
+* Single-value measurements (for example, distance-to-obstacle from an ultrasonic sensor)
+* Structured arrays (for example, depth images from a time-of-flight camera)
+* High-dimensional observations (for example, RGB images and 3D point clouds from LiDAR)
+* Global references (for example, Global Navigation Satellite System (GNSS) position outdoors)
+
+Each modality brings different strengths and failure modes. Cameras can provide rich semantic information but depend strongly on lighting and texture. Ultrasonic sensors are inexpensive and robust at close range but struggle with soft materials and angled surfaces. LiDAR provides accurate geometry but can be affected by reflective or absorbing surfaces and weather. Practical robot designs often combine multiple exteroceptive sensors to reduce blind spots and improve robustness.
+
+This chapter introduces common exteroceptive sensor families, the physical principles behind their measurements, and the practical considerations that determine real-world performance. 
+
+---
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Why do many exteroceptive sensors require substantial processing before their outputs can guide robot decisions?</strong></p>
+<form id="ch3-extero-intro-q1">
+  <input type="radio" name="ch3-extero-intro-q1" value="A"> Because exteroceptive sensors always measure motor currents, which are hard to interpret<br>
+  <input type="radio" name="ch3-extero-intro-q1" value="B"> Because they often produce raw signals (images, point clouds, distances) that must be converted into higher-level information (features, objects, geometry)<br>
+  <input type="radio" name="ch3-extero-intro-q1" value="C"> Because their measurements are already decisions, but robots still double-check for safety<br>
+  <input type="radio" name="ch3-extero-intro-q1" value="D"> Because exteroceptive sensors can only be read at very low rates, so processing replaces sampling<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-extero-intro-q1', 'B',
+      '✅ Correct! Exteroceptive sensors often output raw measurements that need filtering and interpretation (for example, extracting depth, obstacles, or landmarks).',
+      '❌ Try again. The key idea is that exteroceptive sensors often produce raw data that must be transformed into meaningful world information.')">
+    Check Answer
+  </button>
+  <p id="ch3-extero-intro-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: Which scenario best describes a case where a range sensor might work well but a camera might fail?</strong></p>
+<form id="ch3-extero-intro-q2">
+  <input type="radio" name="ch3-extero-intro-q2" value="A"> A dark hallway with very little light, where obstacle distances are still needed<br>
+  <input type="radio" name="ch3-extero-intro-q2" value="B"> A bright sunny day, where cameras always saturate but range sensors always fail<br>
+  <input type="radio" name="ch3-extero-intro-q2" value="C"> A scene with many colorful objects, where range sensors cannot measure distance at all<br>
+  <input type="radio" name="ch3-extero-intro-q2" value="D"> A textured wall, where cameras cannot detect edges but ultrasonic sensors detect texture patterns<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-extero-intro-q2', 'A',
+      '✅ Correct! Cameras depend strongly on illumination, while many range sensors can still return useful distances in low-light conditions.',
+      '❌ Try again. Think about which sensor is most sensitive to lighting conditions and which can still report distance without relying on visible light.')">
+    Check Answer
+  </button>
+  <p id="ch3-extero-intro-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: What is the most practical meaning of a sensor’s “field of view” (FoV) for a mobile robot?</strong></p>
+<form id="ch3-extero-intro-q3">
+  <input type="radio" name="ch3-extero-intro-q3" value="A"> The robot’s allowed driving area, defined by safety regulations<br>
+  <input type="radio" name="ch3-extero-intro-q3" value="B"> The maximum battery capacity needed to power the sensor for one hour<br>
+  <input type="radio" name="ch3-extero-intro-q3" value="C"> The sensor’s measurement precision, expressed in degrees<br>
+  <input type="radio" name="ch3-extero-intro-q3" value="D"> The region of the environment the sensor can observe at a given moment (angular coverage and sometimes range limits)<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-extero-intro-q3', 'D',
+      '✅ Correct! The field of view describes what part of the surroundings the sensor can see at once, which directly affects coverage and blind spots.',
+      '❌ Try again. Field of view is about what portion of the environment is observable, not about power, precision alone, or regulations.')">
+    Check Answer
+  </button>
+  <p id="ch3-extero-intro-q3-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 4 -->
+
+<p><strong>Question 4: Why is time alignment between different exteroceptive sensor measurements important when the robot is moving?</strong></p>
+<form id="ch3-extero-intro-q4">
+  <input type="radio" name="ch3-extero-intro-q4" value="A"> Because time alignment removes all measurement noise, making filters unnecessary<br>
+  <input type="radio" name="ch3-extero-intro-q4" value="B"> Because time alignment increases the sensor’s field of view by averaging timestamps<br>
+  <input type="radio" name="ch3-extero-intro-q4" value="C"> Because sensors can have different update times, and combining mis-timed data can create a distorted or inconsistent view of the world
+<br>
+  <input type="radio" name="ch3-extero-intro-q4" value="D"> Because time alignment is only needed for stationary robots, not moving robots<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-extero-intro-q4', 'C',
+      '✅ Correct! If the robot moves, data captured at different times can correspond to different robot poses, causing errors when fusing measurements.',
+      '❌ Try again. Consider what happens if one sensor sees the world “earlier” than another while the robot is changing position or orientation.')">
+    Check Answer
+  </button>
+  <p id="ch3-extero-intro-q4-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 5 -->
+
+<p><strong>Question 5: What is a strong reason to use multiple different exteroceptive sensing modalities on the same robot?</strong></p>
+<form id="ch3-extero-intro-q5">
+  <input type="radio" name="ch3-extero-intro-q5" value="A"> Different sensors have complementary strengths, so combining them reduces blind spots and improves robustness under changing conditions<br>
+  <input type="radio" name="ch3-extero-intro-q5" value="B"> Multiple sensors guarantee perfect measurements, so calibration is no longer needed<br>
+  <input type="radio" name="ch3-extero-intro-q5" value="C"> Using more sensors always reduces computation because work is split automatically<br>
+  <input type="radio" name="ch3-extero-intro-q5" value="D"> Multiple sensors are only useful to increase robot speed, not perception reliability<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-extero-intro-q5', 'A',
+      '✅ Correct! Sensor modalities can compensate for each other’s weaknesses (for example, geometry from LiDAR and semantics from cameras).',
+      '❌ Try again. Think about robustness: different sensors fail in different ways, so combining them can make perception more reliable.')">
+    Check Answer
+  </button>
+  <p id="ch3-extero-intro-q5-feedback"></p>
+</form>
+
+</details>
+
+
+---
+
+#### Contact Sensors (Touch and Tactile Sensing)
+
+Contact sensors measure the environment **through physical interaction**. Unlike cameras or rangefinders that observe at a distance, contact sensing becomes informative only when the robot **touches** something. This makes contact sensors especially important for tasks where “knowing by touching” is unavoidable, such as grasping an object reliably, detecting collisions, or walking on uncertain terrain.
+
+In robotics curricula, contact sensing is often discussed together with **force perception**, because many contact sensors ultimately aim to estimate contact forces, torques, pressure distributions, and slip events. The detailed sensor principles (resistive, capacitive, piezoelectric, optical tactile sensors), calibration procedures, and force-control use cases are covered in [Force Perception]({{ site.baseurl }}/docs/chap2_sensing/force_perception), so this section focuses on how contact sensing fits into exteroceptive perception.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/touch_sensors.png){: width="500" }
+> <sub>Uses of tactile sensing in robotics. Source: Springer Handbook of Robotics, Fig. 28.1. </sub>
+
+Contact sensing is typically used in three recurring interaction modes: manipulation, exploration, and response. During manipulation, contact measurements help regulate grasp force, infer contact constraints, and assess stability. During exploration, the robot deliberately touches surfaces to estimate properties like texture, friction, or hardness. During response, contact sensing serves safety and robustness by detecting unexpected contact and triggering fast reactions.
+
+Contact sensing spans a spectrum from simple “touch happened” signals to rich measurements of how contact is distributed:
+
+* **Binary contact sensors (contact switches, bumpers):** output a yes/no signal indicating contact. These are common in mobile robots for low-cost collision detection and as safety bumpers.
+* **Local force or pressure sensors (force-sensitive resistors, pressure pads):** output a continuous value related to contact intensity. These are often placed in grippers, fingertips, or foot soles.
+* **Tactile arrays (tactile skin, fingertip taxels):** measure pressure over many small sensing elements (often called *taxels*, short for tactile pixels), producing a “pressure image” of contact. This supports estimating contact location, contact area, and detecting slip or rolling.
+* **Force/torque sensing at an end-effector (force–torque sensor):** measures the net interaction at a mounting point, typically providing forces and torques along three axes each (often called 6-axis force/torque sensing). This is widely used for compliant manipulation, surface following, and safe physical interaction.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/force_torque_contact.png){: width="500" }
+> <sub>Miniature fingertip force–torque sensor for a prosthetic hand. Source: Springer Handbook of Robotics, Fig. 28.2. </sub>
+
+---
+
+##### Why contact sensing matters in practice
+{: .no_toc }
+
+* **Robust manipulation:** vision can suggest where an object is, but contact sensing confirms *when* the object is actually grasped, whether it is slipping, and how firmly it is held.
+* **Safe physical interaction:** contact sensors can trigger fast reflexes (stop, retract, compliant behavior) when unexpected contact occurs.
+* **Locomotion and terrain adaptation:** foot contact sensors help detect touch-down, estimate load distribution, and improve balance on uneven or deformable ground.
+* **Exploration of unknown objects:** tactile arrays can reveal local geometry and material cues (edges, ridges, softness) that may be ambiguous visually.
+
+---
+
+##### Practical design trade-offs
+{: .no_toc }
+
+When selecting or integrating a contact sensor, typical engineering trade-offs include:
+
+* **Sensitivity vs durability:** soft compliant skins can detect light touch but may wear out faster in harsh environments.
+* **Spatial resolution vs wiring and computation:** high-resolution tactile arrays provide richer information but increase cabling complexity, data rate, and processing demands.
+* **Bandwidth (speed) vs noise:** fast contact events (taps, slip onset) require higher sampling rates, which can amplify noise and require filtering.
+* **Calibration and drift:** many tactile and force sensors exhibit offset drift, hysteresis, and temperature dependence, so periodic calibration and compensation can be necessary.
+* **Placement:** fingertip sensors give precise local contact details, while wrist-mounted force–torque sensing gives a global interaction measurement but cannot directly localize contact along a finger without additional modeling.
+
+---
+
+##### How contact sensing complements other exteroceptive sensors
+{: .no_toc }
+
+Contact sensing is often the “last meter” of perception: cameras and range sensors guide the robot toward a target, and contact sensors confirm and regulate the final interaction. A practical example is grasping: vision estimates an object pose and plans an approach, while tactile sensing confirms contact timing, corrects grasp alignment, and detects slip during lifting.
+
+---
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Why can a contact sensor be considered exteroceptive even though it is mounted on the robot?</strong></p>
+<form id="ch3-contact-q1">
+  <input type="radio" name="ch3-contact-q1" value="A"> Because it directly measures the robot’s internal joint torques during motion<br>
+  <input type="radio" name="ch3-contact-q1" value="B"> Because it measures properties of the environment through physical interaction at the robot’s surface<br>
+  <input type="radio" name="ch3-contact-q1" value="C"> Because it only works when the robot is stationary, so it must be external sensing<br>
+  <input type="radio" name="ch3-contact-q1" value="D"> Because it estimates global position like GNSS when contact occurs<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-contact-q1', 'B',
+      '✅ Correct! Contact sensors measure the external world through interaction at the robot-environment interface, even if the hardware is mounted on the robot.',
+      '❌ Try again. Exteroceptive sensing is defined by measuring the environment, not by where the sensor is mounted.')">
+    Check Answer
+  </button>
+  <p id="ch3-contact-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: A bumper switch on a mobile robot is most directly used for which purpose?</strong></p>
+<form id="ch3-contact-q2">
+  <input type="radio" name="ch3-contact-q2" value="A"> Measuring a detailed pressure map to infer object shape<br>
+  <input type="radio" name="ch3-contact-q2" value="B"> Estimating the full 6-axis force and torque at the end-effector<br>
+  <input type="radio" name="ch3-contact-q2" value="C"> Detecting that contact occurred and triggering a safety or reflex response<br>
+  <input type="radio" name="ch3-contact-q2" value="D"> Identifying object class from tactile texture patterns over time<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-contact-q2', 'C',
+      '✅ Correct! A bumper switch is typically a binary sensor used to detect collisions or contact events and trigger fast reactions.',
+      '❌ Try again. A bumper switch usually provides a yes/no contact signal, not a rich force map or object classification.')">
+    Check Answer
+  </button>
+  <p id="ch3-contact-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: Which task benefits most from a tactile array (many taxels) compared to a single force sensor?</strong></p>
+<form id="ch3-contact-q3">
+  <input type="radio" name="ch3-contact-q3" value="A"> Detecting whether any contact occurred at all<br>
+  <input type="radio" name="ch3-contact-q3" value="B"> Estimating where contact occurs on the fingertip and how contact pressure is distributed<br>
+  <input type="radio" name="ch3-contact-q3" value="C"> Measuring the robot battery voltage during grasping<br>
+  <input type="radio" name="ch3-contact-q3" value="D"> Estimating global position drift during long navigation missions<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-contact-q3', 'B',
+      '✅ Correct! Tactile arrays provide spatial information: contact location, area, and pressure distribution, which a single force sensor cannot directly resolve.',
+      '❌ Try again. A single force sensor can indicate net force, but a tactile array is mainly valuable for spatially resolved contact information.')">
+    Check Answer
+  </button>
+  <p id="ch3-contact-q3-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 4 -->
+
+<p><strong>Question 4: A wrist-mounted force–torque (F/T) sensor reports a large net force during a grasp. Which situation could produce a similar reading even if the object is not securely grasped?</strong></p>
+<form id="ch3-contact-q4">
+  <input type="radio" name="ch3-contact-q4" value="A"> The robot’s camera exposure time is set too long<br>
+  <input type="radio" name="ch3-contact-q4" value="B"> The gripper lightly touches a rigid table edge, creating a large reaction force without stable grasp closure<br>
+  <input type="radio" name="ch3-contact-q4" value="C"> The robot increases its Wi-Fi transmit power<br>
+  <input type="radio" name="ch3-contact-q4" value="D"> The robot reads higher-resolution images from its RGB camera<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-contact-q4', 'B',
+      '✅ Correct! A large net force can result from pushing against the environment (e.g., table or fixture) even if the grasp itself is weak or slipping.',
+      '❌ Try again. The F/T sensor measures mechanical interaction at the wrist; similar net forces can come from unintended contacts with the environment.')">
+    Check Answer
+  </button>
+  <p id="ch3-contact-q4-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 5 -->
+
+<p><strong>Question 5: Why do high-resolution tactile skins often create system-level challenges beyond the sensor physics?</strong></p>
+<form id="ch3-contact-q5">
+  <input type="radio" name="ch3-contact-q5" value="A"> They require an outdoor satellite link to synchronize all taxels<br>
+  <input type="radio" name="ch3-contact-q5" value="B"> They always eliminate the need for vision and range sensing, so planning becomes harder<br>
+  <input type="radio" name="ch3-contact-q5" value="C"> They increase wiring, data rate, and processing demands because many sensing elements must be read and interpreted in real time<br>
+  <input type="radio" name="ch3-contact-q5" value="D"> They can only measure torque, not pressure, so additional sensors are mandatory<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch3-contact-q5', 'C',
+      '✅ Correct! Many taxels mean more channels to read, more cabling, higher bandwidth, and more computation for filtering and interpretation.',
+      '❌ Try again. The main difficulty is practical integration: wiring, data transfer, power, and real-time processing for large numbers of sensing elements.')">
+    Check Answer
+  </button>
+  <p id="ch3-contact-q5-feedback"></p>
+</form>
+
+</details>
+
+---
+
+<details markdown="1">
+  <summary>Further exploration</summary>
+* [Chapter 2.3 : Force Perception]({{ site.baseurl }}/docs/chap2_sensing/force_perception)
+* [Tactile sensor](https://en.wikipedia.org/wiki/Tactile_sensor)
+* [Force sensor](https://en.wikipedia.org/wiki/Force_sensor)
+* [Force sensing resistor](https://en.wikipedia.org/wiki/Force-sensing_resistor)
+
+</details>
+
+---
+
+#### Rangefinders
+
+Rangefinders are a family of exteroceptive sensors that provide measurements of the distance between the robot and objects in its environment. These sensors are vital for tasks such as obstacle avoidance, mapping, localization, and autonomous navigation. Unlike contact sensors, which rely on physical interaction, rangefinders gather data from a distance and are typically used to understand the environment beyond the immediate vicinity of the robot.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/lidar.png)
+
+> <sub>LiDAR-based rangefinders are used in various robotic applications for obstacle detection, navigation, and spatial mapping. Source: https://news.panasonic.com/global/stories/805</sub>
+
+In the image above, we see the principle of LiDAR technology, where the sensor emits a laser beam towards an object. The time it takes for the laser to travel to the object and return to the sensor is measured, and this time delay is used to calculate the distance. This technology is commonly used in autonomous vehicles and industrial robots for tasks like obstacle detection and spatial mapping. By measuring distances to surrounding objects, it helps robots understand their environment and make decisions about their movement.
+
+Rangefinders operate on the principle of **time-of-flight (ToF)**, where the sensor measures the time it takes for a signal (typically infrared or ultrasonic) to travel to an object and back. By knowing the speed of the signal and the round-trip time, the distance can be computed using the formula:
+
+$$
+\text{Distance} = \frac{c \cdot t}{2}
+$$
+
+Where:
+
+* (c) is the speed of the signal (typically the speed of light for lasers or sound speed for ultrasonic),
+* (t) is the round-trip travel time of the signal.
+
+The key advantage of rangefinders is their ability to provide **absolute distance measurements** directly, without requiring complex image processing or external references, making them well-suited for both indoor and outdoor navigation tasks.
+
+---
+
+##### Types of Rangefinders
+{: .no_toc }
+
+Rangefinders come in various technologies, each with its strengths and limitations. The most common types include:
+
+* **Ultrasonic Rangefinders:** Use sound waves to measure distances. They are widely used in robotics for short-range applications due to their low cost and simplicity.
+* **Infrared (IR) Rangefinders:** Measure distance using infrared light. They are compact, inexpensive, and often used in small robots and consumer devices.
+* **Laser Rangefinders (LiDAR):** Use laser beams to measure distances with high precision and are widely used in autonomous vehicles and drones. They provide highly accurate 3D distance measurements and are often used in mapping and localization tasks.
+
+---
+
+##### Rangefinder Applications
+{: .no_toc }
+
+Rangefinders are utilized in a variety of tasks across different robotic applications:
+
+* **Obstacle Detection and Avoidance:** Robots use rangefinders to measure the distance to surrounding objects and avoid collisions by navigating around them.
+* **Mapping and Localization:** Robots equipped with rangefinders can create detailed maps of their environment by collecting distance data from multiple points, allowing them to localize themselves within the map.
+* **Autonomous Navigation:** Rangefinders support path planning and trajectory control by continuously measuring distances to obstacles and ensuring safe navigation through dynamic environments.
+
+---
+
+##### Practical Design Trade-offs
+{: .no_toc }
+
+When selecting a rangefinder for a robot, there are several design considerations and trade-offs to take into account:
+
+* **Range vs. Resolution:** High-resolution rangefinders can measure small distance variations, but their range may be limited. Conversely, long-range sensors may offer less fine-grained resolution.
+* **Accuracy vs. Cost:** Ultrasonic and IR sensors are less expensive but provide lower accuracy compared to more advanced technologies like LiDAR.
+* **Environmental Sensitivity:** Some rangefinders are affected by environmental conditions such as lighting (for IR sensors) or weather (for LiDAR), so robustness to different conditions is a key factor in sensor selection.
+* **Speed vs. Noise:** Fast-range measurement systems may suffer from higher noise, while slower systems offer better stability but might be unsuitable for fast-moving robots.
+
+---
+
+##### Why Rangefinders Matter in Practice
+{: .no_toc }
+
+Rangefinders are essential for building an accurate and reliable model of the robot's surroundings. By providing real-time distance data, they allow the robot to make informed decisions about its movement and interactions. For example, LiDAR enables high-precision navigation in environments that are too complex or dynamic for simpler sensors like ultrasonic or IR rangefinders.
+
+Additionally, rangefinders support **sensor fusion**, where their data is combined with information from other exteroceptive sensors (e.g., cameras, IMUs) to create a richer, more reliable understanding of the environment. This fusion improves performance in complex scenarios such as indoor navigation, dynamic obstacle avoidance, and multi-robot coordination.
+
+---
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: What is the primary advantage of using a rangefinder compared to a camera in robotic applications?</strong></p>
+<form id="ch4-rangefinder-q1">
+  <input type="radio" name="ch4-rangefinder-q1" value="A"> Rangefinders provide detailed visual information about objects<br>
+  <input type="radio" name="ch4-rangefinder-q1" value="B"> Rangefinders provide direct measurements of distance without requiring complex image processing<br>
+  <input type="radio" name="ch4-rangefinder-q1" value="C"> Rangefinders are only useful for navigation, not for object recognition<br>
+  <input type="radio" name="ch4-rangefinder-q1" value="D"> Rangefinders are only effective in high-light environments<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch4-rangefinder-q1', 'B',
+      '✅ Correct! Rangefinders provide direct distance measurements, which are less computationally intensive than image processing for object recognition.',
+      '❌ Try again. The key advantage of rangefinders is their ability to measure distance directly, without needing image analysis.')">
+    Check Answer
+  </button>
+  <p id="ch4-rangefinder-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: Which type of rangefinder is most commonly used for precise 3D mapping in autonomous vehicles?</strong></p>
+<form id="ch4-rangefinder-q2">
+  <input type="radio" name="ch4-rangefinder-q2" value="A"> Ultrasonic sensors<br>
+  <input type="radio" name="ch4-rangefinder-q2" value="B"> LiDAR (Laser Rangefinders)<br>
+  <input type="radio" name="ch4-rangefinder-q2" value="C"> IR sensors<br>
+  <input type="radio" name="ch4-rangefinder-q2" value="D"> Sonar sensors<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch4-rangefinder-q2', 'B',
+      '✅ Correct! LiDAR sensors are commonly used for high-precision 3D mapping and are widely deployed in autonomous vehicles.',
+      '❌ Try again. LiDAR provides highly accurate 3D distance measurements, making it ideal for detailed mapping and localization.')">
+    Check Answer
+  </button>
+  <p id="ch4-rangefinder-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: What is the main limitation of ultrasonic rangefinders in practical robotics applications?</strong></p>
+<form id="ch4-rangefinder-q3">
+  <input type="radio" name="ch4-rangefinder-q3" value="A"> They are only useful for long-range detection<br>
+  <input type="radio" name="ch4-rangefinder-q3" value="B"> They are sensitive to environmental factors like lighting and weather<br>
+  <input type="radio" name="ch4-rangefinder-q3" value="C"> They have low accuracy and are prone to interference from reflective surfaces<br>
+  <input type="radio" name="ch4-rangefinder-q3" value="D"> They can only measure distances in one direction<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch4-rangefinder-q3', 'C',
+      '✅ Correct! Ultrasonic rangefinders are less accurate than other types and can be affected by interference from reflective surfaces.',
+      '❌ Try again. While ultrasonic sensors are inexpensive, their accuracy is lower, and they struggle with reflective materials and angled surfaces.')">
+    Check Answer
+  </button>
+  <p id="ch4-rangefinder-q3-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 4 -->
+
+<p><strong>Question 4: Why is sensor fusion important when using rangefinders on robots?</strong></p>
+<form id="ch4-rangefinder-q4">
+  <input type="radio" name="ch4-rangefinder-q4" value="A"> It improves the robot's ability to recognize objects by color<br>
+  <input type="radio" name="ch4-rangefinder-q4" value="B"> It allows the robot to estimate distances more accurately in real-time<br>
+  <input type="radio" name="ch4-rangefinder-q4" value="C"> It enables the robot to combine multiple sensor inputs for a more reliable understanding of the environment<br>
+  <input type="radio" name="ch4-rangefinder-q4" value="D"> It allows rangefinders to work without needing any other sensors<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch4-rangefinder-q4', 'C',
+      '✅ Correct! Sensor fusion combines multiple sensor modalities to create a more accurate and robust perception of the environment.',
+      '❌ Try again. Sensor fusion allows the robot to combine different sensor inputs to compensate for individual sensor weaknesses.')">
+    Check Answer
+  </button>
+  <p id="ch4-rangefinder-q4-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 5 -->
+
+<p><strong>Question 5: What trade-off must be considered when choosing between ultrasonic and LiDAR rangefinders for a robot?</strong></p>
+<form id="ch4-rangefinder-q5">
+  <input type="radio" name="ch4-rangefinder-q5" value="A"> Ultrasonic rangefinders are always more accurate than LiDAR<br>
+  <input type="radio" name="ch4-rangefinder-q5" value="B"> LiDAR is typically more expensive but provides higher accuracy and longer range than ultrasonic sensors<br>
+  <input type="radio" name="ch4-rangefinder-q5" value="C"> Ultrasonic rangefinders work better in bright light conditions<br>
+  <input type="radio" name="ch4-rangefinder-q5" value="D"> LiDAR has lower energy consumption than ultrasonic sensors<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch4-rangefinder-q5', 'B',
+      '✅ Correct! LiDAR provides better accuracy and range than ultrasonic sensors but comes at a higher cost.',
+      '❌ Try again. LiDAR offers superior range and precision but is more expensive than ultrasonic sensors.')">
+    Check Answer
+  </button>
+  <p id="ch4-rangefinder-q5-feedback"></p>
+</form>
+
+</details>
+
+---
+
+<details markdown="1">
+  <summary>Further exploration</summary>
+* [Laser Rangefinder](https://en.wikipedia.org/wiki/Laser_rangefinder)
+* [Ultrasonic Sensor](https://en.wikipedia.org/wiki/Ultrasonic_sensor)
+* [LiDAR](https://en.wikipedia.org/wiki/Lidar)
+</details>
+
+---
+
+
+#### Satellite-Based Positioning: GPS and GNSS
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/sat_image.jpg){: width="600" }
+> <sub> Source: ESA : https://www.esa.int/Applications/Satellite_navigation/How_satellite_navigation_works </sub>
+
+
+Satellite-based positioning is an **exteroceptive** sensing modality because it estimates a robot’s position by observing **external signals** transmitted from satellites. The global navigation satellite system (GNSS) is the umbrella term for satellite constellations that provide this service, while the global positioning system (GPS) is the most widely used instance (NAVSTAR). GNSS provides an estimate of **3D position in absolute coordinates**, plus a precise **time and date** reference, as long as satellite signals can be received reliably. 
+
+Robotics uses GNSS heavily in outdoor navigation because it provides a globally referenced position that does not drift with time in the same way that pure inertial sensing does. For many field robots, GNSS is the primary external reference used to correct accumulated drift from inertial measurement units (IMUs). 
+
+<details markdown="1">
+ <summary>Video introduction</summary>
+
+  Here is a small optional video explaining gps.
+
+  ![](https://www.youtube.com/watch?v=AlHPDRQ08jU)
+  ><sub>*How GPS Works 🛰️ What is GPS . YouTube video, 19.04.2023. Available at: https://www.youtube.com/watch?v=AlHPDRQ08jU*</sub>
+
+</details>
+
+---
+
+##### Core idea: position from time-of-flight
+{: .no_toc }
+
+GNSS works by measuring how long radio signals take to travel from satellites to a receiver. If signal propagation time were known perfectly, the distance to each satellite could be computed and the receiver position could be determined by **trilateration** (intersection of spheres in 3D). In practice, the receiver does not carry an atomic clock like the satellites do, so the measured distances are **pseudo-ranges** that include clock bias and other errors. 
+
+A common measurement model for satellite $i$ is:
+
+$$
+\rho_i = \lVert \mathbf{r} - \mathbf{s}_i \rVert + c,\delta t + \varepsilon_i , .
+$$
+
+* $\rho_i$: pseudo-range measurement to satellite $i$ (meters)
+* $\mathbf{r}$: receiver position (meters, in a chosen reference frame)
+* $\mathbf{s}_i$: satellite position (meters, same frame as $\mathbf{r}$)
+* $c$: speed of light (meters per second)
+* $\delta t$: receiver clock bias (seconds)
+* $\varepsilon_i$: residual errors (atmosphere, multipath, noise, ephemeris uncertainty)
+
+Because there are four unknowns in the simplest case (3D position plus clock bias), a position fix typically requires **at least four satellites** in view. GNSS receivers solve this using estimation algorithms (commonly Kalman-filter-based) and satellite broadcast information (including satellite position and timing). 
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/gps_trilateration.png){: width="400" }
+
+> <sub>GPS trilateration concept (2D sketch). In 3D, each pseudo-range constrains the receiver to a sphere; multiple spheres intersect at the receiver position. Source: Springer Handbook of Robotics, Fig. 29.8. </sub>
+
+**From geometry to equations (trilateration).**  
+In the figure above, each emitter (satellite) at known position $\mathbf{s}_i$ defines a sphere with radius equal to the measured distance $d_i$ to the receiver. Ignoring errors for intuition, the idealized relation is
+
+$$
+\lVert \mathbf{r} - \mathbf{s}_i \rVert = d_i .
+$$
+
+Including receiver clock bias and other effects, the measured distance becomes a pseudo-range,
+
+$$
+d_i = \rho_i = \lVert \mathbf{r} - \mathbf{s}_i \rVert + c\,\delta t + \varepsilon_i .
+$$
+
+$$
+\lVert \mathbf{r} - \mathbf{s}_i \rVert = \rho_i - c\,\delta t - \varepsilon_i.
+$$
+
+Squaring both sides gives a quadratic equation in the unknown receiver position $\mathbf{r} = [x\ y\ z]^T$:
+
+$$
+(x - x_i)^2 + (y - y_i)^2 + (z - z_i)^2 = (\rho_i - c\,\delta t - \varepsilon_i)^2 .
+$$
+
+With multiple satellites, this yields a **system of nonlinear equations**, one per satellite. Subtracting one equation from another eliminates the squared terms and leads to equations that are approximately **linear** in $(x, y, z, \delta t)$ around an initial guess. In practice, receivers solve this system using iterative least-squares or Kalman filtering.
+
+**Geometric intuition.**
+- One satellite → receiver lies somewhere on a sphere  
+- Two satellites → intersection of two spheres (a circle)  
+- Three satellites → two possible points (in 3D)  
+- Four satellites → unique solution for position **and** clock bias  
+
+This geometric requirement is why a minimum of four satellites is needed for a full 3D GNSS fix.
+
+---
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Why does GNSS need at least four satellites to solve for 3D position?</strong></p>
+<form id="ch2-gps-s1-q1">
+  <input type="radio" name="ch2-gps-s1-q1" value="A"> To estimate $x$, $y$, $z$ position and the receiver clock bias $\delta t$<br>
+  <input type="radio" name="ch2-gps-s1-q1" value="B"> To estimate only $x$ and $y$ plus a compass heading<br>
+  <input type="radio" name="ch2-gps-s1-q1" value="C"> Because three satellites can only work at night<br>
+  <input type="radio" name="ch2-gps-s1-q1" value="D"> Because the fourth satellite provides the Earth’s gravity reference<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s1-q1', 'A',
+      '✅ Correct! The receiver must solve for three position components plus clock bias, so at least four independent pseudo-range measurements are needed.',
+      '❌ Try again. The key issue is that the receiver clock is not perfectly synchronized, so the clock bias must be estimated in addition to 3D position.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s1-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: What makes a pseudo-range different from a true geometric range?</strong></p>
+<form id="ch2-gps-s1-q2">
+  <input type="radio" name="ch2-gps-s1-q2" value="A"> It includes receiver clock bias and other propagation errors, not just the geometric distance<br>
+  <input type="radio" name="ch2-gps-s1-q2" value="B"> It is measured only from maps, not from satellite signals<br>
+  <input type="radio" name="ch2-gps-s1-q2" value="C"> It is the range measured only in the vertical direction<br>
+  <input type="radio" name="ch2-gps-s1-q2" value="D"> It is always noiseless because it uses atomic clocks<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s1-q2', 'A',
+      '✅ Correct! Pseudo-range is an apparent distance that includes clock offset and other error sources in addition to geometry.',
+      '❌ Try again. Pseudo-range is not purely geometric; it also contains timing bias and propagation effects.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s1-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: In the pseudo-range equation, what physical effect does the term $c\,\delta t$ represent?</strong></p>
+<form id="ch2-gps-s1-q3">
+  <input type="radio" name="ch2-gps-s1-q3" value="A"> A correction for satellite mass and gravitational pull on the robot<br>
+  <input type="radio" name="ch2-gps-s1-q3" value="B"> An apparent range error caused by the receiver clock offset multiplied by the speed of light<br>
+  <input type="radio" name="ch2-gps-s1-q3" value="C"> The curvature of the Earth converted into meters<br>
+  <input type="radio" name="ch2-gps-s1-q3" value="D"> The Doppler shift used only for velocity, not range<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s1-q3', 'B',
+      '✅ Correct! A clock bias of $\delta t$ seconds maps into an apparent distance error of $c\,\delta t$ meters.',
+      '❌ Try again. The receiver clock offset directly appears as a range-equivalent error when multiplied by $c$.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s1-q3-feedback"></p>
+</form>
+
+</details>
+
+---
+
+##### Satellite constellations and signals
+{: .no_toc }
+
+![]({{ site.baseurl }}/assets/images/new_sensors/nastar_constellation.gif){: width="400" }
+
+> <sub>NASTAR constellation. Source: https://www.defenseindustrydaily.com/the-gps-constellation-now-and-future-01069/. </sub>
+
+The NAVSTAR GPS constellation is built around a baseline of **24 satellites** (with additional operational satellites often present) in medium Earth orbit, arranged so that most locations have **four or more satellites visible** when the sky is unobstructed. GNSS receivers may also use other constellations such as GLONASS and Galileo, and multi-constellation reception is now common in consumer and robotic hardware. 
+
+GPS satellites broadcast navigation signals on specific **radio frequency bands**. The primary civilian signal is the coarse-acquisition (C/A) code transmitted on the **L1 band**, centered at **1575.42 MHz**. The term *L1* simply refers to this designated carrier frequency used by GPS satellites for timing and ranging measurements.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/gps_freq_spectrum.jpg){: width="600" }
+
+> <sub>Talcom. Source: https://www.tualcom.com/gnss-frequency-bands-and-signals/ </sub>
+
+
+Historically, most civilian receivers relied only on the L1 signal. Modern GNSS receivers often track **multiple frequency bands**, which allows them to estimate and compensate for ionospheric delay by comparing how **different signal frequencies experience different amounts of propagation delay** as they pass through the ionosphere. This frequency dependence makes it possible to reduce a major source of range error and improves positioning accuracy and robustness.
+
+A key geometric idea is that accuracy depends not only on noise level, but also on **satellite geometry**. Satellites spread widely across the sky provide a better-conditioned solution than satellites clustered in one direction.
+
+---
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Why does satellite geometry matter even if measurement noise is unchanged?</strong></p>
+<form id="ch2-gps-s2-q1">
+  <input type="radio" name="ch2-gps-s2-q1" value="A"> Geometry can be ignored if more than four satellites are visible<br>
+  <input type="radio" name="ch2-gps-s2-q1" value="B"> Geometry only affects the time it takes satellites to transmit messages<br>
+  <input type="radio" name="ch2-gps-s2-q1" value="C"> Geometry matters only for altitude, never for horizontal position<br>
+  <input type="radio" name="ch2-gps-s2-q1" value="D"> Poor geometry amplifies measurement errors into larger position errors<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s2-q1', 'D',
+      '✅ Correct! The arrangement of satellites affects how pseudo-range errors map into position error.',
+      '❌ Try again. Even with the same noise level, clustered satellites yield a poorly conditioned solution and larger position uncertainty.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s2-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: Why can dual-frequency or multi-frequency reception improve accuracy?</strong></p>
+<form id="ch2-gps-s2-q2">
+  <input type="radio" name="ch2-gps-s2-q2" value="A"> It helps estimate and compensate frequency-dependent ionospheric delay<br>
+  <input type="radio" name="ch2-gps-s2-q2" value="B"> It makes satellites transmit at higher power automatically<br>
+  <input type="radio" name="ch2-gps-s2-q2" value="C"> It removes the need to estimate the clock bias $\delta t$<br>
+  <input type="radio" name="ch2-gps-s2-q2" value="D"> It guarantees zero multipath in cities<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s2-q2', 'A',
+      '✅ Correct! Comparing signals at different frequencies helps correct ionospheric propagation errors.',
+      '❌ Try again. Multiple frequencies mainly help correct propagation errors that depend on frequency (especially ionospheric delay).')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s2-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: What practical environmental feature most directly breaks the GNSS assumption of line-of-sight reception?</strong></p>
+<form id="ch2-gps-s2-q3">
+  <input type="radio" name="ch2-gps-s2-q3" value="A"> A smooth concrete pad with no nearby structures<br>
+  <input type="radio" name="ch2-gps-s2-q3" value="B"> A flat open field with clear horizon<br>
+  <input type="radio" name="ch2-gps-s2-q3" value="C"> Tall buildings or dense canopy blocking direct paths to satellites<br>
+  <input type="radio" name="ch2-gps-s2-q3" value="D"> A high sampling rate in the receiver<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s2-q3', 'C',
+      '✅ Correct! Obstructions like buildings and canopy block or degrade direct satellite signals.',
+      '❌ Try again. The key failure is losing clear line-of-sight to satellites due to obstructions.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s2-q3-feedback"></p>
+</form>
+
+</details>
+
+---
+
+##### Performance, failure modes, and practical limitations
+{: .no_toc }
+
+**Baseline accuracy.** Under typical conditions and without specialized enhancements, standard GPS accuracy is on the order of **20 to 25 m horizontally** and about **43 m vertically**, with a typical fix rate of **1 Hz** (though faster or slower rates are possible). 
+
+**Dominant error sources in robotics deployments:**
+
+* **Line-of-sight obstruction:** buildings, trees, mountains, canyons, and indoor environments can block satellites or reduce usable geometry. 
+* **Atmospheric effects:** ionosphere and troposphere introduce propagation delays that vary with conditions. 
+* **Multipath:** reflections from buildings, canyon walls, terrain, or the ground can delay signals and bias pseudo-ranges. Specialized receiver techniques and antennas can mitigate some multipath, but short-delay ground reflections are particularly difficult. 
+* **Geometry metrics (DOP/PDOP):** dilution of precision (DOP), especially positional DOP (PDOP), captures how measurement errors map into position errors. Receivers often use PDOP-driven satellite selection and periodically recompute it. 
+
+**Important implication for robot safety:** GNSS can sometimes produce **wildly incorrect estimates** when conditions degrade (for example due to multipath or poor geometry). Robust navigation stacks therefore treat GNSS as one input among several, with sanity checks and estimator consistency tests.
+
+---
+
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Why is vertical GNSS accuracy typically worse than horizontal accuracy?</strong></p>
+<form id="ch2-gps-s3-q1">
+  <input type="radio" name="ch2-gps-s3-q1" value="A"> Satellites are mostly above the receiver, giving weaker geometric constraints in the vertical direction<br>
+  <input type="radio" name="ch2-gps-s3-q1" value="B"> GNSS signals do not contain any altitude information<br>
+  <input type="radio" name="ch2-gps-s3-q1" value="C"> The receiver clock bias only affects altitude, not horizontal position<br>
+  <input type="radio" name="ch2-gps-s3-q1" value="D"> Vertical accuracy is limited only by Earth’s magnetic field<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s3-q1', 'A',
+      '✅ Correct! Satellite geometry often provides a poorer baseline for estimating altitude than for horizontal coordinates.',
+      '❌ Try again. The vertical component is typically less well constrained by satellite geometry, so errors project more strongly into altitude.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s3-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: What is multipath, and why can it bias position estimates rather than just adding noise?</strong></p>
+<form id="ch2-gps-s3-q2">
+  <input type="radio" name="ch2-gps-s3-q2" value="A"> Multipath is a software bug in the navigation message decoding<br>
+  <input type="radio" name="ch2-gps-s3-q2" value="B"> The satellite changes its orbit randomly, producing white noise only<br>
+  <input type="radio" name="ch2-gps-s3-q2" value="C"> Receiver temperature changes the speed of signal, shifting ranges uniformly<br>
+  <input type="radio" name="ch2-gps-s3-q2" value="D"> Reflected signals arrive later than the direct signal, creating a systematic pseudo-range delay
+<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s3-q2', 'D',
+      '✅ Correct! Reflections add extra path length (delay), which can systematically bias the measured pseudo-range.',
+      '❌ Try again. Multipath introduces delayed replicas of the signal, which looks like extra distance and can shift the solution, not merely add random noise.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s3-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: What does a high PDOP value suggest about the current satellite configuration?</strong></p>
+<form id="ch2-gps-s3-q3">
+  <input type="radio" name="ch2-gps-s3-q3" value="A"> The receiver clock is perfectly synchronized to GPS time<br>
+  <input type="radio" name="ch2-gps-s3-q3" value="B"> Satellite geometry is poor, so position estimates will be more sensitive to measurement errors<br>
+  <input type="radio" name="ch2-gps-s3-q3" value="C"> Multipath cannot occur because PDOP is high<br>
+  <input type="radio" name="ch2-gps-s3-q3" value="D"> The solution is guaranteed to be centimeter-level accurate<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s3-q3', 'B',
+      '✅ Correct! High PDOP indicates an unfavorable satellite arrangement and an error-amplifying geometry.',
+      '❌ Try again. High PDOP means small measurement errors can produce larger position errors due to weak geometry.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s3-q3-feedback"></p>
+</form>
+
+</details>
+
+---
+
+##### Augmentation and “enhanced GPS” options
+{: .no_toc }
+
+Many systems improve GNSS accuracy by providing external corrections or by using carrier-phase information.
+
+- **Satellite-based augmentation systems (SBAS)**
+
+A **satellite-based augmentation system (SBAS)** is an enhancement layer built on top of GNSS. SBAS uses a network of **ground reference stations** at precisely surveyed locations to monitor GNSS satellite signals. These stations estimate common error sources—such as satellite clock errors, orbit (ephemeris) errors, and ionospheric delay, and broadcast **correction messages** to users via geostationary satellites.
+
+One example of SBAS is the **Wide Area Augmentation System (WAAS)**, operated in North America. When SBAS corrections are available, horizontal positioning accuracy can improve from roughly **10–12 m** (standalone GPS) to about **1–2 m** within the system’s coverage region.
+
+- **Differential GPS (DGPS)**
+
+Differential GPS (DGPS) improves positioning accuracy by using a **reference receiver** placed at a precisely surveyed, fixed location. Because the true position of this reference is known, it can estimate the current GNSS errors affecting its measurements (such as satellite timing and atmospheric delays). These estimated errors are then transmitted to nearby robot receivers, which apply the same corrections to their own measurements.
+
+This approach works well only when the robot is **close to the reference station**, since many GNSS errors vary gradually with location. As the distance increases, the reference errors no longer match the robot’s local errors, and correction effectiveness decreases.
+
+- **Receiver Autonomous Integrity Monitoring (RAIM)**
+
+Receiver Autonomous Integrity Monitoring (RAIM) is a technique that allows a GNSS receiver to **detect faulty measurements** without relying on external corrections. The receiver computes multiple position solutions using different combinations of visible satellites and checks whether these solutions are mutually consistent.
+
+If one satellite is providing incorrect data, the solutions will disagree, allowing the receiver to detect (and sometimes exclude) the faulty measurement. RAIM requires **more satellites than the minimum needed for positioning**, since this redundancy is essential for consistency checks and integrity monitoring.
+
+- **Real-Time Kinematic positioning (RTK)**
+
+Real-Time Kinematic positioning (RTK) is a high-precision GNSS technique that uses not only the navigation code, but also the **carrier signal itself**. GNSS signals are transmitted as radio waves at a known frequency. This underlying radio wave is called the **carrier**, and its oscillation is much faster than the navigation code modulated on top of it.
+
+The **carrier phase** is the position within this repeating wave cycle (for example, whether the wave is at a peak, trough, or somewhere in between) when it arrives at the receiver. By tracking this phase very precisely, the receiver can measure changes in distance with **millimeter-level resolution**.
+
+However, the receiver does not know how many **full carrier wavelengths** lie between the satellite and the receiver-only the fractional part of the current wave cycle can be observed directly. Determining this unknown whole-number count is known as resolving the **integer ambiguity**.
+
+RTK combines carrier-phase measurements with corrections from a nearby base station to determine this integer number of wavelengths. Once the integer ambiguity is resolved, the distance between satellite and receiver can be estimated with very high precision, enabling **centimeter-level horizontal positioning accuracy** under good signal conditions. This level of precision is why RTK is often referred to as “survey grade.”
+
+---
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: What additional information does RTK exploit that basic GNSS pseudo-range methods do not?</strong></p>
+<form id="ch2-gps-s4-q1">
+  <input type="radio" name="ch2-gps-s4-q1" value="A"> Only satellite color codes that identify each satellite<br>
+  <input type="radio" name="ch2-gps-s4-q1" value="B"> Carrier-phase measurements and integer ambiguity resolution (often with base-station corrections)<br>
+  <input type="radio" name="ch2-gps-s4-q1" value="C"> The robot wheel diameter and encoder ticks<br>
+  <input type="radio" name="ch2-gps-s4-q1" value="D"> A magnetometer heading as the main accuracy source<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s4-q1', 'B',
+      '✅ Correct! RTK leverages carrier phase and resolves integer cycle ambiguities, enabling very high precision.',
+      '❌ Try again. RTK is based on carrier-phase measurements (plus corrections) rather than only code-phase pseudo-ranges.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s4-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: Why do DGPS and RTK accuracy degrade as the robot moves farther from the reference station?</strong></p>
+<form id="ch2-gps-s4-q2">
+  <input type="radio" name="ch2-gps-s4-q2" value="A"> Satellites stop broadcasting corrections beyond a fixed radius<br>
+  <input type="radio" name="ch2-gps-s4-q2" value="B"> The speed of light becomes smaller at larger distances<br>
+  <input type="radio" name="ch2-gps-s4-q2" value="C"> Atmospheric and orbit-related errors become less correlated between base and rover with distance<br>
+  <input type="radio" name="ch2-gps-s4-q2" value="D"> The receiver clock bias $\delta t$ disappears, making the solution unstable<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s4-q2', 'C',
+      '✅ Correct! Corrections rely on shared error sources; farther separation reduces how well the base corrections match the rover’s errors.',
+      '❌ Try again. Differential methods assume base and rover see similar errors; that assumption weakens with distance.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s4-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: What is the difference between “accuracy” and “integrity,” and which does RAIM primarily address?</strong></p>
+<form id="ch2-gps-s4-q3">
+  <input type="radio" name="ch2-gps-s4-q3" value="A"> Accuracy is update rate; integrity is battery life, and RAIM improves battery life<br>
+  <input type="radio" name="ch2-gps-s4-q3" value="B"> Accuracy is closeness to truth; integrity is the ability to detect faults, and RAIM focuses on integrity<br>
+  <input type="radio" name="ch2-gps-s4-q3" value="C"> Accuracy is 2D position; integrity is altitude, and RAIM improves altitude only<br>
+  <input type="radio" name="ch2-gps-s4-q3" value="D"> Accuracy and integrity are identical, and RAIM improves both equally<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s4-q3', 'B',
+      '✅ Correct! RAIM is an integrity technique: it checks consistency to detect faulty measurements or satellites.',
+      '❌ Try again. RAIM is mainly about fault detection and trustworthiness (integrity), not only reducing average error (accuracy).')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s4-q3-feedback"></p>
+</form>
+
+</details>
+
+---
+
+
+##### GNSS in a full navigation system: integration with IMU
+{: .no_toc }
+
+GNSS provides strong absolute position references but has three major limitations for robot state estimation:
+
+1. **Orientation is not directly measured** (yaw, and often pitch/roll require other sensors or motion-based inference). 
+2. **Measurements are discrete and can be delayed,** so they do not provide a continuous state estimate at control rate. 
+3. **Fixes can be unavailable** (indoors, underwater, heavy canopy, deep urban canyons). 
+
+A common solution is a GPS-aided inertial navigation system (GPS/INS), where an **extended Kalman filter (EKF)** or factor-graph estimator fuses:
+
+* IMU: high-rate motion propagation (but drifting)
+* GNSS: low-rate absolute position correction (but occasionally unavailable or biased)
+
+The IMU “bridges” between GNSS updates, and GNSS constrains long-term drift. This complementarity is a standard pattern in mobile robotics. 
+
+**Practical note: antenna lever arm.** GNSS measures the position of the **antenna**, not the robot body origin. If the antenna is far from the IMU or vehicle reference point, that offset (lever arm) must be modeled, or apparent position changes can create orientation and stability issues in the fused solution. 
+
+---
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Why does GNSS not directly provide full robot pose (position and orientation)?</strong></p>
+<form id="ch2-gps-s6-q1">
+  <input type="radio" name="ch2-gps-s6-q1" value="A"> Standard GNSS provides position (and time), but not full 3D orientation without additional sensors or special antenna setups<br>
+  <input type="radio" name="ch2-gps-s6-q1" value="B"> GNSS measures only orientation and not position<br>
+  <input type="radio" name="ch2-gps-s6-q1" value="C"> GNSS provides pose only when fewer than four satellites are visible<br>
+  <input type="radio" name="ch2-gps-s6-q1" value="D"> GNSS provides pose only indoors where signals are stable<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s6-q1', 'A',
+      '✅ Correct! A single GNSS antenna estimates position; orientation typically requires IMU, magnetometer, vision, or multi-antenna GNSS.',
+      '❌ Try again. GNSS primarily provides position (and time). Orientation is not directly observed by basic GNSS.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s6-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: In a GNSS-IMU EKF, what role does the IMU play when GNSS is temporarily unavailable?</strong></p>
+<form id="ch2-gps-s6-q2">
+  <input type="radio" name="ch2-gps-s6-q2" value="A"> It propagates the state forward at high rate (dead reckoning), but drift grows until GNSS returns<br>
+  <input type="radio" name="ch2-gps-s6-q2" value="B"> It replaces satellites by broadcasting its own navigation signals<br>
+  <input type="radio" name="ch2-gps-s6-q2" value="C"> It eliminates bias automatically, so drift cannot grow<br>
+  <input type="radio" name="ch2-gps-s6-q2" value="D"> It provides a global absolute position fix with no drift<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s6-q2', 'A',
+      '✅ Correct! The IMU provides continuous motion integration; without GNSS updates, uncertainty and drift accumulate.',
+      '❌ Try again. The IMU is the high-rate propagation sensor; it bridges gaps but drifts without external correction.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s6-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: Why does antenna placement relative to the IMU matter in fused navigation?</strong></p>
+<form id="ch2-gps-s6-q3">
+  <input type="radio" name="ch2-gps-s6-q3" value="A"> GNSS measures the antenna position; if offset from the body/IMU, rotation induces apparent motion that must be modeled as a lever arm<br>
+  <input type="radio" name="ch2-gps-s6-q3" value="B"> Antenna placement changes the speed of light, altering $c$ in the pseudo-range equation<br>
+  <input type="radio" name="ch2-gps-s6-q3" value="C"> Antenna placement only affects Wi-Fi, not GNSS<br>
+  <input type="radio" name="ch2-gps-s6-q3" value="D"> Antenna placement matters only for indoor GNSS<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-s6-q3', 'A',
+      '✅ Correct! A nonzero lever arm means body rotations move the antenna; ignoring this offset can distort fused estimates.',
+      '❌ Try again. The GNSS sensor is physically located at the antenna, so its offset from the IMU/body frame must be accounted for.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-s6-q3-feedback"></p>
+</form>
+
+</details>
+
+---
+
+<details markdown="1">
+  <summary>Further exploration</summary>
+
+* Overview of GNSS concepts: [Wikipedia - GNSS](https://en.wikipedia.org/wiki/Satellite_navigation)
+* Differential corrections and augmentation: [Wikipedia - Differential GPS](https://en.wikipedia.org/wiki/Differential_GPS)
+* High-precision methods: [Wikipedia - Real-time kinematic positioning](https://en.wikipedia.org/wiki/Real-time_kinematic_positioning)
+* Receiver output format often seen in robotics: [Wikipedia - NMEA 0183](https://en.wikipedia.org/wiki/NMEA_0183)
+</details>
+
+---
+
+<details markdown="1">
+  <summary>Chapter wrap-up conceptual questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: A robot drives from open sky into a street canyon between tall buildings. Which GNSS error mechanisms become more severe, and why?</strong></p>
+<form id="ch2-gps-wrap-q1">
+  <input type="radio" name="ch2-gps-wrap-q1" value="A"> Satellite clocks become less accurate because buildings block time<br>
+  <input type="radio" name="ch2-gps-wrap-q1" value="B"> Obstruction and multipath increase, reducing line-of-sight satellites and biasing pseudo-ranges via reflections<br>
+  <input type="radio" name="ch2-gps-wrap-q1" value="C"> The speed of light decreases between buildings, stretching ranges uniformly<br>
+  <input type="radio" name="ch2-gps-wrap-q1" value="D"> IMU bias becomes zero because GNSS is present nearby<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-wrap-q1', 'B',
+      '✅ Correct! Buildings block direct paths (fewer satellites, worse geometry) and create reflections (multipath), both of which degrade accuracy and reliability.',
+      '❌ Try again. Street canyons reduce line-of-sight and increase reflections, which causes degraded geometry and biased measurements.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-wrap-q1-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: Why can GNSS provide long-term global accuracy while IMU-only dead reckoning drifts over time?</strong></p>
+<form id="ch2-gps-wrap-q2">
+  <input type="radio" name="ch2-gps-wrap-q2" value="A"> GNSS works only for short time intervals; IMUs are better long term<br>
+  <input type="radio" name="ch2-gps-wrap-q2" value="B"> IMUs measure absolute position directly with no integration needed<br>
+  <input type="radio" name="ch2-gps-wrap-q2" value="C"> GNSS references external satellites and does not accumulate integration drift like IMU integration does<br>
+  <input type="radio" name="ch2-gps-wrap-q2" value="D"> IMUs drift only when the robot is not moving<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-wrap-q2', 'C',
+      '✅ Correct! IMU errors accumulate through integration, while GNSS provides an external absolute reference that constrains drift over long durations.',
+      '❌ Try again. IMU dead reckoning integrates noisy signals, so error grows over time; GNSS ties position to an external reference.')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-wrap-q2-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 4 -->
+
+<p><strong>Question 3: Why is RTK often described as “survey grade,” and what hidden assumptions must hold for centimeter-level accuracy?</strong></p>
+<form id="ch2-gps-wrap-q4">
+  <input type="radio" name="ch2-gps-wrap-q4" value="A"> It uses carrier phase with integer ambiguity resolution; it assumes good satellite visibility, low multipath, and reliable base corrections/links<br>
+  <input type="radio" name="ch2-gps-wrap-q4" value="B"> It measures distance using camera images, so it assumes good lighting only<br>
+  <input type="radio" name="ch2-gps-wrap-q4" value="C"> It requires only two satellites, so it assumes fewer satellites are available<br>
+  <input type="radio" name="ch2-gps-wrap-q4" value="D"> It is survey grade because it ignores the ionosphere entirely, so conditions do not matter<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-wrap-q4', 'A',
+      '✅ Correct! RTK can reach centimeter precision, but only when carrier-phase tracking is stable and corrections and environment support ambiguity resolution.',
+      '❌ Try again. RTK relies on stable carrier-phase tracking and good conditions (visibility, low multipath, valid corrections).')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-wrap-q4-feedback"></p>
+</form>
+
+<hr>
+
+<!-- Question 5 -->
+
+<p><strong>Question 4: Which GNSS outputs and metadata should a navigation stack log for debugging estimator failures (at minimum)?</strong></p>
+<form id="ch2-gps-wrap-q5">
+  <input type="radio" name="ch2-gps-wrap-q5" value="A"> Only IMU gyro bias estimates, because GNSS has no useful debug fields<br>
+  <input type="radio" name="ch2-gps-wrap-q5" value="B"> Only latitude and longitude, because everything else is redundant<br>
+  <input type="radio" name="ch2-gps-wrap-q5" value="C"> Only the receiver serial number and firmware version<br>
+  <input type="radio" name="ch2-gps-wrap-q5" value="D"> Position/velocity (if available), timestamp, fix type/quality, satellite count, and DOP/PDOP (plus covariance if provided)<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-gps-wrap-q5', 'D',
+      '✅ Correct! Quality fields (fix type, satellites, DOP/PDOP, covariance) are essential for diagnosing bad updates and gating issues.',
+      '❌ Try again. Debugging GNSS in estimation requires both the measurement and its quality indicators (fix type, satellites, DOP/PDOP, covariance).')">
+    Check Answer
+  </button>
+  <p id="ch2-gps-wrap-q5-feedback"></p>
+</form>
+
+</details>
+
+---
+
 - Cameras
-- LIDAR
-- RADAR
-- GPS / GNSS
 - Environmental sensors (temperature, light, gas, chemicals)
 
 ---

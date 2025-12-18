@@ -1,8 +1,11 @@
 ---
 title: "9.1 Introduction to Aerodynamics"
-parent: "Chapter 9: Aerial Robotics"
+parent: "Introduction to UAVs"
 layout: default
 nav_order: 1
+chapter: 9
+section: 1
+publish: true
 ---
 
 <script src="../../questions.js"></script>

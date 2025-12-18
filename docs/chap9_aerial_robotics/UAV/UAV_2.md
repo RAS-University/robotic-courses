@@ -1,8 +1,11 @@
 ---
 title: "9.2 Different Drone Types"
-parent: "Chapter 9: Aerial Robotics"
+parent: "Introduction to UAVs"
 layout: default
 nav_order: 2
+chapter: 9
+section: 2
+publish: true
 ---
 
 <script src="../../questions.js"></script>

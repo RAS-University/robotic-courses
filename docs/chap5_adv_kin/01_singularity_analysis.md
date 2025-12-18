@@ -7,11 +7,16 @@ layout: numbered
 math: mathjax
 chapter: 5
 section: 1
+<<<<<<< HEAD
 --- 
 
 <!-- Link external JavaScript file -->
 <script src="./questions.js"></script>
 
+=======
+publish: false
+---
+>>>>>>> 289e11de6e5e31c688884b5fcb5f8d889ca3d568
 <a name="top"></a>
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 

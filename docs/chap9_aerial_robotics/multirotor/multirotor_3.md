@@ -1,9 +1,11 @@
 ---
-title: Multirotor
-# parent: "Chapter 9: Aerial Robotics"
+title: 9.6 Modeling & Dynamics
+parent: "Multirotor Drones"
 layout: default
-nav_order: 7
-# math: mathjax
+nav_order: 6
+chapter: 9
+section: 6
+publish: false
 ---
 <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 
@@ -60,6 +62,20 @@ Throughout this lecture notes, we will use the following subscripts, superscript
 - $\mathbf{J}$: Moment of inertia
 - $\mathbf{I}_n$: Identity matrix of dimension $n \times n$
 
+
+
+- $x \in \mathbb{R}^{1\times n}$: vector $x$ of dimension $n$
+- $x_i$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$
+- $x_k$: value of $x$ at time step $k$ (discrete time)
+<!-- - $x_{i\mid k}$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$ at time step $k$ -->
+- $x^+$ or $x_{k+1}$: value of $x$ at next time step (discrete time)
+- $\dot{x}$: time derivative of $x$ (continuous time)
+- $x^*$: optimal value of $x$
+- $x^\top$: transpose of vector or matrix $x$
+- $\hat{x}$: estimate of variable $x$ (see chapter on [State Estimation](#-14-intro-to-state-estimation-))
+- $\hat{x}^-$: estimate of variable $x$ before measurement update
+- $\tilde{x}$: estimation error of variable $x$
+- $x_s$: steady state value of variable $x$
 
 
 ## Chapter 2: Modeling & Dynamics

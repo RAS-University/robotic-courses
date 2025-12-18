@@ -1,9 +1,11 @@
 ---
-title: Multirotor
-parent: "Chapter 9: Aerial Robotics"
+title: 9.9 Trajectory Generation & Planning
+parent: "Multirotor Drones"
 layout: default
-nav_order: 7
-# math: mathjax
+nav_order: 9
+chapter: 9
+section: 9
+publish: false
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

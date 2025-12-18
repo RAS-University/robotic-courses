@@ -1,12 +1,13 @@
 ---
-title: 9.5 Vision for UAVs
-parent: "Chapter 9: Aerial Robotics"
+title: 9.11 Aerial Manipulation
+parent: "Aerial Robotics"
 has_children: false
-nav_order: 5
+nav_order: 11
 layout: numbered
 math: mathjax
 chapter: 9
-section: 5
+section: 11
+publish: false
 ---
 
 <!-- Link external JavaScript file -->
@@ -16,7 +17,7 @@ section: 5
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Vision for UAVs 
+# Aerial Manipulation 
 
 <!-- bundle exec jekyll serve -->
 
@@ -25,7 +26,7 @@ section: 5
 
 ## Prerequisites
 
-To get the most out of this Vision for UAVs module, it’s helpful to have:
+To get the most out of this Aerial Manipulation module, it’s helpful to have:
 
 ---
 
@@ -34,7 +35,7 @@ To get the most out of this Vision for UAVs module, it’s helpful to have:
 
 ## Course Content
 
-### General Concepts
+###  General Concepts
 
 
 # **This page is currently under construction and will be published in summer 2026.**

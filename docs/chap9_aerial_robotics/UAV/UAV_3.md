@@ -1,8 +1,11 @@
 ---
 title: "9.3 Cost and Benefits"
-parent: "Chapter 9: Aerial Robotics"
+parent: "Introduction to UAVs"
 layout: default
 nav_order: 3
+chapter: 9
+section: 3
+publish: true
 ---
 
 <script src="../../questions.js"></script>

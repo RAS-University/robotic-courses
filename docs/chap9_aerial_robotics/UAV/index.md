@@ -1,11 +1,10 @@
 ---
-title: "Chapter 13: Soft Robotics"
-parent: "Robotics Advanced Topics II"
+title: "Introduction to UAVs"
+parent: "Chapter 9: Aerial Robotics"
 has_children: true
-nav_order: 13
+nav_order: 1
 layout: default
 ---
-
 
 <style>
   .unfinished { color: #b39ddb; }
@@ -24,8 +23,7 @@ layout: default
   }
 </style>
 
-# Chapter 13: Soft Robotics
-
+# Introduction to UAVs  
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}
 - {% if section.publish == false %}

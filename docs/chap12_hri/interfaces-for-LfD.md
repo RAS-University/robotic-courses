@@ -474,6 +474,20 @@ Kinesthetic teaching is also useful when training robots that differ significant
 
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
+    <iframe width="100%" height="300" src="https://www.youtube.com/embed/9jNg5mBkbrk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <br>
+    <sub>LASA Lab / EPFL</sub>
+  </div>
+  <div style="width: 48%;">
+    <iframe width="100%" height="300" src="https://www.youtube.com/embed/vJRYortGfR0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <br>
+    <sub>LASA Lab / EPFL</sub>
+  </div>
+</div>
+
+<!--
+<div style="display: flex; justify-content: space-between; gap: 10px;">
+  <div style="width: 48%;">
     <video controls style="width: 100%; height: 300px; object-fit: cover;">
       <source src="/assets/videos/interfaces-for-HRI/Kinesthetic1.webm" type="video/webm">
       Your browser does not support the video tag.
@@ -490,6 +504,7 @@ Kinesthetic teaching is also useful when training robots that differ significant
     <sub>LASA Lab / EPFL</sub>
   </div>
 </div>
+-->
 
 In the left example above, the robot has been taught to pick up objects and move through the narrow passage. Meanwhile, the robot can tolerate many disturbances and is resilient to them. More complex tasks, for example, tasks requiring bimanual coordination, can also be taught to the robot using this method. An example of such a task is shown in the right video above. Since the task requires bimanual coordination, the user must hold both arms of the robot. Once trained, the robot can reproduce the forces and the task.
 <br>
@@ -735,6 +750,7 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

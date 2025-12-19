@@ -7,6 +7,7 @@ nav_order: 3
 chapter: 1
 section: 3
 publish: false
+nav_exclude: true
 ---
 
 <!-- Link external JavaScript file -->

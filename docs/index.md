@@ -111,7 +111,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 {% assign sections = site.pages | where: "parent", parent.title | sort: "section" %}
 {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} <span class="badge">Released soon</span></span>
+  <span class="unfinished">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}
@@ -124,7 +124,7 @@ If you are already a robotics expert—or an expert in another field simply curi
         {% assign sections = site.pages | where: "parent", chapter.title | sort: "section" %}
         {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} <span class="badge">Released soon</span></span>
+  <span class="unfinished">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}

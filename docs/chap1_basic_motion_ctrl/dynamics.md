@@ -2597,7 +2597,7 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 * Rotor spins **$G$ times faster** than the link.  
 * Rotor kinetic energy  
   $$
-  E_K_{\text{rotor}}=\tfrac12 \, I_{\text{rotor}}\,(G\,\dot{\theta})^{2}
+  E_{K,\text{rotor}}=\tfrac12 \, I_{\text{rotor}}\,(G\,\dot{\theta})^{2}
   \;=\;\tfrac12\,(G^{2}I_{\text{rotor}})\,\dot{\theta}^{2}
   $$
 * **Apparent inertia** about the joint axis is $G^{2}I_{\text{rotor}}$.  

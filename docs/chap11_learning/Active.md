@@ -8,6 +8,7 @@ math: mathjax
 chapter: 11
 section: 5
 publish: false
+nav_exclude: true
 ---
 
 <!-- Link external JavaScript file -->

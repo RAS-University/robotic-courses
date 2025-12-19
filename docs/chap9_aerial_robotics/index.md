@@ -33,7 +33,7 @@ layout: default
     {% assign sections = site.pages | where: "parent", parent.title | sort: "section" %}
     {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} <span class="badge">Released soon</span></span>
+  <span class="unfinished">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}
@@ -43,7 +43,7 @@ layout: default
   {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
   {% for section in sections %}
   - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} <span class="badge">Released soon</span></span>
+  <span class="unfinished">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}

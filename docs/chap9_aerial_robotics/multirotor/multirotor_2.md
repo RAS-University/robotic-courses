@@ -6,6 +6,7 @@ nav_order: 5
 chapter: 9
 section: 5
 publish: false
+nav_exclude: true
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

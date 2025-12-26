@@ -425,7 +425,7 @@ That is why we separate:
   <input type="radio" name="q-pitch" value="d"> The magnitude of angular velocity $\|\boldsymbol{\omega}\|$.<br>
   <button type="button"
     onclick="checkMCQ('q-pitch', 'b',
-      'Correct. Pitch $h$ measures translation per unit rotation along/about the screw axis.',
+      'Correct. Pitch h measures translation per unit rotation along/about the screw axis.',
       'Incorrect. Correct answer: (b). Why the others are wrong: (a) is a geometry/location parameter, not pitch; (c) is an orientation parameter; (d) is an amplitude/rate, while pitch is a geometric ratio independent of speed scaling.')">
     Check Answer
   </button>
@@ -491,8 +491,8 @@ when $\mathbf{s}$ is unit and $\dot{\theta}$ is the rotational rate about the ax
   <input type="radio" name="q-plucker" value="d"> $\mathbf{s} + \mathbf{m} = \mathbf{0}$.<br>
   <button type="button"
     onclick="checkMCQ('q-plucker', 'b',
-      'Correct. Because $\mathbf{m}=\mathbf{p}\times\mathbf{s}$, we always have $\mathbf{s}\cdot\mathbf{m}=0$.',
-      'Incorrect. Correct answer: (b). Why the others are wrong: (a) is not required (units and magnitudes differ); (c) would mean $\mathbf{s}$ and $\mathbf{m}$ are parallel, which contradicts $\mathbf{m}$ being a cross product with $\mathbf{s}$; (d) has no geometric meaning for a general line.')">
+      'Correct. Because m = p x s, we always have s.m = 0.',
+      'Incorrect. Correct answer: (b). Why the others are wrong: (a) is not required (units and magnitudes differ); (c) would mean s and m are parallel, which contradicts m being a cross product with s; (d) has no geometric meaning for a general line.')">
     Check Answer
   </button>
   <p id="q-plucker-feedback"></p>
@@ -545,6 +545,7 @@ This course page was created by **Durgesh Haribhau Salunkhe, EPFL**, and funded 
 
 [Back to Top](#start)
 
+<script src="{{ '/docs/chap5_adv_kin/questions.js' | relative_url }}"></script>
 <!-- voodoo, some issue with mathjax environment used in graph_theory.md -->
 $$
 .

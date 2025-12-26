@@ -16,88 +16,53 @@ section: 3
 <a name="top"></a>
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
-<!-- Question templates -->
-<details markdown="1">
-<summary>Questions Templates</summary>
-  
-  <p><strong>Question? (single answer possible)</strong></p>
-  <form id="example1">
-    <input type="radio" name="example1" value="option1">
-    ANSWER 1 <br>
-  
-    <input type="radio" name="example1" value="option2">
-    ANSWER 2 <br>
-  
-    <input type="radio" name="example1" value="option3">
-    ANSWER 3 <br>
-  
-    <button type="button" onclick="checkMCQ(
-      'example1',
-      'option1',
-      'Correct!',
-      'Incorrect!'
-    )">
-      Check Answer
-    </button>
-  
-    <p id="example1-feedback"></p>
-  </form>
-  
-  <p><strong>Question? (multiple answers possible)</strong></p>
-  <form id="example2">
-    <input type="checkbox" name="example2" value="option1">
-    ANSWER 1<br>
-  
-    <input type="checkbox" name="example2" value="option2">
-    ANSWER 2 <br>
-  
-    <input type="checkbox" name="example2" value="option3">
-    ANSWER 3 <br>
-  
-    <button type="button" onclick="checkMultipleAnswers(
-      'example2',
-      ['option1','option2'],
-      'Correct!',
-      'Incorrect!'
-    )">
-      Check Answer
-    </button>
-  
-    <p id="example2-feedback"></p>
-  </form>
+<!-- Style definitions -->
+<style>
 
-</details>
+  .goal-window {
+    display: inline-block;
+    margin: 2em auto;
+    padding: 0.6em 1.4em;
+    border-radius: 999px;
+    background: #e6f2f2;
+    color: #053838;
+    font-weight: 500;
+  }
+  .goal-wrapper {
+    text-align: center;
+  }
+
+</style>
 
 # Force Perception (in Robotics)
 
 - Table of Contents
 {:toc}
 
----
-
 ## Prerequisites
 
-⚠️ Adapt in the end ⚠️
+<!-- ⚠️ Adapt in the end ⚠️ -->
 
-- Closed-loop control page (controller definition)
-- Read course about sensors and sensing
-- Read course about kinematics and dynamics
+- Read [Kinematics]({{ '/docs/chap1_basic_motion_ctrl/kinematics' | relative_url }}), [Dynamics]({{ '/docs/chap1_basic_motion_ctrl/dynamics' | relative_url }}) and [Closed-loop Control]({{ '/docs/chap1_basic_motion_ctrl/Closeloop&PID' | relative_url }}) pages
+- Read [Sensors and Sensing]({{ '/docs/chap2_sensing/new-sensors-for-robotics' | relative_url }}) page
 - Basics in electronics (resistance, capacitance, voltage-divider, etc.)
-- Basics in mechanics (Hooke's Law)
-
----
+- Basics in mechanics (Hooke's Law, stress-strain curve, etc.)
 
 ## General Motivation
 
-Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to vision page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
+Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to [vision]({{ '/docs/chap2_sensing/vision-for-robotics' | relative_url }}) page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
 
 **Physical interaction** happens when a robot gets in touch with a human or an object of the real world. There is either a force generated from the robot towards the object or vice-versa. Physical interaction is classified into three catergories according to the executed task: **manipulation, exploration** and **reaction**. These categories are explained and illustrated below.  
 
-- **Manipulation:** (robot: active agent - object: passive agent)  
-*Goal: Use perception to perform an action on an object successfully.*  
-During manipulation, a robot senses an object and adapts its actions accordingly. An example of manipulation is the grasping of objects, essential in industrial applications. During grasping, touch could be used to maximize the contact surface between the robotic hand and the object or to prevent slippage of the object. (->link to grasping page)  
-Slippage can arise in scenarios like dealing with soft objects (e.g. fruit), when objects change weight mid-grasp (e.g. a water bottle being filled during manipulation), or simply while moving objects from one place to another. In the video below, an example is shown of a robotic hand manipulating a filled champagne glass.  
-From the point of view of signals, the action related information flows from the manipulated object towards the controller.
+#### **Manipulation:** (robot: active agent - object: passive agent)  
+
+<div class="goal-window">
+  Goal: Use perception to perform an action on an object successfully.
+</div>
+ 
+  During manipulation, a robot senses an object and adapts its actions accordingly. An example of manipulation is the grasping of objects, essential in industrial applications. During grasping, touch could be used to maximize the contact surface between the robotic hand and the object or to prevent slippage of the object. (->link to grasping page)  
+  Slippage can arise in scenarios like dealing with soft objects (e.g. fruit), when objects change weight mid-grasp (e.g. a water bottle being filled during manipulation), or simply while moving objects from one place to another. In the video below, an example is shown of a robotic hand manipulating a filled champagne glass.  
+  From the point of view of signals, the action related information flows from the manipulated object towards the controller.
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -115,11 +80,11 @@ From the point of view of signals, the action related information flows from the
 ><sub>*Example of Manipulation: Lifting a Tennis Ball. Available on [YouTube](https://www.youtube.com/watch?v=teOeMzuwMpo)*</sub>
 -->
 
-- **Exploration:** (robot: active agent - object: passive agent)  
+#### **Exploration:** (robot: active agent - object: passive agent)  
 *Goal: Learn about object properties.*  
-As in manipulation, exploration is when a robot interacts with an object, except the robot performs movements to learn about the object (action reveals perception).  
-In exploration, touch is used to measure material properties like softness (stiff or compliant), surface texture (e.g. smooth vs rough), shape, temperature or even friction coefficient. In the video below, a humanoid robot moves his fingers over objects trying to identify their shape.  
-The action related information flows from controller towards contact; the object has no infulence on action.
+  As in manipulation, exploration is when a robot interacts with an object, except the robot performs movements to learn about the object (action reveals perception).  
+  In exploration, touch is used to measure material properties like softness (stiff or compliant), surface texture (e.g. smooth vs rough), shape, temperature or even friction coefficient. In the video below, a humanoid robot moves his fingers over objects trying to identify their shape.  
+  The action related information flows from controller towards contact; the object has no infulence on action.
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -137,13 +102,13 @@ The action related information flows from controller towards contact; the object
 ><sub>*Example of Exploration: Shape detection. Available on [YouTube](https://www.youtube.com/watch?v=UWMRR38hNWA)*</sub>
 -->
 
-- **Reaction:** (robot: active agent - human/robot: activ agent)  
+#### **Reaction:** (robot: active agent - human/robot: activ agent)  
 *Goal: Enable safe interactions with another active agent.*  
-Reaction refers to an interaction between a robot and a human (or another robot). The robot not only perceives and acts, but also adapts in real-time to the other agent by interpreting the constant feedback.  
-Therefore there is a bi-directional information flow, known as closed-loop control. This enables safe operation of robots around humans.  
-For example, in the field of *haptics*, humans can guide robots and feel force feedback (e.g. teleoperation).
-More on *haptics* can be found on the dedicated page (link to haptics).  
-In the video below, a robotic hand is shown trying to massage a fake human arm while being pushed away by a person.
+  Reaction refers to an interaction between a robot and a human (or another robot). The robot not only perceives and acts, but also adapts in real-time to the other agent by interpreting the constant feedback.  
+  Therefore there is a bi-directional information flow, known as closed-loop control. This enables safe operation of robots around humans.  
+  For example, in the field of *haptics*, humans can guide robots and feel force feedback (e.g. teleoperation).
+  More on *haptics* can be found on the dedicated page (link to haptics).  
+  In the video below, a robotic hand is shown trying to massage a fake human arm while being pushed away by a person.
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -161,7 +126,12 @@ In the video below, a robotic hand is shown trying to massage a fake human arm w
 ><sub>*Example of Reaction: Handshake between Human and Robot. Available on [YouTube](https://www.youtube.com/watch?v=TFwVKe3W41Y)*</sub>
 -->
 
-Some promising fields in which force perception is used are biomedical robotics (e.g. [Surgical Robots](surgical)), rehabilitation (e.g. exoskeletons -> link to page, not created yet) or humanoids (link to humanoids page, not created yet).
+Some promising fields in which force perception is used are biomedical robotics (e.g.
+[Surgical Robots]({{ '/docs/chap14_robotic_application_domain_II/surgical' | relative_url }})),
+rehabilitation (e.g.
+[Exoskeletons]({{ '/docs/chap14_robotic_application_domain_II/Exoskeletons' | relative_url }}))
+or
+in [Humanoids]({{ '/docs/chap10_robotic_application_domain_I/humanoids' | relative_url }}).
 
 *Note: On this page, the terms **sense of touch**, **tactile sensing** and **force perception** refer to the robot’s ability to perceive and interpret physical interaction.*
 
@@ -248,25 +218,25 @@ It is possible to distinguish two types of force perception based on where the s
 
 - **Tactile feedback (extrinsic)** measures pressure or stress distributions over a surface rather than at a single point. It relies on an array of sensing elements, forming what can be thought of as an electronic skin. Because it includes multiple contact points, it can detect slippage, surface texture and the exact contact location on the array. Depending on the used materials, tactile sensors can be flexible, compliant, stiff and rigid.
 
-*Note: This proposed separation of force perception into intrinsic and extrinsic sensing was taken from the [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5) book.*
+*Note: This proposed separation of force perception into intrinsic and extrinsic sensing was taken from [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5).*
 
 ---
 
 On this page, we will move gradually from **force feedback**, which describes interactions occurring at a single point, to **tactile feedback**, where sensing extends across a surface.  
 Although the examples shown in the introduction mainly focused on hands and fingertips, tactile sensing can be applied to the entire body of a robot. However, challenges such as wiring complexity and limited mechanical flexibility must also be addressed.
 
-⚠️ Adapt in the end ⚠️
+<!-- ⚠️ Adapt in the end ⚠️ -->
 
 - **Section 2.2.3.1: Force/Torque Sensing**  
   Introduction to F/T sensing methods.
 
 - **Section 2.2.3.2: Tactile Sensing**  
-  Overview of the main tactile sensing principles (resistive, capacitive, piezoelectric, optical, magnetic, etc.) and their mechanical implementations (rigid, flexible, compliant, stretchable).
+  Overview of the main tactile sensing principles (resistive, capacitive, piezoelectric, optical, magnetic, etc.).
 
 - **Section 2.2.3.3: Advanced Tactile Sensing**  
   Presentation of flexible, stretchable and vision-based tactile sensors.
 
-- **Section 2.2.3.4: Information Processing**  
+- **Section 2.2.3.4: Issues and Difficulties**  
   Discussion of how tactile data are acquired, including the challenges related to wiring, data rate and power consumption.
 
 <!--
@@ -566,7 +536,7 @@ Once $\tau_{\text{ext}}$ is estimated, the next step is to determine how a force
        alt="Force applied on link (a) and end-effector (b)">
   <figcaption>
     <sub><i>
-      Figure 4: Force applied on link (a) and end-effector (b)
+      Figure 7: Force applied on link (a) and end-effector (b)
       (<a href="https://www.mdpi.com/1424-8220/19/11/2603">S. Yen et al.</a>)
     </i></sub>
   </figcaption>
@@ -642,7 +612,7 @@ An example of such a neural network is shown in the figure below.
        alt="Neural network architecture for estimating force and torque">
   <figcaption>
     <sub><i>
-      Figure 5: Neural network–based estimation of force and torque
+      Figure 8: Neural network–based estimation of force and torque
       (<a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a>)
     </i></sub>
   </figcaption>
@@ -770,7 +740,7 @@ where $R_{x1}$ and $R_{x2}$ are the resistances from the contact point to the le
        alt="Analog resistive strip sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 6: Schematic of analog resistive touch sensing
+      Figure 9: Schematic of analog resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -843,7 +813,7 @@ where
        alt="Multi-strip analog resistive sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 7: Schematic of multi-strip analog resistive touch sensing
+      Figure 10: Schematic of multi-strip analog resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -929,7 +899,7 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 8: Force Sensing Resistor (FSR)
+      Figure 11: Force Sensing Resistor (FSR)
     </i></sub>
   </figcaption>
 
@@ -955,7 +925,7 @@ These sensors are low cost, offer good sensitivity and have simple electronics, 
 
 <div style="text-align: center;">
     <sub><i>
-      Example of Force Sensitive Resistors (FSR)  
+      Example of Force Sensitive Resistors  
       (available on <a href="https://youtu.be/sSdEwA7s8bE">YouTube</a>)
     </i></sub>
 </div>
@@ -1099,7 +1069,7 @@ The simplest capacitive tactile sensor can be modelled as a **parallel-plate cap
        alt="Parallel-plate capacitive tactile sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 9: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 12: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1147,7 +1117,7 @@ In the self-capacitance mode, there is only one electrode, instead of two as in 
        alt="Self-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 10: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 13: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1164,7 +1134,7 @@ In the mutual-capacitance mode, the two electrodes are arranged orthogonally (X-
        alt="Mutual-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 6: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 14: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1206,7 +1176,7 @@ An illustrative implementation of a capacitive tactile array is the system devel
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 11: Mutual-capacitance tactile sensing array
+      Figure 15: Mutual-capacitance tactile sensing array
     </i></sub>
   </figcaption>
 
@@ -1370,19 +1340,19 @@ By the way, most touch screens use the mutual-capacitance principle. Ever wonder
 
 #### Piezoelectric Sensors
 
-generate charge proportional to applied forces (tactile sensing 5.2.)
+<!-- >generate charge proportional to applied forces (tactile sensing 5.2.) -->
 
 #### Optical Sensors
 
-tactile sensing 5.2.3
+<!-- tactile sensing 5.2.3 -->
 
 #### Magnetism-based Sensors
 
-tactile sensing 5.2.4
+<!-- tactile sensing 5.2.4 -->
 
 #### Electrorheological / Magnetorheological
 
-tactile sensing 5.2.7 – 5.2.8
+<!-- tactile sensing 5.2.7 – 5.2.8 -->
 
 ---
 
@@ -1396,12 +1366,12 @@ Lastly, there also exist alternative ways to sense touch. One advanced tactile s
 
 #### Flexible Tactile Sensors
 
-Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
+<!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
 
 -> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
 -> have a look at meta's fingertip tactile sensor
 
-<!--  tactile sensing chapter 4.4.1 
+tactile sensing chapter 4.4.1 
 
 **Piezoresistive Flexible Sensors**
 - CNT-based piezoresistive films on flexible substrates (e.g., CNT/TPU, CNT/PDMS).  
@@ -1425,9 +1395,9 @@ Flexible tactile sensors are those that **bend** but do not undergo large tensil
 
 #### Stretchable Tactile Sensors
 
-Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
+<!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
 
-<!--  tactile sensing chapter 4.4.3 
+tactile sensing chapter 4.4.3 
 
 **Stretchable Piezoresistive Sensors**
 - CNT/PDMS and CNT/TPU stretchable nanocomposites.  
@@ -1456,8 +1426,10 @@ Stretchable tactile sensors must withstand **large strain** (tens to hundreds of
 
 #### Vision-Based Tactile Sensors
 
+<!--
 -> make link to vision course
 -> video from TEDX MIT, guy explains how his vision based tactile sensor works
+-->
 
 ---
 
@@ -1471,14 +1443,17 @@ Stretchable tactile sensors must withstand **large strain** (tens to hundreds of
 
 While integrating tactile sensors on a robot body, the wires that transmit the tactile data can be a big issue. The number of needed wires increases with the number of tactile sensors used. Often, the available space for wires is limited.
 
+<!--
+add challenges of electronics: wiring, data transfer, power consumption  
+-> examples of how it is done today
+-> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+-->
+
 <!-- 
 tactile sensing chapter 4.4.5
 emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
 -->
 
-add challenges of electronics: wiring, data transfer, power consumption  
--> examples of how it is done today
--> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
 
 <!-- 
 ### Expectations of Tactile Systems
@@ -1544,8 +1519,6 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 ---
 
-
-
 ## Credits
 <!-- List all the sources that you used to create the page   -->
 
@@ -1595,6 +1568,5 @@ and then for more recent sensors:
 https://spj.science.org/doi/full/10.34133/2019/3018568
 
 -->
-
 
 [Back to Top](#start)

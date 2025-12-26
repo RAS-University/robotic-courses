@@ -254,6 +254,7 @@ section: 3
 ## Prerequisites
 
 <!-- ⚠️ Adapt in the end ⚠️ -->
+<!-- ⚠️ Adapt in the end ⚠️ -->
 
 - Read [Kinematics]({{ '/docs/chap1_basic_motion_ctrl/kinematics' | relative_url }}) and [Dynamics]({{ '/docs/chap1_basic_motion_ctrl/dynamics' | relative_url }})
 - Read [Sensors and Sensing]({{ '/docs/chap2_sensing/new-sensors-for-robotics' | relative_url }}) page
@@ -816,6 +817,7 @@ Once $\tau_{\text{ext}}$ is estimated, the next step is to determine **how** a f
   <figcaption>
     <sub><i>
       Figure 7: Force applied on link (a) and end-effector (b)
+      Figure 7: Force applied on link (a) and end-effector (b)
       (<a href="https://www.mdpi.com/1424-8220/19/11/2603">S. Yen et al.</a>)
     </i></sub>
   </figcaption>
@@ -895,6 +897,7 @@ An example of such a neural network is shown in the figure below.
        alt="Neural network architecture for estimating force and torque">
   <figcaption>
     <sub><i>
+      Figure 8: Neural network–based estimation of force and torque
       Figure 8: Neural network–based estimation of force and torque
       (<a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a>)
     </i></sub>
@@ -1011,6 +1014,7 @@ where $R_{x1}$ and $R_{x2}$ are the resistances from the contact point to the le
   <figcaption>
     <sub><i>
       Figure 9: Schematic of analog resistive touch sensing
+      Figure 9: Schematic of analog resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -1099,6 +1103,7 @@ where
        alt="Multi-strip analog resistive sensor schematic">
   <figcaption>
     <sub><i>
+      Figure 10: Schematic of multi-strip analog resistive touch sensing
       Figure 10: Schematic of multi-strip analog resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
@@ -1198,6 +1203,7 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
   <figcaption style="margin-top: 8px;">
     <sub><i>
       Figure 11: Force Sensing Resistor (FSR)
+      Figure 11: Force Sensing Resistor (FSR)
     </i></sub>
   </figcaption>
 
@@ -1223,6 +1229,7 @@ These sensors are low cost, offer good sensitivity and have simple electronics, 
 
 <div style="text-align: center;">
     <sub><i>
+      Example of Force Sensitive Resistors  
       Example of Force Sensitive Resistors  
       (available on <a href="https://youtu.be/sSdEwA7s8bE">YouTube</a>)
     </i></sub>
@@ -1344,6 +1351,7 @@ The simplest capacitive tactile sensor can be modelled as a **parallel-plate cap
   <figcaption>
     <sub><i>
       Figure 12: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 12: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1393,6 +1401,7 @@ In the self-capacitance mode, there is only one electrode, instead of two as in 
   <figcaption>
     <sub><i>
       Figure 13: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 13: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1409,6 +1418,7 @@ In the mutual-capacitance mode, the two electrodes are arranged orthogonally (X-
        alt="Mutual-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
+      Figure 14: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
       Figure 14: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -1448,6 +1458,7 @@ An illustrative implementation of a capacitive tactile array is the system devel
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
+      Figure 15: Mutual-capacitance tactile sensing array
       Figure 15: Mutual-capacitance tactile sensing array
     </i></sub>
   </figcaption>
@@ -1604,17 +1615,21 @@ By the way, most touch screens use the mutual-capacitance principle. Ever wonder
 #### C) Piezoelectric Sensors
 
 <!-- >generate charge proportional to applied forces (tactile sensing 5.2.) -->
+<!-- >generate charge proportional to applied forces (tactile sensing 5.2.) -->
 
 #### D) Optical Sensors
 
+<!-- tactile sensing 5.2.3 -->
 <!-- tactile sensing 5.2.3 -->
 
 #### E) Magnetism-based Sensors
 
 <!-- tactile sensing 5.2.4 -->
+<!-- tactile sensing 5.2.4 -->
 
 #### F) Electrorheological / Magnetorheological
 
+<!-- tactile sensing 5.2.7 – 5.2.8 -->
 <!-- tactile sensing 5.2.7 – 5.2.8 -->
 
 ---
@@ -1630,10 +1645,12 @@ Lastly, there also exist alternative ways to sense touch. One advanced tactile s
 #### A) Flexible Tactile Sensors
 
 <!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
+<!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
 
 -> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
 -> have a look at meta's fingertip tactile sensor
 
+tactile sensing chapter 4.4.1 
 tactile sensing chapter 4.4.1 
 
 **Piezoresistive Flexible Sensors**
@@ -1659,7 +1676,9 @@ tactile sensing chapter 4.4.1
 #### B) Stretchable Tactile Sensors
 
 <!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
+<!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
 
+tactile sensing chapter 4.4.3 
 tactile sensing chapter 4.4.3 
 
 **Stretchable Piezoresistive Sensors**
@@ -1690,8 +1709,10 @@ tactile sensing chapter 4.4.3
 #### C) Vision-Based Tactile Sensors
 
 <!--
+<!--
 -> make link to vision course
 -> video from TEDX MIT, guy explains how his vision based tactile sensor works
+-->
 -->
 
 ---
@@ -1705,6 +1726,12 @@ tactile sensing chapter 4.4.3
 #### B) Wiring Complexity
 
 While integrating tactile sensors on a robot body, the wires that transmit the tactile data can be a big issue. The number of needed wires increases with the number of tactile sensors used. Often, the available space for wires is limited.
+
+<!--
+add challenges of electronics: wiring, data transfer, power consumption  
+-> examples of how it is done today
+-> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+-->
 
 <!--
 add challenges of electronics: wiring, data transfer, power consumption  

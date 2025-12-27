@@ -545,7 +545,8 @@ This course page was created by **Durgesh Haribhau Salunkhe, EPFL**, and funded 
 
 [Back to Top](#start)
 
-<script src="{{ '/docs/chap5_adv_kin/questions.js' | relative_url }}"></script>
+<!-- <script src="{{ '/docs/chap5_adv_kin/questions.js' | relative_url }}"></script> -->
+<script src="../questions.js"></script>
 <!-- voodoo, some issue with mathjax environment used in graph_theory.md -->
 $$
 .

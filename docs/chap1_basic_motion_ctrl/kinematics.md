@@ -68,7 +68,7 @@ While you don’t need to be an expert in any one of these areas, having a comfo
 ![Delta Robot Pick and Place](https://www.youtube.com/watch?v=8j5hPlHTZI8)
 ><sub>*Delta robot Pick and Place. YouTube video, 14 June 2021. Available at: https://www.youtube.com/watch?v=8j5hPlHTZI8*</sub>
 
-Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> in the video—pick and place objects at incredible speed and accuracy? These agile machines seem are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
+Have you ever watched a precision robot—like the <a href="https://en.wikipedia.org/wiki/Delta_robot">Delta robot</a> in the video—pick and place objects at incredible speed and accuracy? These agile machines are well known for their fluidity and precision. But behind the impressive motion lies a well-structured branch of mechanics called **kinematics**.
 
 Kinematics, often referred to as the “**geometry of movement**,” is the study of *how bodies move in space without considering the forces or torques causing the motion*. By focusing on the geometry and arrangement of joints, links, and end-effectors, kinematics allows us to:
 
@@ -265,7 +265,7 @@ In robotics, accurately representing the structure of robots (left image below) 
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/kinematics/kine_repre.png' }}" width="500px" alt="Kine">
-  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of a 3-axes parralel robot (left) represented in an kinematic diagram (right)</figcaption>
+  <figcaption style="margin-top: 8px; font-style: italic;">Figure: Structure of a 3-axes parallel robot (left) represented in an kinematic diagram (right)</figcaption>
 </figure>
 
 By learning how to sketch these diagrams, you will be better prepared to analyze robot motion and systematically compute essential parameters such as mobility and degrees of freedom.
@@ -411,7 +411,7 @@ $$
 $$
 
 
-The number of direction of motion enabled at a joint is described by the number of DoFs associetd to the joint. For instance, revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple DoFs. The cylindrical joint (C) has two DoFs and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three DoFs. To understand the following table, recall that a planar motion has 3 Dof (2 translations and one rotation) while in spatial motion we have 6 DoF.
+The number of direction of motion enabled at a joint is described by the number of DoFs associated with the joint. For instance, revolute (R), prismatic (P), and helical (H) joints all have one degree of freedom. Joints can also have multiple DoFs. The cylindrical joint (C) has two DoFs and allows independent translations and rotations about a single fixed joint axis. The universal joint (U) is another two-degree-of-freedom joint that consists of a pair of revolute joints arranged so that their joint axes are orthogonal. The spherical joint (S) has three DoFs. To understand the following table, recall that a planar motion has 3 Dof (2 translations and one rotation) while in spatial motion we have 6 DoF.
 
 | Joint type       | DoF (f) | Constraints (c) between two planar rigid bodies | Constraints (c) between two spatial rigid bodies |
 |------------------|:------:|:-----------------------------------------------:|:------------------------------------------------:|
@@ -1029,7 +1029,7 @@ $$
   <p style="font-size: small;">Quaternions Explained</p>
 </div>
 
-Representing orienattions is a very interesting problem. In robotics, Euler angles were used to represent orientation of the robot's end-effector. They are represented as an ordered set of rotations about X, Y or Z-axes (most commonly used is the Z-X-Z Euler angle representation). While Euler angles are common ways to describe rotations in robotics, they have some limitations, notably the phenomenon known as **gimbal lock**: phenomenon that occurs when using Euler angles (roll, pitch, yaw) to represent orientations or rotations, typically in three-dimensional space. It happens when two of the rotation axes align, causing the loss of one degree of rotational freedom. In simpler terms, you become unable to rotate around one particular axis because two axes have essentially "collapsed" into one. Here is a [video](https://www.youtube.com/watch?v=zc8b2Jo7mno) explaining this phenomeon.
+Representing orientations is a very interesting problem. In robotics, Euler angles were used to represent orientation of the robot's end-effector. They are represented as an ordered set of rotations about X, Y or Z-axes (most commonly used is the Z-X-Z Euler angle representation). While Euler angles are common ways to describe rotations in robotics, they have some limitations, notably the phenomenon known as **gimbal lock**: phenomenon that occurs when using Euler angles (roll, pitch, yaw) to represent orientations or rotations, typically in three-dimensional space. It happens when two of the rotation axes align, causing the loss of one degree of rotational freedom. In simpler terms, you become unable to rotate around one particular axis because two axes have essentially "collapsed" into one. Here is a [video](https://www.youtube.com/watch?v=zc8b2Jo7mno) explaining this phenomenon.
 
 To avoid this representational singularity, we can use rotation matrices, axis-angle representation or **Quaternions**. All these representations are representation singularity-free. While rotation matrices require 6 independent parameters to represent the orientation, bot axis-angle and Quaternion representation need only 4. **Quaternions** are an elegant mathematical alternative for **representing 3D rotations**, avoiding issues like gimbal lock and allowing smooth rotational interpolations. They are widely used in robotics, computer graphics, and aerospace for their efficiency and accuracy in handling rotations.
 
@@ -1372,7 +1372,7 @@ Inversly as the forward kinematics, inverse kinematics (also called Indirect Geo
 Inverse Kinematics (IK), also known as the **Indirect Geometric Model (IGM)**, allows us to determine the required joint positions (angles and link lengths) based on the desired position and orientation of the robot's end-effector, given the geometric parameters of its links. This process is essentially the opposite of forward kinematics.
 
 **How can we use IK to move a robot from point A to point B?**  
-**Inverse Kinematics** is one of the most fundamental concepts in robotics that provides a map between the position and orientation of robt's end-effector and the different configurations that can achieve it.
+**Inverse Kinematics** is one of the most fundamental concepts in robotics that provides a map between the position and orientation of  the robot's end-effector and the different configurations that can achieve it.
 For serial robots, forward kinematics is a many-to-one map (i.e. many configurations may represent a single pose in Cartesian space). Inverse kinematics as the name suggests is  the inverse map (one-to-many) that maps a given pose of robot's end-effector to different configurations that can achieve it. In this course, we will introduce the inverse kinemtics of a very simple case of 6R robot. 
 
 Watch the following video for a clear introduction to inverse kinematics:
@@ -1476,7 +1476,7 @@ $\boxed{\theta_1 = \arctan \frac{y}{x} - \arctan \frac{L_2 s_2}{L_1 + L_2 c_2}}$
 
 Ready to dive deeper into robotics? This section introduces you to one of the coolest concepts in robot motion: the **Jacobian Matrix**! 
 
-Ever wondered how quickly and smoothly a robot's gripper moves in space? Here you will learn exactly how to calculate both the linear and angular velocities of a robot's end-effector. But that is not all—the Jacobian acts like a map , converting **joint velocities** into precise **end-effector movements**. Mastering it means you're unlocking a powerful tool that robotics experts use every day!
+Ever wondered how quickly and smoothly a robot's gripper moves in space? Here you will learn exactly how to calculate both the linear and angular velocities of a robot's end-effector. But that is not all—the Jacobian acts like a map, converting **joint velocities** into precise **end-effector movements**. Mastering it means you're unlocking a powerful tool that robotics experts use every day!
 
 Watch the following video to get an understanding of velocity kinematics and the powerful Jacobian matrix:
 
@@ -1728,7 +1728,7 @@ Singularities occur when a robot configuration causes it to lose the ability to 
 >
 ><sub> Singularities | Robotics 101. YouTube video, 17 October 2022. Available at: https://www.youtube.com/watch?v=WXEOr7X2bPE
 
-For *serial manipulators*, the singular positions result from the **loss of degrees of freedom** while in a *parallel manipulator*, they result of the **gain of one or more degrees of freedom**. Most of the time, passing through a singularity causes **over constraint**, to then inducing the loss of control of one or more degrees of freedom. Which means, not controllable, which is not good. 
+For *serial manipulators*, the singular positions result from the **loss of degrees of freedom** while in a *parallel manipulator*, they result of the **gain of one or more degrees of freedom**. Most of the time, passing through a singularity causes **over constraint**, thus inducing the loss of control of one or more degrees of freedom. Which means, not controllable, which is not good. 
 
 <!-- Conceptual Questions -->
 <details markdown="1">

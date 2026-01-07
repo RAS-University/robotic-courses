@@ -56,7 +56,7 @@ publish: true
   }
   </style>  
 
-  <a href="/docs/aerial_robotics/UAV/UAV_2" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+  <a href="/docs/chap9_aerial_robotics/UAV/UAV_2" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
 
 <style>
   .formula-window{

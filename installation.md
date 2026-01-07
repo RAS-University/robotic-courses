@@ -1,5 +1,5 @@
 ---
-title: Webots Installations & Tutorials
+title: Software Installations & Tutorials
 nav_order: 3
 layout: default
 ---
@@ -31,6 +31,7 @@ layout: default
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
+Several lessons are accompanied with software exercises. The Foundation Courses uses the Webots Simulator, which is an easy to use free of charge simulator developed by a spin-off from EPFL, <a href"https://cyberbotics.com/"> Cyberbotics</a>.
 
 # 🛠️ Installing Webots Simulator
 

@@ -12,9 +12,9 @@ nav_exclude: true
 
 <link rel="stylesheet" href="../styles.css">
 
-<a href="/docs/aerial_robotics/multirotor/multirotor_4" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_4" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
 
-<a href="/docs/aerial_robotics/multirotor/multirotor_6" id="go-to-next" title="Go to Next Chapter">➡​</a>
+<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_6" id="go-to-next" title="Go to Next Chapter">➡​</a>
 
 # Multirotor Drones: Chapter 4
 

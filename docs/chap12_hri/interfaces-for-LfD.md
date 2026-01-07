@@ -652,7 +652,7 @@ The previous setting can be extended to more complex problems. In the example be
 
 <p align="center">
   <video width="600" height="338" controls>
-    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/MotionCapture1.mp4" type="video/mp4">
+    <source src="/assets/videos/interfaces-for-HRI/MotionCapture1.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </p>

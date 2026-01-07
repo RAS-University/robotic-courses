@@ -2,10 +2,8 @@
 title: "Multirotor Drones"
 parent: "Chapter 9: Aerial Robotics"
 layout: default
-nav_order: 1
-chapter: 9
-section: 3
-publish: true
+nav_order: 2
+has_children: true
 ---
 <style>
   .unfinished { color: #b39ddb; }

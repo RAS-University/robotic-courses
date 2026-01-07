@@ -1,11 +1,12 @@
 ---
-title: "Multirotor Drones"
-parent: "Chapter 9: Aerial Robotics"
-has_children: true
-nav_order: 2
+title: "9.3 Multirotor Drones"
+parent: "Introduction to UAVs"
 layout: default
+nav_order: 1
+chapter: 9
+section: 3
+publish: true
 ---
-
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {

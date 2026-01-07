@@ -94,7 +94,7 @@ In the right example, the user controls the robot to pick up different objects. 
 <p><strong>Drag and drop each feature into the correct box. Advantages and Disadvantages of using a Tablet/GUI for Human-Robot Interaction:</strong></p>
 
 
-<link rel="stylesheet" href="{{ site.baseurl }}/assets/css/interfaces-for-HRI/Drag&DropStyle.css">
+<link rel="stylesheet" href="/assets/css/interfaces-for-HRI/Drag&DropStyle.css">
 
 <div class="all-items-container" id="items-to-drag">
   <div class="drag-item" draggable="true" id="item-1" data-correct-zone="Pros">Usability (user experience)</div>

@@ -1,6 +1,6 @@
 ---
-title: "9.3 Multirotor Drones"
-parent: "Introduction to UAVs"
+title: "Multirotor Drones"
+parent: "Chapter 9: Aerial Robotics"
 layout: default
 nav_order: 1
 chapter: 9

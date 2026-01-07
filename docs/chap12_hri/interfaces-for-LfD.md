@@ -117,7 +117,7 @@ In the right example, the user controls the robot to pick up different objects. 
   <button id="reset-button" class="action-button">Reset</button>
 </div>
 
-<script src="{{ site.baseurl }}/assets/js/interfaces-for-HRI/Drag&Drop.js"></script>
+<script src="/assets/js/interfaces-for-HRI/Drag&Drop.js"></script>
 
 </details>
 

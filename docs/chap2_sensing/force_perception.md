@@ -19,17 +19,229 @@ section: 3
 <!-- Style definitions -->
 <style>
 
-  .goal-window {
-    display: inline-block;
-    margin: 2em auto;
-    padding: 0.6em 1.4em;
-    border-radius: 999px;
-    background: #e6f2f2;
-    color: #053838;
-    font-weight: 500;
+  .goal-title {
+    /* Text */
+    font-weight: bold;
+    font-style: normal;
+    color: #0053d9ff;
   }
-  .goal-wrapper {
+
+  .goal-window {
+    /* Layout */
+    display: inline-block;
+    margin: 0.6em auto 0.3em auto; /* vertical spacing */
+    padding: 0.6em 1.4em; /* inner spacing */
+    /* Border and shape */
+    border-left: 4px solid #0053d9ff;
+    /* Text */
+    color: #053838;
+  }
+
+  .window-title {
+    /* Text */
+    font-weight: bold;
+    font-style: normal;
+    text-align: left;
+  }
+
+  .note-window {
+    /* Layout */
+    max-width: 600px;
+    margin: 3em 0 3em auto;
+    padding: 0.6em 1.4em;
+    /* Border and shape */
+    border-right: 4px solid #999;
+    border-radius: 10px 0 0 10px;
+    /* Background */
+    background: #f5f5f5;
+    /* Text */
+    color: #717171ff;
+    font-size: 0.8em;
+  }
+
+  .quiz-btn {
+    /* Layout */
+    display: inline-block;
+    margin: 2em auto 1.5em auto;
+    padding: 0.55em 1.2em;
+    /* Border and shape */
+    border: 1px solid #f0bf1fff;
+    border-radius: 10px;
+    /* Background */
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(186, 115, 2, 0.08);
+    /* Text */
+    color: #dfb21dff;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    user-select: none;
+  }
+  .quiz-btn:hover {
+    background: #f9efcfff;
+  }
+  .quiz-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 4px rgba(186, 115, 2, 0.08);
+  }
+
+  /* Details layout */
+  .quiz-details {
+    margin: 1em 0;
     text-align: center;
+  }
+  .quiz-details > *:not(summary) {
+    text-align: left;
+  }
+  .quiz-details > summary {
+    list-style: none;
+  }
+  .quiz-details > summary::-webkit-details-marker {
+    display: none;
+  }
+  /* Show label */
+  .quiz-details > summary .quiz-label::after {
+    content: " (tap to show)";
+    font-weight: 700;
+  }
+  /* Hide label */
+  .quiz-details[open] > summary .quiz-label::after {
+    content: " (tap to hide)";
+    font-weight: 700;
+  }
+
+  .quiz-window {
+    /* Layout */
+    margin: 0 auto 0 auto; /* space below button */
+    padding: 0.6em 1.4em;
+    /* Border and shape */
+    border: 1px solid #333;
+    border-radius: 10px;
+  }
+
+  .quiz-question-text {
+    /* Layout */
+    margin-bottom: 0.6em;          /* space before options */
+
+    /* Text */
+    font-weight: 600;              /* semi-bold */
+    color: #333;                   /* strong contrast */
+  }
+
+  .section-title {
+    /* Layout */
+    margin: 2em 0 1.6em 0;
+    padding: 0.6em 1em;
+    /* Border and shape */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    /* Background */
+    background: #fafafa;
+    /* Text */
+    font-weight: 700;
+  }
+
+  .section-label {
+    font-weight: 700;
+    color: #4F3DDB;
+    margin-right: 0.4em;
+  }
+
+  .solution-btn {
+    /* Layout */
+    display: inline-block;
+    margin: 1em 0 0.4em 0;
+    padding: 0.3em 0.6em;
+    /* Border & shape */
+    border-radius: 6px;
+    /* Background */
+    background: transparent;
+    /* Text */
+    color: #2e7d32;
+    font-weight: 600;
+    font-size: 0.95em;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .solution-btn:hover {
+    text-decoration: underline;
+  }
+  .solution-details > summary .solution-label::after {
+    content: " (tap to show)";
+    font-weight: 400;
+  }
+  .solution-details[open] > summary .solution-label::after {
+    content: " (tap to hide)";
+  }
+  .solution-details > summary {
+    list-style: none;
+  }
+  .solution-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .solution-window {
+    /* Layout */
+    margin: 0.6em 0 1em 0;
+    padding: 0.6em 1em;
+    /* Border */
+    border-left: 4px solid #2e7d32;
+    /* Background */
+    background: #f6fbf7;
+    /* Text */
+    color: #2b2b2b;
+  }
+
+  .optional-btn {
+    /* Layout */
+    display: inline-block;
+    margin: 1em 0 0.4em 0;
+    padding: 0.3em 0.6em;
+    /* Shape */
+    border-radius: 6px;
+    /* Background */
+    background: transparent;
+    /* Text */
+    color: #555555;
+    font-weight: 600;
+    font-size: 0.95em;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .optional-btn:hover {
+    text-decoration: underline;
+  }
+
+  .optional-details > summary .optional-label::after {
+    content: " (optional)";
+    font-weight: 400;
+    color: #777777;
+  }
+
+  .optional-details[open] > summary .optional-label::after {
+    content: " (tap to hide)";
+  }
+
+  .optional-details > summary {
+    list-style: none;
+  }
+
+  .optional-details > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .optional-window {
+    /* Layout */
+    margin: 0.6em 0 1em 0;
+    padding: 0.6em 1em;
+    /* Border */
+    border-left: 4px solid #000000;
+    /* Background */
+    background: #f2f2f2;
+    /* Text */
+    font-size: 0.95em;
   }
 
 </style>
@@ -43,26 +255,31 @@ section: 3
 
 <!-- ⚠️ Adapt in the end ⚠️ -->
 
-- Read [Kinematics]({{ '/docs/chap1_basic_motion_ctrl/kinematics' | relative_url }}), [Dynamics]({{ '/docs/chap1_basic_motion_ctrl/dynamics' | relative_url }}) and [Closed-loop Control]({{ '/docs/chap1_basic_motion_ctrl/Closeloop&PID' | relative_url }}) pages
+- Read [Kinematics]({{ '/docs/chap1_basic_motion_ctrl/kinematics' | relative_url }}) and [Dynamics]({{ '/docs/chap1_basic_motion_ctrl/dynamics' | relative_url }})
 - Read [Sensors and Sensing]({{ '/docs/chap2_sensing/new-sensors-for-robotics' | relative_url }}) page
-- Basics in electronics (resistance, capacitance, voltage-divider, etc.)
-- Basics in mechanics (Hooke's Law, stress-strain curve, etc.)
+- Basics of electrical circuits (resistance, capacitance, voltage-divider, etc.)
+- Basics of mechanics (Hooke's Law, stress-strain curve, etc.)
 
 ## General Motivation
 
-Robots are expected to interact closely and safely with humans aswell as with their environement. Besides interaction modalities like vision (refer to [vision]({{ '/docs/chap2_sensing/vision-for-robotics' | relative_url }}) page), there is one modality that humans use all the time, but is often neglected in robotics: **touch** (or physical interaction).  
+Robots are expected to interact closely and safely with humans as well as with their environment. To achieve this, there is one sense that humans use all the time but is often neglected in robotics: the sense of **touch**.  
 
-**Physical interaction** happens when a robot gets in touch with a human or an object of the real world. There is either a force generated from the robot towards the object or vice-versa. Physical interaction is classified into three catergories according to the executed task: **manipulation, exploration** and **reaction**. These categories are explained and illustrated below.  
+In robotics, touch refers to situations where a robot gets into **physical interaction** with another real-world **agent**, such as a human, an object, or even another robot. During that interaction, forces are exchanged between two agents. This chapter focuses on how to measure these interaction **forces**.
 
-#### **Manipulation:** (robot: active agent - object: passive agent)  
+Same as humans, robots can perceive interaction forces at different levels. When lifting an object, humans first sense the **overall force**, such as its weight, then acquire more **fine-grained** information through touch, such as local pressure distribution. This distinction leads to the use of **force sensing** for global interaction forces and **tactile sensing** for localized contact information in robotics. But more about this later.
+
+Let us first have a look at some examples. Below are some illustrations and explanations of the three main interaction categories in which touch is used in robotics: **manipulation, exploration** and **reaction**.
+
+<h4 class="section-title">Manipulation</h4>
 
 <div class="goal-window">
-  Goal: Use perception to perform an action on an object successfully.
+  <div class="goal-title">Goal</div>
+  Use touch to physically control an object.  
 </div>
- 
-  During manipulation, a robot senses an object and adapts its actions accordingly. An example of manipulation is the grasping of objects, essential in industrial applications. During grasping, touch could be used to maximize the contact surface between the robotic hand and the object or to prevent slippage of the object. (->link to grasping page)  
-  Slippage can arise in scenarios like dealing with soft objects (e.g. fruit), when objects change weight mid-grasp (e.g. a water bottle being filled during manipulation), or simply while moving objects from one place to another. In the video below, an example is shown of a robotic hand manipulating a filled champagne glass.  
-  From the point of view of signals, the action related information flows from the manipulated object towards the controller.
+
+$\Rightarrow$ Interaction between a robot (active agent) and an object (passive agent).
+
+During manipulation, the robot senses the object and adapts its actions to **control** it accordingly. Object manipulation is essential in fields like industrial robotics. In tasks like **grasping**, force perception is used to estimate the grasp force applied by the robotic hand, to prevent damaging the object or slipping. More about grasping can be found on its dedicated page ([click here]({{ '/docs/chap7_manipulation/grasping' | relative_url }})).  
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -70,21 +287,24 @@ Robots are expected to interact closely and safely with humans aswell as with th
     Your browser does not support the video tag.
   </video>
   <div><sub><i>
-    Example of Manipulation: Moving a Champagne Glass
+    Robotic Hand manipulating a Champagne Glass
     (<a href="https://ieeexplore.ieee.org/document/10146043">F. Khadivar, A. Billard, IEEE T-RO 2023</a>)
   </i></sub></div>
 </div>
 
-<!--
-![Manipulation Example](https://www.youtube.com/watch?v=teOeMzuwMpo)
-><sub>*Example of Manipulation: Lifting a Tennis Ball. Available on [YouTube](https://www.youtube.com/watch?v=teOeMzuwMpo)*</sub>
--->
+*Key points of the video:*  
+A robotic hand manipulates a **water-filled champagne glass**. As the hand tilts the glass, the moving water changes the internal mass distribution, creating disturbances during manipulation. Using **tactile sensors at the fingertips**, the robotic fingers adapt their movement and contact forces to control the glass despite these disturbances. In the end of the sequence, a larger motion causes the water to spill.  
 
-#### **Exploration:** (robot: active agent - object: passive agent)  
-*Goal: Learn about object properties.*  
-  As in manipulation, exploration is when a robot interacts with an object, except the robot performs movements to learn about the object (action reveals perception).  
-  In exploration, touch is used to measure material properties like softness (stiff or compliant), surface texture (e.g. smooth vs rough), shape, temperature or even friction coefficient. In the video below, a humanoid robot moves his fingers over objects trying to identify their shape.  
-  The action related information flows from controller towards contact; the object has no infulence on action.
+<h4 class="section-title">Exploration</h4>
+
+<div class="goal-window">
+  <div class="goal-title">Goal</div>
+  Use touch to learn about object properties.  
+</div>
+
+$\Rightarrow$ Interaction between a robot (active agent) and an object (passive agent).
+
+During exploration, the robot performs movements to **discover unknown properties** of an object, without the objective of directly controlling it. Touch can be used to determine material properties such as **softness**, **surface texture**, **shape**, **temperature** or sometimes even the **friction coefficient**. For example, it is possible to determine whether an object is stiff or compliant, smooth or rough.
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -92,23 +312,24 @@ Robots are expected to interact closely and safely with humans aswell as with th
     Your browser does not support the video tag.
   </video>
   <div><sub><i>
-    Example of Exploration: Shape detection
+    Humanoid Robot performs Shape Detection
     (<a href="https://ieeexplore.ieee.org/document/6907804">N. Sommer, M. Li, A. Billard, ICRA 2014</a>)
   </i></sub></div>
 </div>
 
-<!--
-![Exploration Example](https://www.youtube.com/watch?v=UWMRR38hNWA)
-><sub>*Example of Exploration: Shape detection. Available on [YouTube](https://www.youtube.com/watch?v=UWMRR38hNWA)*</sub>
--->
+*Key points of the video:*  
+A **humanoid robot** explores different objects by moving its fingers along their surface, trying to **identify** them through touch. First it explores a bottle, then a jar, a telephone handset and finally a glass. Tactile sensors at the robot’s fingertips provide **contact information** as the fingers slide over the object. These contact points are accumulated into a noisy point cloud, which is then used to **reconstruct an approximate shape** of the object. This type of tactile exploration is useful in situations where **vision is unavailable**, for example due to bad lighting conditions.  
 
-#### **Reaction:** (robot: active agent - human/robot: activ agent)  
-*Goal: Enable safe interactions with another active agent.*  
-  Reaction refers to an interaction between a robot and a human (or another robot). The robot not only perceives and acts, but also adapts in real-time to the other agent by interpreting the constant feedback.  
-  Therefore there is a bi-directional information flow, known as closed-loop control. This enables safe operation of robots around humans.  
-  For example, in the field of *haptics*, humans can guide robots and feel force feedback (e.g. teleoperation).
-  More on *haptics* can be found on the dedicated page (link to haptics).  
-  In the video below, a robotic hand is shown trying to massage a fake human arm while being pushed away by a person.
+<h4 class="section-title">Reaction</h4>
+
+<div class="goal-window">
+  <div class="goal-title">Goal</div>
+  Use touch to ensure safe interaction with another active agent.  
+</div>
+
+$\Rightarrow$ Interaction between a robot (active agent) and another active agent (human/robot).
+
+During reaction interactions, the robot continuously acts, perceives and **adapts in real time** based on the feedback it receives from the other agent. This enables, for example, safe operation of robots **around humans**: the robot can detect abnormal contact and **adjust its movement** to avoid harm. In the field of **haptics** and more specifically **teleoperation**, touch also allows humans to guide robots while receiving force feedback. More on haptics can be found on the dedicated page ([click here]({{ '/docs/chap12_hri/haptics-for-robotics' | relative_url }})).  
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -116,75 +337,80 @@ Robots are expected to interact closely and safely with humans aswell as with th
     Your browser does not support the video tag.
   </video>
   <div><sub><i>
-    Example of Reaction: Arm Massage by Robot
+    Robotic Hand interacting with Fake Arm
     (<a href="https://doi.org/10.1007/s10514-020-09934-9">M. Khoramshahi, A. Billard, ICRA 2020</a>)
   </i></sub></div>
 </div>
 
-<!--
-![Reaction Example](https://www.youtube.com/watch?v=TFwVKe3W41Y)
-><sub>*Example of Reaction: Handshake between Human and Robot. Available on [YouTube](https://www.youtube.com/watch?v=TFwVKe3W41Y)*</sub>
--->
-
-Some promising fields in which force perception is used are biomedical robotics (e.g.
-[Surgical Robots]({{ '/docs/chap14_robotic_application_domain_II/surgical' | relative_url }})),
-rehabilitation (e.g.
-[Exoskeletons]({{ '/docs/chap14_robotic_application_domain_II/Exoskeletons' | relative_url }}))
-or
-in [Humanoids]({{ '/docs/chap10_robotic_application_domain_I/humanoids' | relative_url }}).
-
-*Note: On this page, the terms **sense of touch**, **tactile sensing** and **force perception** refer to the robot’s ability to perceive and interpret physical interaction.*
+*Key points of the video:*  
+A robotic hand is shown holding continuous contact with a fake human arm. The **arm is moved** by a person, making it a **dynamic interaction** involving another active agent. A **force sensor** located at the robot’s end-effector measures the interaction forces, which allows the robotic hand to adapt its movement continuously. In the end of the video, we can see that the robot reacts differently to fast disturbing contacts: non-consistent disturbances are rejected. This shows that the robot can **distinguish intentional human guidance from accidental disturbances**.  
 
 ---
 
-<details markdown="1">
-<summary>Quiz (tap to unfold)</summary>
+As you can imagine, force perception is used in many areas. From biomedical robotics such as [surgical robots]({{ '/docs/chap14_robotic_application_domain_II/surgical' | relative_url }}), to rehabilitation systems like [exoskeletons]({{ '/docs/chap14_robotic_application_domain_II/Exoskeletons' | relative_url }}) and [humanoid robots]({{ '/docs/chap10_robotic_application_domain_I/humanoids' | relative_url }}).
 
-<p><strong>Why is touch useful in robotics?</strong> (multiple answers possible)</p>
-<form id="quiz-touch">
-  <input type="checkbox" name="quiz-touch" value="option1">
-  It allows robots to understand the forces exchanged with their environment.<br>
+Before moving on, try the quiz below.
 
-  <input type="checkbox" name="quiz-touch" value="option2">
-  It allows robots to detect unexpected events such as slippage or loss of contact.<br>
+<details class="quiz-details" markdown="1">
+<summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
+<div class="quiz-window">
 
-  <input type="checkbox" name="quiz-touch" value="option3">
-  It replaces the need for ALL other sensing modalities in robots, like vision, audio and proximity sensors.<br>
+<div class="quiz-question-text">
+Why is the sense of touch used in robotics? (multiple answers possible)
+</div>
 
-  <input type="checkbox" name="quiz-touch" value="option4">
-  It enables robots to adapt during physical interactions with objects or humans.<br>
+<form id="quiz-motivation">
 
-  <button type="button" onclick="checkMultipleAnswers(
-    'quiz-touch',
-    ['option1', 'option2', 'option4'],
-    'Correct! Touch enables adaptation, provides force information and helps detect events such as slippage. It does not replace ALL other sensing modalities.',
-    'Incorrect. Touch is essential for sensing forces, adapting during interactions and detecting contact events.It does not replace ALL other sensing modalities.'
+  <input type="checkbox" name="quiz-motivation" value="option1">
+  It enables robots to interact safely with humans and their environment.<br>
+
+  <input type="checkbox" name="quiz-motivation" value="option2">
+  It replaces the need for vision in all robotic tasks.<br>
+
+  <input type="checkbox" name="quiz-motivation" value="option3">
+  It allows robots to perceive forces exchanged during physical interactions.<br>
+
+  <input type="checkbox" name="quiz-motivation" value="option4">
+  It helps robots adapt their behavior during physical contact.<br><br>
+
+  <button type="button" onclick="checkMultipleAnswersMapped(
+    'quiz-motivation',
+    ['option1', 'option3', 'option4'],
+    {
+      option1: 'A) Correct. Touch sensing is essential for safe physical interaction with humans and the environment',
+      option2: 'C) Incorrect. Touch does not replace vision, but complements it.',
+      option3: 'B) Correct. Touch allows robots to perceive forces exchanged during contact.',
+      option4: 'D) Correct. Touch sensing allows robots to adapt their behavior in real time during physical contact.'
+    }
   )">
     Check Answer
   </button>
 
-  <p id="quiz-touch-feedback"></p>
+  <p id="quiz-motivation-feedback"></p>
 </form>
 
-<p><strong>Which statements correctly describe the categories of physical interaction?</strong> (multiple answers possible)</p>
+<div class="quiz-question-text">
+Which statements correctly describe the three interaction categories seen earlier? (multiple answers possible)
+</div>
+
 <form id="quiz-categories">
   <input type="checkbox" name="quiz-categories" value="option1">
-  Reaction involves real-time adaptation to another active agent, such as a human.<br>
+  In manipulation, the robot uses touch to physically control an object and adapt its actions based on interaction forces.<br>
 
   <input type="checkbox" name="quiz-categories" value="option2">
-  Exploration uses touch to learn about an object’s properties, such as stiffness or texture.<br>
+  In exploration, the robot uses touch to discover object properties, with the goal of controlling the object during interaction.<br>
 
   <input type="checkbox" name="quiz-categories" value="option3">
-  Manipulation and exploration rely on bi-directional information flow between robot and object.<br>
+  In reaction, the robot adapts its behavior in real time to assure safe interaction with another active agent.<br><br>
 
-  <input type="checkbox" name="quiz-categories" value="option4">
-  Manipulation uses perception to act successfully on an object.<br>
-
-  <button type="button" onclick="checkMultipleAnswers(
+  <button type="button" onclick="checkMultipleAnswersMapped(
     'quiz-categories',
-    ['option1', 'option2', 'option4'],
-    'Correct! Manipulation focuses on acting on objects, exploration focuses on learning object properties and reaction involves adapting to another active agent.',
-    'Incorrect. Only reaction, exploration and manipulation match the definitions. Bi-directional information flow is specific to reaction, not manipulation or exploration.'
+    ['option1', 'option3'],
+    {
+      option1: 'A) Correct. Manipulation focuses on physically controlling an object and adapting actions based on interaction forces.',
+      option2: 'B) Incorrect. Exploration targets learning about object properties only, not at directly controlling the object.',
+      option3: 'C) Correct.'
+    }
   )">
     Check Answer
   </button>
@@ -192,15 +418,24 @@ in [Humanoids]({{ '/docs/chap10_robotic_application_domain_I/humanoids' | relati
   <p id="quiz-categories-feedback"></p>
 </form>
 
+</div>
 </details>
+
+<!--
+<div class="note-window">
+  <div class="window-title">Note</div>
+  On this page, the terms <strong>sense of touch</strong>, <strong>tactile sensing</strong> and <strong>force perception</strong> all refer to the robot’s ability to perceive and interpret physical interaction.
+</div>
+-->
 
 ---
 
 ## Course Content
 
-Now that we have seen **why** robots need a sense of touch, we can dive into **how** force perception is implemented.
+Now that we have seen **why** robots need to perceive forces, we can dive into **how** force perception is implemented. As introduced earlier, robots can perceive interaction forces at different levels of detail, from global interaction forces (**force sensing** or **intrinsic sensing**) to more fine-grained contact information (**tactile sensing** or **extrinsic sensing**).  
 
-It is possible to distinguish two types of force perception based on where the sensors are located: **intrinsic** and **extrinsic**. In **intrinsic sensing**, the sensors are placed within the mechanical structure of the robot (more inward) and we speak of **force feedback**. On the other hand, **extrinsic sensing** refers to sensors mounted at the robot’s contact area (more outward) and we refer to this as **tactile feedback**.
+The distinction between intrinsic and extrinsic sensing is based on the **location of the sensors** on the robot (see figure below). Intrinsic sensing, relies on sensors placed **within the mechanical structure** of the robot. On the other hand, extrinsic sensing, refers to sensors mounted directly at the robot’s **contact surface**.  
+
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/intrinsic-extrinsic-sensors.png' }}"
@@ -214,24 +449,27 @@ It is possible to distinguish two types of force perception based on where the s
   </figcaption>
 </figure>
 
-- **Force feedback (intrinsic)** measures the global forces and torques applied to the system at a specific point, considered infinitesimally small. It can be thought of as the overall push, pull and twist the robot feels at that contact point (usually at a joint).
+In summary:
 
-- **Tactile feedback (extrinsic)** measures pressure or stress distributions over a surface rather than at a single point. It relies on an array of sensing elements, forming what can be thought of as an electronic skin. Because it includes multiple contact points, it can detect slippage, surface texture and the exact contact location on the array. Depending on the used materials, tactile sensors can be flexible, compliant, stiff and rigid.
+- **Force sensing** (intrinsic) measures the global forces and torques applied to the system at a specific point, considered infinitesimally small. It captures the **overall push, pull and twist** experienced by the robot at that location, usually at a joint or a structural element.  
 
-*Note: This proposed separation of force perception into intrinsic and extrinsic sensing was taken from [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5).*
+- **Tactile sensing** (extrinsic) measures stress or **pressure distributions over a surface** rather than at a single point. It relies on an array of sensing elements, forming what can be thought of as an **electronic skin**. Because multiple contact points are available, tactile sensing can detect slippage and precise contact location.  
 
----
+<div class="note-window">
+  <div class="window-title">Note</div>
+  The separation of force perception into intrinsic and extrinsic sensing was proposed in 
+  <a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>.
+</div>
 
-On this page, we will move gradually from **force feedback**, which describes interactions occurring at a single point, to **tactile feedback**, where sensing extends across a surface.  
-Although the examples shown in the introduction mainly focused on hands and fingertips, tactile sensing can be applied to the entire body of a robot. However, challenges such as wiring complexity and limited mechanical flexibility must also be addressed.
+On this page, we will move gradually from **force sensing**, which describes interactions occurring at a single point, to **tactile sensing**, where sensing extends across a bigger surface. Although the examples shown in the introduction mainly focused on hands and fingertips, tactile sensing can be applied to the **entire body** of a robot. However, challenges such as wiring complexity and limited mechanical flexibility must also be addressed. We will see that later.
 
 <!-- ⚠️ Adapt in the end ⚠️ -->
 
-- **Section 2.2.3.1: Force/Torque Sensing**  
-  Introduction to F/T sensing methods.
+- **Section 2.2.3.1: Force Sensing**  
+  Introduction to force and torque sensing methods.
 
 - **Section 2.2.3.2: Tactile Sensing**  
-  Overview of the main tactile sensing principles (resistive, capacitive, piezoelectric, optical, magnetic, etc.).
+  Overview of the main tactile sensing principles (resistive, capacitive, etc.).
 
 - **Section 2.2.3.3: Advanced Tactile Sensing**  
   Presentation of flexible, stretchable and vision-based tactile sensors.
@@ -246,13 +484,15 @@ Although the examples shown in the introduction mainly focused on hands and fing
 
 ---
 
-### Force/Torque Sensing
+### Force Sensing
 
 <!--
 Main ref: [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
 -->
 
-Let’s begin with a quick reminder of the **forces** and **torques** (also called moments) we want to measure. Force is given in Newtons [N] and produces linear movement, whereas torque is given in Newton-meters [Nm] and produces rotational movement. They are both **vector** quantities defined in 3D space, meaning they can be decomposed into components of the orthonormal basis of $\mathbb{R}^3$ (x, y, and z axis).
+<!-- ⚠️ add that not only force but also torque sensing ⚠️ -->
+
+Let us begin with a quick reminder of **forces** and **torques** (also called moments) we want to measure. Force is given in Newtons [N] and produces **linear** movement, whereas torque is given in Newton-meters [Nm] and produces **rotational** movement. They are both **vector** quantities defined in 3D space, meaning they can be decomposed into components of the orthonormal basis of $\mathbb{R}^3$ (x, y, and z axis).
 
 $$\text{Force: } \mathbf{F} = (F_{x}, F_{y}, F_{z}) \in \mathbb{R}^3$$
 $$\text{Torque: } \mathbf{M} = (M_{x}, M_{y}, M_{z}) \in \mathbb{R}^3$$
@@ -269,11 +509,11 @@ $$\text{Torque: } \mathbf{M} = (M_{x}, M_{y}, M_{z}) \in \mathbb{R}^3$$
   </figcaption>
 </figure>
 
-The goal of **force–torque (F/T) sensing** is to obtain a complete description of all forces and torques exchanged at the contact location. This is possible because the sum of all forces and the sum of all moments acting on the system must be equal to zero (in static equilibrium):
+The goal of **force-torque (F/T) sensing** is to obtain a complete description of all forces and torques exchanged at the contact location. This is possible because the sum of all forces and the sum of all moments acting on the system must be equal to zero (in static equilibrium):
 
 $$ \sum \mathbf{F} = 0 \qquad \sum \mathbf{M} = 0 $$
 
-At this point, we can introduce the **wrench vector** $W$. It represents the complete mechanical interaction at the contact point, combining the force and torque vectors into a single vector in $\mathbb{R}^6$. The wrench is the unknown quantity to be determined in force–torque sensing.
+At this point, we can introduce the **wrench vector** $W$. It represents the complete mechanical interaction at the contact point, combining the force and torque vectors into a single vector in $\mathbb{R}^6$. The wrench is the **unknown quantity** to be determined in F/T sensing.
 
 $$
 W =
@@ -298,45 +538,78 @@ $$
 
 Where $F_c$ and $M_c$ are the force and moment vectors applied at the contact location.
 
-As described earlier, force-torque sensing in robotics relies on intrinsic sensors, which are **embedded** within the robot’s structure. In this chapter, we will have a look at two different F/T sensing approaches: first, dedicated **F/T sensors** that **directly** measure these quantities, and second, **sensorless methods** that estimate forces and torques **indirectly**.
+As described earlier, F/T sensing in robotics relies on intrinsic sensors, which are **embedded** within the robot’s structure. In this chapter, we will have a look at two different F/T sensing approaches: first, dedicated **F/T sensors** that **directly** measure these quantities, and second, **sensorless methods** that estimate forces and torques **indirectly**.
 
----
+Try the quiz to make sure that you understood forces and torques.
 
-<details markdown="1">
-<summary>Quiz (tap to unfold)</summary>
+<details class="quiz-details" markdown="1">
+<summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
+<div class="quiz-window">
 
-<p><strong>Which statements correctly describe forces and torques?</strong> (multiple answers possible)</p>
+<div class="quiz-question-text">
+Which statements correctly describe forces? (multiple answers possible)
+</div>
 
-<form id="quiz-ft">
-  <input type="checkbox" name="quiz-ft" value="option1">
-  Force is a vector in $\mathbb{R}^3$ that produces linear motion. <br>
+<form id="quiz-forces">
+  <input type="checkbox" name="quiz-forces" value="option1">
+  Forces are vector quantities that can be decomposed along the three axes of $\mathbb{R}^3$.<br>
 
-  <input type="checkbox" name="quiz-ft" value="option2">
-  Torque is a rotational quantity measured in Newton-meters [Nm]. <br>
+  <input type="checkbox" name="quiz-forces" value="option2">
+  Forces are measured in Newton-meters [Nm] and mainly produce rotational movement.<br>
 
-  <input type="checkbox" name="quiz-ft" value="option3">
-  Force belongs to $\mathbb{R}^6$ because it includes both translational and rotational components. <br>
+  <input type="checkbox" name="quiz-forces" value="option3">
+  Forces produce linear movement and are expressed in Newtons [N].<br><br>
 
-  <input type="checkbox" name="quiz-ft" value="option4">
-  Both force and torque can be decomposed into components along the three axes of $\mathbb{R}^3$. <br>
-
-  <button type="button" onclick="checkMultipleAnswers(
-    'quiz-ft',
-    ['option1', 'option2', 'option4'],
-    'Correct! Force is a vector in $\\mathbb{R}^3$ producing linear motion, torque is rotational and measured in [Nm]. Both quantities decompose along the three axes of $\\mathbb{R}^3$.',
-    'Incorrect. Remember that force and torque are each vectors in $\\mathbb{R}^3$. Only the combined wrench belongs to $\\mathbb{R}^6$.'
+  <button type="button" onclick="checkMultipleAnswersMapped(
+    'quiz-forces',
+    ['option1', 'option3'],
+    {
+      option1: 'A) Correct. Forces are 3D vectors and can be decomposed along the x, y, and z axes.',
+      option2: 'B) Incorrect. Newton-meter is the unit of torque, not force.',
+      option3: 'C) Correct. Forces are expressed in Newtons and produce linear movement.'
+    }
   )">
     Check Answer
   </button>
 
-  <p id="quiz-ft-feedback"></p>
+  <p id="quiz-forces-feedback"></p>
 </form>
 
+<div class="quiz-question-text">
+Which statement correctly describes torques? (multiple answers possible)
+</div>
+
+<form id="quiz-torques">
+  <input type="checkbox" name="quiz-torques" value="option1">
+  Torques are scalar quantities that describe the intensity of a rotational effect.<br>
+
+  <input type="checkbox" name="quiz-torques" value="option2">
+  Torques can only be measured if the system is not in static equilibrium.<br>
+
+  <input type="checkbox" name="quiz-torques" value="option3">
+  Torques are vector quantities expressed in Newton-meters [Nm] that produce rotational motion.<br><br>
+
+  <button type="button" onclick="checkMultipleAnswersMapped(
+    'quiz-torques',
+    ['option3'],
+    {
+      option1: 'A) Incorrect. Torques are vector quantities, not scalars.',
+      option2: 'C) Incorrect. Torques can be measured even in static equilibrium.',
+      option3: 'B) Correct. Torques are vectors expressed in Newton-meters and produce rotational motion.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="quiz-torques-feedback"></p>
+</form>
+
+</div>
 </details>
 
 ---
 
-#### Force/Torque Sensors
+#### A) Force/Torque Sensors
 
 Force-torque sensors are classified based on the number of axes (or degrees of freedom DOF) they measure.
 
@@ -355,7 +628,7 @@ Force-torque sensors are classified based on the number of axes (or degrees of f
        alt="Translational forces acting on end-effector">
   <figcaption>
     <sub><i>
-      Figure 3: Translational forces acting on end-effector. (a) diagonal force, (b) vertical force
+      Figure 3: Illustration of translational forces acting on the end-effector. (a) diagonal force, (b) vertical force
     </i></sub>
   </figcaption>
 </figure>
@@ -367,13 +640,14 @@ Force-torque sensors are classified based on the number of axes (or degrees of f
   W = [F_x, F_y, F_z, M_x, M_y, M_z]^T \in \mathbb{R}^6
   $$
 
-**Sensing Principle and Mechanical Implementation:**
+<br>
+<h4 class="section-title">Sensing Principle and Mechanical Implementation:</h4>
 
-The sensing principle of force–torque sensors relies on detecting **strain** (deformation) in an elastic structure. When a force is applied, the elastic structure deforms and this deformation is converted into an electrical signal using strain gauges. By measuring the strain in the structure, the applied force can be determined using **Hooke’s law**. The detail of the mathematical model is shown later.
+The sensing principle of F/T sensors relies on detecting **strain** (deformation) in an elastic structure. When a force is applied, the elastic structure deforms and this deformation is converted into an electrical signal using strain gauges. By measuring the strain in the structure, the applied force can be determined using **Hooke’s law**. The detail of the mathematical model is shown later.
 
-Below are examples of elastic structures used in force-torque sensors:
+Below are examples of **elastic structures** used in F/T sensors:
 
-1) Cross-Beam Structure:  
+*1) Cross-Beam Structure:*  
 
   The elastic base is shaped like a **crossbar**, consisting of an **inner ring** (central hub) connected to the fixed **outer ring** by flexible supporting beams. The whole piece is machined out of a single piece of material, to ensure high stiffness and to avoid hysteresis.  
 
@@ -429,7 +703,7 @@ Below are examples of elastic structures used in force-torque sensors:
 
   **Strain gauges** are directly bonded on the surfaces of the beams to measure their strain.  
 
-2) Stewart Platform (Parallel Structure):  
+*2) Parallel Structure (Stewart Platform):*  
 
   This structure consists of an **upper mobile** platform and a **lower fixed** base connected by **six legs**. An example of a miniature stewart platform is shown in the next figure.
 
@@ -447,7 +721,8 @@ Below are examples of elastic structures used in force-torque sensors:
 
   This design distributes the applied load through the structure, causing primarily axial strain (tension or compression) along the longitudinal axis of the limbs. **Strain gauges** are bonded on both sides (front and back) of the legs connecting the two platforms to measure the strain.
 
-**Mathematical Model:**
+<br>
+<h4 class="section-title">Mathematical Model:</h4>
 
 From the electrical signal obtained from the strain gauges, we can determine the forces and torques acting on the sensor.
 
@@ -478,27 +753,28 @@ In practice, $K$ is often determined **experimentally** during a **calibration p
 
 ---
 
-#### Sensorless Force/Torque Estimation  
+#### B) Sensorless Force/Torque Estimation  
 
 It is also possible to determine external forces and torques without embedding dedicated sensors. This **sensorless** method relies on the robot’s internal data (available without special hardware), such as the amount of current drawn by its motors. In most motors, the generated torque is proportional to the motor current. By comparing the **actual torque** output (derived from current) with the **theoretically required torque**, it is possible to determine the existence and magnitude of an external force.
 
 Below, we look at two different approaches to estimate external forces using motor current: **model-based** and **model-free** (Neural Network–based).
 
----
+<h4 class="section-title">
+  <span class="section-label">Approach A</span>
+  Model-Based Estimation
+</h4>
 
-- **Approach A: Model-Based Estimation**
-
-This approach is called model-based, as it uses the **robot’s dynamics and kinematics** (= model) to compute the external force applied on the robot. If you need a quick reminder about the Jacobian, have a look at the [Kinematics](kinematics#chapter-7-velocity-kinematics---meet-the-jacobian-) course.
+This approach is called model-based, as it uses the **robot’s dynamics and kinematics** (= model) to compute the external force applied on the robot. If you need a quick reminder about the Jacobian, have a look at the [Kinematics](/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-) course.
 
 Contact force estimation follows three steps:  
 
-- 1) Estimate the external joint torques induced by the force  
-- 2) Compute the Jacobian at the contact location  
-- 3) Convert the joint torques into cartesian force
+- Estimate the external **joint torques** induced by the force  
+- Compute the **Jacobian** at the contact location  
+- Convert the joint torques into **cartesian force**
 
 *1) Estimating the external joint torque $\tau_{\text{ext}}$*
 
-We start with the basic **Lagrangian expression** of the robot’s dynamics (seen previously in the [Dynamics](dynamics#chapter-1-part2-the-lagrangian-formulation-of-dynamics) course):
+We start with the basic **Lagrangian expression** of the robot’s dynamics (seen previously in the [Dynamics](/docs/chap1_basic_motion_ctrl/dynamics#part2-the-lagrangian-formulation-of-dynamics) course):
 
 $$
 M(\theta)\ddot{\theta} + C(\theta,\dot{\theta})\dot{\theta} + g(\theta) = \tau
@@ -522,13 +798,16 @@ $$
 Where:
 - $\tau_{\text{ext}}$: vector of induced torque by the external contact force
 
-By computing the difference between the theoretical model torque and the measured motor torque, we finally obtain the external joint torque $\tau_{\text{ext}}$.  
+By computing the difference between the theoretical model torque and the measured motor torque, we finally obtain the **external joint torque** $\tau_{\text{ext}}$.  
 
-Refer to <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco & A. De Luca) for complete description of that computation step.
+<div class="note-window">
+  <div class="window-title">Note</div>
+  Refer to <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco & A. De Luca) for complete description of that computation step.
+</div>
 
 *2) Computing the Jacobian at the contact location $J_c$*  
 
-Once $\tau_{\text{ext}}$ is estimated, the next step is to determine how a force at the contact point affects the joints. As shown in the figure below, a contact may occur on a link (panel (a)) or on the end-effector (panel (b)). The contact point determines which joints are affected.
+Once $\tau_{\text{ext}}$ is estimated, the next step is to determine **how** a force at the contact point **affects the joints**. As shown in the figure below, a contact may occur on a link (panel (a)) or on the end-effector (panel (b)). The contact point determines which joints are affected.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/jacobian-contact-point.png' }}"
@@ -574,15 +853,19 @@ J_c^T(\theta)
 W
 $$
 
-*Note: This three-step approach is based on <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco, A. De Luca).*
+<div class="note-window">
+  <div class="window-title">Note</div>
+  This three-step approach is based on <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco, A. De Luca).
+</div>
 
----
+<h4 class="section-title">
+  <span class="section-label">Approach B</span>
+  Model-Free Estimation (Neural Network Based)
+</h4>
 
-- **Approach B: Model-Free Estimation (Neural Network Based)**
+The second proposed approach is machine learning based and does **not rely on any physics equation**. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs vast amounts of real-world data, collected using an actual F/T sensor.
 
-The second proposed approach is machine learning based and does not rely on any physics equation. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs vast amounts of real-world data, collected using an actual F/T sensor.
-
-The variables fed to the NN are the robot’s internal state signals, such as joint currents, joint positions $\theta$, joint velocities $\dot{\theta}$ and joint accelerations $\ddot{\theta}$. All these inputs are put together into one input vector $x_n$.
+The variables fed to the NN are the robot’s internal state signals, such as joint **currents**, joint **positions** $\theta$, joint **velocities** $\dot{\theta}$ and joint **accelerations** $\ddot{\theta}$. All these inputs are put together into one input vector $x_n$.
 
 For example, for an $n$-joint robot, an input vector may look like:
 
@@ -618,14 +901,13 @@ An example of such a neural network is shown in the figure below.
   </figcaption>
 </figure>
 
-*Note: This approach was taken from <a href="https://arxiv.org/html/2301.13413v2">Fine Robotic Manipulation without Force/Torque Sensor</a> (S. Shan, Q. Pham)*
+<div class="note-window">
+  <div class="window-title">Note</div>
+  This approach was taken from <a href="https://arxiv.org/html/2301.13413v2">Fine Robotic Manipulation without Force/Torque Sensor</a> (S. Shan, Q. Pham).
+</div>
 
----
+The **performance** of this approach can be seen in the video below.
 
-<details markdown="1">
-<summary>Video: Force-torque estimation in action (tap to unfold)</summary>  
-
-<div> </div>
 <div style="text-align: center;">
   <iframe width="640" height="360"
           src="https://www.youtube.com/embed/spztx3GzPzc"
@@ -638,82 +920,70 @@ An example of such a neural network is shown in the figure below.
 
 <div style="text-align: center;">
     <sub><i>
-      Neural-network based sensorless force-torque estimation in action  
+      Neural-network based sensorless F/T estimation in action  
       (from <a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a> available on <a href="https://www.youtube.com/watch?v=spztx3GzPzc">YouTube</a>)
     </i></sub>
 </div>
 
-</details>
+*Key points of the video:*  
+In the first part, the end-effector of the robot gets in contact with a surface and therefore external forces are created. On the plot, we can see that the estimated forces **closely match** the measurements obtained from the built-in F/T sensor. In the second part, an application example is shown in which the pin is inserted into a corresponding hole. During this task, the **F/T sensor is disabled** and F/T feedback is only given by the estimator. In the last part, the authors show that sensorless force estimation can also be used for **human guidance**.
 
----
+To conclude sensorless F/T estimation, here are its main advantages and disadvantages:
 
-Advantages and limitations of sensorless force-torque estimation:
+| **Advantages**                 | **Disadvantages**                                           |
+|--------------------------------|-------------------------------------------------------------|
+| No dedicated F/T sensor needed | Dependence on model accuracy (model-based approach)         |
+| Reduced hardware complexity    | Dependence on training data (model-free approach)           |
+| Lower system cost              | Performance degrades in unmodeled or untrained situations   |
 
-- **Advantages:**  
-  Avoids the cost of expensive F/T sensors and reduces hardware complexity.
+For **additional information** and another example of sensorless F/T estimation, feel free to read the paper linked below.
 
-- **Limitations:**  
-  Accuracy depends a lot on the used model precision and friction approximation.
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Further Reading: Intrinsic sense of touch</span>
+  </summary>
 
-<!--
----
-
-<details markdown="1">
-<summary>Quiz (tap to unfold)</summary>
-
-  <p><strong>Why do force sensors require calibration?</strong></p>
-  <form id="quiz2">
-    <input type="checkbox" name="quiz2" value="option1">
-    Measurement depends on the mass, which varies depending on where you are on Earth <br>
-
-    <input type="checkbox" name="quiz2" value="option2">
-    Because calibration increases the sensor’s weight <br>
-
-    <input type="checkbox" name="quiz2" value="option3">
-    No sensors are perfectly identical <br>
-
-    <input type="checkbox" name="quiz2" value="option4">
-    To synchronize the sensor’s internal clock with the computer <br>
-
-    <button type="button" onclick="checkMultipleAnswers(
-      'quiz2',
-      ['option3'],
-      'Correct!',
-      'Incorrect!'
-    )">
-      Check Answer
-    </button>
-
-    <p id="quiz2-feedback"></p>
-  </form>
+  <div class="optional-window">
+    <p>
+      In this paper, the authors present a <strong>sensorless intrinsic sense of touch</strong> method, that goes one step further as the force estimation we saw before. The robot is able not only to estimate interaction forces, but also to localize the contacts and reconstruct touch trajectories over its body. This enables interactions like <strong>virtual buttons</strong>, <strong>writing on the robot</strong> surface and more intuitive physical human–robot interaction. It is showing that sensorless estimation can also provide tactile feedback and not only force feedback.
+      <strong>A video is also available by following the link.</strong>
+    </p>
+    <p>
+      <a href="https://www.science.org/stoken/author-tokens/ST-2065/full#" target="_blank" rel="noopener">
+        Intrinsic sense of touch for intuitive physical human–robot interaction
+      </a>
+      <br>
+      <em>M. Iskandar, A. Albu-Schäffer and A. Dietrich</em>
+    </p>
+  </div>
 
 </details>
--->
 
----
+Before moving on to tactile sensing, answer the questions about force sensing in the quiz below.
 
-<details markdown="1">
-<summary>Further Reading: Intrinsic sense of touch (tap to unfold)</summary>
+<details class="quiz-details" markdown="1">
+<summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
+<div class="quiz-window">
 
-In the following research, Iskandar, Albu-Schäffer and Dietrich introduce an **intrinsic robotic sense of touch** that requires no external tactile sensors. By relying only on machine learning algorithms, the robot is able to detect and localize touch anywhere on its body. **Videos are available by following the link.**
+A robot equipped with a 6DOF F/T sensor measures zero torque around the z-axis while pushing on a surface. Which conclusions are possible?
 
-[Intrinsic sense of touch for intuitive physical human-robot interaction](https://www.science.org/stoken/author-tokens/ST-2065/full#) (M. Iskandar, A. Albu-Schäffer and A. Dietrich)
-
+</div>
 </details>
 
 ---
 
 ### Tactile Sensing
 
-#### Resistive Sensors
+#### A) Resistive Sensors
 
 There are two types of resistive tactile sensors: those that determine the contact location and those that determine the contact force or pressure.  
 First, we will take a closer look at resistive sensors of the first type, how resistive technology can be used to determine where a contact happened on a surface.  
 Then, we will move on to sensors of the second type and see how resistive technology is used to measure force/pressure.
 
----
-
-- **Type 1: Determine contact location**  
+<h4 class="section-title">
+  <span class="section-label">Type 1</span>
+  Determination of contact location
+</h4>
 
 *1) Single-strip resistive sensor:*  
 
@@ -757,35 +1027,51 @@ A single-strip resistive sensor of total length $L = 100\ \text{mm}$ is energise
 Compute the x-coordinate of the touch point (distance from the left boundary).  
 Hint: the resistance is proportional to length ($R_{x1} \propto x$).
 
-<details markdown="1">
-<summary>Solution (tap to unfold)</summary>
+<details class="solution-details" markdown="1">
+  <summary class="solution-btn">
+    <span class="solution-label">Solution</span>
+  </summary>
 
----
-
-As mentioned, the resistance is proportional to length for a **uniform** resistive strip. Therefore we have:
-
-- $R_{x1} \propto x$
-- $R_{x2} \propto L - x$
-
-We can replace these expressions in the formula seen above:
-
-$$
-V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x = \frac{L - x}{L} \, V_x
-$$
-
-Solve for x:
-
-$$
-x = L - L \frac{V_{x,\text{out}}}{V_x}
-$$
-
-Insert numerical values:
-
-$$
-x = 0.1 - 0.1 \cdot \frac{2.3}{5} = \boxed{0.054 \, \text{m}}
-$$
-
-**Answer:** the contact is located at **$x = 54\ \text{mm}$** from the left boundary.
+  <div class="solution-window">
+    <p>
+      As mentioned, the resistance is proportional to length for a
+      <strong>uniform</strong> resistive strip. Therefore we have:
+    </p>
+    <ul>
+      <li>\( R_{x1} \propto x \)</li>
+      <li>\( R_{x2} \propto L - x \)</li>
+    </ul>
+    <p>
+      We can replace these expressions in the formula seen above:
+    </p>
+    <p>
+    \[
+    V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x
+    = \frac{L - x}{L} \, V_x
+    \]
+    </p>
+    <p>
+      Solving for \(x\):
+    </p>
+    <p>
+    \[
+    x = L - L \frac{V_{x,\text{out}}}{V_x}
+    \]
+    </p>
+    <p>
+      Inserting numerical values:
+    </p>
+    <p>
+    \[
+    x = 0.1 - 0.1 \cdot \frac{2.3}{5}
+    = \boxed{0.054 \, \text{m}}
+    \]
+    </p>
+    <p>
+      <strong>Answer:</strong>
+      the contact is located at \(x = 54\ \text{mm}\) from the left boundary.
+    </p>
+  </div>
 
 </details>  
 
@@ -830,34 +1116,46 @@ In addition, the wiring complexity increases. While the single-strip version req
 A single strip of length $L = 60\ \text{mm}$ is energised with $V_{\text{ref}} = 5\ \text{V}$. A fingertip presses at a position whose centre is located at $l_x = 25\ \text{mm}$ from the left border. The measured voltage is $V_{\text{out}} = 3.75\ \text{V}$
 Compute the contact width $w$.
 
-<details markdown="1">
-<summary>Solution (tap to unfold)</summary>
+<details class="solution-details" markdown="1">
+  <summary class="solution-btn">
+    <span class="solution-label">Solution</span>
+  </summary>
 
----
-
-Using the given formula:
-
-$$
-V_{\text{out}} = \frac{l_x+\frac{w}{2}}{L - \frac{w}{2}}\,V_{\text{ref}}
-$$
-
-Solve for $w$:
-
-$$
-w = 2 \cdot \frac{\frac{V_{\text{out}}}{V_{\text{ref}}} \cdot L - l_x}{1 + \frac{V_{\text{out}}}{V_{\text{ref}}}}
-$$
-
-Insert numerical values:
-
-$$
-w = 2 \cdot \frac{\frac{3.75}{5} \cdot 0.06 - 0.025}{1 + \frac{3.75}{5}} = \boxed{0.0229 \, \text{m}}
-$$
-
+  <div class="solution-window">
+    <p>
+      Using the given formula:
+    </p>
+    <p>
+    \[
+    V_{\text{out}} = \frac{l_x + \frac{w}{2}}{L - \frac{w}{2}} \, V_{\text{ref}}
+    \]
+    </p>
+    <p>
+      Solving for \(w\):
+    </p>
+    <p>
+    \[
+    w = 2 \cdot \frac{ \frac{V_{\text{out}}}{V_{\text{ref}}} \cdot L - l_x}{1 + \frac{V_{\text{out}}}{V_{\text{ref}}}}
+    \]
+    </p>
+    <p>
+      Inserting numerical values:
+    </p>
+    <p>
+    \[
+    w = 2 \cdot \frac{ \frac{3.75}{5} \cdot 0.06 - 0.025}{1 + \frac{3.75}{5}} 
+    = \boxed{0.0229 \, \text{m}}
+    \]
+    </p>
+  </div>
 </details>
 
 ---
 
-- **Type 2: Determine applied force or pressure**
+<h4 class="section-title">
+  <span class="section-label">Type 2</span>
+  Determination of applied force or pressure
+</h4>
 
 Sensors of the second type are designed to measure how much force or pressure is applied on the surface. These sensors rely on **piezoresistive materials**, whose electrical resistance changes when they are mechanically deformed. When an external force compresses the sensitive material, its resistance varies and by measuring this resistance change, the applied pressure can be estimated.
 
@@ -932,134 +1230,110 @@ These sensors are low cost, offer good sensitivity and have simple electronics, 
 
 </details>
 
----
+<details class="quiz-details" markdown="1">
+  <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
+  <div class="quiz-window">
 
-<details markdown="1">
-<summary>Quiz (tap to unfold)</summary>
+  <div class="quiz-question-text">What is the role of the high-impedance (Hi-Z) connection in a single-strip resistive sensor? (single answer possible)</div>
 
-<p><strong>What is the role of the high-impedance (Hi-Z) connection in a single-strip resistive sensor?</strong> (single answer possible)</p>
+  <form id="type1-q1">
+    <input type="radio" name="type1-q1" value="option2">
+    To increase the sensitivity of the sensor. <br>
+    <input type="radio" name="type1-q1" value="option3">
+    To reduce the resistance of the active strip. <br>
+    <input type="radio" name="type1-q1" value="option1">
+    To ensure that almost no current flows through the reading layer. <br>
+    <input type="radio" name="type1-q1" value="option4">
+    To allow both resistive layers to be energised simultaneously. <br>
+    <button type="button" onclick="checkMCQ(
+      'type1-q1',
+      'option1',
+      'Correct! The Hi-Z input draws almost no current, so it does not disturb the voltage distribution on the active layer.',
+      'Incorrect. Remember that Hi-Z is used so that almost no current flows in the reading layer, without changing the strip resistance or energising both layers at the same time.'
+    )">
+      Check Answer
+    </button>
+    <p id="type1-q1-feedback"></p>
+  </form>
 
-<form id="type1-q1">
+  <div class="quiz-question-text">In a single-strip resistive sensor, the output voltage is given by:  
+  \[V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x \]
+  What does a larger value of \(V_{x,\text{out}} \) indicate? (single answer possible)</div>
+  
+  <form id="type1-q2">
+    <input type="radio" name="type1-q2" value="option1">
+    The contact point is closer to the right boundary of the strip. <br>
+    <input type="radio" name="type1-q2" value="option2">
+    The contact point is in the middle of the strip. <br>
+    <input type="radio" name="type1-q2" value="option3">
+    The strip has a lower overall resistance. <br>
+    <input type="radio" name="type1-q2" value="option4">
+    The sensor is detecting multiple simultaneous touch points. <br>
+    <button type="button" onclick="checkMCQ(
+      'type1-q2',
+      'option1',
+      'Correct! A larger $V_{x,\text{out}}$ means $R_{x2}$ is larger compared to $R_{x1}$, so the contact point is closer to the right boundary.',
+      'Incorrect. Recall that $V_{x,\text{out}}$ increases when $R_{x2}$ becomes larger relative to $R_{x1}$, meaning the contact moves toward the right boundary. It does not indicate a lower total resistance or multiple touches.'
+    )">
+      Check Answer
+    </button>
+    <p id="type1-q2-feedback"></p>
+  </form>
 
-  <input type="radio" name="type1-q1" value="option2">
-  To increase the sensitivity of the sensor. <br>
+  <div class="quiz-question-text">What happens inside a piezoresistive tactile sensor when a force is applied? (single answer possible)</div>
 
-  <input type="radio" name="type1-q1" value="option3">
-  To reduce the resistance of the active strip. <br>
+  <form id="type2-q1">
+    <input type="radio" name="type2-q1" value="option2">
+    The electrodes move apart, breaking the electrical contact. <br>
+    <input type="radio" name="type2-q1" value="option3">
+    The sensor generates a voltage internally, like a piezoelectric element. <br>
+    <input type="radio" name="type2-q1" value="option4">
+    The electronics directly measure the resistance without using a voltage drop. <br>
+    <input type="radio" name="type2-q1" value="option1">
+    The resistance of the piezoresistive layer changes due to mechanical deformation. <br>
+    <button type="button" onclick="checkMCQ(
+      'type2-q1',
+      'option1',
+      'Correct! Piezoresistive sensors rely on a change in resistance when the material is compressed or deformed.',
+      'Incorrect. The electrodes remain fixed, the sensor does not generate voltage like piezoelectric materials, and the electronics measure a voltage drop, not the resistance directly.'
+    )">
+      Check Answer
+    </button>
+    <p id="type2-q1-feedback"></p>
+  </form>
 
-  <input type="radio" name="type1-q1" value="option1">
-  To ensure that almost no current flows through the reading layer. <br>
+  <div class="quiz-question-text">Which of the following is a known limitation of Force Sensing Resistors (FSRs)? (single answer possible)</div>
 
-  <input type="radio" name="type1-q1" value="option4">
-  To allow both resistive layers to be energised simultaneously. <br>
+  <form id="type2-q2">
+    <input type="radio" name="type2-q2" value="option2">
+    They require complex multi-strip wiring like localisation sensors. <br>
+    <input type="radio" name="type2-q2" value="option1">
+    They exhibit hysteresis, with different resistance–pressure curves when loading and unloading. <br>
+    <input type="radio" name="type2-q2" value="option3">
+    They cannot be used to measure pressure, only position. <br>
+    <input type="radio" name="type2-q2" value="option4">
+    They must be operated with a high-impedance reading layer to avoid disturbing the voltage distribution. <br>
+    <button type="button" onclick="checkMCQ(
+      'type2-q2',
+      'option1',
+      'Correct! FSRs are simple and low cost, but they suffer from hysteresis and show a non-linear response.',
+      'Incorrect. FSRs do not require complex wiring, they are pressure sensors, and the Hi-Z configuration applies to localisation sensors, not FSRs.'
+    )">
+      Check Answer
+    </button>
+    <p id="type2-q2-feedback"></p>
+  </form>
 
-  <button type="button" onclick="checkMCQ(
-    'type1-q1',
-    'option1',
-    'Correct! The Hi-Z input draws almost no current, so it does not disturb the voltage distribution on the active layer.',
-    'Incorrect. Remember that Hi-Z is used so that almost no current flows in the reading layer, without changing the strip resistance or energising both layers at the same time.'
-  )">
-    Check Answer
-  </button>
-
-  <p id="type1-q1-feedback"></p>
-</form>
-
-**In a single-strip resistive sensor, the output voltage is given by:  
-$$V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x$$
-What does a larger value of $V_{x,\text{out}}$ indicate?** (single answer possible)
-
-<form id="type1-q2">
-
-  <input type="radio" name="type1-q2" value="option1">
-  The contact point is closer to the right boundary of the strip. <br>
-
-  <input type="radio" name="type1-q2" value="option2">
-  The contact point is in the middle of the strip. <br>
-
-  <input type="radio" name="type1-q2" value="option3">
-  The strip has a lower overall resistance. <br>
-
-  <input type="radio" name="type1-q2" value="option4">
-  The sensor is detecting multiple simultaneous touch points. <br>
-
-  <button type="button" onclick="checkMCQ(
-    'type1-q2',
-    'option1',
-    'Correct! A larger $V_{x,\text{out}}$ means $R_{x2}$ is larger compared to $R_{x1}$, so the contact point is closer to the right boundary.',
-    'Incorrect. Recall that $V_{x,\text{out}}$ increases when $R_{x2}$ becomes larger relative to $R_{x1}$, meaning the contact moves toward the right boundary. It does not indicate a lower total resistance or multiple touches.'
-  )">
-    Check Answer
-  </button>
-
-  <p id="type1-q2-feedback"></p>
-</form>
-
-<p><strong>What happens inside a piezoresistive tactile sensor when a force is applied?</strong> (single answer possible)</p>
-
-<form id="type2-q1">
-
-  <input type="radio" name="type2-q1" value="option2">
-  The electrodes move apart, breaking the electrical contact. <br>
-
-  <input type="radio" name="type2-q1" value="option3">
-  The sensor generates a voltage internally, like a piezoelectric element. <br>
-
-  <input type="radio" name="type2-q1" value="option4">
-  The electronics directly measure the resistance without using a voltage drop. <br>
-
-  <input type="radio" name="type2-q1" value="option1">
-  The resistance of the piezoresistive layer changes due to mechanical deformation. <br>
-
-  <button type="button" onclick="checkMCQ(
-    'type2-q1',
-    'option1',
-    'Correct! Piezoresistive sensors rely on a change in resistance when the material is compressed or deformed.',
-    'Incorrect. The electrodes remain fixed, the sensor does not generate voltage like piezoelectric materials, and the electronics measure a voltage drop, not the resistance directly.'
-  )">
-    Check Answer
-  </button>
-
-  <p id="type2-q1-feedback"></p>
-</form>
-
-<p><strong>Which of the following is a known limitation of Force Sensing Resistors (FSRs)?</strong> (single answer possible)</p>
-
-<form id="type2-q2">
-
-  <input type="radio" name="type2-q2" value="option2">
-  They require complex multi-strip wiring like localisation sensors. <br>
-
-  <input type="radio" name="type2-q2" value="option1">
-  They exhibit hysteresis, with different resistance–pressure curves when loading and unloading. <br>
-
-  <input type="radio" name="type2-q2" value="option3">
-  They cannot be used to measure pressure, only position. <br>
-
-  <input type="radio" name="type2-q2" value="option4">
-  They must be operated with a high-impedance reading layer to avoid disturbing the voltage distribution. <br>
-
-  <button type="button" onclick="checkMCQ(
-    'type2-q2',
-    'option1',
-    'Correct! FSRs are simple and low cost, but they suffer from hysteresis and show a non-linear response.',
-    'Incorrect. FSRs do not require complex wiring, they are pressure sensors, and the Hi-Z configuration applies to localisation sensors, not FSRs.'
-  )">
-    Check Answer
-  </button>
-
-  <p id="type2-q2-feedback"></p>
-</form>
-
+  </div>
 </details>
 
 ---
 
-#### Capacitive Sensors
+#### B) Capacitive Sensors
 
 **Capacitive tactile sensors** make use of the fact that the electrical capacitance between two conductive electrodes changes when the geometry of the capacitor is modified. When a force or pressure is applied on the surface of the sensor, the deformation of the structure leads to a measurable **variation of capacitance**. This variation is then used to estimate the contact force or to detect touch.
 
-- **Basic parallel-plate capacitive sensor:**
+<h4 class="section-title">Basic parallel-plate capacitive sensor:</h4>
 
 The simplest capacitive tactile sensor can be modelled as a **parallel-plate capacitor**. It consists of two conductive plates (electrodes) separated by a flexible dielectric layer (figure below).
 
@@ -1103,11 +1377,12 @@ Note that in this basic model the object deforms the capacitor mechanically. It 
 
 ---
 
-- **Capacitive sensing systems**
+<h4 class="section-title">Capacitive sensing systems:</h4>
+
 
 Capacitive tactile sensors are of two types: **self-capacitance** and **mutual capacitance**. Self-capacitance measures the change in capacitance between a **single electrode** and ground when contact happens, whereas mutual capacitance measures the change in coupling between **two electrodes** when being touched.
 
-*1/ Self-capacitance type*  
+*1) Self-capacitance type*  
 In the self-capacitance mode, there is only one electrode, instead of two as in the parallel-plate capacitor seen above. *Self-capacitance* refers to the intrinsic capacitance an electrode has with respect to the circuit ground ($C_{electrode}$), shown in panel (a) of the figure below.
 
 
@@ -1124,7 +1399,7 @@ In the self-capacitance mode, there is only one electrode, instead of two as in 
 
 When a conducting object (such as a finger) touches or approaches the dielectric layer, it acts as the second plate of the capacitor. As a result, an additional capacitance $C_{touch}$ appears in parallel with the electrode’s intrinsic capacitance, **increasing** the total measured capacitance. This is illustrated on panel (b).
 
-*2/ Mutual capacitance type*  
+*2) Mutual capacitance type*  
 
 In the mutual-capacitance mode, the two electrodes are arranged orthogonally (X- and Y-direction electrodes). Each electrode has its own intrinsic capacitance $C_{electrode}$, and together they form a coupling capacitor with capacitance $C_{mutual}$, as shown in panel (a) of the next figure.
 
@@ -1148,7 +1423,6 @@ An illustrative implementation of a capacitive tactile array is the system devel
 <figure style="text-align: center;">
 
   <div style="display: flex; justify-content: center; gap: 20px;">
-
     <div style="flex: 1;">
       <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/mutual-capacitance-grid-on-robot.png' }}"
            width="300px"
@@ -1160,7 +1434,6 @@ An illustrative implementation of a capacitive tactile array is the system devel
         </i></sub>
       </figcaption>
     </div>
-
     <div style="flex: 1;">
       <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/mutual-capacitance-grid.png' }}"
            width="300px"
@@ -1171,7 +1444,6 @@ An illustrative implementation of a capacitive tactile array is the system devel
         </i></sub>
       </figcaption>
     </div>
-
   </div>
 
   <figcaption style="margin-top: 8px;">
@@ -1184,12 +1456,9 @@ An illustrative implementation of a capacitive tactile array is the system devel
 
 In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is read in $100\,\mu\text{s}$, which results in the entire grid being scanned 20 times per second. Such fast scanning is essential for generating a high-resolution tactile image in real time, such as required in mobile touch screens.
 
----
-
-<details markdown="1">
-<summary>Quiz (tap to unfold)</summary>
-
----
+<details class="quiz-details" markdown="1">
+  <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
+  <div class="quiz-window">
 
 1) In a parallel-plate capacitive tactile sensor, what happens when the dielectric layer is compressed by an external force? (single answer possible)
 
@@ -1219,8 +1488,6 @@ In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is
   <p id="cap-q1-feedback"></p>
 </form>
 
----
-
 2) In a self-capacitance tactile sensor, why does the measured capacitance increase when a finger approaches the electrode? (single answer possible)
 
 <form id="cap-q2">
@@ -1248,8 +1515,6 @@ In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is
 
   <p id="cap-q2-feedback"></p>
 </form>
-
----
 
 3) In a mutual-capacitance tactile sensor, why does the measured capacitance decrease when a finger touches an X–Y electrode crossing? (single answer possible)
 
@@ -1279,8 +1544,6 @@ In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is
   <p id="cap-q3-feedback"></p>
 </form>
 
----
-
 4) Which statement correctly distinguishes the basic parallel-plate sensor from the mutual-capacitance sensor? (single answer possible)
 
 <form id="cap-q4">
@@ -1309,9 +1572,9 @@ In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is
   <p id="cap-q4-feedback"></p>
 </form>
 
-</details>
+</div>
 
----
+</details>
 
 By the way, most touch screens use the mutual-capacitance principle. Ever wondered why you can’t operate them with gloves or wet hands?
 
@@ -1338,19 +1601,19 @@ By the way, most touch screens use the mutual-capacitance principle. Ever wonder
 
 ---
 
-#### Piezoelectric Sensors
+#### C) Piezoelectric Sensors
 
 <!-- >generate charge proportional to applied forces (tactile sensing 5.2.) -->
 
-#### Optical Sensors
+#### D) Optical Sensors
 
 <!-- tactile sensing 5.2.3 -->
 
-#### Magnetism-based Sensors
+#### E) Magnetism-based Sensors
 
 <!-- tactile sensing 5.2.4 -->
 
-#### Electrorheological / Magnetorheological
+#### F) Electrorheological / Magnetorheological
 
 <!-- tactile sensing 5.2.7 – 5.2.8 -->
 
@@ -1364,7 +1627,7 @@ When used in robotics, tactile sensors often need to cover broad areas. This can
 
 Lastly, there also exist alternative ways to sense touch. One advanced tactile sensing technique makes use of vision. These vision-based tactile sensors are presented below.
 
-#### Flexible Tactile Sensors
+#### A) Flexible Tactile Sensors
 
 <!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
 
@@ -1393,7 +1656,7 @@ tactile sensing chapter 4.4.1
 - Printed electrodes + triboelectric polymer layers without stretchability.
 -->
 
-#### Stretchable Tactile Sensors
+#### B) Stretchable Tactile Sensors
 
 <!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
 
@@ -1424,7 +1687,7 @@ tactile sensing chapter 4.4.3
 
 -->
 
-#### Vision-Based Tactile Sensors
+#### C) Vision-Based Tactile Sensors
 
 <!--
 -> make link to vision course
@@ -1437,9 +1700,9 @@ tactile sensing chapter 4.4.3
 
 <!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) -->
 
-#### Wealth of Computation
+#### A) Wealth of Computation
 
-#### Wiring Complexity
+#### B) Wiring Complexity
 
 While integrating tactile sensors on a robot body, the wires that transmit the tactile data can be a big issue. The number of needed wires increases with the number of tactile sensors used. Often, the available space for wires is limited.
 
@@ -1526,10 +1789,9 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 - [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5)
 
-- [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
+<!-- - [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez) -->
 
-## Additional Resources
-
+<!-- 
 ### Videos
 
 - [Adaptive Fingers Coordination for Robust Grasp and In-Hand Manipulation Under Disturbances and Unknown Dynamics](https://ieeexplore.ieee.org/document/10146043) (F. Khadivar, A. Billard, IEEE Transactions on Robotics, 2023)  
@@ -1540,14 +1802,14 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 
 - [A dynamical system approach for detection and reaction to human guidance in physical human–robot interaction](https://doi.org/10.1007/s10514-020-09934-9) (M. Khoramshahi, A. Billard, ICRA 2020)  
 *Example of Reaction: Arm Massage by Robot*
+-->
 
 ### Additional Resources
 <!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->
 
-- [Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://www.sciencedirect.com/science/article/pii/S0263224122003335) (O. Kanoun et al.)
-
 - [Intrinsic sense of touch for intuitive physical human-robot interaction](https://www.science.org/stoken/author-tokens/ST-2065/full#) (M. Iskandar, A. Albu-Schäffer and A. Dietrich)
 
+- [Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://www.sciencedirect.com/science/article/pii/S0263224122003335) (O. Kanoun et al.)
 
 <!--  
 Initial comments:

@@ -36,7 +36,7 @@ nav_order: 1
 
 The RAS-U provides a structured and comprehensive course on robotics for self-learners. The course covers fundamental and advanced topics and applications in robotics.
 
-RAS-U is funded by the <a href="https://www.ieee-ras.org/">IEEE Robotics and Automation Society</a>. It was initiated in 2025 at the <a href="http://lasa.epfl.ch">EPFL LASA Laboratory</a> under <a href="https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en"> by Aude Billard </a>, and benefits from contributions from scholars throughout the world. 
+RAS-U is funded by the <a href="https://www.ieee-ras.org/">IEEE Robotics and Automation Society</a>. It was initiated in 2025 at the <a href="http://lasa.epfl.ch">EPFL LASA Laboratory</a> under <a href="https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en"> Aude Billard </a> IEEE RAS Presidency, and benefits from contributions from scholars throughout the world. 
 
 # 📚 [Robotics Courses](docs/index)
 

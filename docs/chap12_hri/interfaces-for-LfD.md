@@ -39,11 +39,24 @@ section: 1
 
 <br>
 
+<!--
 <p align="center">
   <iframe width="600" height="338" src="https://www.youtube.com/embed/FtjC-BXGgAE" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA](http://lasa.epfl.ch]) - YouTube video, Apr 2008.</sub>
+-->
+
+<p align="center">
+  <video width="600" height="338" controls>
+    <source src="/assets/videos/interfaces-for-HRI/The-Chief-Cook-Robot.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</p>
+
+><sub>A small humanoid robot is taught how to cook an omelet by whipping eggs, cutting ham and grating cheese. Teaching is provided through kinesthetic teaching, a method whereby the teacher guides the robot arms through the steps of the movements. Source: EPFL [LASA](http://lasa.epfl.ch]).</sub>
+
+<br>
 
 ## General Motivation
 [
@@ -766,6 +779,7 @@ This course page was created by Sara Heidaripour, MSc in Robotics at EPFL, based
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
 
 
 

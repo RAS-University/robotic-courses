@@ -413,14 +413,49 @@ While the market and the innovation of multirotor drones grew exponentially over
 Addressing these challenges to improve drone safety, functionality and to expand their application is question of current research.
 
 #### Questions
-TODO...
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What is the advantage of increasing the number of rotors on a multirotor drone??</strong></p>
+  
+  <button type="button" onclick="showAnswer('open1')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open1" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Increasing the number of rotors on a multirotor drone offers several advantages:
+      <ul>
+        <li><strong>Redundancy and Reliability:</strong> More rotors mean that if one fails, the drone can still maintain flight, enhancing safety.</li>
+        <li><strong>Increased Lift Capacity:</strong> Additional rotors can generate more lift, allowing the drone to carry heavier payloads.</li>
+        <li><strong>Improved Stability and Control:</strong> More rotors provide finer control over movement and stability, especially in windy conditions.</li>
+        <li><strong>Smoother Flight:</strong> The distribution of thrust across more rotors can lead to smoother flight characteristics.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: Is this quadcopter configuration stable?</strong></p>
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/quadcopter_unstable_configuration.png" alt="Quadcopter configuration with 2 clockwise and 2 counterclockwise rotors arranged with same rotation direction on the same axis." style="width: 20%; height: auto;">
+  </div>
+  
+  <button type="button" onclick="showAnswer('open2')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open2" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      No, this quadcopter configuration is not stable. In this arrangement, the rotors spinning in the same direction are aligned on the same side of the drone. While this configuration still cancels the net torque around the vertical axis, it creates an imbalance in the distribution of lift around the drone's center of mass. This will lead to instability in pitch and roll, making it difficult to maintain level flight. A more stable configuration would have alternating rotor directions on opposite sides, which helps balance the forces and torques more effectively.
+    </p>
+  </div>
+</div>
 
 ### 2.2 Fixed wing drones
 A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
 
-- higher lift to drag ratio than multicopters --> energetically more efficient
-- fuselage contributes to lift generation and provides space for cargo
-- less agile than multicopters
 
 #### Design Principles
 <div style="margin-bottom: 15px; text-align: center;">
@@ -428,7 +463,7 @@ A fixed-wing aircraft is a machine that uses a combination of fixed lifting surf
   <p style="font-size: small;">Airplane parts and control surfaces definition. Image from <a href="https://www1.grc.nasa.gov/wp-content/uploads/NASA-Glenn-Airplane-Parts-2.pdf" target="_blank">Glenn Research Center</a></p>
 </div>
 
-To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image below shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft.
+To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image above shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft.
 
 <ins>Wing Geometry:</ins>  
 The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the section about aerodynamic lift, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  
@@ -636,7 +671,7 @@ While big fixed-wing aircrafts offer a big variety of interesting designs, we wa
 Unmanned fixed-wing aircrafts already had their beginning during World War I with unmanned remotely controlled aircrafts over radio-frequency. In 1917 the British developped their first UAV *Aerial Target* around the same time as the US the *Kettering Bug* - a forerunner of modern-day missiles. Since then fixed-wing UAVs became important for military and civil use, where they often cover similar fields of applications. Their main use case is in long-range missions in surveillance and mapping.
 
 #### Applications
-
+Since the application fields of fixed-wing UAVs are quite similar to the ones of multirotor drones, they will not be described in detail again. However, due to their higher efficiency and longer range, fixed-wing UAVs are often preferred for applications where long endurance and higher payload capacity are required.
 1. Mapping surveying
 2. Surveillance and Security
 3. Agriculture
@@ -651,8 +686,52 @@ Unmanned fixed-wing aircrafts already had their beginning during World War I wit
 4. miniaturization
 5. Safety and Airspace integration
 
+## Questions
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are the main differences between fixed-wing drones and multirotor drones in terms of flight capabilities and applications?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open3')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open3" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Main differences include: 
+      <ul>
+        <li><strong>Flight Capabilities:</strong> Fixed-wing drones are more efficient for long-distance flight and can carry heavier payloads, while multirotor drones can perform vertical take-off and landing (VTOL) and hover in place.</li>
+        <li><strong>Applications:</strong> Fixed-wing drones  as well as rotorcrafts are often used for mapping, surveillance, and agriculture. Due to their endurance, fixed-wing drones are used for applications where a long flight endurance is benefical, whereas multirotor drones are used higher precison and navigation in confined spaces.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What type of different control surfaces are used to control the pitch, roll and yaw of a fixed-wing aircraft?</strong></p>
+
+  <button type="button" onclick="showAnswer('open4')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open4" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      The main control surfaces used to control the pitch, roll, and yaw of a fixed-wing aircraft are:
+      <ul>
+        <li><strong>Pitch:</strong> Controlled by the elevators located on the horizontal stabilizer at the tail of the aircraft.</li>
+        <li><strong>Roll:</strong> Controlled by the ailerons located on the trailing edge of each wing.</li>
+        <li><strong>Yaw:</strong> Controlled by the rudder located on the vertical stabilizer at the tail of the aircraft.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+
+
+
 ### 2.3 Flapping Wings:
-A flapping wing drone is an aircraft where lift and thrust generation and maneuvers are obtained by the actuation of flapping wings. They seek to imitate the flapping-wing flight of birds, bats and insects and are also known as ornithopter. 
+A flapping wing drone is an aircraft where lift and thrust generation and maneuvers are obtained by the actuation of flapping wings. They seek to imitate the flapping-wing flight of birds, bats and insects and are also known as ornithopters. 
 
 Flapping-wing robots can be split into three groups based on their size and weight: _large-scale_ over 100g, _small-scale_ between 1g and 100g and _insect-size_ flappers below 1g. Despite the weight the different flapping-wing systems differ in the frequency of flapping, which is faster for small- and insect-scale robots, their hover capacity which decreases or vanishes for large-scale systems and their type of actuation used which usually are conventional electric motors for large-scale system and electro-static actuators for insect-scale systems.
 
@@ -890,7 +969,68 @@ Before showing you a few examples of existing robots, the main characteristics o
 </div>
 
 #### Questions
-TODO...
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are the main differences between bird-inspired and insect-inspired flapping-wing drones in terms of design and flight capabilities?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open5')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open5" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      The main differences include:
+      <ul>
+        <li><strong>Design:</strong> Bird-inspired flapping-wing drones have larger wingspans, typically lower flapping frequencies, and often incorporate tails for stability and maneuverability. In contrast, insect-inspired drones are smaller, have higher flapping frequencies, and usually lack tails, relying on wing modulation for control.</li>
+        <li><strong>Flight Capabilities:</strong> Bird-inspired drones are designed for forward flight and gliding capabilities, while insect-inspired drones mainly hover and are capable of agile maneuvers. Additionally, bird-inspired drones tend to be passively stable, whereas insect-inspired drones are often inherently unstable and require active control.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are the main challenges when designing flapping-wing drones compared to fixed-wing or multirotor drones?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open6')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open6" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      The main challenges include:
+      <ul>
+        <li><strong>Complex Aerodynamics:</strong> While aerodynamic forces for fixed-wing ircrafts are mostly very well understood, flapping-wing drones operate in a complex aerodynamic regime that is difficult to model and predict. </li>
+        <li><strong>Miniaturization:</strong> Designing lightweight yet powerful actuators and power systems for small-scale flapping-wing drones is challenging.</li>
+        <li><strong>Control Algorithms:</strong> Developing robust control algorithms to manage the inherently unstable flight dynamics of flapping-wing drones is more complex than for fixed-wing or multirotor drones.</li>
+        <li><strong>Energy Efficiency:</strong> Flapping-wing drones have higher power demands relative to their weight, making energy management a critical challenge. Especially for very small-scale drones, where normal batteries are too heavy and big to be implemented.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are potential advantages of flapping-wing drones over traditional fixed-wing or multirotor drones?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open7')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open7" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Potential advantages include:
+      <ul>
+        <li><strong>Agility:</strong> Flapping-wing drones could technically achieve highly agile maneuvers, making them suitable for navigating complex environments.</li>
+        <li><strong>Small Scales:</strong> At very small scales, flapping-wing flight can be more efficient than propeller-based systems due to aerodynamic advantages at low Reynolds numbers. Additionally, minituarization of rotorcrafts or fixed wing drones are often impossible due to size contraints of electric motors.</li>
+        <li><strong>Biomimicry:</strong> Flapping-wing drones can mimic the flight patterns of birds and insects, potentially leading to new insights in biology.</li>
+        <li><strong>Reduced Noise:</strong> Flapping wings can produce less noise compared to fast-spinning propellers, making them more suitable for operations in noise-sensitive environments.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
 
 ## Additional Resources
 

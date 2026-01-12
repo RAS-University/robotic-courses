@@ -375,6 +375,7 @@ function checkCh1Hard() {
   document.getElementById('ch1-hard-feedback').innerHTML = fb;
 }
 
+// Multiple choice with individual answer for each pressed choice
 function checkMultipleAnswersMapped(questionId, correctAnswers, answerMap, options) {
   options = options || {};
 
@@ -454,6 +455,66 @@ function checkMultipleAnswersMapped(questionId, correctAnswers, answerMap, optio
 
   feedback.innerHTML = lines.join("<br>");
 
+  if (window.MathJax && MathJax.typesetPromise) {
+    MathJax.typesetPromise([feedback]);
+  } else if (window.renderMathInElement) {
+    renderMathInElement(feedback, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "$", right: "$", display: false }
+      ],
+      throwOnError: false
+    });
+  }
+}
+
+// True False with individual answer for each pressed choice
+function checkMultipleTrueFalseMapped(questionId, correctAnswer, answerMap, options) {
+  options = options || {};
+
+  var noneSelectedMessage = options.noneSelectedMessage || "Please select an option.";
+  var correctHeader       = options.correctHeader       || "Correct.";
+  var incorrectHeader     = options.incorrectHeader     || "Incorrect.";
+
+  var fallbackCorrect   = options.fallbackCorrect   || function(v) { return v + " is correct."; };
+  var fallbackIncorrect = options.fallbackIncorrect || function(v) { return v + " is incorrect."; };
+
+  var inputs = document.getElementsByName(questionId);
+  var selectedValue = null;
+
+  for (var i = 0; i < inputs.length; i++) {
+    if (inputs[i].checked) {
+      selectedValue = inputs[i].value;
+      break;
+    }
+  }
+
+  var feedback = document.getElementById(questionId + "-feedback");
+  if (!feedback) return;
+
+  if (!selectedValue) {
+    feedback.textContent = noneSelectedMessage;
+    feedback.style.color = "red";
+    return;
+  }
+
+  var isCorrect = (selectedValue === correctAnswer);
+  var header = isCorrect ? correctHeader : incorrectHeader;
+
+  // Color
+  feedback.style.color = isCorrect ? "green" : "red";
+
+  // Message (from answerMap if provided, otherwise fallback)
+  var msg = answerMap && answerMap[selectedValue];
+  if (!msg) {
+    msg = isCorrect ? fallbackCorrect(selectedValue) : fallbackIncorrect(selectedValue);
+  }
+
+  // Compose output (HTML allowed in answerMap)
+  feedback.innerHTML = "<strong>" + header + "</strong> " + msg;
+
+  // Re-render math inside feedback (same as your multi-answer function)
   if (window.MathJax && MathJax.typesetPromise) {
     MathJax.typesetPromise([feedback]);
   } else if (window.renderMathInElement) {

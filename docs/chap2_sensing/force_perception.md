@@ -150,8 +150,7 @@ section: 3
   .solution-btn {
     /* Layout */
     display: inline-block;
-    margin: 1em 0 0.4em 0;
-    padding: 0.3em 0.6em;
+    margin: 0.4em 0 0.4em 1.2em;
     /* Border & shape */
     border-radius: 6px;
     /* Background */
@@ -196,8 +195,7 @@ section: 3
   .optional-btn {
     /* Layout */
     display: inline-block;
-    margin: 1em 0 0.4em 0;
-    padding: 0.3em 0.6em;
+    margin: 0.6em 0 0.6em 0;
     /* Shape */
     border-radius: 6px;
     /* Background */
@@ -817,7 +815,6 @@ Once $\tau_{\text{ext}}$ is estimated, the next step is to determine **how** a f
   <figcaption>
     <sub><i>
       Figure 7: Force applied on link (a) and end-effector (b)
-      Figure 7: Force applied on link (a) and end-effector (b)
       (<a href="https://www.mdpi.com/1424-8220/19/11/2603">S. Yen et al.</a>)
     </i></sub>
   </figcaption>
@@ -898,7 +895,6 @@ An example of such a neural network is shown in the figure below.
   <figcaption>
     <sub><i>
       Figure 8: Neural network–based estimation of force and torque
-      Figure 8: Neural network–based estimation of force and torque
       (<a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a>)
     </i></sub>
   </figcaption>
@@ -968,7 +964,184 @@ Before moving on to tactile sensing, answer the questions about force sensing in
 <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
 <div class="quiz-window">
 
-A robot equipped with a 6DOF F/T sensor measures zero torque around the z-axis while pushing on a surface. Which conclusions are possible?
+<div class="quiz-question-text">
+A robot arm is equipped with a 6DOF F/T sensor at its end-effector. Below are three scenarios where this robot end-effector pushes on a horizontal surface.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/F-T-sensor-exercice-scenarios.png' }}"
+       width="600"
+       alt="Force–torque sensing scenarios at the end-effector">
+  <figcaption>
+    <sub><i>
+      Front view of three contact scenarios.
+      Red arrows are contact forces, black arrows are the motion of the robot end-effector.
+    </i></sub>
+  </figcaption>
+</figure>
+
+
+1) The F/T sensor measures:\[F_z > 0, \quad M_y \neq 0, \quad F_x = 0 \]
+
+Which contact scenario could produce this output? (single answer possible)
+</div>
+
+<form id="quiz-ft-scenario-select">
+  <input type="radio" name="quiz-ft-scenario-select" value="option1">
+  Scenario (a): Pure vertical push through the center of the end-effector (force line passes through the sensor origin).<br>
+
+  <input type="radio" name="quiz-ft-scenario-select" value="option2">
+  Scenario (b): Pure vertical push, but the contact point is shifted to the side of the end-effector (force line does NOT pass through the sensor origin).<br>
+
+  <input type="radio" name="quiz-ft-scenario-select" value="option3">
+  Scenario (c): Vertical push with tangential friction force along x-axis (sliding contact).<br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'quiz-ft-scenario-select',
+    'option2',
+    {
+      option1: 'A centered vertical push gives \\(F_z > 0\\) but no torque, so \\(M_y = 0\\).',
+      option2: 'An off-center vertical push creates a torque around the y-axis due to the lever arm: \\(M_y = r_x F_z\\neq 0\\), while \\(F_x = 0\\).',
+      option3: 'Sliding contact introduces a tangential friction force, so \\(F_x\\neq 0\\), which contradicts the measurement.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="quiz-ft-scenario-select-feedback"></p>
+</form>
+
+<div class="quiz-question-text">
+2) The robot is in scenario (c). It pushes down on a horizontal surface while the contact is sliding, so friction acts along the x-axis.<br><br>
+
+Which measurement output is corresponding to that scenario? (single answer possible)
+</div>
+
+<form id="quiz-ft-output-predict">
+
+  <input type="radio" name="quiz-ft-output-predict" value="option1">
+  $F_x > 0$, $F_z > 0$, $M_y \neq 0$<br>
+
+  <input type="radio" name="quiz-ft-output-predict" value="option2">
+  $F_x = 0$, $F_z > 0$, $M_y = 0$<br>
+
+  <input type="radio" name="quiz-ft-output-predict" value="option3">
+  $F_x > 0$, $F_z > 0$, $M_y = 0$<br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'quiz-ft-output-predict',
+    'option1',
+    {
+      option1: 'Sliding contact creates a tangential friction force \\(F_x\\). Since this force acts below the sensor origin, it generates a torque around the y-axis: \\(M_y = r_z F_x \\neq 0\\), in addition to the normal force \\(F_z\\).',
+      option2: 'Sliding contact implies the presence of a tangential friction force, so \\(F_x = 0\\) is not realistic.',
+      option3: 'The tangential friction force creates a torque around the y-axis.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="quiz-ft-output-predict-feedback"></p>
+</form>
+
+<div class="quiz-question-text">
+3) The robot is in scenario (b). A pure vertical force is applied. The contact point is shifted from the center.
+The contact point moves further to the left along the x-axis. The magnitude of the applied vertical force stays the same.
+
+<br><br>
+
+Which of the following statements is correct? (single answer possible)
+</div>
+
+<form id="quiz-ft-invariance">
+
+  <input type="radio" name="quiz-ft-invariance" value="option2">
+  $F_z$ increases, $M_y$ remains unchanged.<br>
+
+  <input type="radio" name="quiz-ft-invariance" value="option3">
+  $F_z$ and $M_y$ remain unchanged.<br>
+
+  <input type="radio" name="quiz-ft-invariance" value="option1">
+  $F_z$ remains unchanged, $M_y$ increases.<br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'quiz-ft-invariance',
+    'option1',
+    {
+      option1: 'The measured force $F_z$ depends only on the applied normal force, which is unchanged. The torque $M_y = r_x F_z$ increases because the lever arm $r_x$ increases as the contact point moves further from the sensor origin.',
+      option2: 'The normal force $F_z$ does not depend on the contact point location, but the torque does.',
+      option3: '$F_z$ remains unchanged, but the torque increases due to the larger lever arm.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="quiz-ft-invariance-feedback"></p>
+</form>
+
+<div class="quiz-question-text">
+4) The robot was originally equipped with a 6DOF F/T, but the sensor is now damaged and can't be used anymore.
+Due to cost, replacing the sensor is not an option.<br><br>
+
+Which solution is the most appropriate to still estimate interaction forces? (single answer possible)
+</div>
+
+<form id="quiz-sensorless-choice">
+
+  <input type="radio" name="quiz-sensorless-choice" value="option1">
+  Install a new tactile skin covering the entire robot arm.<br>
+
+  <input type="radio" name="quiz-sensorless-choice" value="option2">
+  Use sensorless F/T estimation based on motor currents and the robot dynamics.<br>
+
+  <input type="radio" name="quiz-sensorless-choice" value="option3">
+  Install a cheap camera and estimate forces using vision only, without any physical model.<br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'quiz-sensorless-choice',
+    'option2',
+    {
+      option1: 'A tactile skin needs additional hardware, wiring and cost. Tactile sensors will be adressed in the next section.',
+      option2: 'Sensorless F/T estimation relies on internal robot signals and does not require additional hardware. This is a suitable option in that case.',
+      option3: 'Vision alone can\'t reliably estimate interaction forces during physical contact.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="quiz-sensorless-choice-feedback"></p>
+</form>
+
+<div class="quiz-question-text">
+5) A neural-network-based sensorless force estimator is trained and tested extensively in the laboratory.
+After moving the robot to its real work place and changing the end-effector, the force estimation performance degrades significantly.<br><br>
+
+What is the most likely reason for this behavior? (single answer possible)
+</div>
+
+<form id="quiz-sensorless-failure">
+
+  <input type="radio" name="quiz-sensorless-failure" value="option1">
+  The F/T sensor was not recalibrated properly.<br>
+
+  <input type="radio" name="quiz-sensorless-failure" value="option2">
+  The training data no longer matches the robot dynamics and contact conditions.<br>
+
+  <input type="radio" name="quiz-sensorless-failure" value="option3">
+  Neural networks can't estimate forces in real time.<br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'quiz-sensorless-failure',
+    'option2',
+    {
+      option1: 'The estimator is sensorless and does not rely on the physical F/T sensor.',
+      option2: 'Changing the end-effector and environment changes the robot dynamics and contact behavior, leading to a mismatch with the used training data.',
+      option3: 'Neural networks can operate in real time (sometimes with a minimal delay).'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="quiz-sensorless-failure-feedback"></p>
+</form>
 
 </div>
 </details>
@@ -977,25 +1150,73 @@ A robot equipped with a 6DOF F/T sensor measures zero torque around the z-axis w
 
 ### Tactile Sensing
 
+This section presents the following tactile sensing technologies:
+
+- Resistive sensors  
+- Capacitive sensors  
+- Piezoelectric sensors  
+- Optical sensors  
+- Magnetism-based sensors  
+- Electrorheological / magnetorheological sensors  
+
+Let's begin with **resistive tactile** sensors.
+
 #### A) Resistive Sensors
 
-There are two types of resistive tactile sensors: those that determine the contact location and those that determine the contact force or pressure.  
-First, we will take a closer look at resistive sensors of the first type, how resistive technology can be used to determine where a contact happened on a surface.  
-Then, we will move on to sensors of the second type and see how resistive technology is used to measure force/pressure.
+There are two different types of resistive tactile sensors:
+
+- **Type 1:** Sensors designed to determine the **contact location** on a surface.
+- **Type 2:** Sensors designed to measure the **contact force or pressure**.
+
+We will first take a closer look at resistive tactile sensors of the **first type** and see how resistive technology can be used to localize contact on a surface.  
 
 <h4 class="section-title">
   <span class="section-label">Type 1</span>
   Determination of contact location
 </h4>
 
-*1) Single-strip resistive sensor:*  
+We begin with **single-strip resistive sensors** to understand the working principle of resistive tactile sensing. We then extend this concept to a more complete version: **the multi-strip resistive sensor**.
 
-Resistive tactile sensors are usually made of two sheets coated with a resistive material, placed one on top of the other. The two layers are separated by microspheres so that they remain electrically isolated from each other. When an object touches the sensor, the pressure brings both layers into contact. This configuration can be seen in panel (a) of the figure below (with one layer shown in green and the second layer in grey).  
+*1) Single-strip resistive sensors:*  
 
-To determine the contact location, we need to extract both the x- and y-coordinates. This is done by energising the layers one at a time. A uniform voltage $V_x$ is applied along the first resistive layer (never both layers simultaneously), while the second layer is connected in a high-impedance (Hi-Z) configuration, able to read the voltage output. Because the Hi-Z connection draws almost no current, it does not disturb the voltage distribution on the active layer. This setup corresponds to panel (b).  
+Resistive tactile sensors are usually composed of **two thin sheets coated with a resistive material** and placed on top of each other. The two layers are separated by **microscopic spacer elements** (microspheres), which keep them **electrically isolated** when no contact is applied.
 
-The contact between the sheets acts as the slider of a linear potentiometer (for more information about potentiometers refer to [Sensors and Sensing](new-sensors-for-robotics)). The resistance in the first layer depends on where along the strip the contact occurs. The voltage at the contact point is transferred through the second layer and thus provides the x-coordinate. Similarly, the x-coordinate is obtained by applying a uniform voltage $V_y$ to the second layer and leaving the first layer in Hi-Z, as shown in panel (c).  
-The measured output voltages are the result of a voltage divider. The simplified expressions are:  
+When an object presses on the sensor surface, the applied pressure **locally** brings the two resistive layers into contact. This **contact location** corresponds to the point where an **electrical connection** is created between the layers. The structure of this sensor is seen in panel (a) of the figure below, where the first resistive layer is shown in green and the second layer in grey.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor.png' }}"
+       width="640px"
+       alt="Analog resistive strip sensor schematic">
+  <figcaption>
+    <sub><i>
+      Figure 9: Schematic of analog resistive touch sensing
+      (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+To determine the **contact location** on the sensor surface, the **x- and y-coordinates** of the contact point must be extracted. This is achieved by energising the two resistive layers **one after the other**, never simultaneously.
+
+The measurement procedure follows these key steps:
+
+<div style="margin-left: 1.6em;">
+  <ol>
+    <li>One resistive layer is energised by applying a <strong>uniform voltage</strong> across it.</li>
+    <li>The other resistive layer is left in a <strong>high-impedance</strong> (Hi-Z) configuration. Because the Hi-Z input draws almost no current, it does <strong>not disturb the voltage distribution</strong> along the active layer.</li>
+    <li>When contact happens, the contact point between the two layers forms a <strong>measurement node</strong>, transferring the local voltage of the active layer to the passive one.</li>
+    <li>This measured output voltage corresponds to the position of the contact along the active resistive layer and can be <strong>used to compute the corresponding coordinate</strong>.</li>
+  </ol>
+</div>
+
+In panel (b), $V_x$ is applied to the green layer while the grey layer is set to Hi-Z, allowing the **x-coordinate** of the contact to be extracted.  
+
+In panel (c), the **roles** of the layers are **swapped**: $V_y$ is applied to the grey layer and the green layer is set to Hi-Z, which provides the **y-coordinate** of the contact.  
+
+In practice, the sensor **switches rapidly** between measuring the x- and y-coordinates. The layers are energised one after the other at a **high frequency**, making the switching imperceptible to a human user (response times of 10 ms or faster).  
+
+The measured **output voltages** correspond to the voltages read at the measurement node. The contact point divides the active resistive layer into **two resistive segments**. As a result, the measured output voltage is given by a voltage divider between these two resistances. The equivalent electrical circuit is shown in panel (d) of the figure above.
+
+The simplified expressions are:  
 
 $$
 V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x
@@ -1005,31 +1226,33 @@ $$
 V_{y,\text{out}} = \frac{R_{y2}}{R_{y1} + R_{y2}} \, V_y
 $$
 
-where $R_{x1}$ and $R_{x2}$ are the resistances from the contact point to the left and right boundaries of the x-layer, and $R_{y1}$ and $R_{y2}$ are the equivalent resistances on the y-layer (panel (d)). Panels (e) and (f) show the equivalent electrical circuits when the x- and y-layers are energised.
-
-<figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor.png' }}"
-       width="640px"
-       alt="Analog resistive strip sensor schematic">
-  <figcaption>
-    <sub><i>
-      Figure 9: Schematic of analog resistive touch sensing
-      Figure 9: Schematic of analog resistive touch sensing
-      (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
-    </i></sub>
-  </figcaption>
-</figure>
-
-In practice, the sensor switches rapidly between measuring the x- and y-coordinates. The layers are energised one after the other at a high frequency, making the switching imperceptible to a human user (response can be provided in 10ms or faster). But this approach has an important drawback: it cannot distinguish multiple simultaneous touch points, which is why multi-strip resistive sensors are used.
+Where, $V_x$ and $V_y$ are the **voltages applied** to the x- and y-layers, $V_{x,\text{out}}$ and $V_{y,\text{out}}$ are the **measured output voltages**. The resistances $R_{x1}$ and $R_{x2}$ correspond to the **resistive segments** between the contact point and the left and right boundaries of the x-layer, $R_{y1}$ and $R_{y2}$ are the equivalent resistances on the y-layer.
 
 ---
 
-**Exercise:** Determine the x-coordinate of the contact location
+<div class="quiz-question-text">
+  Exercise: Contact localization with a single-strip resistive sensor
+</div>
 
-A single-strip resistive sensor of total length $L = 100\ \text{mm}$ is energised with a voltage $V_x = 5\ \text{V}$. The measured output voltage is $ V_{x,\text{out}} = 2.3\ \text{V}$.  
+A single-strip resistive sensor of total length $L = 100\ \text{mm}$ is energised with a voltage $V_x = 5\ \text{V}$.  
 
-Compute the x-coordinate of the touch point (distance from the left boundary).  
-Hint: the resistance is proportional to length ($R_{x1} \propto x$).
+<div style="margin-left: 1.2em;">
+  <p>
+    <strong>1)</strong> The measured output voltage is \(V_{x,\text{out}} = 2.3\ \text{V}\).<br>
+    Compute the x-coordinate of the touch point (distance from the left boundary).
+  </p>
+  <p>
+    <strong>2)</strong> The contact point is located at \(x = 70\ \text{mm}\) from the left boundary.<br>
+    Compute the expected output voltage \(V_{x,\text{out}}\).
+  </p>
+  <p>
+    <strong>3)</strong> What output voltage is expected if the contact occurs exactly at the center of the sensor?
+  </p>
+  <p>
+    <em>Hint:</em> the resistance is proportional to length (\(R_{x1} \propto x\)).
+  </p>
+</div>
+
 
 <details class="solution-details" markdown="1">
   <summary class="solution-btn">
@@ -1037,65 +1260,153 @@ Hint: the resistance is proportional to length ($R_{x1} \propto x$).
   </summary>
 
   <div class="solution-window">
-    <p>
-      As mentioned, the resistance is proportional to length for a
-      <strong>uniform</strong> resistive strip. Therefore we have:
-    </p>
-    <ul>
-      <li>\( R_{x1} \propto x \)</li>
-      <li>\( R_{x2} \propto L - x \)</li>
-    </ul>
-    <p>
-      We can replace these expressions in the formula seen above:
-    </p>
-    <p>
+
+  <!-- ===================== PART 1 ===================== -->
+  <p><strong>1) Determine the x-coordinate of the contact location</strong></p>
+
+  <p>
+    As mentioned, the resistance is proportional to length for a
+    <strong>uniform</strong> resistive strip. Therefore we have:
+  </p>
+  <ul>
+    <li>\( R_{x1} \propto x \)</li>
+    <li>\( R_{x2} \propto L - x \)</li>
+  </ul>
+
+  <p>
+    We can replace these expressions in the formula seen above:
+  </p>
+  <p>
     \[
     V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x
     = \frac{L - x}{L} \, V_x
     \]
-    </p>
-    <p>
-      Solving for \(x\):
-    </p>
-    <p>
+  </p>
+
+  <p>
+    Solving for \(x\):
+  </p>
+  <p>
     \[
     x = L - L \frac{V_{x,\text{out}}}{V_x}
     \]
-    </p>
-    <p>
-      Inserting numerical values:
-    </p>
-    <p>
+  </p>
+
+  <p>
+    Inserting numerical values (\(L = 0.1\,\text{m}\), \(V_x = 5\,\text{V}\), \(V_{x,\text{out}} = 2.3\,\text{V}\)):
+  </p>
+  <p>
     \[
     x = 0.1 - 0.1 \cdot \frac{2.3}{5}
     = \boxed{0.054 \, \text{m}}
     \]
-    </p>
-    <p>
-      <strong>Answer:</strong>
-      the contact is located at \(x = 54\ \text{mm}\) from the left boundary.
-    </p>
-  </div>
+  </p>
 
-</details>  
+  <p>
+    <strong>Answer:</strong>
+    the contact is located at \(x = 54\ \text{mm}\) from the left boundary.
+  </p>
+
+  <hr>
+
+  <!-- ===================== PART 2 ===================== -->
+  <p><strong>2) Predict the output voltage</strong></p>
+
+  <p>
+    We again start from the voltage divider relation:
+  </p>
+  <p>
+    \[
+    V_{x,\text{out}} = \frac{L - x}{L}\, V_x
+    \]
+  </p>
+
+  <p>
+    Inserting numerical values (\(L = 100\,\text{mm}\), \(x = 70\,\text{mm}\), \(V_x = 5\,\text{V}\)):
+  </p>
+  <p>
+    \[
+    V_{x,\text{out}} = \frac{100 - 70}{100}\cdot 5
+    = 0.3 \cdot 5
+    = \boxed{1.5\ \text{V}}
+    \]
+  </p>
+
+  <p>
+    <strong>Answer:</strong>
+    the expected output voltage is \(V_{x,\text{out}} = 1.5\ \text{V}\).
+  </p>
+
+  <hr>
+
+  <!-- ===================== PART 3 ===================== -->
+  <p><strong>3) Contact exactly at the center of the sensor</strong></p>
+
+  <p>
+    At the center, the contact is located at:
+  </p>
+  <p>
+    \[
+    x = \frac{L}{2}
+    \]
+  </p>
+
+  <p>
+    Using the same expression:
+  </p>
+  <p>
+    \[
+    V_{x,\text{out}} = \frac{L - x}{L}\, V_x
+    \]
+  </p>
+
+  <p>
+    Substitute \(x = \frac{L}{2}\):
+  </p>
+  <p>
+    \[
+    V_{x,\text{out}} = \frac{L - \frac{L}{2}}{L}\, V_x
+    = \frac{1}{2} V_x
+    \]
+  </p>
+
+  <p>
+    With \(V_x = 5\,\text{V}\):
+  </p>
+  <p>
+    \[
+    V_{x,\text{out}} = \frac{1}{2}\cdot 5
+    = \boxed{2.5\ \text{V}}
+    \]
+  </p>
+
+  <p>
+    <strong>Answer:</strong>
+    if the contact occurs at the center, the output voltage is \(V_{x,\text{out}} = 2.5\ \text{V}\).
+  </p>
+
+  </div>
+</details>
+
+Single-strip resistive sensors have an important drawback: they **can't distinguish multiple simultaneous touch points**, which is why multi-strip resistive sensors are used.
 
 ---
 
-*2) Multi-strip resistive sensor:*  
+*2) Multi-strip resistive sensors:*  
 
-As in the single-strip version, the multi-strip resistive sensor also consists of two resistive layers and the measuring principle remains the same. However, each layer is divided into multiple strips along its length, as can be seen in the figure below. In this configuration, multiple simultaneous contacts can be detected, as each strip provides its own independent measurement. Because the strips are narrow, the output voltage of a given strip depends on the contact position aswell as on the contact width.
+As in the single-strip version, the **multi-strip resistive sensor** also consists of two resistive layers and the **measuring principle remains** the same. However, each layer is **divided into multiple strips** along its length, as can be seen in the figure below. In this configuration, **multiple simultaneous contacts** can be detected, as each strip provides its own independent measurement. As in the single-strip version, the output voltage of a given strip depends on the contact position. However, because the strips are **narrow**, it also depends on the **contact width**.
 
-The output voltage for a single strip is given by:
+For a **single strip**, the measured **output voltage** is given by:
 
 $$
 V_{\text{out}} = \frac{l_x + \frac{w}{2}}{L - \frac{w}{2}} \, V_{\text{ref}}
 $$
 
-where  
-- $l_x$ is the distance from the left boundary of the strip to the **centre** of the applied contact
-- $w$ is the **width** of the contact area (for example, the width of a fingertip)
-- $L$ is the **total** length of the strip
-- $V_{\text{ref}}$ is the applied reference voltage
+where,  
+- $l_x$ is the distance from the left boundary of the strip to the **centre** of the applied contact,
+- $w$ is the **width** of the contact area (for example, the width of a fingertip),
+- $L$ is the **total** length of the strip,
+- $V_{\text{ref}}$ is the applied reference voltage.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/multi-strip-resistive-sensor.png' }}"
@@ -1104,22 +1415,40 @@ where
   <figcaption>
     <sub><i>
       Figure 10: Schematic of multi-strip analog resistive touch sensing
-      Figure 10: Schematic of multi-strip analog resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
 
-Now, instead of performing only one measurement per layer, we need to make $n$ separate measurements for all $n$ strips. If the layers are divided into strips in both directions, this increases the total number of measurements from $2$ to $2n$. As a result, scanning the entire sensor becomes more time-consuming.  
+Now, instead of performing only one measurement per layer, we need to make **$n$ separate measurements** for all $n$ strips. If both resistive layers are divided into $n$ strips, this increases the total number of measurements from only $2$ to $2n$. As a result, scanning the entire sensor becomes **more time-consuming**.  
 
-In addition, the wiring complexity increases. While the single-strip version requires only four connection wires, the multi-strip version needs $2+2n$ wires: one for $V_{\text{ref}}$, one for the ground and $n$ measurement wires for each of the two stripped layers. The wiring complexity issue will be addressed later.
+In addition, the **wiring complexity** increases. While the single-strip version requires only four connection wires, the multi-strip version needs $2+2n$ wires: one for $V_{\text{ref}}$, one for ground and $n$ measurement wires for each of the two stripped layers. The wiring complexity issue will be addressed later.
 
----
+<div class="quiz-question-text">
+  Exercise: Contact position and width estimation on a multi-strip resistive sensor
+</div>
 
-**Exercise:** Determine the contact width
+A single strip of length $L = 60\ \text{mm}$ is energised with a reference voltage
+$V_{\text{ref}} = 5\ \text{V}$.
 
-A single strip of length $L = 60\ \text{mm}$ is energised with $V_{\text{ref}} = 5\ \text{V}$. A fingertip presses at a position whose centre is located at $l_x = 25\ \text{mm}$ from the left border. The measured voltage is $V_{\text{out}} = 3.75\ \text{V}$
-Compute the contact width $w$.
+<div style="margin-left: 1.2em;">
+
+  <p>
+    <strong>1)</strong>
+    The measured output voltage is \(V_{\text{out}} = 2.5\ \text{V}\).
+    Assuming a point contact (\(w = 0\)), compute the contact position \(l_x\)
+    from the left boundary.
+  </p>
+
+  <p>
+    <strong>2)</strong>
+    A fingertip presses on the strip at a position whose centre is located at
+    \(l_x = 25\ \text{mm}\) from the left boundary.
+    The measured output voltage is \(V_{\text{out}} = 3.75\ \text{V}\).
+    Compute the contact width \(w\).
+  </p>
+
+</div>
 
 <details class="solution-details" markdown="1">
   <summary class="solution-btn">
@@ -1127,48 +1456,103 @@ Compute the contact width $w$.
   </summary>
 
   <div class="solution-window">
-    <p>
-      Using the given formula:
-    </p>
-    <p>
+
+  <!-- ===================== PART 1 ===================== -->
+  <p><strong>1) Determine the contact position \(l_x\)</strong></p>
+
+  <p>
+    For a point contact, the contact width is \(w = 0\). The output voltage
+    expression simplifies to:
+  </p>
+  <p>
+    \[
+    V_{\text{out}} = \frac{l_x}{L}\, V_{\text{ref}}
+    \]
+  </p>
+
+  <p>
+    Solving for \(l_x\):
+  </p>
+  <p>
+    \[
+    l_x = L\,\frac{V_{\text{out}}}{V_{\text{ref}}}
+    \]
+  </p>
+
+  <p>
+    Inserting numerical values (\(L = 0.06\,\text{m}\),
+    \(V_{\text{out}} = 2.5\,\text{V}\),
+    \(V_{\text{ref}} = 5\,\text{V}\)):
+  </p>
+  <p>
+    \[
+    l_x = 0.06 \cdot \frac{2.5}{5}
+    = \boxed{0.03\,\text{m}}
+    \]
+  </p>
+
+  <p>
+    <strong>Answer:</strong>
+    the contact is located at \(l_x = 30\ \text{mm}\) from the left boundary.
+  </p>
+
+  <hr>
+
+  <!-- ===================== PART 2 ===================== -->
+  <p><strong>2) Determine the contact width \(w\)</strong></p>
+
+  <p>
+    Using the given formula:
+  </p>
+  <p>
     \[
     V_{\text{out}} = \frac{l_x + \frac{w}{2}}{L - \frac{w}{2}} \, V_{\text{ref}}
     \]
-    </p>
-    <p>
-      Solving for \(w\):
-    </p>
-    <p>
+  </p>
+
+  <p>
+    Solving for \(w\):
+  </p>
+  <p>
     \[
     w = 2 \cdot \frac{ \frac{V_{\text{out}}}{V_{\text{ref}}} \cdot L - l_x}{1 + \frac{V_{\text{out}}}{V_{\text{ref}}}}
     \]
-    </p>
-    <p>
-      Inserting numerical values:
-    </p>
-    <p>
+  </p>
+
+  <p>
+    Inserting numerical values (\(L = 0.06\,\text{m}\),
+    \(V_{\text{out}} = 3.75\,\text{V}\),
+    \(V_{\text{ref}} = 5\,\text{V}\), \(l_x = 0.025\,\text{m}\)):
+  </p>
+  <p>
     \[
-    w = 2 \cdot \frac{ \frac{3.75}{5} \cdot 0.06 - 0.025}{1 + \frac{3.75}{5}} 
+    w = 2 \cdot \frac{ \frac{3.75}{5} \cdot 0.06 - 0.025}{1 + \frac{3.75}{5}}
     = \boxed{0.0229 \, \text{m}}
     \]
-    </p>
+  </p>
+
+  <p>
+    <strong>Answer:</strong>
+    the contact width is \(w \approx 22.9\ \text{mm}\).
+  </p>
+
   </div>
 </details>
 
----
+Now we move on to sensors of the second type: how resistive tactile sensors are used to **measure force and pressure**.
 
 <h4 class="section-title">
   <span class="section-label">Type 2</span>
   Determination of applied force or pressure
 </h4>
 
-Sensors of the second type are designed to measure how much force or pressure is applied on the surface. These sensors rely on **piezoresistive materials**, whose electrical resistance changes when they are mechanically deformed. When an external force compresses the sensitive material, its resistance varies and by measuring this resistance change, the applied pressure can be estimated.
+As said, sensors of this type are designed to measure how much force or pressure is applied on the surface. These sensors rely on **piezoresistive materials**, whose electrical resistance changes when they are mechanically deformed. When an external force compresses the sensitive material, its resistance varies and by measuring this resistance change, the applied pressure can be estimated.
 
-Note that the resistance change is not the quantity measured directly. Instead, the electronics measure the resulting voltage drop at the boundaries of the piezoresistive layer. This is usually done using a voltage-divider configuration.
+Note that the resistance change is **not** the quantity **measured directly**. Instead, the electronics measure the resulting voltage drop at the boundaries of the piezoresistive layer. This is usually done using a voltage-divider configuration.
 
-Materials used as piezoresistive layers are conductive rubber, conductive polymers, conductive gels, and others.
+Materials used as piezoresistive layers are conductive **rubber**, conductive **polymers**, conductive **gels**, and others.
 
-An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)*. These sensors combine two electrodes and a piezoresistive layer. When a voltage is applied across the electrodes, current flows through the piezoresistive layer from one electrode to the other. On panel (a) of the figure below, the different layers of the FSR can be observed. Panel (b) shows a commercially available FSR from [Interlink Electronics](https://www.interlinkelectronics.com).
+An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)*. These sensors combine two electrodes and a piezoresistive layer. When a voltage is applied across the electrodes, current flows **through the piezoresistive layer** from one electrode to the other. On panel (a) of the figure below, the different layers of the FSR can be observed. Panel (b) shows a commercially available FSR from [Interlink Electronics](https://www.interlinkelectronics.com).
 
 <figure style="text-align: center;">
 
@@ -1203,132 +1587,193 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
   <figcaption style="margin-top: 8px;">
     <sub><i>
       Figure 11: Force Sensing Resistor (FSR)
-      Figure 11: Force Sensing Resistor (FSR)
     </i></sub>
   </figcaption>
 
 </figure>
 
-These sensors are low cost, offer good sensitivity and have simple electronics, but their main drawback is the presence of hysteresis, meaning that the sensor does not follow the same resistance–pressure curve when the force increases as when it decreases.
+These sensors are **low cost**, offer good sensitivity and have **simple electronics**, but their main drawback is the presence of **hysteresis**, meaning that the sensor does not follow the same resistance–pressure curve when the force increases as when it decreases.
 
----
 
-<details markdown="1">
-<summary>Video: Force Sensitive Resistors in Action (tap to unfold)</summary>  
 
-<div> </div>
-<div style="text-align: center;">
-  <iframe width="640" height="360"
-          src="https://www.youtube.com/embed/sSdEwA7s8bE"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-  </iframe>
-</div>
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Illustrative video about Force Sensing Resistors</span>
+  </summary>
 
-<div style="text-align: center;">
-    <sub><i>
-      Example of Force Sensitive Resistors  
-      Example of Force Sensitive Resistors  
-      (available on <a href="https://youtu.be/sSdEwA7s8bE">YouTube</a>)
-    </i></sub>
-</div>
+  <div class="optional-window"><br>
 
+  <div style="text-align: center;">
+    <iframe width="640" height="360"
+            src="https://www.youtube.com/embed/sSdEwA7s8bE"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+  </div>
+  <div style="text-align: center;">
+      <sub><i>
+        Force Sensitive Resistors  
+        (available on <a href="https://youtu.be/sSdEwA7s8bE">YouTube</a>)
+      </i></sub>
+  </div>
+
+  <p>
+    <em>Key points of the video:</em><br>
+    This video is a practical introduction to FSRs. It first presents FSRs with <strong>different shapes and sizes</strong>, then the video shows the key operating principle: their electrical resistance decreases as the applied pressure increases. Towards the end, a simple electrical circuit is shown, where an operational amplifier is used in comparator mode to turn on an LED when pressure is applied.
+  </p>
+
+  </div>
 </details>
+
+Test you knowledge about resistive tactile sensors in the quiz below.
 
 <details class="quiz-details" markdown="1">
   <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
   <div class="quiz-window">
 
-  <div class="quiz-question-text">What is the role of the high-impedance (Hi-Z) connection in a single-strip resistive sensor? (single answer possible)</div>
+  <!-- ===================== QUESTION 1 ===================== -->
+  <div class="quiz-question-text">
+    What is the role of the high-impedance (Hi-Z) connection in a single-strip resistive sensor?
+    (single answer possible)
+  </div>
 
   <form id="type1-q1">
-    <input type="radio" name="type1-q1" value="option2">
-    To increase the sensitivity of the sensor. <br>
-    <input type="radio" name="type1-q1" value="option3">
-    To reduce the resistance of the active strip. <br>
-    <input type="radio" name="type1-q1" value="option1">
-    To ensure that almost no current flows through the reading layer. <br>
-    <input type="radio" name="type1-q1" value="option4">
-    To allow both resistive layers to be energised simultaneously. <br>
-    <button type="button" onclick="checkMCQ(
-      'type1-q1',
-      'option1',
-      'Correct! The Hi-Z input draws almost no current, so it does not disturb the voltage distribution on the active layer.',
-      'Incorrect. Remember that Hi-Z is used so that almost no current flows in the reading layer, without changing the strip resistance or energising both layers at the same time.'
-    )">
-      Check Answer
-    </button>
-    <p id="type1-q1-feedback"></p>
+  <input type="radio" name="type1-q1" value="option2">
+  To increase the sensitivity of the sensor. <br>
+
+  <input type="radio" name="type1-q1" value="option1">
+  To ensure that almost no current flows through the reading layer. <br>
+
+  <input type="radio" name="type1-q1" value="option3">
+  To reduce the resistance of the active strip. <br>
+
+  <input type="radio" name="type1-q1" value="option4">
+  To allow both resistive layers to be energised simultaneously. <br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'type1-q1',
+    'option1',
+    {
+      option1: 'The Hi-Z input draws almost no current, so it does not disturb the voltage distribution along the active layer.',
+      option2: 'The Hi-Z configuration does not increase sensitivity, it prevents loading the active layer.',
+      option3: 'The resistance of the active strip is determined by its geometry and material, not by the Hi-Z connection.',
+      option4: 'The two layers are never energised simultaneously, they are switched one after the other.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="type1-q1-feedback"></p>
   </form>
 
-  <div class="quiz-question-text">In a single-strip resistive sensor, the output voltage is given by:  
-  \[V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x \]
-  What does a larger value of \(V_{x,\text{out}} \) indicate? (single answer possible)</div>
-  
+  <!-- ===================== QUESTION 2 ===================== -->
+  <div class="quiz-question-text">
+    In a single-strip resistive sensor, the output voltage is given by
+    \(V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x\).
+    What does a larger value of \(V_{x,\text{out}}\) indicate?
+    (single answer possible)
+  </div>
+
   <form id="type1-q2">
-    <input type="radio" name="type1-q2" value="option1">
-    The contact point is closer to the right boundary of the strip. <br>
-    <input type="radio" name="type1-q2" value="option2">
-    The contact point is in the middle of the strip. <br>
-    <input type="radio" name="type1-q2" value="option3">
-    The strip has a lower overall resistance. <br>
-    <input type="radio" name="type1-q2" value="option4">
-    The sensor is detecting multiple simultaneous touch points. <br>
-    <button type="button" onclick="checkMCQ(
-      'type1-q2',
-      'option1',
-      'Correct! A larger $V_{x,\text{out}}$ means $R_{x2}$ is larger compared to $R_{x1}$, so the contact point is closer to the right boundary.',
-      'Incorrect. Recall that $V_{x,\text{out}}$ increases when $R_{x2}$ becomes larger relative to $R_{x1}$, meaning the contact moves toward the right boundary. It does not indicate a lower total resistance or multiple touches.'
-    )">
-      Check Answer
-    </button>
-    <p id="type1-q2-feedback"></p>
+  <input type="radio" name="type1-q2" value="option1">
+  The contact point is closer to the right boundary of the strip. <br>
+
+  <input type="radio" name="type1-q2" value="option2">
+  The contact point is in the middle of the strip. <br>
+
+  <input type="radio" name="type1-q2" value="option3">
+  The strip has a lower overall resistance. <br>
+
+  <input type="radio" name="type1-q2" value="option4">
+  The sensor is detecting multiple simultaneous touch points. <br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'type1-q2',
+    'option1',
+    {
+      option1: 'A larger $V_{x,\\text{out}}$ means that $R_{x2}$ is larger relative to $R_{x1}$, which corresponds to a contact closer to the right boundary.',
+      option2: 'A middle contact would produce an output voltage close to half of $V_x$, not necessarily a larger value.',
+      option3: 'The overall resistance of the strip does not affect the voltage ratio used for localisation.',
+      option4: 'Single-strip sensors cannot distinguish multiple simultaneous contacts.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="type1-q2-feedback"></p>
   </form>
 
-  <div class="quiz-question-text">What happens inside a piezoresistive tactile sensor when a force is applied? (single answer possible)</div>
+  <!-- ===================== QUESTION 3 ===================== -->
+  <div class="quiz-question-text">
+    What happens inside a piezoresistive tactile sensor when a force is applied?
+    (single answer possible)
+  </div>
 
   <form id="type2-q1">
-    <input type="radio" name="type2-q1" value="option2">
-    The electrodes move apart, breaking the electrical contact. <br>
-    <input type="radio" name="type2-q1" value="option3">
-    The sensor generates a voltage internally, like a piezoelectric element. <br>
-    <input type="radio" name="type2-q1" value="option4">
-    The electronics directly measure the resistance without using a voltage drop. <br>
-    <input type="radio" name="type2-q1" value="option1">
-    The resistance of the piezoresistive layer changes due to mechanical deformation. <br>
-    <button type="button" onclick="checkMCQ(
-      'type2-q1',
-      'option1',
-      'Correct! Piezoresistive sensors rely on a change in resistance when the material is compressed or deformed.',
-      'Incorrect. The electrodes remain fixed, the sensor does not generate voltage like piezoelectric materials, and the electronics measure a voltage drop, not the resistance directly.'
-    )">
-      Check Answer
-    </button>
-    <p id="type2-q1-feedback"></p>
+
+  <input type="radio" name="type2-q1" value="option2">
+  The electrodes move apart, breaking the electrical contact. <br>
+
+  <input type="radio" name="type2-q1" value="option3">
+  The sensor generates a voltage internally, like a piezoelectric element. <br>
+
+  <input type="radio" name="type2-q1" value="option4">
+  The electronics directly measure the resistance without using a voltage drop. <br>
+
+  <input type="radio" name="type2-q1" value="option1">
+  The resistance of the piezoresistive layer changes due to mechanical deformation. <br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'type2-q1',
+    'option1',
+    {
+      option1: 'Piezoresistive materials change their electrical resistance when mechanically deformed by an applied force.',
+      option2: 'The electrodes remain in contact. The resistance change occurs in the piezoresistive material.',
+      option3: 'Piezoresistive sensors do not generate a voltage themselves. We will see more about piezoelectric sensors later.',
+      option4: 'In practice, the resistance change is inferred through a voltage-divider configuration.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="type2-q1-feedback"></p>
   </form>
 
-  <div class="quiz-question-text">Which of the following is a known limitation of Force Sensing Resistors (FSRs)? (single answer possible)</div>
+  <!-- ===================== QUESTION 4 ===================== -->
+  <div class="quiz-question-text">
+    Which of the following is a known limitation of Force Sensing Resistors (FSRs)?
+    (single answer possible)
+  </div>
 
   <form id="type2-q2">
-    <input type="radio" name="type2-q2" value="option2">
-    They require complex multi-strip wiring like localisation sensors. <br>
-    <input type="radio" name="type2-q2" value="option1">
-    They exhibit hysteresis, with different resistance–pressure curves when loading and unloading. <br>
-    <input type="radio" name="type2-q2" value="option3">
-    They cannot be used to measure pressure, only position. <br>
-    <input type="radio" name="type2-q2" value="option4">
-    They must be operated with a high-impedance reading layer to avoid disturbing the voltage distribution. <br>
-    <button type="button" onclick="checkMCQ(
-      'type2-q2',
-      'option1',
-      'Correct! FSRs are simple and low cost, but they suffer from hysteresis and show a non-linear response.',
-      'Incorrect. FSRs do not require complex wiring, they are pressure sensors, and the Hi-Z configuration applies to localisation sensors, not FSRs.'
-    )">
-      Check Answer
-    </button>
-    <p id="type2-q2-feedback"></p>
+  <input type="radio" name="type2-q2" value="option2">
+  They require complex multi-strip wiring like localisation sensors. <br>
+
+  <input type="radio" name="type2-q2" value="option3">
+  They can't be used to measure pressure, only position. <br>
+
+  <input type="radio" name="type2-q2" value="option4">
+  They must be operated with a high-impedance reading layer to avoid disturbing the voltage distribution. <br>
+
+  <input type="radio" name="type2-q2" value="option1">
+  They exhibit hysteresis, with different resistance–pressure curves when loading and unloading. <br><br>
+
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
+    'type2-q2',
+    'option1',
+    {
+      option1: 'FSRs are known to exhibit hysteresis, meaning their response differs when the applied force increases or decreases.',
+      option2: 'FSRs are simple sensors and do not require multi-strip wiring.',
+      option3: 'FSRs are designed to measure force or pressure.',
+      option4: 'The Hi-Z configuration is used for resistive localisation sensors, not for FSRs.'
+    }
+  )">
+    Check Answer
+  </button>
+
+  <p id="type2-q2-feedback"></p>
   </form>
 
   </div>
@@ -1351,7 +1796,6 @@ The simplest capacitive tactile sensor can be modelled as a **parallel-plate cap
   <figcaption>
     <sub><i>
       Figure 12: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
-      Figure 12: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1362,31 +1806,38 @@ $$
 C = \varepsilon \frac{A}{d},
 $$
 
-where
+where,
 
-- $A$ is the area of the electrodes
-- $d$ is the thickness of the dielectric layer separating the electrodes
-- $\varepsilon$ is the permittivity of the dielectric material placed between the electrodes
+- $A$ is the area of the electrodes,
+- $d$ is the thickness of the dielectric layer separating the electrodes,
+- $\varepsilon$ is the permittivity of the dielectric material placed between the electrodes.
 
 When a force $F$ presses on the sensor surface, the dielectric layer is compressed and the distance $d$ between the two electrodes decreases. The key principle is the **inverse proportionality** between capacitance and distance ($C \propto \tfrac{1}{d}$): as the distance $d$ becomes smaller, the capacitance $C$ increases.
 
 This change in capacitance is then converted into an **electrical output signal**. The electronics circuitry used for this purpose is beyond the scope if this class. If interested, a review of different methods can be found below.
 
-Note that in this basic model the object deforms the capacitor mechanically. It does not need to be a conductive object, as it does not interact electrically with the capacitor.
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Further Reading: Capacitance Measurement Techniques</span>
+  </summary>
 
----
-
-<details markdown="1">
-<summary>Further Reading: Capacitance Measurement Techniques (tap to unfold)</summary>
-
-[Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://www.sciencedirect.com/science/article/pii/S0263224122003335) (O. Kanoun et al.)
-
+  <div class="optional-window">
+    <p>
+      In this paper, the authors provide an overview of the main <strong>electronic methods</strong> used to measure capacitance in capacitive sensors. They review classical and modern readout circuits that convert small capacitance changes into voltage, frequency or digital signals. Then they compare the different measurement approaches in terms of accuracy, complexity and robustness.  
+    </p>
+    <p>
+      <a href="https://www.sciencedirect.com/science/article/pii/S0263224122003335" target="_blank" rel="noopener">
+        Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review
+      </a>
+      <br>
+      <em>O. Kanoun, A. Y. Kallel, A. Fendri</em>
+    </p>
+  </div>
 </details>
 
----
+Note that in this basic model the object deforms the capacitor mechanically. It does not need to be a conductive object, as it does not interact electrically with the capacitor.
 
 <h4 class="section-title">Capacitive sensing systems:</h4>
-
 
 Capacitive tactile sensors are of two types: **self-capacitance** and **mutual capacitance**. Self-capacitance measures the change in capacitance between a **single electrode** and ground when contact happens, whereas mutual capacitance measures the change in coupling between **two electrodes** when being touched.
 
@@ -1400,7 +1851,6 @@ In the self-capacitance mode, there is only one electrode, instead of two as in 
        alt="Self-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 13: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
       Figure 13: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -1418,7 +1868,6 @@ In the mutual-capacitance mode, the two electrodes are arranged orthogonally (X-
        alt="Mutual-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 14: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
       Figure 14: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -1459,50 +1908,60 @@ An illustrative implementation of a capacitive tactile array is the system devel
   <figcaption style="margin-top: 8px;">
     <sub><i>
       Figure 15: Mutual-capacitance tactile sensing array
-      Figure 15: Mutual-capacitance tactile sensing array
     </i></sub>
   </figcaption>
 
 </figure>
 
-In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is read in $100\,\mu\text{s}$, which results in the entire grid being scanned 20 times per second. Such fast scanning is essential for generating a high-resolution tactile image in real time, such as required in mobile touch screens.
+In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is read in $100\,\mu\text{s}$, which results in the entire grid being scanned 20 times per second. Such fast scanning is needed for generating a high-resolution tactile image in real time, like for mobile touch screens.
 
 <details class="quiz-details" markdown="1">
   <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
   <div class="quiz-window">
 
-1) In a parallel-plate capacitive tactile sensor, what happens when the dielectric layer is compressed by an external force? (single answer possible)
+  <!-- ===================== QUESTION 1 ===================== -->
+  <div class="quiz-question-text">
+    In a parallel-plate capacitive tactile sensor, what happens when the dielectric layer is compressed by an external force?
+    (single answer possible)
+  </div>
 
-<form id="cap-q1">
+  <form id="cap-q1">
 
   <input type="radio" name="cap-q1" value="option3">
   The capacitance $C$ remains unchanged because the permittivity is constant. <br>
 
   <input type="radio" name="cap-q1" value="option2">
-  The capacitance $C$ decreases because the electrode area $A$ becomes smaller when pressed. <br>
+  The capacitance $C$ decreases because the electrode area $A$ becomes smaller. <br>
 
   <input type="radio" name="cap-q1" value="option1">
-  The capacitance $C$ increases because the distance $d$ between electrodes becomes smaller. <br> <!-- correct -->
+  The capacitance $C$ increases because the distance $d$ between the electrodes becomes smaller. <br>
 
   <input type="radio" name="cap-q1" value="option4">
-  The capacitance $C$ remains unchanged because compression does not affect the mechanical stability of the capacitor. <br>
+  The capacitance $C$ remains unchanged because compression does not affect the capacitor geometry. <br><br>
 
-  <button type="button" onclick="checkMCQ(
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
     'cap-q1',
     'option1',
-    'Correct! Compression reduces $d$, and since $C = \\\\varepsilon A / d$, the capacitance increases.',
-    'Incorrect. Remember that decreasing $d$ increases $C$. The electrode area does not shrink under compression, permittivity stays constant, and mechanical stability does not determine capacitance.'
+    {
+      option1: 'Compressing the dielectric reduces the distance $d$ between the electrodes. Since $C = \\varepsilon A / d$, the capacitance increases.',
+      option2: 'The electrode area $A$ does not change when pressure is applied.',
+      option3: 'The permittivity $\\varepsilon$ is assumed constant. The capacitance change comes from geometry, not material properties.',
+      option4: 'Compression directly modifies the geometry of the capacitor by reducing $d$.'
+    }
   )">
     Check Answer
   </button>
 
   <p id="cap-q1-feedback"></p>
-</form>
+  </form>
 
-2) In a self-capacitance tactile sensor, why does the measured capacitance increase when a finger approaches the electrode? (single answer possible)
+  <!-- ===================== QUESTION 2 ===================== -->
+  <div class="quiz-question-text">
+    In a self-capacitance tactile sensor, why does the measured capacitance increase when a finger approaches the electrode?
+    (single answer possible)
+  </div>
 
-<form id="cap-q2">
-
+  <form id="cap-q2">
   <input type="radio" name="cap-q2" value="option4">
   Because the electrode spacing decreases under pressure. <br>
 
@@ -1510,55 +1969,69 @@ In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is
   Because the finger increases the dielectric constant of the material. <br>
 
   <input type="radio" name="cap-q2" value="option2">
-  Because the finger acts as a conductive body, adding an extra capacitance $C_{touch}$ in parallel. <br> <!-- correct -->
+  Because the finger acts as a conductive object, adding an extra capacitance $C_{touch}$ in parallel. <br>
 
   <input type="radio" name="cap-q2" value="option3">
-  Because the electrode self-capacitance naturally increases over time. <br>
+  Because the electrode self-capacitance naturally increases over time. <br><br>
 
-  <button type="button" onclick="checkMCQ(
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
     'cap-q2',
     'option2',
-    'Correct! The finger acts like a second electrode, increasing the total capacitance measured by the system.',
-    'Incorrect. The finger does not change the dielectric constant or compress the structure—the key is that it behaves as a conductive object that adds parallel capacitance.'
+    {
+      option2: 'In self-capacitance sensing, a conductive finger behaves like a second electrode, adding a parallel capacitance $C_{touch}$.',
+      option4: 'Self-capacitance sensing does not rely on mechanical compression of a dielectric.',
+      option1: 'The dielectric material itself is not modified by the finger.',
+      option3: 'The change is caused by interaction with the finger, not by time-dependent effects.'
+    }
   )">
     Check Answer
   </button>
 
   <p id="cap-q2-feedback"></p>
-</form>
+  </form>
 
-3) In a mutual-capacitance tactile sensor, why does the measured capacitance decrease when a finger touches an X–Y electrode crossing? (single answer possible)
+  <!-- ===================== QUESTION 3 ===================== -->
+  <div class="quiz-question-text">
+    In a mutual-capacitance tactile sensor, why does the measured capacitance decrease when a finger touches an X–Y electrode crossing?
+    (single answer possible)
+  </div>
 
-<form id="cap-q3">
-
+  <form id="cap-q3">
   <input type="radio" name="cap-q3" value="option3">
   Because the finger electrically shorts the X and Y electrodes. <br>
 
   <input type="radio" name="cap-q3" value="option1">
-  Because the dielectric layer is compressed and $d$ decreases. <br>
+  Because the dielectric layer is compressed and the distance $d$ decreases. <br>
 
   <input type="radio" name="cap-q3" value="option4">
   Because the permittivity of air decreases when displaced by the finger. <br>
 
   <input type="radio" name="cap-q3" value="option2">
-  Because the finger distorts the electric field and reduces coupling between the electrodes. <br> <!-- correct -->
+  Because the finger distorts the electric field and reduces the coupling between the electrodes. <br><br>
 
-  <button type="button" onclick="checkMCQ(
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
     'cap-q3',
     'option2',
-    'Correct! A conductive finger steals electric field lines, reducing X–Y coupling and lowering the mutual capacitance.',
-    'Incorrect. Mutual capacitance is not based on compression or dielectric change—the key effect is electric field distortion, not electrode shorting.'
+    {
+      option2: 'In mutual capacitance, a conductive finger distorts the electric field and reduces coupling between the X and Y electrodes.',
+      option3: 'The electrodes are not shorted together by the finger.',
+      option1: 'Mutual capacitance sensing does not rely on mechanical compression.',
+      option4: 'The dominant effect is field distortion, not a change in permittivity.'
+    }
   )">
     Check Answer
   </button>
 
   <p id="cap-q3-feedback"></p>
-</form>
+  </form>
 
-4) Which statement correctly distinguishes the basic parallel-plate sensor from the mutual-capacitance sensor? (single answer possible)
+  <!-- ===================== QUESTION 4 ===================== -->
+  <div class="quiz-question-text">
+    Which statement correctly distinguishes the basic parallel-plate capacitive sensor from the mutual-capacitance sensor?
+    (single answer possible)
+  </div>
 
-<form id="cap-q4">
-
+  <form id="cap-q4">
   <input type="radio" name="cap-q4" value="option1">
   In both cases, the object must be conductive to affect the capacitance. <br>
 
@@ -1566,48 +2039,61 @@ In this example, the mutual capacitance $C_{mutual}$ of a single sensing node is
   The basic model relies on electric-field disturbance, whereas mutual capacitance relies on mechanical deformation. <br>
 
   <input type="radio" name="cap-q4" value="option2">
-  The basic model uses mechanical deformation of $d$, while mutual capacitance requires a conductive object that disturbs the electric field. <br> <!-- correct -->
+  The basic model relies on mechanical deformation of $d$, while mutual capacitance requires a conductive object that disturbs the electric field. <br>
 
   <input type="radio" name="cap-q4" value="option3">
-  Mutual capacitance changes only when the dielectric layer is compressed. <br>
+  Mutual capacitance changes only when the dielectric layer is compressed. <br><br>
 
-  <button type="button" onclick="checkMCQ(
+  <button type="button" onclick="checkMultipleTrueFalseMapped(
     'cap-q4',
     'option2',
-    'Correct! The parallel-plate sensor is mechanical, while mutual capacitance requires a conductive object affecting the electric field.',
-    'Incorrect. The basic model does not require conductivity, nor does mutual capacitance rely on mechanical compression—only on electric field disturbance.'
+    {
+      option2: 'The parallel-plate model measures capacitance changes due to mechanical compression, while mutual capacitance relies on electric field distortion by a conductive object.',
+      option1: 'The basic parallel-plate model does not require a conductive object.',
+      option4: 'The roles are reversed: mechanical deformation applies to the basic model, not to mutual capacitance.',
+      option3: 'Mutual capacitance does not depend on compression of the dielectric layer.'
+    }
   )">
     Check Answer
   </button>
 
   <p id="cap-q4-feedback"></p>
-</form>
+  </form>
 
-</div>
-
+  </div>
 </details>
 
 By the way, most touch screens use the mutual-capacitance principle. Ever wondered why you can’t operate them with gloves or wet hands?
 
-<details markdown="1">
-<summary>Complement: Touch screens (tap to unfold)</summary>
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Complement: Touch screens</span>
+  </summary>
 
-<div style="text-align: center;">
-  <iframe width="640" height="360"
-          src="https://www.youtube.com/embed/IdWXT391FJE"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-  </iframe>
-</div>
+  <div class="optional-window"><br>
 
-<div style="text-align: center;">
-    <sub><i>
-      Effect of conductive object in capacitive tactile sensors (available on <a href="https://youtu.be/IdWXT391FJE">YouTube</a>)
-    </i></sub>
-</div>
+  <div style="text-align: center;">
+    <iframe width="640" height="360"
+            src="https://www.youtube.com/embed/IdWXT391FJE"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+  </div>
 
+  <div style="text-align: center;">
+      <sub><i>
+        Effect of conductive object in capacitive tactile sensors (available on <a href="https://youtu.be/IdWXT391FJE">YouTube</a>)
+      </i></sub>
+  </div>
+
+  <p>
+    <!-- <em>Key points of the video:</em><br> -->
+
+  </p>
+
+  </div>
 </details>
 
 ---
@@ -1615,21 +2101,17 @@ By the way, most touch screens use the mutual-capacitance principle. Ever wonder
 #### C) Piezoelectric Sensors
 
 <!-- >generate charge proportional to applied forces (tactile sensing 5.2.) -->
-<!-- >generate charge proportional to applied forces (tactile sensing 5.2.) -->
 
 #### D) Optical Sensors
 
-<!-- tactile sensing 5.2.3 -->
 <!-- tactile sensing 5.2.3 -->
 
 #### E) Magnetism-based Sensors
 
 <!-- tactile sensing 5.2.4 -->
-<!-- tactile sensing 5.2.4 -->
 
 #### F) Electrorheological / Magnetorheological
 
-<!-- tactile sensing 5.2.7 – 5.2.8 -->
 <!-- tactile sensing 5.2.7 – 5.2.8 -->
 
 ---
@@ -1645,12 +2127,10 @@ Lastly, there also exist alternative ways to sense touch. One advanced tactile s
 #### A) Flexible Tactile Sensors
 
 <!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
-<!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
 
 -> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
 -> have a look at meta's fingertip tactile sensor
 
-tactile sensing chapter 4.4.1 
 tactile sensing chapter 4.4.1 
 
 **Piezoresistive Flexible Sensors**
@@ -1676,9 +2156,7 @@ tactile sensing chapter 4.4.1
 #### B) Stretchable Tactile Sensors
 
 <!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
-<!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
 
-tactile sensing chapter 4.4.3 
 tactile sensing chapter 4.4.3 
 
 **Stretchable Piezoresistive Sensors**
@@ -1709,10 +2187,8 @@ tactile sensing chapter 4.4.3
 #### C) Vision-Based Tactile Sensors
 
 <!--
-<!--
 -> make link to vision course
 -> video from TEDX MIT, guy explains how his vision based tactile sensor works
--->
 -->
 
 ---
@@ -1733,17 +2209,10 @@ add challenges of electronics: wiring, data transfer, power consumption
 -> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
 -->
 
-<!--
-add challenges of electronics: wiring, data transfer, power consumption  
--> examples of how it is done today
--> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
--->
-
 <!-- 
 tactile sensing chapter 4.4.5
 emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
 -->
-
 
 <!-- 
 ### Expectations of Tactile Systems

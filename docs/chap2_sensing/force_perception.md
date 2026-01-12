@@ -252,7 +252,6 @@ section: 3
 ## Prerequisites
 
 <!-- ⚠️ Adapt in the end ⚠️ -->
-<!-- ⚠️ Adapt in the end ⚠️ -->
 
 - Read [Kinematics]({{ '/docs/chap1_basic_motion_ctrl/kinematics' | relative_url }}) and [Dynamics]({{ '/docs/chap1_basic_motion_ctrl/dynamics' | relative_url }})
 - Read [Sensors and Sensing]({{ '/docs/chap2_sensing/new-sensors-for-robotics' | relative_url }}) page
@@ -2202,6 +2201,12 @@ tactile sensing chapter 4.4.3
 #### B) Wiring Complexity
 
 While integrating tactile sensors on a robot body, the wires that transmit the tactile data can be a big issue. The number of needed wires increases with the number of tactile sensors used. Often, the available space for wires is limited.
+
+<!--
+add challenges of electronics: wiring, data transfer, power consumption  
+-> examples of how it is done today
+-> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+-->
 
 <!--
 add challenges of electronics: wiring, data transfer, power consumption  

@@ -327,22 +327,22 @@ This device operates as a closed-loop system and introduces delays. The delay de
 
 <br>
 
+<!--
 <p align="center">
   <iframe width="600" height="338" src="https://youtu.be/yULQsB4XXn4" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>LASA / EPFL (Switzerland) - JRL / AIST (Japan). Source: EPFL [LASA](http://lasa.epfl.ch])</sub>
+-->
 
-<!--
 <p align="center">
   <video width="600" height="338" controls>
-    <source src="{{ site.baseurl }}/assets/videos/Interfaces-for-HRI/HapticInterfaces.mp4" type="video/mp4">
+    <source src="/assets/videos/interfaces-for-HRI/Hapticinterfaces.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </p>
 
 ><sub>LASA / EPFL (Switzerland) - JRL / AIST (Japan)</sub>
--->
 
 <br>
 
@@ -472,6 +472,7 @@ Kinesthetic teaching is also useful when training robots that differ significant
 > - Limited in the number of joints / limbs one can move at once
 -->
 
+<!--
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
     <iframe width="100%" height="300" src="https://www.youtube.com/embed/9jNg5mBkbrk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -484,12 +485,14 @@ Kinesthetic teaching is also useful when training robots that differ significant
     <sub>LASA Lab / EPFL</sub>
   </div>
 </div>
+-->
 
-<!--
+<br>
+
 <div style="display: flex; justify-content: space-between; gap: 10px;">
   <div style="width: 48%;">
     <video controls style="width: 100%; height: 300px; object-fit: cover;">
-      <source src="/assets/videos/interfaces-for-HRI/Kinesthetic1.webm" type="video/webm">
+      <source src="/assets/videos/interfaces-for-HRI/Kinesthetic1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <br>
@@ -497,14 +500,15 @@ Kinesthetic teaching is also useful when training robots that differ significant
   </div>
   <div style="width: 48%;">
     <video controls style="width: 100%; height: 300px; object-fit: cover;">
-      <source src="/assets/videos/interfaces-for-HRI/Kinesthetic1.webm" type="video/webm">
+      <source src="/assets/videos/interfaces-for-HRI/Kinesthetic1.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
     <br>
     <sub>LASA Lab / EPFL</sub>
   </div>
 </div>
--->
+
+<br>
 
 In the left example above, the robot has been taught to pick up objects and move through the narrow passage. Meanwhile, the robot can tolerate many disturbances and is resilient to them. More complex tasks, for example, tasks requiring bimanual coordination, can also be taught to the robot using this method. An example of such a task is shown in the right video above. Since the task requires bimanual coordination, the user must hold both arms of the robot. Once trained, the robot can reproduce the forces and the task.
 <br>
@@ -631,6 +635,7 @@ In motion capture systems, markers attached to body parts are tracked by infrare
 ><sub>C. Stanton, A. Bogdanovych, E. Ratanasena: Teleoperation of a humanoid robot using full-body motion capture, example movements, and machine learning. In proceedings of Australasian Conference on Robotics and Automation (ACRA 2012), Wellington, New Zealand, 3-5 December 2012. 
 YouTube video, Feb 2012. </sub>
 <br>
+<br>
 Another very popular and more practical method is to use a motion sensor. In this case, markers are tracked by cameras, which are usually infrared-based. The translation and rotation of the marker are mapped to the translation and rotation of the robot’s endpoint. This allows the user to guide the robot’s position from a distance. This method can be quite accurate.
 
 <p align="center">
@@ -641,14 +646,17 @@ Another very popular and more practical method is to use a motion sensor. In thi
 System built on the HAL Robotics Framework streaming packages with a flexible interface to easily replace the sensors.
  YouTube video, Jun 2019. </sub>
 
+ <br>
+
 The previous setting can be extended to more complex problems. In the example below, the user is wearing a marker-based system that tracks the full motion of the arm as well as the fingers. These motions are directly mapped onto the robot. This setup still requires the user to wear a device. It is not as heavy as an exoskeleton, but it is also not as ideal as wearing nothing and relying solely on an external camera system. To achieve such a setup, cameras must be placed around the entire room and must track motion at very high resolution. Moreover, the system is marker-based, which means tracking is lost as soon as markers become obstructed.
 
+<!--
 <p align="center">
   <iframe width="600" height="338" src="https://youtu.be/EUGeL9_ONvw" frameborder="0" allowfullscreen></iframe>
 </p>
 
 ><sub>LASA Lab / EPFL</sub>
-
+-->
 
 <p align="center">
   <video width="600" height="338" controls>
@@ -740,7 +748,7 @@ In such operations, transmission delays can be extremely detrimental. In fact, o
 
 ## Credits:
 <!-- List all the sources that you used to create the page   -->
-This course page is based on the content of the second lecture (Lecture 02: Acquiring Data for Learning) of the course ["MICRO-462, Learning and Adaptive Control for Robots"](https://edu.epfl.ch/coursebook/fr/learning-and-adaptive-control-for-robots-MICRO-462), taught at EPFL by Professor [Aude Billard](https://people.epfl.ch/aude.billard). It also benefitted from input from Dr. Ahalya Prabhakar.
+This course page was created by Sara Heidaripour, MSc in Robotics at EPFL, based on the content of the second lecture (Lecture 02: Acquiring Data for Learning) of the course ["MICRO-462, Learning and Adaptive Control for Robots"](https://edu.epfl.ch/coursebook/fr/learning-and-adaptive-control-for-robots-MICRO-462), taught at EPFL by Professor [Aude Billard](https://people.epfl.ch/aude.billard). It also benefitted from input from Dr. Ahalya Prabhakar.
 
 ## Resources:
 ### Books:
@@ -758,6 +766,13 @@ This course page is based on the content of the second lecture (Lecture 02: Acqu
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 1. [Billard, A.G., Calinon, S., Dillmann, R. (2016). Learning from Humans. In: Siciliano, B., Khatib, O. (eds) Springer Handbook of Robotics. Springer Handbooks. Springer, Cham. https://doi.org/10.1007/978-3-319-32552-1_74](https://link.springer.com/chapter/10.1007/978-3-319-32552-1_74#citeas)
+
+
+
+
+
+
+
 
 
 

@@ -12,7 +12,7 @@ nav_exclude: true
 
 <link rel="stylesheet" href="../styles.css">
 
-<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_2" id="go-to-next" title="Go to Next Chapter">➡​</a>
+<!-- <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_2" id="go-to-next" title="Go to Next Chapter">➡​</a> -->
 
 
 # Multirotor Drones: Chapter 0
@@ -43,8 +43,9 @@ nav_exclude: true
 
 ## 2. General Motivation
 
-Since the 2000's market for consumer quadcopters grows in a high speed. While the first available drones were difficult to control and tend to crash, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
-This module about multicopters aims to provide you with the tools to model, simulate and control a multirotor drone. For the sake of simplicity all the steps will be shown on a quadcopter but are extendable to other multirotor drone configurations. At the end of the module there is a big simulation exercise where you will need to control a drone to fly through gates as fast as possible. For this we will introduce the mathematical language for drone modeling to then later model a drone, derive the dynamics of a drone and finally present control strategies.
+Since the 2000's the market for consumer quadcopters grows in a high speed. While the first available drones were difficult to control and tend to crash easily, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
+This module about multicopters aims to provide you with the tools to model, simulate and control a multirotor drone. For the sake of simplicity all the steps will be shown on a quadcopter but are extendable to other multirotor drone configurations. At the end of the module there is a simulation exercise where you will need to control a drone to fly through gates as fast as possible.  
+Until there we will first introduce the mathematical language for drone modeling to then later model a drone, derive the dynamics of a drone and finally present control strategies.
 
 This page will establish the different reference frames needed to describe the position of a drone in 3D space and give a short refresher on how rotations in the 3d space are described mathematically.
 
@@ -58,7 +59,7 @@ The **world-fixed frame** or also **inertial frame** is a coordinate frame fixed
 For the rest of this module we will refer to this frame as the *world frame* and denote $\mathcal{W}$ or ${W}$ with its axes $\mathbf{x}_W$, $\mathbf{y}_W$, and $\mathbf{z}_W$.
 
 <div class="note-box">
-  <strong>Note: </strong>For the duration and speed of quadrotor flights in this course, we assume the World Frame is an Inertial Frame. We neglect the rotation of the Earth (Coriolis effect) and the curvature of the Earth.
+  <strong>Note: </strong>For the duration and speed of quadrotor flights in this course, we assume that the World Frame is an Inertial Frame. We neglect the rotation of the Earth (Coriolis effect) and the curvature of the Earth.
 </div>
 
 
@@ -420,4 +421,10 @@ This course page is partly based on the Aerial Robotics class taught by [Prof. D
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 [Introduction to Multicopter Design and Control (Quan Quan)](https://link.springer.com/book/10.1007/978-981-10-3382-7)- Textbook offering a systematic overview over multicopters from basic design guidelines to high-level control. 
 
+
+<div class="page-navigation">
+  <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_2"
+     id="go-to-next"
+     title="Go to Next Chapter">➡</a>
+</div>
 

@@ -9,54 +9,7 @@ publish: true
 ---
 
 <script src="../../questions.js"></script>
-
-<style>
-  #go-to-next {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #go-to-next:hover {
-    opacity: 1;
-  }
-  </style>
-
-<style>
-  #go-to-previous {
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #go-to-previous:hover {
-    opacity: 1;
-  }
-  </style>  
-
-  <a href="/docs/chap9_aerial_robotics/UAV/UAV_2" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+<link rel="stylesheet" href="../styles.css">
 
 <style>
   .formula-window{
@@ -255,9 +208,19 @@ TODO...
 ### Credits:
 This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**. 
 
+This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
+
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 Raymer, D. P. (1992). Aircraft design: A conceptual approach (2. ed). American Institute of Aeronautics and Astronautics.
+
+
+<div class="page-navigation">
+  <a href="/docs/chap9_aerial_robotics/UAV/UAV_2"
+     id="go-to-previous"
+     title="Go to Previous Chapter">⬅</a>
+
+</div>
 
 
 

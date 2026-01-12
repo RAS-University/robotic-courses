@@ -23,3 +23,23 @@
 #go-to-previous:hover {
   opacity: 1;
 }
+
+
+.answer-box {
+  transition: all 0.3s ease;
+  font-family: sans-serif;
+  line-height: 1.5;
+  color: #333;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}

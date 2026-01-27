@@ -366,6 +366,7 @@ This combined motion is called a **screw motion**.
 **A bit of history (people worth knowing).**
 - **Michel Chasles (1793–1880)**: established the geometric foundation of rigid-body displacements as screw motions.
 - **Robert Stawell Ball (1840–1913)**: developed screw theory into a systematic tool for mechanics and kinematics (often cited as the classical “screw theory” reference).
+- **Kenneth H. Hunt**: a key figure in kinematic geometry and screw theory for mechanisms; introduced influential concepts such as *connectivity* and *uncertainty configurations* (increased instantaneous mobility) that shaped modern singularity analysis.
 </div>
 
 <p align="center">
@@ -522,13 +523,493 @@ Why is it helpful that a line can be encoded by two 3-vectors $(\mathbf{s},\math
 ---
 
 <div class="note" markdown="1">
-**Up next (next section we will write):**  
+**Up next:**  
 We will connect these preliminaries to **joint screws** and show how a serial chain builds a twist subspace by “cascading” joint twists to derive the **geometric Jacobian**.
 </div>
 
 
-### General Concepts
+### General concepts
 
+The preliminaries introduced the *objects* of screw theory—vectors, forces and moments, twists and wrenches, screws and Plücker coordinates. We now introduce the *viewpoint* we will use for singularity analysis:
+
+- what a mechanism can do instantaneously is captured by a **subspace of twists** (allowable motions),
+- what a mechanism can transmit or resist is captured by a **subspace of wrenches** (allowable actions),
+- singularities are configurations where these subspaces (and their relationship) become *degenerate* in a way that changes motion/constraint capability.
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Concept map: from twists and wrenches to degrees of freedom and singularities"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: A learning map—twists and wrenches lead to subspaces, which lead to DOF counting and singularity interpretation.
+  </small>
+</figcaption>
+
+---
+
+#### Configuration versus instantaneous motion
+
+A mechanism has a **configuration** described by joint variables
+$$
+q \in \mathbb{R}^n,
+\qquad
+\dot{q} \in \mathbb{R}^n.
+$$
+
+At each configuration, the end-effector (or platform) has an **instantaneous motion** described by a **twist**
+$$
+\mathbf{V} \in \mathbb{R}^6.
+$$
+
+For many systems, velocity kinematics is a linear relation between joint rates and twist.
+
+<div class="definition" markdown="1">
+**Serial velocity map.**  
+For a serial chain, joint rates produce an end-effector twist:
+$$
+\mathbf{V} = J(q)\,\dot{q},
+$$
+where the geometric Jacobian $J(q)$ is typically a $6 \times n$ matrix.
+</div>
+
+Parallel mechanisms add constraints. One convenient form is to write constraint equations directly on the platform twist.
+
+<div class="definition" markdown="1">
+**Constraint velocity form (one common model).**  
+For constrained motion, allowable platform twists satisfy
+$$
+A(q)\,\mathbf{V} = \mathbf{0},
+$$
+where rows of $A(q)$ represent instantaneous constraints.
+</div>
+
+<div class="note" markdown="1">
+Singularity analysis is inherently **configuration-dependent** because both $J(q)$ and $A(q)$ change with $q$.
+</div>
+
+#### Quiz — configuration versus instantaneous motion
+<p><strong>Question GC-1: Which object represents the instantaneous motion of a rigid body?</strong></p>
+<form id="q-gc-1">
+  <input type="radio" name="q-gc-1" value="a"> A wrench<br>
+  <input type="radio" name="q-gc-1" value="b"> A twist<br>
+  <button type="button"
+    onclick="checkMCQ('q-gc-1', 'b',
+      'Correct. A twist represents instantaneous motion (angular and linear velocity).',
+      'Incorrect. Correct answer: A twist. A wrench represents action (force and moment), not motion.')">
+    Check Answer
+  </button>
+  <p id="q-gc-1-feedback"></p>
+</form>
+
+---
+
+#### Twist space and wrench space
+
+At a fixed configuration $q$, a mechanism does not produce “any” motion or “any” wrench; it produces only those compatible with its joints and constraints.
+
+<div class="definition" markdown="1">
+**Twist space.**  
+The **twist space** $\mathcal{S}_t(q)\subset \mathbb{R}^6$ is the set of all platform/end-effector twists that are instantaneously realizable at configuration $q$.
+</div>
+
+<div class="definition" markdown="1">
+**Wrench space.**  
+The **wrench space** $\mathcal{S}_w(q)\subset \mathbb{R}^6$ is the set of wrenches that the mechanism can transmit or enforce at configuration $q$ (through actuation and/or constraints).
+</div>
+
+A crucial idea is that **dimension equals capability**.
+
+<div class="quick-fact" markdown="1">
+**Dimension = local capability.**  
+- $\dim(\mathcal{S}_t(q))$ counts independent instantaneous motion directions (local DOF).  
+- $\dim(\mathcal{S}_w(q))$ counts independent action/constraint directions available at that configuration.
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Twist and wrench spaces as subspaces inside a 6D space"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: Allowable twists and allowable wrenches can be viewed as subspaces inside $\mathbb{R}^6$. Singularities appear when this geometry becomes degenerate.
+  </small>
+</figcaption>
+
+---
+
+#### Reciprocity and virtual work (a preview you will use constantly)
+
+When a wrench acts on a twist, it produces instantaneous **power**. If a rigid body has twist
+$\mathbf{V} = (\boldsymbol{\omega}, \mathbf{v})$ and is subject to wrench
+$\mathbf{W} = (\mathbf{f}, \mathbf{m})$, the instantaneous power is
+$$
+\mathcal{P} = \mathbf{f}\cdot \mathbf{v} + \mathbf{m}\cdot \boldsymbol{\omega}.
+$$
+
+<div class="definition" markdown="1">
+**Reciprocity (virtual work condition).**  
+A wrench $\mathbf{W}$ is **reciprocal** to a twist $\mathbf{V}$ if it does no instantaneous power on that motion:
+$$
+\mathcal{P} = 0.
+$$
+</div>
+
+This single condition will later let us *construct constraint wrenches* for parallel robots and connect them to allowable motions without “guessing” from geometry.
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Virtual work picture: a constraint wrench is reciprocal to an allowable twist"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: Visual intuition of reciprocity—constraint wrenches do zero virtual work on allowable twists.
+  </small>
+</figcaption>
+
+---
+
+#### Jacobian rank is a geometric event
+
+A Jacobian is a **linear map** between vector spaces.
+
+#### Serial chains
+For a serial chain,
+$$
+\mathbf{V} = J(q)\,\dot{q}.
+$$
+The set of all achievable twists is the column space of $J(q)$, hence
+$$
+\mathcal{S}_t(q) = \operatorname{Col}(J(q)),
+\qquad
+\dim(\mathcal{S}_t(q)) = \operatorname{rank}(J(q)).
+$$
+A singularity is typically marked by a **rank drop** of $J(q)$, meaning the twist space loses dimension: at least one instantaneous motion direction becomes unavailable.
+
+#### Parallel mechanisms and constraints
+For constrained motion written as
+$$
+A(q)\,\mathbf{V} = \mathbf{0},
+$$
+the allowable twist space is the null space:
+$$
+\mathcal{S}_t(q) = \operatorname{Null}(A(q)).
+$$
+If the constraint rows become linearly dependent, constraints lose effectiveness and the platform may gain unexpected instantaneous motion (the geometric intuition behind “uncertainty” configurations).
+
+<div class="slide" markdown="1">
+**Two complementary failure modes.**  
+- **Serial singularity:** loss of motion capability (a shrink of $\mathcal{S}_t$).  
+- **Parallel constraint singularity:** loss of constraint capability (constraint wrenches become dependent), often causing an expansion of allowable motion directions.
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Serial versus parallel singularity intuition: loss of motion vs loss of constraints"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: Serial singularities reduce attainable twist directions; constraint singularities reduce independent constraint wrenches and may introduce unintended platform motion.
+  </small>
+</figcaption>
+
+#### Quiz — meaning of a rank drop
+<p><strong>Question GC-2: For a serial robot, if the rank of $J(q)$ drops at a configuration, what is the most direct geometric meaning?</strong></p>
+<form id="q-gc-2">
+  <input type="radio" name="q-gc-2" value="a"> The end-effector gains additional independent motion directions.<br>
+  <input type="radio" name="q-gc-2" value="b"> The end-effector loses at least one independent instantaneous motion direction.<br>
+  <input type="radio" name="q-gc-2" value="c"> The robot becomes unusable for all tasks everywhere.<br>
+  <input type="radio" name="q-gc-2" value="d"> The robot’s links must be deforming elastically.<br>
+  <button type="button"
+    onclick="checkMCQ('q-gc-2', 'b',
+      'Correct. A rank drop means the dimension of the attainable twist space shrinks: at least one instantaneous motion direction is lost.',
+      'Incorrect. Correct answer: (b). (a) is typical of losing constraints in parallel robots, not serial rank loss; (c) is too strong (the statement is local); (d) is a compliance issue, not a kinematic rank statement.')">
+    Check Answer
+  </button>
+  <p id="q-gc-2-feedback"></p>
+</form>
+
+---
+
+#### Degrees of freedom from subspaces (the roadmap)
+
+Rather than memorizing mobility formulas, we will repeatedly use a single habit:
+
+1. identify a set of candidate **twists** (from joint screws or allowable platform motions),  
+2. identify a set of candidate **wrenches** (from constraints/actuation),  
+3. compute dimensions via span, rank, and reciprocity.
+
+For serial robots, the DOF is read from $\operatorname{rank}(J(q))$.  
+For parallel robots, the DOF is often read from the dimension of $\operatorname{Null}(A(q))$, or equivalently from how many independent constraint wrenches exist.
+
+<div class="assignment" markdown="1">
+### Mini-assignment GC — think in subspaces
+
+Consider three revolute joints whose axes (in a fixed base frame) are:
+
+- Joint 1: axis along $ \hat{\mathbf{z}} $ through the origin  
+- Joint 2: axis also along $ \hat{\mathbf{z}} $ and lying on the same line as Joint 1  
+- Joint 3: axis along $ \hat{\mathbf{x}} $ through the origin  
+
+1) Without computing any determinant, argue how many independent joint screw directions you expect in the attainable twist space.  
+2) Explain why Joints 1 and 2 do not contribute two independent directions (hint: same screw axis, different amplitude).  
+3) Describe (in words) a geometric alignment that could reduce the number of independent directions further (a singularity event).
+</div>
+
+---
+
+#### Caution: Jacobians are powerful, but not a silver bullet
+
+Expressions such as $J^{\mathsf{T}}J$ and $JJ^{\mathsf{T}}$ appear often (least squares, damping, manipulability measures). They are useful only when you keep track of:
+
+- which vectors live in joint space versus twist space,
+- the dimensions of $J$ (often $6\times n$, not square),
+- the physical meaning of the metric you are implicitly introducing.
+
+<div class="note" markdown="1">
+We will return to this caution after deriving the geometric Jacobian and again in the parallel-robot singularity discussion. The guiding habit is always the same: interpret rank and null spaces as statements about **twist and wrench subspaces**.
+</div>
+
+
+
+
+### Singularities in a serial robot: building the Jacobian one joint at a time
+
+A serial robot can be understood as a sequence of joints that each contribute an **instantaneous motion** to the end-effector. The geometric Jacobian appears naturally when we ask a simple question:
+
+> *If only joint \(i\) moves (all other joints are frozen), what instantaneous twist does the end-effector experience?*
+
+When we answer this question for every joint and stack the results, we obtain the Jacobian.
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Serial chain intuition: each joint contributes an instantaneous motion at the end-effector"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: A serial chain. Each joint contributes one instantaneous twist at the end-effector; stacking these twists forms the Jacobian.
+  </small>
+</figcaption>
+
+---
+
+#### The “one joint moves” thought experiment
+
+Fix a configuration $q$ (all joint values are fixed). Consider the end-effector frame with origin at a point $E$ attached to the last link. For each joint $i$:
+
+- set $\dot{q}_i \neq 0$,
+- set $\dot{q}_j = 0$ for every $j\neq i$.
+
+The end-effector then has some instantaneous twist
+$$
+\mathbf{V}_E^{(i)} \in \mathbb{R}^6,
+$$
+which is the *contribution of joint \(i\)* to the end-effector twist.
+
+Because velocity kinematics is linear in joint rates, the full end-effector twist is the sum of all contributions:
+$$
+\mathbf{V}_E = \sum_{i=1}^n \mathbf{V}_E^{(i)}.
+$$
+
+---
+
+#### Revolute and prismatic joints as screws (end-effector contribution)
+
+To write $\mathbf{V}_E^{(i)}$ explicitly, we describe each joint as a screw axis expressed in a common frame (typically the base frame).
+
+##### Revolute joint \(i\)
+A revolute joint has:
+- an axis direction vector $\mathbf{s}_i$ (unit vector),
+- a point $P_i$ on the axis.
+
+Define the moment of the axis about the base origin $O$:
+$$
+\mathbf{m}_i = \mathbf{r}_{OP_i} \times \mathbf{s}_i.
+$$
+
+The angular velocity contribution at the end-effector due to joint $i$ is
+$$
+\boldsymbol{\omega}^{(i)} = \dot{q}_i \, \mathbf{s}_i.
+$$
+
+The linear velocity contribution of the end-effector point $E$ is
+$$
+\mathbf{v}_E^{(i)} = \boldsymbol{\omega}^{(i)} \times \mathbf{r}_{P_iE}
+= \dot{q}_i \, \mathbf{s}_i \times \mathbf{r}_{P_iE}.
+$$
+
+So the end-effector twist contribution becomes
+$$
+\mathbf{V}_E^{(i)} =
+\begin{bmatrix}
+\boldsymbol{\omega}^{(i)}\\
+\mathbf{v}_E^{(i)}
+\end{bmatrix}
+=
+\dot{q}_i
+\begin{bmatrix}
+\mathbf{s}_i\\
+\mathbf{s}_i \times \mathbf{r}_{P_iE}
+\end{bmatrix}.
+$$
+
+##### Prismatic joint \(i\)
+A prismatic joint has:
+- a translation direction vector $\mathbf{s}_i$ (unit vector).
+
+Its contribution has zero angular velocity and a linear velocity along the axis:
+$$
+\mathbf{V}_E^{(i)} =
+\begin{bmatrix}
+\mathbf{0}\\
+\dot{q}_i\,\mathbf{s}_i
+\end{bmatrix}.
+$$
+
+<div class="note" markdown="1">
+The key pattern is simple:
+
+- revolute joint column: an angular part \(\mathbf{s}_i\) and a linear part \(\mathbf{s}_i\times\mathbf{r}_{P_iE}\),
+- prismatic joint column: angular part \(\mathbf{0}\), linear part \(\mathbf{s}_i\).
+
+This is exactly the geometric meaning of “joint screws.”
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Revolute joint contribution: axis direction and moment arm to end-effector create a twist column"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: A revolute joint contributes a twist at the end-effector. The linear part comes from the moment arm from the joint axis to the end-effector point.
+  </small>
+</figcaption>
+
+---
+
+#### Jacobian formation: stacking the joint contributions
+
+Collect all the joint contributions into a single matrix by placing the twist generated by unit joint rate in each column.
+
+For revolute joints, the \(i\)-th column is
+$$
+\mathbf{J}_i(q) =
+\begin{bmatrix}
+\mathbf{s}_i(q)\\
+\mathbf{s}_i(q)\times\mathbf{r}_{P_iE}(q)
+\end{bmatrix},
+$$
+and for prismatic joints it is
+$$
+\mathbf{J}_i(q) =
+\begin{bmatrix}
+\mathbf{0}\\
+\mathbf{s}_i(q)
+\end{bmatrix}.
+$$
+
+Stacking these columns gives the **geometric Jacobian**
+$$
+J(q) = \begin{bmatrix} \mathbf{J}_1(q) & \mathbf{J}_2(q) & \cdots & \mathbf{J}_n(q)\end{bmatrix}.
+$$
+
+Then the end-effector twist is simply
+$$
+\mathbf{V}_E = J(q)\,\dot{q}.
+$$
+
+<div class="quick-fact" markdown="1">
+**Why this is “natural.”**  
+Each column answers the same physical question: *what twist appears at the end-effector if only joint \(i\) moves with unit rate?*  
+The Jacobian is just these answers written side-by-side.
+</div>
+
+---
+
+#### Serial singularities: loss of attainable twist directions
+
+The set of all twists the end-effector can generate at configuration $q$ is the column space of $J(q)$:
+$$
+\mathcal{S}_t(q) = \operatorname{Col}(J(q)).
+$$
+
+Its dimension is
+$$
+\dim(\mathcal{S}_t(q)) = \operatorname{rank}(J(q)).
+$$
+
+A **serial singularity** occurs at configurations where the rank drops:
+$$
+\operatorname{rank}(J(q)) \text{ decreases.}
+$$
+
+Geometrically, this means at least one instantaneous motion direction that was possible nearby becomes impossible at that configuration. Equivalently, the columns of $J(q)$ become linearly dependent.
+
+<p align="center">
+  <img src="{{ '/assets/images/screw_theory/todo.png' | relative_url }}"
+       alt="Rank drop picture: Jacobian columns become dependent so the attainable twist space shrinks"
+       width="650">
+</p>
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Figure: At a serial singularity, Jacobian columns become dependent, shrinking the attainable twist subspace.
+  </small>
+</figcaption>
+
+---
+
+#### What “dependence of columns” means physically
+
+If two joint columns become aligned in the 6D sense, their effects at the end-effector become redundant. Typical geometric causes include:
+
+- two revolute axes becoming parallel (and positioned so their end-effector velocity contributions align),
+- three axes becoming coplanar or intersecting in special ways,
+- wrist alignment events (common in 6R wrists), where two rotation axes line up and one rotational direction is lost.
+
+<div class="note" markdown="1">
+The important point is not the specific “named singularity,” but the mechanism behind it:
+**a singularity is a configuration where the joint screws fail to span the same set of twists as they do in a generic configuration.**
+</div>
+
+---
+
+#### Quiz — how the Jacobian is formed
+<p><strong>Question 3.1: What does the \(i\)-th column of the geometric Jacobian represent?</strong></p>
+<form id="q-jac-col">
+  <input type="radio" name="q-jac-col" value="a"> The position of joint \(i\) in the base frame.<br>
+  <input type="radio" name="q-jac-col" value="b"> The end-effector twist produced when only joint \(i\) moves with unit rate.<br>
+  <input type="radio" name="q-jac-col" value="c"> The torque required at joint \(i\) to hold a load.<br>
+  <input type="radio" name="q-jac-col" value="d"> The end-effector acceleration produced by joint \(i\).<br>
+  <button type="button"
+    onclick="checkMCQ('q-jac-col', 'b',
+      'Correct. Each Jacobian column is the end-effector twist corresponding to a unit rate at that joint (others frozen).',
+      'Incorrect. Correct answer: (b). A Jacobian column is a velocity (twist) contribution, not a position, torque, or acceleration quantity.')">
+    Check Answer
+  </button>
+  <p id="q-jac-col-feedback"></p>
+</form>
+
+<div class="assignment" markdown="1">
+### Mini-assignment 3 — “spot the redundancy”
+
+Consider a 3-joint serial mechanism with three revolute joints. Suppose that at a particular configuration:
+
+- Joint 1 axis direction is \(\mathbf{s}_1 = \hat{\mathbf{z}}\),
+- Joint 2 axis direction is \(\mathbf{s}_2 = \hat{\mathbf{z}}\) (parallel to joint 1),
+- Joint 3 axis direction is \(\mathbf{s}_3 = \hat{\mathbf{x}}\).
+
+1) Explain why \(\mathbf{s}_1\) and \(\mathbf{s}_2\) being parallel is a warning sign for a rank drop.  
+2) Give a geometric condition involving the end-effector point \(E\) (relative to the two axes) that could make the full 6D columns truly dependent.  
+3) In one sentence, state what motion you expect to be “hard” or “impossible” at the singular configuration.
+
+*Goal:* practice translating “column dependence” into geometry.
+</div>
 
 
 ### References and Further Reading (Intro Level)

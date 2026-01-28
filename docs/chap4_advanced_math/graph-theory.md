@@ -122,197 +122,6 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 <!-- - Collision checking in robot environments -->
 
 ---
-### Asymptotic Notation Refresher
-
-Suppose we double the number of intersections in a city map. Will our shortest-path algorithm become twice as slow? Four times? Or barely slower at all? Questions like these arise constantly in graph-based planning, and answering them requires a scale-independent way of describing algorithmic growth.
-
-Asymptotic notation provides this perspective. By focusing on how running time behaves as the graph size grows, rather than on machine-specific measurements, we obtain a clear and comparable description of algorithmic efficiency.
-
----
-
-When we analyze graph algorithms, we usually care about how the running time grows with the input size $n$ as $n \to \infty$. We compare functions like $f(n)$ and $g(n)$ using the following notations:
-
-#### Big-O, Big-Omega, Big-Theta
-
-<div class="definition" markdown=1>
-<strong>Definition.</strong> **Big-O** — *asymptotic upper bound*  
-
-A function $ f(n) $ is in $ O(g(n)) $ if there exist constants $ c > 0 $ and $ n_0 $ such that  
-$$
-0 \le f(n) \le c\, g(n) \quad \text{for all } n \ge n_0 .
-$$
-</div>
-
-<p align="center">
-  <img src="{{ '/assets/images/graph_theory/big0.webp' | relative_url }}" 
-       alt="Big-O" 
-       width="350">
-</p>
-
-<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
-  <small>
-    Image source: 
-    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
-      Programiz – Asymptotic Notations
-    </a>.
-  </small>
-</figcaption>
-
-
-> Intuition: $f$ does not grow faster than $g$, up to constant factors.
-
-While Big-O describes an upper bound, it does not tell us whether the function ever grows faster than the comparison. To capture that aspect, we use Big-Omega.
-
----
-
-
-<div class="definition" markdown=1>
-<strong>Definition.</strong> **Big-Omega** — *asymptotic lower bound*
-
-A function $ f(n) $ is in $ \Omega(g(n)) $ if there exist constants $ c > 0 $ and $ n_0 $ such that  
-$$
-0 \le c\, g(n) \le f(n) \quad \text{for all } n \ge n_0 .
-$$
-</div>
-
-<p align="center">
-  <img src="{{ '/assets/images/graph_theory/omega.webp' | relative_url }}" 
-       alt="Omega" 
-       width="350">
-</p>
-
-<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
-  <small>
-    Image source: 
-    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
-      Programiz – Asymptotic Notations
-    </a>.
-  </small>
-</figcaption>
-
-> Intuition: $f$ does not grow slower than $g$.
-
-Neither an upper nor a lower bound alone gives the full picture. When both coincide, we obtain a tight characterization, expressed using Big-Theta.
-
----
-
-
-<div class="definition" markdown=1>
-<strong>Definition.</strong> **Big-Theta** — *tight bound*
-
-A function $ f(n) $ is in $ \Theta(g(n)) $ if  
-$$
-f(n) = O(g(n)) \quad \text{and} \quad f(n) = \Omega(g(n)).
-$$
-</div>
-
-<p align="center">
-  <img src="{{ '/assets/images/graph_theory/theta.webp' | relative_url }}" 
-       alt="Theta" 
-       width="350">
-</p>
-
-<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
-  <small>
-    Image source: 
-    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
-      Programiz – Asymptotic Notations
-    </a>.
-  </small>
-</figcaption>
-
-> Intuition: $f$ and $g$ grow at the same rate (up to constant factors).
-
-The three notations form a hierarchy of expressiveness. Together, they let us distinguish between algorithms that merely avoid worst-case blowup and those that are genuinely efficient across all input sizes.
-
----
-
-
-### Quick Examples
-
-- $ n^2 = O(n^3) $.  
-- $ n^3 = \Omega(n^2) $.  
-- $ 3n^2 + 5n + 7 = \Theta(n^2) $ (same growth rate as $ n^2 $).  
-
-We will use these notations throughout to describe the time and space complexity of graph algorithms such as BFS, DFS, Dijkstra, and A\*.
-
----
-
-
-<div class="assignment" markdown="1">
-<strong>Quiz.</strong>
-  <div class="mcq" id="mcq-asy1">
-    For f(n) = 3n^2 + 5n and g(n) = n^3, which statement is correct?
-    <div class="options">
-      <label><input type="radio" name="asy1" value="O"> f(n) ∈ O(n^3)</label>
-      <label><input type="radio" name="asy1" value="Omega"> f(n) ∈ Ω(n^3)</label>
-      <label><input type="radio" name="asy1" value="Theta"> f(n) ∈ Θ(n^3)</label>
-    </div>
-    <div class="actions">
-      <button onclick="checkAsy1()">Check</button>
-    </div>
-    <div class="result" id="asy1-result"></div>
-  </div>
-
-  <div class="mcq" id="mcq-asy2">
-    Which notation gives a tight asymptotic bound on f(n)?
-    <div class="options">
-      <label><input type="radio" name="asy2" value="O"> Big-O</label>
-      <label><input type="radio" name="asy2" value="Omega"> Big-Omega</label>
-      <label><input type="radio" name="asy2" value="Theta"> Big-Theta</label>
-    </div>
-    <div class="actions">
-      <button onclick="checkAsy2()">Check</button>
-    </div>
-    <div class="result" id="asy2-result"></div>
-  </div>
-
-  <div class="mcq" id="mcq-asy3">
-    For f(n) = n^3 + 2n and g(n) = n^2, which statement is correct?
-    <div class="options">
-      <label><input type="radio" name="asy3" value="O"> f(n) ∈ O(n^2)</label>
-      <label><input type="radio" name="asy3" value="Omega"> f(n) ∈ Ω(n^2)</label>
-      <label><input type="radio" name="asy3" value="Theta"> f(n) ∈ Θ(n^2)</label>
-    </div>
-    <div class="actions">
-      <button onclick="checkAsy3()">Check</button>
-    </div>
-    <div class="result" id="asy3-result"></div>
-  </div>
-  <script>
-  function pick(name) {
-    const xs = document.querySelectorAll(`input[name="${name}"]`);
-    for (const x of xs) if (x.checked) return x.value;
-    return null;
-  }
-  function mark(el, ok) {
-    el.textContent = ok ? "Correct ✅" : "Try again ❌";
-    el.parentElement.classList.toggle("correct", ok);
-    el.parentElement.classList.toggle("incorrect", !ok);
-  }
-  function checkAsy1() {
-    const v = pick("asy1");
-    const ok = (v === "O");
-    mark(document.getElementById("asy1-result"), ok);
-  }
-  function checkAsy2() {
-    const v = pick("asy2");
-    const ok = (v === "Theta");
-    mark(document.getElementById("asy2-result"), ok);
-  }
-  function checkAsy3() {
-    const v = pick("asy3");
-    const ok = (v === "Omega");
-    mark(document.getElementById("asy3-result"), ok);
-  }
-  </script>
-
-</div>
-
-With these tools in hand, we can now analyze the complexity of the graph algorithms introduced throughout this chapter.
-
----
-
 
 ## General Motivation
 
@@ -351,6 +160,18 @@ Autonomous robots navigating a warehouse are another classic example. We can mod
   </figcaption>
 </figure>
 
+<figure style="margin:1em 0; display:flex; justify-content:center; flex-direction:column; align-items:center;">
+  <img src="{{ '/assets/images/graph_theory/warehouse_motivation_graph.png' | relative_url }}"
+       alt="Warehouse floor modeled as a graph"
+       style="width:100%; max-width:720px; height:auto; border-radius:6px;">
+  <figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+    <small>
+      Example graph abstraction of a warehouse floor.  
+      Each node represents a free cell or intersection, and edges represent possible robot moves, with labels indicating time needed to traverse the edge. 
+    </small>
+  </figcaption>
+</figure>
+
 ---
 
 These examples highlight how diverse systems can be described using the same graph abstraction. To work with such systems rigorously, we next introduce precise definitions for graphs, edges, weights, and paths, forming the mathematical foundation used throughout the rest of this material.
@@ -379,10 +200,34 @@ $$
 where $V$ is a finite, nonempty set of vertices (or nodes) and $E$ is a set of edges that connect pairs of vertices.  
 Each edge can be represented as an ordered or unordered pair $(u, v)$, depending on whether the graph is directed or undirected.
 
-In an undirected graph, $(u, v) \in E$ implies $(v, u) \in E$, meaning that the connection between the two vertices is symmetric. In contrast, directed graphs encode asymmetric relationships, such as one-way communication links, dependencies, or flows of information.  
+<div class="example" markdown="1">
+<strong>Example — 2D robot car at a crossroad.</strong>  
 
-The number of vertices connected to a vertex $v$ is called its degree.  
+Consider a 2D environment with a small road network. Each road intersection is a vertex, and each drivable road segment between intersections is an edge.
+When the robot car approaches a crossroad, its next action (go straight / turn left / turn right) corresponds to choosing one of the outgoing edges.
+</div>
+
+
+In an **undirected** graph, $(u, v) \in E$ implies $(v, u) \in E$, meaning that the connection between the two vertices is symmetric. In contrast, **directed** graphs encode asymmetric relationships, such as one-way communication links, dependencies, or flows of information.  
+
+<div class="example" markdown="1">
+<strong>Example — Two-way vs one-way streets at the same crossroad.</strong>  
+
+In the same crossroad scene, if streets are two-way, motion is possible in both directions and the graph is undirected.
+If one branch of the crossroad is one-way (e.g., “no entry”), we represent that road segment with a directed edge.
+The geometry is identical; only the allowed direction of travel changes.
+</div>
+
+The number of vertices connected to a vertex $v$ is called its **degree**.  
 In directed graphs, we often distinguish between the in-degree and out-degree, referring to the number of incoming and outgoing edges respectively.
+
+<div class="example" markdown="1">
+<strong>Example — Traffic flow at an intersection.</strong>  
+
+In a directed road network, the in-degree of an intersection corresponds to the number of streets from which a vehicle can enter,
+while the out-degree corresponds to the number of streets through which it can leave.
+Dead ends have out-degree zero, while highly connected intersections have larger degrees.
+</div>
 
 
 ---
@@ -442,6 +287,15 @@ The weight may represent distance, time, energy, or any quantitative measure of 
 The inclusion of weights allows us to formalize the notion of optimality.  
 A path connecting two vertices may exist, but the one with minimal total weight is often of greater interest than any arbitrary path.
 
+<div class="example" markdown="1">
+<strong>Example — Flat ground vs hilly terrain.</strong>  
+
+A robot moving on flat ground at constant speed can be modeled using an unweighted graph, since all motions have equal cost.
+If the same robot moves in a hilly 2D or 3D environment, edges can be weighted by the energy required to traverse them,
+with uphill motions having higher cost than downhill or flat ones.
+</div>
+
+
 ---
 
 #### Paths and Connectivity
@@ -455,9 +309,29 @@ $$
 such that each consecutive pair $(v_i, v_{i+1})$ is an edge in $E$.  
 The length of a path can refer either to the number of edges it contains (for unweighted graphs) or to the sum of edge weights (for weighted graphs).
 
-A graph is said to be connected if, for every pair of vertices $u$ and $v$, there exists at least one path from $u$ to $v$.  
+<div class="example" markdown="1">
+<strong>Example — Path in the crossroad environment.</strong>  
+
+In the 2D crossroad environment, a path corresponds to a sequence of intersections the robot car visits.
+For example, starting at the central crossroad $C$, a path $P = C \rightarrow R \rightarrow L$ represents the car first turning right at the crossroad and then turning left at the next intersection.
+
+In an unweighted model, this path has length 2 (two road segments).
+
+If edges are weighted, the cost of the path is given by the sum of the traversal costs of the chosen road segments.
+</div>
+
+A graph is said to be **connected** if, for every pair of vertices $u$ and $v$, there exists at least one path from $u$ to $v$.  
 Otherwise, the graph is disconnected, meaning that it consists of multiple connected components that are isolated from one another.  
 Connectivity plays a central role in determining whether traversal or communication between parts of the graph is possible.
+
+<div class="example" markdown="1">
+<strong>Example — Connectivity in the crossroad environment.</strong>  
+
+In the same crossroad environment, if the robot car is allowed to drive freely along all road segments, every intersection is reachable from the central crossroad, and the graph is connected.
+
+If we impose a motion constraint, such as allowing only right turns at intersections, some intersections may no longer be reachable from the start.
+In this case, the induced directed graph becomes disconnected, even though the physical road layout remains unchanged.
+</div>
 
 
 <div class="assignment" markdown="1">
@@ -565,6 +439,243 @@ Connectivity plays a central role in determining whether traversal or communicat
 In summary, this chapter introduced the essential components of a graph, vertices, edges, weights, and paths, and showed how these elements encode the structure of a system. With these definitions established, we can now examine how graphs are represented inside a computer, an important consideration for the efficiency of search and planning algorithms.
 
 ---
+
+
+### Asymptotic Notation Refresher
+
+#### Why complexity matters
+Suppose we double the number of intersections in a city map. Will our shortest-path algorithm become twice as slow? Four times? Or barely slower at all? Questions like these arise constantly in graph-based planning, and answering them requires a scale-independent way of describing algorithmic growth.
+
+Asymptotic notation provides this perspective. By focusing on how running time behaves as the graph size grows, rather than on machine-specific measurements, we obtain a clear and comparable description of algorithmic efficiency.
+
+
+#### Disclaimer
+
+In this chapter, we use graphs as *discrete* models for planning: vertices represent states/configurations, and edges represent valid transitions. As a result, the “functions” we compare are not continuous signals, but **resource costs** (time and memory) of graph algorithms.
+
+Concretely, the input size is a discrete quantity such as:
+- $n = \lvert V \rvert$ (number of vertices / states),
+- $m = \lvert E \rvert$ (number of edges / transitions),
+- or a planning horizon $T$ (e.g., in a time-expanded graph for multi-step planning).
+
+Although asymptotic notation is defined for real-valued functions, in algorithm analysis we evaluate it on integer inputs ($n \in \mathbb{N}$), which directly matches graph sizes.
+
+---
+
+#### What we compare in practice (interval vs. asymptote)
+
+In practice, we analyze the computational cost of a planning or search algorithm by studying how its cost function $f(n)$ behaves over a relevant range of problem sizes:
+
+1. **Finite horizon / bounded problem sizes**: analyze the cost for $n \in [n_0, N_T]$.  
+   This corresponds to planning from a start state at some minimum meaningful size $n_0$ up to a maximum map size or time horizon $N_T$ (for example, a fixed planning horizon $T$ or a fixed workspace discretization).
+
+2. **Intrinsic scalability**: analyze the cost asymptotically as $n \to \infty$.  
+   This captures how the algorithm scales as graphs become very large (larger maps, denser discretizations, frequent replanning), and is commonly used as a measure of the algorithm’s intrinsic complexity.
+
+These viewpoints apply also to comparisons between alternative planners.  
+In that case, one compares two cost functions $f(n)$ and $g(n)$ of different planners over the same interval $n \in [n_0, N_T]$, or asymptotically for $n > n_0$, to determine which planner is computationally preferable for a given time horizon or problem scale.
+
+In path planning, this is particularly relevant because planning always starts from a nontrivial initial state ($n_0$), and the choice between planners is often driven either by performance over a fixed horizon or by their asymptotic behavior as problem size increases.
+
+
+---
+
+When we analyze graph algorithms, we usually care about how the running time grows with the input size $n$ as $n \to \infty$. We compare functions like $f(n)$ and $g(n)$ using the following notations:
+
+#### Big-O, Big-Omega, Big-Theta
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> **Big-O** — *asymptotic upper bound*  
+
+A function $ f(n) $ is in $ O(g(n)) $ if there exist constants $ c > 0 $ and $ n_0 $ such that  
+$$
+0 \le f(n) \le c\, g(n) \quad \text{for all } n \ge n_0 .
+$$
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/big0.webp' | relative_url }}" 
+       alt="Big-O" 
+       width="350">
+</p>
+
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Image source: 
+    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
+      Programiz – Asymptotic Notations
+    </a>.
+  </small>
+</figcaption>
+
+
+> Intuition: $f$ does not grow faster than $g$, up to constant factors.
+
+<div class="note" markdown="1">
+<strong>Planning interpretation.</strong>  
+Here, $f(n)$ and $g(n)$ can represent the runtime (or memory) of two different planning/search algorithms on graphs of size $n$.  
+The constants $c$ and $n_0$ mean that the comparison is intended to hold for all sufficiently large problems, i.e., for $n \ge n_0$ (or practically, over a range $n \in [n_0, N_T]$ when the horizon/map size is bounded).
+</div>
+
+While Big-O describes an upper bound, it does not tell us whether the function ever grows faster than the comparison. To capture that aspect, we use Big-Omega.
+
+---
+
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> **Big-Omega** — *asymptotic lower bound*
+
+A function $ f(n) $ is in $ \Omega(g(n)) $ if there exist constants $ c > 0 $ and $ n_0 $ such that  
+$$
+0 \le c\, g(n) \le f(n) \quad \text{for all } n \ge n_0 .
+$$
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/omega.webp' | relative_url }}" 
+       alt="Omega" 
+       width="350">
+</p>
+
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Image source: 
+    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
+      Programiz – Asymptotic Notations
+    </a>.
+  </small>
+</figcaption>
+
+> Intuition: $f$ does not grow slower than $g$.
+
+Neither an upper nor a lower bound alone gives the full picture. When both coincide, we obtain a tight characterization, expressed using Big-Theta.
+
+---
+
+
+<div class="definition" markdown=1>
+<strong>Definition.</strong> **Big-Theta** — *tight bound*
+
+A function $ f(n) $ is in $ \Theta(g(n)) $ if  
+$$
+f(n) = O(g(n)) \quad \text{and} \quad f(n) = \Omega(g(n)).
+$$
+</div>
+
+<p align="center">
+  <img src="{{ '/assets/images/graph_theory/theta.webp' | relative_url }}" 
+       alt="Theta" 
+       width="350">
+</p>
+
+<figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
+  <small>
+    Image source: 
+    <a href="https://www.programiz.com/dsa/asymptotic-notations" target="_blank" rel="noopener">
+      Programiz – Asymptotic Notations
+    </a>.
+  </small>
+</figcaption>
+
+> Intuition: $f$ and $g$ grow at the same rate (up to constant factors).
+
+The three notations form a hierarchy of expressiveness. Together, they let us distinguish between algorithms that merely avoid worst-case blowup and those that are genuinely efficient across all input sizes.
+
+---
+
+
+### Quick Examples
+
+- $ n^2 = O(n^3) $.  
+- $ n^3 = \Omega(n^2) $.  
+- $ 3n^2 + 5n + 7 = \Theta(n^2) $ (same growth rate as $ n^2 $).  
+
+
+<div class="note" markdown="1">
+<strong>Discrete graph reminder.</strong>  
+In graph algorithms, the complexity is often written using $|V|$ and $|E|$ rather than a single $n$ (e.g., BFS runs in $O(|V|+|E|)$).  
+When we write $n$ here, you can read it as “the graph size parameter relevant for the comparison” (often $|V|$, sometimes $(|V|,|E|)$, or a horizon $T$).
+</div>
+
+We will use these notations throughout to describe the time and space complexity of graph algorithms such as BFS, DFS, Dijkstra, and A\*.
+
+---
+
+
+<div class="assignment" markdown="1">
+<strong>Quiz.</strong>
+  <div class="mcq" id="mcq-asy1">
+    For f(n) = 3n^2 + 5n and g(n) = n^3, which statement is correct?
+    <div class="options">
+      <label><input type="radio" name="asy1" value="O"> f(n) ∈ O(n^3)</label>
+      <label><input type="radio" name="asy1" value="Omega"> f(n) ∈ Ω(n^3)</label>
+      <label><input type="radio" name="asy1" value="Theta"> f(n) ∈ Θ(n^3)</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkAsy1()">Check</button>
+    </div>
+    <div class="result" id="asy1-result"></div>
+  </div>
+
+  <div class="mcq" id="mcq-asy2">
+    Which notation gives a tight asymptotic bound on f(n)?
+    <div class="options">
+      <label><input type="radio" name="asy2" value="O"> Big-O</label>
+      <label><input type="radio" name="asy2" value="Omega"> Big-Omega</label>
+      <label><input type="radio" name="asy2" value="Theta"> Big-Theta</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkAsy2()">Check</button>
+    </div>
+    <div class="result" id="asy2-result"></div>
+  </div>
+
+  <div class="mcq" id="mcq-asy3">
+    For f(n) = n^3 + 2n and g(n) = n^2, which statement is correct?
+    <div class="options">
+      <label><input type="radio" name="asy3" value="O"> f(n) ∈ O(n^2)</label>
+      <label><input type="radio" name="asy3" value="Omega"> f(n) ∈ Ω(n^2)</label>
+      <label><input type="radio" name="asy3" value="Theta"> f(n) ∈ Θ(n^2)</label>
+    </div>
+    <div class="actions">
+      <button onclick="checkAsy3()">Check</button>
+    </div>
+    <div class="result" id="asy3-result"></div>
+  </div>
+  <script>
+  function pick(name) {
+    const xs = document.querySelectorAll(`input[name="${name}"]`);
+    for (const x of xs) if (x.checked) return x.value;
+    return null;
+  }
+  function mark(el, ok) {
+    el.textContent = ok ? "Correct ✅" : "Try again ❌";
+    el.parentElement.classList.toggle("correct", ok);
+    el.parentElement.classList.toggle("incorrect", !ok);
+  }
+  function checkAsy1() {
+    const v = pick("asy1");
+    const ok = (v === "O");
+    mark(document.getElementById("asy1-result"), ok);
+  }
+  function checkAsy2() {
+    const v = pick("asy2");
+    const ok = (v === "Theta");
+    mark(document.getElementById("asy2-result"), ok);
+  }
+  function checkAsy3() {
+    const v = pick("asy3");
+    const ok = (v === "Omega");
+    mark(document.getElementById("asy3-result"), ok);
+  }
+  </script>
+
+</div>
+
+With these tools in hand, we can now analyze the complexity of the graph algorithms introduced throughout this chapter.
+
+---
+
 
 ### Graph Representations
 

@@ -207,7 +207,7 @@ Its complexity is described as `O(E + V log V)`, meaning its runtime depends on 
 The process of Dijkstra's algorithm meticulously expanding outward from the start node is demonstrated in the visualization below:
 ![Dijkstra's shortest path]({{ '/assets/images/sampling_based_planning/dijkstra.gif' | relative_url }})
 
-(For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../advanced_math/graph-theory))
+(For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../chap4_advanced_math/graph-theory))
 
 #### Final step: The Limits of Grids and the Curse of Dimensionality
 

@@ -37,38 +37,57 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
     padding: 1em;
   }
 
-.lemma-window {
-  border: 2px solid #e7260c;   /* Red outline */
-  border-radius: 10px;         /* Rounded edges */
-  background: #ffffff;         /* Clean white background */
-  width: 725px;
-  margin: 2em auto;
-  padding: 1em 1.2em;          /* Add padding for readability */
-  box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
-}
-.lemma-title {
-  font-weight: bold;           
-  font-size: 1em;              /* Same size as normal text */
-  background: none;            /* Remove red background */
-  color: #e7260c;              /* Make text red to match the outline */
-  margin-bottom: 0.5em;        /* Add spacing after the title */
-}
- .remark-window {
-  border: 2px solid #4F3DDB;   /* Red outline */
-  border-radius: 10px;         /* Rounded edges */
-  background: #ffffff;         /* Clean white background */
-  width: 725px;
-  margin: 2em auto;
-  padding: 1em 1.2em;          /* Add padding for readability */
-  box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
-}
-.remark-title {
-  font-weight: bold;           
-  font-size: 1em;              /* Same size as normal text */
-  background: none;            /* Remove red background */
-  color: #4F3DDB;              /* Make text red to match the outline */
-  margin-bottom: 0.5em;        /* Add spacing after the title */
-}
+  /* .lemma-window {
+    border: 2px solid #e7260c;
+    border-radius: 10px;
+    background: #ffffff;
+    width: 725px;
+    margin: 2em auto;
+    padding: 1em 1.2em;
+    box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
+  }
+
+  .lemma-title {
+    font-weight: bold;
+    font-size: 1em;
+    background: none;
+    color: #e7260c;
+    margin-bottom: 0.5em;
+  } */
+
+  .thm-window,
+  .def-window,
+  .remark-window {
+    width: 725px;
+    margin: 2em auto;
+    padding: 1em 1.2em;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(226, 42, 60, 0.05);
+    border: 2px solid #e7260c; /* default outline for theorem/definition */
+  }
+
+  .def-window {
+    border-color: #FC814A;
+  }
+
+  .remark-window {
+    border-color: #4F3DDB;
+    box-shadow: 0 2px 8px rgba(79, 61, 219, 0.05);
+  }
+
+  .thm-title,
+  .def-title,
+  .remark-title {
+    font-weight: bold;
+    font-size: 1em;
+    background: none;
+    margin-bottom: 0.5em;
+  }
+
+  .thm-title { color: #e7260c; }
+  .def-title { color: #FC814A; }
+  .remark-title { color: #4F3DDB; }
 
   .tab-window {
     border: 2px solid #4F3DDB;
@@ -108,6 +127,20 @@ You can also use some of the material from Alireza Karimi's course. Make sure to
     border-top-right-radius: 5px;
   }
 
+  .proof {
+    position: relative;
+    padding-right: 1.6em;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+  }
+
+  .proof .qed {
+    position: absolute;
+    right: 0;
+    top: 0.2em;
+    font-size: 0.95em;
+    color: #333;
+  }
 
   .tab-header {
     display: flex;
@@ -381,8 +414,8 @@ $$
 
 With $A \in \mathbb{R}^{n \times n}$ the state matrix and $B \in \mathbb{R}^{n \times m}$ the input matrix. These matrices define how the state of the system evolves over time and how the control inputs affect the state, they are usually fixed and defined by the physics of the system. The goal of the controller is to determine the appropriate control inputs $u(t)$ that will drive the state $x(t)$ to a desired state, often the origin (zero state), while minimizing a cost function that penalizes deviations from the desired state and excessive control effort.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="cost-func">LQR cost function</div>
+<div class="def-window">
+  <div class="def-title" id="cost-func">Definition 1.1 - LQR cost function</div>
   <div>
   In this context, we formulate a cost function for our optimization problem (continuous time):
   \[
@@ -456,8 +489,8 @@ The way the **cost function** $J$ is set up here leads to the integral always be
 
 The next step is to formulate the optimization problem, which consists in finding the control input $u(t)$ that minimizes the cost function $J$ while satisfying the dynamics of the system \eqref{eq:1_1_dynamics}. This can be expressed mathematically by the value function $V(x)$ defined in the box below.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="value-func">Value function</div>
+<div class="def-window">
+  <div class="def-title" id="value-func">Definition 1.2 - Value function</div>
   <div>
 
   The value function for a continuous time system $V(x)$ is defined as the minimum cost-to-go, starting from state $x$ at time $t$:
@@ -570,6 +603,14 @@ While the LQR provides an elegant and powerful solution for unconstrained linear
 
 Model Predictive Control (MPC) extends the ideas of LQR by explicitly incorporating constraints and optimizing control actions over a finite prediction horizon. MPC can handle multivariable systems, constraints, and even nonlinearity, making it a much more versatile and practical approach for modern control problems. Understanding MPC is therefore essential for advancing in control theory and tackling real-world engineering challenges.
 
+<!-- **TODO: add quiz to reflect on the weights matrices $Q$ and $R$: always diagonal ? what is there impacts ? etc.** -->
+
+<!-- <div class="quiz-window">
+  <div class="quiz-title">Quiz 1.1 - Reflection on weight matrices $Q$ qnd $R$</div>
+
+
+</div> -->
+
 ---
 
 #### The Riccati Equation
@@ -623,8 +664,8 @@ Where $S$ is the solution of the (continuous time) algebraic Riccati equation (C
 
 If we look back only at \eqref{eq:feedback_law_riccati}, we can see that it is only a full state feedback controller, in other words the optimal way to solve the optimization problem is to use a full state feedback controller. But in order to compute the gain matrix $K$, we need go through several steps.
 
-<div class="lemma-window">
-  <div class="lemma-title">Procedure to solve LQR problems</div>
+<div class="def-window">
+  <div class="def-title" id="solve_LQR">Definition 1.3 - Procedure to solve LQR problems</div>
   <div>
     <ol>
       <li>Define the system dynamics: $A$, $B$ (known from the plant)</li>
@@ -691,7 +732,7 @@ In Mathematica, we need to use function like `Transpose`, `Simplify`, and `Inver
 In order to determine which of the solutions for $S$ yield a stable system, we need to compute the gain matrix $K$ for each solution using the formula $K = R^{-1} B^\top S$. Then, we can analyze the closed-loop system dynamics given by $\dot{x}(t) = (A - BK)x(t)$. A system is considered stable if all the eigenvalues of the matrix $(A - BK)$ have negative real parts. We can compute the eigenvalues in Mathematica using the `Eigenvalue` function. By checking the eigenvalues for each solution of $S$, we can identify which one leads to a stable closed-loop system.
 
 <div class="remark-window">
-  <div class="remark-title">Remark</div>
+  <div class="remark-title" id="validity_sol">Remark 1.2</div>
   Mathematically, all the solutions for $S$ are valid, but from an engineering perspective, we are only interested in the solution that yield a stable system.
 </div>
 
@@ -893,8 +934,8 @@ $$
 
 The system is controllable if the controllability matrix $\mathcal{C}$ has full row rank, i.e. $\text{rank}(\mathcal{C}) = n$. If the rank of $\mathcal{C}$ is less than $n$, then the system is not controllable.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="HPB-controllability">Hautus for controllability</div>
+<div class="thm-window">
+  <div class="thm-title" id="HPB-controllability">Theorem 1.1 - Hautus for controllability</div>
   <div>
     Another way to check if a system is controllable is with the <strong>Popov-Belevitch-Hautus (PBH) test</strong>. The PBH test states that the system is controllable if and only if
     
@@ -949,8 +990,8 @@ $$
 
 The system is observable if the observability matrix $\mathcal{O}$ has full column rank, i.e. $\text{rank}(\mathcal{O}) = n$. If the rank of $\mathcal{O}$ is less than $n$, then the system is not observable.
 
-<div class="lemma-window">
-  <div class="lemma-title" id="HPB-observability">Hautus for observability</div>
+<div class="thm-window">
+  <div class="thm-title" id="HPB-observability">Theorem 1.2 - Hautus for observability</div>
   <div>
     The same way as for controllability, we can use the <strong>Popov-Belevitch-Hautus (PBH) test</strong> to check if a system is observable. The PBH test states that the system is observable if and only if
     
@@ -1397,8 +1438,8 @@ In this chapter we study MPC for the case when the state is known. This case is 
 
 **Invariance**
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def-2-1-positive-invariant">Definition 2.1: Positively invariant set</div>
+<div class="def-window">
+  <div class="def-title" id="def-2-1-positive-invariant">Definition 2.1 - Positively invariant set</div>
   <div>
     A set $\mathcal{X} \subseteq \mathbb{R}^{n_x}$ is positively invariant under the dynamics defined by
     \[
@@ -1419,8 +1460,8 @@ In this chapter we study MPC for the case when the state is known. This case is 
 
 The invariant set will provide a set of initial states for which the trajectories will never violate the system constraints. In order to increase the applicability of the MPC algorithm, and in particular to increase the size of the set of initial conditions $x_{0}$ for which the terminal condition $x_{N} \in \mathcal{X}_T$ can be met, it is important to choose the maximal positively invariant set as the terminal constraint set. This set is defined as follows. 
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def-2-2-max-positive-invariant">Definition 2.2: Maximal positively invariant set</div>
+<div class="def-window">
+  <div class="def-title" id="def-2-2-max-positive-invariant">Definition 2.2 - Maximal positively invariant set</div>
   <div>
     The maximal positively invariant (MPI) set under the dynamics of \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} is the union of all sets that are positively invariant under these dynamics and constraints. We will denote this set as $\mathcal{X}_\infty$ of $\mathcal{X}^{\text{MPI}}$.
   </div>
@@ -1432,8 +1473,8 @@ The invariant set will provide a set of initial states for which the trajectorie
   </figure>
 </div>
 
-<div class="lemma-window">
-  <div class="lemma-title" id="th-2-1">Theorem 2.1</div>
+<div class="thm-window">
+  <div class="thm-title" id="th-2-1">Theorem 2.1</div>
   <div>
   The MPI set for the dynamics defined by \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} can be expressed
   \[
@@ -1473,8 +1514,8 @@ The invariant set will provide a set of initial states for which the trajectorie
 
 **Pre-Sets**
 
-<div class="lemma-window">
-  <div class="lemma-title" id="def-2-3-pre-set">Pre Set</div>
+<div class="def-window">
+  <div class="def-title" id="def-2-3-pre-set">Definition 2.3 - Pre Set</div>
   <div>
   Given a set $\mathcal{X}$ and the system describe by the dynamic \eqref{eq:constraints}, the <strong>pre-set</strong> of $\mathcal{X}$ is the of states that evolve into the target set $\mathcal{X}$ in one step:
   \[
@@ -1514,8 +1555,8 @@ Consider the phase diagram below, which shows the target set $T$, the pre-set of
   </figure>
 </div>
 
-<div class="lemma-window">
-  <div class="lemma-title">Theorem 2.2: Geometric condition for invariance</div>
+<div class="thm-window">
+  <div class="thm-title">Theorem 2.2: Geometric condition for invariance</div>
   <div>
   A set $\mathcal{X}$ is positively invariant under the dynamics defined by \eqref{eq:u_control} and \eqref{eq:x_dynamics} and the constraints \eqref{eq:constraints} if and only if $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$.
   </div>
@@ -1551,8 +1592,8 @@ _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\te
 
 **Controlled Invariance**
 
-<div class="lemma-window">
-  <div class="lemma-title">Control invariant set</div>
+<div class="def-window">
+  <div class="def-title">Definition 2.4 - Control invariant set</div>
   <div>
   A set $\mathcal{C} \in \mathbb{X}$ is said to be a controlled invariant set if 
   \[
@@ -1563,8 +1604,8 @@ _Note that $\mathcal{X} \subseteq \text{pre}(\mathcal{X})$ is equivalent to $\te
 
 This defines the states for which there exist a **controller** that will satisfy the constraints at all time.
 
-<div class="lemma-window">
-  <div class="lemma-title">Maximal control invariant set</div>
+<div class="def-window">
+  <div class="def-title">Definition 2.5 - Maximal control invariant set</div>
   <div>
   The set $\mathcal{C}_\infty$ is said to be the maximal control invariant set for the system $x^+=f(x,u)$ subject to the constraints $(x,u)\in \mathbb{X}\times\mathbb{U}$ if it is control invariant and contains all control invariant sets contained in $\mathbb{X}$.
   </div>
@@ -1595,7 +1636,7 @@ That's where MPC comes into play, we will use MPC to approximate the control inv
 
 ---
 
-#### Model Predictive Control
+#### MPC Core Principles
 
 To study model predictive control, we consider the following system dynamics
 <div>
@@ -1638,8 +1679,8 @@ The goal of the optimal control problem is to find a control law
 that minimizes the cost function while satisfying the system dynamics and constraints, from which the input $u^{\*}_0$ will be applied to the system.
 
 The optimal control problem is defined as follows:
-<div class="lemma-window">
-  <div class="lemma-title">Infinite horizon optimal control problem</div>
+<div class="def-window">
+  <div class="def-title">Definition 2.6 - Infinite horizon optimal control problem</div>
   <div>
     \[
       \tag{2.3.3} \label{eq:infinite_horizon_ocp}
@@ -1687,8 +1728,8 @@ In this example we consider a simple linear system with a time horizon of 1 and 
 * The equality constraints (model) allows to eliminate $x_1$
 * Convex problem $\Rightarrow$ KKT conditions are necessary and sufficient
 
-<div class="lemma-window">
-  <div class="lemma-title">KKT conditions (only inequalities)</div>
+<div class="def-window">
+  <div class="def-title">Definition 2.7 - KKT conditions (only inequalities)</div>
   <div>
     The KKT conditions are given by
     <div>
@@ -1767,10 +1808,8 @@ The optimal control law is therefore given by
 
 #### Stability and Convergence
 
-<!-- ### Lyapunov analysis -->
-
-<div class="lemma-window">
-  <div class="lemma-title">Stable equilibrium</div>
+<div class="def-window">
+  <div class="def-title">Defintion 2.8 - Stable equilibrium</div>
   <div>
   The equilibrium point $x=0$ pf the system $x^+=f(x,u)$ is said to be stable if a small perturbation of the state perturbs the state trajectory in a continuous way. More formally:
 
@@ -1786,9 +1825,152 @@ The optimal control law is therefore given by
   </div>
 </div>
 
+<div class="def-window">
+  <div class="def-title">Definition 2.9 - Feasibility set</div>
+  The feasibility set $\mathcal{X}_N$ is the set of all initial states $x_0$ for which the finite horizon optimal control problem \eqref{eq:finite_horizon_ocp} with horizon N is feasible.
+  <div>
+  \[
+    \mathcal{X}_N \: \colon = \{ x_0 \: \mid \: \exists u_0, \cdots, u_{N-1} \text{ such that } Cu_1+Bx_i < b, i=1, \cdots, N \}
+  \]
+  </div>
+</div>
+
+You can see below an example of a feasibility set for the system with dynamics $x^+=Ax+Bu$ subject to the constraints $-1 \leq x/8 \leq 1$ and $-1 \leq u \leq 1$ with
+<div>
+\[
+  A = \begin{bmatrix} 1.1 & 2 \\ 0 & 0.95 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 0.0787 \end{bmatrix}, \quad C = \begin{bmatrix} -1 & 1 \end{bmatrix}
+\]
+</div> 
+
+<div class="images">
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/MPC/Terminal_set_example.png" alt="Feasibility set" width="500"/>
+  </figure>
+</div>
+
+In order to guarantee stability and feasibility of the MPC controller, we need to introduce a terminal cost $V_f(x)$ and a terminal constraint set $\mathcal{X}_f$.
+
+<div>
+\[
+J^*(x) = \min_{x,u} \sum_{t=0}^{N-1} x_i^\top Q x_i + u_i^\top R u_i + \boxed{x_N^\top P x_N} \\
+\]
+\begin{aligned}
+\text{s.t.} \qquad x_{i+1} &= A x_i + B u_i \\
+C x_i + D u_i & \leq b \\
+x_N & \in \boxed{\mathcal{X}_f} \\
+x_0 &= x
+\end{aligned}
+</div>
+With $x_N^\top P x_N$ the terminal cost $V_f(x)$ and $\mathcal{X}_f$ the terminal constraint set. The values of $P$ and $\mathcal{X}_f$ are chosen to simulate an infinite horizon.
+
+Using a finite horizon $N$, also called a "short sight" strategy, causes deviation between the open-loop prediction and the actual closed-loop trajectory. This deviation can lead to instability if not properly addressed. It is to mitigate this issue that we have introduced the terminal cost and the terminal constraint set. In an ideal scenario, with infinite computational resources, we would solve the infinite horizon optimal control problem directly, eliminating the need for these terminal components. However, since this is not feasible in practice, we rely on the terminal cost and constraint set to approximate the infinite horizon behavior and ensure stability.
+
+In order to choose appropriate values for the terminal cost, we can devide the infinite horizon cost function into two parts: the finite horizon part and the tail part. The tail part can be view as an unconstrained LQR problem starting from state $x_N$. The terminal constraint set can be chosen as a control invariant set for the system under a stabilizing control law, such as the linear quadratic regulator (LQR) control law.
+
+The first part where the constrains are active is given by the finite horizon cost function:
+<div>
+\[
+  J(x) = \min_{x,u} \sum_{t=0}^{N-1} x_i^\top Q x_i + u_i^\top R u_i
+\]
+\begin{aligned}
+\text{s.t.} \qquad x_{i+1} &= A x_i + B u_i \\
+C x_i + D u_i & \leq b \\
+x_0 &= x
+\end{aligned}
+</div>
+
+The second part where the constrains are inactive is given by the tail cost function:
+<div>
+\[
+  J_N(x) = \min_{x,u} \sum_{t=N}^{\infty} x_i^\top Q x_i + u_i^\top R u_i = x_N^\top P x_N
+\]
+\begin{aligned}
+\text{s.t.} \qquad x_{i+1} &= A x_i + B u_i \\
+\end{aligned}
+</div>
+where $P$ is the solution of the discrete-time algebraic Riccati equation for the unconstrained LQR problem. The tail is also bounded from $N$ to $+\infty$ if we apply the LQR control law $u=K_{LQR}x$ with $K$ the LQR gain.
+
+Then, our original infinite horizon cost function can be recontructed as:
+<div>
+\[
+  J^*(x) = J(x) + J_N(x)
+\]
+</div>
+
+The goal is to obtain feasibility of the closed loop system at all time steps.
+
+<div class="def-window">
+  <div class="def-title">Theorem 2.3 - Recursive feasibility</div>
+  <div>
+  If for all fesible initial states $x_0 \in \mathcal{X}_N$, the feasibility of the finite horizon control problem is guaranted at all subsequent time steps $k=1,2,\cdots$ when applying the MPC control law $u=\kappa_{MPC}(x)$, then the MPC controller is said to be recursively feasible.
+  </div>
+</div>
+
+In order to show recursive feasibility, we need to show that if the finite horizon optimal control problem is feasible at time step $k$, then it is also feasible at time step $k+1$ when applying the MPC control law. To do this, we first consider the terminal constraint $x_N=0$ and show that the cost function decreases at each time step, in other words, we show that $J^\*(x_{k+1}) - J^\*(x_k) \leq 0$.
+
+<div>
+\begin{aligned}
+J^*(x_0) &= \sum_{=0}^{N-1} \ell(x_i^*,u_i^*) \\
+J^*(x_1) &\leq \sum_{i=1}^{N} \ell(x_i^*,u_i^*) = \sum_{i=0}^{N-1} \ell(x_i^*,u_i^*) - \ell(x_0,u_0^*) + \ell(x_N,u_N) \\
+&= J^*(x_0) - \ell(x_0,u_0^*) + \ell(0,0) \\
+\Rightarrow J^*(x_1) - J^*(x_0) &\leq - \ell(x_0,u_0^*) \leq 0
+\end{aligned}
+</div>
+
+However, the terminal constraint $x_N=0$ is often too restrictive, so we consider a more general terminal constraint $x_N \in \mathcal{X}_f$. Under the assumption that there exists a control law $\kappa_f(x)$ such that the set $\mathcal{X}_f$ is control invariant under the dynamics $x^+=f(x,\kappa_f(x))$, and that the terminal cost $V_f(x)$ is a Lyapunov function decreasing along the trajectories of the system under the control law $\kappa_f(x)$ ($V_f(x^+)-V_f(x)\leq-\ell(x,\kappa_f(x))$ for all $x\in\mathcal{X}_f$), we can show that the cost function decreases at each time step.
+
+<div>
+\begin{aligned}
+J^*(x_0) &= \sum_{=0}^{N-1} \ell(x_i^*,u_i^*) + V_f(x_N^*) \\
+J^*(x_1) &\leq \sum_{i=1}^{N-1} \ell(x_i^*,u_i^*) + \ell(x_N^*,\kappa_f(x_N^*)) + V_f(x^+) \\
+&= J^*(x_0) - \ell(x_0,u_0^*) + \ell(x_N^*,\kappa_f(x_N^*)) + V_f(x^+) - V_f(x_N^*) \\
+\Rightarrow J^*(x_1) - J^*(x_0) &\leq - \ell(x_0,u_0^*) + \ell(x_N^*,\kappa_f(x_N^*)) + V_f(x^+) - V_f(x_N^*) \\
+&\leq - \ell(x_0,u_0^*) \leq 0
+\end{aligned}
+</div>
+
+This analysis shows that the optimal MPC cost $J^\*(x)$ can be used as a Lyapunov function for the closed-loop system. By introducing an appropriate terminal cost and a control-invariant terminal set, the finite-horizon optimization problem is made to mimic the infinite-horizon behavior. The decrease of the optimal cost along closed-loop trajectories guarantees recursive feasibility and ensures stability of the equilibrium. In particular, while the terminal constraint $x_N = 0$ provides a simple proof of cost decrease, the more general terminal set $x_N \in \mathcal{X}_f$ together with a stabilizing terminal controller and a Lyapunov-type terminal cost yields the same stability and convergence properties in a less restrictive and more practical framework.
+
 ---
 
-#### Examples of MPC
+#### Example of MPC algorithm
+
+The following video present a visual representation of a live computing MPC controller for trajectory tracking, velocity control and moving obstacle avoidance.
+
+<iframe width="735" height="413" src="https://www.youtube.com/embed/oC0RnkdP-jo?si=iMz8VSuXtDZ8eEA0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+To illustrate the implementation of a basic MPC algorithm, we consider the problem of trajectory tracking for a mobile robot. Consider a differential-drive robot whose linearized dynamics around a reference trajectory are given by
+
+<div>
+\[
+\mathbf{x}^+ = A\mathbf{x} + B\mathbf{u}
+\]
+</div>
+
+where $\mathbf{x} = [x, y, \theta]^T$ represents the deviation from the reference position $(x, y)$ and orientation $\theta$, and $\mathbf{u} = [v, \omega]^T$ denotes the control inputs (linear and angular velocities). The matrices $A$ and $B$ depend on the reference trajectory and the sampling time $T_s$. The control objective is to drive the robot to track the reference trajectory while respecting physical constraints on velocities and accelerations.
+
+The MPC problem is formulated as follows. At each time step $k$, we solve the finite-horizon optimal control problem
+
+<div>
+\[
+\mathbb{P}_N(\mathbf{x}(k)) : \min_{\mathbf{u}(0), \ldots, \mathbf{u}(N-1)} V_f(\mathbf{x}(N)) + \sum_{i=0}^{N-1} \ell(\mathbf{x}(i), \mathbf{u}(i))
+\]
+</div>
+
+subject to the dynamics $\mathbf{x}(i+1) = A\mathbf{x}(i) + B\mathbf{u}(i)$ for $i = 0, \ldots, N-1$, with initial condition $\mathbf{x}(0) = \mathbf{x}(k)$. The stage cost is chosen as $\ell(\mathbf{x}, \mathbf{u}) = (1/2)(\mathbf{x}^T Q \mathbf{x} + \mathbf{u}^T R \mathbf{u})$ where $Q = \text{diag}(q_x, q_y, q_\theta) \succ 0$ and $R = \text{diag}(r_v, r_\omega) \succ 0$ are positive definite weighting matrices that encode the relative importance of tracking accuracy versus control effort. The control constraints are $\mathbf{u} \in \mathbb{U} := \{[v, \omega]^T : \mid v\mid  \leq v_{\max}, \mid \omega\mid  \leq \omega_{\max}\}$, representing the physical limitations of the robot's actuators. The terminal cost is $V_f(\mathbf{x}) = (1/2)\mathbf{x}^T P \mathbf{x}$ where $P \succ 0$ is obtained by solving the discrete-time algebraic Riccati equation (DARE) 
+
+<div>
+\[
+A^T P A - P + Q - A^T P B(R + B^T P B)^{-1}B^T P A = 0
+\]
+</div>
+
+This choice of terminal cost corresponds to the infinite-horizon LQR cost-to-go for the unconstrained system. To ensure feasibility and stability, we impose the terminal constraint $\mathbf{x}(N) \in \mathbb{X}_f$, where $\mathbb{X}_f$ is a positively invariant set for the system under the unconstrained LQR control law $\mathbf{u} = K\mathbf{x}$ with $K = -(R + B^T P B)^{-1}B^T P A$.
+
+The solution procedure proceeds as follows. First, we compute offline the terminal ingredients $P$, $K$, and $\mathbb{X}_f$. The DARE is solved using standard numerical methods to obtain $P$, from which the LQR gain $K$ follows immediately. The maximal positively invariant set $\mathbb{X}_f$ within the constraint set $\mathbb{U}$ under the control law $\mathbf{u} = K\mathbf{x}$ can be computed using iterative methods or approximated by an ellipsoid $\mathbb{X}_f = \{\mathbf{x} : \mathbf{x}^T P \mathbf{x} \leq \alpha\}$ for sufficiently small $\alpha > 0$. At each time step $k$ during online operation, we measure or estimate the current state $\mathbf{x}(k)$ and solve the optimization problem $\mathbb{P}_N(\mathbf{x}(k))$ using quadratic programming (QP) techniques, since the problem is convex with quadratic cost and linear constraints. Let $\{\mathbf{u}^\*(0\mid k), \mathbf{u}^\*(1\mid k), \ldots, \mathbf{u}^\*(N-1\mid k)\}$ denote the optimal control sequence. According to the receding horizon principle, we apply only the first control $\kappa_N(\mathbf{x}(k)) := \mathbf{u}^\*(0\mid k)$ to the system, discard the remainder of the sequence, and repeat the process at time $k+1$ with the new state measurement. The value function $V_N^0(\mathbf{x}(k))$ corresponding to the optimal cost provides a Lyapunov function that certifies stability of the closed-loop system. Specifically, it can be shown that $V_N^0(\mathbf{x}(k+1)) - V_N^0(\mathbf{x}(k)) \leq -\ell(\mathbf{x}(k), \kappa_N(\mathbf{x}(k)))$, ensuring that the value function decreases along trajectories and thus the origin is asymptotically stable.
+
+For the robot trajectory tracking problem, this MPC strategy ensures that tracking errors are driven to zero while respecting velocity constraints, demonstrating the power of MPC to handle constraints systematically. An extension of this formulation to include obstacle avoidance constraints is straightforward and represents a natural direction for more advanced applications in robotic navigation.
 
 ---
 
@@ -1849,65 +2031,553 @@ $$
 
 </details>
 
+**Exercise 2.2:**
+
+A first-order system with the discrete time model $x_{k+1}=1.5x_k+u_k$ is to be controlled using a predictive controller that minimizes the predicted performance
+$$J(x_k, u_{0|k}, u_{1|k}) = \sum_{i=0}^{1}\left(x_{i|k}^2 + 10u_{i|k}^2\right) + qx_{2|k}^2$$
+where $q$ is a positive constant and the value $x_{i∣k}​$ represnet a prediction made at time $k$ for $i$ steps in the future.
+
+(a) Show that the unconstrained predictive control law is $u_k=-0.35x_k$ if $q=1$.
+
+(b) The unconstrained optimal control law with respect to the infinite horizon cost $\sum_{k=0}^{\infty}\left(x_k^2 + 10u_k^2\right)$ is $u_k=-0.88x_k$. Determine the value of $q$ so that the unconstrained predictive control law coincides with the LQ optimal control law.
+
+(c) The predicted cost is to be minimized subject to the input constraints $-0.5 \leq u_{i\|k} \leq 1$. If the predicted inputs are defined as $u_{i\|k}=-0.88x_{i\|k}$, for all $i\geq2$, show that the MPC optimization problem is guaranteed to be recursively feasible if $u_{i\|k}$ satisfies these constarints for $i=0,1$ and $2$.
+
+<details markdown="1">
+  <summary><strong>Solution</strong></summary>
+<div markdown="1">
+
+**(a)** Starting from current state $x_k$, we predict future states for $i=0,1,2$:
+
+$$
+x_{0|k} = x_k
+$$
+
+$$
+x_{1|k} = 1.5x_{0|k} + u_{0|k} = 1.5x_k + u_{0|k}
+$$
+
+$$
+x_{2|k} = 1.5x_{1|k} + u_{1|k} = 2.25x_k + 1.5u_{0|k} + u_{1|k}
+$$
+
+Using the predicted states, the cost function can be expressed as:
+
+$$
+J = x_k^2 + 10u_{0|k}^2 + x_{1|k}^2 + 10u_{1|k}^2 + x_{2|k}^2
+$$
+
+$$
+J = x_k^2 + 10u_{0|k}^2 + (1.5x_k + u_{0|k})^2 + 10u_{1|k}^2 + (2.25x_k + 1.5u_{0|k} + u_{1|k})^2
+$$
+
+$$
+J = 8.3125x_k^2 + 13.25u_{0|k}^2 + 11u_{1|k}^2 + 9.75x_ku_{0|k} + 4.5x_ku_{1|k} + 3u_{0|k}u_{1|k}
+$$
+
+To find the optimal control inputs, we need to optimize the cost function with respect to the control inputs $u_{0\|k}$ and $u_{1\|k}$, i.e., we need to solve the following equations:
+
+$$
+\frac{\partial J}{\partial u_{0|k}} = 26.5u_{0|k} + 9.75x_k + 3u_{1|k} = 0
+$$
+$$
+\frac{\partial J}{\partial u_{1|k}} = 22u_{1|k} + 4.5x_k + 3u_{0|k} = 0
+$$
+
+Solving for $u_{0\|k}$, we obtain:
+$$u_{0|k} = -\frac{201}{574}x_k = -0.35x_k$$
+
+**Result:** 
+$$\boxed{u_k = -0.35x_k}$$
+This confirms the unconstrained predictive control law when $q = 1$.
+
+**(b)** The infinite horizon LQ optimal control with cost:
+$$\sum_{k=0}^{\infty}(x_k^2 + 10u_k^2)$$
+
+yields the control law:
+$$u_k = -0.88x_k$$
+
+We first use the LQ theory, for the discrete-time system $x_{k+1} = Ax_k + Bu_k$ with cost $\sum(x_k^TQx_k + u_k^TRu_k)$:
+
+- $A = 1.5$, $B = 1$
+- $Q = 1$, $R = 10$
+
+The optimal control is then $u_k = -Kx_k$, where $K = (R + B^TP B)^{-1}B^TPA$ and $P$ satisfies the Discrete Algebraic Riccati Equation (DARE):
+
+$$P = Q + A^TPA - A^TPB(R + B^TPB)^{-1}B^TPA$$
+
+We need to compute $P$ using the system parameters:
+$$P = 1 + 2.25P - \frac{2.25P^2}{10 + P}$$
+
+$$P(10 + P) = (10 + P) + 2.25P(10 + P) - 2.25P^2$$
+
+$$10P + P^2 = 10 + P + 22.5P + 2.25P^2 - 2.25P^2$$
+
+$$10P + P^2 = 10 + 23.5P$$
+
+$$P^2 - 13.5P - 10 = 0$$
+
+Using the quadratic formula:
+$$P = \frac{13.5 \pm \sqrt{182.25 + 40}}{2} = \frac{13.5 \pm \sqrt{222.25}}{2} = \frac{13.5 \pm 14.908}{2}$$
+
+Taking the positive root:
+$$P = \frac{28.408}{2} = 14.204$$
+
+Now that we have $P$, we can compute $K$:
+
+$$K = \frac{B^TPA}{R + B^TPB} = \frac{1 \times 14.204 \times 1.5}{10 + 1 \times 14.204 \times 1} = \frac{21.306}{24.204} = 0.88$$
+
+This confirms $u_k = -0.88x_k$.
+
+Finally, to find $q$ such that the predictive control law matches the LQ optimal control law, we set up the cost function with general $q$ and derive the optimal control law as in part (a).
+
+For the predictive control law to match, we need:
+$$u_{0|k} = -0.88x_k$$
+
+Following similar derivation as part (a) but with general $q$:
+
+The cost function is:
+$$J = x_k^2 + 10u_{0|k}^2 + (1.5x_k + u_{0|k})^2 + 10u_{1|k}^2 + q(2.25x_k + 1.5u_{0|k} + u_{1|k})^2$$
+
+After expanding and taking derivatives, setting $\frac{\partial J}{\partial u_{0\|k}} = 0$ and $\frac{\partial J}{\partial u_{1\|k}} = 0$, then solving for $u_{0\|k}$, we get a relationship between the control gain and $q$.
+
+Through numerical solution or matching coefficients with the condition that $u_{0\|k} = -0.88x_k$:
+
+$$\boxed{q \approx 14.204}$$
+
+**(c)** Given Constraints
+$$-0.5 \leq u_{i\|k} \leq 1$$
+
+and the predicted inputs defined as:
+
+For $i \geq 2$:
+$$u_{i\|k} = -0.88x_{i\|k}$$
+
+We first need to verify the initial constraints for $i=0,1,2$. If those are satisfied, we can show recursive feasibility and then the MPC problem remains feasible for all future time steps. Using the control law for $i \leq 2$ defined above, we analyze the state evolution:
+
+$$x_{1\|k} = 1.5x_k + u_{0\|k}$$
+
+$$x_{2\|k} = 1.5x_{1\|k} + u_{1\|k} = 1.5(1.5x_k + u_{0\|k}) + u_{1\|k}$$
+
+$$x_{3\|k} = 1.5x_{2\|k} + u_{2\|k} = 1.5x_{2\|k} - 0.88x_{2\|k} = 0.62x_{2\|k}$$
+
+
+We observe that for $i \geq 2$, since $u_{i\|k} = -0.88x_{i\|k}$ and the system evolves as:
+
+$$x_{i+1\|k} = 1.5x_{i\|k} + u_{i\|k} = 1.5x_{i\|k} - 0.88x_{i\|k} = 0.62x_{i\|k}$$
+
+The state converges to zero geometrically: $\|x_{i+1\|k}\| = 0.62\|x_{i\|k}\|$ We can deduce then that if $u_{2\|k} = -0.88x_{2\|k}$ satisfies the constraints:
+
+$$-0.5 \leq -0.88x_{2\|k} \leq 1$$
+
+It means:
+
+$$-\frac{1}{0.88} \leq x_{2\|k} \leq \frac{0.5}{0.88}$$
+$$-1.136 \leq x_{2\|k} \leq 0.568$$
+
+For all $i > 2$:
+$$\|x_{i\|k}\| = 0.62^{i-2}\|x_{2\|k}\| \leq 0.62^{i-2} \times \max(1.136, 0.568)$$
+
+Since $0.62 < 1$, the states decay exponentially, so:
+$$\|u_{i\|k}\| = 0.88\|x_{i\|k}\| \leq 0.88 \times 0.62^{i-2}\|x_{2\|k}\|$$
+
+**Answer:**
+
+**If** $u_{0\|k}$, $u_{1\|k}$, and $u_{2\|k}$ satisfy the constraints $[-0.5, 1]$, **then**:
+
+1. All future states $x_{i\|k}$ for $i > 2$ decay exponentially
+2. All future controls $u_{i\|k} = -0.88x_{i\|k}$ for $i \geq 2$ also decay exponentially
+3. Since $\|u_{2\|k}\| \leq 1$ (the tightest constraint), we have:
+   $$\|u_{i\|k}| \leq 0.62^{i-2}\|u_{2\|k}\| \leq 0.62^{i-2} \times 1 < 1$$ for all $i > 2$
+4. Similarly, $\|u_{i\|k}\| < 0.5$ will eventually be satisfied for large enough $i$
+
+$$\boxed{\text{The MPC problem is recursively feasible if } u_{0\|k}, u_{1\|k}, u_{2\|k} \in [-0.5, 1]}$$
+
+The key insight is that the closed-loop system with $u = -0.88x$ is stable (eigenvalue = 0.62 < 1), so states and controls converge to zero. Once the first three controls satisfy the constraints, the exponential decay guarantees all future predicted controls will remain within the feasible region.
+</div>
+</details>
+
 ---
 
-### Robust MPC  - In Progress
+### Robust MPC
 [See notations](#notations)
-
----
 
 #### Introduction
 
----
+The MPC formulation presented in the previous sections relies on the assumption that the system model is perfectly known and that no disturbances affect the system dynamics. In practice, however, this assumption is rarely satisfied. Real systems are subject to model uncertainties arising from linearization errors, parameter variations, unmodeled dynamics, and external disturbances such as ground friction variations, sensor noise, or environmental interactions. For instance, a mobile robot navigating outdoors may experience wheel slippage, wind gusts, or terrain irregularities that cannot be captured by a nominal model. 
 
-#### A Game Theoretic Approach
+When such uncertainties are present, the nominal MPC controller may fail to maintain constraint satisfaction or stability guarantees, as the predicted trajectories deviate from the actual system behavior. Robust MPC addresses these challenges by explicitly accounting for uncertainties in the problem formulation, ensuring that constraints are satisfied and stability is preserved for all possible realizations of the uncertainty within a specified set. The key idea is to replace the deterministic optimization problem with one that considers the worst-case scenario over all admissible uncertainties, thereby providing guarantees that hold under all conditions rather than only for the nominal model.
 
----
-
-#### Prediction Dynamics in Robust MPC
+Robust control can be achieved through various approaches, including min-max optimization, tube-based methods, and scenario-based techniques. Each approach has its own advantages and trade-offs in terms of computational complexity, conservatism, and ease of implementation. In this section, we will explore the fundamental concepts of tube MPC, focusing on tube-based methods due to their balance between performance and computational tractability. This section should be seen as an introduction to robust MPC, and we will not cover all possible robust MPC formulations in detail. 
 
 ---
 
-#### Robust Min-Max MPC
+#### Uncertainty Modeling and Tube MPC
+
+**Uncertainty Modeling**
+
+The need to use robust MPC arises from the presence of uncertainties in the system dynamics and external disturbances. However, uncertainties can be modeled in various ways, depending on the nature of the system and the available information. In this section, we will explore different possible uncertainties that can affect the system and how they can be represented mathematically.
+
+First, we consider additive disturbances that affect the system dynamics. The system can be modeled as:
+<div>
+\[
+  x_{k+1}=f(x_k,u_k,w_k)
+\]
+</div>
+where $w_k$ represents the disturbance at time step $k$. If the disturbance $w$ is bounded within a known set $\mathcal{W}$, it is often possible to design a robust MPC controller that guarantees constraint satisfaction for all possible disturbances within this set. In that case, the model predictive controller is designed to ensure that the constraints are on average satisfied for all possible disturbances $w_k \in \mathcal{W}$, or that the constraints are satisfied with a prespecified probability if the disturbance is stochastic. However, if the disturbance is unbounded or has unknown characteristics, it becomes impossible to guarantee constraint satisfaction for all possible disturbances. In such cases, alternative approaches such as stochastic MPC or adaptive MPC may be more appropriate.
+
+Additionally, uncertainties can also arise from the state measurements. In many practical scenarios, the state of the system may not be directly measurable, and instead, we have access to noisy measurements of the state. This can be modeled as:
+<div>
+\[
+  x_{k+1}=f(x_k+e,u_k,w_k)=f(\hat{x}_k,u_k,w_k)
+\]
+</div>
+where $e$ denotes the measurement error. In this case, the model predictive controller must be designed to account for the uncertainty in the state measurements and ensure that the constraints are satisfied for all possible states within a certain confidence interval. One approach to handle measurement uncertainties is to use state estimation techniques, such as Kalman filtering or moving horizon estimation, to obtain a more accurate estimate of the state (denoted $\hat{x}$). The estimated state can then be used in the MPC formulation to ensure constraint satisfaction. In controlling the state estimate $\hat{x}$, we should ensure that the true state $x$ remains within a certain bound of the estimate $\hat{x}$, i.e., $x \in \hat{x} \oplus \mathcal{E}$, where $\mathcal{E}$ is a set representing the uncertainty in the state estimate.
+
+Finally, uncertainties can also arise from the model parameters. In many practical scenarios, the system model may not be perfectly known, and instead, we have access to a nominal model with uncertain parameters. This can be modeled as:
+<div>
+\[
+  x_{k+1}=f(x_k,u_k,\theta)
+\]
+</div>
+where $\theta$ represents the uncertain parameters. In this case, the model predictive controller must be designed to account for the uncertainty in the model parameters and ensure that the constraints are satisfied for all possible parameter values within a certain range. One approach to handle parameter uncertainties is to use robust optimization techniques, such as min-max optimization or scenario-based optimization, to obtain a control law that is robust to parameter variations.
+
+**Tube MPC Formulation**
+
+Tube MPC is a popular approach for robust MPC that involves designing a nominal MPC controller based on a nominal model of the system and then using a feedback controller to keep the actual system state within a tube around the nominal trajectory. The tube is designed to account for the uncertainties in the system dynamics and ensure that the constraints are satisfied for all possible realizations of the uncertainty within a specified set.
+
+In the figure below, we illustrate the concept of Tube MPC. The nominal trajectory is represented by the blue line. The tube around the nominal trajectory represents the set of possible states that the actual system can reach under the influence of uncertainties at each time steps. Those tubes set ($\mathcal{X}_0, \mathcal{X}_1, \ldots, \mathcal{X}_N$) are designed based on the initial state $x$ and the system policy $\mu$. Determining a suitable tube is diffivult even for linear systems, hence we use for robust MPC simple tubes that bound all realizations of the state trajectory. This construction allows for the robust model predictive controller to be designed with only minor additional online computational complexity compared to the nominal MPC controller.
+
+<div class="images">
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/MPC/Tube_MPC_ill.png" alt="Tube MPC illustration" width="450"/>
+    <figcaption style="text-align: center;">Figure 6.1: Tube MPC illustration</figcaption>
+  </figure>
+</div>
+
+#### Key Mathematical Elements of Tube MPC
+
+To formalize the Tube MPC approach, we introduce several key mathematical concepts that enable robust constraint satisfaction and recursive feasibility guarantees.
+
+**Constraint Tightening**
+
+The fundamental principle of Tube MPC is to plan the nominal trajectory using tightened constraints that account for possible deviations. Given state constraints $\mathbb{X}$ and input constraints $\mathbb{U}$, the nominal trajectory must satisfy:
+
+$$\bar{x}_k \in \mathbb{X} \ominus \mathcal{Z}, \quad \bar{u}_k \in \mathbb{U} \ominus K\mathcal{Z}$$
+
+where $\ominus$ denotes the _Pontryagin_ set difference, defined as
+$$
+\mathcal{A} \ominus \mathcal{B} := \{\, a \in \mathcal{A} \mid a + b \in \mathcal{A}\ \text{for all } b \in \mathcal{B} \,\}
+$$
+(See Figure [6.2](#pontryagin_set_diff)). This operation ensures that when the actual state deviates from the nominal by any element in $\mathcal{Z}$, the true constraints are still satisfied: $x_k \in \mathbb{X}$ and $u_k \in \mathbb{U}$ for all possible disturbance realizations.
+
+<div class="images" id="pontryagin_set_diff">
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/MPC/Pontryagin_illustration.png" alt="Pontryagin set difference illustration" width="450"/>
+    <figcaption style="text-align: center;">Figure 6.2: Pontryagin set difference illustration</figcaption>
+  </figure>
+</div>
+
+**Robust Invariant Sets**
+
+ The tube cross-section $\mathcal{Z}$ is constructed as a robust positively invariant (RPI) set for the error dynamics. Consider the error between actual and nominal state: $e_k = x_k - \bar{x}_k$. Under the feedback control law $u_k = \bar{u}_k + Ke_k$, the error evolves according to:
+
+$$e_{k+1} = (A + BK)e_k + w_k$$
+
+where $w_k \in \mathbb{W}$ represents bounded disturbances. The set $\mathcal{Z}$ is RPI if $e_k \in \mathcal{Z}$ implies $e_{k+1} \in \mathcal{Z}$ for all $w_k \in \mathbb{W}$. This property ensures that once the error enters the tube, it remains bounded within the tube cross-section throughout the prediction horizon. In practice, we often use the minimal RPI (mRPI) set, which is the smallest set satisfying this property, or approximate it using finite-time reachable sets for computational tractability.
+
+**Control Law Structure**
+
+ The overall control applied to the system combines the nominal control with a corrective feedback term:
+
+$$u_k = \bar{u}_k + K(x_k - \bar{x}_k)$$
+
+The feedback gain $K$ is designed to stabilize the error dynamics $(A + BK)$ and is typically computed offline. Common choices include LQR gains or gains designed to minimize the size of the RPI set $\mathcal{Z}$. This separation between nominal planning and feedback correction is what enables Tube MPC to maintain computational efficiency while providing robustness guarantees.
+
+**Terminal Ingredients** 
+
+Similar to nominal MPC, Tube MPC requires a terminal constraint set $\mathbb{X}_f$ and terminal cost $V_f(\cdot)$ to guarantee recursive feasibility and stability. The nominal terminal state must satisfy $\bar{x}_N \in \mathbb{X}_f \ominus \mathcal{Z}$ to ensure that the actual terminal state $x_N \in \mathbb{X}_f$ for all disturbance realizations. The terminal set is typically chosen as a robust control invariant set under a local controller, ensuring that feasibility at time $k$ implies feasibility at time $k+1$.
+
+**Recursive Feasibility** 
+
+A key advantage of Tube MPC is that it provides hard guarantees on constraint satisfaction. If the optimization problem is feasible at time $k=0$, it remains feasible for all future times under the tube-based control law, provided the disturbances remain within $\mathbb{W}$. This property follows from the combination of:
+1. the RPI property of $\mathcal{Z}$ ensuring bounded error propagation,
+2. the tightened constraints providing a safety margin,
+3. the terminal set ensuring a feasible continuation beyond the horizon.
+
+**Stability Under Uncertainty** 
+
+The stability properties of Tube MPC mirror those of nominal MPC, but with robustness to bounded disturbances. Under standard assumptions on the cost function (stage cost positive definite, terminal cost a Lyapunov function) and terminal ingredients, the closed-loop system is input-to-state stable (ISS) with respect to the disturbance set $\mathbb{W}$. This means the system state is ultimately bounded in a neighborhood of the origin, with the size of this neighborhood depending on the disturbance magnitude.
 
 ---
 
-#### To go further - Tube MPC
+#### Illustrative Example: Exothermic Reaction
 
----
+In this section, we demonstrate the application of Tube MPC to a classical chemical engineering problem: temperature and concentration control in a continuous stirred-tank reactor (CSTR) with an exothermic chemical reaction. This example, adapted from Rawlings, Mayne, and Diehl (2022) and based on the model by Hicks and Ray (1971) as modified by Kameswaran and Biegler (2006), illustrates how Tube MPC handles nonlinear systems through successive linearization and provides robustness against persistent disturbances.
 
-#### Exercises
-[See notations](#notations)
+##### System Description
+
+A CSTR is a vessel where chemical reactions occur under continuous flow conditions. In our case, an exothermic reaction (one that releases heat) takes place, and the reactor temperature must be carefully controlled to maintain the desired reaction rate while ensuring safety. The coolant flow rate serves as the manipulated variable to reject disturbances and regulate the system to a desired operating point.
+
+The reactor dynamics are governed by mass and energy balances, resulting in a two-state nonlinear model:
+
+**State Variables:**
+- $x_1$: reactant concentration
+- $x_2$: reactor temperature
+
+**Control Input:**
+- $u$: coolant flow rate
+
+**Disturbance:**
+- $w$: external temperature disturbance (e.g., variations in feed temperature or ambient conditions)
+
+##### Mathematical Model
+
+The continuous-time dynamics are:
+
+<div>
+\begin{aligned}
+\dot{x}_1 &= \frac{1}{\theta}(1-x_1) - k x_1 \exp\left(-\frac{M}{x_2}\right) \\
+\dot{x}_2 &= \frac{1}{\theta}(x_f - x_2) + k x_1 \exp\left(-\frac{M}{x_2}\right) - \alpha u (x_2 - x_c) + w
+\end{aligned}
+</div>
+
+where the parameters are:
+
+| Parameter | Value | Physical Meaning |
+|-----------|-------|------------------|
+| $\theta$ | 20 | Residence time |
+| $k$ | 300 | Reaction rate constant |
+| $M$ | 5 | Activation energy parameter |
+| $\alpha$ | 0.117 | Heat transfer coefficient |
+| $x_f$ | 0.3947 | Feed temperature |
+| $x_c$ | 0.3816 | Coolant temperature |
+
+**Physical Interpretation:**
+- The first equation describes reactant depletion due to outflow and chemical reaction
+- The second equation balances heating from the exothermic reaction against cooling from the coolant and feed flow
+- The Arrhenius term $\exp(-M/x_2)$ captures the strong temperature dependence of the reaction rate
+
+##### Operating Points and Control Objective
+
+The system has two steady-state equilibrium points. We consider regulation from one steady state to another:
+
+- **Initial steady state**: $x_s = (0.9831, 0.3918)$ with $u_s = 0$ (no cooling)
+  - High concentration, low temperature (slow reaction)
+  
+- **Desired operating point**: $x_{\text{op}} = (0.2632, 0.6519)$ with $u_{\text{op}} = 0.1947$
+  - Low concentration, high temperature (fast reaction with active cooling)
+
+The equilibrium pair $(x_{\text{op}}, u_{\text{op}})$ satisfies $\dot{x} = 0$, i.e., $f(x_{\text{op}}, u_{\text{op}}, 0) = 0$.
+
+**Control Objective**: Regulate the reactor from $x_s$ to $x_{\text{op}}$ while satisfying safety constraints and rejecting disturbances.
+
+##### Constraints
+
+Safety and operational limits impose the following constraints:
+
+<div>
+\begin{aligned}
+\mathbb{X} &= \{ x \in \mathbb{R}^2 : 0 \leq x_1 \leq 2,\ 0 \leq x_2 \leq 2 \} \\
+\mathbb{U} &= \{ u \in \mathbb{R} : 0 \leq u \leq 2 \} \\
+\mathbb{W} &= \{ w \in \mathbb{R} : |w| \leq 0.001 \}
+\end{aligned}
+</div>
+
+**Physical Rationale:**
+- State constraints prevent unsafe concentrations and temperatures
+- Input constraints reflect physical limitations of the cooling system
+- Disturbance bounds represent realistic feed temperature variations
+
+##### Cost Function
+
+Since the desired operating point is not the origin, we perform a coordinate transformation and replace the stage cost $\ell(x,u)$ with $\ell(x - x_{\text{op}}, u - u_{\text{op}})$. Where:
+
+<div>
+\[\ell(x, u) = \frac{1}{2}\left( \|x\|^2 + u^2 \right)\]
+</div>
+
+with weighting matrix $Q = I_2$ (equal penalty on concentration and temperature deviations). This penalizes deviations from the desired operating point and excessive control effort.
+
+##### Disturbance Model
+
+To evaluate controller robustness, we model realistic time-varying disturbances as:
+
+$$w(t) = A \sin(\omega t)$$
+
+where $A \in [0, 0.001]$ and $\omega \in [0, 1]$ are independent random variables uniformly distributed over their respective intervals. This captures both the magnitude and frequency variability of feed temperature fluctuations.
+
+##### Comparison: Nominal MPC vs. Tube MPC
+
+Figure [6.3](#tube_mpc_comparison) compares the performance of standard nominal MPC and Tube MPC under the same disturbance realizations. Both controllers use a prediction horizon of $N=40$ and identical cost functions, but Tube MPC incorporates constraint tightening and robust invariant sets to handle disturbances. In both cases, we simulate 100 realizations of the disturbance and plot the resulting state trajectories and control inputs.
+
+**Key Observations:**
+
+**Transient Behavior**: Nominal MPC (left panels) shows a spread in the state trajectories, particularly during the initial transient. Whereas the Tube MPC (right panels) demonstrates tighter clustering of trajectories around the nominal path. The actual states remain within a well-defined tube throughout the transient, with notably less variability.
+
+**Control Effort**: Since both controllers use the same nominal model and cost function, the control effort profiles are similar. However, Tube MPC exhibits slightly more conservative control actions to maintain robustness, resulting in smoother control trajectories.
+
+**Steady-State Performance**: Both controllers converge to the desired operating point $x_{\text{op}}$ in steady state since they use the same nominal model. The convergence time for Tube MPC is slightly longer (≈ 150 seconds vs. ≈ 120 seconds for nominal MPC) due to the more conservative constraint tightening.
+
+**Robustness vs. Performance Trade-off**: Tube MPC sacrifices faster settling time in exchange for guaranteed constraint satisfaction and significantly reduced trajectory variability.
+
+<div class="images" id="tube_mpc_comparison">
+  <figure style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/MPC/Standard_Tube_MPC.png" alt="Tube MPC comparison" width="500" style="display:block;margin:0 auto;"/>
+    <figcaption style="text-align: center;">Figure 6.3: Comparison of 100 realizations of standard and tube-based MPC for the chemical reactor example</figcaption>
+  </figure>
+</div>
 
 ---
 
 ### Economic MPC  - In Progress
 [See notations](#notations)
 
----
+#### Introduction
 
-#### Stage cost
+Traditional MPC formulations focus on tracking problems, where the controller drives the system to a predetermined steady-state setpoint ($x_s$, $u_s$) computed offline. The MPC cost function typically takes the form of a quadratic stage cost $g(x, u)$ that penalizes deviations from the setpoint. This tracking-based approach is well-suited for applications such as vehicle and robotic motion guidance, low-level industrial process control (pressure, temperature, level, flow regulation), electromechanical drives, etc. 
 
----
+However, many modern control problems involve complex performance metrics that go beyond simple setpoint tracking:
+- Economic objectives: maximizing profit, minimizing production costs
+- Regulatory specifications: emissions limits, quality requirements
+- Resource utilization: energy consumption, material usage
 
-#### Horizon
+In such scenarios, the optimal operating point may not correspond to a fixed setpoint but rather to a dynamic trade-off among multiple competing objectives. Moreover, the nominal trajectory may not be the optimal solution when considering economic factors. Economic MPC (EMPC) addresses these challenges by directly incorporating economic performance criteria into the MPC formulation, allowing for more flexible and adaptive control strategies.
 
----
-
-#### Economic MPC vs MPC
-
----
-
-#### Exercises
-[See notations](#notations)
+For example, in a chemical process plant, the optimal operating conditions may vary based on market prices for raw materials and products, energy costs, and environmental regulations. An EMPC controller can adjust the process parameters in real-time to optimize profitability while ensuring compliance with constraints.
 
 ---
 
+##### Economic MPC Framework
+
+In Economic MPC (EMPC), the traditional tracking cost function is replaced with an economic stage cost $\omega(x, u)$ that directly reflects the performance metrics of interest. Unlike the quadratic costs used in standard MPC, the economic cost can be nonlinear, non-convex, and may not have a unique minimum at a specific setpoint. The objective of EMPC is to optimize economic performance directly, rather than merely driving the system to a predefined equilibrium. In this configuration, the optimal steady state $(x_s, u_s)$ may operate away from traditional setpoints if doing so yields better economic outcomes, in some cases, it may be optimal for the system to operate in a dynamic regime rather than at a fixed point. The optimization of such systems are typically more challenging, often requiring advanced numerical methods to solve the resulting non-convex problems in real-time.
+
+**Problem Formulation**
+
+The EMPC optimization problem at time $k$ is:
+
+<div>
+\[
+\begin{aligned}
+V_N(x) = \min_{u,x} \quad & \sum_{j=0}^{N-1} \omega(x_j, u_j) \\
+\text{s.t.} \quad & x_{j+1} = f(x_j, u_j), \quad j = 0, \ldots, N-1 \\
+& x_0 = x \\
+& x_j \in \mathbb{X}, \quad j = 1, \ldots, N \\
+& u_j \in \mathbb{U}, \quad j = 0, \ldots, N-1 \\
+& x_N \in \mathbb{X}_f
+\end{aligned}
+\]
+</div>
+
+where:
+- $\omega(x, u)$ is the economic stage cost (continuous and lower-bounded)
+- $N$ is the prediction horizon
+- $\mathbb{X}_f$ is the terminal constraint set
+- $(x_s, u_s)$ typically represents the optimal economic steady state
+
+The terminal constraint $x_N = x_s$ (or $x_N \in \mathbb{X}_f$ containing $x_s$) is imposed, where $(x_s, u_s)$ solves the steady-state economic optimization problem.
+
+---
+
+#### Horizon Length and Stability Analysis
+
+**Infinite Horizon Formulation**:
+
+<div>
+\[
+V_\infty(x) = \min_{u,x} \sum_{k=0}^{\infty} \omega(x_k, u_k) \quad \text{subject to dynamics and constraints}
+\]
+</div>
+
+The infinite horizon MPC express a continuous process over an infinite time span, optimizing the cumulative economic cost without a predefined endpoint, leading to its interest in long-term economic performance. The system may not be driven to an equilibrium, which can be advantageous if continuous operation is more efficient. Boundedness of the trajectory is ensured by constraints applied over the infinite horizon. However, this formulation is computationally intractable due to its infinite-dimensional nature.
+
+**Finite Horizon (without terminal constraint)**:
+
+<div>
+\[
+V_N(x) = \min_{u,x} \sum_{k=0}^{N-1} \omega(x_k, u_k) \quad \text{subject to dynamics and constraints}
+\]
+</div>
+
+The finite horizon EMPC optimizes the economic cost over a limited time frame, making it computationally feasible for real-time applications. However, without terminal constraints or costs, stability and convergence to a steady state are not guaranteed. The choice of horizon length $N$ becomes critical; too short a horizon may lead to suboptimal or unstable behavior, while too long a horizon increases computational burden. Unlike tracking MPC, where longer horizons generally improve performance, in EMPC, the relationship between horizon length and economic performance is more complex and requires careful analysis. Unstable trajectories can emerge, where the controller opts for a cheap trajectory now that leads to expensive corrections later, outside the horizon.
+
+**Finite Horizon with Terminal Constraint**:
+
+<div>
+\[
+V_N(x) = \min_{u,x} \sum_{k=0}^{N-1} \omega(x_k, u_k) \quad \text{subject to dynamics, constraints, and } x_N = x_s
+\]
+</div>
+
+The finite horizon EMPC with terminal constraints ensures that the system reaches the optimal steady state at the end of the prediction horizon. This approach provides a balance between computational tractability and stability guarantees. By enforcing the terminal constraint, the controller is guided towards the desired economic operating point, improving long-term performance. However, this formulation may still require careful selection of horizon length and terminal set design to ensure recursive feasibility and satisfactory closed-loop behavior.
+
+The terminal constraint $x_N = x_s$ (or $x_N \in \mathbb{X}_f$) is crucial for ensuring that the system converges to the optimal steady state over time. With the terminal constraint, if the problem is feasible at time $k$, it remains feasible at time $k+1$, ensuring recursive feasibility. This property is essential for maintaining constraint satisfaction over an infinite time horizon.
+
+**Modified EMPC with Tracking Term**:
+
+<div>
+\[
+\tilde{\omega}(x, u) = \omega(x, u) + \lambda \left( \|x - x_s\|_Q^2 + \|u - u_s\|_R^2 \right)
+\]
+</div>
+
+where $\lambda > 0$ is a small weight and $Q, R \succ 0$. This modification introduces a "tracking component" that encourages convergence to the steady state while still prioritizing economic objectives. For sufficiently small $\lambda$, the economic performance is only slightly degraded, but asymptotic stability can be guaranteed.
+
+<!-- Economic MPC extends the MPC framework to directly address economic and performance objectives that cannot be captured by simple tracking formulations. While it introduces additional theoretical and computational challenges, it offers significant advantages for modern control applications where economic efficiency, resource optimization, and complex performance metrics are primary concerns. The key is understanding when the additional complexity is justified by the economic benefits, and choosing the appropriate EMPC formulation for the specific application requirements. -->
+
+---
+
+#### Example: Linear Economic MPC
+
+Consider the linear system
+
+<div>
+\[
+x_{k+1} = Ax_k + Bu_k, \quad A = \begin{bmatrix} 1/2 & 1 \\ 0 & 3/4 \end{bmatrix}, \quad B = \begin{bmatrix} 0 \\ 1 \end{bmatrix}
+\]
+</div>
+
+with economic loss function
+
+<div>
+\[
+\omega(x, u) = q^\top x + ru, \quad q = \begin{bmatrix} -2 \\ 2 \end{bmatrix}, \quad r = -10
+\]
+</div>
+
+and constraints $\mathbb{U} = [-1, 1]$.
+
+**Optimal steady state**: The steady-state optimization problem is
+
+<div>
+\[
+\min_{x_s,u_s} \omega(x_s, u_s) \quad \text{subject to} \quad x_s = Ax_s + Bu_s, \; u_s \in \mathbb{U}
+\]
+</div>
+
+Since $\omega$ is linear, the solution lies at a vertex of the constraint set. The optimal solution is at the boundary: $u_s = 1$ (or $u_s = -1$ depending on the constraint structure).
+
+**Comparison of Standard MPC vs Economic MPC**:
+
+- **Stadard MPC**: Use $(x_s, u_s)$ as the desired target. Define $\tilde{x} = x - x_s$ and $\tilde{u} = u - u_s$. Use quadratic cost $g(\tilde{x}_k, \tilde{u}_k) = 10 \|\tilde{x}_k\|^2 + \|\tilde{u}_k\|^2$ with terminal constraint $x_N = x_s$. The controller drives the system to the steady state as quickly as possible.
+
+- **Economic MPC**: Use $\omega(x, u)$ directly in the receding horizon controller with terminal constraint $x_N = x_s$. The controller optimizes economic performance directly, potentially finding trajectories that are more economically efficient than directly tracking the steady state.
+
+<div class="images">
+  <figure>
+    <img src="{{ site.baseurl }}/assets/images/MPC/empc_vs_tracking.png" alt="Economic MPC vs Tracking MPC trajectories" width="600"/>
+    <figcaption style="text-align: center;">Comparison of closed-loop trajectories: tracking MPC (blue) vs economic MPC (red)</figcaption>
+  </figure>
+</div>
+
+The economic MPC trajectory exploits the structure of $\omega$ to achieve lower accumulated cost, even though it may not converge to $x_s$ in the most direct way. This illustrates that EMPC can produce more efficient trajectories during transients.
+
+---
 
 ## Credits
 <!-- List all the sources that you used to create the page   -->
 
-- Saverio Bolognani's lectures: **Computational Control** at ETH Zurich in spring 2024
+<!-- - Saverio Bolognani's lectures: **Computational Control** at ETH Zurich in spring 2024 -->
 - Colin Jones' lectures: **Model Predictive Control (ME-425)** at EPFL in Automn 2024
 - **Model Predictive Control: Classical, Robust and Stochastic** textbook by Basil Kouvaritakis, Mark Cannon, 2016
 - **Model Predictive Control: Theory, Computation, and Design** James B. Rawlings, David Q. Mayne, Moritz M. Diehl, 2nd Edition, 2022, available for free [here](https://sites.engineering.ucsb.edu/~jbraw/mpc/MPC-book-2nd-edition-1st-printing.pdf)

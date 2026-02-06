@@ -2674,11 +2674,156 @@ where $p = [p_{11}, p_{12}, p_{12}, p_{22}]^\top$ and $q = [1, 0, 0, 1]^\top$.</
 
 ---
 
-### Frobenius Theorem
+### Control Design Methods for Robots
 
----
+<iframe width="735" height="413" src="https://www.youtube.com/embed/OwXurbynWx8?si=s46y3TW1bmze8Itc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-### Control Design Methods
+#### System definition
+
+For the folowing section, we will consider a robotic arm, which is a planar, two-link, articulated manipulator. This robotic arm is illustrated in the figure below:
+
+<div class="images" style="justify-content:center; text-align:center;">
+  <figure id="fig_4.6_robotic_arm">
+    <img src="{{ site.baseurl }}/assets/images/Nonlinear_control/Robot_arm.png" alt="Robotic Arm" width="450"/>
+    <figcaption style="text-align: center;"><strong>Figure 4.6:</strong> Planar two-link robotic arm</figcaption>
+  </figure>
+</div>
+
+We can descrobe the dynamics of this system using the joint angles $q_1,\;q_2$ and their actuator torques $\tau_1,\;\tau_2$. The general form of the equations of motion for this robotic arm is given by:
+<div>
+\[H(q)\ddot{q} + C(q,\dot{q})\dot{q} + D(q,\dot{q})\dot{q} + g(q) = \tau\]
+</div>
+where:
+- $H(q)$ is the inertia matrix (symmetric and positive definite),
+- $C(q,\dot{q})$ is the Coriolis and centripetal torques matrix,
+- $D(q,\dot{q})$ is the viscous friction matrix (positive semi-definite),
+- $g(q)$ is the gravitational torques vector.
+
+The kinetic energy of the system is given by:
+<div>
+\[T = \dfrac{1}{2} \dot{q}^\top H(q) \dot{q}\]
+</div>
+
+##### Position control 
+
+We first want to design a controller that allows the robotic arm to reach a desired position $q_d$. We try to get the robot (and its load) to reach this constant terminal position. This system presents a lot of nonlinearities, such as the Coriolis and centripetal forces, the gravity, the friction, etc, but also insertainties such as the load mass and inertia, the friction coefficients, etc. It is physically clear that the joint proportional-derivative (PD) controller (feedback control law) at each joint will be able to achieve the desired position, despite the nonlinearities and uncertainties of the system. The control law is given by:
+<div>
+\[\tau_j = K_{pj} (q_j - q_{dj}) - K_{dj} \dot{q}_j = K_{pj} \tilde{q}_j - K_{dj} \dot{q}_j\]
+</div>
+where $K_{pj}$ and $K_{dj}$ are the proportional and derivative gains for joint $j$.
+
+One can ask the question: *why does this simple PD controller work so well for this nonlinear system ?*
+
+For position control of the robotic arm, the PD controller works by applying "virtual physic" of a spring-damper system at each joint. The proportional term $K_{pj}$ acts like a spring force that pulls the joint towards the desired position, while the derivative term $-K_{dj}$ acts like a damper that resists motion and reduces oscillations. This combination of spring-like and damping-like behavior helps stabilize the joint position and velocity, allowing the robotic arm to reach and maintain the desired position effectively. Moreover, this "virtual physic" is programable, meaning that by tuning the gains $K_{pj}$ and $K_{dj}$, we can adjust the stiffness and damping of the system to achieve the desired performance, such as faster convergence or reduced overshoot.
+
+This system is autonomous, since the dynamics do not depend explicitly on time. Thus, we can use Lyapunov's direct method to analyze the stability of the closed-loop system. As the Lyapunov function candidate, a reasonable choice is the total energy of the system (total energy of the "virtual" system, including the potential energy due to the virtual springs at each joint). The kinetic energy is given by:
+<div>
+\[T = \dfrac{1}{2} \dot{q}^\top H(q) \dot{q}\]
+</div>
+and the potential energy stored in the virtual springs is given by:
+<div>
+\[U = \dfrac{1}{2} \tilde{q}^\top K_p \tilde{q}\]
+</div>
+where $K_p = \text{diag}(K_{p1}, K_{p2})$ is the diagonal matrix of proportional gains. Thus, the total energy (Lyapunov function candidate) is:
+<div>
+\[V(q,\dot{q}) = T + U = \dfrac{1}{2} \dot{q}^\top H(q) \dot{q} + \dfrac{1}{2} \tilde{q}^\top K_p \tilde{q}\]
+</div>
+
+The time derivative of the Lyapunov function is found deriving the kinetic and potential energy terms:
+<div>
+\[\dot{T} = \frac{d}{dt}\left[\frac{1}{2}\dot{q}^\top H(q) \dot{q}\right]\]
+</div>
+Using the property of conservation of energy, the time derivative of the kinetic energy must be equal to the external power input to the system, which are the joint torques $\tau$ applied to the system, the gravity (which we will not considere in this particular study) and the friction forces:
+<div>
+\[\dot{T} = \dot{q}^\top (\tau - D\dot{q})\]
+</div>
+
+Deriving the potential energy term gives:
+<div>
+\[\dot{U} = \dot{q}^\top K_p \tilde{q}\]
+</div>
+
+Thus, the time derivative of the Lyapunov function is:
+<div>
+\[\dot{V} = \dot{T} + \dot{U} = \dot{q}^\top (\tau - D\dot{q}) + \dot{q}^\top K_p \tilde{q}\]
+</div>
+Substituting the control law into the above equation gives:
+<div>
+\[\dot{V} = \dot{q}^\top (K_p \tilde{q} - K_d \dot{q} - D\dot{q}) + \dot{q}^\top K_p \tilde{q} = -\dot{q}^\top (K_d + D) \dot{q}\]
+</div>
+We recognize that $\dot{V}$ correscponds to the energy dissipation due to the damping and friction forces in the system. Since both $K_d$ and $D$ are positive semi-definite matrices, the time derivative of the Lyapunov function is negative semi-definite, i.e. $\dot{V} \leq 0$. Thus, by Lyapunov's direct method, the closed-loop system is stable.
+
+##### Trajectory control
+
+We consider now the problem of trajectory control, where we want the robotic arm to follow a desired trajectory $q_d(t)$, which is a time-varying function. The PD controller used for position control is not sufficient for trajectory tracking, since it does not account for the desired velocity and acceleration profiles. We will still trying to use the conservation of energy to adjust the control law. 
+
+From the conservation of energy, we have:
+<div>
+\begin{align*}
+\dot{q}^\top (\tau - D\dot{q}) &= \dfrac{d}{dt}\left[\dfrac{1}{2} \dot{q}^\top H(q) \dot{q}\right] \\
+&= \dot{q}^\top H(q) \ddot{q} + \dfrac{1}{2} \dot{q}^\top \dot{H} \dot{q} \\
+&= \dot{q}^\top [\tau - C\dot{q} - g - D\dot{q}] + \dfrac{1}{2} \dot{q}^\top \dot{H} \dot{q} \\
+\Rightarrow 0 &= \dot{q}^\top [\dot{H} - 2C] \dot{q}
+\end{align*}
+</div>
+This property indicates that the matrix $\dot{H} - 2C$ is skew-symmetric, which will be useful in the following derivations. This term represent a matrix vertion of the energy conservation property.
+
+The matrix $C$ is usually defined as:
+<div>
+\[C_{ij} = \frac{1}{2} \dot{H}_{ij} + \frac{1}{2} \sum_{k=1}^n \left(\frac{\partial H_{ij}}{\partial q_k} + \frac{\partial H_{ik}}{\partial q_j} - \frac{\partial H_{kj}}{\partial q_i}\right) \dot{q}_k\]
+</div>
+
+Four the Lyapunov function candidate, we choose the following:
+<div>
+\[V = \dfrac{1}{2} s^\top H(q) s\]
+</div>
+where $s$ is defined as $s=\dot{\tilde{q}} + \lambda \tilde{q}$, with $\lambda$ a positive constant. The vector $s$ is used to replace a second order problem by a first order one. We can see that $s$ can be rewritten as $s = \dot{q} - \dot{q}_r$.
+
+The time derivative of the Lyapunov function is:
+<div>
+\begin{align*}
+\dot{V} &= s^\top H \dot{s} + \dfrac{1}{2} s^\top \dot{H} s \\ 
+&= s^\top (H\ddot{q} - H\ddot{q}_r) + \dfrac{1}{2} s^\top \dot{H} s \\
+&= s^\top [\tau - C\dot{q} - g - D\dot{q} - H \ddot{q}_r] + \dfrac{1}{2} s^\top \dot{H} s \\
+&= s^\top [\tau - C\dot{q}_r - g - D\dot{q} - H \ddot{q}_r] + \dfrac{1}{2} s^\top (\dot{H}-2C) s \\
+&= s^\top [\tau - C\dot{q}_r - g - D\dot{q} - H \ddot{q}_r]
+\end{align*}
+</div>
+where we used the skew-symmetry property of $\dot{H} - 2C$ to eliminate the last term. We got rid of the derivative term involving $\dot{H}$, which is hard to compute in practice.
+
+From the previous derivation, we have:
+<div>
+\[\dot{V} = s^\top [\tau - C\dot{q}_r - g - D\dot{q} - H \ddot{q}_r]\]
+</div>
+
+To ensure that $\dot{V} \leq 0$, we need to design a control law that makes the right-hand side negative definite. A natural choice is to set:
+<div>
+\[\tau = H\ddot{q}_r + C\dot{q}_r + g + D\dot{q} - K_d s\]
+</div>
+where $K_d$ is a positive definite gain matrix. This control law is known as the computed torque control or inverse dynamics control.
+
+Substituting this control law into the expression for $\dot{V}$:
+<div>
+\[\dot{V} = s^\top [H\ddot{q}_r + C\dot{q}_r + g + D\dot{q} - K_d s - C\dot{q}_r - g - D\dot{q} - H \ddot{q}_r] = -s^\top K_d s \leq 0\]
+</div>
+
+Since $K_d$ is positive definite, we have $\dot{V} < 0$ for all $s \neq 0$, which proves that the system is asymptotically stable. This means that $s \to 0$ as $t \to \infty$, and since $s = \dot{\tilde{q}} + \lambda \tilde{q}$, this implies that both the position error $\tilde{q}$ and velocity error $\dot{\tilde{q}}$ converge to zero exponentially.
+
+**Interpretation of the control law:**
+
+The computed torque control law can be decomposed into several components:
+- $H\ddot{q}_r$: feedforward compensation of the inertial forces,
+- $C\dot{q}_r$: feedforward compensation of the Coriolis and centripetal forces,
+- $g$: feedforward compensation of the gravitational forces,
+- $D\dot{q}$: feedforward compensation of the friction forces,
+- $-K_d s$: feedback term that provides damping and ensures convergence.
+
+The feedforward terms compensate for the known nonlinearities of the system, while the feedback term ensures robustness to modeling errors and disturbances. This controller effectively "linearizes" the nonlinear robot dynamics, transforming the closed-loop system into a simple linear system in the $s$ coordinates:
+<div>
+\[\dot{s} = -H^{-1} K_d s\]
+</div>
+
+However, this approach requires exact knowledge of the robot's dynamic model, including the inertia matrix $H(q)$, the Coriolis matrix $C(q,\dot{q})$, and the gravity vector $g(q)$. In practice, these terms may not be perfectly known due to modeling uncertainties, unmodeled dynamics, or payload variations. For this reason, robust and adaptive control techniques are often used to enhance the performance of the computed torque controller.
 
 ---
 
@@ -2704,7 +2849,7 @@ Then move to
 It would be good to also have a section on nonlinear MPC (but could be moved to MPC)
 -->
 
-## Credits:
+## Credits
 - Slotine's Nonlinear Control Book and Lectures: https://web.mit.edu/nsl/www/videos/lectures.html
 - Philippe Müllhaupt's lecture: **Nonlinear Control Course (ME-523)** at EPFL in Autumn 2024
 - **Introduction à l'analyse et à la commande des systems non linéaires** textbook by Philippe Müllhaupt, first edition (french)

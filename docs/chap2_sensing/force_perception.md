@@ -4,7 +4,7 @@ parent: "Chapter 2: Sensing in Robotics"
 has_children: false
 nav_order: 3
 layout: numbered
-author: Mael Studer (EPFL)
+author: Mael Studer, Aude Billard (EPFL)
 chapter: 2
 section: 3
 ---
@@ -656,7 +656,7 @@ Below are examples of **elastic structures** used in F/T sensors:
   <figcaption>
     <sub><i>
       Figure 4: Cross-Beam force/torque sensor structure. (a) square base, (b) round base  
-      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al.</a>)
+      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al., in Mechanics Based Design of Structures and Machines (2025)</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -693,7 +693,7 @@ Below are examples of **elastic structures** used in F/T sensors:
   <figcaption style="margin-top: 8px;">
     <sub><i>
       Figure 5: Visualisation of the cross-beam structure deformation  
-      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al.</a>)
+      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al., in Mechanics Based Design of Structures and Machines (2025)</a>)
     </i></sub>
   </figcaption>
 
@@ -2284,6 +2284,11 @@ Take same robot examples as in the kinematics course (delta ...) so that the stu
 ---
 
 ## Credits
+
+This page was created by Mael Studer, under the supervision of Prof. Aude Billard.
+
+This page used the following resources:
+
 <!-- List all the sources that you used to create the page   -->
 
 - [Handbook of Robotics, Springer](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20) (Chapter 19. Force and Tactile Sensors)
@@ -2331,5 +2336,6 @@ and then for more recent sensors:
 https://spj.science.org/doi/full/10.34133/2019/3018568
 
 -->
+
 
 [Back to Top](#start)

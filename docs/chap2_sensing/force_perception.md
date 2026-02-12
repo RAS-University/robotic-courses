@@ -800,7 +800,7 @@ By computing the difference between the theoretical model torque and the measure
 
 <div class="note-window">
   <div class="window-title">Note</div>
-  Refer to <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco & A. De Luca) for complete description of that computation step.
+  Refer to <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco & A. De Luca, IROS 2014) for complete description of that computation step.
 </div>
 
 *2) Computing the Jacobian at the contact location $J_c$*  
@@ -837,7 +837,7 @@ I & -\,S(p_{i,c}(\theta)) \cr
 J_i(\theta)
 $$
 
-where $S(\cdot)$ is the [skew-symmetric matrix](https://en.wikipedia.org/wiki/Skew-symmetric_matrix#Cross_product).  
+where $S(\cdot)$ is the [skew-symmetric matrix](https://en.wikipedia.org/wiki/Skew-symmetric_matrix#Cross_product), composed of the components of the vector $p_{i,c}(\theta)$:.  
 
 This Jacobian describes how a force applied at the contact point generates joint torques.
 
@@ -861,7 +861,7 @@ $$
   Model-Free Estimation (Neural Network Based)
 </h4>
 
-The second proposed approach is machine learning based and does **not rely on any physics equation**. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs vast amounts of real-world data, collected using an actual F/T sensor.
+The second proposed approach is machine learning based and does **not rely on any physics equation**. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs real-world data, that can be collected using an actual F/T sensor. Data is usually obtained through *learning from demonstration*, a method whereby an operator passively moves the robot to show how to perform a given task. Data on F/T perception are gathered as the robot makes various contacts with the environment, see course on <a href="https://www.ieee-ras.org/ras-university/?ras_page=docs/chap12_learning/LfD.html"> learning from demonstration</a>. 
 
 The variables fed to the NN are the robot’s internal state signals, such as joint **currents**, joint **positions** $\theta$, joint **velocities** $\dot{\theta}$ and joint **accelerations** $\ddot{\theta}$. All these inputs are put together into one input vector $x_n$.
 
@@ -2339,3 +2339,4 @@ https://spj.science.org/doi/full/10.34133/2019/3018568
 
 
 [Back to Top](#start)
+

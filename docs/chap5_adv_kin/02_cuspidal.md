@@ -91,6 +91,9 @@ For orthogonal 3R structures, cusp-point geometry gives strong classification to
 In practice, this means a robot can trace a smooth path around a cusp-related region and return to the same Cartesian neighborhood on a different IKS branch, without hitting $\det(J)=0$.
 </div>
 
+<div id="orthogonal-3r-interactive"></div>
+<script src="/cuspidal_robots.js"></script>
+
 <form id="q-3r-orth">
   <p><strong>Quiz (Orthogonal 3R):</strong> Why is orthogonal 3R often used as the reference model?</p>
   <input type="radio" name="q-3r-orth" value="a"> It has no singularities.<br>

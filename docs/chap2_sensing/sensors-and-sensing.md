@@ -58,7 +58,7 @@ Early robotics tried to side-step sensing by assuming perfectly known environmen
   <button type="button"
     onclick="checkTrueFalse('sens-1', 'B',
       '✅ Correct! Sensing turns motion, light, sound, and force into data that closes the control loop.',
-      '❌ Not quite. Think about how the robot\'s brain learns what is happening around it.')">
+      '❌ Not quite. Think about how the robot brain learns what is happening around it.')">
     Check Answer
   </button>
   <p id="sens-1-feedback"></p>
@@ -3187,31 +3187,714 @@ The IMU “bridges” between GNSS updates, and GNSS constrains long-term drift.
 
 ---
 
-- Cameras
-- Environmental sensors (temperature, light, gas, chemicals)
+#### Environmental Sensors (Temperature, Light, Gas, Chemicals)
+
+Environmental sensors allow a robot to perceive the physical and chemical properties of the ambient medium surrounding it. While humans use their skin to feel temperature and their noses to smell, robots use a variety of specialized sensors to measure these ambient conditions. This sensing modality is particularly important for robots operating in unstructured, hazardous, or agricultural environments where the physical state of the environment dictates the robot's behavior or forms the core mission objective itself.
 
 ---
 
-### Multisensor Data Fusion
+##### Thermodynamic Sensing: How Robots Feel Heat
 
-- Probabilistic grids
-- The Kalman Filter
-- Sequential Monte Carlo Methods
+{: .no_toc }
 
----
-
-### Sensor Selection and Integration
-
-- Defining requirements
-- Mechanical, electrical & software integration
-- EMI, thermal, and environmental considerations
-- Safety, redundancy, fail‑safe design
-- Maintenance & recalibration schedules
-
+Temperature sensing is critical for both internal diagnostics (such as preventing motor burnout or monitoring battery health) and exteroceptive perception (locating fires, monitoring agricultural climates, or detecting human presence). 
 
 ---
 
-### Programming
+<details markdown="1">
+ <summary>Video introduction</summary>
+
+  Temperature sensors explained. How do temperature sensors work? In this video we learn the basics of how different temperature sensors work. We look at thermometers, thermocouples, thermistors and resistance temperature detectors RTD.
+
+  ![](https://www.youtube.com/watch?v=w3Hfj2kMrGo)
+  ><sub>*Temperature Sensors Explained. YouTube video, 11.07.2019. Available at: https://www.youtube.com/watch?v=w3Hfj2kMrGo*</sub>
+
+</details>
+
+---
+
+Engineers generally choose between three distinct technologies depending on the required temperature range, sensitivity, and operating environment:
+
+
+
+* **Resistance Temperature Detectors (RTDs):**
+
+RTDs are typically made of pure metals, most commonly platinum. The physical principle is straightforward: as a metal heats up, its atoms vibrate more intensely, which scatters conduction electrons and causes a predictable increase in electrical resistance. Platinum is favored because it is chemically inert, highly stable, and offers a very linear response over a wide temperature range (often -200°C to +850°C).
+Over standard ranges, the resistance can be mapped to temperature using linear approximation:
+$$R_T = R_0(1 + \alpha(T - T_0))$$
+Where $R_T$ is the measured resistance, $R_0$ is the resistance at a reference temperature $T_0$ (usually 0°C), and $\alpha$ is the metal's temperature coefficient. Because the absolute resistance changes are tiny, long wires running through a robot arm can introduce significant errors. To counteract this, engineers often use complex 3-wire or 4-wire measuring circuits to cancel out the resistance of the lead wires.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/Thin_Film_PRT.png)
+> <sub>Thin-film PRT (platinum resistance thermometer). Source: https://en.wikipedia.org/wiki/Resistance_thermometer</sub>
+
+
+**Thermistors:**
+
+The name comes from "thermal resistor." Unlike metallic RTDs, thermistors are made from ceramic or polymer semiconductor materials. They offer exceptionally high sensitivity (large resistance changes for small temperature changes), fast response times, and low cost, making them the most common temperature sensor in robotics for narrow, everyday ranges (typically -50°C to +150°C). They come in two primary types:
+
+>**1) NTC (Negative Temperature Coefficient):** The resistance *decreases* as temperature *increases*. Heating the semiconductor frees up more charge carriers (electrons), making it more conductive. NTCs are the standard choice for continuous temperature measurement, such as monitoring ambient air or battery pack heat. Their response is highly non-linear, typical approximation rely on the exponential $\beta$-constant model for basic applications:
+$$R = R_0 \cdot e^{\beta(\frac{1}{T} - \frac{1}{T_0})}$$
+*(Note: For higher precision, engineers use the more complex Steinhart-Hart polynomial equation instead of the $\beta$-parameter model).*
+
+>**2) PTC (Positive Temperature Coefficient):** The resistance *increases* as temperature *increases*. In certain PTC materials, the resistance spikes abruptly at a specific threshold temperature. Because of this non-linear "switch-like" behavior, PTCs are rarely used for continuous measurement. Instead, they act as fail-safes in robotics, functioning as self-resetting fuses (polyfuses) to cut off current if a motor controller or heater gets dangerously hot.
+
+
+![]({{ site.baseurl }}/assets/images/new_sensors/ntc_ptc.png)
+> <sub>NTC thermistors respond quickly to temperature changes. PTC thermistors, however, react slower but provide thermal protection. Source: https://www.dxmht.com/article/difference-between-ntc-and-ptc-thermistors.html</sub>
+
+
+* **Thermocouples:**
+
+For extreme conditions where a thermistor or RTD would melt, such as inside a 3D printer hotend or on a firefighting robot, engineers use thermocouples. They rely on the **Seebeck effect**: when two dissimilar metal wires are joined at one end and heated, the temperature difference between that "hot junction" and the "cold junction" (where the wires connect to the circuit board) generates a tiny, proportional micro-voltage.
+Thermocouples are rugged and require no external excitation power to operate. However, because they only measure a temperature *difference*, the robot's circuit board must include a secondary temperature sensor (like a thermistor) to measure the temperature of the board itself. This process, known as **Cold Junction Compensation (CJC)**, allows the microcontroller to calculate the absolute temperature at the hot tip. They also require specialized, high-gain amplifiers to read the micro-volt signals accurately amidst the electrical noise of a robot.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/thermocouples.png)
+> <sub>Diagram of a thermocouple showing two different metal wires (Type A and Type B) joined at a heated hot junction, producing a millivolt output relative to a cold junction connected to copper lead wires and a measuring instrument (example shown: 829 °C / 1500 °F). Source: https://www.dwyeromega.com/en-us/resources/how-thermocouples-work</sub>
+
+The diagram shows two dissimilar metal wires joined at the hot junction near a flame, generating a small voltage due to the temperature difference between the hot junction and the cold junction where the wires transition to copper.
+
+---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+<p><strong>What is the primary reason platinum is the most common metal used in Resistance Temperature Detectors (RTDs)?</strong></p>
+<form id="chk-rtd-1">
+  <input type="radio" name="chk-rtd-1" value="A"> It is highly conductive and generates its own power.<br>
+  <input type="radio" name="chk-rtd-1" value="B"> It is chemically inert, highly stable, and offers a very linear response over a wide temperature range.<br>
+  <input type="radio" name="chk-rtd-1" value="C"> It has the highest resistance of any metal, eliminating the need for complex wiring.<br>
+  <input type="radio" name="chk-rtd-1" value="D"> It reacts quickly to sudden temperature spikes, acting as a fail-safe.<br>
+  <button type="button" onclick="checkTrueFalse('chk-rtd-1', 'B', '✅ Correct! Platinum is favored for its chemical stability and predictable, linear resistance changes across a massive temperature range.', '❌ Try again. Review the properties of platinum mentioned in the RTD physical principle.')">Check Answer</button>
+  <p id="chk-rtd-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Which mathematical model is typically used to map resistance to temperature in an RTD over standard ranges?</strong></p>
+<form id="chk-rtd-2">
+  <input type="radio" name="chk-rtd-2" value="A"> An exponential beta-constant model.<br>
+  <input type="radio" name="chk-rtd-2" value="B"> A power-law relationship.<br>
+  <input type="radio" name="chk-rtd-2" value="C"> The Steinhart-Hart polynomial equation.<br>
+  <input type="radio" name="chk-rtd-2" value="D"> A linear approximation using a reference resistance and temperature coefficient.<br>
+  <button type="button" onclick="checkTrueFalse('chk-rtd-2', 'D', '✅ Correct! Because RTDs are highly linear, a simple linear approximation formula is used for standard ranges.', '❌ Try again. RTDs are known for being very linear, unlike thermistors.')">Check Answer</button>
+  <p id="chk-rtd-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>In terms of material composition, how do thermistors fundamentally differ from RTDs?</strong></p>
+<form id="chk-therm-1">
+  <input type="radio" name="chk-therm-1" value="A"> Thermistors use ceramic or polymer semiconductors instead of pure metals.<br>
+  <input type="radio" name="chk-therm-1" value="B"> Thermistors are made entirely of platinum, while RTDs use cheap alloys.<br>
+  <input type="radio" name="chk-therm-1" value="C"> Thermistors contain an internal electrolyte fluid.<br>
+  <input type="radio" name="chk-therm-1" value="D"> Thermistors are composed of two dissimilar metal wires welded together.<br>
+  <button type="button" onclick="checkTrueFalse('chk-therm-1', 'A', '✅ Correct! While RTDs use pure metals like platinum, thermistors are built from semiconductor materials.', '❌ Try again. Think about the definition of a thermal resistor mentioned at the start of the section.')">Check Answer</button>
+  <p id="chk-therm-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What is the primary advantage of choosing a thermistor over an RTD for narrow, everyday temperature ranges in robotics?</strong></p>
+<form id="chk-therm-2">
+  <input type="radio" name="chk-therm-2" value="A"> They offer a perfectly linear response.<br>
+  <input type="radio" name="chk-therm-2" value="B"> They generate their own voltage via the Seebeck effect.<br>
+  <input type="radio" name="chk-therm-2" value="C"> They provide exceptionally high sensitivity, fast response times, and are low cost.<br>
+  <input type="radio" name="chk-therm-2" value="D"> They can withstand extreme heat inside 3D printer hotends.<br>
+  <button type="button" onclick="checkTrueFalse('chk-therm-2', 'C', '✅ Correct! Thermistors are cheap, fast, and highly sensitive, making them ideal for everyday ambient and component monitoring.', '❌ Try again. RTDs are more linear, and thermocouples are used for extreme heat. What makes thermistors good for everyday use?')">Check Answer</button>
+  <p id="chk-therm-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What physical principle allows a thermocouple to measure extreme temperatures without external excitation power?</strong></p>
+<form id="chk-tc-1">
+  <input type="radio" name="chk-tc-1" value="A"> The internal photoelectric effect.<br>
+  <input type="radio" name="chk-tc-1" value="B"> The Seebeck effect.<br>
+  <input type="radio" name="chk-tc-1" value="C"> An electron depletion layer.<br>
+  <input type="radio" name="chk-tc-1" value="D"> The Steinhart-Hart principle.<br>
+  <button type="button" onclick="checkTrueFalse('chk-tc-1', 'B', '✅ Correct! The Seebeck effect dictates that a temperature difference between joined dissimilar metals generates a tiny voltage.', '❌ Try again. Review the physical phenomenon that governs how two dissimilar metal wires behave when heated.')">Check Answer</button>
+  <p id="chk-tc-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Why is a specialized, high-gain amplifier strictly necessary when integrating a thermocouple into a robot?</strong></p>
+<form id="chk-tc-2">
+  <input type="radio" name="chk-tc-2" value="A"> To power the hot junction of the thermocouple.<br>
+  <input type="radio" name="chk-tc-2" value="B"> To convert the sensor's massive resistance changes into a safe voltage.<br>
+  <input type="radio" name="chk-tc-2" value="C"> To actively heat the sensor to its 400°C working temperature.<br>
+  <input type="radio" name="chk-tc-2" value="D"> To accurately read the very tiny micro-volt signals amidst the electrical noise of the robot.<br>
+  <button type="button" onclick="checkTrueFalse('chk-tc-2', 'D', '✅ Correct! Thermocouples generate micro-voltages that are easily lost in a robot electrical noise without high-gain amplification.', '❌ Try again. Remember that thermocouples require no external power, but the signal they output is extremely small.')">Check Answer</button>
+  <p id="chk-tc-2-feedback"></p>
+</form>
+
+</details>
+
+
+---
+
+##### Optical Sensing: Beyond the Camera
+
+{: .no_toc }
+
+While cameras capture dense, high-dimensional arrays of pixels, they require heavy computation and are bottlenecked by relatively slow frame rates (typically 30 to 60 Hz). When a robot needs to react to its environment *instantaneously*, such as an industrial arm triggering an emergency stop or a mobile robot counting motor rotations, engineers rely on discrete optical sensors. These transducers convert incident photons directly into changes in resistance or current, trading spatial resolution for blazing speed and low computational overhead.
+
+* **Photoresistors (LDRs):**
+
+Light Dependent Resistors (LDRs) are typically made from a semiconductor material like Cadmium Sulfide (CdS). They operate on the principle of the internal photoelectric effect: as photons strike the material, they excite bound electrons up into the conduction band. In pitch darkness, an LDR might have a resistance of several Megohms ($M\Omega$); under bright light, this resistance plummets to just a few hundred ohms.
+Because the resistance change is so massive, they are incredibly easy to integrate into a robot using a simple voltage divider circuit. However, LDRs are notoriously slow. It can take tens or even hundreds of milliseconds for the resistance to fully change after the light level drops. This "memory effect" makes them suitable for slow tasks like solar tracking or turning on a robot's headlights, but useless for high-speed obstacle detection.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/ldr.png)
+> <sub>Structure and circuit symbols of a Light Dependent Resistor (LDR), showing the zigzag photoconductive track on a ceramic substrate with metal electrodes and wire terminals. Source: https://engineeringlearn.com/what-is-ldr-photoresistor-types-working-application-diagram-symbol-complete-details/</sub>
+
+
+---
+
+<details markdown="1">
+ <summary>Deep dive: video explanation of LDRs</summary>
+
+  A simple explanation of a Light Dependent Resistor (LDR). Understand the working principle of a Light Dependent Resistor circuit, and exactly how an LDR sensor works.
+
+  ![](https://www.youtube.com/watch?v=ilN8XIK77dc)
+  ><sub>*Light Dependent Resistors (LDR): Working Principle. YouTube video, 07.02.2016. Available at: https://www.youtube.com/watch?v=ilN8XIK77dc*</sub>
+
+</details>
+
+---
+
+* **Photodiodes:**
+
+When speed is critical, engineers use photodiodes. These are specialized silicon PN junctions designed to absorb light. When a photon strikes the depletion region of the diode, it creates an electron-hole pair. In robotics circuits, photodiodes are usually operated in *reverse bias*. In this state, the light generates a tiny "photocurrent" that is highly linear with respect to the light intensity.
+Photodiodes are exceptionally fast, reacting in the nanosecond range. This makes them the sensor of choice for high-speed applications (for example for optical motor encoders or the receivers in LiDAR systems). The main engineering trade-off is that the generated photocurrent is tiny (often in the microamp range). To be read by a robot's microcontroller, this tiny current must be fed into a specialized op-amp circuit called a Transimpedance Amplifier (TIA) to convert it into a usable voltage.
+
+
+![]({{ site.baseurl }}/assets/images/new_sensors/photodiode.png)
+> <sub>Photodiode components: (Left) TO-5 metal header package; (Center) Schematic symbol; (Right) Internal semiconductor stack showing the light-sensitive PN junction. Source: https://www.electricalvolt.com/photodiode-working-characteristics-applications/</sub>
+
+---
+
+<details markdown="1">
+ <summary>Deep dive: video explanation of Photodiodes</summary>
+
+  Let's explore the working of a photodiode - a PN junction that converts light into electricity - its working, its applications, and why it's reverse biased. 
+
+  ![](https://www.youtube.com/watch?v=KgKcbW77txY)
+  ><sub>*Photodiodes (working & why it's reverse biased) | Class 12 | Semiconductors | Physics | Khan Academy. YouTube video, 12.12.2020. Available at: https://www.youtube.com/watch?v=KgKcbW77txY*</sub>
+
+</details>
+
+---
+
+* **Phototransistors:** 
+
+A phototransistor combines the light-sensing capability of a photodiode with the signal amplification of a Bipolar Junction Transistor (BJT). Instead of a wired electrical connection to the transistor's base, the base is exposed to light. The photons generate a small base current, which the transistor then amplifies by its inherent gain ($\beta$).
+$$I_{collector} = \beta \cdot I_{photo}$$
+This built-in amplification is a huge advantage for simple robotics. A phototransistor outputs a signal large enough to be read directly by a microcontroller pin, eliminating the need for complex amplifier circuits. The trade-off is a slight loss in speed: the internal capacitance of the transistor slows its reaction time down to the microsecond range. They are the standard component found in infrared (IR) line-following arrays, optical limit switches, and short-range proximity sensors.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/phototransistor.png)
+> <sub>Phototransistor circuit symbol and common package styles (metal can and epoxy-encapsulated types), illustrating a light-sensitive transistor in which incident light generates base current and controls collector–emitter conduction. Source: https://www.y-ic.fr/blog/Understanding-Phototransistors-Definition,Principles,Advantages,and-Applications.html</sub>
+
+---
+
+<details markdown="1">
+ <summary>Deep dive: video explanation of phototransistor</summary>
+
+  Video explanation about the working principle of phototransistor.
+
+  ![](https://www.youtube.com/watch?v=Og7km30Du80)
+  ><sub>*Working principle of phototransistor. YouTube video, 27.01.2019. Available at: https://www.youtube.com/watch?v=Og7km30Du80*</sub>
+
+</details>
+
+---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+<p><strong>What physical phenomenon describes how an LDR reacts to incident photons?</strong></p>
+<form id="chk-ldr-1">
+  <input type="radio" name="chk-ldr-1" value="A"> The Seebeck effect.<br>
+  <input type="radio" name="chk-ldr-1" value="B"> The internal photoelectric effect, where photons excite bound electrons into the conduction band.<br>
+  <input type="radio" name="chk-ldr-1" value="C"> A reduction-oxidation (redox) reaction.<br>
+  <input type="radio" name="chk-ldr-1" value="D"> The dielectric constant changes based on light absorption.<br>
+  <button type="button" onclick="checkTrueFalse('chk-ldr-1', 'B', '✅ Correct! Photons strike the Cadmium Sulfide, exciting electrons into the conduction band and lowering resistance.', '❌ Try again. Look at the description of how photons interact with the semiconductor material in an LDR.')">Check Answer</button>
+  <p id="chk-ldr-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>How extreme is the resistance change in a typical LDR when transitioning from pitch darkness to bright light?</strong></p>
+<form id="chk-ldr-2">
+  <input type="radio" name="chk-ldr-2" value="A"> It drops from several Megohms to just a few hundred ohms.<br>
+  <input type="radio" name="chk-ldr-2" value="B"> It increases from zero ohms to a few hundred ohms.<br>
+  <input type="radio" name="chk-ldr-2" value="C"> It changes by only a few micro-ohms, requiring a Wheatstone bridge.<br>
+  <input type="radio" name="chk-ldr-2" value="D"> The resistance stays the same, but it generates a massive voltage.<br>
+  <button type="button" onclick="checkTrueFalse('chk-ldr-2', 'A', '✅ Correct! The resistance change is massive, plummeting from Megohms in the dark to mere hundreds of ohms in the light.', '❌ Try again. The text explicitly mentions the scale of resistance change that makes LDRs easy to use with simple voltage dividers.')">Check Answer</button>
+  <p id="chk-ldr-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>In what electrical state are photodiodes typically operated in robotics circuits to generate a linear photocurrent?</strong></p>
+<form id="chk-pd-1">
+  <input type="radio" name="chk-pd-1" value="A"> Forward bias<br>
+  <input type="radio" name="chk-pd-1" value="B"> Reverse bias<br>
+  <input type="radio" name="chk-pd-1" value="C"> Zero bias (short circuit)<br>
+  <input type="radio" name="chk-pd-1" value="D"> Alternating current (AC) bias<br>
+  <button type="button" onclick="checkTrueFalse('chk-pd-1', 'B', '✅ Correct! Photodiodes are operated in reverse bias to generate a tiny, highly linear photocurrent when struck by light.', '❌ Try again. Review the text on how the PN junction of a photodiode is electrically configured in a robot circuit.')">Check Answer</button>
+  <p id="chk-pd-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What happens inside the depletion region of a photodiode when a photon successfully strikes it?</strong></p>
+<form id="chk-pd-2">
+  <input type="radio" name="chk-pd-2" value="A"> It excites the atoms to vibrate, increasing resistance.<br>
+  <input type="radio" name="chk-pd-2" value="B"> It creates a temporary electron depletion layer.<br>
+  <input type="radio" name="chk-pd-2" value="C"> It generates an electron-hole pair.<br>
+  <input type="radio" name="chk-pd-2" value="D"> It multiplies the photons by the transistor gain.<br>
+  <button type="button" onclick="checkTrueFalse('chk-pd-2', 'C', '✅ Correct! The energy of the photon creates an electron-hole pair in the depletion region, which drives the photocurrent.', '❌ Try again. What is the sub-atomic result of a photon hitting the specialized silicon PN junction?')">Check Answer</button>
+  <p id="chk-pd-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>How does the physical structure of a phototransistor differ from a standard Bipolar Junction Transistor (BJT)?</strong></p>
+<form id="chk-pt-1">
+  <input type="radio" name="chk-pt-1" value="A"> It lacks a collector pin entirely.<br>
+  <input type="radio" name="chk-pt-1" value="B"> Instead of a wired electrical connection, the transistor base is exposed to light.<br>
+  <input type="radio" name="chk-pt-1" value="C"> It uses two dissimilar metal wires joined at the base.<br>
+  <input type="radio" name="chk-pt-1" value="D"> It contains a vacuum cavity above the silicon diaphragm.<br>
+  <button type="button" onclick="checkTrueFalse('chk-pt-1', 'B', '✅ Correct! Light entering the exposed base generates a small base current, which the transistor then amplifies.', '❌ Try again. Think about how the signal amplification actually gets triggered in a phototransistor.')">Check Answer</button>
+  <p id="chk-pt-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Which of the following is a common robotics application perfectly suited for the reaction speed and output size of a phototransistor?</strong></p>
+<form id="chk-pt-2">
+  <input type="radio" name="chk-pt-2" value="A"> High-speed LiDAR receivers<br>
+  <input type="radio" name="chk-pt-2" value="B"> Measuring the temperature of a battery pack<br>
+  <input type="radio" name="chk-pt-2" value="C"> Infrared (IR) line-following arrays and optical limit switches<br>
+  <input type="radio" name="chk-pt-2" value="D"> Continuous solar tracking over many hours<br>
+  <button type="button" onclick="checkTrueFalse('chk-pt-2', 'C', '✅ Correct! The built-in amplification and microsecond response time make them ideal for standard IR line followers and proximity sensors.', '❌ Try again. Photodiodes are used for LiDAR, and LDRs are used for solar tracking. What are phototransistors standardly used for?')">Check Answer</button>
+  <p id="chk-pt-2-feedback"></p>
+</form>
+
+</details>
+
+---
+
+##### Atmospheric Perception: Robotic Olfaction (Smell)
+
+{: .no_toc }
+
+Giving a robot a "nose" is essential for tasks ranging from detecting hazardous industrial leaks to monitoring indoor air quality. Unlike temperature or light, which are forms of physical energy, chemical sensing requires a physical interaction between ambient molecules and the sensor's surface. This makes robotic olfaction inherently slower and more susceptible to cross-sensitivity (where a sensor gets "confused" by a non-target gas). Engineers generally choose from the following dominant technologies based on power constraints and required precision:
+
+* **Metal-Oxide (MOX) Semiconductor Sensors:**
+
+These are the most common and inexpensive gas sensors in robotics, widely used for detecting Volatile Organic Compounds (VOCs), carbon monoxide, and combustible gases. They consist of a ceramic substrate coated in a thin film of metal oxide, typically Tin Dioxide ($SnO_2$).
+The physics rely on the formation of an **electron depletion layer (EDL)**. The sensor must be actively heated to an optimal working temperature (often 200°C to 400°C). In clean air, atmospheric oxygen adsorbs onto the hot metal oxide surface, trapping electrons from the semiconductor's conduction band and keeping its electrical resistance very high. When a target reducing gas (like methane) hits the sensor, it reacts with the adsorbed oxygen. This reaction releases the trapped electrons back into the conduction band, causing a massive, measurable drop in the sensor's resistance.
+The gas concentration ($C$) is calculated by comparing the sensor's current resistance ($R_s$) to its baseline resistance in clean air ($R_0$) using a power-law relationship:
+$$R_s = A \cdot C^{-\alpha}$$
+Where $A$ and $\alpha$ are sensor-specific constants determined through calibration.
+While cheap and sensitive, the active heating element draws significant, continuous current (often tens of milliamps). This power drain is a major design constraint for small, battery-operated mobile robots.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/mox_sensor.png)
+> <sub>MOx sensor working principle, where oxygen is adsorbed onto the surface of the metal oxide. Source: Fukuda et al. (2024). A Feasibility Study of a Respiratory Rate Measurement System Using Wearable MOx Sensors. Information. 15. 492. 10.3390/info15080492. </sub>
+
+---
+
+<details markdown="1">
+ <summary>Complementary: video explanation of Metal-Oxide Semiconductor Sensors</summary>
+
+  Structure and operating principle of MOS type gas sensors will be explained in this animation.
+
+  ![](https://www.youtube.com/watch?v=usEe3spV5vI)
+  ><sub>*How do MOS type gas sensors detect gas? YouTube video, 28.01.2019. Available at: https://www.youtube.com/watch?v=usEe3spV5vI*</sub>
+
+</details>
+
+---
+
+* **Electrochemical Sensors:** 
+
+When a robot requires highly precise, parts-per-million (ppm) detection of toxic gases (like hydrogen sulfide, ammonia, or ozone), engineers use electrochemical cells. These act like tiny, gas-specific batteries.
+The target gas diffuses through a hydrophobic membrane into an electrolyte solution, where it meets a catalytic sensing electrode. Here, a reduction-oxidation (redox) reaction occurs. For example, in a carbon monoxide sensor, the CO is oxidized at the anode, generating a flow of electrons. This reaction produces a tiny electrical current that is linearly proportional to the gas concentration:
+$$I = S \cdot C$$
+Where $I$ is the generated current, $S$ is the sensor's sensitivity (e.g., nanoamps per ppm), and $C$ is the gas concentration. Because the current is in the nanoamp or microamp range, the robot's circuitry requires a highly precise transimpedance amplifier (or a specialized potentiostat circuit) to read it.
+Electrochemical sensors consume almost zero power, making them ideal for long-term deployment on environmental monitoring drones. However, because the redox reaction consumes the internal electrodes and electrolyte over time, these sensors have a finite lifespan (typically 1 to 3 years) and require frequent recalibration.
+
+---
+
+<details markdown="1">
+ <summary>Complementary: video explanation of Electrochemical Sensors</summary>
+
+  Video explanation about the working principle of electrochemical sensors.
+
+  ![](https://www.youtube.com/watch?v=yjQyJjiatl0)
+  ><sub>*How do electrochemical-type sensors detect gas? YouTube video, 28.06.2019. Available at: https://www.youtube.com/watch?v=yjQyJjiatl0*</sub>
+
+</details>
+
+---
+
+* **Non-Dispersive Infrared (NDIR) Sensors:** 
+
+Often used in indoor autonomous robots to monitor carbon dioxide ($CO_2$) or in agricultural robots for methane detection. Unlike the previous two contact-based sensors, NDIR is an optical technique. It relies on the fact that specific gas molecules absorb specific wavelengths of infrared light. An IR lamp shoots light through a sampling tube; if the target gas is present, it absorbs some of the light, and an optical detector at the other end measures the drop in intensity. NDIR sensors are bulky and expensive but offer incredible accuracy and do not suffer from chemical degradation over time.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/NDIR_sensor.png)
+> <sub> Sketch of the Non Dispersive Infra-Red (NDIR) carbon dioxide (CO2) sensor structure. Source: Mendes et al. NDIR Gas Sensor for Spatial Monitoring of Carbon Dioxide Concentrations in Naturally Ventilated Livestock Buildings. Sensors 2015, 15, 11239-11257. https://doi.org/10.3390/s150511239 </sub> 
+
+
+---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+<p><strong>In clean air, what physically keeps the electrical resistance of a heated MOX sensor very high?</strong></p>
+<form id="chk-mox-1">
+  <input type="radio" name="chk-mox-1" value="A"> Atmospheric oxygen adsorbs onto the surface, trapping electrons from the conduction band.<br>
+  <input type="radio" name="chk-mox-1" value="B"> The heater causes the metal oxide to expand and break the electrical circuit.<br>
+  <input type="radio" name="chk-mox-1" value="C"> The ceramic substrate blocks all electron flow until a gas dissolves it.<br>
+  <input type="radio" name="chk-mox-1" value="D"> Atmospheric nitrogen forms a highly conductive layer on the sensor.<br>
+  <button type="button" onclick="checkTrueFalse('chk-mox-1', 'A', '✅ Correct! The adsorbed oxygen creates an electron depletion layer by trapping electrons, which keeps baseline resistance very high.', '❌ Try again. Review the physics of the electron depletion layer (EDL) in clean air.')">Check Answer</button>
+  <p id="chk-mox-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What mathematical relationship is used to calculate gas concentration from a MOX sensor's resistance change?</strong></p>
+<form id="chk-mox-2">
+  <input type="radio" name="chk-mox-2" value="A"> The international barometric formula<br>
+  <input type="radio" name="chk-mox-2" value="B"> A linear approximation<br>
+  <input type="radio" name="chk-mox-2" value="C"> A power-law relationship<br>
+  <input type="radio" name="chk-mox-2" value="D"> The Steinhart-Hart equation<br>
+  <button type="button" onclick="checkTrueFalse('chk-mox-2', 'C', '✅ Correct! Gas concentration is calculated using a power-law equation comparing current resistance to baseline resistance.', '❌ Try again. Look at the specific equation provided in the MOX sensor section.')">Check Answer</button>
+  <p id="chk-mox-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>How does the target gas physically reach the catalytic sensing electrode in an electrochemical sensor?</strong></p>
+<form id="chk-ec-1">
+  <input type="radio" name="chk-ec-1" value="A"> It is pulled in by a microscopic mechanical fan.<br>
+  <input type="radio" name="chk-ec-1" value="B"> It diffuses through a hydrophobic membrane into an electrolyte solution.<br>
+  <input type="radio" name="chk-ec-1" value="C"> It adsorbs onto a heated metal oxide thin film.<br>
+  <input type="radio" name="chk-ec-1" value="D"> It travels down a sampling tube illuminated by an IR lamp.<br>
+  <button type="button" onclick="checkTrueFalse('chk-ec-1', 'B', '✅ Correct! The gas must diffuse through a specialized membrane to interact with the electrolyte and the electrode.', '❌ Try again. Review the physical structure of an electrochemical cell as described in the text.')">Check Answer</button>
+  <p id="chk-ec-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What is the relationship between the generated electrical current and the gas concentration in an electrochemical sensor?</strong></p>
+<form id="chk-ec-2">
+  <input type="radio" name="chk-ec-2" value="A"> Exponentially proportional<br>
+  <input type="radio" name="chk-ec-2" value="B"> Inverse power-law<br>
+  <input type="radio" name="chk-ec-2" value="C"> Highly non-linear<br>
+  <input type="radio" name="chk-ec-2" value="D"> Linearly proportional<br>
+  <button type="button" onclick="checkTrueFalse('chk-ec-2', 'D', '✅ Correct! The redox reaction produces a tiny current that scales linearly with the gas concentration ($I = S \\cdot C$).', '❌ Try again. Unlike MOX sensors, electrochemical cells have a very straightforward mathematical relationship with gas concentration.')">Check Answer</button>
+  <p id="chk-ec-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What is a major longevity advantage of NDIR sensors over electrochemical cells?</strong></p>
+<form id="chk-ndir-1">
+  <input type="radio" name="chk-ndir-1" value="A"> They do not suffer from chemical degradation over time because they are optical.<br>
+  <input type="radio" name="chk-ndir-1" value="B"> They consume zero power and can run indefinitely.<br>
+  <input type="radio" name="chk-ndir-1" value="C"> Their metal oxide coating replenishes itself automatically.<br>
+  <input type="radio" name="chk-ndir-1" value="D"> They generate their own light using the Seebeck effect.<br>
+  <button type="button" onclick="checkTrueFalse('chk-ndir-1', 'A', '✅ Correct! Because NDIR relies on infrared light absorption rather than chemical redox reactions, the sensor does not degrade chemically over time.', '❌ Try again. Think about the fundamental difference between an optical technique and a contact-based chemical technique.')">Check Answer</button>
+  <p id="chk-ndir-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>In agricultural or indoor robotic applications, which gases are NDIR sensors most commonly used to detect?</strong></p>
+<form id="chk-ndir-2">
+  <input type="radio" name="chk-ndir-2" value="A"> Oxygen and Nitrogen<br>
+  <input type="radio" name="chk-ndir-2" value="B"> Carbon Dioxide ($CO_2$) and Methane<br>
+  <input type="radio" name="chk-ndir-2" value="C"> Hydrogen Sulfide and Ozone<br>
+  <input type="radio" name="chk-ndir-2" value="D"> Carbon Monoxide and VOCs<br>
+  <button type="button" onclick="checkTrueFalse('chk-ndir-2', 'B', '✅ Correct! The text highlights NDIR as the standard choice for monitoring indoor $CO_2$ or agricultural methane.', '❌ Try again. Review the specific examples of gases targeted by NDIR sensors at the beginning of the section.')">Check Answer</button>
+  <p id="chk-ndir-2-feedback"></p>
+</form>
+
+</details>
+
+---
+
+##### Meteorological Perception: Weather and Altitude
+
+{: .no_toc }
+
+While temperature, light, and gases cover many immediate environmental hazards, robots operating outdoors (like agricultural rovers or delivery drones) or navigating multi-story buildings need to understand meteorological variables. Humidity and atmospheric pressure are the two most common parameters measured here, providing critical data for weather forecasting, greenhouse management, and 3D spatial positioning.
+
+* **Capacitive Humidity Sensors:**
+
+When robots need to measure Relative Humidity (RH), engineers almost always use capacitive sensors. They are almost always packaged alongside a thermistor on a single digital chip (like the DHT22, SHT31, or BME280).
+
+The physical principle is based on a variable capacitor. The sensor consists of two conductive electrodes separated by a thin layer of a hygroscopic (water-absorbing) dielectric polymer. The capacitance $C$ of a parallel-plate capacitor is defined as:
+
+
+$$C = \frac{\varepsilon_0 \varepsilon_r A}{d}$$
+
+
+Where $\varepsilon_0$ is the vacuum permittivity, $A$ is the area of the plates, and $d$ is the distance between them. The key variable here is $\varepsilon_r$, the relative permittivity (or dielectric constant) of the polymer. Pure water has a massive relative permittivity ($\varepsilon_r \approx 80$) compared to the dry polymer ($\varepsilon_r \approx 2$ to $5$). As the ambient humidity increases, the polymer absorbs water vapor from the air, drastically increasing its overall dielectric constant and therefore increasing the sensor's capacitance.
+
+For robotics, these sensors are excellent because they consume microamps of power. However, they have a major constraint: **response time**. Unlike a photodiode that reacts in nanoseconds, a capacitive polymer must physically absorb and desorb water molecules. It can take anywhere from 5 to 30 seconds for the sensor to stabilize after a sudden change in humidity, meaning it cannot be used for high-speed dynamic control.
+
+![]({{ site.baseurl }}/assets/images/new_sensors/humidity_sensor.jpg)
+> <sub>Multi-layer construction of a thin-film capacitive humidity sensor. The diagram identifies the electrodes, polymer sensing layer, and glass substrate used to detect atmospheric moisture levels. Source: https://automationforum.co/capacitive-type-humidity-measurement/</sub>
+
+
+---
+
+* **Piezoresistive Barometric Pressure Sensors:**
+
+While barometers measure atmospheric pressure, in robotics, they are primarily used as **altimeters**. For a flying drone, a barometer enables "altitude hold" flight modes. For a legged or wheeled indoor robot, a barometer is sensitive enough to detect which floor of a building the robot is on by sensing the pressure drop as it rides an elevator.
+
+Modern robotic barometers utilize Micro-Electromechanical Systems (MEMS) technology. Inside the microscopic chip, there is a tiny silicon diaphragm covering a sealed reference cavity (which is usually a vacuum). As the ambient air pressure pushes down on this diaphragm, it bends. Piezoresistive elements are etched directly into the flexing silicon. As the diaphragm stretches, the mechanical stress changes the electrical resistance of the piezoresistors. The robot's onboard circuitry reads this tiny resistance change using a Wheatstone bridge.
+
+To convert this measured pressure ($p$) into a usable altitude estimate ($h$) in meters, the robot's navigation stack relies on the simplified international barometric formula:
+
+
+$$h = 44330 \cdot \left(1 - \left(\frac{p}{p_0}\right)^{\frac{1}{5.255}}\right)$$
+
+
+Where $p_0$ is the reference pressure at sea level (typically 1013.25 hPa). The constant 44330 represents the theoretical height where air temperature would reach absolute zero based on a standard cooling rate, while the exponent 5.255 accounts for the non-linear relationship between pressure and density as the air thins.
+
+The primary engineering constraint when using these sensors on a moving robot is **dynamic pressure interference**. The spinning propellers of a drone or the HVAC vents in an office building create localized high-pressure air currents that will cause massive spikes in the altitude reading. To counteract this, engineers must physically shield the tiny hole on the barometer chip with a piece of open-cell acoustic foam to block wind while still allowing ambient static pressure to pass through.
+
+---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+<p><strong>What acts as the dielectric material between the conductive electrodes in a capacitive humidity sensor?</strong></p>
+<form id="chk-hum-1">
+  <input type="radio" name="chk-hum-1" value="A"> A sealed vacuum cavity.<br>
+  <input type="radio" name="chk-hum-1" value="B"> Pure distilled water.<br>
+  <input type="radio" name="chk-hum-1" value="C"> A hygroscopic (water-absorbing) polymer.<br>
+  <input type="radio" name="chk-hum-1" value="D"> A layer of platinum.<br>
+  <button type="button" onclick="checkTrueFalse('chk-hum-1', 'C', '✅ Correct! The thin layer of polymer absorbs water vapor, which dramatically increases the dielectric constant between the plates.', '❌ Try again. Look at the description of the parallel-plate capacitor structure in the sensor.')">Check Answer</button>
+  <p id="chk-hum-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What is the primary electrical advantage of using capacitive humidity sensors on small robots?</strong></p>
+<form id="chk-hum-2">
+  <input type="radio" name="chk-hum-2" value="A"> They generate a large voltage that can power the microcontroller.<br>
+  <input type="radio" name="chk-hum-2" value="B"> They only consume microamps of power.<br>
+  <input type="radio" name="chk-hum-2" value="C"> They require an active heating element to burn off moisture.<br>
+  <input type="radio" name="chk-hum-2" value="D"> They process data internally at high frame rates.<br>
+  <button type="button" onclick="checkTrueFalse('chk-hum-2', 'B', '✅ Correct! Capacitive humidity sensors are extremely low power, consuming only microamps, though they suffer from a slow response time.', '❌ Try again. What does the text state about their power consumption compared to their response time constraint?')">Check Answer</button>
+  <p id="chk-hum-2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>In MEMS barometers, how are the piezoresistive elements integrated into the sensor?</strong></p>
+<form id="chk-baro-1">
+  <input type="radio" name="chk-baro-1" value="A"> They are glued to the outside of the robot chassis.<br>
+  <input type="radio" name="chk-baro-1" value="B"> They are submerged in an electrolyte solution.<br>
+  <input type="radio" name="chk-baro-1" value="C"> They are etched directly into the flexing silicon diaphragm.<br>
+  <input type="radio" name="chk-baro-1" value="D"> They are printed onto an open-cell acoustic foam.<br>
+  <button type="button" onclick="checkTrueFalse('chk-baro-1', 'C', '✅ Correct! The piezoresistive elements are etched directly into the silicon so that when the diaphragm bends, the mechanical stress changes their resistance.', '❌ Try again. Review the microscopic internal structure of the MEMS chip described in the text.')">Check Answer</button>
+  <p id="chk-baro-1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>What circuit layout does the robot's onboard electronics use to read the tiny resistance changes in the barometer piezoresistors?</strong></p>
+<form id="chk-baro-2">
+  <input type="radio" name="chk-baro-2" value="A"> A Transimpedance Amplifier (TIA)<br>
+  <input type="radio" name="chk-baro-2" value="B"> A Wheatstone bridge<br>
+  <input type="radio" name="chk-baro-2" value="C"> A Cold Junction Compensator (CJC)<br>
+  <input type="radio" name="chk-baro-2" value="D"> A simple voltage divider<br>
+  <button type="button" onclick="checkTrueFalse('chk-baro-2', 'B', '✅ Correct! A Wheatstone bridge is utilized to accurately measure the tiny changes in electrical resistance caused by the flexing diaphragm.', '❌ Try again. A TIA is for photodiodes. What circuit reads the piezoresistors?')">Check Answer</button>
+  <p id="chk-baro-2-feedback"></p>
+</form>
+
+</details>
+
+
+---
+
+
+
+<details markdown="1">
+  <summary>Chapter wrap-up conceptual questions</summary>
+
+<p><strong>Question 1: Why do engineers often use complex 3-wire or 4-wire measuring circuits when integrating Resistance Temperature Detectors (RTDs) in a robot arm?</strong></p>
+<form id="ch-env-q1">
+  <input type="radio" name="ch-env-q1" value="A"> Because RTDs generate a massive voltage that needs to be stepped down safely.<br>
+  <input type="radio" name="ch-env-q1" value="B"> To cancel out the resistance of the long lead wires, since absolute resistance changes in RTDs are very tiny.<br>
+  <input type="radio" name="ch-env-q1" value="C"> Because RTDs require three to four different power sources to operate correctly.<br>
+  <input type="radio" name="ch-env-q1" value="D"> To provide a cold junction reference for the platinum element.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q1', 'B', '✅ Correct! RTD resistance changes are minimal, so long lead wires can introduce significant errors. 3-wire and 4-wire circuits help cancel out this extra wire resistance.', '❌ Try again. Think about the physical layout of a robot arm and how the small resistance changes of the RTD might be affected by long cables.')">Check Answer</button>
+  <p id="ch-env-q1-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 2: In robotics, what is the primary function of a Positive Temperature Coefficient (PTC) thermistor?</strong></p>
+<form id="ch-env-q2">
+  <input type="radio" name="ch-env-q2" value="A"> Continuous temperature monitoring of ambient air due to its highly linear response.<br>
+  <input type="radio" name="ch-env-q2" value="B"> Measuring extreme temperatures inside a 3D printer hotend.<br>
+  <input type="radio" name="ch-env-q2" value="C"> Acting as a fail-safe or self-resetting fuse to cut off current if a component overheats.<br>
+  <input type="radio" name="ch-env-q2" value="D"> Canceling out the cold junction errors of a thermocouple.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q2', 'C', '✅ Correct! Because their resistance spikes abruptly at a specific threshold, PTCs are rarely used for continuous measurement and instead act as thermal fail-safes.', '❌ Try again. Unlike NTC thermistors, PTCs have a switch-like behavior. How might that be useful for protecting circuits?')">Check Answer</button>
+  <p id="ch-env-q2-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 3: Why is Cold Junction Compensation (CJC) required when using a thermocouple?</strong></p>
+<form id="ch-env-q3">
+  <input type="radio" name="ch-env-q3" value="A"> Because thermocouples measure a temperature difference, so the circuit board's temperature must be known to calculate the absolute hot tip temperature.<br>
+  <input type="radio" name="ch-env-q3" value="B"> Because thermocouples draw too much current and the cold junction prevents short circuits.<br>
+  <input type="radio" name="ch-env-q3" value="C"> Because the metal wires will melt if the cold junction is not actively cooled by a fan.<br>
+  <input type="radio" name="ch-env-q3" value="D"> Because it converts the thermocouple's resistance into a readable voltage.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q3', 'A', '✅ Correct! The Seebeck effect generates a voltage based on the difference between the hot and cold junctions. A secondary sensor is needed at the cold junction to find the absolute temperature.', '❌ Try again. Thermocouples rely on the Seebeck effect, which depends on two different temperatures. What does the circuit need to know to find the absolute temperature at the tip?')">Check Answer</button>
+  <p id="ch-env-q3-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 4: Why are Light Dependent Resistors (LDRs) generally unsuitable for high-speed robotic applications like fast obstacle detection?</strong></p>
+<form id="ch-env-q4">
+  <input type="radio" name="ch-env-q4" value="A"> They produce too much electrical noise for microcontrollers to process.<br>
+  <input type="radio" name="ch-env-q4" value="B"> They require heavy computation similar to a camera.<br>
+  <input type="radio" name="ch-env-q4" value="C"> Their resistance changes are too small to detect without expensive amplifiers.<br>
+  <input type="radio" name="ch-env-q4" value="D"> They suffer from a memory effect and can take tens to hundreds of milliseconds to fully react to light changes.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q4', 'D', '✅ Correct! LDRs are notoriously slow to react, making them better suited for slow tasks like solar tracking rather than high-speed obstacle detection.', '❌ Try again. Consider the physical properties of LDRs mentioned in the text regarding how quickly their resistance changes in response to light.')">Check Answer</button>
+  <p id="ch-env-q4-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 5: What specialized circuit is typically required to convert the output of a high-speed photodiode into a usable voltage for a robot?</strong></p>
+<form id="ch-env-q5">
+  <input type="radio" name="ch-env-q5" value="A"> Cold Junction Compensator (CJC)<br>
+  <input type="radio" name="ch-env-q5" value="B"> Transimpedance Amplifier (TIA)<br>
+  <input type="radio" name="ch-env-q5" value="C"> Simple voltage divider<br>
+  <input type="radio" name="ch-env-q5" value="D"> Bipolar Junction Transistor (BJT)<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q5', 'B', '✅ Correct! Photodiodes generate a very tiny photocurrent (often microamps) that must be fed into a Transimpedance Amplifier to be converted into a usable voltage.', '❌ Try again. A photodiode produces a tiny current in reverse bias. What kind of amplifier converts this tiny current into a voltage?')">Check Answer</button>
+  <p id="ch-env-q5-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 6: What is the primary advantage of using a phototransistor instead of a photodiode in simple robotics?</strong></p>
+<form id="ch-env-q6">
+  <input type="radio" name="ch-env-q6" value="A"> Built-in signal amplification allows it to be read directly by a microcontroller pin.<br>
+  <input type="radio" name="ch-env-q6" value="B"> It responds much faster to light changes than a photodiode.<br>
+  <input type="radio" name="ch-env-q6" value="C"> It can measure absolute temperature as well as light intensity.<br>
+  <input type="radio" name="ch-env-q6" value="D"> It generates a high voltage without needing an external power source.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q6', 'A', '✅ Correct! The inherent gain of the transistor amplifies the photocurrent, eliminating the need for complex external amplifier circuits.', '❌ Try again. Phototransistors are actually slightly slower than photodiodes due to internal capacitance. What benefit makes up for this loss of speed?')">Check Answer</button>
+  <p id="ch-env-q6-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 7: How does a Metal-Oxide (MOX) semiconductor sensor detect the presence of a target reducing gas like methane?</strong></p>
+<form id="ch-env-q7">
+  <input type="radio" name="ch-env-q7" value="A"> The gas absorbs infrared light emitted by the sensor, dropping the detected light intensity.<br>
+  <input type="radio" name="ch-env-q7" value="B"> The gas reacts with adsorbed oxygen on the heated surface, releasing trapped electrons and dropping the sensor resistance.<br>
+  <input type="radio" name="ch-env-q7" value="C"> The gas dissolves in an electrolyte, creating a redox reaction that generates a nanoamp current.<br>
+  <input type="radio" name="ch-env-q7" value="D"> The gas cools down the sensor surface, generating a voltage via the Seebeck effect.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q7', 'B', '✅ Correct! The reducing gas reacts with the oxygen on the metal oxide surface, dismantling the electron depletion layer and severely lowering resistance.', '❌ Try again. Consider the chemical interaction that occurs on the heated ceramic substrate of the MOX sensor.')">Check Answer</button>
+  <p id="ch-env-q7-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 8: What is a major design constraint when implementing MOX gas sensors on small, battery-operated mobile robots?</strong></p>
+<form id="ch-env-q8">
+  <input type="radio" name="ch-env-q8" value="A"> They are extremely heavy and bulky.<br>
+  <input type="radio" name="ch-env-q8" value="B"> They require complex optical lenses to focus gas molecules.<br>
+  <input type="radio" name="ch-env-q8" value="C"> They have a very short lifespan of only a few weeks.<br>
+  <input type="radio" name="ch-env-q8" value="D"> They require an active heating element that draws significant continuous current.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q8', 'D', '✅ Correct! MOX sensors must be actively heated to 200°C–400°C to function, causing a constant drain on a small robot battery.', '❌ Try again. Review the operating principles of MOX sensors. What physical condition is required for the electron depletion layer to form and react properly?')">Check Answer</button>
+  <p id="ch-env-q8-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 9: Which gas sensor technology acts like a tiny, gas-specific battery, consuming almost zero power but suffering from a finite lifespan due to internal chemical consumption?</strong></p>
+<form id="ch-env-q9">
+  <input type="radio" name="ch-env-q9" value="A"> Non-Dispersive Infrared (NDIR) Sensors<br>
+  <input type="radio" name="ch-env-q9" value="B"> Metal-Oxide (MOX) Sensors<br>
+  <input type="radio" name="ch-env-q9" value="C"> Electrochemical Sensors<br>
+  <input type="radio" name="ch-env-q9" value="D"> Photoresistors (LDRs)<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q9', 'C', '✅ Correct! Electrochemical sensors rely on a redox reaction that consumes the electrodes and electrolyte, giving them a finite lifespan but incredibly low power consumption.', '❌ Try again. Which sensor relies on a redox reaction inside an electrolyte solution to generate a tiny current?')">Check Answer</button>
+  <p id="ch-env-q9-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 10: Which of the following sensors uses an optical technique rather than physical contact with the gas molecules to determine concentration?</strong></p>
+<form id="ch-env-q10">
+  <input type="radio" name="ch-env-q10" value="A"> Metal-Oxide (MOX) Sensors<br>
+  <input type="radio" name="ch-env-q10" value="B"> Electrochemical Sensors<br>
+  <input type="radio" name="ch-env-q10" value="C"> Non-Dispersive Infrared (NDIR) Sensors<br>
+  <input type="radio" name="ch-env-q10" value="D"> Resistance Temperature Detectors (RTDs)<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q10', 'C', '✅ Correct! NDIR sensors work by shining an IR lamp through a sampling tube and measuring the light intensity drop caused by specific gas absorption.', '❌ Try again. Look for the sensor type that uses an IR lamp and relies on specific wavelengths being absorbed.')">Check Answer</button>
+  <p id="ch-env-q10-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 11: Which temperature sensor relies on the exponential beta-constant model for basic applications due to its highly non-linear response?</strong></p>
+<form id="ch-env-q11">
+  <input type="radio" name="ch-env-q11" value="A"> NTC Thermistor<br>
+  <input type="radio" name="ch-env-q11" value="B"> Platinum RTD<br>
+  <input type="radio" name="ch-env-q11" value="C"> Thermocouple<br>
+  <input type="radio" name="ch-env-q11" value="D"> Photodiode<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q11', 'A', '✅ Correct! Negative Temperature Coefficient (NTC) thermistors have a highly non-linear response that is commonly modeled using the exponential beta-constant equation.', '❌ Try again. RTDs are very linear, and thermocouples use the Seebeck effect. Which sensor is made from semiconductor ceramics and uses the beta-constant model?')">Check Answer</button>
+  <p id="ch-env-q11-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 12: In an NTC thermistor, what happens physically when the ambient temperature increases?</strong></p>
+<form id="ch-env-q12">
+  <input type="radio" name="ch-env-q12" value="A"> The atoms vibrate more intensely, scattering conduction electrons and increasing resistance.<br>
+  <input type="radio" name="ch-env-q12" value="B"> Heating the semiconductor frees up more charge carriers (electrons), decreasing the resistance.<br>
+  <input type="radio" name="ch-env-q12" value="C"> The hot and cold junctions create a larger micro-voltage.<br>
+  <input type="radio" name="ch-env-q12" value="D"> The resistance spikes abruptly at a threshold, cutting off the current.<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch-env-q12', 'B',
+      '✅ Correct! For Negative Temperature Coefficient (NTC) thermistors, higher temperatures free more charge carriers, which makes the material more conductive and lowers the resistance.',
+      '❌ Try again. Option A describes an RTD. Option D describes a PTC thermistor. What does Negative Temperature Coefficient mean for resistance as temperature rises?')">Check Answer</button>
+  <p id="ch-env-q12-feedback"></p>
+</form>
+
+<hr>
+
+<p><strong>Question 13: How does a capacitive humidity sensor detect changes in the air's moisture levels?</strong></p>
+<form id="ch-env-q13">
+  <input type="radio" name="ch-env-q13" value="A"> Water molecules increase the distance between the capacitor plates.<br>
+  <input type="radio" name="ch-env-q13" value="B"> A hygroscopic polymer absorbs water, increasing the dielectric constant and thus the capacitance.<br>
+  <input type="radio" name="ch-env-q13" value="C"> The sensor measures the electrical resistance of water droplets on a ceramic substrate.<br>
+  <input type="radio" name="ch-env-q13" value="D"> It uses an IR lamp to measure the light absorption of water vapor.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q13', 'B', '✅ Correct! Water has a high dielectric constant; as the polymer absorbs it, the overall capacitance of the sensor increases.', '❌ Try again. Review the section on capacitive humidity sensors and how the dielectric constant (epsilon) changes.')">Check Answer</button>
+  <p id="ch-env-q13-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 14: In the barometric formula, why is the relationship between pressure and altitude non-linear (using an exponent like 5.255)?</strong></p>
+<form id="ch-env-q14">
+  <input type="radio" name="ch-env-q14" value="A"> Because gravity increases significantly as the robot flies higher.<br>
+  <input type="radio" name="ch-env-q14" value="B"> Because the sensor's silicon diaphragm becomes stiffer at higher altitudes.<br>
+  <input type="radio" name="ch-env-q14" value="C"> Because air is compressible, causing density and pressure to drop more slowly at higher altitudes.<br>
+  <input type="radio" name="ch-env-q14" value="D"> Because the formula must account for the rotation of the Earth.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q14', 'C', '✅ Correct! Air is a compressible gas; the non-linear exponent accounts for the decreasing density of the air column as altitude increases.', '❌ Try again. Think about the physical properties of air as a gas versus a solid.')">Check Answer</button>
+  <p id="ch-env-q14-feedback"></p>
+</form>
+<hr>
+
+<p><strong>Question 15: Why might an engineer place a piece of open-cell foam over a drone's barometer chip?</strong></p>
+<form id="ch-env-q15">
+  <input type="radio" name="ch-env-q15" value="A"> To keep the sensor warm so the silicon diaphragm doesn't freeze.<br>
+  <input type="radio" name="ch-env-q15" value="B"> To prevent "dynamic pressure" from wind or propellers from causing false altitude spikes.<br>
+  <input type="radio" name="ch-env-q15" value="C"> To absorb moisture so the barometer doesn't turn into a humidity sensor.<br>
+  <input type="radio" name="ch-env-q15" value="D"> To increase the surface area for gas molecules to hit the sensor.<br>
+  <button type="button" onclick="checkTrueFalse('ch-env-q15', 'B', '✅ Correct! Foam acts as a wind shield, blocking high-speed air currents (dynamic pressure) while still allowing the sensor to measure the ambient (static) pressure.', '❌ Try again. Review the section on engineering constraints for barometers on moving robots.')">Check Answer</button>
+  <p id="ch-env-q15-feedback"></p>
+</form>
+
+</details>
+
+---
+
+<details markdown="1">
+<summary>Further exploration</summary>
+
+* [NTC vs PTC thermistors](https://www.dxmht.com/article/difference-between-ntc-and-ptc-thermistors.html)
+* [Seebeck effect & Thermocouples (Wikipedia)](https://en.wikipedia.org/wiki/Thermocouple)
+* [Steinhart–Hart equation for Thermistors (Wikipedia)](https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation)
+* [What is a Photoresistor?](https://engineeringlearn.com/what-is-ldr-photoresistor-types-working-application-diagram-symbol-complete-details/)
+* [Photodiode](https://www.electricalvolt.com/photodiode-working-characteristics-applications/)
+* [Metal-Oxide Semiconductor Gas Sensors (Wikipedia)](https://en.wikipedia.org/wiki/Gas_detector#Semiconductor)
+* [Capacitive type Humidity measurement](https://automationforum.co/capacitive-type-humidity-measurement/)
+
+</details>
 
 ---
 ## Credits

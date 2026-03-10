@@ -191,6 +191,13 @@ The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the 
 
 This module about UAVs aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
 
+## Chapter 0: Sneak Peek into current state of the art of flying robots
+
+Before we dive into the details of how drones work, we invite you to have a look at the video below, which gives you an overview of the current state of the art of flying robots and their main research questions. It doesn't go much into technical details, but it is a good starting point to make you curious about the topic and to give you a glimpse of the different drone types that exist.
+
+![video](https://www.youtube.com/watch?v=U6ZP38XUrGs)
+><sub>The present and future of flying robots - IEEE Robotics and Automation Society. Learn about the work of Dr. Roland Siegwart, Dr. Anibal Ollero, Dr. Dario Floreano, and Dr. Margarita Chli on flying robots and some of the challenges they are still trying to tackle. Available at: https://www.youtube.com/watch?v=U6ZP38XUrGs</sub>
+
 ## Chapter 1 : Introduction to aerodynamic principles
 
 On the image below you see in <span style="color: #FFAA00;">yellow</span> a flying object - here you can think of it as the profile of a wing. Suppose the wing is moving in the direction of the <span style="color: #020FA4;">blue</span> vector. What kind of forces are acting on it? There is of course the gravity coming from the weight of the wing - here in <span style="color: black;">black</span>. The force that makes the wing stay in the air - instead of being restrained to the ground as us humans - is called <span style="color: #C20000;">*lift*</span> force. But the wing is not simply hovering in the air, it moves in the <span style="color: #020FA4;">direction of movement</span>. The force making this possible is the <span style="color: #02E308;">*thrust*</span>, which is counteracted by the *drag*. For a wing we call the angle between the direction of movement and the centerline of the wing the *angle of attack*. 

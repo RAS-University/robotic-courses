@@ -1,11 +1,11 @@
 ---
-title: 15.3 Surgical Robots
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: 16.3 Surgical Robots
+parent: "Chapter 16: Robotic Application Domains Part - II"
 has_children: false
 nav_order: 3
 layout: numbered
 math: mathjax
-chapter: 15
+chapter: 16
 section: 3
 publish: false
 nav_exclude: true

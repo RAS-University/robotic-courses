@@ -1,8 +1,8 @@
 ---
-title: "Chapter 16: Novel Trendy Research Areas in Robotics"
+title: "Chapter 15: Sustainable Robotics"
 parent: "Robotics Advanced Topics II"
 has_children: true
-nav_order: 16
+nav_order: 15
 layout: default
 ---
 
@@ -24,7 +24,7 @@ layout: default
   }
 </style>
 
-# Chapter 16: Novel Trendy Research Areas in Robotics
+# Chapter 15: Sustainable Robotics
 
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}

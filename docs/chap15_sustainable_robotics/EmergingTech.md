@@ -1,6 +1,6 @@
 ---
-title: 15.2 Educational Robotics
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: 15.2 Emerging Sustainable Technologies for Robotics and their applications
+parent: "Chapter 15: Sustainable Robotics"
 has_children: false
 nav_order: 2
 layout: numbered
@@ -18,7 +18,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-#  Educational Robotics 
+# Emerging Sustainable Technologies for Robotics and their applications
 
 <!-- bundle exec jekyll serve -->
 
@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this Educational Robotics module, it’s helpful to have:
+To get the most out of this module, it's helpful to have:
 
 ---
 

@@ -1,12 +1,12 @@
 ---
-title: 16.3 Robotics and Arts
-parent: "Chapter 16: Novel Trendy Research Areas in Robotics"
+title: 16.4 Micro-Robotics
+parent: "Chapter 16: Robotic Application Domains Part - II"
 has_children: false
-nav_order: 3
+nav_order: 4
 layout: numbered
 math: mathjax
 chapter: 16
-section: 3
+section: 4
 publish: false
 nav_exclude: true
 ---
@@ -18,7 +18,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Robotics and Arts 
+# Micro-Robotics 
 
 <!-- bundle exec jekyll serve -->
 
@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this Robotics and Arts module, it’s helpful to have:
+To get the most out of this Micro-Robotics module, it’s helpful to have:
 
 ---
 

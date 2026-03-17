@@ -1,8 +1,8 @@
 ---
-title: "Chapter 15: Robotic Application Domains Part - II"
+title: "Chapter 17: Novel Trendy Research Areas in Robotics"
 parent: "Robotics Advanced Topics II"
 has_children: true
-nav_order: 15
+nav_order: 17
 layout: default
 ---
 
@@ -24,7 +24,7 @@ layout: default
   }
 </style>
 
-# Chapter 15: Robotic Application Domains Part - II
+# Chapter 17: Novel Trendy Research Areas in Robotics
 
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}

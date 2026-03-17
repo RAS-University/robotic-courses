@@ -1,12 +1,12 @@
 ---
-title: 15.4 Micro-Robotics
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: 16.2 Educational Robotics
+parent: "Chapter 16: Robotic Application Domains Part - II"
 has_children: false
-nav_order: 4
+nav_order: 2
 layout: numbered
 math: mathjax
-chapter: 15
-section: 4
+chapter: 16
+section: 2
 publish: false
 nav_exclude: true
 ---
@@ -18,7 +18,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Micro-Robotics 
+#  Educational Robotics 
 
 <!-- bundle exec jekyll serve -->
 
@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this Micro-Robotics module, it’s helpful to have:
+To get the most out of this Educational Robotics module, it’s helpful to have:
 
 ---
 

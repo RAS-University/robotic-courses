@@ -1,12 +1,12 @@
 ---
-title: 16.1 Supernumerary Limbs
-parent: "Chapter 16: Novel Trendy Research Areas in Robotics"
+title: 17.2 Robotics and Arts
+parent: "Chapter 17: Novel Trendy Research Areas in Robotics"
 has_children: false
-nav_order: 1
+nav_order: 2
 layout: numbered
 math: mathjax
-chapter: 16
-section: 1
+chapter: 17
+section: 2
 publish: false
 nav_exclude: true
 ---
@@ -18,7 +18,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Supernumerary Limbs 
+# Robotics and Arts 
 
 <!-- bundle exec jekyll serve -->
 
@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this Supernumerary Limbs module, it’s helpful to have:
+To get the most out of this Robotics and Arts module, it’s helpful to have:
 
 ---
 

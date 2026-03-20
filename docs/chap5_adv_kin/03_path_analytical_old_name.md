@@ -1,6 +1,6 @@
 ---
-title: 5.3 Path Planning with Analytical Guarantees
-parent: "Chapter 5: Advanced Kinematics"
+title: 5.3 Path Planning with Analytical Guarantees (Archived)
+parent: "Chapter 5 Archive"
 has_children: false
 nav_order: 3
 layout: numbered
@@ -8,7 +8,7 @@ math: mathjax
 chapter: 5
 section: 3
 publish: false
-nav_exclude: false
+nav_exclude: true
 ---
 
 <!-- Link external JavaScript file -->

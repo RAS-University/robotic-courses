@@ -1,6 +1,6 @@
 ---
-title: 5.2 Cuspidal Robots
-parent: "Chapter 5: Advanced Kinematics"
+title: 5.2 Cuspidal Robots (Archived)
+parent: "Chapter 5 Archive"
 has_children: false
 nav_order: 2
 layout: numbered
@@ -8,7 +8,7 @@ math: mathjax
 chapter: 5
 section: 2
 publish: false
-nav_exclude: false
+nav_exclude: true
 ---
 
 <!-- Link external JavaScript file -->

@@ -1,12 +1,14 @@
 ---
-title: "5.1 Singularity analysis"
-parent: "Chapter 5: Advanced Kinematics"
+title: "5.1 Singularity analysis (Archived)"
+parent: "Chapter 5 Archive"
 has_children: false
 nav_order: 1
 layout: numbered
 math: mathjax
 chapter: 5
 section: 1
+publish: false
+nav_exclude: true
 ---
 <a name="top"></a>
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
@@ -916,12 +918,12 @@ $$
 
 Stacking these columns gives the **geometric Jacobian**
 $$
-J(q) = \begin{bmatrix} \mathbf{J}_1(q) & \mathbf{J}_2(q) & \cdots & \mathbf{J}_n(q)\end{bmatrix}.
+\mathbf{J}(\mathbf{q}) = \begin{bmatrix} \mathbf{J}_1(\mathbf{q}) & \mathbf{J}_2(\mathbf{q}) & \cdots & \mathbf{J}_n(\mathbf{q})\end{bmatrix}.
 $$
 
 Then the end-effector twist is simply
 $$
-\mathbf{V}_E = J(q)\,\dot{q}.
+\mathbf{V}_E = J(q)\,\dot{\mathbf{q}}.
 $$
 
 <div class="quick-fact" markdown="1">

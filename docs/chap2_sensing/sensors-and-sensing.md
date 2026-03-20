@@ -11,8 +11,7 @@ section: 1
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
 
-# Sensors and Sensing in Robotics [In progress]
-
+# Sensors and Sensing in Robotics 
 
 <a name="top"></a>
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
@@ -186,9 +185,11 @@ To understand real sensors, it helps to imagine the **ideal sensor**, a theoreti
 | **Unlimited lifetime** | **Never degrades** or wears out over time                        |
 
 
-The ideal sensor doesn’t exist, but it’s a useful reference. When engineers design robots, they compare real sensors against this “perfect” baseline to reason about **range, resolution, noise, latency, linearity, drift,** and **environmental robustness**.
+The ideal sensor does not exist, but it is a useful reference. When designing a robot, it is useful to compare real sensors against this “perfect” baseline to reason about **range, resolution, noise, latency, linearity, drift,** and **environmental robustness**.
 
----
+#### Sensor encoding: analog to digital converter
+
+Sensors usually employ Analog-to-Digital Converter (ADC) to convert a continuous analog input signal into a discrete digital value, so as to ease computer interpretation. An ADC samples an analog quantity (such as voltage). It then quantizes that value into one of a finite number of digital codes. For an N-bit ADC, there are $2^N$ possible digital codes. For instance, a 3-bit ADC produces 8 codes: 000, 001, 010, 011, 100, 101, 110, 111. Each code corresponds to a small range of the analog input, often called a quantization level or bin.
 
 #### Sensor imperfections 
 
@@ -200,7 +201,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 - **Limited range** : Every sensor has minimum and maximum values it can detect.  
   >*Example:* an ultrasonic module may only work from ~2 cm to ~4 m.
 
-- **Finite resolution** : Sensors (and ADCs) can only detect changes above a threshold (quantization).  
+- **Finite resolution** : Sensors encoded in Analog-to-Digital Converter (ADC) can only detect changes above a threshold (quantization).  
   >*Example:* a 10-bit ADC over 3.3 V has ≈3.2 mV per LSB.
 
 - **Accuracy vs precision** : A sensor may be consistent but biased, or accurate on average but inconsistent.  
@@ -474,24 +475,30 @@ For robots, it’s important to always check what units a sensor outputs and whe
 Key rules:
 
 1. A wider range prevents saturation but often reduces resolution.  
-2. Outside the range, data si *invalid*.
+2. Outside the range, data is *invalid*.
 
 ---
 
 #### Resolution
 
-Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect.
+Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect. 
 
-* For an **ADC-based sensor**  
+* For an **ADC-based sensor**, the resolution is determined by the maximal number of bits \(N\) one can use to encode the signal:  
   $$\Delta x_{\text{min}} = \tfrac{\text{FS}}{2^N}$$  
-  where \(N\) = number of bits, and FS the Full Scale of the sensor.
-
-* For an **analog sensor** it is limited by inherent noise.
-
-> **Example** A 12-bit, ±8 g accelerometer:  
-> $$\Delta x_{\text{min}} = \frac{16\,\text{g}}{2^{12}} \approx 0.004\,\text{g}.$$
-
+  where \(N\) = number of bits, and FS the Full Scale of sensor measurement.
+  
 A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the sensor
+
+> **Example** A Potentiometer placed on a motor shaft can measure the displacement of the robot joint moved by that motor. The potentiometer outputs a continuous analog voltage
+> (e.g., 0–5 V) proportional to the angle that can then be converted into a digital signal with an ADC. 
+> If one uses a 8-bit ADC encoder and the joint can move ±90 degrees, the resolution is: 
+> $$\Delta x_{\text{min}} = \frac{180\,\text{g}}{2^{8}} \approx 0.7\,\text{degrees}.$$
+> A resolution of less than 1 degree may be insufficient for generating highly accurate displacements. In a robot arm, such angular imprecision accumulates along the kinematic
+> chain, resulting in significant positional error at the end effector.
+
+* For an **analog sensor**, the resolution is determined by the sensor's physics and construction. For instance, the sensor's material properties (e.g. resistive or capacitive elements) may limit what it can respond to. Additionally, mechanical tolerances (e.g., friction, backlash) may further reduce resolution.
+
+The resolution and range of measurement of a sensor is usually documented in the manufacturer's datasheet.
 
 ---
 
@@ -528,8 +535,8 @@ The dartboard analogy below is a classic way to illustrate this difference:
 **Key take-aways:**
 
 1. A sensor can be **precise yet inaccurate** (systematic bias) or **accurate yet imprecise** (large random scatter).  
-2. Calibration removes bias to improve *accuracy*; filtering averages out noise to improve *precision*.  
-
+2. Calibration removes bias to improve *accuracy*; filtering averages out noise to improve *precision*.
+3. While a sensor may be highly accurate, the resolution of the sensor's ADC may reduce this accuracy to the lowest resolution of its encoder.
 
 <details markdown="1">
  <summary>Video Explaining Accuracy and Precision</summary>
@@ -540,6 +547,8 @@ The dartboard analogy below is a classic way to illustrate this difference:
   ><sub>Accuracy and Precision | It's Easy! . YouTube video, 06.11.2017. Available at: https://www.youtube.com/watch?v=KEeSQvMCPLg</sub>
 
 </details>
+
+When controling a robot, knowing the sensor’s resolution, precision and accuracy is crucial, as it can constrain or even rule out certain actions. For example, if distances to objects cannot be measured with a resolution or accuracy finer than 10 cm, the robot must operate with great caution when moving close to objects. 
 
 ---
 
@@ -556,31 +565,31 @@ where $x(t)$ is the true signal, $b$ is a (possibly time/temperature-dependent) 
 To understand and manage noise effectively, it is important to distinguish between **random noise**, which is unpredictable and varies from reading to reading, and **systematic errors**, which are repeatable biases built into the measurement process.
 
 
-**Random noise** (stochastic, zero-mean)  
+-**Random noise** (stochastic, zero-mean)  
 Unpredictable jitter that causes repeated readings to fluctuate around the true value.
 
-**Examples**
+>-**Examples**
 >- A distance sensor reports 100.2, 99.8, 100.5, 100.1 cm while the target is fixed at 100 cm.
 >- A light sensor varies slightly due to mains flicker or transient shadows.
 >- An IMU yaw estimate wanders by about ±0.2° when the platform is stationary.
 
-**Mitigation**  
+-**Mitigation**  
 Averaging or low-pass filtering. If the standard deviation of single readings is $\sigma$, averaging $M$ independent readings yields approximately
 $$
 \sigma_{\text{avg}} \approx \frac{\sigma}{\sqrt{M}}.
 $$
 This reduces scatter but increases latency.
 
-**Systematic noise (errors)** (deterministic, repeatable)  
+-**Systematic noise (errors)** (deterministic, repeatable)  
 Consistent deviations that bias measurements in a fixed direction. Averaging does **not** remove these; **calibration** is required.
 
-**Examples**
+>**Examples**
 >- **Bias/offset**: A thermometer consistently reads $+2\,^\circ\mathrm{C}$ high.  
 >- **Scale factor error**: Wheel odometry overestimates distance because the wheel diameter is set too large, reporting $1.02\times$ the true travel.  
 >- **Misalignment**: A range sensor tilted upward returns longer distances than actual.  
 >- **Drift**: A sensor’s output shifts gradually with warm-up or supply voltage changes.
 
-**Mitigation**  
+-**Mitigation**  
 Zeroing and multi-point calibration (to remove bias and correct scale), improved mounting/alignment, temperature compensation, stable power, and appropriate warm-up time.
 
 > **Rule of thumb**  

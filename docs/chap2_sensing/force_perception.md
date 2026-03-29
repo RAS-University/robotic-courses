@@ -25,7 +25,6 @@ section: 3
     font-style: normal;
     color: #0053d9ff;
   }
-
   .goal-window {
     /* Layout */
     display: inline-block;
@@ -84,8 +83,6 @@ section: 3
     transform: translateY(1px);
     box-shadow: 0 1px 4px rgba(186, 115, 2, 0.08);
   }
-
-  /* Details layout */
   .quiz-details {
     margin: 1em 0;
     text-align: center;
@@ -99,17 +96,14 @@ section: 3
   .quiz-details > summary::-webkit-details-marker {
     display: none;
   }
-  /* Show label */
   .quiz-details > summary .quiz-label::after {
     content: " (tap to show)";
     font-weight: 700;
   }
-  /* Hide label */
   .quiz-details[open] > summary .quiz-label::after {
     content: " (tap to hide)";
     font-weight: 700;
   }
-
   .quiz-window {
     /* Layout */
     margin: 0 auto 0 auto; /* space below button */
@@ -118,14 +112,12 @@ section: 3
     border: 1px solid #333;
     border-radius: 10px;
   }
-
   .quiz-question-text {
     /* Layout */
-    margin-bottom: 0.6em;          /* space before options */
-
+    margin-bottom: 0.6em;
     /* Text */
-    font-weight: 600;              /* semi-bold */
-    color: #333;                   /* strong contrast */
+    font-weight: 600;
+    color: #333;
   }
 
   .section-title {
@@ -140,7 +132,6 @@ section: 3
     /* Text */
     font-weight: 700;
   }
-
   .section-label {
     font-weight: 700;
     color: #4F3DDB;
@@ -162,9 +153,16 @@ section: 3
     cursor: pointer;
     user-select: none;
   }
-
   .solution-btn:hover {
     text-decoration: underline;
+  }
+  .solution-details > summary .solution-label::before {
+    content: "▶ ";
+    font-size: 1.2em;
+  }
+  .solution-details[open] summary .solution-label::before {
+    content: "▼ ";
+    font-size: 1.2em;
   }
   .solution-details > summary .solution-label::after {
     content: " (tap to show)";
@@ -179,7 +177,6 @@ section: 3
   .solution-details > summary::-webkit-details-marker {
     display: none;
   }
-
   .solution-window {
     /* Layout */
     margin: 0.6em 0 1em 0;
@@ -207,29 +204,31 @@ section: 3
     cursor: pointer;
     user-select: none;
   }
-
   .optional-btn:hover {
     text-decoration: underline;
   }
-
+  .optional-details summary .optional-label::before {
+    content: "▶ ";
+    font-size: 1.2em;
+  }
+  .optional-details[open] > summary .optional-label::before {
+    content: "▼ ";
+    font-size: 1.2em;
+  }
   .optional-details > summary .optional-label::after {
     content: " (optional)";
     font-weight: 400;
     color: #777777;
   }
-
   .optional-details[open] > summary .optional-label::after {
     content: " (tap to hide)";
   }
-
   .optional-details > summary {
     list-style: none;
   }
-
   .optional-details > summary::-webkit-details-marker {
     display: none;
   }
-
   .optional-window {
     /* Layout */
     margin: 0.6em 0 1em 0;
@@ -376,8 +375,8 @@ Why is the sense of touch used in robotics? (multiple answers possible)
     ['option1', 'option3', 'option4'],
     {
       option1: 'A) Correct. Touch sensing is essential for safe physical interaction with humans and the environment',
-      option2: 'C) Incorrect. Touch does not replace vision, but complements it.',
-      option3: 'B) Correct. Touch allows robots to perceive forces exchanged during contact.',
+      option2: 'B) Incorrect. Touch does not replace vision, but complements it.',
+      option3: 'C) Correct. Touch allows robots to perceive forces exchanged during contact.',
       option4: 'D) Correct. Touch sensing allows robots to adapt their behavior in real time during physical contact.'
     }
   )">
@@ -418,13 +417,6 @@ Which statements correctly describe the three interaction categories seen earlie
 
 </div>
 </details>
-
-<!--
-<div class="note-window">
-  <div class="window-title">Note</div>
-  On this page, the terms <strong>sense of touch</strong>, <strong>tactile sensing</strong> and <strong>force perception</strong> all refer to the robot’s ability to perceive and interpret physical interaction.
-</div>
--->
 
 ---
 
@@ -483,12 +475,6 @@ On this page, we will move gradually from **force sensing**, which describes int
 ---
 
 ### Force Sensing
-
-<!--
-Main ref: [Force-Torque Sensing in Robotics](https://unige.iris.cineca.it/handle/11567/942466) (F. J. Andrade Chavez)
--->
-
-<!-- ⚠️ add that not only force but also torque sensing ⚠️ -->
 
 Let us begin with a quick reminder of **forces** and **torques** (also called moments) we want to measure. Force is given in Newtons [N] and produces **linear** movement, whereas torque is given in Newton-meters [Nm] and produces **rotational** movement. They are both **vector** quantities defined in 3D space, meaning they can be decomposed into components of the orthonormal basis of $\mathbb{R}^3$ (x, y, and z axis).
 
@@ -762,7 +748,7 @@ Below, we look at two different approaches to estimate external forces using mot
   Model-Based Estimation
 </h4>
 
-This approach is called model-based, as it uses the **robot’s dynamics and kinematics** (= model) to compute the external force applied on the robot. If you need a quick reminder about the Jacobian, have a look at the [Kinematics](/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-) course.
+This approach is called model-based, as it uses the **robot’s dynamics and kinematics** (= model) to compute the external force applied on the robot.  
 
 Contact force estimation follows three steps:  
 
@@ -772,10 +758,20 @@ Contact force estimation follows three steps:
 
 *1) Estimating the external joint torque $\tau_{\text{ext}}$*
 
+The total physical effort acting on the robot's joints is the sum of the torque produced by the motors and the torque coming from the external environment:
+
+$$ \tau_{\text{total}} = \tau_{\text{motor}} + \tau_{\text{ext}} \in \mathbb{R}^n$$
+
+In this equation:
+
+- $n$: Number of joints
+- $\tau_{\text{motor}}$: Vector of torques applied by the robot's motors. We know these values because it is what our controller commands.  
+- $\tau_{\text{ext}}$: Vector of unknown torques induced by the external contact force. This is what we want to find.  
+
 We start with the basic **Lagrangian expression** of the robot’s dynamics (seen previously in the [Dynamics](/docs/chap1_basic_motion_ctrl/dynamics#part2-the-lagrangian-formulation-of-dynamics) course):
 
 $$
-M(\theta)\ddot{\theta} + C(\theta,\dot{\theta})\dot{\theta} + g(\theta) = \tau
+M(\theta)\ddot{\theta} + C(\theta,\dot{\theta})\dot{\theta} + g(\theta) = \tau_{\text{total}}
 $$
 
 Where:
@@ -785,27 +781,103 @@ Where:
 - $M(\theta)$: mass matrix
 - $C(\theta,\dot{\theta})\dot{\theta}$: vector accounting for Coriolis or centrifugal torques  
 - $g(\theta)$: vector of gravity torques
-- $\tau$: vector of torques applied by the robot's motors
+- $\tau_{\text{total}}$: sum of all torques applied on the robot ($\tau_{\text{motor}} + \tau_{\text{ext}}$)
 
-To properly estimate external forces, we use and **extended dynamic model**, which includes the external torques:
+We could simply solve this Lagrangian equation for $\tau_{\text{ext}}$, but real-world acceleration data ($\ddot{\theta}$) is too noisy to be used. Instead, we use the **Residual Method**, which transforms the problem into an **integral-based** problem. This allows us to estimate $\tau_{\text{ext}}$ using only the clean data we have: joint positions ($\theta$), joint velocities ($\dot{\theta}$) and motor torques ($\tau_{\text{motor}}$).
 
-$$
-M(\theta)\ddot{\theta} + C(\theta,\dot{\theta})\dot{\theta} + g(\theta) = \tau + \tau_{\text{ext}}
-$$
+A complete description of that computation step is shown in the drop-down below.
 
-Where:
-- $\tau_{\text{ext}}$: vector of induced torque by the external contact force
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Going deeper: Mathematical derivation of $\tau_{\text{ext}}$</span>
+  </summary>
 
-By computing the difference between the theoretical model torque and the measured motor torque, we finally obtain the **external joint torque** $\tau_{\text{ext}}$.  
+  <div class="optional-window">
 
-<div class="note-window">
-  <div class="window-title">Note</div>
-  Refer to <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco & A. De Luca, IROS 2014) for complete description of that computation step.
-</div>
+    <h5 style="margin-top: 20px;">1. Law of Momentum</h5>
+
+    <p>
+      We use the <b>Law of Momentum</b>. In robotics, the generalized momentum is defined as:
+    </p>
+
+    \[ p = M(\theta)\dot{\theta} \]
+
+    <p>
+      Next, we take the devirative of the momentum (\(\dot{p}\)):
+    </p>
+
+    \[ \dot{p} = M(\theta)\ddot{\theta} + \dot{M}(\theta)\dot{\theta} \]
+
+    <p>
+      This is where we need the <b>Lagrangian Dynamics</b> formula that we have seen above. Let's arrange the terms:
+    </p>
+
+    \[ M(\theta)\ddot{\theta}  = \tau_{\text{motor}} + \tau_{\text{ext}} - C(\theta, \dot{\theta})\dot{\theta} - g(\theta)\]
+
+    <p>
+      Then replace the \( M(\theta)\ddot{\theta} \) term in our momentum derivative with this entire Lagrangian expression. Like this we can get rid of the noisy acceleration \(\ddot{\theta}\):
+    </p>
+
+    \[ \dot{p} = \tau_{\text{motor}} + \tau_{\text{ext}} - C(\theta, \dot{\theta})\dot{\theta} - g(\theta) + \dot{M}(\theta)\dot{\theta} \]
+
+    <p>
+      Moreover, we can use the mass matrix property \( \dot{M}(\theta) = C(\theta, \dot{\theta}) + C^T(\theta, \dot{\theta}) \). After replacing it in the formula and simplifying, we get to the following relationship:
+    </p>
+
+    \[ \dot{p} = \tau_{\text{motor}} + \tau_{\text{ext}} + C^T(\theta, \dot{\theta})\dot{\theta} - g(\theta) \]
+
+    <h5 style="margin-top: 20px;">2. Defining the Residual \(r(t)\)</h5>
+
+    <p>
+      We define the <b>Residual \(r\)</b>, a variable that imitates the external torque.
+    </p>
+
+    \[ r \rightarrow \tau_{\text{ext}} \]
+
+    <p>
+      The idea is to define the <b>change</b> in our estimate (\(\dot{r}\)) so that it is proportional to the error between the true external torque and our current estimate:
+      \[ \dot{r} = K (\tau_{\text{ext}} - r) \]
+    </p>
+
+    <p>
+      Where <b>\(K\)</b> is the diagonal gain matrix, which determines how fast the residual reacts.
+    </p>
+
+    <p>
+      From our momentum balance we can isolate \(\tau_{\text{ext}} \):
+      \[ \tau_{\text{ext}} = \dot{p} - \tau_{\text{motor}} - C^T(\theta, \dot{\theta})\dot{\theta} + g(\theta) \]
+    </p>
+
+    <p>
+      When then plug this expression of \(\tau_{\text{ext}} \) back into \(\dot{r}\):
+      \[ \dot{r} = K (\dot{p} - \tau_{\text{motor}} + C^T(\theta, \dot{\theta})\dot{\theta} + g(\theta) - r) \]
+    </p>
+
+    <p>
+      Finally, we integrate both sides from \(0\) to \(t\). The derivative of momentum (\(\dot{p}\)) turns back into the original momentum (\(p = M\dot{\theta}\)).
+    </p>
+
+    <p>
+      This final implementation uses only data we have (joint positions, joint velocities and motor torques):
+    </p>
+
+    \[ r(t) = K \Bigg[ M(\theta)\dot{\theta} - \int_{0}^{t} \left( \tau_{\text{motor}} + C^T(\theta, \dot{\theta})\dot{\theta} - g(\theta) + r(s) \right) ds \Bigg] \]
+
+    <p>
+      Now, this residual detects the motion induced by external contact forces and rises until:
+      \[ r(t) \approx \tau_{\text{ext}} \]
+    </p>
+
+  </div>
+</details>
 
 *2) Computing the Jacobian at the contact location $J_c$*  
 
-Once $\tau_{\text{ext}}$ is estimated, the next step is to determine **how** a force at the contact point **affects the joints**. As shown in the figure below, a contact may occur on a link (panel (a)) or on the end-effector (panel (b)). The contact point determines which joints are affected.
+If you need a quick reminder about Jacobians, have a look at the [Kinematics](/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-) course.
+
+Once $\tau_{\text{ext}}$ is estimated, the next step is to determine **how** this external force **affects the joints**. A force applied at a specific contact point $p_c$ creates both **linear forces and rotational torques** at the link origin. To map these effects back to the joints, we use a transformation matrix.
+
+The contact may happen on a link or at the robot end-effector, and its location determines **which joints are affected**. As shown in the figure below, a force applied on a specific link $i$ (panel (a)) only affects the joints located between that link and the robot's base. In contrast, a force applied at the end-effector (panel (b)) affects all joints along the entire kinematic chain.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/jacobian-contact-point.png' }}"
@@ -819,13 +891,31 @@ Once $\tau_{\text{ext}}$ is estimated, the next step is to determine **how** a f
   </figcaption>
 </figure>
 
-The position of the contact point relative to joint $i$, on which the contact is happening, is obtained by subtracting the absolute position of the origin of link $i$, denoted $p_i(\theta)$, from the absolute position of the contact point on that link, denoted $p_{c}(\theta)$:
+To identify the external force, we focus our efforts on the **link where the contact occurs**. Our goal is to shift our kinematic perspective from the robot's end-effector to this specific contact location.
+
+The **position of the contact point** relative to the origin of the contact link $i$ is obtained through simple geometry. If we assume the absolute contact location $p_c(\theta)$ is known, we can compute its relative distance to the origin of that specific link $i$ by subtracting the absolute position of the link's origin, denoted $p_i(\theta)$, from the absolute contact point:
 
 $$
 p_{i,c}(\theta) = p_{c}(\theta) - p_i(\theta)
 $$
 
-Having this, the **contact-point Jacobian** $J_c(\theta)$ can be computed. It is derived from the link Jacobian $J_i(\theta)$:
+In the figure below, we can see the **cartesian-space** referential at the bottom ($x_0, y_0, z_0$) and the local **joint-space** referential ($x_i, y_i, z_i$) at the origin of the contact link. The vector $p_{i,c}(\theta)$ acts as the physical bridge between these two spaces.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/contact_point_relative_to_joint.png' }}"
+       width="210"
+       alt="Geometrical representation of the contact point regarding the contact link">
+  <figcaption>
+    <sub><i>
+      Figure 7: Definition of the contact vector \(p_{i,c}\) in the joint-space of link i
+      (<a href="https://ieeexplore.ieee.org/document/6942848">E. Magrini, F. Flacco, A. De Luca</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+By defining this **lever arm** vector, we can determine the torque created by the force.  
+
+Once $p_{i,c}(\theta)$ is found, we can compute the **contact-point Jacobian** $J_c(\theta)$. It is derived by transforming the standard Jacobian matrix $J_i(\theta)$ as follows:
 
 $$
 J_c(\theta)
@@ -837,13 +927,71 @@ I & -\,S(p_{i,c}(\theta)) \cr
 J_i(\theta)
 $$
 
-where $S(\cdot)$ is the [skew-symmetric matrix](https://en.wikipedia.org/wiki/Skew-symmetric_matrix#Cross_product), composed of the components of the vector $p_{i,c}(\theta)$:.  
+The term $S(p_{i,c}(\theta))$ is the **skew-symmetric matrix** constructed from the components of $p_{i,c}$. Considering $p_{i,c}(\theta) = (x, y, z)$, we have:
 
-This Jacobian describes how a force applied at the contact point generates joint torques.
+$$
+S(p_{i,c}(\theta)) = \begin{bmatrix} 0 & -z & y \\ z & 0 & -x \\ -y & x & 0 \end{bmatrix}
+$$
+
+The skew-symmetric matrix is a mathematical tool used to represent a **cross product** in matrix form. It shows how the force creates torque due to the distance $p_{i,c}$.
+
+If needed for clarification, the formulas are rewritten in full matrix expansion in the drop-down below.
+
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Example: Formulas with Matrix Expansion</span>
+  </summary>
+
+  <div class="optional-window">
+    <p>
+      Let's look at an example where an external force acts on <b>link 4</b> of a robot (\( i = 4 \)).
+    </p>
+
+    <h5>1. Define the coordinates</h5>
+    <p>
+      Assuming we know the following positions in cartesian space:
+      <ul>
+        <li>Contact point: \( p_c = \begin{bmatrix} a_1 & a_2 & a_3 \end{bmatrix}^T \)</li>
+        <li>Origin of link 4: \( p_4 = \begin{bmatrix} b_1 & b_2 & b_3 \end{bmatrix}^T \)</li>
+      </ul>
+    </p>
+
+    <h5>2. Compute the relative vector \( p_{4,c} \)</h5>
+    <p>
+      Subtracting the link origin from the contact point gives us the <b>lever arm</b> components \((x, y, z)\):
+      \[ p_{4,c} = p_c - p_4 = \begin{bmatrix} a_1 - b_1 \\ a_2 - b_2 \\ a_3 - b_3 \end{bmatrix} = \begin{bmatrix} x \\ y \\ z \end{bmatrix} \]
+    </p>
+
+    <h5>3. Build the link Jacobian \( J_4 \)</h5>
+    <p>
+      The link Jacobian is obtained directly from the full robot Jacobian \( J \). Since the contact is on link 4, only the first 4 joints are affected. We take the first 4 columns of the robot's kinematic chain and set the remaining columns to zero:
+      \[ J_4 = \begin{bmatrix} \text{col}_1 & \text{col}_2 & \text{col}_3 & \text{col}_4 & 0 & \dots & 0 \end{bmatrix} \]
+    </p>
+
+    <h5>4. Build the transformation matrix</h5>
+    <p>
+      We plug the skew-symmetric matrix into the transformation matrix, as seen earlier:
+    </p>
+
+    \[
+    J_c =
+    \begin{bmatrix} I & -S(p_{4,c}) \\ 0 & I \end{bmatrix} J_4 = 
+    \begin{bmatrix} 
+    1 & 0 & 0 & 0 & z & -y \\
+    0 & 1 & 0 & -z & 0 & x \\
+    0 & 0 & 1 & y & -x & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1
+    \end{bmatrix} J_4
+    \]
+
+  </div>
+</details>
 
 *3) Computing the contact force*  
 
-Finally we can compute the wrench $W \in \mathbb{R}^6$ by resolving the following equation:
+Finally, we can compute the wrench $W \in \mathbb{R}^6$ by resolving the following equation:
 
 $$
 \tau_{\text{ext}} = 
@@ -851,17 +999,354 @@ J_c^T(\theta)
 W
 $$
 
+$$
+\Leftrightarrow W = (J_c^T(\theta))^{-1} \ \tau_{\text{ext}}
+$$
+
 <div class="note-window">
   <div class="window-title">Note</div>
   This three-step approach is based on <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco, A. De Luca).
 </div>
+
+Let's check your understanding with two exercices.
+
+---
+
+<div class="quiz-question-text">
+  Exercise 1: Force estimation at the tool tip
+</div>
+
+Consider the 2D-planar robot illustrated below. In this simplified configuration, the robot has 3 joints located at positions $p_1$, $p_2$ and $p_3$ respectively, with a fixed base at the origin.
+
+An external force $F_{ext}$ is applied at the tool tip, denoted as the contact point $p_c$.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/Force_estimation_exercise1.png' }}"
+       width="340"
+       alt="Contact scenario at the tool-tip">
+  <figcaption>
+    <sub><i>
+      Scenario 1: External force applied at the tool tip (<a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+<div style="margin-left: 1.2em;">
+  <p>
+    <strong>1)</strong>  
+    Using the grid (where each block represents \(10\) cm), identify the coordinates for \(p_3\) and \(p_c\). Compute the relative vector \(p_{3,c} = p_c - p_3\) and construct its skew-symmetric matrix \(S(p_{3,c})\). The referential origin \(O\) is located at the center of Joint 1.
+  </p>
+  <p>
+    <strong>2)</strong>  
+    Compute the contact Jacobian \(J_c\) by applying the transformation matrix to the link Jacobian \(J_3\). For this specific pose, \(J_3\) is given as:
+    \[ J_3 = \begin{bmatrix} 1.3 & 0.8 & 0.3 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix} \]
+  </p>
+  <p>
+    <strong>3)</strong>  
+    The external joint torque vector \(\tau_{ext}\) has been estimated using the residual method:
+    \[ \tau_{ext} = \begin{bmatrix} 11.0 \\ 6.0 \\ 1.0 \end{bmatrix} \text{Nm} \]
+    Compute the resulting wrench \(W = [F_x, F_y, F_z, M_x, M_y, M_z]^T\) applied by the external force using the formula seen in the course (\(\tau_{ext} = J_c^T W\)).
+  </p>
+</div>
+
+<details class="solution-details" markdown="1">
+  <summary class="solution-btn">
+    <span class="solution-label">Solution</span>
+  </summary>
+
+  <div class="solution-window">
+
+  <p><strong>1) Compute the relative vector \(p_{3,c}\) and its skew-symmetric matrix</strong></p>
+
+  <p>
+    Based on the grid coordinates provided:
+    <ul>
+      <li>Joint 3 position: \(p_3 = \begin{bmatrix} 0.15 & 0 & 0.9 \end{bmatrix}^T\ \text{m}\)</li>
+      <li>Contact point: \(p_c = \begin{bmatrix} 0.3 & 0 & 0.8 \end{bmatrix}^T\ \text{m}\)</li>
+    </ul>
+  </p>
+
+  <p>
+    The relative vector \(p_{3,c}\) is:
+    \[
+    p_{3,c} = p_c - p_3 = \begin{bmatrix} 0.15 \\ 0 \\ -0.1 \end{bmatrix} = \begin{bmatrix} x \\ y \\ z \end{bmatrix}
+    \]
+  </p>
+
+  <p>
+    Following the definition of the skew-symmetric matrix \(S(p_{3,c})\):
+    \[
+    S(p_{3,c}) = \begin{bmatrix} 0 & -z & y \\ z & 0 & -x \\ -y & x & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0.1 & 0 \\ -0.1 & 0 & -0.15 \\ 0 & 0.15 & 0 \end{bmatrix}
+    \]
+  </p>
+
+  <p><strong>2) Compute the Contact Jacobian \(J_c\)</strong></p>
+
+  <p>
+    We apply the transformation matrix to the link Jacobian \(J_3\):
+    \[
+    J_c = \begin{bmatrix} I & -S(p_{3,c}) \\ 0 & I \end{bmatrix} J_3
+    \]
+  </p>
+
+  <p>
+    \[
+    J_c = \begin{bmatrix} 
+    1 & 0 & 0 & 0 & -0.1 & 0 \\
+    0 & 1 & 0 & 0.1 & 0 & 0.15 \\
+    0 & 0 & 1 & 0 & -0.15 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1
+    \end{bmatrix} 
+    \begin{bmatrix} 1.3 & 0.8 & 0.3 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix}
+    \]
+  </p>
+
+  <p>
+    After matrix multiplication, we obtain the \(6 \times 3\) contact Jacobian:
+    \[
+    J_c = \boxed{\begin{bmatrix} 1.2 & 0.7 & 0.2 \\ 0 & 0 & 0 \\ -0.15 & -0.15 & -0.15 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix}}
+    \]
+  </p>
+
+  <p><strong>3) Compute the Wrench \(W\)</strong></p>
+
+  <p>
+    We solve for the wrench \(W = [F_x, F_y, F_z, M_x, M_y, M_z]^T\) using \(\tau_{ext} = J_c^T W\). 
+    First transpose \(J_c\):
+    \[
+    J_c^T = \begin{bmatrix} 1.2 & 0 & -0.15 & 0 & 1 & 0 \\ 0.7 & 0 & -0.15 & 0 & 1 & 0 \\ 0.2 & 0 & -0.15 & 0 & 1 & 0 \end{bmatrix}
+    \]
+  </p>
+
+  <p>
+    Given \(\tau_{ext} = [11.0, 6.0, 1.0]^T\ \text{Nm}\), we solve the system for the three non zero components (\(F_x, F_z, M_y\)):
+    <br>1) \(1.2 F_x - 0.15 F_z + M_y = 11.0\)
+    <br>2) \(0.7 F_x - 0.15 F_z + M_y = 6.0\)
+    <br>3) \(0.2 F_x - 0.15 F_z + M_y = 1.0\)
+  </p>
+
+  <p>
+    By subtracting (2) from (1), we get: \(0.5 F_x = 5.0 \implies F_x = 10.0\ \text{N}\).
+    <br>Using (3): \(0.2(10) - 0.15 F_z + M_y = 1.0 \implies M_y - 0.15 F_z = -1.0\).
+    <br>Assuming a pure horizontal push (\(F_z = 0\)):
+  </p>
+
+  <p>
+    <strong>Final Answer:</strong>
+    \[
+    W = \boxed{\begin{bmatrix} 10.0 & 0 & 0 & 0 & -1.0 & 0 \end{bmatrix}^T}
+    \]
+    The human is applying a horizontal force of \(10\ \text{N}\), which results in a moment of \(-1.0\ \text{Nm}\) at the contact point.
+  </p>
+
+  </div>
+</details>
+
+---
+
+<div class="quiz-question-text">
+  Exercise 2: Force estimation for a mid-link contact
+</div>
+
+Let's consider the same robotic arm as in the previous exercise. This time, however, the external force $F_{ext}$ is applied to link 2 instead of the tool tip.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/Force_estimation_exercise2.png' }}"
+       width="340"
+       alt="Contact scenario on Link 2">
+  <figcaption>
+    <sub><i>
+      Scenario 2: External force applied on Link 2 (Inspired by <a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+<div style="margin-left: 1.2em;">
+  <p>
+    <strong>1)</strong>
+    Using the joint angles \(\theta_1, \theta_2, \theta_3\) and the link lengths \(L_1\) and \(L_2\) (\(L_3=0\)), derive the general analytical Jacobian \(J(\theta)\) for the end-effector of this 3-DOF planar arm.
+  </p>
+  <p>
+    <em>Hint:</em> Review the <a href="/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-">Kinematics</a> section if you need a refresher on how to deriving the Jacobian matrix.
+  </p>
+  <p>
+    <strong>2)</strong>
+    Deduce the link Jacobian \(J_2(\theta)\) from the full Jacobian \(J(\theta)\). Note that since the contact occurs on Link 2, the motion of Joint 3 does not affect the contact point. 
+  </p>
+  <p>
+    <strong>3)</strong>
+    Identify the coordinates of \(p_2\) and \(p_c\) from the grid. Compute the relative vector \(p_{2,c} = p_c - p_2\) and construct its skew-symmetric matrix \(S(p_{2,c})\).
+  </p>
+  <p>
+    <strong>4)</strong>
+    Find the contact Jacobian \(J_{c,2}(\theta)\) by applying the transformation matrix to the link Jacobian \(J_2(\theta)\).
+  </p>
+  <p>
+    <strong>5)</strong>
+    Compute the resulting wrench \(W = [F_x, F_z, T_y]^T\) applied by the external force using the formula seen in the course (\(\tau_{ext} = J_c^T W\)).
+  </p>
+  <p>
+    <strong>6)</strong> 
+    Finally, calculate the numerical values of the wrench for the specific pose shown in the figure:
+    \(\theta_1 = 135^\circ\), \(\theta_2 = -100^\circ\), and \(\theta_3 = -75^\circ\).
+  </p>
+</div>
+
+<details class="solution-details" markdown="1">
+  <summary class="solution-btn">
+    <span class="solution-label">Solution</span>
+  </summary>
+
+  <div class="solution-window">
+
+  <p><strong>1) Derive the analytical Jacobian \(J(\theta)\)</strong></p>
+
+  <p>
+    For a 3-DOF planar robot, the Jacobian relates joint velocities to the tip velocity. Given the contact is on Link 2, we set \(L_3 = 0\). Using \(L_1 = 0.5\) and \(L_2 = 0.5\), the position of the point is:
+    \[ x = L_1 \cos(\theta_1) + L_2 \cos(\theta_1 + \theta_2) \]
+    \[ z = L_1 \sin(\theta_1) + L_2 \sin(\theta_1 + \theta_2) \]
+  </p>
+  <p>
+    Differentiating with respect to time, we obtain the \(6 \times 3\) Jacobian (focusing on X-Z plane and Y-rotation):
+    \[
+    J(\theta) = \begin{bmatrix} 
+    -0.5s_1 - 0.5s_{12} & -0.5s_{12} & 0 \\
+    0 & 0 & 0 \\
+    0.5c_1 + 0.5c_{12} & 0.5c_{12} & 0 \\
+    0 & 0 & 0 \\
+    1 & 1 & 1 \\
+    0 & 0 & 0 
+    \end{bmatrix}
+    \]
+    <i>Note: $s_{12} = \sin(\theta_1 + \theta_2)$.</i>
+  </p>
+
+  <hr>
+
+  <p><strong>2) Deduce the link Jacobian \(J_2(\theta)\)</strong></p>
+
+  <p>
+    The link Jacobian \(J_2\) describes the velocity of the origin of Link 2 (Joint 2). Since Joint 3 is "downstream" of Link 2, its motion does not affect the link's origin. We therefore truncate the third column:
+  
+  </p>
+
+<!--
+    \[
+    J_2(\theta) = \boxed{\begin{bmatrix} 
+    -0.5s_1 & 0 & 0 \\
+    0 & 0 & 0 \\
+    0.5c_1 & 0 & 0 \\
+    0 & 0 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 0 
+    \end{bmatrix}}
+    \]
+  </p>
+
+  <hr>
+
+  <p><strong>3) Relative vector \(p_{2,c}\) and skew-symmetric matrix</strong></p>
+
+  <p>
+    Using the provided coordinates:
+    <ul>
+      <li>Joint 2 position: \(p_2 = \begin{bmatrix} -0.5 & 0 & 0.5 \end{bmatrix}^T\ \text{m}\)</li>
+      <li>Contact point: \(p_c = \begin{bmatrix} 0.2 & 0 & 0.7 \end{bmatrix}^T\ \text{m}\)</li>
+    </ul>
+    \[ p_{2,c} = p_c - p_2 = \begin{bmatrix} 0.2 - (-0.5) \\ 0 - 0 \\ 0.7 - 0.5 \end{bmatrix} = \begin{bmatrix} 0.7 \\ 0 \\ 0.2 \end{bmatrix} = \begin{bmatrix} x \\ y \\ z \end{bmatrix} \]
+  </p>
+  <p>
+    Constructing the skew-symmetric matrix \(S(p_{2,c})\):
+    \[
+    S(p_{2,c}) = \begin{bmatrix} 0 & -z & y \\ z & 0 & -x \\ -y & x & 0 \end{bmatrix} = \boxed{\begin{bmatrix} 0 & -0.2 & 0 \\ 0.2 & 0 & -0.7 \\ 0 & 0.7 & 0 \end{bmatrix}}
+    \]
+  </p>
+
+  <hr>
+
+  <p><strong>4) Compute the contact Jacobian \(J_{c,2}(\theta)\)</strong></p>
+
+  <p>
+    We apply the transformation matrix:
+    \[
+    J_{c,2} = \begin{bmatrix} I & -S(p_{2,c}) \\ 0 & I \end{bmatrix} J_2 = 
+    \begin{bmatrix} 
+    1 & 0 & 0 & 0 & 0.2 & 0 \\
+    0 & 1 & 0 & -0.2 & 0 & 0.7 \\
+    0 & 0 & 1 & 0 & -0.7 & 0 \\
+    0 & 0 & 0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 0 & 0 & 1
+    \end{bmatrix} J_2
+    \]
+    Resulting in:
+    \[
+    J_{c,2}(\theta) = \boxed{\begin{bmatrix} 
+    -0.5s_1 + 0.2 & 0 & 0 \\
+    0 & 0 & 0 \\
+    0.5c_1 - 0.7 & 0 & 0 \\
+    0 & 0 & 0 \\
+    1 & 0 & 0 \\
+    0 & 0 & 0 
+    \end{bmatrix}}
+    \]
+  </p>
+
+  <hr>
+
+  <p><strong>5) Wrench Formulation</strong></p>
+
+  <p>
+    The wrench is found via \(\tau_{ext} = J_{c,2}^T W\). Transposing our result:
+    \[
+    J_{c,2}^T = \begin{bmatrix} (-0.5s_1 + 0.2) & 0 & (0.5c_1 - 0.7) & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 \end{bmatrix}
+    \]
+    The relationship becomes:
+    \[ \tau_{ext,1} = (-0.5s_1 + 0.2)F_x + (0.5c_1 - 0.7)F_z + M_y \]
+  </p>
+
+  <hr>
+
+  <p><strong>6) Numerical Application</strong></p>
+
+  <p>
+    For the pose \(\theta_1 = 135^\circ\): 
+    \(c_1 = -0.707\), \(s_1 = 0.707\).
+  </p>
+  <p>
+    Substituting into the Jacobian row:
+    <br>Row 1: \(-0.5(0.707) + 0.2 = -0.1535\)
+    <br>Row 3: \(0.5(-0.707) - 0.7 = -1.0535\)
+  </p>
+  <p>
+    Assuming \(F_z = 0\) and \(M_y = -1\ \text{Nm}\) (similar to Ex 1), and given \(\tau_{ext,1} = -2.535\ \text{Nm}\):
+    \[ -2.535 = (-0.1535)F_x + 0 - 1 \implies F_x = 10\ \text{N} \]
+  </p>
+  <p>
+    <strong>Final Answer:</strong>
+    \[ W = \boxed{\begin{bmatrix} 10.0 & 0 & 0 & 0 & -1.0 & 0 \end{bmatrix}^T} \]
+  </p>
+
+-->
+
+  </div>
+</details>
+
+---
+
+
+
+
+
 
 <h4 class="section-title">
   <span class="section-label">Approach B</span>
   Model-Free Estimation (Neural Network Based)
 </h4>
 
-The second proposed approach is machine learning based and does **not rely on any physics equation**. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs real-world data, that can be collected using an actual F/T sensor. Data is usually obtained through *learning from demonstration*, a method whereby an operator passively moves the robot to show how to perform a given task. Data on F/T perception are gathered as the robot makes various contacts with the environment, see course on <a href="https://www.ieee-ras.org/ras-university/?ras_page=docs/chap12_learning/LfD.html"> learning from demonstration</a>. 
+The second proposed approach is machine learning based and does **not rely on any physics equation**. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs real-world data, that can be collected using an actual F/T sensor. Data is usually obtained through **learning from demonstration**, a method whereby an operator passively moves the robot to show how to perform a given task. Data on F/T perception are gathered as the robot makes various contacts with the environment, see course on <a href="https://www.ieee-ras.org/ras-university/?ras_page=docs/chap12_learning/LfD.html"> learning from demonstration</a>. 
 
 The variables fed to the NN are the robot’s internal state signals, such as joint **currents**, joint **positions** $\theta$, joint **velocities** $\dot{\theta}$ and joint **accelerations** $\ddot{\theta}$. All these inputs are put together into one input vector $x_n$.
 
@@ -1077,7 +1562,7 @@ Which of the following statements is correct? (single answer possible)
 </form>
 
 <div class="quiz-question-text">
-4) The robot was originally equipped with a 6DOF F/T, but the sensor is now damaged and can't be used anymore.
+4) The robot was originally equipped with a 6DOF F/T sensor, but it is now damaged and can't be used anymore.
 Due to cost, replacing the sensor is not an option.<br><br>
 
 Which solution is the most appropriate to still estimate interaction forces? (single answer possible)
@@ -1092,15 +1577,15 @@ Which solution is the most appropriate to still estimate interaction forces? (si
   Use sensorless F/T estimation based on motor currents and the robot dynamics.<br>
 
   <input type="radio" name="quiz-sensorless-choice" value="option3">
-  Install a cheap camera and estimate forces using vision only, without any physical model.<br><br>
+  Install a camera and estimate forces using vision only, without any physical model.<br><br>
 
   <button type="button" onclick="checkMultipleTrueFalseMapped(
     'quiz-sensorless-choice',
     'option2',
     {
-      option1: 'A tactile skin needs additional hardware, wiring and cost. Tactile sensors will be adressed in the next section.',
+      option1: 'A tactile skin needs significantly more hardware, which implies increasing cost. Tactile skins are adressed later.',
       option2: 'Sensorless F/T estimation relies on internal robot signals and does not require additional hardware. This is a suitable option in that case.',
-      option3: 'Vision alone can\'t reliably estimate interaction forces during physical contact.'
+      option3: 'Vision is not the preferred option here, as it implies installing an external camera. However, your intuition is right: vision combined with physical models can be used to estimate contact forces. <a href=&quot;#c-vision-based-force-sensors&quot;>Vision-Based Force Sensors</a> are the topic of the next section'
     }
   )">
     Check Answer
@@ -1144,6 +1629,58 @@ What is the most likely reason for this behavior? (single answer possible)
 
 </div>
 </details>
+
+#### C) Vision-Based Force Sensors  
+
+In the continuity of sensorless force estimation, interaction forces can also be determined using **external vision**.
+
+<!--
+Traditionally, measuring forces requires mounting costly and cumbersome transducers onto objects or the robot, which can alter the object's physical properties and obstruct the natural range of motion. Vision-based force sensing (FSV) establishes that these forces can be estimated in a reliable, non-intrusive way using a single **RGB-D camera**.
+
+This method is a **hybrid approach**: it combines the flexibility of **Model-Free estimation** (Neural Networks) with the strict physical guardrails of **Model-Based estimation** (Physics-based optimization).
+
+### The Multi-Contact Challenge
+Estimating forces from a video feed is an "ill-posed" or indeterminate problem. In multi-contact scenarios, such as a five-finger grasp, an infinity of different force distributions can result in the same observed motion. To solve this, the estimation framework follows two main steps.
+
+*1) Markerless Kinematics Tracking*
+
+Instead of internal motor signals, the system tracks the motion of the object and the hand.
+
+- **Motion Capture**: To handle occlusions and fast movements, the hand and object are often tracked as a single **rigid compound**.
+- **Kinematics Estimation**: By analyzing the object's position and orientation over time, the system uses numerical differentiation to compute the **acceleration** ($a$) and **rotational velocity** ($\omega$). 
+
+These kinematic values are linked to the net contact forces through the **Newton-Euler equations**:
+
+$$
+\mathcal{F}_c = m a - \mathcal{F}_d
+$$
+
+Where:
+- $\mathcal{F}_c$: net force due to individual contact forces
+- $m$: mass of the object
+- $a$: translational acceleration
+- $\mathcal{F}_d$: net force due to non-contact forces (e.g., gravity) 
+
+*2) The Hybrid Estimation Framework*
+
+To determine how much force each individual finger is applying, the system uses two layers in a "closed-loop" architecture:
+
+- **The Learning Layer (RNN)**: A Recurrent Neural Network (RNN) learns the mapping between motion and force. It captures how humans naturally distribute forces over time based on "human-like" patterns found in manipulation datasets.
+- **The Physics Layer (SOCP Optimizer)**: Because neural networks can predict impossible forces, a **Second-Order Cone Program (SOCP)** acts as a "physical checker". It refines the RNN predictions to ensure they align with physics, such as ensuring fingers only "push" (positivity) and stay within the **friction cone**.
+
+
+
+### Why use this hybrid approach?
+By combining these methods, the system ensures both **realism** and **consistency**:
+- **Consistency**: The Optimizer ensures that predicted forces never break physical laws, matching the observed motion and preventing unrealistic "pulling" forces.
+- **Realism**: The Neural Network allows the system to capture the "intuitive" ways humans apply force, which a purely mathematical model might miss.
+
+<div class="note-window">
+  <div class="window-title">Note</div>
+  This approach is based on <a href="https://ieeexplore.ieee.org/document/8085119">Hand-Object Contact Force Estimation from Markerless Visual Tracking</a> (T. Pham, N. Kyriazis, A.A. Argyros & A. Kheddar, IEEE 2018).
+</div>
+
+-->
 
 ---
 
@@ -2188,6 +2725,8 @@ tactile sensing chapter 4.4.3
 <!--
 -> make link to vision course
 -> video from TEDX MIT, guy explains how his vision based tactile sensor works
+
+vision used for force sensing, address this here: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8085141
 -->
 
 ---
@@ -2273,12 +2812,7 @@ add the challenges that come with the sensor location (integrated into skin surf
 ### 2.2.3.6 : Exercices
 
 add exercices
-look at Aude's propositions on slack
-Take same robot examples as in the kinematics course (delta ...) so that the student can work on the basis he already has
-1/ Knowing the different tactile sensors from above, where should the sensor be placed if we wish F/T control of robot to lift object up and down (joint, wrist)
-2/ ... push object
-3/ peg in a hole
-4/ ...
+
 -->
 
 ---

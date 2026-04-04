@@ -915,7 +915,7 @@ In the figure below, we can see the **cartesian-space** referential at the botto
 
 By defining this **lever arm** vector, we can determine the torque created by the force.  
 
-Once $p_{i,c}(\theta)$ is found, we can compute the **contact-point Jacobian** $J_c(\theta)$. It is derived by transforming the standard Jacobian matrix $J_i(\theta)$ as follows:
+Once $p_{i,c}(\theta)$ is found, we can compute the **contact-point Jacobian** $J_c(\theta)$. This is derived from the **link Jacobian** $J_i(\theta)$, which represents the velocity and angular velocity of the **origin of the $i$-th link**. To map this motion to the specific point of contact, we apply the following transformation:
 
 $$
 J_c(\theta)
@@ -1039,13 +1039,24 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
   <p>
     <strong>2)</strong>  
     Compute the contact Jacobian \(J_c\) by applying the transformation matrix to the link Jacobian \(J_3\). For this specific pose, \(J_3\) is given as:
-    \[ J_3 = \begin{bmatrix} 1.3 & 0.8 & 0.3 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix} \]
+
+    \[
+    J_3 = \begin{bmatrix} 
+    -0.9 & -0.4 & 0 \\ 
+    0 & 0 & 0 \\ 
+    0.1 & 0.6 & 0 \\ 
+    0 & 0 & 0 \\ 
+    1 & 1 & 1 \\ 
+    0 & 0 & 0 
+    \end{bmatrix}
+    \]
   </p>
+
   <p>
     <strong>3)</strong>  
     The external joint torque vector \(\tau_{ext}\) has been estimated using the residual method:
     \[ \tau_{ext} = \begin{bmatrix} 11.0 \\ 6.0 \\ 1.0 \end{bmatrix} \text{Nm} \]
-    Compute the resulting wrench \(W = [F_x, F_y, F_z, M_x, M_y, M_z]^T\) applied by the external force using the formula seen in the course (\(\tau_{ext} = J_c^T W\)).
+    Compute the resulting wrench \(W = [F_x, F_z, M_y]^T\) applied by the external force using the formula seen in the course (\(\tau_{ext} = J_c^T W\)).
   </p>
 </div>
 
@@ -1056,27 +1067,27 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
 
   <div class="solution-window">
 
-  <p><strong>1) Compute the relative vector \(p_{3,c}\) and its skew-symmetric matrix</strong></p>
+  <p><strong>1) Relative vector \(p_{3,c}\) and skew-symmetric matrix</strong></p>
 
   <p>
     Based on the grid coordinates provided:
     <ul>
-      <li>Joint 3 position: \(p_3 = \begin{bmatrix} 0.15 & 0 & 0.9 \end{bmatrix}^T\ \text{m}\)</li>
-      <li>Contact point: \(p_c = \begin{bmatrix} 0.3 & 0 & 0.8 \end{bmatrix}^T\ \text{m}\)</li>
+      <li>\(p_3 = \begin{bmatrix} 0.15 & 0 & 0.9 \end{bmatrix}^T\ \text{m}\)</li>
+      <li>\(p_c = \begin{bmatrix} 0.3 & 0 & 0.8 \end{bmatrix}^T\ \text{m}\)</li>
     </ul>
   </p>
 
   <p>
     The relative vector \(p_{3,c}\) is:
     \[
-    p_{3,c} = p_c - p_3 = \begin{bmatrix} 0.15 \\ 0 \\ -0.1 \end{bmatrix} = \begin{bmatrix} x \\ y \\ z \end{bmatrix}
+    p_{3,c} = p_c - p_3 = \begin{bmatrix} 0.3 - 0.15 \\ 0 \\ 0.8 - 0.9 \end{bmatrix} = \begin{bmatrix} 0.15 \\ 0 \\ -0.1 \end{bmatrix}
     \]
   </p>
 
   <p>
     Following the definition of the skew-symmetric matrix \(S(p_{3,c})\):
     \[
-    S(p_{3,c}) = \begin{bmatrix} 0 & -z & y \\ z & 0 & -x \\ -y & x & 0 \end{bmatrix} = \begin{bmatrix} 0 & 0.1 & 0 \\ -0.1 & 0 & -0.15 \\ 0 & 0.15 & 0 \end{bmatrix}
+    S(p_{3,c}) = \begin{bmatrix} 0 & 0.1 & 0 \\ -0.1 & 0 & -0.15 \\ 0 & 0.15 & 0 \end{bmatrix}
     \]
   </p>
 
@@ -1084,14 +1095,10 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
 
   <p>
     We apply the transformation matrix to the link Jacobian \(J_3\):
-    \[
-    J_c = \begin{bmatrix} I & -S(p_{3,c}) \\ 0 & I \end{bmatrix} J_3
-    \]
-  </p>
 
-  <p>
     \[
-    J_c = \begin{bmatrix} 
+    J_c = \begin{bmatrix} I & -S(p_{3,c}) \\ 0 & I \end{bmatrix} J_3 = 
+    \begin{bmatrix} 
     1 & 0 & 0 & 0 & -0.1 & 0 \\
     0 & 1 & 0 & 0.1 & 0 & 0.15 \\
     0 & 0 & 1 & 0 & -0.15 & 0 \\
@@ -1099,46 +1106,62 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
     0 & 0 & 0 & 0 & 1 & 0 \\
     0 & 0 & 0 & 0 & 0 & 1
     \end{bmatrix} 
-    \begin{bmatrix} 1.3 & 0.8 & 0.3 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix}
+    \begin{bmatrix} 
+    -0.9 & -0.4 & 0 \\ 
+    0 & 0 & 0 \\ 
+    0.1 & 0.6 & 0 \\ 
+    0 & 0 & 0 \\ 
+    1 & 1 & 1 \\ 
+    0 & 0 & 0 
+    \end{bmatrix}
     \]
   </p>
 
   <p>
     After matrix multiplication, we obtain the \(6 \times 3\) contact Jacobian:
     \[
-    J_c = \boxed{\begin{bmatrix} 1.2 & 0.7 & 0.2 \\ 0 & 0 & 0 \\ -0.15 & -0.15 & -0.15 \\ 0 & 0 & 0 \\ 1 & 1 & 1 \\ 0 & 0 & 0 \end{bmatrix}}
+    J_c = 
+    \begin{bmatrix} 
+    -1.0 & -0.5 & -0.1 \\
+    0 & 0 & 0 \\
+    -0.05 & 0.45 & -0.15 \\
+    0 & 0 & 0 \\
+    1 & 1 & 1 \\
+    0 & 0 & 0
+    \end{bmatrix}
     \]
   </p>
 
-  <p><strong>3) Compute the Wrench \(W\)</strong></p>
+  <p><strong>3) Wrench \(W\)</strong></p>
 
   <p>
     We solve for the wrench \(W = [F_x, F_y, F_z, M_x, M_y, M_z]^T\) using \(\tau_{ext} = J_c^T W\). 
-    First transpose \(J_c\):
+    Let's first transpose \(J_c\):
     \[
-    J_c^T = \begin{bmatrix} 1.2 & 0 & -0.15 & 0 & 1 & 0 \\ 0.7 & 0 & -0.15 & 0 & 1 & 0 \\ 0.2 & 0 & -0.15 & 0 & 1 & 0 \end{bmatrix}
+    J_c^T = 
+    \begin{bmatrix} 
+    -1.0 & 0 & -0.05 & 0 & 1 & 0 \\ 
+    -0.5 & 0 & 0.45 & 0 & 1 & 0 \\ 
+    -0.1 & 0 & -0.15 & 0 & 1 & 0 
+    \end{bmatrix}
     \]
   </p>
 
   <p>
-    Given \(\tau_{ext} = [11.0, 6.0, 1.0]^T\ \text{Nm}\), we solve the system for the three non zero components (\(F_x, F_z, M_y\)):
-    <br>1) \(1.2 F_x - 0.15 F_z + M_y = 11.0\)
-    <br>2) \(0.7 F_x - 0.15 F_z + M_y = 6.0\)
-    <br>3) \(0.2 F_x - 0.15 F_z + M_y = 1.0\)
-  </p>
+    Given \(\tau_{ext} = [11.0, 6.0, 1.0]^T\ \text{Nm}\), we obtain the following set of equations:
 
-  <p>
-    By subtracting (2) from (1), we get: \(0.5 F_x = 5.0 \implies F_x = 10.0\ \text{N}\).
-    <br>Using (3): \(0.2(10) - 0.15 F_z + M_y = 1.0 \implies M_y - 0.15 F_z = -1.0\).
-    <br>Assuming a pure horizontal push (\(F_z = 0\)):
-  </p>
-
-  <p>
-    <strong>Final Answer:</strong>
     \[
-    W = \boxed{\begin{bmatrix} 10.0 & 0 & 0 & 0 & -1.0 & 0 \end{bmatrix}^T}
+    \begin{cases}
+    \tau_{ext,1} = 11 = - F_x - 0.05 F_z + M_y \\
+    \tau_{ext,2} = 6 = -0.5 F_x + 0.45 F_z + M_y \\
+    \tau_{ext,3} = 1 = -0.1 F_x - 0.15 F_z + M_y
+    \end{cases}
     \]
-    The human is applying a horizontal force of \(10\ \text{N}\), which results in a moment of \(-1.0\ \text{Nm}\) at the contact point.
+  </p>
+
+  <p>
+    By solving for the variables, we find:
+    \[ W = \begin{bmatrix} F_x & F_z & M_y \end{bmatrix}^T = \boxed{\begin{bmatrix} -11 & -1 & 0.05 \end{bmatrix}^T} \]
   </p>
 
   </div>
@@ -1166,14 +1189,14 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
 <div style="margin-left: 1.2em;">
   <p>
     <strong>1)</strong>
-    Using the joint angles \(\theta_1, \theta_2, \theta_3\) and the link lengths \(L_1\) and \(L_2\) (\(L_3=0\)), derive the general analytical Jacobian \(J(\theta)\) for the end-effector of this 3-DOF planar arm.
+    Using the joint angles \(\theta_1, \theta_2 \text{and} \theta_3\), derive the general Jacobian \(J(\theta)\) for the end-effector of this 3-DOF planar arm.
   </p>
   <p>
-    <em>Hint:</em> Review the <a href="/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-">Kinematics</a> section if you need a refresher on how to deriving the Jacobian matrix.
+    <em>Hint:</em> Review the <a href="/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-">Kinematics</a> course if you need a refresher on how to deriving the Jacobian matrix.
   </p>
   <p>
     <strong>2)</strong>
-    Deduce the link Jacobian \(J_2(\theta)\) from the full Jacobian \(J(\theta)\). Note that since the contact occurs on Link 2, the motion of Joint 3 does not affect the contact point. 
+    Deduce the link Jacobian \(J_2(\theta)\) from the general Jacobian \(J(\theta)\). Note that since the contact occurs on link 2, the motion of joint 3 does not affect the contact point. Consider the following link lengths \(L_1 = 0.7\)m, \(L_2 = 0.75\)m and \(L_3 = 0.2\)m.
   </p>
   <p>
     <strong>3)</strong>
@@ -1185,12 +1208,12 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
   </p>
   <p>
     <strong>5)</strong>
-    Compute the resulting wrench \(W = [F_x, F_z, T_y]^T\) applied by the external force using the formula seen in the course (\(\tau_{ext} = J_c^T W\)).
+    Derive the resulting wrench \(W = [F_x, F_z, M_y]^T\) applied by the external force using the formula seen in the course (\(\tau_{ext} = J_c^T W\)). Consider the following joint torque vector \(\tau_{ext}\): \[ \tau_{ext} = \begin{bmatrix} 11.0 \\ 6.0 \\ 0 \end{bmatrix} \text{Nm} \]
   </p>
   <p>
     <strong>6)</strong> 
     Finally, calculate the numerical values of the wrench for the specific pose shown in the figure:
-    \(\theta_1 = 135^\circ\), \(\theta_2 = -100^\circ\), and \(\theta_3 = -75^\circ\).
+    \(\theta_1 = 135^\circ\), \(\theta_2 = -100^\circ\) and \(\theta_3 = -75^\circ\).
   </p>
 </div>
 
@@ -1201,48 +1224,80 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
 
   <div class="solution-window">
 
-  <p><strong>1) Derive the analytical Jacobian \(J(\theta)\)</strong></p>
+  <p><strong>1) End-effector Jacobian \(J(\theta)\)</strong></p>
 
   <p>
-    For a 3-DOF planar robot, the Jacobian relates joint velocities to the tip velocity. Given the contact is on Link 2, we set \(L_3 = 0\). Using \(L_1 = 0.5\) and \(L_2 = 0.5\), the position of the point is:
-    \[ x = L_1 \cos(\theta_1) + L_2 \cos(\theta_1 + \theta_2) \]
-    \[ z = L_1 \sin(\theta_1) + L_2 \sin(\theta_1 + \theta_2) \]
+    Remember, in order to find the Jacobian we need to derivate the position and orientation of the end-effector in the cartesian space with respect to time.
   </p>
+
   <p>
-    Differentiating with respect to time, we obtain the \(6 \times 3\) Jacobian (focusing on X-Z plane and Y-rotation):
-    \[
-    J(\theta) = \begin{bmatrix} 
-    -0.5s_1 - 0.5s_{12} & -0.5s_{12} & 0 \\
-    0 & 0 & 0 \\
-    0.5c_1 + 0.5c_{12} & 0.5c_{12} & 0 \\
-    0 & 0 & 0 \\
-    1 & 1 & 1 \\
-    0 & 0 & 0 
-    \end{bmatrix}
-    \]
-    <i>Note: $s_{12} = \sin(\theta_1 + \theta_2)$.</i>
+    <i>Recall: $s_{12} = \sin(\theta_1 + \theta_2)$.</i>
+  </p>
+
+  <p>
+    The position and orientation of the tool tip in the X-Z plane are:
+    \[ \begin{cases}
+      x = L_1 c_1 + L_2 c_{12} + L_3 c_{123} \\
+      y = 0 \\
+      z = L_1 s_1 + L_2 s_{12} + L_3 s_{123} \\
+      \theta_x = 0 \\
+      \theta_y = \theta_1 + \theta_2 + \theta_3 \\
+      \theta_z = 0
+    \end{cases} \]
+  </p>
+
+  <p>
+    By differentiating these coordinates with respect to time:
+    \[ \begin{cases}
+      \dot{x} = -L_1 s_1 \dot{\theta}_1 - L_2 s_{12} (\dot{\theta}_1 + \dot{\theta}_2) - L_3 s_{123} (\dot{\theta}_1 + \dot{\theta}_2 + \dot{\theta}_3) \\
+      \dot{y} = 0 \\
+      \dot{z} = L_1 c_1 \dot{\theta}_1 + L_2 c_{12} (\dot{\theta}_1 + \dot{\theta}_2) + L_3 c_{123} (\dot{\theta}_1 + \dot{\theta}_2 + \dot{\theta}_3) \\
+      \dot{\theta}_x = 0 \\
+      \dot{\theta}_y = \dot{\theta}_1 + \dot{\theta}_2 + \dot{\theta}_3 \\
+      \dot{\theta}_z = 0
+    \end{cases} \]
+  </p>
+
+  <p>
+    And by rearranging the terms, such that \(\dot{\mathbf{x}}=J \dot{\mathbf{\theta}}\), we obtain the \(6 \times 3\) Jacobian:
+
+    \[ J(\theta) = \begin{bmatrix}
+      -L_1 s_1 - L_2 s_{12} - L_3 s_{123} & -L_2 s_{12} - L_3 s_{123} & -L_3 s_{123} \\
+      0 & 0 & 0 \\
+      L_1 c_1 + L_2 c_{12} + L_3 c_{123} & L_2 c_{12} + L_3 c_{123} & L_3 c_{123} \\
+      0 & 0 & 0 \\
+      1 & 1 & 1 \\
+      0 & 0 & 0 
+    \end{bmatrix} \]
   </p>
 
   <hr>
 
   <p><strong>2) Deduce the link Jacobian \(J_2(\theta)\)</strong></p>
 
-  <p>
-    The link Jacobian \(J_2\) describes the velocity of the origin of Link 2 (Joint 2). Since Joint 3 is "downstream" of Link 2, its motion does not affect the link's origin. We therefore truncate the third column:
-  
-  </p>
+  <p>  
+    The link Jacobian \(J_2\) describes the motion of the <b>origin</b> of link 2 (joint 2). Because the contact occurs on Link 2, Joint 3 is downstream and has no effect (column 3 is zero). Moreover, 2e must also remove all existing terms related to \(L_2\) and \(L_3\), since they do not affect the motion of the origin of joint 2:
 
-<!--
-    \[
-    J_2(\theta) = \boxed{\begin{bmatrix} 
-    -0.5s_1 & 0 & 0 \\
-    0 & 0 & 0 \\
-    0.5c_1 & 0 & 0 \\
-    0 & 0 & 0 \\
-    1 & 0 & 0 \\
-    0 & 0 & 0 
-    \end{bmatrix}}
-    \]
+    \[J_2(\theta) = \begin{bmatrix}
+      -L_1 s_1 & 0 & 0 \\
+      0 & 0 & 0 \\
+      L_1 c_1 & 0 & 0 \\
+      0 & 0 & 0 \\
+      1 & 1 & 0 \\
+      0 & 0 & 0
+    \end{bmatrix} \]
+
+    Replace \(L_1\) by its numerical value:
+  
+    \[J_2(\theta) = \begin{bmatrix}
+      -0.7 s_1 & 0 & 0 \\
+      0 & 0 & 0 \\
+      0.7 c_1 & 0 & 0 \\
+      0 & 0 & 0 \\
+      1 & 1 & 0 \\
+      0 & 0 & 0
+    \end{bmatrix} \]
+
   </p>
 
   <hr>
@@ -1252,26 +1307,26 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
   <p>
     Using the provided coordinates:
     <ul>
-      <li>Joint 2 position: \(p_2 = \begin{bmatrix} -0.5 & 0 & 0.5 \end{bmatrix}^T\ \text{m}\)</li>
-      <li>Contact point: \(p_c = \begin{bmatrix} 0.2 & 0 & 0.7 \end{bmatrix}^T\ \text{m}\)</li>
+      <li>\(p_2 = \begin{bmatrix} -0.5 & 0 & 0.5 \end{bmatrix}^T\ \text{m}\)</li>
+      <li>\(p_c = \begin{bmatrix} 0.2 & 0 & 0.7 \end{bmatrix}^T\ \text{m}\)</li>
     </ul>
-    \[ p_{2,c} = p_c - p_2 = \begin{bmatrix} 0.2 - (-0.5) \\ 0 - 0 \\ 0.7 - 0.5 \end{bmatrix} = \begin{bmatrix} 0.7 \\ 0 \\ 0.2 \end{bmatrix} = \begin{bmatrix} x \\ y \\ z \end{bmatrix} \]
+    \[ p_{2,c} = p_c - p_2 = \begin{bmatrix} 0.2 - (-0.5) \\ 0 \\ 0.7 - 0.5 \end{bmatrix} = \begin{bmatrix} 0.7 \\ 0 \\ 0.2 \end{bmatrix} \]
   </p>
   <p>
-    Constructing the skew-symmetric matrix \(S(p_{2,c})\):
+    We can deduce the skew-symmetric matrix \(S(p_{2,c})\):
     \[
-    S(p_{2,c}) = \begin{bmatrix} 0 & -z & y \\ z & 0 & -x \\ -y & x & 0 \end{bmatrix} = \boxed{\begin{bmatrix} 0 & -0.2 & 0 \\ 0.2 & 0 & -0.7 \\ 0 & 0.7 & 0 \end{bmatrix}}
+    S(p_{2,c}) = \begin{bmatrix} 0 & -0.2 & 0 \\ 0.2 & 0 & -0.7 \\ 0 & 0.7 & 0 \end{bmatrix}
     \]
   </p>
 
   <hr>
 
-  <p><strong>4) Compute the contact Jacobian \(J_{c,2}(\theta)\)</strong></p>
+  <p><strong>4) Compute the contact Jacobian \(J_c(\theta)\)</strong></p>
 
   <p>
-    We apply the transformation matrix:
+    Applying the transformation matrix:
     \[
-    J_{c,2} = \begin{bmatrix} I & -S(p_{2,c}) \\ 0 & I \end{bmatrix} J_2 = 
+    J_c(\theta) = \begin{bmatrix} I & -S(p_{2,c}) \\ 0 & I \end{bmatrix} J_2(\theta) = 
     \begin{bmatrix} 
     1 & 0 & 0 & 0 & 0.2 & 0 \\
     0 & 1 & 0 & -0.2 & 0 & 0.7 \\
@@ -1279,32 +1334,37 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
     0 & 0 & 0 & 1 & 0 & 0 \\
     0 & 0 & 0 & 0 & 1 & 0 \\
     0 & 0 & 0 & 0 & 0 & 1
-    \end{bmatrix} J_2
+    \end{bmatrix} J_2(\theta)
     \]
     Resulting in:
     \[
-    J_{c,2}(\theta) = \boxed{\begin{bmatrix} 
-    -0.5s_1 + 0.2 & 0 & 0 \\
+    J_c(\theta) = \begin{bmatrix}
+    -0.7 s_1 + 0.2 & 0.2 & 0 \\
     0 & 0 & 0 \\
-    0.5c_1 - 0.7 & 0 & 0 \\
+    0.7 c_1 - 0.7 & -0.7 & 0 \\
     0 & 0 & 0 \\
-    1 & 0 & 0 \\
-    0 & 0 & 0 
-    \end{bmatrix}}
+    1 & 1 & 0 \\
+    0 & 0 & 0
+    \end{bmatrix}
     \]
   </p>
 
   <hr>
 
-  <p><strong>5) Wrench Formulation</strong></p>
+  <p><strong>5) Wrench \(W\)</strong></p>
 
   <p>
-    The wrench is found via \(\tau_{ext} = J_{c,2}^T W\). Transposing our result:
-    \[
-    J_{c,2}^T = \begin{bmatrix} (-0.5s_1 + 0.2) & 0 & (0.5c_1 - 0.7) & 0 & 1 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 \end{bmatrix}
+    The external wrench \(W = [F_x, F_y, F_z, M_x, M_y, M_z]^T\) is found via \(\tau_{ext} = J_c^T W\). The relationship becomes:
+
+    \[ 
+    \begin{cases}
+    \tau_{ext,1} = 11 = (-0.7 s_1 + 0.2)F_x + (0.7 c_1 - 0.7)F_z + M_y \\
+    \tau_{ext,2} = 6 = 0.2 F_x - 0.7 F_z + M_y \\
+    \tau_{ext,3} = 0
+    \end{cases}
     \]
-    The relationship becomes:
-    \[ \tau_{ext,1} = (-0.5s_1 + 0.2)F_x + (0.5c_1 - 0.7)F_z + M_y \]
+
+    This system is underdetermined, as we have 2 equations for 3 unknowns (\(F_x, F_z, M_y\)). In order to fully determine the wrench, additionnal information will be needed.
   </p>
 
   <hr>
@@ -1312,24 +1372,34 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
   <p><strong>6) Numerical Application</strong></p>
 
   <p>
-    For the pose \(\theta_1 = 135^\circ\): 
-    \(c_1 = -0.707\), \(s_1 = 0.707\).
+    In the pose \(\theta_1 = 135^\circ\):  
+    \[s_1 \approx 0.7\, \quad c_1 \approx -0.7\]
   </p>
   <p>
-    Substituting into the Jacobian row:
-    <br>Row 1: \(-0.5(0.707) + 0.2 = -0.1535\)
-    <br>Row 3: \(0.5(-0.707) - 0.7 = -1.0535\)
+    The equations of 5) become:
+    \[ 
+    \begin{cases}
+    -0.3 F_x - 1.2 F_z + M_y = 11\\
+    0.2 F_x - 0.7 F_z + M_y = 6
+    \end{cases}
+    \]
   </p>
   <p>
-    Assuming \(F_z = 0\) and \(M_y = -1\ \text{Nm}\) (similar to Ex 1), and given \(\tau_{ext,1} = -2.535\ \text{Nm}\):
-    \[ -2.535 = (-0.1535)F_x + 0 - 1 \implies F_x = 10\ \text{N} \]
-  </p>
-  <p>
-    <strong>Final Answer:</strong>
-    \[ W = \boxed{\begin{bmatrix} 10.0 & 0 & 0 & 0 & -1.0 & 0 \end{bmatrix}^T} \]
-  </p>
+    <ul>
+      <li>First, let's consider a purely vertical force: \(F_x = 0\)</li>
+    </ul>
+    \[ W = \begin{bmatrix} F_x & F_z & M_y \end{bmatrix}^T = \boxed{\begin{bmatrix} 0 & -10 & -1 \end{bmatrix}^T} \]
 
--->
+    <ul>
+      <li>Second, a purely horizontal force: \(F_z = 0\)</li>
+    </ul>
+    \[ W = \boxed{\begin{bmatrix} -10 & 0 & 8 \end{bmatrix}^T} \]
+
+    <ul>
+      <li>Lastly, a force that produces no torque: \(M_y = 0\)</li>
+    </ul>
+    \[ W = \boxed{\begin{bmatrix} -1.1 & -8.9 & 0 \end{bmatrix}^T} \]
+  </p>
 
   </div>
 </details>

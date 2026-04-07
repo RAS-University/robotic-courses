@@ -16,11 +16,13 @@ nav_exclude: false
 
 # Multirotor Drones: Chapter 0
 
-- Table of Contents
-{:toc}
+-Forewords
 This course offers an introduction to the control of *multirotors*, a type of Unmanned Aerial Vehicle (UAV), i.e., drones. Multirotors are UAVs driven by several rotors that provide vertical lift and propulsion. A typical example is the *quadcopter*, an unmanned helicopter with four rotors, which can operate in confined spaces and requires only a small, flat area. Multirotors are similar in principle to helicopters in that they can take off and land vertically, making them ideally suited for operation in confined environments. Multirotor systems are highly maneuverable and can operate in hovering modes at low speeds with high stability. This is why they are so popular for a variety of applications, ranging from photography to inspection and surveillance.
 
 This course covers methods for modeling and controlling multirotors, from stabilizing the drone to planning trajectories and controlling trajectory tracking. The course assumes several prerequisites, notably a foundation in control theory, which is covered in previous classes at [RAS University](https://www.ieee-ras.org/ras-university) (see list below).
+
+- Table of Contents
+{:toc}
 
 ## 1. Prerequisites
 1. **Basic Mathematics**

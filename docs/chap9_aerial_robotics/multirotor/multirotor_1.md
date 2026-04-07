@@ -14,36 +14,37 @@ nav_exclude: false
 
 <!-- <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_2" id="go-to-next" title="Go to Next Chapter">➡​</a> -->
 
-
 # Multirotor Drones: Chapter 0
 
 - Table of Contents
 {:toc}
+This course offers an introduction to the control of *multirotors*, a type of Unmanned Aerial Vehicle (UAV), i.e., drones. Multirotors are UAVs driven by several rotors that provide vertical lift and propulsion. A typical example is the *quadcopter*, an unmanned helicopter with four rotors, which can operate in confined spaces and requires only a small, flat area. Multirotors are similar in principle to helicopters in that they can take off and land vertically, making them ideally suited for operation in confined environments. Multirotor systems are highly maneuverable and can operate in hovering modes at low speeds with high stability. This is why they are so popular for a variety of applications, ranging from photography to inspection and surveillance.
+
+This course covers methods for modeling and controlling multirotors, from stabilizing the drone to planning trajectories and controlling trajectory tracking. The course assumes several prerequisites, notably a foundation in control theory, which is covered in previous classes at [RAS University](https://www.ieee-ras.org/ras-university) (see list below).
 
 ## 1. Prerequisites
-1. **Basic Mathematics**  
-  - trigonometry
-  - linear algebra (vectors, matrices and basic matrix operations)
+1. **Basic Mathematics**
+  - Trigonometry
+  - Linear algebra (vectors, matrices and basic matrix operations)
 
-2. **Kinematics**  
-  - coordinate transformations and rotation matrices
+2. **Kinematics**[Kinematics]    
+  - Coordinate transformations and rotation matrices
 
-3. **Dynamics**  
+3. **Dynamics**[Dynamics]     
   Analysis of forces and their effects on motion, crucial for modeling and simulating drone behavior.
 
-4. **PID Control**  
+4. **PID Control**[Closeloop&PID]  
   Basics of Control Theory. Stability, Controllability etc.
 
-5. **Model Predictive Control (MPC)**  
+5. **Model Predictive Control (MPC)**[MPC]    
   In the last chapter we will use mpc to control the drone. Previous knowledge is needed.
 
-6. **Sensors and Sensing**  
+6. **Sensors and Sensing**[sensors-and-sensing]    
   Understanding the role of sensors like IMUs, GPS, and cameras in perceiving the environment and providing feedback for control. Have an idea about sensor fusion algorithms, especially the Kalman Filter. 
-
 
 ## 2. General Motivation
 
-Since the 2000's the market for consumer quadcopters grows in a high speed. While the first available drones were difficult to control and tend to crash easily, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
+Since the 2000's the market for consumer quadcopters grows at a high speed. While the first available drones were difficult to control and tended to crash easily, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
 This module about multicopters aims to provide you with the tools to model, simulate and control a multirotor drone. For the sake of simplicity all the steps will be shown on a quadcopter but are extendable to other multirotor drone configurations. At the end of the module there is a simulation exercise where you will need to control a drone to fly through gates as fast as possible.  
 Until there we will first introduce the mathematical language for drone modeling to then later model a drone, derive the dynamics of a drone and finally present control strategies.
 
@@ -413,7 +414,7 @@ Link to other foundations that are needed such as mpc, optimization and
 
 ### Credits:
 <!-- List all the sources that you used to create the page   -->
-This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.
+This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, under supervision of **[Dr. Charbel Toumieh](https://scholar.google.com/citations?user=34d6O30AAAAJ&hl=en)** and **[Prof. Aude Billard](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en&oi=ao)**, and funded by **IEEE RAS** and **EPFL**.
 
 This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
 

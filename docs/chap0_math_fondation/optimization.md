@@ -1,9 +1,8 @@
 ---
 title: "0.1 Optimization"
 parent: "Chapter 0: Mathematical Foundation"
-has_children: false
 layout: numbered
-nav_order: 1
+nav_order: 2
 chapter: 0
 section: 1
 publish: true

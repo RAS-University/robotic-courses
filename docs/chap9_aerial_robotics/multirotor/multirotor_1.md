@@ -29,19 +29,19 @@ This course covers methods for modeling and controlling multirotors, from stabil
   - Trigonometry
   - Linear algebra (vectors, matrices and basic matrix operations)
 
-2. **Kinematics**[Kinematics]    
+2. **Kinematics**[Kinematics](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap1_basic_motion_ctrl/kinematics.html)    
   - Coordinate transformations and rotation matrices
 
-3. **Dynamics**[Dynamics]     
+3. **Dynamics**[Dynamics](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap1_basic_motion_ctrl/dynamics.html)     
   Analysis of forces and their effects on motion, crucial for modeling and simulating drone behavior.
 
-4. **PID Control**[Closeloop&PID]  
+4. **PID Control**[Closeloop&PID](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap1_basic_motion_ctrl/Closeloop%26PID.html)  
   Basics of Control Theory. Stability, Controllability etc.
 
-5. **Model Predictive Control (MPC)**[MPC]    
+5. **Model Predictive Control (MPC)**[MPC](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap6_advanced_ctrl/MPC.html)    
   In the last chapter we will use mpc to control the drone. Previous knowledge is needed.
 
-6. **Sensors and Sensing**[sensors-and-sensing]    
+6. **Sensors and Sensing**[sensors-and-sensing](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/sensors-and-sensing.html)    
   Understanding the role of sensors like IMUs, GPS, and cameras in perceiving the environment and providing feedback for control. Have an idea about sensor fusion algorithms, especially the Kalman Filter. 
 
 ## 2. General Motivation

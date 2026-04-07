@@ -1,5 +1,5 @@
 ---
-title: "Mathematical Foundation"
+title: "0.0 Mathematical Foundation"
 parent: "Chapter 0: Mathematical Foundation"
 has_children: false
 layout: numbered

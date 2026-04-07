@@ -1,10 +1,9 @@
 ---
-title: "0.0 Mathematical Foundation"
+title: 0.0 Mathematical Foundation
 parent: "Chapter 0: Mathematical Foundation"
-has_children: false
 layout: numbered
 math: mathjax
-nav_order: 0
+nav_order: 1
 chapter: 0
 section: 0
 publish: true

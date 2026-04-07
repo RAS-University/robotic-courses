@@ -5,8 +5,8 @@ layout: default
 nav_order: 10
 chapter: 9
 section: 10
-publish: false
-nav_exclude: true
+publish: true
+nav_exclude: false
 toc: true             # <--- ENABLE TOC GENERATION
 toc_label: On This Page # <--- Custom title for the sidebar
 # math: mathjax

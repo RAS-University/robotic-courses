@@ -5,8 +5,8 @@ layout: default
 nav_order: 4
 chapter: 9
 section: 4
-publish: false
-nav_exclude: true
+publish: true
+nav_exclude: false
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

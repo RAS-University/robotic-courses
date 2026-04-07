@@ -16,15 +16,13 @@ nav_exclude: false
 
 # Multirotor Drones: Chapter 0
 
--Forewords
-This course offers an introduction to the control of *multirotors*, a type of Unmanned Aerial Vehicle (UAV), i.e., drones. Multirotors are UAVs driven by several rotors that provide vertical lift and propulsion. A typical example is the *quadcopter*, an unmanned helicopter with four rotors, which can operate in confined spaces and requires only a small, flat area. Multirotors are similar in principle to helicopters in that they can take off and land vertically, making them ideally suited for operation in confined environments. Multirotor systems are highly maneuverable and can operate in hovering modes at low speeds with high stability. This is why they are so popular for a variety of applications, ranging from photography to inspection and surveillance.
-
-This course covers methods for modeling and controlling multirotors, from stabilizing the drone to planning trajectories and controlling trajectory tracking. The course assumes several prerequisites, notably a foundation in control theory, which is covered in previous classes at [RAS University](https://www.ieee-ras.org/ras-university) (see list below).
-
 - Table of Contents
 {:toc}
 
 ## 1. Prerequisites
+
+This course covers methods for modeling and controlling multirotors, from stabilizing the drone to planning trajectories and controlling trajectory tracking. The course assumes several prerequisites, notably a foundation in control theory, which is covered in previous classes at [RAS University](https://www.ieee-ras.org/ras-university) (see list below).
+
 1. **Basic Mathematics**
   - Trigonometry
   - Linear algebra (vectors, matrices and basic matrix operations)
@@ -46,12 +44,9 @@ This course covers methods for modeling and controlling multirotors, from stabil
 
 ## 2. General Motivation
 
-Since the 2000's the market for consumer quadcopters grows at a high speed. While the first available drones were difficult to control and tended to crash easily, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
-This module about multicopters aims to provide you with the tools to model, simulate and control a multirotor drone. For the sake of simplicity all the steps will be shown on a quadcopter but are extendable to other multirotor drone configurations. At the end of the module there is a simulation exercise where you will need to control a drone to fly through gates as fast as possible.  
-Until there we will first introduce the mathematical language for drone modeling to then later model a drone, derive the dynamics of a drone and finally present control strategies.
+This course offers an introduction to the control of *multirotors*, a type of Unmanned Aerial Vehicle (UAV), i.e., drones. Multirotors are UAVs driven by several rotors that provide vertical lift and propulsion. A typical example is the *quadcopter*, an unmanned helicopter with four rotors, which can operate in confined spaces and requires only a small, flat area. Multirotors are similar in principle to helicopters in that they can take off and land vertically, making them ideally suited for operation in confined environments. Multirotor systems are highly maneuverable and can operate in hovering modes at low speeds with high stability. This is why they are so popular for a variety of applications, ranging from photography to inspection and surveillance. Since the 2000's the market for consumer quadcopters has grown at a high speed. While the first available drones were difficult to control and tended to crash easily, nowadays the average multicopter on the market is highly performant, offers a great stability and is easy to control.  
 
-This page will establish the different reference frames needed to describe the position of a drone in 3D space and give a short refresher on how rotations in the 3d space are described mathematically.
-
+This course aims to provide you with the tools to model, simulate, and control a multirotor drone. For the sake of simplicity, all steps will be demonstrated using a quadcopter, but the concepts are extendable to other multirotor configurations. We first introduce the mathematical framework for drone modeling. We then model a drone, derive its dynamics, and finally present control strategies. This page establishes the different reference frames needed to describe the position of a drone in 3D space and provides a short refresher on how rotations in 3D space are described mathematically. The course closes with a simulation exercise in which you will control a drone to fly through gates as fast as possible. 
 
 ## Chapter 0 : Mathematical tools for modelling and control of UAV's
 

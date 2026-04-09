@@ -46,6 +46,8 @@ In addition, we will use the following symbols systematically:
 - $\mathcal{S}$: a screw
 - $\mathcal{T}$: a twist, that is, a motion screw
 - $\mathcal{W}$: a wrench, that is, a force screw
+- $\mathbf{x}$: the upper three-dimensional part of a generic screw
+- $\mathbf{y}$: the lower three-dimensional part of a generic screw
 - $\mathbf{f}$: a force vector
 - $\mathbf{m}$: a moment vector
 - $\mathbf{v}$: a linear velocity vector
@@ -59,9 +61,9 @@ Accordingly, a screw is written as a stacked six-dimensional entity:
 $$
 \mathcal{S}=
 \begin{bmatrix}
-\mathbf{s}\\
-\mathbf{m}
-\end{bmatrix}.
+\mathbf{x} \\ <br>
+\mathbf{y}
+\end{bmatrix}
 $$
 
 When the screw represents motion, we write the twist as:
@@ -69,9 +71,9 @@ When the screw represents motion, we write the twist as:
 $$
 \mathcal{T}=
 \begin{bmatrix}
-\boldsymbol{\omega}\\
+\boldsymbol{\omega} \\ <br>
 \mathbf{v}
-\end{bmatrix}.
+\end{bmatrix}
 $$
 
 When it represents force transmission, we write the wrench as:
@@ -79,9 +81,9 @@ When it represents force transmission, we write the wrench as:
 $$
 \mathcal{W}=
 \begin{bmatrix}
-\mathbf{f}\\
+\mathbf{f} \\ <br>
 \mathbf{m}
-\end{bmatrix}.
+\end{bmatrix}
 $$
 
 This stacked notation will be maintained throughout the chapter whenever a six-dimensional object is composed of two three-dimensional vectors.
@@ -91,7 +93,7 @@ To discuss reciprocity, we will use $\odot$ to denote the reciprocal product bet
 $$
 \mathcal{S}_1 \odot \mathcal{S}_2
 =
-\mathbf{s}_1 \cdot \mathbf{m}_2 + \mathbf{s}_2 \cdot \mathbf{m}_1.
+\mathbf{x}_1 \cdot \mathbf{y}_2 + \mathbf{x}_2 \cdot \mathbf{y}_1
 $$
 
 In particular, for a wrench and a twist, the pairing becomes:
@@ -102,6 +104,357 @@ $$
 \mathbf{f}\cdot\mathbf{v} + \mathbf{m}\cdot\boldsymbol{\omega}.
 $$
 This scalar is the quantity that will later encode power and reciprocity. A recurring idea in this chapter is that two screws are reciprocal when their pairing is zero.
+
+### Rotation, Exponentials, and Product of Exponentials
+
+To make screw theory useful for robot kinematics, we need one more bridge: how an **instantaneous motion** gives rise to a **finite motion**. That bridge is provided by a differential equation and its solution through the matrix exponential.
+
+#### Rotation as the solution of a differential equation
+
+Before talking about screws in full generality, it helps to start with ordinary rotation.
+
+The set $SO(3)$ is the set of all $3\times 3$ rotation matrices:
+
+$$
+SO(3) = \{ \mathbf{R} \in \mathbb{R}^{3 \times 3} \mid \mathbf{R}^T \mathbf{R} = \mathbf{I},\ \det(\mathbf{R}) = 1 \}.
+$$
+
+This notation means:
+
+- $S$ stands for **special**, which here means determinant $+1$,
+- $O$ stands for **orthogonal**, which means $\mathbf{R}^T\mathbf{R}=\mathbf{I}$,
+- $(3)$ means we are in three-dimensional space.
+
+So an element of $SO(3)$ is exactly a matrix that rotates vectors in 3D without stretching them, shrinking them, or reflecting them.
+
+If a rigid body rotates, its orientation changes with time, so we write
+
+$$
+\mathbf{R}(t)\in SO(3).
+$$
+
+The main question is then:
+
+> If we know the body's instantaneous angular velocity, how do we recover the finite rotation after some time?
+
+That is where the differential equation appears.
+
+#### Simple intuition: one point moving on a circle
+
+First consider a point rotating in the $x$-$y$ plane around the origin with constant angular speed $\omega$. Its position is
+
+$$
+\mathbf{r}(t) = 
+\begin{bmatrix}
+x(t) \\ <br> 
+y(t)
+\end{bmatrix}
+$$
+
+From elementary kinematics, the velocity is tangent to the circle and perpendicular to the radius. In matrix form,
+
+$$
+\dot{\mathbf{r}}(t)=
+\begin{bmatrix}
+0 & -\omega \\ <br>
+\omega & 0
+\end{bmatrix}
+\mathbf{r}(t)
+$$
+
+<figure>
+  <img src="images/rotation_planar.png" alt="Planar rotation with radius vector and tangent velocity" style="display: block; max-width: 100%; height: auto; margin: 1rem auto;" />
+  <figcaption><strong>Figure:</strong> The linear velocity at a point is normal to axis of rotation and its position vector, and is obtained by scaling by the angular speed.</figcaption>
+</figure>
+
+So even in this simple planar case, the motion is already written as a linear differential equation of the form
+
+$$
+\dot{\mathbf{r}} = \mathbf{A}\mathbf{r},
+$$
+
+where the matrix $\mathbf{A}$ encodes the instantaneous generator of rotation.
+
+The 3D case is the same idea, only now the generator is built from the angular velocity vector.
+
+#### How the rotational differential equation appears
+
+Using the skew-symmetric matrix associated with $\boldsymbol{\omega}$,
+
+$$
+[\boldsymbol{\omega}] =
+\begin{bmatrix}
+0 & -\omega_z & \omega_y \\ <br>
+\omega_z & 0 & -\omega_x \\ <br>
+-\omega_y & \omega_x & 0
+\end{bmatrix},
+$$
+
+which is defined so that
+
+$$
+[\boldsymbol{\omega}]\,\mathbf{a}=\boldsymbol{\omega}\times \mathbf{a}
+$$
+
+for every vector $\mathbf{a}\in\mathbb{R}^3$.
+
+Now take any vector $\mathbf{u}$ fixed in the body. As the body rotates, its coordinates in the spatial frame are
+
+$$
+\mathbf{r}(t)=\mathbf{R}(t)\mathbf{u}.
+$$
+
+Its velocity must be
+
+$$
+\dot{\mathbf{r}}(t)=\boldsymbol{\omega}\times \mathbf{r}(t)
+=
+[\boldsymbol{\omega}]\,\mathbf{r}(t).
+$$
+
+But since $\mathbf{u}$ is constant in the body,
+
+$$
+\dot{\mathbf{r}}(t)=\dot{\mathbf{R}}(t)\mathbf{u}.
+$$
+
+Combining the two expressions gives
+
+$$
+\dot{\mathbf{R}}(t)\mathbf{u}
+=
+[\boldsymbol{\omega}]\,\mathbf{R}(t)\mathbf{u}
+$$
+
+for every body-fixed vector $\mathbf{u}$. Therefore,
+
+$$
+\dot{\mathbf{R}}(t) = [\boldsymbol{\omega}]\,\mathbf{R}(t),
+$$
+
+when $\boldsymbol{\omega}$ is expressed in the spatial frame. This is the rotational differential equation. It says that the rate of change of orientation is produced by the infinitesimal rotation operator $[\boldsymbol{\omega}]$ acting on the current orientation.
+
+If the angular velocity is constant, this linear differential equation has the solution
+
+$$
+\mathbf{R}(t)=\exp([\boldsymbol{\omega}]\,t)\,\mathbf{R}(0).
+$$
+
+This is the first important idea: a **finite rotation** is obtained by integrating an **instantaneous rotational generator**, and the result is written with the matrix exponential.
+
+#### The matrix exponential
+
+For any square matrix $\mathbf{A}$, the exponential is defined by the power series
+
+$$
+\exp(\mathbf{A})=
+\mathbf{I}+\mathbf{A}+\frac{\mathbf{A}^2}{2!}+\frac{\mathbf{A}^3}{3!}+\frac{\mathbf{A}^4}{4!}+\cdots
+$$
+
+So here we set
+
+$$
+\mathbf{A}=[\boldsymbol{\omega}]\,t.
+$$
+
+Then
+
+$$
+\exp([\boldsymbol{\omega}]\,t)
+=
+\mathbf{I}
++
+[\boldsymbol{\omega}]\,t
++
+\frac{([\boldsymbol{\omega}]\,t)^2}{2!}
++
+\frac{([\boldsymbol{\omega}]\,t)^3}{3!}
++
+\frac{([\boldsymbol{\omega}]\,t)^4}{4!}
++\cdots
+$$
+
+To simplify this expression, write
+
+$$
+\boldsymbol{\omega} = \theta \mathbf{n}/t, \quad \theta = \| \boldsymbol{\omega} \| t, \quad \| \mathbf{n} \| = 1.
+$$
+
+Then
+
+$$
+[\boldsymbol{\omega}]\,t=\theta[\mathbf{n}].
+$$
+
+So the exponential becomes
+
+$$
+\exp([\boldsymbol{\omega}]\,t)=\exp(\theta[\mathbf{n}]).
+$$
+
+Now use the identities for a unit vector $\mathbf{n}$:
+
+$$
+[\mathbf{n}]^2 = \mathbf{n}\mathbf{n}^T - \mathbf{I}, \quad [\mathbf{n}]^3 = -[\mathbf{n}], \quad [\mathbf{n}]^4 = -[\mathbf{n}]^2.
+$$
+
+Hence the powers repeat in cycles:
+
+$$
+[\mathbf{n}]^{2k+1} = (-1)^k[\mathbf{n}], \quad [\mathbf{n}]^{2k+2} = (-1)^k[\mathbf{n}]^2.
+$$
+
+Substituting into the power series gives
+
+$$
+\exp(\theta[\mathbf{n}])
+=
+\mathbf{I}
++
+\left(\theta-\frac{\theta^3}{3!}+\frac{\theta^5}{5!}-\cdots\right)[\mathbf{n}]
++
+\left(\frac{\theta^2}{2!}-\frac{\theta^4}{4!}+\frac{\theta^6}{6!}-\cdots\right)[\mathbf{n}]^2.
+$$
+
+Recognizing the sine and cosine series,
+
+$$
+\sin\theta = \theta-\frac{\theta^3}{3!}+\frac{\theta^5}{5!}-\cdots, \quad
+1-\cos\theta = \frac{\theta^2}{2!}-\frac{\theta^4}{4!}+\frac{\theta^6}{6!}-\cdots
+$$
+
+we obtain the Euler-Rodrigues formula:
+
+$$
+\exp(\theta[\mathbf{n}])
+=
+\mathbf{I}
++
+\sin\theta\,[\mathbf{n}]
++
+(1-\cos\theta)\,[\mathbf{n}]^2.
+$$
+
+Returning to $\boldsymbol{\omega}$ gives the equivalent form
+
+$$
+\exp([\boldsymbol{\omega}]\,t)
+=
+\mathbf{I}
++
+\frac{\sin \theta}{\theta}[\boldsymbol{\omega}]\,t
++
+\frac{1-\cos \theta}{\theta^2}([\boldsymbol{\omega}]\,t)^2,
+\quad
+\theta = \|\boldsymbol{\omega}\|t.
+$$
+
+So the exponential is not an abstract symbol only. It is the compact closed-form expression for the finite rotation generated by a constant angular velocity.
+
+<figure>
+  <div style="border: 1px solid #999; padding: 1.4rem; margin: 1rem 0; text-align: center; background: #fafafa; color: #555;">
+    Placeholder image: angular velocity vector generating an infinitesimal rotation and the corresponding finite rotation.
+  </div>
+  <figcaption><strong>Figure:</strong> Angular velocity acts as the generator of rotation. Integrating the rotation differential equation produces a finite rotation matrix through the exponential map.</figcaption>
+</figure>
+
+#### From rotations to rigid motions
+
+Rigid-body motion in space involves both orientation and position. We therefore move from the rotation group $SO(3)$ to the rigid-motion group $SE(3)$.
+
+A rigid motion is written as a homogeneous transformation
+
+$$
+\mathbf{T}(t)=
+\begin{bmatrix}
+\mathbf{R}(t) & \mathbf{p}(t) \\ <br>
+\mathbf{0}^T & 1
+\end{bmatrix} \in SE(3)
+$$
+
+Its instantaneous motion is described by a twist
+
+$$
+\mathcal{T}=
+\begin{bmatrix}
+\boldsymbol{\omega} \\ <br>
+\mathbf{v}
+\end{bmatrix},
+$$
+
+or equivalently by the matrix form
+
+$$
+[\mathcal{T}] =
+\begin{bmatrix}
+[\boldsymbol{\omega}] & \mathbf{v} \\ <br>
+\mathbf{0}^T & 0
+\end{bmatrix}
+$$
+
+The rigid motion then satisfies the analogous differential equation
+
+$$
+\dot{\mathbf{T}}(t) = [\mathcal{T}]\,\mathbf{T}(t).
+$$
+
+If the twist is constant, the solution is
+
+$$
+\mathbf{T}(t)=\exp([\mathcal{T}]\,t)\,\mathbf{T}(0).
+$$
+
+This is the finite version of a twist. In other words, a constant twist generates a finite **screw motion**. Rotation appears as a special case; pure translation appears as another limiting case; and the general case combines both in one unified object.
+
+<figure>
+  <div style="border: 1px solid #999; padding: 1.4rem; margin: 1rem 0; text-align: center; background: #fafafa; color: #555;">
+    Placeholder image: a screw axis in space with simultaneous rotation about the axis and translation along it.
+  </div>
+  <figcaption><strong>Figure:</strong> A constant twist generates a screw motion: the body rotates about an axis while translating along the same axis according to the pitch.</figcaption>
+</figure>
+
+#### Product of exponentials
+
+Once a single joint motion is written as an exponential, a serial chain can be built by composing those exponentials one after another.
+
+Suppose joint $i$ is associated with a screw axis $\mathcal{S}_i$, expressed in a chosen reference configuration. If its joint variable is $q_i$, then the motion contributed by that joint is written as
+
+$$
+\exp([\mathcal{S}_i]\,q_i).
+$$
+
+For a serial manipulator with $n$ joints, the end-effector configuration can therefore be written as
+
+$$
+\mathbf{T}(q)
+=
+\exp([\mathcal{S}_1]q_1)
+\exp([\mathcal{S}_2]q_2)
+\cdots
+\exp([\mathcal{S}_n]q_n)\,
+\mathbf{M},
+$$
+
+where $\mathbf{M}$ is the end-effector pose in the reference configuration.
+
+This expression is called the **Product of Exponentials (POE)** formula. Each factor represents one joint screw acting on the body, and the complete forward kinematics is obtained by multiplying these finite joint motions in sequence.
+
+The conceptual advantage is important:
+
+- the model is written directly in terms of geometric joint axes,
+- revolute, prismatic, and helical joints are treated in one common language,
+- the kinematics is expressed without needing restrictive coordinate conventions such as Denavit-Hartenberg tables.
+
+<figure>
+  <div style="border: 1px solid #999; padding: 1.4rem; margin: 1rem 0; text-align: center; background: #fafafa; color: #555;">
+    Placeholder image: a serial manipulator with joint screw axes and the successive exponentials composing the end-effector pose.
+  </div>
+  <figcaption><strong>Figure:</strong> In a serial chain, each joint contributes one exponential map. Their ordered product gives the full end-effector configuration.</figcaption>
+</figure>
+
+#### Why this matters for screw theory
+
+This viewpoint gives screw theory a direct kinematic meaning. A screw is no longer only a six-dimensional stacked quantity: it becomes the generator of a finite rigid-body motion. The exponential map tells us how to pass from an instantaneous twist to an actual displacement, and the POE formula shows how several joint screws combine to produce the motion of an entire robot. This will be essential later when we express joint motions, derive Jacobian columns from joint screws, and interpret singularities as geometric changes in the screw systems that the robot can generate or resist.
 
 ### Temporary
 

@@ -24,4 +24,13 @@
 8. Product of exponentials, use A instead of M
 9. Mention the suffixes for fixed and moving frame
 
+10. Show Jacobian
+11. Linear dependency for singularities
+
+
+12. Wrench and twists as screws
+12. Reciprocal screws
+13. mobility analysis for PKM
+14. Constraint singularities etc.
+
 ## 10th April, 2026

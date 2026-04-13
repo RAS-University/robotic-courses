@@ -739,9 +739,9 @@ In practice, $K$ is often determined **experimentally** during a **calibration p
 
 #### B) Sensorless Force/Torque Estimation  
 
-It is also possible to determine external forces and torques without embedding dedicated sensors. This **sensorless** method relies on the robot’s internal data (available without special hardware), such as the amount of current drawn by its motors. In most motors, the generated torque is proportional to the motor current. By comparing the **actual torque** output (derived from current) with the **theoretically required torque**, it is possible to determine the existence and magnitude of an external force.
+It is also possible to determine external forces and torques without embedding dedicated sensors. **Sensorless** methods rely on the robot’s internal data (available without special hardware), such as the amount of current drawn by its motors. In most motors, the generated torque is proportional to the motor current. By comparing the **actual torque** output (derived from current) with the **theoretically required torque**, it is possible to determine the existence and magnitude of an external force.
 
-Below, we look at two different approaches to estimate external forces using motor current: **model-based** and **model-free** (Neural Network–based).
+Below, we have a look at two different approaches to estimate external forces using motor current: **model-based** and **model-free** (Neural Network–based).
 
 <h4 class="section-title">
   <span class="section-label">Approach A</span>
@@ -803,7 +803,7 @@ A complete description of that computation step is shown in the drop-down below.
     \[ p = M(\theta)\dot{\theta} \]
 
     <p>
-      Next, we take the devirative of the momentum (\(\dot{p}\)):
+      Next, we take the derivative of the momentum (\(\dot{p}\)):
     </p>
 
     \[ \dot{p} = M(\theta)\ddot{\theta} + \dot{M}(\theta)\dot{\theta} \]
@@ -885,7 +885,7 @@ The contact may happen on a link or at the robot end-effector, and its location 
        alt="Force applied on link (a) and end-effector (b)">
   <figcaption>
     <sub><i>
-      Figure 7: Force applied on link (a) and end-effector (b)
+      Figure 7: External force applied on: (a) link, (b) end-effector 
       (<a href="https://www.mdpi.com/1424-8220/19/11/2603">S. Yen et al.</a>)
     </i></sub>
   </figcaption>
@@ -907,7 +907,7 @@ In the figure below, we can see the **cartesian-space** referential at the botto
        alt="Geometrical representation of the contact point regarding the contact link">
   <figcaption>
     <sub><i>
-      Figure 7: Definition of the contact vector \(p_{i,c}\) in the joint-space of link i
+      Figure 8: Definition of the contact vector \(p_{i,c}\) in the joint-space of link i
       (<a href="https://ieeexplore.ieee.org/document/6942848">E. Magrini, F. Flacco, A. De Luca</a>)
     </i></sub>
   </figcaption>
@@ -1026,7 +1026,7 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
        alt="Contact scenario at the tool-tip">
   <figcaption>
     <sub><i>
-      Scenario 1: External force applied at the tool tip (<a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
+      Figure 9: External force applied at the tool tip (<a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1091,7 +1091,9 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
     \]
   </p>
 
-  <p><strong>2) Compute the Contact Jacobian \(J_c\)</strong></p>
+  <hr>
+
+  <p><strong>2) Compute the contact Jacobian \(J_c\)</strong></p>
 
   <p>
     We apply the transformation matrix to the link Jacobian \(J_3\):
@@ -1131,6 +1133,8 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
     \end{bmatrix}
     \]
   </p>
+
+  <hr>
 
   <p><strong>3) Wrench \(W\)</strong></p>
 
@@ -1173,7 +1177,7 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
   Exercise 2: Force estimation for a mid-link contact
 </div>
 
-Let's consider the same robotic arm as in the previous exercise. This time, however, the external force $F_{ext}$ is applied to link 2 instead of the tool tip.
+Let's consider the same robotic arm as in the previous exercise. However this time, the external force $F_{ext}$ is applied to link 2 instead of the tool tip.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/Force_estimation_exercise2.png' }}"
@@ -1181,7 +1185,7 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
        alt="Contact scenario on Link 2">
   <figcaption>
     <sub><i>
-      Scenario 2: External force applied on Link 2 (Inspired by <a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
+      Figure 10: External force applied on link 2 (<a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1189,7 +1193,7 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
 <div style="margin-left: 1.2em;">
   <p>
     <strong>1)</strong>
-    Using the joint angles \(\theta_1, \theta_2 \text{and} \theta_3\), derive the general Jacobian \(J(\theta)\) for the end-effector of this 3-DOF planar arm.
+    Using the joint angles \(\theta_1\), \(\theta_2 \) and \(\theta_3\), derive the general Jacobian \(J(\theta)\) for the end-effector of this 3-DOF planar arm.
   </p>
   <p>
     <em>Hint:</em> Review the <a href="/docs/chap1_basic_motion_ctrl/kinematics#1137-velocity-kinematics---meet-the-jacobian-">Kinematics</a> course if you need a refresher on how to deriving the Jacobian matrix.
@@ -1369,7 +1373,7 @@ Let's consider the same robotic arm as in the previous exercise. This time, howe
 
   <hr>
 
-  <p><strong>6) Numerical Application</strong></p>
+  <p><strong>6) Numerical application</strong></p>
 
   <p>
     In the pose \(\theta_1 = 135^\circ\):  
@@ -1448,16 +1452,11 @@ An example of such a neural network is shown in the figure below.
        alt="Neural network architecture for estimating force and torque">
   <figcaption>
     <sub><i>
-      Figure 8: Neural network–based estimation of force and torque
+      Figure 11: Neural network–based estimation of force and torque
       (<a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a>)
     </i></sub>
   </figcaption>
 </figure>
-
-<div class="note-window">
-  <div class="window-title">Note</div>
-  This approach was taken from <a href="https://arxiv.org/html/2301.13413v2">Fine Robotic Manipulation without Force/Torque Sensor</a> (S. Shan, Q. Pham).
-</div>
 
 The **performance** of this approach can be seen in the video below.
 
@@ -1481,13 +1480,10 @@ The **performance** of this approach can be seen in the video below.
 *Key points of the video:*  
 In the first part, the end-effector of the robot gets in contact with a surface and therefore external forces are created. On the plot, we can see that the estimated forces **closely match** the measurements obtained from the built-in F/T sensor. In the second part, an application example is shown in which the pin is inserted into a corresponding hole. During this task, the **F/T sensor is disabled** and F/T feedback is only given by the estimator. In the last part, the authors show that sensorless force estimation can also be used for **human guidance**.
 
-To conclude sensorless F/T estimation, here are its main advantages and disadvantages:
-
-| **Advantages**                 | **Disadvantages**                                           |
-|--------------------------------|-------------------------------------------------------------|
-| No dedicated F/T sensor needed | Dependence on model accuracy (model-based approach)         |
-| Reduced hardware complexity    | Dependence on training data (model-free approach)           |
-| Lower system cost              | Performance degrades in unmodeled or untrained situations   |
+<div class="note-window">
+  <div class="window-title">Note</div>
+  This approach was taken from <a href="https://arxiv.org/html/2301.13413v2">Fine Robotic Manipulation without Force/Torque Sensor</a> (S. Shan, Q. Pham).
+</div>
 
 For **additional information** and another example of sensorless F/T estimation, feel free to read the paper linked below.
 
@@ -1498,8 +1494,8 @@ For **additional information** and another example of sensorless F/T estimation,
 
   <div class="optional-window">
     <p>
-      In this paper, the authors present a <strong>sensorless intrinsic sense of touch</strong> method, that goes one step further as the force estimation we saw before. The robot is able not only to estimate interaction forces, but also to localize the contacts and reconstruct touch trajectories over its body. This enables interactions like <strong>virtual buttons</strong>, <strong>writing on the robot</strong> surface and more intuitive physical human–robot interaction. It is showing that sensorless estimation can also provide tactile feedback and not only force feedback.
-      <strong>A video is also available by following the link.</strong>
+      In this paper, the authors present a <strong>sensorless intrinsic sense of touch</strong> method, that goes one step further as the force estimation we saw before. The robot is able not only to estimate interaction forces, but also to localize the contacts and reconstruct touch trajectories over its body. This enables interactions like <strong>virtual buttons</strong>, <strong>writing on the robot</strong> surface and more intuitive physical human–robot interaction (see figure below). It is showing that sensorless estimation can also provide tactile feedback and not only force feedback.
+      <strong>An illustrative video is provided by following the link.</strong>
     </p>
     <p>
       <a href="https://www.science.org/stoken/author-tokens/ST-2065/full#" target="_blank" rel="noopener">
@@ -1508,11 +1504,116 @@ For **additional information** and another example of sensorless F/T estimation,
       <br>
       <em>M. Iskandar, A. Albu-Schäffer and A. Dietrich</em>
     </p>
+
+    <figure style="text-align: center;"> 
+      <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/sensorless_sense_of_touch.jpg' }}" 
+          width="420" 
+          alt="Virtual buttons using sensorless force estimation"> 
+      <figcaption> 
+        <sub><i> 
+          Figure 12: Virtual buttons using sensorless force estimation. Top: Actual contact by finger, bottom: estimated contact 
+          (<a href="https://www.science.org/doi/10.1126/scirobotics.abn2789" target="_blank">M. Iskandar, A. Albu-Schäffer and A. Dietrich</a>) 
+        </i></sub> 
+      </figcaption> 
+    </figure>
+
   </div>
 
 </details>
 
-Before moving on to tactile sensing, answer the questions about force sensing in the quiz below.
+---
+
+<div class="quiz-question-text">
+  Programming exercise: Sensorless force estimation
+</div>
+
+Question text
+
+<div style="margin-left: 1.2em;">
+
+  <p>
+  <strong>1) ...</strong>
+  </p>
+
+  <p>
+  <strong>2) ... </strong>
+  </p>
+
+  <p>
+  <strong>3) ...</strong>
+  </p>
+
+</div>
+
+<details class="solution-details" markdown="1">
+  <summary class="solution-btn">
+    <span class="solution-label">Solution</span>
+  </summary>
+
+  <div class="solution-window">
+
+  <p><strong>1) Answer ...</strong></p>
+
+  <p><strong>2) Answer ...</strong></p>
+
+  <p><strong>3) Answer ...</strong></p>
+
+  </div>
+</details>
+
+---
+
+
+In the continuity of sensorless force estimation, interaction forces can also be determined using **external vision**. If interested, have a look at the drop-down below.
+
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Further Reading: Contact Force Estimation from Vision</span>
+  </summary>
+
+  <div class="optional-window">
+    <p>
+      In this research, the authors demonstrate that interaction forces can be estimated in a reliable way using vision alone. While this approach uses and additional sensor (an RGB-D camera), it remains "sensorless" in the sense that there is no need for a traditional F/T sensor.
+    </p>
+    <p>
+      Estimating forces from vision is an <strong>indeterminant problem</strong>: a single observed motion can generally be caused by an <strong>infinite distribution of possible forces</strong>. For example, different grip strengths can produce the same hand-object motion trajectories.
+    </p>
+    <p>
+      To solve this, the authors propose a hybrid framework that combines <strong>model-free learning</strong> and <strong>model-based optimization</strong>. A Recurrent Neural Network (RNN) is first used to learn the mapping between kinematic features and human-like manipulation forces. These predictions are then refined using <strong>physics-based optimization</strong> (Second-Order Cone Programming) to ensure the final force distributions are physically plausible and consistent with the observed equations of motion. Results of such vision-based force estimation are shown in the figure below.
+    </p>
+
+    <p>
+      <a href="https://ieeexplore.ieee.org/document/8085141" target="_blank" rel="noopener">
+        Hand-Object Contact Force Estimation from Markerless Visual Tracking
+      </a>
+      <br>
+      <em>T. Pham, N. Kyriazis et al.</em>
+    </p>
+
+    <figure style="text-align: center;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/vision_based_force_estimation.jpg' }}"
+           width="400"
+           alt="Estimated forces from vision-based tracking">
+      <figcaption>
+        <sub><i>
+          Figure 13: Interaction force estimation using visual tracking. Predicted forces are in red versus ground-truth measurements in grey.
+          (<a href="https://ieeexplore.ieee.org/document/8085141" target="_blank">T. Pham, N. Kyriazis et al.</a>)
+        </i></sub>
+      </figcaption>
+    </figure>
+
+  </div>
+</details>
+
+To conclude sensorless F/T estimation, here are its main advantages and disadvantages compared to actual F/T sensors:
+
+| **Advantages**                 | **Disadvantages**                                           |
+|--------------------------------|-------------------------------------------------------------|
+| No dedicated F/T sensor needed | Dependence on model accuracy (model-based approach)         |
+| Reduced hardware complexity    | Dependence on training data (model-free approach)           |
+| Lower system cost              | Performance degrades in unmodeled or untrained situations   |
+
+Before moving on to tactile sensing, try the wrap-up quiz about force sensing below.
 
 <details class="quiz-details" markdown="1">
 <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
@@ -1532,7 +1633,6 @@ A robot arm is equipped with a 6DOF F/T sensor at its end-effector. Below are th
     </i></sub>
   </figcaption>
 </figure>
-
 
 1) The F/T sensor measures:\[F_z > 0, \quad M_y \neq 0, \quad F_x = 0 \]
 
@@ -1655,7 +1755,7 @@ Which solution is the most appropriate to still estimate interaction forces? (si
     {
       option1: 'A tactile skin needs significantly more hardware, which implies increasing cost. Tactile skins are adressed later.',
       option2: 'Sensorless F/T estimation relies on internal robot signals and does not require additional hardware. This is a suitable option in that case.',
-      option3: 'Vision is not the preferred option here, as it implies installing an external camera. However, your intuition is right: vision combined with physical models can be used to estimate contact forces. <a href=&quot;#c-vision-based-force-sensors&quot;>Vision-Based Force Sensors</a> are the topic of the next section'
+      option3: 'Vision is not the preferred option here, as it implies installing an external camera.'
     }
   )">
     Check Answer
@@ -1700,58 +1800,6 @@ What is the most likely reason for this behavior? (single answer possible)
 </div>
 </details>
 
-#### C) Vision-Based Force Sensors  
-
-In the continuity of sensorless force estimation, interaction forces can also be determined using **external vision**.
-
-<!--
-Traditionally, measuring forces requires mounting costly and cumbersome transducers onto objects or the robot, which can alter the object's physical properties and obstruct the natural range of motion. Vision-based force sensing (FSV) establishes that these forces can be estimated in a reliable, non-intrusive way using a single **RGB-D camera**.
-
-This method is a **hybrid approach**: it combines the flexibility of **Model-Free estimation** (Neural Networks) with the strict physical guardrails of **Model-Based estimation** (Physics-based optimization).
-
-### The Multi-Contact Challenge
-Estimating forces from a video feed is an "ill-posed" or indeterminate problem. In multi-contact scenarios, such as a five-finger grasp, an infinity of different force distributions can result in the same observed motion. To solve this, the estimation framework follows two main steps.
-
-*1) Markerless Kinematics Tracking*
-
-Instead of internal motor signals, the system tracks the motion of the object and the hand.
-
-- **Motion Capture**: To handle occlusions and fast movements, the hand and object are often tracked as a single **rigid compound**.
-- **Kinematics Estimation**: By analyzing the object's position and orientation over time, the system uses numerical differentiation to compute the **acceleration** ($a$) and **rotational velocity** ($\omega$). 
-
-These kinematic values are linked to the net contact forces through the **Newton-Euler equations**:
-
-$$
-\mathcal{F}_c = m a - \mathcal{F}_d
-$$
-
-Where:
-- $\mathcal{F}_c$: net force due to individual contact forces
-- $m$: mass of the object
-- $a$: translational acceleration
-- $\mathcal{F}_d$: net force due to non-contact forces (e.g., gravity) 
-
-*2) The Hybrid Estimation Framework*
-
-To determine how much force each individual finger is applying, the system uses two layers in a "closed-loop" architecture:
-
-- **The Learning Layer (RNN)**: A Recurrent Neural Network (RNN) learns the mapping between motion and force. It captures how humans naturally distribute forces over time based on "human-like" patterns found in manipulation datasets.
-- **The Physics Layer (SOCP Optimizer)**: Because neural networks can predict impossible forces, a **Second-Order Cone Program (SOCP)** acts as a "physical checker". It refines the RNN predictions to ensure they align with physics, such as ensuring fingers only "push" (positivity) and stay within the **friction cone**.
-
-
-
-### Why use this hybrid approach?
-By combining these methods, the system ensures both **realism** and **consistency**:
-- **Consistency**: The Optimizer ensures that predicted forces never break physical laws, matching the observed motion and preventing unrealistic "pulling" forces.
-- **Realism**: The Neural Network allows the system to capture the "intuitive" ways humans apply force, which a purely mathematical model might miss.
-
-<div class="note-window">
-  <div class="window-title">Note</div>
-  This approach is based on <a href="https://ieeexplore.ieee.org/document/8085119">Hand-Object Contact Force Estimation from Markerless Visual Tracking</a> (T. Pham, N. Kyriazis, A.A. Argyros & A. Kheddar, IEEE 2018).
-</div>
-
--->
-
 ---
 
 ### Tactile Sensing
@@ -1781,48 +1829,76 @@ We will first take a closer look at resistive tactile sensors of the **first typ
   Determination of contact location
 </h4>
 
-We begin with **single-strip resistive sensors** to understand the working principle of resistive tactile sensing. We then extend this concept to a more complete version: **the multi-strip resistive sensor**.
+We start with **single-strip resistive sensors** to understand the working principle of resistive tactile sensing. We then extend this concept to a more complete version: **the multi-strip resistive sensor**.
 
 *1) Single-strip resistive sensors:*  
 
-Resistive tactile sensors are usually composed of **two thin sheets coated with a resistive material** and placed on top of each other. The two layers are separated by **microscopic spacer elements** (microspheres), which keep them **electrically isolated** when no contact is applied.
+Resistive tactile sensors are composed of **two thin sheets coated with a resistive material**, positioned one on top of the other. In the figure below, the first resistive layer is shown in green and the second in grey. 
 
-When an object presses on the sensor surface, the applied pressure **locally** brings the two resistive layers into contact. This **contact location** corresponds to the point where an **electrical connection** is created between the layers. The structure of this sensor is seen in panel (a) of the figure below, where the first resistive layer is shown in green and the second layer in grey.
+These layers are separated by **microscopic spacer elements** (often microspheres), which keep them **electrically isolated** when no pressure is applied. These spacers are represented by the black dots in the figure.
+
+When an object presses onto the sensor surface, the applied pressure **locally** brings the two resistive layers into contact. This creates an **electrical connection** at the point of touch, allowing the sensor to detect the location.
 
 <figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor.png' }}"
-       width="640px"
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor1.png' }}"
+       width="300px"
        alt="Analog resistive strip sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 9: Schematic of analog resistive touch sensing
+      Figure 14: Schematic of single-strip resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
 
-To determine the **contact location** on the sensor surface, the **x- and y-coordinates** of the contact point must be extracted. This is achieved by energising the two resistive layers **one after the other**, never simultaneously.
+To determine the **contact location** on the sensor surface, the **x- and y-coordinates** of the touch point must be extracted. This is achieved by **alternating** the roles (active vs. passive) of the two resistive layers.
 
 The measurement procedure follows these key steps:
 
 <div style="margin-left: 1.6em;">
   <ol>
-    <li>One resistive layer is energised by applying a <strong>uniform voltage</strong> across it.</li>
-    <li>The other resistive layer is left in a <strong>high-impedance</strong> (Hi-Z) configuration. Because the Hi-Z input draws almost no current, it does <strong>not disturb the voltage distribution</strong> along the active layer.</li>
-    <li>When contact happens, the contact point between the two layers forms a <strong>measurement node</strong>, transferring the local voltage of the active layer to the passive one.</li>
-    <li>This measured output voltage corresponds to the position of the contact along the active resistive layer and can be <strong>used to compute the corresponding coordinate</strong>.</li>
+    <li><strong>Layer activation:</strong> The first resistive layer is activated by applying a <strong>uniform voltage gradient</strong> across its length.</li>
+    <li><strong>Hi-Z state:</strong> The second resistive layer is placed in a <strong>Hi-Z</strong> (high-impedance) configuration. Because it draws no current, it does <strong>not</strong> disturb the <strong>voltage distribution</strong> along the active layer.</li>
+    <li><strong>Voltage transfer:</strong> During contact, the physical connection between the sheets forms a <strong>measurement node</strong>. The voltage at the specific contact point on the active layer is transferred onto the passive layer.</li>
+    <li><strong>Coordinate calculation:</strong> The voltage measured at the output of the passive layer correlates linearly with the contact location. This value is used to compute the <strong>corresponding coordinate</strong> (x or y).</li>
   </ol>
 </div>
 
-In panel (b), $V_x$ is applied to the green layer while the grey layer is set to Hi-Z, allowing the **x-coordinate** of the contact to be extracted.  
+The roles of the active and passive layers are then swapped. In practice, the controller switches at a **high frequency** between x- and y-measurements, providing a response time (often 10 ms or faster) that is imperceptible to a human user.
 
-In panel (c), the **roles** of the layers are **swapped**: $V_y$ is applied to the grey layer and the green layer is set to Hi-Z, which provides the **y-coordinate** of the contact.  
+Both measurement states are illustrated in the figure below. Panel (a) shows the first state, where the green layer is active and the grey layer is in a Hi-Z state. The applied **voltage gradient**, indicated as $V_x$, decreases uniformly along the length of the active layer. 
 
-In practice, the sensor **switches rapidly** between measuring the x- and y-coordinates. The layers are energised one after the other at a **high frequency**, making the switching imperceptible to a human user (response times of 10 ms or faster).  
+Similarly, panel (b) illustrates the second state where the roles are swapped.
 
-The measured **output voltages** correspond to the voltages read at the measurement node. The contact point divides the active resistive layer into **two resistive segments**. As a result, the measured output voltage is given by a voltage divider between these two resistances. The equivalent electrical circuit is shown in panel (d) of the figure above.
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor2.png' }}"
+       width="540px"
+       alt="Measurement procedure of single-strip resistive touch sensors">
+  <figcaption>
+    <sub><i>
+      Figure 15: Measurement procedure of single-strip resistive touch sensors. (a) Active x-layer, (b) Active y-layer 
+      (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
-The simplified expressions are:  
+To compute the **contact location**, we need to have a look at the equivalent electrical circuit of the resistive layers, as illustrated in panel (a) below. We define $R_{x1}, R_{x2}$ and $R_{y1}, R_{y2}$ as the **resistive segments** formed between the contact point and the boundaries of the respective layers. Note that in the resting state, the layers are physically separated and the circuit lines do not intersect.
+
+Panels (b) and (c) show the equivalent circuits when the layers are alternatingly activated. The physical contact introduces an equivalent **touch resistance** ($R_{touch}$) at the junction.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/single-strip-resistive-sensor3.png' }}"
+       width="540px"
+       alt="Equivalent electrical circuit of single-strip resistive touch sensors">
+  <figcaption>
+    <sub><i>
+      Figure 16: Equivalent electrical circuit of single-strip resistive touch sensors. (a) Initial equivalent circuit during no touch, (b) Touch while active x-layer, (c) Touch while active y-layer
+      (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+In ideal conditions (assuming no current is drawn by the Hi-Z passive layer), the measured output voltage behaves as a standard **voltage divider**. The simplified expressions for the output voltages are:
 
 $$
 V_{x,\text{out}} = \frac{R_{x2}}{R_{x1} + R_{x2}} \, V_x
@@ -1832,7 +1908,43 @@ $$
 V_{y,\text{out}} = \frac{R_{y2}}{R_{y1} + R_{y2}} \, V_y
 $$
 
-Where, $V_x$ and $V_y$ are the **voltages applied** to the x- and y-layers, $V_{x,\text{out}}$ and $V_{y,\text{out}}$ are the **measured output voltages**. The resistances $R_{x1}$ and $R_{x2}$ correspond to the **resistive segments** between the contact point and the left and right boundaries of the x-layer, $R_{y1}$ and $R_{y2}$ are the equivalent resistances on the y-layer.
+Where $V_{x,\text{out}}$ and $V_{y,\text{out}}$ are the measured voltages used to calculate the coordinates of the touch.
+
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Going deeper: Formula in non-ideal conditions</span>
+  </summary>
+
+  <div class="optional-window">
+    <p>
+      In a real-world circuit, the passive layer is never <i>infinitely</i> resistive. A small amount of current may flow through the measurement terminal, meaning we must consider the <strong>load resistance</strong> ($R_L$).
+    </p>
+
+    <p>
+      Consider the equivalent electrical circuit shown in panel (b) of the previous figure. The total resistance seen from the contact point toward the measurement terminal is defined as:
+      \[ R_L = R_{touch} + R_{y1} \text{ (or } R_{y2}\text{)} + R_{Hi\text{-}Z} \]
+      where $R_{Hi\text{-}Z}$ represents the impedance at the measuring terminal. 
+    </p>
+
+    <p>
+      For the opposite measurement state, $R_L$ is defined similarly by swapping the respective layer resistances (replace $R_{yi}$ by $R_{xi}$).
+    </p>
+
+    <p>
+      Under these non-ideal conditions, the actual output voltage expressions are:
+    </p>
+
+    <p>
+      \[ V_{x,\text{out}} = \frac{R_{x2} R_L}{R_{x1} R_L + R_{x2} R_L + R_{x1} R_{x2}} V_x \]
+      \[ V_{y,\text{out}} = \frac{R_{y2} R_L}{R_{y1} R_L + R_{y2} R_L + R_{y1} R_{y2}} V_y \]
+    </p>
+
+    <p>
+      When the impedance at the measuring terminal ($R_{Hi\text{-}Z}$) is very high, $R_L$ becomes much larger than the layer resistances ($R_{x1}, R_{x2}$). In this mathematical limit, the $R_{x1}R_{x2}$ term in the denominator becomes negligible, the $R_L$ terms cancel out, which reduces the formula back to the simplified formula used in the main text.
+    </p>
+
+  </div>
+</details>
 
 ---
 
@@ -2000,35 +2112,39 @@ Single-strip resistive sensors have an important drawback: they **can't distingu
 
 *2) Multi-strip resistive sensors:*  
 
-As in the single-strip version, the **multi-strip resistive sensor** also consists of two resistive layers and the **measuring principle remains** the same. However, each layer is **divided into multiple strips** along its length, as can be seen in the figure below. In this configuration, **multiple simultaneous contacts** can be detected, as each strip provides its own independent measurement. As in the single-strip version, the output voltage of a given strip depends on the contact position. However, because the strips are **narrow**, it also depends on the **contact width**.
+As with the single-strip version, the **multi-strip resistive sensor** consists of two resistive layers and the **measuring principle** remains the same. However, each layer is **divided into multiple independent strips** along its length, as shown in the figure below. 
 
-For a **single strip**, the measured **output voltage** is given by:
+This configuration allows for the detection of **multiple simultaneous contacts**, as each strip provides its own independent measurement. While the output voltage of a given strip still depends on the contact position, the **narrow geometry** of the strips means the measurement is also affected by the **contact width**.
+
+For a **single strip** within the array, the measured **output voltage** is given by:
 
 $$
 V_{\text{out}} = \frac{l_x + \frac{w}{2}}{L - \frac{w}{2}} \, V_{\text{ref}}
 $$
 
-where,  
-- $l_x$ is the distance from the left boundary of the strip to the **centre** of the applied contact,
-- $w$ is the **width** of the contact area (for example, the width of a fingertip),
-- $L$ is the **total** length of the strip,
+where:  
+- $l_x$ is the distance from the left boundary of the strip to the **center** of the applied contact,
+- $w$ is the **width** of the contact area (for example the width of a fingertip),
+- $L$ is the **total length** of the strip,
 - $V_{\text{ref}}$ is the applied reference voltage.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/force_perception/multi-strip-resistive-sensor.png' }}"
-       width="640px"
+       width="540px"
        alt="Multi-strip analog resistive sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 10: Schematic of multi-strip analog resistive touch sensing
+      Figure 17: Schematic of multi-strip resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
 
-Now, instead of performing only one measurement per layer, we need to make **$n$ separate measurements** for all $n$ strips. If both resistive layers are divided into $n$ strips, this increases the total number of measurements from only $2$ to $2n$. As a result, scanning the entire sensor becomes **more time-consuming**.  
+Instead of performing only one measurement per layer, we must now conduct **$n$ separate measurements** for all $n$ strips. If both resistive layers are divided into $n$ strips, the total number of measurements per full scan increases from 2 to $2n$. As a result, scanning the entire sensor surface becomes **more time-consuming** as the resolution increases.
 
-In addition, the **wiring complexity** increases. While the single-strip version requires only four connection wires, the multi-strip version needs $2+2n$ wires: one for $V_{\text{ref}}$, one for ground and $n$ measurement wires for each of the two stripped layers. The wiring complexity issue will be addressed later.
+Furthermore, the **wiring complexity** increases with the number of strips. While the single-strip version requires only four connection wires, the multi-strip version typically requires $2+2n$ wires: one for $V_{\text{ref}}$ and one for ground (shared), plus $n$ independent measurement wires for each of the two stripped layers. This increase in wiring complexity will be addressed later in the course.
+
+---
 
 <div class="quiz-question-text">
   Exercise: Contact position and width estimation on a multi-strip resistive sensor
@@ -2145,14 +2261,14 @@ $V_{\text{ref}} = 5\ \text{V}$.
   </div>
 </details>
 
-Now we move on to sensors of the second type: how resistive tactile sensors are used to **measure force and pressure**.
+Next, we move on to sensors of the second type: how resistive tactile sensors are used to **measure force and pressure**.
 
 <h4 class="section-title">
   <span class="section-label">Type 2</span>
   Determination of applied force or pressure
 </h4>
 
-As said, sensors of this type are designed to measure how much force or pressure is applied on the surface. These sensors rely on **piezoresistive materials**, whose electrical resistance changes when they are mechanically deformed. When an external force compresses the sensitive material, its resistance varies and by measuring this resistance change, the applied pressure can be estimated.
+As mentioned, sensors of this type are designed to measure how much force or pressure is applied on the surface. These sensors rely on **piezoresistive materials**, whose electrical resistance changes when they are mechanically deformed. When an external force compresses the sensitive material, its resistance varies and by measuring this resistance change, the applied pressure can be estimated.
 
 Note that the resistance change is **not** the quantity **measured directly**. Instead, the electronics measure the resulting voltage drop at the boundaries of the piezoresistive layer. This is usually done using a voltage-divider configuration.
 
@@ -2192,7 +2308,7 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 11: Force Sensing Resistor (FSR)
+      Figure 18: Force Sensing Resistor (FSR)
     </i></sub>
   </figcaption>
 
@@ -2233,7 +2349,7 @@ These sensors are **low cost**, offer good sensitivity and have **simple electro
   </div>
 </details>
 
-Test you knowledge about resistive tactile sensors in the quiz below.
+Test your knowledge about resistive tactile sensors in the quiz below.
 
 <details class="quiz-details" markdown="1">
   <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
@@ -2401,7 +2517,7 @@ The simplest capacitive tactile sensor can be modelled as a **parallel-plate cap
        alt="Parallel-plate capacitive tactile sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 12: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 19: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -2457,7 +2573,7 @@ In the self-capacitance mode, there is only one electrode, instead of two as in 
        alt="Self-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 13: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 20: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -2474,7 +2590,7 @@ In the mutual-capacitance mode, the two electrodes are arranged orthogonally (X-
        alt="Mutual-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 14: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 21: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -2513,7 +2629,7 @@ An illustrative implementation of a capacitive tactile array is the system devel
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 15: Mutual-capacitance tactile sensing array
+      Figure 22: Mutual-capacitance tactile sensing array
     </i></sub>
   </figcaption>
 

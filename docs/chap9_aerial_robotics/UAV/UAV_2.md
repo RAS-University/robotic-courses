@@ -1035,7 +1035,7 @@ Before showing you a few examples of existing robots, the main characteristics o
 ## Additional Resources
 
 ### Credits:
-This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**. 
+This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, under supervision of **Dr. Charbel Toumieh (EPFL LIS)** and **Prof. Aude Billard**. It was funded by **IEEE RAS** and **EPFL**. 
 
 This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
 

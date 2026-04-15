@@ -671,7 +671,7 @@ While big fixed-wing aircrafts offer a big variety of interesting designs, we wa
 Unmanned fixed-wing aircrafts already had their beginning during World War I with unmanned remotely controlled aircrafts over radio-frequency. In 1917 the British developped their first UAV *Aerial Target* around the same time as the US the *Kettering Bug* - a forerunner of modern-day missiles. Since then fixed-wing UAVs became important for military and civil use, where they often cover similar fields of applications. Their main use case is in long-range missions in surveillance and mapping.
 
 #### Applications
-Since the application fields of fixed-wing UAVs are quite similar to the ones of multirotor drones, they will not be described in detail again. However, due to their higher efficiency and longer range, fixed-wing UAVs are often preferred for applications where long endurance and higher payload capacity are required.
+Since the application fields of fixed-wing UAVs are quite similar to the ones of multirotor drones, they will not be described in detail again. However, due to their higher efficiency and longer range, fixed-wing UAVs are often preferred for applications where long endurance and higher payload capacity are required. These include:
 1. Mapping surveying
 2. Surveillance and Security
 3. Agriculture
@@ -680,11 +680,31 @@ Since the application fields of fixed-wing UAVs are quite similar to the ones of
 6. Cargo & delivery
 
 #### Challenges
+Controlling UAVs require to overcome a number of challenges, such as:
+
 1. VTOL capabilities
-2. autonomous navigation
-3. Energy management
-4. miniaturization
-5. Safety and Airspace integration
+Achieving efficient vertical takeoff and landing (VTOL) requires handling complex aerodynamic interactions and underactuated dynamics, while balancing hover efficiency with forward-flight performance. Hybrid configurations must address trade-offs between endurance, payload capacity, and control complexity. We will see more about this in the [multirotor page](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/multirotor).
+
+2. Autonomous navigation
+Reliable autonomy demands robust state estimation, mapping, and path planning in uncertain and dynamic environments. Challenges include dealing with limited onboard sensing, GPS-denied scenarios, real-time obstacle avoidance, and maintaining stability under disturbances. We will see more about this in the [aerial advanced control](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/aac).
+
+4. Energy management
+UAVs are strongly constrained by onboard energy density, requiring efficient propulsion, power-aware control strategies, and optimal mission planning. Extending flight endurance while supporting computation, sensing, and payload operation remains a critical limitation.
+
+5. Miniaturization
+Reducing size and weight while maintaining sensing, computation, and actuation capabilities introduces constraints on hardware integration, power consumption, and aerodynamic performance. Scaling effects also significantly impact flight dynamics and control.
+
+6. Safety and airspace integration
+Ensuring safe operation involves fault-tolerant control, redundancy, and reliable communication. Integration into shared airspace requires compliance with regulations, collision avoidance systems, and coordination with manned and unmanned traffic management frameworks.
+
+### Costs and Benefits
+
+Most commercial drones are small (<1kg), but depending on their principle they offer different applications. Different architectures bring more autonomy, stability or maneuverability. The below graphic shows an interesting relationship between range and weight of the aircrafts. While very small-scale drones are almost exclusively flapping-wing drones, their flight time is also short. For long range flights, fixed wing aircrafts achieve by far the greatest autonomy. Rotorcrafts are covering the space in between: mid-range flights and small (<1kg) mid-sized drones.
+
+<div style="float: left; margin-right: 15px; text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/dronetype_flighttime_weight.webp" alt="Drone types against flight time and weight" style="width: 600px; height: auto;">
+  <p style="font-size: small;">The figure shows different drone types and compares flight time against weight. From <a href="https://www.nature.com/articles/nature14542/figures/3" target="_blank">Floreano & Woods, Nature 2015, Fig. 3</a></p>
+</div>
 
 ## Questions
 

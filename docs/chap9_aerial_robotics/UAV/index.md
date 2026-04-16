@@ -37,7 +37,7 @@ Unmanned Aerial Vehicles (UAV) are flying object's without a pilot and controlle
     DJI mini pro 5 - a small consumer camera drone. Picture from
     <a href="https://store.dji.com/ch/product/dji-mini-5-pro?vid=199551g" target="_blank">DJI</a>
   </span>
-</span>
+
 
 
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}

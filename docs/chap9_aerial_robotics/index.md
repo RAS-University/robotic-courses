@@ -28,14 +28,14 @@ layout: default
 
 This chapter offers an introduction to aerial robotics, that consists of all robots that can fly autonomously. These are known as **Unmanned Aerial Vehicles (UAV)** or **drones**.  
 
-# Sneak Peek into current state of the art of flying robots
+## Sneak Peek into current state of the art of flying robots
 
 Before we dive into the details of how UAVs work, we invite you to have a look at the video below, which gives you an overview of the current state of the art of flying robots and their main research questions. It doesn't go much into technical details, but it is a good starting point to make you curious about the topic and to give you a glimpse of the different drone types that exist.
 
 ![video](https://www.youtube.com/watch?v=U6ZP38XUrGs)
 ><sub>The present and future of flying robots - IEEE Robotics and Automation Society. Learn about the work of Dr. Roland Siegwart, Dr. Anibal Ollero, Dr. Dario Floreano, and Dr. Margarita Chli on flying robots and some of the challenges they are still trying to tackle. Available at: https://www.youtube.com/watch?v=U6ZP38XUrGs</sub>
 
-# Course content
+## Course content
 
 The aerial robotics course is divided into three sections. 
 

@@ -39,7 +39,11 @@ Before we dive into the details of how UAVs work, we invite you to have a look a
 
 The aerial robotics course is divided into three sections. 
 
-We begin with a brief review of aerodynamic principles, followed by an analysis of UAV design and the associated aerodynamic models, comparing conventional fixed-wing configurations with more advanced bio-inspired flapping-wing platforms. We then address the modeling and control of quadrotor systems, a class of multirotor UAVs capable of vertical takeoff and landing (VTOL), emphasizing their nonlinear dynamics, flight stability, and control architectures, which underpin their widespread adoption due to high maneuverability and robustness. Finally, we present advanced control methodologies for UAVs, including cooperative and distributed control for multi-agent systems, vision-based feedback control, and the integration of aerial manipulation capabilities through onboard robotic manipulators, enabling tasks such as object transportation, perching, and physical interaction with the environment.
+1: We begin with a brief review of aerodynamic principles, followed by an analysis of UAV design and the associated aerodynamic models, comparing conventional fixed-wing configurations with more advanced bio-inspired flapping-wing platforms.
+
+2: We then address the modeling and control of quadrotor systems, a class of multirotor UAVs capable of vertical takeoff and landing (VTOL), emphasizing their nonlinear dynamics, flight stability, and control architectures, which underpin their widespread adoption due to high maneuverability and robustness. 
+
+3: Finally, we present advanced control methodologies for UAVs, including cooperative and distributed control for multi-agent systems, vision-based feedback control, and the integration of aerial manipulation capabilities through onboard robotic manipulators, enabling tasks such as object transportation, perching, and physical interaction with the environment.
 
 {% assign parents = site.pages | where: "parent", page.title | sort: "nav_order" %}
 {% if parents.size > 0 %}

@@ -1,5 +1,5 @@
 ---
-title: "9.2 Different Drone Types"
+title: "9.2 UAV/Drone Types"
 parent: "Introduction to UAVs"
 layout: default
 nav_order: 2
@@ -165,7 +165,7 @@ function showTab(idx, windowId) {
 }
 </script>
 
-# Unmanned Aerial Vehicles
+#  UAV/Drone Types
 
 <!-- bundle exec jekyll serve -->
 
@@ -174,32 +174,26 @@ function showTab(idx, windowId) {
 
 ## 1. Prerequisites
 To get the most of this module, it is recommended that you have knowledge in:
-1. **Basic Mechanical Physics**
-  - Newton's laws of motion, especially the third law of action and reaction. 
-  - Concepts of **moments** and **torques**.
+1. **Basic Principles of Aerodynamics**
+  - See the introduction to aerodynamics in [Advanced Mathematical Foundations](http://128.178.145.16:8080/feature-chap9/docs/chap4_advanced_math/)
 
-## 2. General Motivation
-<div style="margin-bottom: 15px; text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/dji_mini_5_pro.webp" alt="DJI mini pro 5 - a small consumer camera drone." style="width: 400px; height: auto;">
-  <p style="font-size: small;">DJI mini pro 5 - a small consumer camera drone. Picture from <a href="https://store.dji.com/ch/product/dji-mini-5-pro?vid=199551g" target="_blank">DJI</a></p>
-</div>
 
-Unmanned Aerial Vehicles (UAV) are flying object's without a pilot and controlled remotely or are autonomous. They are usually referred to as drones. And probably now, when you hear the word _drone_ you are thinking of a small commercial quadcopter people use to take stunning video shots like on the image above? Or maybe you are thinking of drone racing? Or maybe of military drones used more and more frequently in modern war?
-But, did you know that drones/UAVs are much more than only quadcopters?
-The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the last decade the drone market got revolutionized and is growing in an incredible pace. More complex mechanics, more stable control and more autonomy. This and the following lectures will give you an overview of different drone types, aerodynamic principles, and what it takes to build and control an UAV.
-
-This module about UAVs aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
-
-## Chapter 2 : Drone Types and Use Case
-In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs in three big groups: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing robots*. 
+## 2. Overview : Drone Types and Use Case
+In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs according to three groups that are representative of distinct flying patterns: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing robots*. 
 
 <div style="text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/drone_types.png" alt="Overview of UAV categories" style="width: 90%; height: auto;">
+  <img src="{{ site.baseurl }}/assets/images/uav/drone_types.png" alt="Overview of UAV categories" style="width: 100%; height: auto;">
   <p style="font-size: small;">Overview over the three main drone types: <it>multirotor drone</it>, <it>flapping-wing drone</it> and <it>fixed-wing drone</it>. </p>
 </div>
 
+**Multirotor drones (rotorcraft)** generate lift using multiple propellers and can hover, take off vertically, and move in any direction with high precision. Their control relies on continuously adjusting the speed of individual rotors to tilt the vehicle and redirect thrust, allowing for stable, responsive motion and the ability to hold position in place.
+
+**Fixed-wing drones**, by contrast, require constant forward motion to produce lift through their wings, much like airplanes. They follow smooth, continuous flight paths and cannot hover; instead, they maneuver using aerodynamic control surfaces such as ailerons, elevators, and rudders, which change the aircraft’s orientation while airflow over the wings sustains lift.
+
+**Flapping wing robots** mimic birds or insects by generating lift and thrust through oscillating wing motions. Their flight is often agile but inherently less stable, and control is achieved by varying flapping frequency, amplitude, or wing asymmetry, making their aerodynamics more complex and less standardized compared to the other two types.
+
 <div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
-  <strong>Disclaimer:</strong> While there are fundamental differences between the three drone types, there is a big number of drones combining principles from different types. There exist bird inspired fixed wing drones, hybrid fixed wing rotorcrafts or morphing rotorcrafts etc... 
+  <strong>Disclaimer:</strong> These categorisations are by no means inclusive of all existing designs. Drone designs is a fast growing area and nowadays we see many more interesting designs that bear no resemblances neither with traditional aircrafts and helicopters, nor with birds. 
 </div>
 
 ### 2.1 Rotorcrafts

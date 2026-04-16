@@ -166,7 +166,7 @@ function showTab(idx, windowId) {
 }
 </script>
 
-# Unmanned Aerial Vehicles
+# Introduction to aerodynamic principles
 
 <!-- bundle exec jekyll serve -->
 
@@ -179,26 +179,7 @@ To get the most of this module, it is recommended that you have knowledge in:
   - Newton's laws of motion, especially the third law of action and reaction. 
   - Concepts of **moments** and **torques**.
 
-## 2. General Motivation
-<div style="margin-bottom: 15px; text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/dji_mini_5_pro.webp" alt="DJI mini pro 5 - a small consumer camera drone." style="width: 400px; height: auto;">
-  <p style="font-size: small;">DJI mini pro 5 - a small consumer camera drone. Picture from <a href="https://store.dji.com/ch/product/dji-mini-5-pro?vid=199551g" target="_blank">DJI</a></p>
-</div>
-
-Unmanned Aerial Vehicles (UAV) are flying object's without a pilot and controlled remotely or are autonomous. They are usually referred to as drones. And probably now, when you hear the word _drone_ you are thinking of a small commercial quadcopter people use to take stunning video shots like on the image above? Or maybe you are thinking of drone racing? Or maybe of military drones used more and more frequently in modern war?
-But, did you know that drones/UAVs are much more than only quadcopters?
-The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the last decade the drone market got revolutionized and is growing in an incredible pace. More complex mechanics, more stable control and more autonomy. This and the following modules will give you an overview of different drone types, aerodynamic principles, and what it takes to build and control an UAV.
-
-This module about UAVs aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
-
-## Chapter 0: Sneak Peek into current state of the art of flying robots
-
-Before we dive into the details of how drones work, we invite you to have a look at the video below, which gives you an overview of the current state of the art of flying robots and their main research questions. It doesn't go much into technical details, but it is a good starting point to make you curious about the topic and to give you a glimpse of the different drone types that exist.
-
-![video](https://www.youtube.com/watch?v=U6ZP38XUrGs)
-><sub>The present and future of flying robots - IEEE Robotics and Automation Society. Learn about the work of Dr. Roland Siegwart, Dr. Anibal Ollero, Dr. Dario Floreano, and Dr. Margarita Chli on flying robots and some of the challenges they are still trying to tackle. Available at: https://www.youtube.com/watch?v=U6ZP38XUrGs</sub>
-
-## Chapter 1 : Introduction to aerodynamic principles
+## 2: Aerodynamics Principle
 
 On the image below you see in <span style="color: #FFAA00;">yellow</span> a flying object - here you can think of it as the profile of a wing. Suppose the wing is moving in the direction of the <span style="color: #020FA4;">blue</span> vector. What kind of forces are acting on it? There is of course the gravity coming from the weight of the wing - here in <span style="color: black;">black</span>. The force that makes the wing stay in the air - instead of being restrained to the ground as us humans - is called <span style="color: #C20000;">*lift*</span> force. But the wing is not simply hovering in the air, it moves in the <span style="color: #020FA4;">direction of movement</span>. The force making this possible is the <span style="color: #02E308;">*thrust*</span>, which is counteracted by the *drag*. For a wing we call the angle between the direction of movement and the centerline of the wing the *angle of attack*. 
 
@@ -213,7 +194,7 @@ The three most important forces when it comes to drones are lift, thrust and dra
   <strong>Disclaimer:</strong> Aerodynamic is an entire subject on it's own. This chapter will not be a full or complete module. It rather aims to provide you with the necessary tools and intuition to understand the relevant aspects of aerodynamics related to drones. This is crucial to understand later how drones are controlled.
 </div>
 
-### 1.1 Drag
+### 2.1 Drag
 When an object moves through a fluid there is a resistive force acting in the opposite direction of motion. Often referred to as air resistance, the drag force depends on the air density, the shape of the moving object and *quadratically* to the speed of the drone. It is always **parallel** to the flow direction. 
 
 To grasp this in more detail, please watch the video below from **0:10** until **10:37** or read the description beneath it:
@@ -394,7 +375,7 @@ $$
 
 </details>
 
-### 1.2 Lift
+### 2.2 Lift
 
 Gravity holds everyone of us on the ground. To stay in the air, the gravitational force must be compensated. The force pointing in the opposite direction of the gravity is called lift force and is always **perpendicular** to the direction of the airflow. For most drone types the lift force is generated by the morphology of the wing or the propeller. To fly stable in the air, the parallel part of the lift force must equal the gravitational force.
 
@@ -648,7 +629,7 @@ $v$:    airspeed
 
 </details>
 
-### 1.3 Thrust
+### 2.3 Thrust
 
 Thrust is the mechanical force that propels an flying object forward. 
 <!-- The physical principle behind them are all based on Newton’s Third Law of Motion, according to which *"for every action, there is an equal and opposite reaction"*. Thrust is generated when a system expels mass in one direction, producing an equal force in the opposite direction.  -->
@@ -807,7 +788,7 @@ While propellers are commonly used in smaller aircraft and UAVs due to their eff
   
 </details>
 
-### 1.4 Conditions to fly
+### 2.4 Conditions to fly
 With drag, lift, thrust and gravity as basic forces, we can already understand the conditions for an aircraft to fly.
 
 

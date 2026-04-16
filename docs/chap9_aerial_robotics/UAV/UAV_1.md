@@ -255,7 +255,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
 
   If you would manage to maintain laminar flow over the wings of commercial aircraft, you could reduce the total drag by 10-15%. But this is very hard to achieve and is an open question in research. One idea that was partially successful is the so called hybrid-laminar flow control, where air is suck downwards along the surface of the wing. Another possibility is to reduce the effect of turbulent flow on friction drag. One interesting research aspect there looks at the microstructure of shark skin.
 
-  We have seen that the magnitude of friction and pressure drag depends on the surface of a body relative to the direction of flow. An obvious example is flat plat at 90° angle to the direction of flow. The flow separates easily, creating a separation region and the pressure drag is large. In this case friction drag is almost zero, since shear stresses are not aligned with the drag direction. However if you turn the plate by 90° such that the surface is aligned with the direction of flow, we have a very streamlined body and the pressure drag is small. But the friction is now much more significant. 
+  We have seen that the magnitude of friction and pressure drag depends on the surface of a body relative to the direction of flow. An obvious example is when considering a flat plate, that is a level thin plate, placed at 90° angle to the direction of flow. The flow separates easily, creating a separation region and the pressure drag is large. In this case friction drag is almost zero, since shear stresses are not aligned with the drag direction. However if you turn the plate by 90° such that the surface is aligned with the direction of flow, we have a very streamlined body and the pressure drag is small. But the friction is now much more significant. 
 
   <div style="text-align: center;">
     <img src="{{ site.baseurl }}/assets/images/uav/airfoil_angles_of_attack.jpg" alt="Effect of angle of attack on flow separation for an airfoil." style="width: 80%; height: auto;">
@@ -283,7 +283,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
 <details markdown="1">
   <summary>Conceptual Questions</summary>
 
-<p><strong>Question 1: Pressure drag is caused by shear stresses acting along the surface.</strong></p>
+<p><strong>Question 1.1: Pressure drag is caused by shear stresses acting along the surface.</strong></p>
 <form id="q1">
   <input type="radio" name="q1" value="True"> True<br>
   <input type="radio" name="q1" value="False"> False<br>
@@ -296,7 +296,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   <p id="q1-feedback"></p>
 </form>
 
-<p><strong>Question 2: Does using the most streamlined shape, always result in the lowest drag?</strong></p>
+<p><strong>Question 1.2: Does using the most streamlined shape, always result in the lowest drag?</strong></p>
 <form id="drag-q2">
   <input type="radio" name="drag-q2" value="True"> True<br>
   <input type="radio" name="drag-q2" value="False"> False<br>
@@ -309,7 +309,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
   <p id="drag-q2-feedback"></p>
 </form>
 
-<p><strong>Question 3: Which changes would likely help reduce total aerodynamic drag on a vehicle?</strong></p>
+<p><strong>Question 1.3: Which changes would likely help reduce total aerodynamic drag on a vehicle?</strong></p>
 <form id="drag-q3">
   <input type="checkbox" name="drag-q3" value="A"> <strong>(A)</strong> Streamlining the shape<br>
   <input type="checkbox" name="drag-q3" value="B"> <strong>(B)</strong> Maintaining laminar flow over the surface<br>
@@ -337,7 +337,7 @@ To grasp this in more detail, please watch the video below from **0:10** until *
 <details markdown="1">
   <summary>Mathematical Exercise</summary>
 
-**EXERCISE 1:**
+**EXERCISE 1.4:**
 
 A small drone is flying at a constant speed of 15 m/s at sea level. The drone has:
 
@@ -349,9 +349,9 @@ The air density at sea level is $ρ=1.225 kg/m^3$.
 Calculate the drag force acting on the plane.
 
 <details markdown="1">
-<summary><strong>Solutions</strong></summary>
+<summary><strong>Solution</strong></summary>
 
-**Exercise 1**:
+**Solution Exercise 1.4**:
 
 We use the drag equation:
 
@@ -511,7 +511,7 @@ $v$:    airspeed
 <details markdown="1"> 
   <summary>Conceptual Questions on Lift</summary> 
   
-<p><strong>Question 1: Lift is primarily generated due to the pressure difference between the upper and lower surfaces of a body.</strong></p> 
+<p><strong>Question 2.1: Lift is primarily generated due to the pressure difference between the upper and lower surfaces of a body.</strong></p> 
   <form id="lift-q1"> 
   <input type="radio" name="lift-q1" value="True"> True<br> 
   <input type="radio" name="lift-q1" value="False"> False<br> 
@@ -519,7 +519,7 @@ $v$:    airspeed
   Check Answer 
   </button> <p id="lift-q1-feedback"></p> </form> 
   
-  <p><strong>Question 2: Which of the following factors contribute to generating lift on a wing or airfoil? (Select all that apply)</strong></p> 
+  <p><strong>Question 2.2: Which of the following factors contribute to generating lift on a wing or airfoil? (Select all that apply)</strong></p> 
   <form id="lift-q2"> 
   <input type="checkbox" name="lift-q2" value="A"> <strong>(A)</strong> Angle of attack<br> 
   <input type="checkbox" name="lift-q2" value="B"> <strong>(B)</strong> Pressure difference across the wing<br> 
@@ -540,7 +540,7 @@ $v$:    airspeed
   <p id="lift-q2-feedback"></p> 
   </form> 
   
-  <p><strong>Question 3: Flow separation on the upper surface of an airfoil usually leads to:</strong></p> 
+  <p><strong>Question 2.3: Flow separation on the upper surface of an airfoil usually leads to:</strong></p> 
   <form id="lift-q3"> 
     <input type="radio" name="lift-q3" value="A"> (A) Increased lift and reduced drag<br> 
     <input type="radio" name="lift-q3" value="B"> (B) Decreased lift and increased drag<br> <input type="radio" name="lift-q3" value="C"> (C) No change in lift<br> 
@@ -556,7 +556,7 @@ $v$:    airspeed
 <details markdown="1"> 
   <summary>Mathematical Questions</summary> 
 
-**EXERCISE 1:**
+**EXERCISE 2.1:**
 
   Imagine a Boeing-777 is flying at an altitude of $500 m$ with a speed of $400 km/h$. The total weight of the airplane is $250 t$ and the wing area is $427 m²$.
 
@@ -570,16 +570,16 @@ $v$:    airspeed
   </div>
 
 
-  **Question 1**: What is the lift coefficient of the airplane at 500m, supposed it flies straight?
+  **Question a**: What is the lift coefficient of the airplane at 500m, supposed it flies straight?
 
-  **Question 2**: How much faster must the airplane fly at 10,000 m to maintain level flight (same lift force)?
+  **Question b**: How much faster must the airplane fly at 10,000 m to maintain level flight (same lift force)?
 
-  **Question 3**: How much does the drag increase when flying at 10,000 m?
+  **Question  c**: How much does the drag increase when flying at 10,000 m?
 
   <details markdown="1">
   <summary><strong>Solutions</strong></summary>
 
-  **Question 1**:
+  **Question a**:
 
   To achieve a level-flight, the lift force must equal the gravitational force. We use the lift equation to calculate it:
 
@@ -599,7 +599,7 @@ $v$:    airspeed
   \boxed{C_L \approx 0.78}
   $$
 
-  **Question 2**:
+  **Question b**:
 
   The air density at 10km altitude decreases to approximately $0.4 kg/m^3$. This loss in density must be compensated by a higher flight velocity.
 
@@ -615,7 +615,7 @@ $v$:    airspeed
 
   Hence the airplane must fly approximately **1.73** times faster at a speed of  **693 km/h**.
 
-  **Question 3**:
+  **Question c**:
 
   The drag force and the lift force have the same relationship with respect to air density and velocity:
 
@@ -734,15 +734,23 @@ While propellers are commonly used in smaller aircraft and UAVs due to their eff
 <details markdown="1"> 
   <summary>Conceptual Questions on Thrust</summary> 
   
-<p><strong>Question 1: Thrust using a propeller is generated because the blades create a pressure difference between the front and rear of the propeller.</strong></p> 
-  <form id="thrust-q1"> 
+<p><strong>Question 3.1: Thrust using a propeller is generated because the blades create a pressure difference between the front and rear of the propeller.</strong></p> 
+
+<form id="thrust-q1">
   <input type="radio" name="thrust-q1" value="True"> True<br> 
   <input type="radio" name="thrust-q11" value="False"> False<br> 
-  <button type="button" onclick="checkTrueFalse('thrust-q1', 'True', 'Correct! The shape of moving propeller blades create a pressure difference between the front and back of it which pushes the aircraft forward.', 'Incorrect! The shape of moving propeller blades create a pressure difference between the front and back of it which pushes the aircraft forward.')"> 
-  Check Answer 
-  </button> <p id="thrust-q1-feedback"></p> </form> 
+  <button type="button"
+    onclick="checkTrueFalse('thrust-q1', 'True', 
+      'Correct! The shape of moving propeller blades create a pressure difference between the front and back of it which pushes the aircraft forward.',
+      'Incorrect! The shape of moving propeller blades create a pressure difference between the front and back of it which pushes the aircraft forward.')">
+    Check Answer
+  </button>
+  <p id="thrust-q1-feedback"></p>
+</form>
+
   
-<p><strong>Question 2: Which of the following is true about the relationship between propeller rotation speed and thrust generation? (Select all that apply)</strong></p> 
+  
+<p><strong>Question 3.2: Which of the following is true about the relationship between propeller rotation speed and thrust generation? (Select all that apply)</strong></p> 
   <form id="thrust-q2-1"> 
   <input type="checkbox" name="thrust-q2" value="A"> <strong>(A)</strong> Higher rotation speeds result in an increased angle of attack<br> 
   <input type="checkbox" name="thrust-q2" value="B"> <strong>(B)</strong> Faster forward speeds decrease the angle of attack<br> 
@@ -774,7 +782,7 @@ While propellers are commonly used in smaller aircraft and UAVs due to their eff
 </form>
 
   
-  <p><strong>Question 3: What is the primary purpose of a variable-pitch propeller?</strong></p> 
+  <p><strong>Question 3.3: What is the primary purpose of a variable-pitch propeller?</strong></p> 
   <form id="thrust-q3"> 
     <input type="radio" name="thrust-q3" value="A"> (A) To decrease drag at high speeds<br> 
     <input type="radio" name="thrust-q3" value="B"> (B) To increase the number of blades on the propeller<br> 

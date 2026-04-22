@@ -179,7 +179,7 @@ To get the most of this module, it is recommended that you have knowledge in:
 
 
 ## 2. Overview : Drone Types and Use Case
-In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs according to three groups that are representative of distinct flying patterns: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing robots*. 
+In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs according to three groups that are representative of distinct flying patterns: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing drones*. 
 
 <div style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/uav/drone_types.png" alt="Overview of UAV categories" style="width: 100%; height: auto;">
@@ -190,7 +190,7 @@ In this chapter we want to give you an overview of different drone types, their 
 
 **Fixed-wing drones**, by contrast, require constant forward motion to produce lift through their wings, much like airplanes. They follow smooth, continuous flight paths and cannot hover; instead, they maneuver using aerodynamic control surfaces such as ailerons, elevators, and rudders, which change the aircraft’s orientation while airflow over the wings sustains lift.
 
-**Flapping wing robots** mimic birds or insects by generating lift and thrust through oscillating wing motions. Their flight is often agile but inherently less stable, and control is achieved by varying flapping frequency, amplitude, or wing asymmetry, making their aerodynamics more complex and less standardized compared to the other two types.
+**Flapping wing drones** mimic birds or insects by generating lift and thrust through oscillating wing motions. Their flight is often agile but inherently less stable, and control is achieved by varying flapping frequency, amplitude, or wing asymmetry, making their aerodynamics more complex and less standardized compared to the other two types.
 
 <div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
   <strong>Disclaimer:</strong> These categorisations are by no means inclusive of all existing designs. Drone designs is a fast growing area and nowadays we see many more interesting designs that bear no resemblances neither with traditional aircrafts and helicopters, nor with birds. 
@@ -207,71 +207,76 @@ The image below shows a collection of some state-of-the-art commercial rotorcraf
   <p style="font-size: small;">The figure illustrates various multicopters. From top left: DJI Mavic Air 2, Autel Robotics EVO II, DJI Phantom Pro, CyPhy LVL 1 Drone, Freefly Alta 8, Skydio 2, Voliro T, Yuneec H520E, Yuneec Typhoon H Plus. </p>
 </div>
 
+#### Control principle
 The lift force generation principle of a rotorcraft is similar to that of thrust generation using propellers -  only the force acts vertically, countering gravity. Each rotor generates both lift and torque. To maintain balance, the system includes an equal number of clockwise and counterclockwise spinning rotors to cancel out rotational torque. 
 
 Drone movement is achieved by adjusting the rotational speed of individual rotors. For example increasing all rotors speed equally generates more lift, allowing the drone to ascend. By tilting the drone, the direction of the thrust force becomes misaligned with gravity, allowing the drone to move laterally or to rotate. 
 
-Different rotor configurations - both in number and arrangement - serve different operational needs and control strategies. You will learn more about this in the dedicated module about multirotor UAVs.
-
+Multirotor systems are primarily distinguished by the number of rotors they use, which directly influences their lift capacity, redundancy, and overall complexity. Different rotor configurations - both in number and arrangement - serve different operational needs and control strategies, see figure below for a few examples. 
 <div style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/uav/rotorcraft_configuration.png" alt="An overview of common drone configuration." style="width: 90%; height: auto;">
   <p style="font-size: small;">The figure illustrates four common drone configurations. A classic quadcopter, a hexacopter, octocopter and a co-axial copter. Each shows rotor rotation directions (blue: counterclockwise, green: clockwise) along with a representative commercial model. From left: DJI Mavic Air 2, Yuneec H520E, Freefly Alta 8, OnyxStar HYDRA-12. </p>
 </div>
 
-#### History
+Tricopters, with three rotors, achieve yaw control through a tilting rear motor. This mechanical feature makes them lighter but adds a layer of maintenance complexity. Quadcopters, featuring four rotors, are the most common configuration because they strike an ideal balance between simplicity and performance—requiring only motor speed adjustments for control, without additional moving parts. Hexacopters (six rotors) or octocopters (eight rotors) benefit from increased lifting capacity and fault tolerance, that is the drone can remain stable even if a motor fails. However, these advantages come with higher energy consumption, added weight, and more intricate control requirements. Rotor arrangement also plays a crucial role. The "X" configuration in quadcopters, where arms are diagonally aligned, is widely adopted for its balanced control and minimal obstruction of forward-facing cameras. The older "+" configuration, with rotors aligned front and back, simplifies geometry but is less practical for many applications. Other designs, like stretched or asymmetric frames, enhance forward-flight efficiency or optimize sensor placement. Coaxial configurations, with stacked rotors on each arm, boost thrust without expanding the vehicle’s footprint, though they face challenges like aerodynamic interference and tuning complexity.
 
-The first flying rotorcrafts were quadrotors - a machine with four rotors - in 1922 by George de Bothezat. Luckily there exists some footage of that time, which allows us follow the development of rotorcrafts up to the modern age. Below you see a test flight from de Bothezat. The flight was not yet that stable nor high but here we have our first flying rotorcraft!
+Control principles remain consistent across configurations: multirotors adjust individual rotor speeds to redistribute thrust. Increasing overall thrust raises altitude, while differential thrust between motors controls roll, pitch, and yaw. Yaw is typically managed by leveraging the reaction torques of counter-rotating propellers, except in tricopters, which use mechanical tilting.
+Control systems rely on real-time feedback from an inertial measurement unit (IMU) and a flight controller. The controller uses PID loops to compare the vehicle’s current state with the desired trajectory, adjusting motor speeds accordingly. As rotor count increases, control allocation becomes more flexible, improving disturbance rejection and fault tolerance.
+Operational trade-offs are evident: fewer rotors mean greater agility and energy efficiency but less redundancy, making the system more vulnerable to failure. More rotors enhance stability and safety, particularly for heavy payloads or critical missions, though they reduce responsiveness and increase power consumption. Coaxial and asymmetric designs introduce further compromises between compactness, efficiency, and control complexity. Ultimately, the choice of configuration reflects a balance between performance needs, reliability, and the sophistication of the control system.
 
+To learn more about control of multirotors, follow the dedicated module: [multirotors](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/multirotor)
+
+#### Questions
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What is the advantage of increasing the number of rotors on a multirotor drone??</strong></p>
+  
+  <button type="button" onclick="showAnswer('open1')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open1" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Increasing the number of rotors on a multirotor drone offers several advantages:
+      <ul>
+        <li><strong>Redundancy and Reliability:</strong> More rotors mean that if one fails, the drone can still maintain flight, enhancing safety.</li>
+        <li><strong>Increased Lift Capacity:</strong> Additional rotors can generate more lift, allowing the drone to carry heavier payloads.</li>
+        <li><strong>Improved Stability and Control:</strong> More rotors provide finer control over movement and stability, especially in windy conditions.</li>
+        <li><strong>Smoother Flight:</strong> The distribution of thrust across more rotors can lead to smoother flight characteristics.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: Is this quadcopter configuration stable?</strong></p>
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/quadcopter_unstable_configuration.png" alt="Quadcopter configuration with 2 clockwise and 2 counterclockwise rotors arranged with same rotation direction on the same axis." style="width: 20%; height: auto;">
+  </div>
+  
+  <button type="button" onclick="showAnswer('open2')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open2" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      No, this quadcopter configuration is not stable. In this arrangement, the rotors spinning in the same direction are aligned on the same side of the drone. While this configuration still cancels the net torque around the vertical axis, it creates an imbalance in the distribution of lift around the drone's center of mass. This will lead to instability in pitch and roll, making it difficult to maintain level flight. A more stable configuration would have alternating rotor directions on opposite sides, which helps balance the forces and torques more effectively.
+    </p>
+  </div>
+</div>
+
+#### Applications
+
+Early developments of rotorcrafts were focused on quadrotors. Below you see a test flight from one such early design in 1922. The flight was not yet that stable nor high.
 ![video](https://www.youtube.com/watch?v=oM6TqjHfC5I)
 ><sub>De Bothezat 1922 helicopter. First flying quadrotor. Available at: https://www.youtube.com/watch?v=oM6TqjHfC5I</sub>
 
-Due to the difficulty of simultaneously controlling four motor speeds for a human pilot, the development of quadcopters was paused and overtaken by the development of helicopters. Helicopters have a single rotor but need a more complex mechanical structure to balance torques and maneuver. On September 14, 1939, the world's first practical helicopter took flight in Stratford, Connecticut. The VS-300, designed by Igor Sikorsky led the foundation of controllable rotorcraft. On the footage below you can see some of the early flights of the VS-300. Note the complex mechanical structure necessary for a helicopter to work. Mechanically a quadcopter is much simpler!
+Due to the difficulty of simultaneously controlling four motor speeds for a human pilot, the development of quadcopters was overtaken by the development of helicopters. Helicopters have a single rotor but need a more complex mechanical structure to balance torques and maneuver. <!-- While helicopters are extremely fascinating vehicules, in this module, we focus on modern multirotor drones.  UAVs. The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually.  
 
-![video](https://www.youtube.com/watch?v=PnbKZOG2gII)
-><sub>Igor Sikorsky test flies VS-300. Available at: https://www.youtube.com/watch?v=PnbKZOG2gII</sub>
-
-<!-- While helicopters are extremely fascinating vehicules, we don't want to spend more time on them and focus on modern multirotor drones. During the post-war era some development of quadcopters took place again - like the Curtiss-Wright VZ-7 in the 1950s - but the true comeback of multirotos was in the early 2000s with small-scale UAVs. The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually.  -->
-
-<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
-  <div style="flex: 1; min-width: 300px;">
-    <p>
-      While helicopters are extremely fascinating vehicules, we don't want to spend more time on them and focus on modern multirotor drones. During the post-war era some development of quadcopters took again place - like the Curtiss-Wright VZ-7 in the 1950s - but the true comeback of multirotors was in the early 2000s with small-scale UAVs.
-    </p>
-  </div>
-
-  <div style="flex: 2; min-width: 280px;">
-    <img src="{{ site.baseurl }}/assets/images/uav/Curtiss-Wright_VZ-7.webp" alt="Curtiss-Wright_VZ-7 helicopter." style="width: 100%; height: auto;">
-    <p style="font-size: small; text-align: center;">
-      The Curtiss-Wright VZ-7 machine developed for the U.S. Army in the 1950s. It was retired only a few years later due to insufficient performance. Image from <a href="https://aviationsmilitaires.net/v3/kb/picture/10742/curtiss-wright-vz-7-au-sol" target="_blank">Librairie Images Collège Léodate Volmar</a>.
-    </p>
-  </div>
-
-</div>
-
-The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually. The processors doing this job are usually referred to as autopilot.
-
-<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
-  <div style="flex: 1; min-width: 280px;">
-    <img src="{{ site.baseurl }}/assets/images/uav/phantom_1.jpg" alt="A selection of different multirotor drones" style="width: 100%; height: auto;">
-    <p style="font-size: small; text-align: center;">
-      Phantom 1 from DJI, released on January 7, 2013. With this drone, camera drones became accessible to a wider audience for the first time.<br>
-      Image from <a href="https://se-cdn.djiits.com/tpc/uploads/sku/cover/p1-1@ultra.png" target="_blank">DJI</a>.
-    </p>
-  </div>
-
-  <div style="flex: 2; min-width: 300px;">
-    <p>
-      This technological breakthrough sparked a wave of innovation. By the 2010s, several commercial brands entered the market, bringing drones to a wider audience. Chinese company DJI became a dominant player with the launch of the Phantom series in 2013, combining a compact quadcopter frame with integrated GPS, camera stabilization, and user-friendly controls. It was the first consumer drone on the market. Other notable companies like Parrot, 3D Robotics, and Yuneec also contributed to the growing drone ecosystem, offering different designs such as hexacopters and octocopters, tailored for heavier payloads and enhanced stability.
-    </p>
-  </div>
-</div>
-
+Nowadays the drone market covers a wide range of different applications with new spin-offs and start-ups continuously pushing the boundaries.  
 These drones overcame early limitations in battery life, GPS accuracy, and control range through continual improvements in battery technology, GNSS systems, and wireless communication protocols. The result was a rapid evolution from basic remote-controlled flying toys to highly capable autonomous systems used in filmmaking, surveying, agriculture, and more.
-
-Today, multirotor drones take the biggest piece of the drone market and continue to evolve with the integration of obstacle avoidance, collision resilience, machine learning, and swarm coordination, opening up even more applications.
-
-#### Applications
-Nowadays the drone market covers a wide range of different applications with new spin-offs and start-ups continuously pushing the boundaries.
 
 <ins>Search and rescue:</ins>
 
@@ -406,46 +411,7 @@ While the market and the innovation of multirotor drones grew exponentially over
 
 Addressing these challenges to improve drone safety, functionality and to expand their application is question of current research.
 
-#### Questions
 
-<div class="open-question-container" style="margin-bottom: 2em;">
-  <p><strong>Question: What is the advantage of increasing the number of rotors on a multirotor drone??</strong></p>
-  
-  <button type="button" onclick="showAnswer('open1')">
-    Show/Hide Answer
-  </button>
-
-  <div id="answer-open1" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
-    <p><strong>Answer:</strong></p>
-    <p>
-      Increasing the number of rotors on a multirotor drone offers several advantages:
-      <ul>
-        <li><strong>Redundancy and Reliability:</strong> More rotors mean that if one fails, the drone can still maintain flight, enhancing safety.</li>
-        <li><strong>Increased Lift Capacity:</strong> Additional rotors can generate more lift, allowing the drone to carry heavier payloads.</li>
-        <li><strong>Improved Stability and Control:</strong> More rotors provide finer control over movement and stability, especially in windy conditions.</li>
-        <li><strong>Smoother Flight:</strong> The distribution of thrust across more rotors can lead to smoother flight characteristics.</li>
-      </ul>
-    </p>
-  </div>
-</div>
-
-<div class="open-question-container" style="margin-bottom: 2em;">
-  <p><strong>Question: Is this quadcopter configuration stable?</strong></p>
-  <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/quadcopter_unstable_configuration.png" alt="Quadcopter configuration with 2 clockwise and 2 counterclockwise rotors arranged with same rotation direction on the same axis." style="width: 20%; height: auto;">
-  </div>
-  
-  <button type="button" onclick="showAnswer('open2')">
-    Show/Hide Answer
-  </button>
-
-  <div id="answer-open2" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
-    <p><strong>Answer:</strong></p>
-    <p>
-      No, this quadcopter configuration is not stable. In this arrangement, the rotors spinning in the same direction are aligned on the same side of the drone. While this configuration still cancels the net torque around the vertical axis, it creates an imbalance in the distribution of lift around the drone's center of mass. This will lead to instability in pitch and roll, making it difficult to maintain level flight. A more stable configuration would have alternating rotor directions on opposite sides, which helps balance the forces and torques more effectively.
-    </p>
-  </div>
-</div>
 
 ### 2.2 Fixed wing drones
 A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
@@ -1056,8 +1022,7 @@ This course page is partly based on the Aerial Robotics class taught by [Prof. D
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 Raymer, D. P. (1992). Aircraft design: A conceptual approach (2. ed). American Institute of Aeronautics and Astronautics.
-
-
+Beard, Randal W., and Timothy W. McLain. Small unmanned aircraft: Theory and practice. Princeton university press, 2012.
 
 <div class="page-navigation">
   <a href="/docs/chap9_aerial_robotics/UAV/UAV_1"

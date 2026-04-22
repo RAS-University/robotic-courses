@@ -316,7 +316,7 @@ These drones overcame early limitations in battery life, GPS accuracy, and contr
 <ins>Inspection:</ins>
 
 ![video]([https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11)
-<sub>Voliro T for NDT and LPS inspection on a wind turbine and a gaz power plant. Available at: https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11</sub>
+><sub>Voliro T for NDT and LPS inspection on a wind turbine and a gaz power plant. Available at: https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11</sub>
 
 Multirotor drones are transforming inspection processes across industries by offering a safer, faster, and more cost-effective alternative to traditional methods. They are widely used to inspect infrastructure such as power lines, wind turbines, pipelines, bridges, and telecommunications towers. High-definition cameras, thermal sensors, and LiDAR enable detailed visual and thermal analysis, reducing the need for scaffolding, cranes, or rope access. This not only improves worker safety but also minimizes downtime, reduces cost and enhances maintenance planning.
 
@@ -335,11 +335,11 @@ Companies and research institutions are also developing larger multirotor system
 <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
     <p>
-      With the advancements in technology, drones offer farmers new and innovative ways to improve efficiency and crop yields. They are used in crop monitoring, yield estimation and to spray fertilizers or pesticides in a targeted manner. This reduces chemical usage, labor cost and can increase crop productivity. An example from [XAG](https://www.xag-au.com/) in Australia.
+      With the advancements in technology, drones offer farmers new and innovative ways to improve efficiency and crop yields. They are used in crop monitoring, yield estimation and to spray fertilizers or pesticides in a targeted manner. This reduces chemical usage, labor cost and can increase crop productivity. An example from <a href"https://www.xag-au.com/">XAG</a> in Australia.
     </p>
   </div>
 
-  <div style="flex: 2; min-width: 280px;">
+  <div style="flex: 2; min-width: 260px;">
     <img src="{{ site.baseurl }}/assets/images/uav/drone-agriculture2.jpg" alt="Agriculture drone." style="width: 90%; height: auto;">
     <p style="font-size: small;"> An example of use of agricultural drone in Vietnam to make rice production more sustainable, as monsoon season starts, from <a href="https://www.xag-au.com/" target="_blank">XAG (Australia)</a>.</p>
   </div>
@@ -378,8 +378,7 @@ Drones form an integral part of modern warfare. Most of them being fixed wing dr
 
 
 ### 2.2 Fixed wing drones
-A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
-
+Like traditional airplanes, fixed-wing UAV/drone use a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
 
 #### Design Principles
 <div style="margin-bottom: 15px; text-align: center;">
@@ -387,7 +386,7 @@ A fixed-wing aircraft is a machine that uses a combination of fixed lifting surf
   <p style="font-size: small;">Airplane parts and control surfaces definition. Image from <a href="https://www1.grc.nasa.gov/wp-content/uploads/NASA-Glenn-Airplane-Parts-2.pdf" target="_blank">Glenn Research Center</a></p>
 </div>
 
-To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image above shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft.
+To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image above shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft. If unfamiliar with principle of aerodynamics, it is highly recommended to read the [aerodynamics module](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html). 
 
 <ins>Wing Geometry:</ins>  
 The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the section about aerodynamic lift, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  

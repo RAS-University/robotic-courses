@@ -307,7 +307,7 @@ These drones overcame early limitations in battery life, GPS accuracy, and contr
     </p>
   </div>
 
-  <div style="flex: 2; min-width: 280px;">
+  <div style="flex: 2; min-width: 380px;">
     <img src="{{ site.baseurl }}/assets/images/uav/drone_shot.png" alt="Cinematic drone shot of lake bled in Slovenia." style="width: 90%; height: auto;">
     <p style="font-size: small;">Cinematic drone shots—like this one of Lake Bled in Slovenia—have become an integral part of modern photography and filmmaking. Screenshot from <em>DJI Mavic Air Lake Bled, Slovenia</em> by The Leisure Club, available on <a href="https://www.youtube.com/watch?v=4FWChWcOeHQ" target="_blank">Youtube</a>.</p>
   </div>
@@ -315,8 +315,8 @@ These drones overcame early limitations in battery life, GPS accuracy, and contr
 
 <ins>Inspection:</ins>
 
-![video]([https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11))
-><sub>Voliro T for NDT and LPS inspection on a wind turbine and a gaz power plant. Available at: https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11</sub>
+![video]([https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11)
+<sub>Voliro T for NDT and LPS inspection on a wind turbine and a gaz power plant. Available at: https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11</sub>
 
 Multirotor drones are transforming inspection processes across industries by offering a safer, faster, and more cost-effective alternative to traditional methods. They are widely used to inspect infrastructure such as power lines, wind turbines, pipelines, bridges, and telecommunications towers. High-definition cameras, thermal sensors, and LiDAR enable detailed visual and thermal analysis, reducing the need for scaffolding, cranes, or rope access. This not only improves worker safety but also minimizes downtime, reduces cost and enhances maintenance planning.
 

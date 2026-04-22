@@ -375,43 +375,6 @@ Drones form an integral part of modern warfare. Most of them being fixed wing dr
   </div>
 </div>
 
-#### Challenges
-While the market and the innovation of multirotor drones grew exponentially over the past decade, there is still a lot of research going on, aiming to make drones more versatile and efficient. We want to provide below a non-exhaustive list with ongoing challenges.
-
-1. <ins>Agility, Efficiency, and Autonomy</ins><br>
-  <em>Goals:</em>  
-   - Faster and more responsive flight  
-   - Reduce energy consumption and decrease need for human control  
-   - <em>Challenges:</em> limited onboard processing power, battery life constraints, complex control algorithms
-
-2. <ins>Aerial Physical Manipulation</ins><br>
-  <em>Goals:</em>    
-   - Grasping or moving objects mid-air  
-   - <em>Challenges:</em> lightweight but stable design, complex mechanical structure & control
-
-3. <ins>Tight or Cluttered Environments</ins><br>
-  <em>Goals:</em>    
-   - Flying through narrow spaces (e.g., buildings, pipelines)  
-   - <em>Challenges:</em> adaptive design, real-time navigation
-
-4. <ins>Landing on complex Surfaces</ins><br>
-  <em>Goals:</em>    
-   - Inclined, moving, or uneven terrain indoors and outdoors 
-   - <em>Challenges:</em> ensure stable landing without human interaction
-
-5. <ins>Drone Swarms</ins><br>
-  <em>Goals:</em>    
-   - Coordinating multiple drones simultaneously 
-   - <em>Challenges:</em> communication, task distribution, swarm intelligence
-
-6. <ins>Robust Obstacle Avoidance</ins><br>
-  <em>Goals:</em>    
-   - Detecting and avoiding dynamic objects in complex environments at high speeds
-   - <em>Challenges:</em> reliable sensors and fast processing
-
-Addressing these challenges to improve drone safety, functionality and to expand their application is question of current research.
-
-
 
 ### 2.2 Fixed wing drones
 A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.

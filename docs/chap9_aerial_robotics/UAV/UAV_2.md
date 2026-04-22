@@ -175,7 +175,7 @@ function showTab(idx, windowId) {
 ## 1. Prerequisites
 To get the most of this module, it is recommended that you have knowledge in:
 1. **Basic Principles of Aerodynamics**
-  - See the introduction to aerodynamics in [Advanced Mathematical Foundations](http://128.178.145.16:8080/feature-chap9/docs/chap4_advanced_math/)
+  - See the [introduction to aerodynamics]([http://128.178.145.16:8080/feature-chap9/docs/chap4_advanced_math/](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html))
 
 
 ## 2. Overview : Drone Types and Use Case
@@ -389,7 +389,7 @@ Like traditional airplanes, fixed-wing UAV/drone use a combination of fixed lift
 To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image above shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft. If unfamiliar with principle of aerodynamics, it is highly recommended to read the [aerodynamics module](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html). 
 
 <ins>Wing Geometry:</ins>  
-The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the section about aerodynamic lift, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  
+The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the [introduction to aerodynamic](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html), lift section, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  
 Despite the pressure drag (also form drag) and friction drag (also parasite drag), there exists a commonly used third type of drag: <em>induced drag</em>. Induced drag is drag that is <it>"induced"</it> by the lift generation. The high pressure difference between the top and bottom of the wing during lift generation, causes air to <it>"spill"</it> around the wing. This in turn, causes vortex generation leading to an increase in the total drag.
 <div style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/uav/wing_geometry.svg" alt="Illustration of aircraft with swept and tapered wings." style="width: 50%; height: auto;">
@@ -494,9 +494,28 @@ Despite the pressure drag (also form drag) and friction drag (also parasite drag
   </div>
 </div>
 
-- dihedral angle  
-Balances at what angle of attack an aircraft is longitidunal stable.
+#### Stability
 
+The dihedral angle refers to the upward tilt of an aircraft’s wings relative to the horizontal when viewed from the front. Its primary role is in lateral (roll) stability, not longitudinal stability. When an aircraft with dihedral experiences a sideslip—for example due to a gust—the lower wing encounters a higher effective angle of attack and generates more lift than the higher wing. This creates a restoring rolling moment that brings the aircraft back toward level flight. In that sense, dihedral “balances” the aircraft by making it naturally resist roll disturbances.
+
+An aircraft is longitudinally stable when it naturally returns to a specific trimmed angle of attack after a disturbance, due to the balance of aerodynamic moments about its center of gravity. Meanwhile, the dihedral angle contributes separately by providing roll stability, helping the aircraft return to wings-level flight after lateral disturbances.
+
+To connect longitudinal stability with a more formal view, we look at how the pitching moment coefficient varies with angle of attack. The key idea is that an aircraft is in equilibrium (trimmed) when the total pitching moment about the center of gravity is zero, and it is stable if small deviations from that condition produce restoring moments.
+
+
+Longitudinal stability is analyzed using the pitching moment coefficient \(C_m)\, which depends on the angle of attack \(α\). Around the operating point, it is often approximated as a linear relation:
+\(C_m(\alpha) = C_{m0} + C_{m\alpha}\,\alpha\)
+
+where \(C_m0)\ is the moment coefficient at zero angle of attack, and \(C_{mα}\) is the slope of the curve.
+
+The trim condition is obtained when \(C_m=0\), which gives a specific equilibrium angle of attack. But stability depends on the slope:
+
+If \(C_{mα}<0\), the aircraft is longitudinally stable
+If \(C_{mα}>0\), it is unstable.
+
+The reason is intuitive: imagine the aircraft is trimmed and then a gust increases α. If the slope is negative, this increase produces a negative pitching moment (nose-down), which pushes the angle of attack back toward equilibrium. That is a restoring effect.
+
+You can visualize this as a straight line crossing the horizontal axis (where \(C_m=0\)). The crossing point gives the trim angle of attack, and the slope determines whether the system returns to it or diverges.
 
 <ins>Control Surfaces:</ins>  
 <div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">

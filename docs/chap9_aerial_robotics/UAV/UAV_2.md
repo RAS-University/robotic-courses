@@ -1,5 +1,5 @@
 ---
-title: "9.2 Different Drone Types"
+title: "9.2 UAV/Drone Types"
 parent: "Introduction to UAVs"
 layout: default
 nav_order: 2
@@ -9,56 +9,7 @@ publish: true
 ---
 
 <script src="../../questions.js"></script>
-
-<style>
-  #go-to-next {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #go-to-next:hover {
-    opacity: 1;
-  }
-  </style>
-
-<style>
-  #go-to-previous {
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #go-to-previous:hover {
-    opacity: 1;
-  }
-  </style>  
-
-  <a href="/docs/chap9_aerial_robotics/UAV/UAV_3" id="go-to-next" title="Go to Next Chapter">➡​</a>
-
-  <a href="/docs/chap9_aerial_robotics/UAV/UAV_1" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+<link rel="stylesheet" href="../styles.css">
 
 <style>
   .formula-window{
@@ -214,7 +165,7 @@ function showTab(idx, windowId) {
 }
 </script>
 
-# Unmanned Aerial Vehicles
+#  UAV/Drone Types
 
 <!-- bundle exec jekyll serve -->
 
@@ -223,32 +174,26 @@ function showTab(idx, windowId) {
 
 ## 1. Prerequisites
 To get the most of this module, it is recommended that you have knowledge in:
-1. **Basic Mechanical Physics**
-  - Newton's laws of motion, especially the third law of action and reaction. 
-  - Concepts of **moments** and **torques**.
+1. **Basic Principles of Aerodynamics**
+  - See the [introduction to aerodynamics]([http://128.178.145.16:8080/feature-chap9/docs/chap4_advanced_math/](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html))
 
-## 2. General Motivation
-<div style="margin-bottom: 15px; text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/dji_mini_5_pro.webp" alt="DJI mini pro 5 - a small consumer camera drone." style="width: 400px; height: auto;">
-  <p style="font-size: small;">DJI mini pro 5 - a small consumer camera drone. Picture from <a href="https://store.dji.com/ch/product/dji-mini-5-pro?vid=199551g" target="_blank">DJI</a></p>
-</div>
 
-Unmanned Aerial Vehicles (UAV) are flying object's without a pilot and controlled remotely or are autonomous. They are usually referred to as drones. And probably now, when you hear the word _drone_ you are thinking of a small commercial quadcopter people use to take stunning video shots like on the image above? Or maybe you are thinking of drone racing? Or maybe of military drones used more and more frequently in modern war?
-But, did you know that drones/UAVs are much more than only quadcopters?
-The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the last decade the drone market got revolutionized and is growing in an incredible pace. More complex mechanics, more stable control and more autonomy. This and the following lectures will give you an overview of different drone types, aerodynamic principles, and what it takes to build and control an UAV.
-
-This module about UAVs aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
-
-## Chapter 2 : Drone Types and Use Case
-In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs in three big groups: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing robots*. 
+## 2. Overview : Drone Types and Use Case
+In this chapter we want to give you an overview of different drone types, their flying principle and history. We grouped for that UAVs according to three groups that are representative of distinct flying patterns: *rotorcrafts* or *multirotor drones*, *fixed-wing drones* and *flapping wing drones*. 
 
 <div style="text-align: center;">
-  <img src="{{ site.baseurl }}/assets/images/uav/drone_types.png" alt="Overview of UAV categories" style="width: 90%; height: auto;">
+  <img src="{{ site.baseurl }}/assets/images/uav/drone_types.png" alt="Overview of UAV categories" style="width: 100%; height: auto;">
   <p style="font-size: small;">Overview over the three main drone types: <it>multirotor drone</it>, <it>flapping-wing drone</it> and <it>fixed-wing drone</it>. </p>
 </div>
 
+**Multirotor drones (rotorcraft)** generate lift using multiple propellers and can hover, take off vertically, and move in any direction with high precision. Their control relies on continuously adjusting the speed of individual rotors to tilt the vehicle and redirect thrust, allowing for stable, responsive motion and the ability to hold position in place.
+
+**Fixed-wing drones**, by contrast, require constant forward motion to produce lift through their wings, much like airplanes. They follow smooth, continuous flight paths and cannot hover; instead, they maneuver using aerodynamic control surfaces such as ailerons, elevators, and rudders, which change the aircraft’s orientation while airflow over the wings sustains lift.
+
+**Flapping wing drones** mimic birds or insects by generating lift and thrust through oscillating wing motions. Their flight is often agile but inherently less stable, and control is achieved by varying flapping frequency, amplitude, or wing asymmetry, making their aerodynamics more complex and less standardized compared to the other two types.
+
 <div style="background-color: #f0f0f0; border-left: 4px solid #999; padding: 1em; margin: 1.5em 0; font-size: 0.95em; color: #333; border-radius: 4px;">
-  <strong>Disclaimer:</strong> While there are fundamental differences between the three drone types, there is a big number of drones combining principles from different types. There exist bird inspired fixed wing drones, hybrid fixed wing rotorcrafts or morphing rotorcrafts etc... 
+  <strong>Disclaimer:</strong> These categorisations are by no means inclusive of all existing designs. Drone designs is a fast growing area and nowadays we see many more interesting designs that bear no resemblances neither with traditional aircrafts and helicopters, nor with birds. 
 </div>
 
 ### 2.1 Rotorcrafts
@@ -262,71 +207,76 @@ The image below shows a collection of some state-of-the-art commercial rotorcraf
   <p style="font-size: small;">The figure illustrates various multicopters. From top left: DJI Mavic Air 2, Autel Robotics EVO II, DJI Phantom Pro, CyPhy LVL 1 Drone, Freefly Alta 8, Skydio 2, Voliro T, Yuneec H520E, Yuneec Typhoon H Plus. </p>
 </div>
 
+#### Control principle
 The lift force generation principle of a rotorcraft is similar to that of thrust generation using propellers -  only the force acts vertically, countering gravity. Each rotor generates both lift and torque. To maintain balance, the system includes an equal number of clockwise and counterclockwise spinning rotors to cancel out rotational torque. 
 
 Drone movement is achieved by adjusting the rotational speed of individual rotors. For example increasing all rotors speed equally generates more lift, allowing the drone to ascend. By tilting the drone, the direction of the thrust force becomes misaligned with gravity, allowing the drone to move laterally or to rotate. 
 
-Different rotor configurations - both in number and arrangement - serve different operational needs and control strategies. You will learn more about this in the dedicated module about multirotor UAVs.
-
+Multirotor systems are primarily distinguished by the number of rotors they use, which directly influences their lift capacity, redundancy, and overall complexity. Different rotor configurations - both in number and arrangement - serve different operational needs and control strategies, see figure below for a few examples. 
 <div style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/uav/rotorcraft_configuration.png" alt="An overview of common drone configuration." style="width: 90%; height: auto;">
   <p style="font-size: small;">The figure illustrates four common drone configurations. A classic quadcopter, a hexacopter, octocopter and a co-axial copter. Each shows rotor rotation directions (blue: counterclockwise, green: clockwise) along with a representative commercial model. From left: DJI Mavic Air 2, Yuneec H520E, Freefly Alta 8, OnyxStar HYDRA-12. </p>
 </div>
 
-#### History
+Tricopters, with three rotors, achieve yaw control through a tilting rear motor. This mechanical feature makes them lighter but adds a layer of maintenance complexity. Quadcopters, featuring four rotors, are the most common configuration because they strike an ideal balance between simplicity and performance—requiring only motor speed adjustments for control, without additional moving parts. Hexacopters (six rotors) or octocopters (eight rotors) benefit from increased lifting capacity and fault tolerance, that is the drone can remain stable even if a motor fails. However, these advantages come with higher energy consumption, added weight, and more intricate control requirements. Rotor arrangement also plays a crucial role. The "X" configuration in quadcopters, where arms are diagonally aligned, is widely adopted for its balanced control and minimal obstruction of forward-facing cameras. The older "+" configuration, with rotors aligned front and back, simplifies geometry but is less practical for many applications. Other designs, like stretched or asymmetric frames, enhance forward-flight efficiency or optimize sensor placement. Coaxial configurations, with stacked rotors on each arm, boost thrust without expanding the vehicle’s footprint, though they face challenges like aerodynamic interference and tuning complexity.
 
-The first flying rotorcrafts were quadrotors - a machine with four rotors - in 1922 by George de Bothezat. Luckily there exists some footage of that time, which allows us follow the development of rotorcrafts up to the modern age. Below you see a test flight from de Bothezat. The flight was not yet that stable nor high but here we have our first flying rotorcraft!
+Control principles remain consistent across configurations: multirotors adjust individual rotor speeds to redistribute thrust. Increasing overall thrust raises altitude, while differential thrust between motors controls roll, pitch, and yaw. Yaw is typically managed by leveraging the reaction torques of counter-rotating propellers, except in tricopters, which use mechanical tilting.
+Control systems rely on real-time feedback from an inertial measurement unit (IMU) and a flight controller. The controller uses PID loops to compare the vehicle’s current state with the desired trajectory, adjusting motor speeds accordingly. As rotor count increases, control allocation becomes more flexible, improving disturbance rejection and fault tolerance.
+Operational trade-offs are evident: fewer rotors mean greater agility and energy efficiency but less redundancy, making the system more vulnerable to failure. More rotors enhance stability and safety, particularly for heavy payloads or critical missions, though they reduce responsiveness and increase power consumption. Coaxial and asymmetric designs introduce further compromises between compactness, efficiency, and control complexity. Ultimately, the choice of configuration reflects a balance between performance needs, reliability, and the sophistication of the control system.
 
+To learn more about control of multirotors, follow the dedicated module: [multirotors](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/multirotor)
+
+#### Questions
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What is the advantage of increasing the number of rotors on a multirotor drone??</strong></p>
+  
+  <button type="button" onclick="showAnswer('open1')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open1" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Increasing the number of rotors on a multirotor drone offers several advantages:
+      <ul>
+        <li><strong>Redundancy and Reliability:</strong> More rotors mean that if one fails, the drone can still maintain flight, enhancing safety.</li>
+        <li><strong>Increased Lift Capacity:</strong> Additional rotors can generate more lift, allowing the drone to carry heavier payloads.</li>
+        <li><strong>Improved Stability and Control:</strong> More rotors provide finer control over movement and stability, especially in windy conditions.</li>
+        <li><strong>Smoother Flight:</strong> The distribution of thrust across more rotors can lead to smoother flight characteristics.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: Is this quadcopter configuration stable?</strong></p>
+  <div style="text-align: center;">
+    <img src="{{ site.baseurl }}/assets/images/uav/quadcopter_unstable_configuration.png" alt="Quadcopter configuration with 2 clockwise and 2 counterclockwise rotors arranged with same rotation direction on the same axis." style="width: 20%; height: auto;">
+  </div>
+  
+  <button type="button" onclick="showAnswer('open2')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open2" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      No, this quadcopter configuration is not stable. In this arrangement, the rotors spinning in the same direction are aligned on the same side of the drone. While this configuration still cancels the net torque around the vertical axis, it creates an imbalance in the distribution of lift around the drone's center of mass. This will lead to instability in pitch and roll, making it difficult to maintain level flight. A more stable configuration would have alternating rotor directions on opposite sides, which helps balance the forces and torques more effectively.
+    </p>
+  </div>
+</div>
+
+#### Applications
+
+Early developments of rotorcrafts were focused on quadrotors. Below you see a test flight from one such early design in 1922. The flight was not yet that stable nor high.
 ![video](https://www.youtube.com/watch?v=oM6TqjHfC5I)
 ><sub>De Bothezat 1922 helicopter. First flying quadrotor. Available at: https://www.youtube.com/watch?v=oM6TqjHfC5I</sub>
 
-Due to the difficulty of simultaneously controlling four motor speeds for a human pilot, the development of quadcopters was paused and overtaken by the development of helicopters. Helicopters have a single rotor but need a more complex mechanical structure to balance torques and maneuver. On September 14, 1939, the world's first practical helicopter took flight in Stratford, Connecticut. The VS-300, designed by Igor Sikorsky led the foundation of controllable rotorcraft. On the footage below you can see some of the early flights of the VS-300. Note the complex mechanical structure necessary for a helicopter to work. Mechanically a quadcopter is much simpler!
+Due to the difficulty of simultaneously controlling four motor speeds for a human pilot, the development of quadcopters was overtaken by the development of helicopters. Helicopters have a single rotor but need a more complex mechanical structure to balance torques and maneuver. <!-- While helicopters are extremely fascinating vehicules, in this module, we focus on modern multirotor drones.  UAVs. The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually.  
 
-![video](https://www.youtube.com/watch?v=PnbKZOG2gII)
-><sub>Igor Sikorsky test flies VS-300. Available at: https://www.youtube.com/watch?v=PnbKZOG2gII</sub>
-
-<!-- While helicopters are extremely fascinating vehicules, we don't want to spend more time on them and focus on modern multirotor drones. During the post-war era some development of quadcopters took place again - like the Curtiss-Wright VZ-7 in the 1950s - but the true comeback of multirotos was in the early 2000s with small-scale UAVs. The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually.  -->
-
-<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
-  <div style="flex: 1; min-width: 300px;">
-    <p>
-      While helicopters are extremely fascinating vehicules, we don't want to spend more time on them and focus on modern multirotor drones. During the post-war era some development of quadcopters took again place - like the Curtiss-Wright VZ-7 in the 1950s - but the true comeback of multirotors was in the early 2000s with small-scale UAVs.
-    </p>
-  </div>
-
-  <div style="flex: 2; min-width: 280px;">
-    <img src="{{ site.baseurl }}/assets/images/uav/Curtiss-Wright_VZ-7.webp" alt="Curtiss-Wright_VZ-7 helicopter." style="width: 100%; height: auto;">
-    <p style="font-size: small; text-align: center;">
-      The Curtiss-Wright VZ-7 machine developed for the U.S. Army in the 1950s. It was retired only a few years later due to insufficient performance. Image from <a href="https://aviationsmilitaires.net/v3/kb/picture/10742/curtiss-wright-vz-7-au-sol" target="_blank">Librairie Images Collège Léodate Volmar</a>.
-    </p>
-  </div>
-
-</div>
-
-The rise of compact, efficient microcontrollers, brushless electric motors, and miniaturized inertial measurement units (IMUs) finally solved the core challenge that had hindered quadcopters for decades: stable and responsive electronic control of multiple rotors. Thanks to these advances, flight control could now be fully automated and stabilized by onboard processors rather than a human pilot managing four motors manually. The processors doing this job are usually referred to as autopilot.
-
-<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
-  <div style="flex: 1; min-width: 280px;">
-    <img src="{{ site.baseurl }}/assets/images/uav/phantom_1.jpg" alt="A selection of different multirotor drones" style="width: 100%; height: auto;">
-    <p style="font-size: small; text-align: center;">
-      Phantom 1 from DJI, released on January 7, 2013. With this drone, camera drones became accessible to a wider audience for the first time.<br>
-      Image from <a href="https://se-cdn.djiits.com/tpc/uploads/sku/cover/p1-1@ultra.png" target="_blank">DJI</a>.
-    </p>
-  </div>
-
-  <div style="flex: 2; min-width: 300px;">
-    <p>
-      This technological breakthrough sparked a wave of innovation. By the 2010s, several commercial brands entered the market, bringing drones to a wider audience. Chinese company DJI became a dominant player with the launch of the Phantom series in 2013, combining a compact quadcopter frame with integrated GPS, camera stabilization, and user-friendly controls. It was the first consumer drone on the market. Other notable companies like Parrot, 3D Robotics, and Yuneec also contributed to the growing drone ecosystem, offering different designs such as hexacopters and octocopters, tailored for heavier payloads and enhanced stability.
-    </p>
-  </div>
-</div>
-
+Nowadays the drone market covers a wide range of different applications with new spin-offs and start-ups continuously pushing the boundaries.  
 These drones overcame early limitations in battery life, GPS accuracy, and control range through continual improvements in battery technology, GNSS systems, and wireless communication protocols. The result was a rapid evolution from basic remote-controlled flying toys to highly capable autonomous systems used in filmmaking, surveying, agriculture, and more.
-
-Today, multirotor drones take the biggest piece of the drone market and continue to evolve with the integration of obstacle avoidance, collision resilience, machine learning, and swarm coordination, opening up even more applications.
-
-#### Applications
-Nowadays the drone market covers a wide range of different applications with new spin-offs and start-ups continuously pushing the boundaries.
 
 <ins>Search and rescue:</ins>
 
@@ -357,7 +307,7 @@ Nowadays the drone market covers a wide range of different applications with new
     </p>
   </div>
 
-  <div style="flex: 2; min-width: 280px;">
+  <div style="flex: 2; min-width: 380px;">
     <img src="{{ site.baseurl }}/assets/images/uav/drone_shot.png" alt="Cinematic drone shot of lake bled in Slovenia." style="width: 90%; height: auto;">
     <p style="font-size: small;">Cinematic drone shots—like this one of Lake Bled in Slovenia—have become an integral part of modern photography and filmmaking. Screenshot from <em>DJI Mavic Air Lake Bled, Slovenia</em> by The Leisure Club, available on <a href="https://www.youtube.com/watch?v=4FWChWcOeHQ" target="_blank">Youtube</a>.</p>
   </div>
@@ -365,17 +315,18 @@ Nowadays the drone market covers a wide range of different applications with new
 
 <ins>Inspection:</ins>
 
-![video](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11)
+![video]([https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11)
 ><sub>Voliro T for NDT and LPS inspection on a wind turbine and a gaz power plant. Available at: https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11</sub>
 
 Multirotor drones are transforming inspection processes across industries by offering a safer, faster, and more cost-effective alternative to traditional methods. They are widely used to inspect infrastructure such as power lines, wind turbines, pipelines, bridges, and telecommunications towers. High-definition cameras, thermal sensors, and LiDAR enable detailed visual and thermal analysis, reducing the need for scaffolding, cranes, or rope access. This not only improves worker safety but also minimizes downtime, reduces cost and enhances maintenance planning.
 
 <ins>Transportation:</ins>
 
-The last mile in goods delivery is the most cost and time intensive of an entire delivery chain. The idea to deliver goods over urban areas with drones is in the meanwhile already an old story. First companies and test flights occurred already in the 2010s. However, until today, they are struggling with restrictive regulatory laws, safety concerns, noise concerns and limited payload capacities. Nevertheless there exist some success stories, one of them is the Platform 2 from Zipline. They use a hybrid fixed wing and multirotor drone in combination with a droid, a small deliver unit, lowered on a tethered rope to achieve fast, quiet and high precision home delivery. 
+The last mile in goods delivery is the most cost and time intensive of an entire delivery chain. The idea to deliver goods over urban areas with drones is in the meanwhile already an old story. First companies and test flights occurred already in the 2010s. However, until today, they are struggling with restrictive regulatory laws, safety concerns, noise concerns and limited payload capacities. Nevertheless there exist some success stories, one of them is the  <a href="https://www.post.ch/en/about-us/innovation/innovations-in-development/drones">Swiss post medical delivery</a> that introduced the first drone service for the transport of laboratory samples in 2017. By 2022, more than 2,000 flights had been successfully completed. The drones transport laboratory samples up to 45 minutes faster than road couriers. The drone follows pre-programmed routes between hospital buildings, using GPS for global positioning combined with onboard inertial measurement units and barometric altimeters—for local stabilization. The flight controller continuously runs feedback loops to maintain stability and track the desired trajectory, adjusting motor speeds in real time to compensate for disturbances like wind. For safety and operational reliability, the system includes multiple layers of redundancy and monitoring, to detect anomalies such as motor failure, navigation errors, or communication loss. Geofencing is also used to restrict the drone to authorized corridors, which is particularly important in urban environments.
+
 <div style="text-align: center;">
-    <img src="{{ site.baseurl }}/assets/images/uav/zipline_platform2.png" alt="Zipline Platform 2, autonomous drone delivery system." style="width: 90%; height: auto;">
-    <p style="font-size: small;">The Zipline Platform 2 autonomous drone delivery system focused on home delivery. They use a hybrid multirotor and fixed wing drone with a tethered delivery system from air. Image from <a href="https://www.zipline.com/about/zipline-fact-sheet" target="_blank">Zipline</a>.</p>
+    <img src="{{ site.baseurl }}/assets/images/uav/Drohnelugano1872x1053.jpg" alt="Swiss Post autonomous drone delivery system - 1st transport of laboratory samples in Lugano (2017)." style="width: 90%; height: auto;">
+    <p style="font-size: small;">The Swiss Post autonomous drone delivery system focused on transport lab samples between hospitals and laboratories.  Image from <a href="[https://www.zipline.com/about/zipline-fact-sheet](https://www.post.ch/en/about-us/innovation/innovations-in-development/drones)" target="_blank">Swiss Post</a>.</p>
 </div> 
 Companies and research institutions are also developing larger multirotor systems for human transport and urban air mobility, exploring the potential for future drone taxis. However none of them is fully operational up to this day.
 
@@ -384,13 +335,13 @@ Companies and research institutions are also developing larger multirotor system
 <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
     <p>
-      With the advancements in technology, drones offer farmers new and innovative ways to improve efficiency and crop yields. They are used in crop monitoring, yield estimation and to spray fertilizers or pesticides in a targeted manner. This reduces chemical usage, labor cost and can increase crop productivity. An example is the Argas T-50 from DJI, specifically developed for the use in agriculture.
+      With the advancements in technology, drones offer farmers new and innovative ways to improve efficiency and crop yields. They are used in crop monitoring, yield estimation and to spray fertilizers or pesticides in a targeted manner. This reduces chemical usage, labor cost and can increase crop productivity. An example from <a href"https://www.xag-au.com/">XAG</a> in Australia.
     </p>
   </div>
 
-  <div style="flex: 2; min-width: 280px;">
-    <img src="{{ site.baseurl }}/assets/images/uav/dji-argas-t50.png" alt="The DJI Argas T-50, an agriculture drone." style="width: 90%; height: auto;">
-    <p style="font-size: small;">The Argas T-50 from DJI equipped with a sprayer for agricultural use. Image from <a href="https://ag.dji.com/newsroom/agras-t50-and-t25-global-launch" target="_blank">DJI</a>.</p>
+  <div style="flex: 2; min-width: 260px;">
+    <img src="{{ site.baseurl }}/assets/images/uav/drone-agriculture2.jpg" alt="Agriculture drone." style="width: 90%; height: auto;">
+    <p style="font-size: small;"> An example of use of agricultural drone in Vietnam to make rice production more sustainable, as monsoon season starts, from <a href="https://www.xag-au.com/" target="_blank">XAG (Australia)</a>.</p>
   </div>
 </div>
 
@@ -425,51 +376,9 @@ Drones form an integral part of modern warfare. Most of them being fixed wing dr
   </div>
 </div>
 
-#### Challenges
-While the market and the innovation of multirotor drones grew exponentially over the past decade, there is still a lot of research going on, aiming to make drones more versatile and efficient. We want to provide below a non-exhaustive list with ongoing challenges.
-
-1. <ins>Agility, Efficiency, and Autonomy</ins><br>
-  <em>Goals:</em>  
-   - Faster and more responsive flight  
-   - Reduce energy consumption and decrease need for human control  
-   - <em>Challenges:</em> limited onboard processing power, battery life constraints, complex control algorithms
-
-2. <ins>Aerial Physical Manipulation</ins><br>
-  <em>Goals:</em>    
-   - Grasping or moving objects mid-air  
-   - <em>Challenges:</em> lightweight but stable design, complex mechanical structure & control
-
-3. <ins>Tight or Cluttered Environments</ins><br>
-  <em>Goals:</em>    
-   - Flying through narrow spaces (e.g., buildings, pipelines)  
-   - <em>Challenges:</em> adaptive design, real-time navigation
-
-4. <ins>Landing on complex Surfaces</ins><br>
-  <em>Goals:</em>    
-   - Inclined, moving, or uneven terrain indoors and outdoors 
-   - <em>Challenges:</em> ensure stable landing without human interaction
-
-5. <ins>Drone Swarms</ins><br>
-  <em>Goals:</em>    
-   - Coordinating multiple drones simultaneously 
-   - <em>Challenges:</em> communication, task distribution, swarm intelligence
-
-6. <ins>Robust Obstacle Avoidance</ins><br>
-  <em>Goals:</em>    
-   - Detecting and avoiding dynamic objects in complex environments at high speeds
-   - <em>Challenges:</em> reliable sensors and fast processing
-
-Addressing these challenges to improve drone safety, functionality and to expand their application is question of current research.
-
-#### Questions
-TODO...
 
 ### 2.2 Fixed wing drones
-A fixed-wing aircraft is a machine that uses a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
-
-- higher lift to drag ratio than multicopters --> energetically more efficient
-- fuselage contributes to lift generation and provides space for cargo
-- less agile than multicopters
+Like traditional airplanes, fixed-wing UAV/drone use a combination of fixed lifting surfaces (wings) and of forward thrust to fly. They generate lift through one or more stationary wings, relying on forward motion provided by a propeller or jet engine. Unlike rotorcrafts they cannot hover or take-off vertically, but are highly efficient for long-distance flight and can carry heavier payloads over extended duration.
 
 #### Design Principles
 <div style="margin-bottom: 15px; text-align: center;">
@@ -477,10 +386,10 @@ A fixed-wing aircraft is a machine that uses a combination of fixed lifting surf
   <p style="font-size: small;">Airplane parts and control surfaces definition. Image from <a href="https://www1.grc.nasa.gov/wp-content/uploads/NASA-Glenn-Airplane-Parts-2.pdf" target="_blank">Glenn Research Center</a></p>
 </div>
 
-To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image below shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft.
+To better understand the challenges and oppourtunities of a fixed-wing UAV, it is helpful to understand the basics of a how an aircraft operates. The image above shows a standard airplane where all major parts and control surfaces are named. We will use these names in the following section to describe the design principles and flight dynamics of a fixed-wing aircraft. Do not hesitate to come back to this overview image to see where a specific part is nomarlly located on an aircraft. If unfamiliar with principle of aerodynamics, it is highly recommended to read the [aerodynamics module](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html). 
 
 <ins>Wing Geometry:</ins>  
-The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the section about aerodynamic lift, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  
+The wings are the part which contribute usually the most to the lift generation of a plane. As we have already seen in the [introduction to aerodynamic](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/UAV/UAV_1.html), lift section, there are many factors having an impact on the dynamics of a wing. While wing design is an entire topic for itself, we want to introduce here a few more of the most important design parameters of an airfoil.  
 Despite the pressure drag (also form drag) and friction drag (also parasite drag), there exists a commonly used third type of drag: <em>induced drag</em>. Induced drag is drag that is <it>"induced"</it> by the lift generation. The high pressure difference between the top and bottom of the wing during lift generation, causes air to <it>"spill"</it> around the wing. This in turn, causes vortex generation leading to an increase in the total drag.
 <div style="text-align: center;">
   <img src="{{ site.baseurl }}/assets/images/uav/wing_geometry.svg" alt="Illustration of aircraft with swept and tapered wings." style="width: 50%; height: auto;">
@@ -585,9 +494,28 @@ Despite the pressure drag (also form drag) and friction drag (also parasite drag
   </div>
 </div>
 
-- dihedral angle  
-Balances at what angle of attack an aircraft is longitidunal stable.
+#### Stability
 
+The dihedral angle refers to the upward tilt of an aircraft’s wings relative to the horizontal when viewed from the front. Its primary role is in lateral (roll) stability, not longitudinal stability. When an aircraft with dihedral experiences a sideslip—for example due to a gust—the lower wing encounters a higher effective angle of attack and generates more lift than the higher wing. This creates a restoring rolling moment that brings the aircraft back toward level flight. In that sense, dihedral “balances” the aircraft by making it naturally resist roll disturbances.
+
+An aircraft is longitudinally stable when it naturally returns to a specific trimmed angle of attack after a disturbance, due to the balance of aerodynamic moments about its center of gravity. Meanwhile, the dihedral angle contributes separately by providing roll stability, helping the aircraft return to wings-level flight after lateral disturbances.
+
+To connect longitudinal stability with a more formal view, we look at how the pitching moment coefficient varies with angle of attack. The key idea is that an aircraft is in equilibrium (trimmed) when the total pitching moment about the center of gravity is zero, and it is stable if small deviations from that condition produce restoring moments.
+
+
+Longitudinal stability is analyzed using the pitching moment coefficient \(C_m)\, which depends on the angle of attack \(α\). Around the operating point, it is often approximated as a linear relation:
+\(C_m(\alpha) = C_{m0} + C_{m\alpha}\,\alpha\)
+
+where \(C_m0)\ is the moment coefficient at zero angle of attack, and \(C_{mα}\) is the slope of the curve.
+
+The trim condition is obtained when \(C_m=0\), which gives a specific equilibrium angle of attack. But stability depends on the slope:
+
+If \(C_{mα}<0\), the aircraft is longitudinally stable
+If \(C_{mα}>0\), it is unstable.
+
+The reason is intuitive: imagine the aircraft is trimmed and then a gust increases α. If the slope is negative, this increase produces a negative pitching moment (nose-down), which pushes the angle of attack back toward equilibrium. That is a restoring effect.
+
+You can visualize this as a straight line crossing the horizontal axis (where \(C_m=0\)). The crossing point gives the trim angle of attack, and the slope determines whether the system returns to it or diverges.
 
 <ins>Control Surfaces:</ins>  
 <div style="display: flex; justify-content: center; align-items: center; gap: 20px; text-align: center;">
@@ -685,7 +613,7 @@ While big fixed-wing aircrafts offer a big variety of interesting designs, we wa
 Unmanned fixed-wing aircrafts already had their beginning during World War I with unmanned remotely controlled aircrafts over radio-frequency. In 1917 the British developped their first UAV *Aerial Target* around the same time as the US the *Kettering Bug* - a forerunner of modern-day missiles. Since then fixed-wing UAVs became important for military and civil use, where they often cover similar fields of applications. Their main use case is in long-range missions in surveillance and mapping.
 
 #### Applications
-
+Since the application fields of fixed-wing UAVs are quite similar to the ones of multirotor drones, they will not be described in detail again. However, due to their higher efficiency and longer range, fixed-wing UAVs are often preferred for applications where long endurance and higher payload capacity are required. These include:
 1. Mapping surveying
 2. Surveillance and Security
 3. Agriculture
@@ -694,14 +622,78 @@ Unmanned fixed-wing aircrafts already had their beginning during World War I wit
 6. Cargo & delivery
 
 #### Challenges
+Controlling UAVs require to overcome a number of challenges, such as:
+
 1. VTOL capabilities
-2. autonomous navigation
-3. Energy management
-4. miniaturization
-5. Safety and Airspace integration
+Achieving efficient vertical takeoff and landing (VTOL) requires handling complex aerodynamic interactions and underactuated dynamics, while balancing hover efficiency with forward-flight performance. Hybrid configurations must address trade-offs between endurance, payload capacity, and control complexity. We will see more about this in the [multirotor page](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/multirotor).
+
+2. Autonomous navigation
+Reliable autonomy demands robust state estimation, mapping, and path planning in uncertain and dynamic environments. Challenges include dealing with limited onboard sensing, GPS-denied scenarios, real-time obstacle avoidance, and maintaining stability under disturbances. We will see more about this in the [aerial advanced control](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap9_aerial_robotics/aac).
+
+4. Energy management
+UAVs are strongly constrained by onboard energy density, requiring efficient propulsion, power-aware control strategies, and optimal mission planning. Extending flight endurance while supporting computation, sensing, and payload operation remains a critical limitation.
+
+5. Miniaturization
+Reducing size and weight while maintaining sensing, computation, and actuation capabilities introduces constraints on hardware integration, power consumption, and aerodynamic performance. Scaling effects also significantly impact flight dynamics and control.
+
+6. Safety and airspace integration
+Ensuring safe operation involves fault-tolerant control, redundancy, and reliable communication. Integration into shared airspace requires compliance with regulations, collision avoidance systems, and coordination with manned and unmanned traffic management frameworks.
+
+### Costs and Benefits
+
+Most commercial drones are small (<1kg), but depending on their principle they offer different applications. Different architectures bring more autonomy, stability or maneuverability. The below graphic shows an interesting relationship between range and weight of the aircrafts. While very small-scale drones are almost exclusively flapping-wing drones, their flight time is also short. For long range flights, fixed wing aircrafts achieve by far the greatest autonomy. Rotorcrafts are covering the space in between: mid-range flights and small (<1kg) mid-sized drones.
+
+<div style="float: left; margin-right: 15px; text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/uav/dronetype_flighttime_weight.webp" alt="Drone types against flight time and weight" style="width: 600px; height: auto;">
+  <p style="font-size: small;">The figure shows different drone types and compares flight time against weight. From <a href="https://www.nature.com/articles/nature14542/figures/3" target="_blank">Floreano & Woods, Nature 2015, Fig. 3</a></p>
+</div>
+
+## Questions
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are the main differences between fixed-wing drones and multirotor drones in terms of flight capabilities and applications?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open3')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open3" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Main differences include: 
+      <ul>
+        <li><strong>Flight Capabilities:</strong> Fixed-wing drones are more efficient for long-distance flight and can carry heavier payloads, while multirotor drones can perform vertical take-off and landing (VTOL) and hover in place.</li>
+        <li><strong>Applications:</strong> Fixed-wing drones  as well as rotorcrafts are often used for mapping, surveillance, and agriculture. Due to their endurance, fixed-wing drones are used for applications where a long flight endurance is benefical, whereas multirotor drones are used higher precison and navigation in confined spaces.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What type of different control surfaces are used to control the pitch, roll and yaw of a fixed-wing aircraft?</strong></p>
+
+  <button type="button" onclick="showAnswer('open4')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open4" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      The main control surfaces used to control the pitch, roll, and yaw of a fixed-wing aircraft are:
+      <ul>
+        <li><strong>Pitch:</strong> Controlled by the elevators located on the horizontal stabilizer at the tail of the aircraft.</li>
+        <li><strong>Roll:</strong> Controlled by the ailerons located on the trailing edge of each wing.</li>
+        <li><strong>Yaw:</strong> Controlled by the rudder located on the vertical stabilizer at the tail of the aircraft.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+
+
 
 ### 2.3 Flapping Wings:
-A flapping wing drone is an aircraft where lift and thrust generation and maneuvers are obtained by the actuation of flapping wings. They seek to imitate the flapping-wing flight of birds, bats and insects and are also known as ornithopter. 
+A flapping wing drone is an aircraft where lift and thrust generation and maneuvers are obtained by the actuation of flapping wings. They seek to imitate the flapping-wing flight of birds, bats and insects and are also known as ornithopters. 
 
 Flapping-wing robots can be split into three groups based on their size and weight: _large-scale_ over 100g, _small-scale_ between 1g and 100g and _insect-size_ flappers below 1g. Despite the weight the different flapping-wing systems differ in the frequency of flapping, which is faster for small- and insect-scale robots, their hover capacity which decreases or vanishes for large-scale systems and their type of actuation used which usually are conventional electric motors for large-scale system and electro-static actuators for insect-scale systems.
 
@@ -939,17 +931,89 @@ Before showing you a few examples of existing robots, the main characteristics o
 </div>
 
 #### Questions
-TODO...
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are the main differences between bird-inspired and insect-inspired flapping-wing drones in terms of design and flight capabilities?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open5')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open5" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      The main differences include:
+      <ul>
+        <li><strong>Design:</strong> Bird-inspired flapping-wing drones have larger wingspans, typically lower flapping frequencies, and often incorporate tails for stability and maneuverability. In contrast, insect-inspired drones are smaller, have higher flapping frequencies, and usually lack tails, relying on wing modulation for control.</li>
+        <li><strong>Flight Capabilities:</strong> Bird-inspired drones are designed for forward flight and gliding capabilities, while insect-inspired drones mainly hover and are capable of agile maneuvers. Additionally, bird-inspired drones tend to be passively stable, whereas insect-inspired drones are often inherently unstable and require active control.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are the main challenges when designing flapping-wing drones compared to fixed-wing or multirotor drones?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open6')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open6" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      The main challenges include:
+      <ul>
+        <li><strong>Complex Aerodynamics:</strong> While aerodynamic forces for fixed-wing ircrafts are mostly very well understood, flapping-wing drones operate in a complex aerodynamic regime that is difficult to model and predict. </li>
+        <li><strong>Miniaturization:</strong> Designing lightweight yet powerful actuators and power systems for small-scale flapping-wing drones is challenging.</li>
+        <li><strong>Control Algorithms:</strong> Developing robust control algorithms to manage the inherently unstable flight dynamics of flapping-wing drones is more complex than for fixed-wing or multirotor drones.</li>
+        <li><strong>Energy Efficiency:</strong> Flapping-wing drones have higher power demands relative to their weight, making energy management a critical challenge. Especially for very small-scale drones, where normal batteries are too heavy and big to be implemented.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
+<div class="open-question-container" style="margin-bottom: 2em;">
+  <p><strong>Question: What are potential advantages of flapping-wing drones over traditional fixed-wing or multirotor drones?</strong></p>
+  
+  <button type="button" onclick="showAnswer('open7')">
+    Show/Hide Answer
+  </button>
+
+  <div id="answer-open7" class="answer-box" style="display: none; margin-top: 10px; padding: 15px; border-left: 4px solid #2196F3; background-color: #f9f9f9;">
+    <p><strong>Answer:</strong></p>
+    <p>
+      Potential advantages include:
+      <ul>
+        <li><strong>Agility:</strong> Flapping-wing drones could technically achieve highly agile maneuvers, making them suitable for navigating complex environments.</li>
+        <li><strong>Small Scales:</strong> At very small scales, flapping-wing flight can be more efficient than propeller-based systems due to aerodynamic advantages at low Reynolds numbers. Additionally, minituarization of rotorcrafts or fixed wing drones are often impossible due to size contraints of electric motors.</li>
+        <li><strong>Biomimicry:</strong> Flapping-wing drones can mimic the flight patterns of birds and insects, potentially leading to new insights in biology.</li>
+        <li><strong>Reduced Noise:</strong> Flapping wings can produce less noise compared to fast-spinning propellers, making them more suitable for operations in noise-sensitive environments.</li>
+      </ul>
+    </p>
+  </div>
+</div>
+
 
 ## Additional Resources
 
 ### Credits:
-This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**. 
+This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, under supervision of **Dr. Charbel Toumieh (EPFL LIS)** and **Prof. Aude Billard**. It was funded by **IEEE RAS** and **EPFL**. 
+
+This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
 
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 Raymer, D. P. (1992). Aircraft design: A conceptual approach (2. ed). American Institute of Aeronautics and Astronautics.
+Beard, Randal W., and Timothy W. McLain. Small unmanned aircraft: Theory and practice. Princeton university press, 2012.
 
+<div class="page-navigation">
+  <a href="/docs/chap9_aerial_robotics/UAV/UAV_1"
+     id="go-to-previous"
+     title="Go to Previous Chapter">⬅</a>
 
+  <a href="/docs/chap9_aerial_robotics/UAV/UAV_3"
+     id="go-to-next"
+     title="Go to Next Chapter">➡</a>
 
+</div>
 

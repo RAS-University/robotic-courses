@@ -5,8 +5,8 @@ layout: default
 nav_order: 6
 chapter: 9
 section: 6
-publish: false
-nav_exclude: true
+publish: true
+nav_exclude: false
 ---
 <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 
@@ -34,9 +34,9 @@ MathJax.Hub.Config({
 
 <link rel="stylesheet" href="../styles.css">
 
-<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_2" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+<!-- <a href="/docs/aerial_robotics/multirotor/multirotor_2" id="go-to-previous" title="Go to Previous Chapter">⬅​</a> -->
 
-<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_4" id="go-to-next" title="Go to Next Chapter">➡​</a>
+<!-- <a href="/docs/aerial_robotics/multirotor/multirotor_4" id="go-to-next" title="Go to Next Chapter">➡​</a> -->
 
 # Multirotor Drones: Chapter 2
 
@@ -63,20 +63,6 @@ Throughout this lecture notes, we will use the following subscripts, superscript
 - $\mathbf{J}$: Moment of inertia
 - $\mathbf{I}_n$: Identity matrix of dimension $n \times n$
 
-
-
-- $x \in \mathbb{R}^{1\times n}$: vector $x$ of dimension $n$
-- $x_i$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$
-- $x_k$: value of $x$ at time step $k$ (discrete time)
-<!-- - $x_{i\mid k}$ with $i \in \mathbb{N}$, $i=1,\cdots,n$ for $x\in\mathbb{R}^{1\times n}$: component $i$ of vector $x$ at time step $k$ -->
-- $x^+$ or $x_{k+1}$: value of $x$ at next time step (discrete time)
-- $\dot{x}$: time derivative of $x$ (continuous time)
-- $x^*$: optimal value of $x$
-- $x^\top$: transpose of vector or matrix $x$
-- $\hat{x}$: estimate of variable $x$ (see chapter on [State Estimation](#-14-intro-to-state-estimation-))
-- $\hat{x}^-$: estimate of variable $x$ before measurement update
-- $\tilde{x}$: estimation error of variable $x$
-- $x_s$: steady state value of variable $x$
 
 
 ## Chapter 2: Modeling & Dynamics
@@ -240,6 +226,7 @@ m \mathbf{R}_B^W & \mathbf{0} \\ \mathbf{0} & \mathbf{I}_3
 
 Thrust model  
 state-space model: x'=f(x,u)
+
 ## Additional Resources
 
 ### Credits:
@@ -251,5 +238,15 @@ This course page is partly based on the Aerial Robotics class taught by [Prof. D
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 [Introduction to Multicopter Design and Control (Quan Quan)](https://link.springer.com/book/10.1007/978-981-10-3382-7)- Textbook offering a systematic overview over multicopters from basic design guidelines to high-level control. 
+
+<div class="page-navigation">
+  <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_2"
+     id="go-to-previous"
+     title="Go to Previous Chapter">⬅</a>
+
+  <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_4"
+     id="go-to-next"
+     title="Go to Next Chapter">➡</a>
+</div>
 
 

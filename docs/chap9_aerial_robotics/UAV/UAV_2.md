@@ -315,7 +315,7 @@ These drones overcame early limitations in battery life, GPS accuracy, and contr
 
 <ins>Inspection:</ins>
 
-![video](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11)
+![video]([https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11](https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11))
 ><sub>Voliro T for NDT and LPS inspection on a wind turbine and a gaz power plant. Available at: https://youtu.be/Q29N_pTc6kA?si=kTuKMjH5e8VwasCl&t=11</sub>
 
 Multirotor drones are transforming inspection processes across industries by offering a safer, faster, and more cost-effective alternative to traditional methods. They are widely used to inspect infrastructure such as power lines, wind turbines, pipelines, bridges, and telecommunications towers. High-definition cameras, thermal sensors, and LiDAR enable detailed visual and thermal analysis, reducing the need for scaffolding, cranes, or rope access. This not only improves worker safety but also minimizes downtime, reduces cost and enhances maintenance planning.
@@ -334,13 +334,13 @@ Companies and research institutions are also developing larger multirotor system
 <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 2em; flex-wrap: wrap;">
   <div style="flex: 1; min-width: 300px;">
     <p>
-      With the advancements in technology, drones offer farmers new and innovative ways to improve efficiency and crop yields. They are used in crop monitoring, yield estimation and to spray fertilizers or pesticides in a targeted manner. This reduces chemical usage, labor cost and can increase crop productivity. An example is the Argas T-50 from DJI, specifically developed for the use in agriculture.
+      With the advancements in technology, drones offer farmers new and innovative ways to improve efficiency and crop yields. They are used in crop monitoring, yield estimation and to spray fertilizers or pesticides in a targeted manner. This reduces chemical usage, labor cost and can increase crop productivity. An example from [XAG](https://www.xag-au.com/) in Australia.
     </p>
   </div>
 
   <div style="flex: 2; min-width: 280px;">
-    <img src="{{ site.baseurl }}/assets/images/uav/dji-argas-t50.png" alt="The DJI Argas T-50, an agriculture drone." style="width: 90%; height: auto;">
-    <p style="font-size: small;">The Argas T-50 from DJI equipped with a sprayer for agricultural use. Image from <a href="https://ag.dji.com/newsroom/agras-t50-and-t25-global-launch" target="_blank">DJI</a>.</p>
+    <img src="{{ site.baseurl }}/assets/images/uav/drone-agriculture2.jpg" alt="Agriculture drone." style="width: 90%; height: auto;">
+    <p style="font-size: small;"> An example of use of agricultural drone in Vietnam to make rice production more sustainable, as monsoon season starts, from <a href="https://www.xag-au.com/" target="_blank">XAG (Australia)</a>.</p>
   </div>
 </div>
 

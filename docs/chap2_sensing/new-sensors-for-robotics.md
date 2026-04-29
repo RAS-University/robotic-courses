@@ -188,6 +188,10 @@ To understand real sensors, it helps to imagine the **ideal sensor**, a theoreti
 
 The ideal sensor doesn’t exist, but it’s a useful reference. When engineers design robots, they compare real sensors against this “perfect” baseline to reason about **range, resolution, noise, latency, linearity, drift,** and **environmental robustness**.
 
+#### Sensor encoding: analog to digital converter
+
+Sensors usually employ Analog-to-Digital Converter (ADC) to convert a continuous analog input signal into a discrete digital value, so as to ease computer interpretation. An ADC samples an analog quantity (such as voltage). It then quantizes that value into one of a finite number of digital codes. For an N-bit ADC, there are $2^N$ possible digital codes. For instance, a 3-bit ADC produces 8 codes: 000, 001, 010, 011, 100, 101, 110, 111. Each code corresponds to a small range of the analog input, often called a quantization level or bin.
+
 ---
 
 #### Sensor imperfections 
@@ -200,7 +204,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 - **Limited range** : Every sensor has minimum and maximum values it can detect.  
   >*Example:* an ultrasonic module may only work from ~2 cm to ~4 m.
 
-- **Finite resolution** : Sensors (and ADCs) can only detect changes above a threshold (quantization).  
+- **Finite resolution** : Sensors encoded in Analog-to-Digital Converter (ADC) can only detect changes above a threshold (quantization).  
   >*Example:* a 10-bit ADC over 3.3 V has ≈3.2 mV per LSB.
 
 - **Accuracy vs precision** : A sensor may be consistent but biased, or accurate on average but inconsistent.  
@@ -211,7 +215,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 
 - **Environmental sensitivity** : Performance may drop under certain conditions (lighting, temperature, materials, EMI, vibrations).  
   >*Example:* cameras in low light; sonar on soft or angled surfaces.
-
+  
 **Trade-off examples**
 >- A **LiDAR** provides very accurate distance maps but is **expensive** and **power-hungry**.  
 >- An **ultrasonic** sensor is **cheap and robust**, but has **low resolution** and can be **confused by certain materials**.  
@@ -480,24 +484,28 @@ Key rules:
 
 #### Resolution
 
-Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect.
+Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect. 
 
-* For an **ADC-based sensor**  
+* For an **ADC-based sensor**, the resolution is determined by the maximal number of bits \(N\) one can use to encode the signal:  
   $$\Delta x_{\text{min}} = \tfrac{\text{FS}}{2^N}$$  
-  where \(N\) = number of bits, and FS the Full Scale of the sensor.
-
-* For an **analog sensor** it is limited by inherent noise.
-
-> **Example** A 12-bit, ±8 g accelerometer:  
-> $$\Delta x_{\text{min}} = \frac{16\,\text{g}}{2^{12}} \approx 0.004\,\text{g}.$$
-
+  where \(N\) = number of bits, and FS the Full Scale of sensor measurement.
+  
 A measurement smaller than $\Delta x_{\text{min}}$ can not be perceived by the sensor
+
+> **Example** A Potentiometer placed on a motor shaft can measure the displacement of the robot joint moved by that motor. The potentiometer outputs a continuous analog voltage
+> (e.g., 0–5 V) proportional to the angle that can then be converted into a digital signal with an ADC. 
+> If one uses a 8-bit ADC encoder and the joint can move ±90 degrees, the resolution is: 
+> $$\Delta x_{\text{min}} = \frac{180\,\text{g}}{2^{8}} \approx 0.7\,\text{degrees}.$$
+> A resolution of less than 1 degree may be insufficient for generating highly accurate displacements. In a robot arm, such angular imprecision accumulates along the kinematic
+> chain, resulting in significant positional error at the end effector.
+
+* For an **analog sensor**, the resolution is determined by the sensor's physics and construction. For instance, the sensor's material properties (e.g. resistive or capacitive elements) may limit what it can respond to. Additionally, mechanical tolerances (e.g., friction, backlash) may further reduce resolution.
+
+The resolution and range of measurement of a sensor is usually documented in the manufacturer's datasheet.
 
 ---
 
-#### Accuracy & Precision
-
-When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
+#When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
 
 - **Accuracy** is about how close the average measurement is to the true or reference value.
 
@@ -528,8 +536,8 @@ The dartboard analogy below is a classic way to illustrate this difference:
 **Key take-aways:**
 
 1. A sensor can be **precise yet inaccurate** (systematic bias) or **accurate yet imprecise** (large random scatter).  
-2. Calibration removes bias to improve *accuracy*; filtering averages out noise to improve *precision*.  
-
+2. Calibration removes bias to improve *accuracy*; filtering averages out noise to improve *precision*.
+3. While a sensor may be highly accurate, the resolution of the sensor's ADC may reduce this accuracy to the lowest resolution of its encoder.
 
 <details markdown="1">
  <summary>Video Explaining Accuracy and Precision</summary>
@@ -541,6 +549,7 @@ The dartboard analogy below is a classic way to illustrate this difference:
 
 </details>
 
+When controling a robot, knowing the sensor’s resolution, precision and accuracy is crucial, as it can constrain or even rule out certain actions. For example, if distances to objects cannot be measured with a resolution or accuracy finer than 10 cm, the robot must operate with great caution when moving close to objects. 
 ---
 
 #### Noise

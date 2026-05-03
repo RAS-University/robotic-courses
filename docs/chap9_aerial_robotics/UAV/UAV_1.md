@@ -10,53 +10,7 @@ publish: true
 
 <script src="../../questions.js"></script>
 
-<style>
-  #go-to-next {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #go-to-next:hover {
-    opacity: 1;
-  }
-  </style>
-
-<style>
-  #go-to-previous {
-    position: fixed;
-    bottom: 60px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  #go-to-previous:hover {
-    opacity: 1;
-  }
-  </style>  
-
-  <a href="/docs/chap9_aerial_robotics/UAV/UAV_2" id="go-to-next" title="Go to Next Chapter">➡​</a>
+<link rel="stylesheet" href="../styles.css">
 
 <style>
   .formula-window{
@@ -233,9 +187,16 @@ To get the most of this module, it is recommended that you have knowledge in:
 
 Unmanned Aerial Vehicles (UAV) are flying object's without a pilot and controlled remotely or are autonomous. They are usually referred to as drones. And probably now, when you hear the word _drone_ you are thinking of a small commercial quadcopter people use to take stunning video shots like on the image above? Or maybe you are thinking of drone racing? Or maybe of military drones used more and more frequently in modern war?
 But, did you know that drones/UAVs are much more than only quadcopters?
-The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the last decade the drone market got revolutionized and is growing in an incredible pace. More complex mechanics, more stable control and more autonomy. This and the following lectures will give you an overview of different drone types, aerodynamic principles, and what it takes to build and control an UAV.
+The first consumer drone entered the market in 2013 - the DJI Phantom 1. In the last decade the drone market got revolutionized and is growing in an incredible pace. More complex mechanics, more stable control and more autonomy. This and the following modules will give you an overview of different drone types, aerodynamic principles, and what it takes to build and control an UAV.
 
 This module about UAVs aims to give an introduction to aerial robotics and provide an overview over different drone types, their aerodynamical principles and their associated cost and benefits.
+
+## Chapter 0: Sneak Peek into current state of the art of flying robots
+
+Before we dive into the details of how drones work, we invite you to have a look at the video below, which gives you an overview of the current state of the art of flying robots and their main research questions. It doesn't go much into technical details, but it is a good starting point to make you curious about the topic and to give you a glimpse of the different drone types that exist.
+
+![video](https://www.youtube.com/watch?v=U6ZP38XUrGs)
+><sub>The present and future of flying robots - IEEE Robotics and Automation Society. Learn about the work of Dr. Roland Siegwart, Dr. Anibal Ollero, Dr. Dario Floreano, and Dr. Margarita Chli on flying robots and some of the challenges they are still trying to tackle. Available at: https://www.youtube.com/watch?v=U6ZP38XUrGs</sub>
 
 ## Chapter 1 : Introduction to aerodynamic principles
 
@@ -878,9 +839,17 @@ Watch the following video to see how the magnitude of these forces are changing 
 ### Credits:
 This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**. 
 
+This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
+
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
 Raymer, D. P. (1992). Aircraft design: A conceptual approach (2. ed). American Institute of Aeronautics and Astronautics.
+
+<div class="page-navigation">
+  <a href="/docs/chap9_aerial_robotics/UAV/UAV_2"
+     id="go-to-next"
+     title="Go to Next Chapter">➡</a>
+</div>
 
 
 

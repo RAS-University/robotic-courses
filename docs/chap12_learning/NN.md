@@ -1,5 +1,5 @@
 ---
-title: 12.7 Neural Networks for Robotics
+title: 12.8 Neural Networks for Robotics
 parent: "Chapter 12: Robot Learning"
 has_children: false
 nav_order: 2
@@ -8,7 +8,7 @@ math: mathjax
 chapter: 12
 section: 8
 publish: true
-nav_exclude: true
+nav_exclude: false
 ---
 
 <!-- Link external JavaScript file -->

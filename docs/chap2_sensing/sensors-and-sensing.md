@@ -1143,7 +1143,7 @@ $$
 
 ---
 
-##### Calibration & error sources (typical)
+**Calibration & error sources (typical)**
 {: .no_toc }
 - **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
 - **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
@@ -1165,7 +1165,7 @@ Odometry turns local actuator/IMU readings into an integrated pose estimate usin
 ---
 
 <details markdown="1">
- <summary>Conceptual Quesetions</summary>
+ <summary>Conceptual Questions</summary>
 
   <p><strong>Question 1: </strong> What is the core idea of odometry?</p>
   <form id="ch2-odom-q1">
@@ -1384,8 +1384,8 @@ To convert bits of resolution into the number of positions the encoder can detec
 </details>
 
 **Take-home message**
-An absolute encoder  provides a unique digital code for each distinct position of its shaft, allowing it to determine the absolute angular position immediately upon power-up, without the need for homing or reference movements. In contrast, incremental encoders only provide relative position changes. Absolute encoders are hence advantageous in that they retain their position information even after power loss.
----
+An absolute encoder  provides a unique digital code for each distinct position of its shaft, allowing it to determine the absolute angular position immediately upon power-up, without the need for homing or reference movements. In contrast, incremental encoders only provide relative position changes. Absolute encoders are hence advantageous in that they retain their position information even after power loss.  \
+----------------
 
 **Potentiometers.**  
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/poten.jpg)

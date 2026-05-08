@@ -1082,13 +1082,13 @@ Proprioceptive and exteroceptive sensing form two complementary views of a robot
 
 Together, these two sensing modalities provide the foundation for robust robotic behavior: proprioceptive sensors keep the robot stable and aware of itself, while exteroceptive sensors keep it situated and responsive to the world.
 
-#### Odometry
+#### Odometry
 {: #ch2-odom }
 
 *Odometry* estimates a robot’s change in pose by integrating *proprioceptive* motion measurements over time (e.g., wheel/track motion, joint motion, IMU). Historically known as *dead reckoning*, odometry develops a kinematic model relating actuator motions to body motion, then integrates that model to produce pose as a function of time. Errors from modeling and sensing accumulate and must be managed or corrected with additional measurements.
 
 
-##### Differential-drive wheel odometry 
+**Differential-drive wheel odometry** 
 {: .no_toc }
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Differential_drive.png)
 ><sub>Differential drive kinematics. Source : Springer Handbook of Robotics, Chapter : 20.1</sub>
@@ -1155,7 +1155,7 @@ $$
 
 ---
 
-#### Odometry in the estimation stack
+**Odometry in the estimation stack**
 {: .no_toc }
 Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
 
@@ -1316,7 +1316,7 @@ Odometry turns local actuator/IMU readings into an integrated pose estimate usin
 
 ---
 
-#### Rotary & Linear Position Sensing (Encoders & Potentiometers)
+#### Rotary & Linear Position Sensing (Encoders & Potentiometers)
 
 Position sensing provides joint/shaft angle and linear travel for feedback control, odometry, and safety. Common technologies include **incremental encoders**, **absolute encoders**, **resolvers/synchros**, and **potentiometers**. Selection should be guided by the characteristics in Ch. 1 (range, resolution, accuracy, noise, bandwidth/latency) and by mechanical integration constraints.
 
@@ -1351,6 +1351,12 @@ Many incremental encoders also include an **Index (I)** signal, which generates 
 ---
 
 **Absolute encoders.**  
+
+Absolute encoders use typically a coded disc attached to the rotating shaft. The disc is divided into concentric tracks, each containing a pattern of opaque and transparent (or reflective) segments. Each track corresponds to a bit in the digital output word. As the shaft rotates, a light source (LED) and photodetectors (or optical sensors) read the pattern on each track, generating a unique binary code for every position.
+
+Single-Turn Absolute Encoders: Provide a unique code for one full rotation (360°). The number of unique positions is determined by the resolution (e.g., 8-bit = 256 positions, 12-bit = 4096 positions).
+Multi-Turn Absolute Encoders: Include additional gears or battery-backed counters to track the number of full rotations, enabling position measurement beyond 360° (e.g., 16-bit for turns + 12-bit for position within a turn).
+
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Absolute_encoder.png)
 ><sub>Each concentric track on the encoder disk represents one bit of resolution. Note that each track, starting from the inside of the disk, has double the number of light-and-dark bands than the previous track. The encoder shown here has 4 tracks, so has 4 bits of resolution and can measure 16 positions (2^4) for each rotation of the encoder. Source : https://www.linearmotiontips.com/when-is-encoder-resolution-specified-in-bits-and-what-does-that-tell-us/</sub>
 
@@ -1377,6 +1383,8 @@ To convert bits of resolution into the number of positions the encoder can detec
 
 </details>
 
+**Take-home message**
+An absolute encoder  provides a unique digital code for each distinct position of its shaft, allowing it to determine the absolute angular position immediately upon power-up, without the need for homing or reference movements. In contrast, incremental encoders only provide relative position changes. Absolute encoders are hence advantageous in that they retain their position information even after power loss.
 ---
 
 **Potentiometers.**  

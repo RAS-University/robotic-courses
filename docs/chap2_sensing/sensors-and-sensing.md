@@ -1496,26 +1496,7 @@ Wine-glass resonator gyroscopes use the effect of Coriolis forces on the positio
 * **Angle Random Walk (ARW)** is a measure of the noise-induced angular error that accumulates when integrating a gyroscope’s rate output over time. It quantifies how random noise in the sensor’s output translates into uncertainty in the estimated orientation after integration. ARW is typically specified in degrees per root hour (deg/√hr) or radians per root second (rad/√s) and is derived from the spectral density of the sensor’s noise. ARW determines the short-term precision of a robot’s orientation estimate. Even if a gyroscope has no bias or scale factor errors, the inherent noise in its measurements will cause the integrated angle to diffuse randomly over time, similar to a drunkard’s walk. To reduce the impact of ARW, engineers often use sensor fusion techniques (e.g., combining gyroscope data with accelerometer or magnetometer data) to constrain the orientation estimate and prevent unbounded error growth.
 
 * **Scale Factor** - in inertial units compares measured angular rate in degrees per second and sensor’s output (e.g., voltage, digital counts, or current). For example, a gyroscope might have a scale factor of 5 mV per °/s, meaning that for every degree per second of rotation, the sensor outputs 5 millivolts. A 1% scale factor error in a gyroscope measuring 100°/s would result in a 1°/s error in the rate measurement, which, when integrated, could lead to significant orientation errors over time. 
----
 
-##### Practical selection and integration tips
-{: .no_toc }
-
-* **Match Range to Dynamics**: When selecting sensors for a robotic system, it is critical to ensure that the measurement range and bandwidth are appropriately matched to the dynamics of the robot’s motion. The full-scale range of the sensor should be chosen such that saturation is unlikely even during the most extreme maneuvers the robot might perform. For example, if a robot arm is expected to accelerate rapidly during high-speed tasks, the gyroscopes or accelerometers should have a range that accommodates the maximum angular velocity or linear acceleration without clipping, which would lead to loss of data and potential control instability.
-
-* **Match Bandwidth to Dynamics**: The bandwidth (number of measurement per secund) must be high enough to capture the fastest dynamics of the robot’s motion without introducing excessive noise or latency. The bandwitch of the inertial unit and the interface to the onboard computer must be selected based on the natural frequencies of the robot’s motion and the control system’s requirements.
-
-* **Mounting and Alignment**: Proper mounting and alignment of sensors are fundamental to achieving accurate and reliable measurements. Sensors should be rigidly mounted as close as possible to the robot’s center of mass or the point of interest to minimize the effects of vibration and mechanical coupling. For instance, in a robotic arm, placing an Inertial Measurement Unit near the base rather than at the end effector reduces the influence of high-frequency vibrations from the joints, which can otherwise corrupt the sensor data.
-Additionally, the axes of the sensors must be orthogonal to each other and aligned with the robot’s principal axes to ensure that measurements are consistent with the robot’s coordinate frame. Misalignment between the sensor axes and the robot’s body frame can introduce cross-axis errors, where motion along one axis is incorrectly interpreted as motion along another.
-
-* **Thermal Behavior**
-Temperature variations can significantly affect sensor performance, particularly in MEMS-based sensors like accelerometers and gyroscopes. As the sensor heats up or cools down, its output may shift or scale non-linearly. Characterizing the bias and scale factor as functions of temperature and then applying temperature compensation in the sensor’s firmware or the robot’s state estimator may be necessary. 
-
-* **Why fusion is essential**
-All inertial measurements exhibit **drift** due to bias and noise. Drift causes orientation error; In practice, three orthogonal gyroscopes are often ganged together to measure angular velocity about all three axes (roll, pitch, and yaw), enabling the reconstruction of the robot’s full 3-D rotation. However, gyroscopes alone are insufficient for complete state estimation because they drift over time due to integration errors. To address this, gyroscopes are typically integrated with accelerometers in an **Inertial Measurement Unit (IMU)**. An IMU combines three orthogonal accelerometers (to measure linear acceleration and gravity) and three orthogonal gyroscopes (to measure angular velocity). The accelerometers provide a reference for gravity, which helps correct the drift in the gyroscopes’ orientation estimates.
-
-* **Notes for robots** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. \
-  
 ---
 
 <details markdown="1">
@@ -1572,39 +1553,6 @@ All inertial measurements exhibit **drift** due to bias and noise. Drift causes 
   <p id="ch2-3-q3-feedback"></p>
 </form>
 
-<!-- Question 4 -->
-
-<p><strong>Question 4: Which spec mainly limits short-term orientation precision when integrating gyro rate?</strong></p>
-<form id="ch2-3-q4">
-  <input type="radio" name="ch2-3-q4" value="A"> Angle Random Walk (ARW)<br>
-  <input type="radio" name="ch2-3-q4" value="B"> Long-term bias stability only<br>
-  <input type="radio" name="ch2-3-q4" value="C"> Scale-factor linearity at full temperature range<br>
-  <input type="radio" name="ch2-3-q4" value="D"> Maximum measurable rate (full-scale)<br>
-  <button type="button"
-    onclick="checkTrueFalse('ch2-3-q4', 'A',
-      '✅ Correct! ARW characterizes noise that integrates into short-term angle uncertainty.',
-      '❌ Try again.')">
-    Check Answer
-  </button>
-  <p id="ch2-3-q4-feedback"></p>
-</form>
-
-<!-- Question 5 -->
-
-<p><strong>Question 5: What is a good practice to reduce orientation drift in an IMU-based estimator?</strong></p>
-<form id="ch2-3-q5">
-  <input type="radio" name="ch2-3-q5" value="A"> Rely only on double-integrated accelerometer data<br>
-  <input type="radio" name="ch2-3-q5" value="B"> Mount the IMU far from the center to increase sensed vibration<br>
-  <input type="radio" name="ch2-3-q5" value="C"> Maximize bandwidth regardless of noise<br>
-  <input type="radio" name="ch2-3-q5" value="D"> Fuse gyro with accelerometer/magnetometer (e.g., complementary/Kalman filter) and estimate bias<br>
-  <button type="button"
-    onclick="checkTrueFalse('ch2-3-q5', 'D',
-      '✅ Correct! Sensor fusion with bias estimation constrains drift using gravity and heading references.',
-      '❌ Try again.')">
-    Check Answer
-  </button>
-  <p id="ch2-3-q5-feedback"></p>
-</form>
 </details>
 
 ---
@@ -1734,9 +1682,69 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
   <p id="ch2-acc-q4-feedback"></p>
 </form>
 
-<hr>
 
-<p><strong>Question 5: Gravity removal in an IMU.</strong> True or False: Accurate attitude from gyros is important because any tilt error misprojects gravity, leaving a residual that integrates to large velocity/position drift.</p>
+</details>
+---
+
+##### Practical selection and integration tips
+{: .no_toc }
+
+* **Match Range to Dynamics**: When selecting sensors for a robotic system, it is critical to ensure that the measurement range and bandwidth are appropriately matched to the dynamics of the robot’s motion. The full-scale range of the sensor should be chosen such that saturation is unlikely even during the most extreme maneuvers the robot might perform. For example, if a robot arm is expected to accelerate rapidly during high-speed tasks, the gyroscopes or accelerometers should have a range that accommodates the maximum angular velocity or linear acceleration without clipping, which would lead to loss of data and potential control instability.
+
+* **Match Bandwidth to Dynamics**: The bandwidth (number of measurement per secund) must be high enough to capture the fastest dynamics of the robot’s motion without introducing excessive noise or latency. The bandwitch of the inertial unit and the interface to the onboard computer must be selected based on the natural frequencies of the robot’s motion and the control system’s requirements.
+
+* **Mounting and Alignment**: Proper mounting and alignment of sensors are fundamental to achieving accurate and reliable measurements. Sensors should be rigidly mounted as close as possible to the robot’s center of mass or the point of interest to minimize the effects of vibration and mechanical coupling. For instance, in a robotic arm, placing an Inertial Measurement Unit near the base rather than at the end effector reduces the influence of high-frequency vibrations from the joints, which can otherwise corrupt the sensor data.
+Additionally, the axes of the sensors must be orthogonal to each other and aligned with the robot’s principal axes to ensure that measurements are consistent with the robot’s coordinate frame. Misalignment between the sensor axes and the robot’s body frame can introduce cross-axis errors, where motion along one axis is incorrectly interpreted as motion along another.
+
+* **Thermal Behavior**
+Temperature variations can significantly affect sensor performance, particularly in MEMS-based sensors like accelerometers and gyroscopes. As the sensor heats up or cools down, its output may shift or scale non-linearly. Characterizing the bias and scale factor as functions of temperature and then applying temperature compensation in the sensor’s firmware or the robot’s state estimator may be necessary. 
+
+* **Why fusion is essential**
+All inertial measurements exhibit **drift** due to bias and noise. Drift causes orientation error; In practice, three orthogonal gyroscopes are often ganged together to measure angular velocity about all three axes (roll, pitch, and yaw), enabling the reconstruction of the robot’s full 3-D rotation. However, gyroscopes alone are insufficient for complete state estimation because they drift over time due to integration errors. To address this, gyroscopes are typically integrated with accelerometers in an **Inertial Measurement Unit (IMU)**. An IMU combines three orthogonal accelerometers (to measure linear acceleration and gravity) and three orthogonal gyroscopes (to measure angular velocity). The accelerometers provide a reference for gravity, which helps correct the drift in the gyroscopes’ orientation estimates.
+
+* **Notes for robots** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. \
+  ---
+
+<details markdown="1">
+  <summary>Conceptual questions</summary>
+
+<!-- Question 1 -->
+
+<p><strong>Question 1: Which spec mainly limits short-term orientation precision when integrating gyro rate?</strong></p>
+<form id="ch2-3-q4">
+  <input type="radio" name="ch2-3-q4" value="A"> Angle Random Walk (ARW)<br>
+  <input type="radio" name="ch2-3-q4" value="B"> Long-term bias stability only<br>
+  <input type="radio" name="ch2-3-q4" value="C"> Scale-factor linearity at full temperature range<br>
+  <input type="radio" name="ch2-3-q4" value="D"> Maximum measurable rate (full-scale)<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q4', 'A',
+      '✅ Correct! ARW characterizes noise that integrates into short-term angle uncertainty.',
+      '❌ Try again.')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q4-feedback"></p>
+</form>
+
+<!-- Question 2 -->
+
+<p><strong>Question 2: What is a good practice to reduce orientation drift in an IMU-based estimator?</strong></p>
+<form id="ch2-3-q5">
+  <input type="radio" name="ch2-3-q5" value="A"> Rely only on double-integrated accelerometer data<br>
+  <input type="radio" name="ch2-3-q5" value="B"> Mount the IMU far from the center to increase sensed vibration<br>
+  <input type="radio" name="ch2-3-q5" value="C"> Maximize bandwidth regardless of noise<br>
+  <input type="radio" name="ch2-3-q5" value="D"> Fuse gyro with accelerometer/magnetometer (e.g., complementary/Kalman filter) and estimate bias<br>
+  <button type="button"
+    onclick="checkTrueFalse('ch2-3-q5', 'D',
+      '✅ Correct! Sensor fusion with bias estimation constrains drift using gravity and heading references.',
+      '❌ Try again.')">
+    Check Answer
+  </button>
+  <p id="ch2-3-q5-feedback"></p>
+</form>
+
+<!-- Question 3 -->
+
+<p><strong>Question 3: Gravity removal in an IMU.</strong> True or False: Accurate attitude from gyros is important because any tilt error misprojects gravity, leaving a residual that integrates to large velocity/position drift.</p>
 <form id="ch2-acc-q5">
   <input type="radio" name="ch2-acc-q5" value="True"> True<br>
   <input type="radio" name="ch2-acc-q5" value="False"> False<br>
@@ -1750,7 +1758,7 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 </form>
 
 </details>
-
+---
 
 ---
 

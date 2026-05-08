@@ -1788,10 +1788,7 @@ The rest of this section page gives only a coarse overview of sensors to measure
 {: .no_toc }
 
 * **Actuator effort (motor current).** In many electric drives, torque produced by the motor can be inferred from the current. This linear or often nonlinear relationship is advantageous in that it does not require placement of an additional sensor to measure force. However, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
-* **Joint or wrist F/T sensors.** The alternative is to place a sensor to measure the force produced by the robot. This can be done either by placing force/torque sensors, or tactile sensors.
-
-  load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
-
+* **Joint or wrist F/T sensors.** The alternative is to place a sensor to measure the force produced by the robot. This can be done either by placing force-torque sensors at the robot's joints or end-effector to measure forces applied at the joint or end-effector, or to cover the robot with an artificial skin, made of so-called tactile sensors, enabling to measure contact point along the robot's surface.
 
 ---
 
@@ -1801,29 +1798,32 @@ The rest of this section page gives only a coarse overview of sensors to measure
 In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor. The simplest way of representing this is through a linear relationship.
 
 * **Linear approximation**
-For a motor with torque constant $k_t$,
+For a motor with torque constant $k_t$, one can estimate the relationship between the torque, $\tau_m$, produced by the motor and the measured current $I$:
 $$
 \tau_m \approx k_t I \quad \text{(SI units: } k_t[\mathrm{Nm/A]} \text{).}
 $$
-With a gear ratio $g$ (output torque is $g$ times motor shaft torque) and efficiency $\eta$,
+The model can be extended to take into account cases when the motor torque is amplified by a gear ratio $g$ (output torque is $g$ times motor shaft torque) with an estimated efficiency $\eta$, and diminishes due to losses from friction and cogging effects $\tau_f(\dot{q})$ and reflected inertia, a$J_{\text{refl}}$ at the joint $q$.
 $$
 \tau_{\text{joint}} \approx \eta g k_t I - \tau_f(\dot{q}) - J_{\text{refl}} \ddot{q},
 $$
-where $\tau_f(\dot{q})$ captures friction and cogging effects, $J_{\text{refl}}$ is reflected inertia, and $q$ is the joint angle.
+where 
 
 **Why it is popular.**
-* Zero added mechanics or wiring; readings arrive at **drive rates** with minimal latency.
-* Sufficient for many inner-loop controllers, collision detection, and coarse force regulation.
+* Torque estimation via current measurement eliminates the need for extra sensors, mechanical modifications, or complex wiring. Data is acquired at drive rates, providing real-time feedback with minimal latency.
+
+* Torque through current estimate is sufficiently accurate for inner-loop controllers (e.g., PID or torque control loops), simplistic collision detection (on/off and for large impact), and coarse force regulation (maintaining approximate force levels).
 
 **Implementation notes.**
-* **Current measurement.** Shunt resistor (precise, adds burden voltage) or Hall-effect/isolated sensors (galvanic isolation, lower insertion loss).
-* **Calibration.** Identify $k_t$ from datasheet then verify under load; characterize $\tau_f(\dot{q})$ via slow sweeps; measure $\eta$ under representative speeds/loads.
-* **Limits and pitfalls.**
+* **Current measurement.** is done through shunt resistor (precise, adds burden voltage) or Hall-effect/isolated sensors (galvanic isolation, lower insertion loss).
+* **Calibration.** One can identify the constant $k_t$ from datasheet and should verify its validity when loading the motor; one should also characterize $\tau_f(\dot{q})$ via slow sweeps, and measure $\eta$ under representative speeds/loads.
+  
+* **Limits and pitfalls.** 
 
-  * Gear friction, stiction, and cogging bias the estimate at low speeds.
-  * Thermal drift of phase resistance and $k_t$ changes the mapping over temperature.
-  * Current loops and PWM add ripple; bandwidth and filtering trade latency against noise.
-  * Backlash/compliance decouple motor torque from external interaction torque during reversals.
+* At low speeds, gear friction, stiction, and cogging introduce biases into the torque estimate, as these non-linear effects distort the relationship between motor current and actual output torque.
+* Thermal drift in phase resistance and the torque constant alters the mapping between current and torque over time, as temperature variations affect the motor’s electrical and magnetic properties.
+* The presence of current loops and PWM (Pulse-Width Modulation - electronics to control motors) further complicates the process by introducing ripple into the measurements.
+* Aggressive filtering reduces noise but increases latency, while minimal filtering preserves responsiveness at the cost of signal clarity.
+* Backlash and compliance in the mechanical system can decouple the motor torque from the external interaction torque, particularly during direction reversals, leading to discrepancies between the estimated and actual torque experienced by the load. 
 
 **When to add a true torque sensor.**
 If precise low-force regulation, contact transients, or model uncertainties dominate, **joint torque sensors**, **series elastic elements**, or **wrist F/T sensors** provide more reliable interaction measurements.

@@ -135,7 +135,15 @@ A humanoid robot may be tasked to interact with its environment in more ways tha
 ---
 ## Course Content
 
-### What is a sensor
+This course offers a general introduction to the vast variety of sensors used in robotics. As comprehensive as we try to be, surely, this page may not encompass the most recent development, as robotics strives continuously to incorporate or design new sensors to expand its capabilities.
+
+This course is composed of the following:
+* Brief overview of what a sensor consists of, how we encode information and main caveats in usage of sensors
+* Review main characteristics of sensors (measurement scale, noise, bias, etc)
+* Presents principle of variety of sensors from devices to estimate the internal state (position, orientation, speed, acceleration) of robots to sensors measuring the environment surrounding the robot (visually from cameras and lidars, and haptically through force/tactile sensors).
+* Brief presentation of odometry, a technique to combine multiple sensors' measurements to localise the robot. 
+
+## What is a sensor
 {: #ch0 }
 
 A **sensor** is a device that detects or measures a physical property, the **measurand** (e.g., distance, light, temperature, pressure, motion), and converts it into a signal that can be read, interpreted, and used by a computer.
@@ -167,7 +175,7 @@ In robotics, sensors are essential because they provide the link between the rob
 
 ---
 
-#### The Ideal Sensor
+### The Ideal Sensor
 
 To understand real sensors, it helps to imagine the **ideal sensor**, a theoretical device that:
 
@@ -187,11 +195,11 @@ To understand real sensors, it helps to imagine the **ideal sensor**, a theoreti
 
 The ideal sensor does not exist, but it is a useful reference. When designing a robot, it is useful to compare real sensors against this “perfect” baseline to reason about **range, resolution, noise, latency, linearity, drift,** and **environmental robustness**.
 
-#### Sensor encoding: analog to digital converter
+### Sensor encoding: analog to digital converter
 
 Sensors usually employ Analog-to-Digital Converter (ADC) to convert a continuous analog input signal into a discrete digital value, so as to ease computer interpretation. An ADC samples an analog quantity (such as voltage). It then quantizes that value into one of a finite number of digital codes. For an N-bit ADC, there are $2^N$ possible digital codes. For instance, a 3-bit ADC produces 8 codes: 000, 001, 010, 011, 100, 101, 110, 111. Each code corresponds to a small range of the analog input, often called a quantization level or bin.
 
-#### Sensor imperfections 
+### Sensor imperfections 
 
 Real sensors are always imperfect. They come with **limitations** and **trade-offs**, such as:
 
@@ -306,7 +314,7 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 
 <!-- 
 
-#### 0.4 **Key Sensor Characteristics** 
+### 0.4 **Key Sensor Characteristics** 
 {: .no_toc }
 
 | Category | Typical values / notes |
@@ -438,11 +446,11 @@ Real sensors are always imperfect. They come with **limitations** and **trade-of
 
 ---
 
-### Characteristics of Sensors
+## Characteristics of Sensors
 {: #ch1 }
 
 
-#### Units & Scales
+### Units & Scales
 
 Every sensor output is ultimately expressed in a **physical unit** defined by the International System of Units (SI).
 
@@ -463,7 +471,7 @@ For robots, it’s important to always check what units a sensor outputs and whe
 
 ---
 
-#### Measurement Range
+### Measurement Range
 
 *Range* is the interval $$[x_{\min},\,x_{\max}]$$ within which the sensor maintains its specified performance.
 
@@ -479,7 +487,7 @@ Key rules:
 
 ---
 
-#### Resolution
+### Resolution
 
 Resolution is the **smallest input increment** $\Delta x_{\text{min}}$  a system can detect. 
 
@@ -502,7 +510,7 @@ The resolution and range of measurement of a sensor is usually documented in the
 
 ---
 
-#### Accuracy & Precision
+### Accuracy & Precision
 
 When evaluating a sensor, two related but distinct concepts often come up: **accuracy** and **precision**. These terms are sometimes confused, but they describe different aspects of measurement quality.
 
@@ -552,7 +560,7 @@ When controling a robot, knowing the sensor’s resolution, precision and accura
 
 ---
 
-#### Noise
+### Noise
 
 *Noise* is any undesired variation added to a measurement. It limits how well we can estimate the true value, even when the sensor is otherwise “perfect.”
 
@@ -610,7 +618,7 @@ Zeroing and multi-point calibration (to remove bias and correct scale), improved
 
 ---
 
-#### Response Time & Bandwidth
+### Response Time & Bandwidth
 
 A sensor’s **dynamic performance** determines how well it tracks changes over time. Two core notions are used:
 
@@ -1041,7 +1049,7 @@ $$
 
 ---
 
-### Proprioceptive Sensors
+## Proprioceptive Sensors
 {: #ch2 }
 
 Proprioceptive sensors measure a robot’s **internal state** (joint positions/velocities, body rates, torques/currents, temperatures, power). In contrast, *exteroceptive sensing* observes the external environment (e.g., range to obstacles, images of the scene). 
@@ -1083,7 +1091,7 @@ Proprioceptive and exteroceptive sensing form two complementary views of a robot
 Together, these two sensing modalities provide the foundation for robust robotic behavior: proprioceptive sensors keep the robot stable and aware of itself, while exteroceptive sensors keep it situated and responsive to the world.
 
 ---
-#### Rotary & Linear Position Sensing (Encoders & Potentiometers)
+### Rotary & Linear Position Sensing (Encoders & Potentiometers)
 
 Position sensing provides joint/shaft angle and linear travel for feedback control, odometry, and safety. Common technologies include **incremental encoders**, **absolute encoders**, **resolvers/synchros**, and **potentiometers**. Selection should be guided by the characteristics in Ch. 1 (range, resolution, accuracy, noise, bandwidth/latency) and by mechanical integration constraints.
 
@@ -1410,9 +1418,9 @@ which reduces to $V_{\text{out}}\!\approx\!\alpha V_{\text{ref}}$ when $R_{\text
 
 ---
 
-#### Inertial Sensing
+### Inertial Sensing
 
-##### Gyroscopic Systems
+#### Gyroscopic Systems
 
 The goal of gyroscopic systems is to measure changes in vehicle orientation by taking advantage of physical laws that produce predictable effects under rotation. Effectively they measure how fast a robot is rotating about an axis (angular rate). By **integrating** this rate, we can track changes in orientation over time. In practice, every real gyro has noise and bias, so orientation from pure integration will drift and must be calibrated and often fused with other sensors. 
 
@@ -1479,7 +1487,7 @@ Wine-glass resonator gyroscopes use the effect of Coriolis forces on the positio
 
 ---
 
-###### What gyros actually deliver
+##### What gyros actually deliver
 {: .no_toc }
 
 * **Rate gyros (RG).** Output angular **rate** $\dot{\theta}$ directly.
@@ -1490,7 +1498,7 @@ All gyros exhibit **drift** due to bias and noise. Drift causes orientation erro
 
 ---
 
-##### Important Performance metrics of Inertial measurement units
+#### Important Performance metrics of Inertial measurement units
 {: .no_toc }
 * **Bias Repeatability / Stability** Bias repeatability refers to the consistency of a sensor’s zero-rate output—the signal produced when the sensor is stationary—over multiple power cycles or initializations under identical environmental conditions. High bias repeatability means that the sensor produces nearly the same offset each time it is powered on, which is critical for applications requiring long-term stability, such as navigation systems or industrial robotics. Poor repeatability can lead to inconsistent initial conditions, forcing the system to recalibrate frequently, which may not always be feasible in autonomous or embedded applications.
 Bias stability, on the other hand, describes how much the zero-rate output wanders or drifts over time while the sensor remains in a constant, undisturbed state (e.g., no motion, stable temperature). This drift is a primary contributor to long-term orientation errors in inertial navigation systems. For example, in a gyroscope, even a tiny bias drift of 0.1°/s can lead to a 36° orientation error after just 10 minutes if uncorrected. Bias instability is often quantified in terms of degrees per hour (deg/hr) or micro-radians per second (µrad/s) and is a critical specification for high-precision applications like aerospace, autonomous vehicles, or surgical robots. To mitigate its effects, systems often employ calibration routines at startup and real-time bias estimation within state estimators (e.g., Kalman filters) to dynamically compensate for drift.
@@ -1501,7 +1509,7 @@ Bias stability, on the other hand, describes how much the zero-rate output wande
 Scale factor errors can arise from manufacturing tolerances, temperature variations, or aging effects. A 1% scale factor error in a gyroscope measuring 100°/s would result in a 1°/s error in the rate measurement, which, when integrated, could lead to significant orientation errors over time. To address this, sensors are often calibrated to determine their precise scale factor, and temperature compensation may be applied if the scale factor varies with temperature. In high-precision systems, such as inertial navigation for aerospace or autonomous vehicles, the scale factor is typically modeled as a function of temperature and corrected in real time. Additionally, non-linearity in the scale factor (where the relationship between input and output is not perfectly linear) can introduce further errors, so some applications require higher-order calibration to account for these effects.
 ---
 
-##### Practical selection and integration tips
+#### Practical selection and integration tips
 {: .no_toc }
 * **Match Range and Bandwidth to Dynamics**: When selecting sensors for a robotic system, it is critical to ensure that the measurement range and bandwidth are appropriately matched to the dynamics of the robot’s motion. The full-scale range of the sensor should be chosen such that saturation is unlikely even during the most extreme maneuvers the robot might perform. For example, if a robot arm is expected to accelerate rapidly during high-speed tasks, the gyroscopes or accelerometers should have a range that accommodates the maximum angular velocity or linear acceleration without clipping, which would lead to loss of data and potential control instability.
 Equally important is the bandwidth of the sensor. The bandwidth must be high enough to capture the fastest dynamics of the robot’s motion without introducing excessive noise or latency. A bandwidth that is too low will fail to capture high-frequency motions, leading to phase lag and inaccurate state estimation. Conversely, an excessively high bandwidth can amplify high-frequency noise, degrading the signal-to-noise ratio and potentially destabilizing control loops. Therefore, the bandwidth should be selected based on the natural frequencies of the robot’s motion and the control system’s requirements, often determined through experimental tuning or simulation.
@@ -1519,7 +1527,7 @@ To mitigate these effects, it is advisable to calibrate the sensor across its ex
 
 * **Triads and IMUs** In practice, three orthogonal gyroscopes are often ganged together to measure angular velocity about all three axes (roll, pitch, and yaw), enabling the reconstruction of the robot’s full 3-D rotation. However, gyroscopes alone are insufficient for complete state estimation because they drift over time due to integration errors. To address this, gyroscopes are typically integrated with accelerometers in an **Inertial Measurement Unit (IMU)**. An IMU combines three orthogonal accelerometers (to measure linear acceleration and gravity) and three orthogonal gyroscopes (to measure angular velocity). This combination allows the system to estimate both orientation and linear motion. The accelerometers provide a reference for gravity, which helps correct the drift in the gyroscopes’ orientation estimates. Additionally, some IMUs include magnetometers to measure the Earth’s magnetic field, further aiding in yaw estimation and reducing drift in heading. The data from these sensors is often fused using sensor fusion algorithms, such as a Kalman filter or Madgwick filter, to produce a stable and accurate estimate of the robot’s orientation and position. This fusion process leverages the complementary strengths of each sensor type—gyroscopes for high-frequency dynamics and accelerometers/magnetometers for low-frequency corrections—while mitigating their individual weaknesses.
 
-* **Notes for robots.** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
+* **Notes for robots** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
 ---
 
 <details markdown="1">
@@ -1624,7 +1632,7 @@ To mitigate these effects, it is advisable to calibrate the sensor across its ex
 
 ---
 
-##### Accelerometer
+#### Accelerometer
 
 Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
 
@@ -1653,11 +1661,12 @@ Under a constant acceleration $a$ (e.g., gravity component), static equilibrium 
 In an IMU, tri-axial gyros integrate attitude, accelerometer readings are rotated to the navigation frame, gravity is subtracted, and the result is integrated to **velocity** and then **position**. Any gyro/accel bias mis-orients gravity removal, so residual gravity integrates to large position drift over time, hence the need for sensor fusion.
 
 **Key specifications**
-- **Range** (e.g., $\pm2g,\ \pm16g$): prevent saturation during maneuvers.  
-- **Scale factor / sensitivity** (e.g., mV/$(\mathrm{m/s^2})$): maps output to acceleration; accuracy matters for bias/scale calibration. 
-- **Bias & bias stability / drift**: dominant long-term error; characterize across temperature and time.
-- **Bandwidth / response time**: choose high enough for platform dynamics; avoid excessive internal filtering that adds latency.
-- **Alignment & orthogonality**: small axis misalignments couple motions; include in calibration.
+- **Range** (e.g., $\pm2g,\ \pm16g$): measurement range defines the maximum and minimum values the accelerometer can accurately detect without saturation. This is crucial to ensure correct tracking of acceleration throughout during fast manoeuver (e.g., a drone performing aggressive aerobatics or a rocket during launch). To prevent saturation, the sensor range should be selected to exceed the worst-case dynamics expected during the robot’s operation. This ensures that the sensor remains within its linear operating region, providing reliable and undistorted measurements even during extreme maneuvers.
+- **Scale factor / sensitivity** (e.g., mV/$(\mathrm{m/s^2})$): maps output to acceleration; accuracy matters for bias/scale calibration. An accelerometer with a scale factor of 100 mV/g will output 100 millivolts per g of acceleration. The scale factor is critical because errors in its value directly scale the sensor’s output, leading to proportional errors in the estimated motion. 
+- **Bias & bias stability / drift**: dominant long-term error; characterize across temperature and time. A gyroscope with poor bias stability might exhibit a 0.1°/s drift, leading to a 36° orientation error after just 10 minutes if uncorrected. 
+- **Bandwidth / response time**: choose high enough for platform dynamics; avoid excessive internal filtering that adds latency. For accelerometers and gyroscope, bandwith is crucial as these sensors must provide high-rate measurement to guarantee accurate tracking of deviation from trajectory.
+- **Alignment & orthogonality**: small axis misalignments couple motions; include in calibration. For measurement of orientation, especially when it comes to stabilizing the platform in flight (drone) or while locomoting (humanoid), even minor misalignments can lead to significant cumulative errors. 
+- 
 
 **Calibration & usage notes.**
 - **Six-position “1 g” check.** Place each axis alternately up/down to estimate per-axis bias and scale ($\lVert a\rVert\approx g$ at rest).  
@@ -1770,252 +1779,13 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 
 ---
 
-#### Fusion of proprioceptive sensing for localisation (Odometry)
-{: #ch2-odom }
-
-*Odometry* estimates a robot’s change in pose by integrating *proprioceptive* motion measurements over time. Historically known as *dead reckoning*, odometry develops a kinematic model relating actuator motions to body motion, then integrates that model to produce pose as a function of time. Errors from modeling and sensing accumulate and must be managed or corrected with additional measurements.
-
-Odometry is the process of estimating a robot’s position, orientation, and velocity over time by integrating motion data from various sensors. It is a form of sensor fusion, whereby odometry combines output from multiple sensor measurements, such as wheel encoders, inertial measurement units (IMUs), visual sensors, or LiDAR—to produce a more accurate and robust estimate of the robot’s motion than could be achieved with any single sensor alone.
-
-**Differential-drive wheel odometry** 
-{: .no_toc }
-![img-description]({{ site.baseurl }}/assets/images/new_sensors/Differential_drive.png)
-><sub>Differential drive kinematics. Source : Springer Handbook of Robotics, Chapter : 20.1</sub>
-
-One of the most common forms of odometry is wheel odometry. Consider a planar robot with two powered wheels mounted on a common axle, separated by track width $b=2d$ (so $d$ is the half-baseline). Let the right/left wheel **linear** speeds be $v_{r}, v_{\ell}$ (positive forward) and the corresponding incremental **travels** over a sample be $\Delta s_{r}, \Delta s_{\ell}$. The body’s instantaneous motion is a rigid twist about an *instantaneous center of curvature* (ICC) on the axle line.
-
-**Kinematic relations .** With body angular rate $\omega$ and ICC radius $R$ (signed, measured from the body center):
-$$
-\omega (R+d)=v_{\ell}, \qquad \omega (R-d)=v_{r}.
-$$
-
-We can rearrange these two equations to solve for ω the rate of rotation about the ICC and R the distance from the center of the robot to the ICC :
-$$
-V=\tfrac{1}{2}(v_{r}+v_{\ell}), \qquad 
-\omega=\frac{v_{r}-v_{\ell}}{b}, \qquad
-R=\frac{V}{\omega}=\frac{b}{2}\,\frac{v_{r}+v_{\ell}}{\,v_{r}-v_{\ell}\,}.
-$$
-
-Now as $v_{r}, v_{\ell}$ are functions of time we can generate a set of equations of motion for the differential drive robot. Using the point midway between the wheels as the origin of the robot, and writing $\omega$ as the orientation of the robot with respect to the x-axis of a global Cartesian coordinate system, one obtains
-
-$$
-x(t) = \int V(t)\cos(\theta(t))\,dt, \qquad
-y(t) = \int V(t)\sin(\theta(t))\,dt, \qquad
-\theta(t) = \int \omega(t)\,dt .
-$$
-
-**From encoders to wheel travel.**  
-Encoders report **counts** as the wheel (or motor) turns. Over one sample, let the right/left counts be $\Delta N_r,\ \Delta N_\ell$. If each **wheel** revolution produces $\text{CPR}$ (Counts Per Rotation) counts and the wheel radius is $r$, then
-
-$$
-\Delta \phi = 2\pi\,\frac{\Delta N}{\text{CPR}}\quad(\text{rad}),\qquad
-\Delta s = r\,\Delta \phi = \frac{2\pi r}{\text{CPR}}\,\Delta N.
-$$
-
-Apply the same to each side:
-$$
-\Delta s_r = \frac{2\pi r}{\text{CPR}}\,\Delta N_r,\qquad
-\Delta s_\ell = \frac{2\pi r}{\text{CPR}}\,\Delta N_\ell.
-$$
-
-A simple **velocity** estimate uses the sample time $\Delta t$:
-$$
-v \approx \frac{\Delta s}{\Delta t}.
-$$
-
-> **Example** $r=0.05\,\text{m}$, $\text{CPR}=8000$. One count corresponds to  
-> $$
-> \Delta s_{\text{per count}} = \frac{2\pi r}{\text{CPR}} \approx \frac{2\pi\cdot 0.05}{8000} \approx 0.0000393\,\text{m} = 0.039\,\text{mm}.
-> $$
-> If $\Delta N_r=+300$ and $\Delta N_\ell=+280$ over $\Delta t=0.02\,\text{s}$, then  
-> $\Delta s_r\approx 11.8\,\text{mm}$, $\Delta s_\ell\approx 11.0\,\text{mm}$ and $v_r\approx 0.59\,\text{m/s}$, $v_\ell\approx 0.55\,\text{m/s}$.
-
----
-
-**Calibration & error sources (typical)**
-{: .no_toc }
-- **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
-- **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
-- **Encoder quantization & missed counts.** Sets resolution and adds random noise (cf. Ch. 1.3, 1.5).  
-- **Backlash & compliance.** Reversals cause transient under/over-counting; mount encoders on motor vs. output shaft accordingly.  
-- **Wheel slip & terrain effects.** Slip, sinkage, uneven contact violate the no-slip model; *systematic* curvature error accumulates.  
-- **Time synchronization.** Pose errors arise if encoder/IMU samples are integrated with inconsistent time stamps.  
-- **Integration drift.** Dead reckoning accumulates error; *pose maintenance* requires fusing with external references (e.g., vision, LiDAR, GPS) or loop closures.
-
----
-
-**Odometry in the estimation stack**
-{: .no_toc }
-Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
-
-**Key takeaway.**  
-Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance.
-
----
-
-<details markdown="1">
- <summary>Conceptual Questions</summary>
-
-  <p><strong>Question 1: </strong> What is the core idea of odometry?</p>
-  <form id="ch2-odom-q1">
-    <input type="radio" name="ch2-odom-q1" value="A"> Estimating pose by matching images to a map<br>
-    <input type="radio" name="ch2-odom-q1" value="B"> Estimating pose by integrating proprioceptive motion with a kinematic model<br>
-    <input type="radio" name="ch2-odom-q1" value="C"> Estimating pose using GPS only<br>
-    <input type="radio" name="ch2-odom-q1" value="D"> Estimating pose by triangulating radio beacons<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q1','B',
-        '✅ Correct! Odometry integrates internal motion measurements through a kinematic model.',
-        '❌ Odometry relies on internal sensing and kinematics, not external references.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q1-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 2: </strong> If $v_r=v_\ell\neq 0$ for a differential drive with track width $b=2d$, what is the angular rate $\omega$?</p>
-  <form id="ch2-odom-q2">
-    <input type="radio" name="ch2-odom-q2" value="A"> $\omega = \dfrac{2v_r}{b}$<br>
-    <input type="radio" name="ch2-odom-q2" value="B"> $\omega = \dfrac{v_r-v_\ell}{b}=0$<br>
-    <input type="radio" name="ch2-odom-q2" value="C"> $\omega = \dfrac{v_r+v_\ell}{b}$<br>
-    <input type="radio" name="ch2-odom-q2" value="D"> $\omega$ is undefined<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q2','B',
-        '✅ Correct! Equal wheel speeds imply zero yaw rate and straight motion.',
-        '❌ Try again')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q2-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 3: </strong> With the sign convention $v_r,v_\ell&gt;0$ forward and $\omega=(v_r-v_\ell)/b$, if $v_r&gt;v_\ell$ the robot turns:</p>
-  <form id="ch2-odom-q3">
-    <input type="radio" name="ch2-odom-q3" value="A"> Toward the right wheel (clockwise)<br>
-    <input type="radio" name="ch2-odom-q3" value="B"> Toward the left wheel (counterclockwise)<br>
-    <input type="radio" name="ch2-odom-q3" value="C"> Straight ahead<br>
-    <input type="radio" name="ch2-odom-q3" value="D"> Backward<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q3','B',
-        '✅ Correct! $\omega&gt;0$ and the instantaneous center lies on the left side.',
-        '❌ Compare $v_r$ vs $v_\ell$ in $\omega=(v_r-v_\ell)/b$ and the ICC interpretation.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q3-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 4: </strong> If $\mathrm{CPR}$ doubles and all else is unchanged, the distance represented by one count:</p>
-  <form id="ch2-odom-q6">
-    <input type="radio" name="ch2-odom-q6" value="A"> Doubles<br>
-    <input type="radio" name="ch2-odom-q6" value="B"> Halves<br>
-    <input type="radio" name="ch2-odom-q6" value="C"> Stays the same<br>
-    <input type="radio" name="ch2-odom-q6" value="D"> Becomes zero<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q6','B',
-        '✅ Correct! Distance per count is inversely proportional to CPR.',
-        '❌ Use $\Delta s_{\text{per count}}=2\pi r/\mathrm{CPR}$.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q6-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 5: </strong> True or False: Mounting encoders on the motor shaft removes the influence of gearbox backlash on wheel odometry.</p>
-  <form id="ch2-odom-q7">
-    <input type="radio" name="ch2-odom-q7" value="True"> True<br>
-    <input type="radio" name="ch2-odom-q7" value="False"> False<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q7','False',
-        '✅ Correct! Motor-side encoders do not measure output-side lash and compliance, so wheel motion can be misestimated during reversals.',
-        '❌ See the note on backlash and encoder mounting in the error sources list.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q7-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 6: </strong> True or False: Even with perfect encoders and calibration, persistent wheel slip can create systematic curvature errors in odometry.</p>
-  <form id="ch2-odom-q9">
-    <input type="radio" name="ch2-odom-q9" value="True"> True<br>
-    <input type="radio" name="ch2-odom-q9" value="False"> False<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q9','True',
-        '✅ Correct! Slip violates the no-slip kinematic assumption and introduces bias.',
-        '❌ Slip breaks the kinematic model assumptions and biases path estimates.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q9-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 7: </strong> For $v_r=0.60$ m/s, $v_\ell=0.40$ m/s, and $b=0.50$ m, what is $\omega$?</p>
-  <form id="ch2-odom-q11">
-    <input type="radio" name="ch2-odom-q11" value="A"> $0.20$ rad/s<br>
-    <input type="radio" name="ch2-odom-q11" value="B"> $0.40$ rad/s<br>
-    <input type="radio" name="ch2-odom-q11" value="C"> $1.00$ rad/s<br>
-    <input type="radio" name="ch2-odom-q11" value="D"> $2.00$ rad/s<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q11','B',
-        '✅ Correct! $\omega=(v_r-v_\ell)/b=(0.60-0.40)/0.50=0.40$ rad/s.',
-        '❌ Apply $\omega=(v_r-v_\ell)/b$ carefully with units.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q11-feedback"></p>
-  </form>
-
-  <hr>
-
-  <p><strong>Question 8: </strong> Which statement best describes odometry in a modern fusion system?</p>
-  <form id="ch2-odom-q12">
-    <input type="radio" name="ch2-odom-q12" value="A"> It replaces exteroceptive sensors entirely<br>
-    <input type="radio" name="ch2-odom-q12" value="B"> It provides a high-rate motion prior, while drift is corrected by global or exteroceptive measurements<br>
-    <input type="radio" name="ch2-odom-q12" value="C"> It is only used when GPS is available<br>
-    <input type="radio" name="ch2-odom-q12" value="D"> It estimates absolute position without drift<br>
-    <button type="button"
-      onclick="checkTrueFalse('ch2-odom-q12','B',
-        '✅ Correct! Odometry is low-latency input to filters; vision, LiDAR, or GPS bound drift.',
-        '❌ See the odometry-in-the-stack discussion and the key takeaway.')">
-      Check Answer
-    </button>
-    <p id="ch2-odom-q12-feedback"></p>
-  </form>
-
-</details>
-
----
-
-<details markdown="1">
- <summary>Further exploration</summary>
-
-  Video explaining differential drive odometry in more detail.
-
-  ![](https://www.youtube.com/watch?v=LrsTBWf6Wsc)
-  ><sub>*wheeled robot control and odometry. YouTube video, Sep 11, 2019. Available at: https://www.youtube.com/watch?v=LrsTBWf6Wsc*</sub>
-
-  Article explaining differential Drive odometry :
-  - [Wheel Odometry Model for Differential Drive Robotics](https://medium.com/@nahmed3536/wheel-odometry-model-for-differential-drive-robotics-91b85a012299)
-
-</details>
-
----
-
-
-
----
-
-#### Force, Torque, and Strain Sensing
+### Force, Torque, and Strain Sensing
 
 Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
 ---
 
-##### Measurement Location: From Effort to Contact
+#### Measurement Location: From Effort to Contact
 {: .no_toc }
 
 * **Actuator effort (motor current).** In many electric drives, torque is approximately proportional to current, $\tau \approx k_t I$. This relationship is useful for fast inner-loop control, however, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
@@ -2024,7 +1794,7 @@ Force, torque, and strain sensing enable a robot to perceive its own interaction
 
 ---
 
-##### Actuator effort: motor current as a torque sensor
+#### Actuator effort: motor current as a torque sensor
 {: .no_toc }
 
 In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor.
@@ -2061,18 +1831,18 @@ If precise low-force regulation, contact transients, or model uncertainties domi
 
 ---
 
-##### Strain-based sensing
+#### Strain-based sensing
 {: .no_toc }
 
 Strain-based sensing measures tiny elastic deformations in a compliant mechanical element and infers the applied force or torque through a known stiffness model. It is the workhorse behind joint torque sensors, six-axis wrist force–torque (F/T) sensors, weigh-scale load cells, and many tactile skins.
 
-##### What is measured
+#### What is measured
 {: .no_toc }
 
 * **Strain** is the relative change in length, $\varepsilon = \Delta L / L$ (unitless). In metals operating in the linear elastic regime, stress $\sigma$ and strain relate by $\sigma = E \varepsilon$, where $E$ is Young’s modulus.
 * **Strain gauges** convert strain to an electrical signal. The most common are metal-foil resistive gauges; alternatives include piezoresistive silicon and piezoelectric ceramics.
 
-##### Core transducer physics
+#### Core transducer physics
 {: .no_toc }
 
 * **Foil (resistive) strain gauges.** Electrical resistance $R$ changes approximately linearly with strain:
@@ -2083,7 +1853,7 @@ Strain-based sensing measures tiny elastic deformations in a compliant mechanica
 * **Piezoresistive silicon.** Doped silicon has a larger effective gauge factor (10–150), enabling compact, low-noise sensors, often integrated on diaphragms or micro-flexures.
 * **Piezoelectric.** Generates charge proportional to dynamic strain. Very high bandwidth but poor at true DC; best for vibration or impact sensing (dynamic tactile).
 
-##### From strain to force/torque
+#### From strain to force/torque
 {: .no_toc }
 
 A compliant element (beam, ring, cross-shape, diaphragm, or torsion tube) concentrates strain where gauges are placed. With a linear elastic model,
@@ -2092,7 +1862,7 @@ $$
 $$
 where $\mathbf{v}$ collects bridge voltages, $\mathbf{w} = [F_x, F_y, F_z, \tau_x, \tau_y, \tau_z]^\top$ is the wrench (forces and torques) at a reference point, $\mathbf{S}$ is the sensitivity matrix determined by geometry and gauge placement, and $\mathbf{b}$ is an offset. Calibration identifies $\mathbf{S}$ (and $\mathbf{b}$) by applying known loads and solving a linear regression; the inverse then maps voltages back to forces and torques.
 
-##### Bridge circuits and signal conditioning
+#### Bridge circuits and signal conditioning
 {: .no_toc }
 
 * **Wheatstone bridge.** Gauges are wired as quarter-, half-, or full-bridges. Full-bridges place gauges in tension and compression, doubling sensitivity and providing temperature compensation.
@@ -2171,7 +1941,7 @@ Tactile/force information flows neatly into manipulation tasks:
 
 ---
 
-### Exteroceptive Sensors
+## Exteroceptive Sensors
 
 {: #ch3 }
 
@@ -2299,7 +2069,7 @@ This chapter introduces common exteroceptive sensor families, the physical princ
 
 ---
 
-#### Contact Sensors (Touch and Tactile Sensing)
+### Contact Sensors (Touch and Tactile Sensing)
 
 Contact sensors measure the environment **through physical interaction**. Unlike cameras or rangefinders that observe at a distance, contact sensing becomes informative only when the robot **touches** something. This makes contact sensors especially important for tasks where “knowing by touching” is unavoidable, such as grasping an object reliably, detecting collisions, or walking on uncertain terrain.
 
@@ -2322,7 +2092,7 @@ Contact sensing spans a spectrum from simple “touch happened” signals to ric
 
 ---
 
-##### Why contact sensing matters in practice
+#### Why contact sensing matters in practice
 {: .no_toc }
 
 * **Robust manipulation:** vision can suggest where an object is, but contact sensing confirms *when* the object is actually grasped, whether it is slipping, and how firmly it is held.
@@ -2332,7 +2102,7 @@ Contact sensing spans a spectrum from simple “touch happened” signals to ric
 
 ---
 
-##### Practical design trade-offs
+#### Practical design trade-offs
 {: .no_toc }
 
 When selecting or integrating a contact sensor, typical engineering trade-offs include:
@@ -2462,7 +2232,7 @@ Contact sensing is often the “last meter” of perception: cameras and range s
 
 ---
 
-#### Rangefinders
+### Rangefinders
 
 Rangefinders are a family of exteroceptive sensors that provide measurements of the distance between the robot and objects in its environment. These sensors are vital for tasks such as obstacle avoidance, mapping, localization, and autonomous navigation. Unlike contact sensors, which rely on physical interaction, rangefinders gather data from a distance and are typically used to understand the environment beyond the immediate vicinity of the robot.
 
@@ -2487,7 +2257,7 @@ The key advantage of rangefinders is their ability to provide **absolute distanc
 
 ---
 
-##### Types of Rangefinders
+#### Types of Rangefinders
 {: .no_toc }
 
 Rangefinders come in various technologies, each with its strengths and limitations. The most common types include:
@@ -2498,7 +2268,7 @@ Rangefinders come in various technologies, each with its strengths and limitatio
 
 ---
 
-##### Rangefinder Applications
+#### Rangefinder Applications
 {: .no_toc }
 
 Rangefinders are utilized in a variety of tasks across different robotic applications:
@@ -2509,7 +2279,7 @@ Rangefinders are utilized in a variety of tasks across different robotic applica
 
 ---
 
-##### Practical Design Trade-offs
+#### Practical Design Trade-offs
 {: .no_toc }
 
 When selecting a rangefinder for a robot, there are several design considerations and trade-offs to take into account:
@@ -2521,7 +2291,7 @@ When selecting a rangefinder for a robot, there are several design consideration
 
 ---
 
-##### Why Rangefinders Matter in Practice
+#### Why Rangefinders Matter in Practice
 {: .no_toc }
 
 Rangefinders are essential for building an accurate and reliable model of the robot's surroundings. By providing real-time distance data, they allow the robot to make informed decisions about its movement and interactions. For example, LiDAR enables high-precision navigation in environments that are too complex or dynamic for simpler sensors like ultrasonic or IR rangefinders.
@@ -2640,7 +2410,7 @@ Additionally, rangefinders support **sensor fusion**, where their data is combin
 ---
 
 
-#### Satellite-Based Positioning: GPS and GNSS
+### Satellite-Based Positioning: GPS and GNSS
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/sat_image.jpg){: width="600" }
 > <sub> Source: ESA : https://www.esa.int/Applications/Satellite_navigation/How_satellite_navigation_works </sub>
@@ -2662,7 +2432,7 @@ Robotics uses GNSS heavily in outdoor navigation because it provides a globally 
 
 ---
 
-##### Core idea: position from time-of-flight
+#### Core idea: position from time-of-flight
 {: .no_toc }
 
 GNSS works by measuring how long radio signals take to travel from satellites to a receiver. If signal propagation time were known perfectly, the distance to each satellite could be computed and the receiver position could be determined by **trilateration** (intersection of spheres in 3D). In practice, the receiver does not carry an atomic clock like the satellites do, so the measured distances are **pseudo-ranges** that include clock bias and other errors. 
@@ -2783,7 +2553,7 @@ This geometric requirement is why a minimum of four satellites is needed for a f
 
 ---
 
-##### Satellite constellations and signals
+#### Satellite constellations and signals
 {: .no_toc }
 
 ![]({{ site.baseurl }}/assets/images/new_sensors/nastar_constellation.gif){: width="400" }
@@ -2867,7 +2637,7 @@ A key geometric idea is that accuracy depends not only on noise level, but also 
 
 ---
 
-##### Performance, failure modes, and practical limitations
+#### Performance, failure modes, and practical limitations
 {: .no_toc }
 
 **Baseline accuracy.** Under typical conditions and without specialized enhancements, standard GPS accuracy is on the order of **20 to 25 m horizontally** and about **43 m vertically**, with a typical fix rate of **1 Hz** (though faster or slower rates are possible). 
@@ -2947,7 +2717,7 @@ A key geometric idea is that accuracy depends not only on noise level, but also 
 
 ---
 
-##### Augmentation and “enhanced GPS” options
+#### Augmentation and “enhanced GPS” options
 {: .no_toc }
 
 Many systems improve GNSS accuracy by providing external corrections or by using carrier-phase information.
@@ -3045,7 +2815,7 @@ RTK combines carrier-phase measurements with corrections from a nearby base stat
 ---
 
 
-##### GNSS in a full navigation system: integration with IMU
+#### GNSS in a full navigation system: integration with IMU
 {: .no_toc }
 
 GNSS provides strong absolute position references but has three major limitations for robot state estimation:
@@ -3219,13 +2989,13 @@ The IMU “bridges” between GNSS updates, and GNSS constrains long-term drift.
 
 ---
 
-#### Environmental Sensors (Temperature, Light, Gas, Chemicals)
+### Environmental Sensors (Temperature, Light, Gas, Chemicals)
 
 Environmental sensors allow a robot to perceive the physical and chemical properties of the ambient medium surrounding it. While humans use their skin to feel temperature and their noses to smell, robots use a variety of specialized sensors to measure these ambient conditions. This sensing modality is particularly important for robots operating in unstructured, hazardous, or agricultural environments where the physical state of the environment dictates the robot's behavior or forms the core mission objective itself.
 
 ---
 
-##### Thermodynamic Sensing: How Robots Feel Heat
+#### Thermodynamic Sensing: How Robots Feel Heat
 
 {: .no_toc }
 
@@ -3360,7 +3130,7 @@ The diagram shows two dissimilar metal wires joined at the hot junction near a f
 
 ---
 
-##### Optical Sensing: Beyond the Camera
+#### Optical Sensing: Beyond the Camera
 
 {: .no_toc }
 
@@ -3507,7 +3277,7 @@ This built-in amplification is a huge advantage for simple robotics. A phototran
 
 ---
 
-##### Atmospheric Perception: Robotic Olfaction (Smell)
+#### Atmospheric Perception: Robotic Olfaction (Smell)
 
 {: .no_toc }
 
@@ -3643,7 +3413,7 @@ Often used in indoor autonomous robots to monitor carbon dioxide ($CO_2$) or in 
 
 ---
 
-##### Meteorological Perception: Weather and Altitude
+#### Meteorological Perception: Weather and Altitude
 
 {: .no_toc }
 
@@ -3929,11 +3699,250 @@ The primary engineering constraint when using these sensors on a moving robot is
 </details>
 
 ---
-## Credits
+---
 
-##  Ressources
+### Odometry: Fusion of sensors for robot localisation 
+{: #ch2-odom }
 
-### Books
+*Odometry* estimates a robot’s change in pose by integrating *proprioceptive* motion measurements over time. Historically known as *dead reckoning*, odometry develops a kinematic model relating actuator motions to body motion, then integrates that model to produce pose as a function of time. Errors from modeling and sensing accumulate and must be managed or corrected with additional measurements.
+
+Odometry is the process of estimating a robot’s position, orientation, and velocity over time by integrating motion data from various sensors. It is a form of sensor fusion, whereby odometry combines output from multiple sensor measurements, such as wheel encoders, inertial measurement units (IMUs), visual sensors, or LiDAR—to produce a more accurate and robust estimate of the robot’s motion than could be achieved with any single sensor alone.
+
+**Differential-drive wheel odometry** 
+{: .no_toc }
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/Differential_drive.png)
+><sub>Differential drive kinematics. Source : Springer Handbook of Robotics, Chapter : 20.1</sub>
+
+One of the most common forms of odometry is wheel odometry. Consider a planar robot with two powered wheels mounted on a common axle, separated by track width $b=2d$ (so $d$ is the half-baseline). Let the right/left wheel **linear** speeds be $v_{r}, v_{\ell}$ (positive forward) and the corresponding incremental **travels** over a sample be $\Delta s_{r}, \Delta s_{\ell}$. The body’s instantaneous motion is a rigid twist about an *instantaneous center of curvature* (ICC) on the axle line.
+
+**Kinematic relations .** With body angular rate $\omega$ and ICC radius $R$ (signed, measured from the body center):
+$$
+\omega (R+d)=v_{\ell}, \qquad \omega (R-d)=v_{r}.
+$$
+
+We can rearrange these two equations to solve for ω the rate of rotation about the ICC and R the distance from the center of the robot to the ICC :
+$$
+V=\tfrac{1}{2}(v_{r}+v_{\ell}), \qquad 
+\omega=\frac{v_{r}-v_{\ell}}{b}, \qquad
+R=\frac{V}{\omega}=\frac{b}{2}\,\frac{v_{r}+v_{\ell}}{\,v_{r}-v_{\ell}\,}.
+$$
+
+Now as $v_{r}, v_{\ell}$ are functions of time we can generate a set of equations of motion for the differential drive robot. Using the point midway between the wheels as the origin of the robot, and writing $\omega$ as the orientation of the robot with respect to the x-axis of a global Cartesian coordinate system, one obtains
+
+$$
+x(t) = \int V(t)\cos(\theta(t))\,dt, \qquad
+y(t) = \int V(t)\sin(\theta(t))\,dt, \qquad
+\theta(t) = \int \omega(t)\,dt .
+$$
+
+**From encoders to wheel travel.**  
+Encoders report **counts** as the wheel (or motor) turns. Over one sample, let the right/left counts be $\Delta N_r,\ \Delta N_\ell$. If each **wheel** revolution produces $\text{CPR}$ (Counts Per Rotation) counts and the wheel radius is $r$, then
+
+$$
+\Delta \phi = 2\pi\,\frac{\Delta N}{\text{CPR}}\quad(\text{rad}),\qquad
+\Delta s = r\,\Delta \phi = \frac{2\pi r}{\text{CPR}}\,\Delta N.
+$$
+
+Apply the same to each side:
+$$
+\Delta s_r = \frac{2\pi r}{\text{CPR}}\,\Delta N_r,\qquad
+\Delta s_\ell = \frac{2\pi r}{\text{CPR}}\,\Delta N_\ell.
+$$
+
+A simple **velocity** estimate uses the sample time $\Delta t$:
+$$
+v \approx \frac{\Delta s}{\Delta t}.
+$$
+
+> **Example** $r=0.05\,\text{m}$, $\text{CPR}=8000$. One count corresponds to  
+> $$
+> \Delta s_{\text{per count}} = \frac{2\pi r}{\text{CPR}} \approx \frac{2\pi\cdot 0.05}{8000} \approx 0.0000393\,\text{m} = 0.039\,\text{mm}.
+> $$
+> If $\Delta N_r=+300$ and $\Delta N_\ell=+280$ over $\Delta t=0.02\,\text{s}$, then  
+> $\Delta s_r\approx 11.8\,\text{mm}$, $\Delta s_\ell\approx 11.0\,\text{mm}$ and $v_r\approx 0.59\,\text{m/s}$, $v_\ell\approx 0.55\,\text{m/s}$.
+
+---
+
+**Calibration & error sources (typical)**
+{: .no_toc }
+- **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
+- **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
+- **Encoder quantization & missed counts.** Sets resolution and adds random noise (cf. Ch. 1.3, 1.5).  
+- **Backlash & compliance.** Reversals cause transient under/over-counting; mount encoders on motor vs. output shaft accordingly.  
+- **Wheel slip & terrain effects.** Slip, sinkage, uneven contact violate the no-slip model; *systematic* curvature error accumulates.  
+- **Time synchronization.** Pose errors arise if encoder/IMU samples are integrated with inconsistent time stamps.  
+- **Integration drift.** Dead reckoning accumulates error; *pose maintenance* requires fusing with external references (e.g., vision, LiDAR, GPS) or loop closures.
+
+---
+
+**Odometry in the estimation stack**
+{: .no_toc }
+Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
+
+**Key takeaway.**  
+Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance.
+
+---
+
+<details markdown="1">
+ <summary>Conceptual Questions</summary>
+
+  <p><strong>Question 1: </strong> What is the core idea of odometry?</p>
+  <form id="ch2-odom-q1">
+    <input type="radio" name="ch2-odom-q1" value="A"> Estimating pose by matching images to a map<br>
+    <input type="radio" name="ch2-odom-q1" value="B"> Estimating pose by integrating proprioceptive motion with a kinematic model<br>
+    <input type="radio" name="ch2-odom-q1" value="C"> Estimating pose using GPS only<br>
+    <input type="radio" name="ch2-odom-q1" value="D"> Estimating pose by triangulating radio beacons<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q1','B',
+        '✅ Correct! Odometry integrates internal motion measurements through a kinematic model.',
+        '❌ Odometry relies on internal sensing and kinematics, not external references.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q1-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 2: </strong> If $v_r=v_\ell\neq 0$ for a differential drive with track width $b=2d$, what is the angular rate $\omega$?</p>
+  <form id="ch2-odom-q2">
+    <input type="radio" name="ch2-odom-q2" value="A"> $\omega = \dfrac{2v_r}{b}$<br>
+    <input type="radio" name="ch2-odom-q2" value="B"> $\omega = \dfrac{v_r-v_\ell}{b}=0$<br>
+    <input type="radio" name="ch2-odom-q2" value="C"> $\omega = \dfrac{v_r+v_\ell}{b}$<br>
+    <input type="radio" name="ch2-odom-q2" value="D"> $\omega$ is undefined<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q2','B',
+        '✅ Correct! Equal wheel speeds imply zero yaw rate and straight motion.',
+        '❌ Try again')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q2-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 3: </strong> With the sign convention $v_r,v_\ell&gt;0$ forward and $\omega=(v_r-v_\ell)/b$, if $v_r&gt;v_\ell$ the robot turns:</p>
+  <form id="ch2-odom-q3">
+    <input type="radio" name="ch2-odom-q3" value="A"> Toward the right wheel (clockwise)<br>
+    <input type="radio" name="ch2-odom-q3" value="B"> Toward the left wheel (counterclockwise)<br>
+    <input type="radio" name="ch2-odom-q3" value="C"> Straight ahead<br>
+    <input type="radio" name="ch2-odom-q3" value="D"> Backward<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q3','B',
+        '✅ Correct! $\omega&gt;0$ and the instantaneous center lies on the left side.',
+        '❌ Compare $v_r$ vs $v_\ell$ in $\omega=(v_r-v_\ell)/b$ and the ICC interpretation.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q3-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 4: </strong> If $\mathrm{CPR}$ doubles and all else is unchanged, the distance represented by one count:</p>
+  <form id="ch2-odom-q6">
+    <input type="radio" name="ch2-odom-q6" value="A"> Doubles<br>
+    <input type="radio" name="ch2-odom-q6" value="B"> Halves<br>
+    <input type="radio" name="ch2-odom-q6" value="C"> Stays the same<br>
+    <input type="radio" name="ch2-odom-q6" value="D"> Becomes zero<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q6','B',
+        '✅ Correct! Distance per count is inversely proportional to CPR.',
+        '❌ Use $\Delta s_{\text{per count}}=2\pi r/\mathrm{CPR}$.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q6-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 5: </strong> True or False: Mounting encoders on the motor shaft removes the influence of gearbox backlash on wheel odometry.</p>
+  <form id="ch2-odom-q7">
+    <input type="radio" name="ch2-odom-q7" value="True"> True<br>
+    <input type="radio" name="ch2-odom-q7" value="False"> False<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q7','False',
+        '✅ Correct! Motor-side encoders do not measure output-side lash and compliance, so wheel motion can be misestimated during reversals.',
+        '❌ See the note on backlash and encoder mounting in the error sources list.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q7-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 6: </strong> True or False: Even with perfect encoders and calibration, persistent wheel slip can create systematic curvature errors in odometry.</p>
+  <form id="ch2-odom-q9">
+    <input type="radio" name="ch2-odom-q9" value="True"> True<br>
+    <input type="radio" name="ch2-odom-q9" value="False"> False<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q9','True',
+        '✅ Correct! Slip violates the no-slip kinematic assumption and introduces bias.',
+        '❌ Slip breaks the kinematic model assumptions and biases path estimates.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q9-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 7: </strong> For $v_r=0.60$ m/s, $v_\ell=0.40$ m/s, and $b=0.50$ m, what is $\omega$?</p>
+  <form id="ch2-odom-q11">
+    <input type="radio" name="ch2-odom-q11" value="A"> $0.20$ rad/s<br>
+    <input type="radio" name="ch2-odom-q11" value="B"> $0.40$ rad/s<br>
+    <input type="radio" name="ch2-odom-q11" value="C"> $1.00$ rad/s<br>
+    <input type="radio" name="ch2-odom-q11" value="D"> $2.00$ rad/s<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q11','B',
+        '✅ Correct! $\omega=(v_r-v_\ell)/b=(0.60-0.40)/0.50=0.40$ rad/s.',
+        '❌ Apply $\omega=(v_r-v_\ell)/b$ carefully with units.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q11-feedback"></p>
+  </form>
+
+  <hr>
+
+  <p><strong>Question 8: </strong> Which statement best describes odometry in a modern fusion system?</p>
+  <form id="ch2-odom-q12">
+    <input type="radio" name="ch2-odom-q12" value="A"> It replaces exteroceptive sensors entirely<br>
+    <input type="radio" name="ch2-odom-q12" value="B"> It provides a high-rate motion prior, while drift is corrected by global or exteroceptive measurements<br>
+    <input type="radio" name="ch2-odom-q12" value="C"> It is only used when GPS is available<br>
+    <input type="radio" name="ch2-odom-q12" value="D"> It estimates absolute position without drift<br>
+    <button type="button"
+      onclick="checkTrueFalse('ch2-odom-q12','B',
+        '✅ Correct! Odometry is low-latency input to filters; vision, LiDAR, or GPS bound drift.',
+        '❌ See the odometry-in-the-stack discussion and the key takeaway.')">
+      Check Answer
+    </button>
+    <p id="ch2-odom-q12-feedback"></p>
+  </form>
+
+</details>
+
+---
+
+<details markdown="1">
+ <summary>Further exploration</summary>
+
+  Video explaining differential drive odometry in more detail.
+
+  ![](https://www.youtube.com/watch?v=LrsTBWf6Wsc)
+  ><sub>*wheeled robot control and odometry. YouTube video, Sep 11, 2019. Available at: https://www.youtube.com/watch?v=LrsTBWf6Wsc*</sub>
+
+  Article explaining differential Drive odometry :
+  - [Wheel Odometry Model for Differential Drive Robotics](https://medium.com/@nahmed3536/wheel-odometry-model-for-differential-drive-robotics-91b85a012299)
+
+</details>
+
+
+---
+# Credits
+This page was created by Tim Lucking - EPFL - under supervision of Aude Billard - EPFL.
+
+
+#  Ressources
+
+## Books
 
 - [Springer Handbook of Robotics ](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_5) (Sensing and Estimation)
 
@@ -3941,16 +3950,16 @@ The primary engineering constraint when using these sensors on a moving robot is
 
 - [Springer Handbook of Robotics ](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_26) (Multisensor Data Fusion)
 
-### Videos
+## Videos
 
 - [Sensors and Perception](https://www.youtube.com/watch?v=k-V1jUWc7-o) (University of Cambridge)
   
-### Free Online Courses
+## Free Online Courses
 
 - [Perception in Robotics course Skoltech 2021](https://github.com/MobileRoboticsSkoltech/Perception-in-Robotics-course-T3-2021-Skoltech?tab=readme-ov-file) 
 
 
-### Websites
+## Websites
 
 - [Interactive Kalman filter](https://calerga.ch/projects/epfl/mobots/18/kalman.html)
 

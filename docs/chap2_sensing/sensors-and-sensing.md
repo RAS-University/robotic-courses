@@ -1568,14 +1568,14 @@ Wine-glass resonator gyroscopes use the effect of Coriolis forces on the positio
 
 ---
 
-#### Accelerometers
+**Accelerometers**
 
 Just as gyroscopes can be used to measure changes in orientation of a robot, other inertial sensors, known as **accelerometers**, can be used to measure **external forces** acting on the vehicle. One important factor concerning accelerometers is that they are sensitive to all external forces acting upon them, including gravity. Accelerometers use one of a number of different mechanisms (e.g., gravity), the force acts on the mass and displaces the spring.
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/accel.png)
 ><sub>Accelerometers. (a) Mechanical accelerometer. (b) Piezoelectric accelerometer. Source: Springer Handbook of Robotics, Chapter 20.3</sub>
 
-**Physical model (spring–mass–damper).**  
+* **Physical model (spring–mass–damper).**  
 A basic accelerometer can be idealized as a proof mass $m$ attached to a spring $k$ with damping $c$; external force produces displacement $x$ measured by the readout:
 $$
 \begin{array}{rl}
@@ -1587,16 +1587,16 @@ $$
 
 Under a constant acceleration $a$ (e.g., gravity component), static equilibrium gives $k\,x \approx m\,a$ (ignoring damping), so displacement is proportional to acceleration; dynamics (bandwidth, settling) follow from the second-order system above. Mechanical implementations are sensitive to vibration and may converge slowly if under-damped. 
 
-**Common transduction mechanisms.**
+* **Common transduction mechanisms.**
 - **Mechanical (displacement-measured).** Uses the spring–mass–damper directly; simple but vibration-prone and slower to settle.
 - **Piezoelectric.** A crystal stressed by the proof mass generates a measurable voltage; well suited to dynamic acceleration.
 - 
 *(Modern MEMS devices often use capacitive sensing of the proof-mass displacement; principles still map to the model above.)*
 
-**Link to the inertial pipeline.**  
+* **Link to the inertial pipeline.**  
 In an IMU, tri-axial gyros integrate attitude, accelerometer readings are rotated to the navigation frame, gravity is subtracted, and the result is integrated to **velocity** and then **position**. Any gyro/accel bias mis-orients gravity removal, so residual gravity integrates to large position drift over time, hence the need for sensor fusion.
 
-**Key specifications**
+* **Key specifications**
 - **Range** (e.g., $\pm2g,\ \pm16g$): measurement range defines the maximum and minimum values the accelerometer can accurately detect without saturation. This is crucial to ensure correct tracking of acceleration throughout during fast manoeuver (e.g., a drone performing aggressive aerobatics or a rocket during launch). To prevent saturation, the sensor range should be selected to exceed the worst-case dynamics expected during the robot’s operation. This ensures that the sensor remains within its linear operating region, providing reliable and undistorted measurements even during extreme maneuvers.
 - **Scale factor / sensitivity** (e.g., mV/$(\mathrm{m/s^2})$): maps output to acceleration; accuracy matters for bias/scale calibration. An accelerometer with a scale factor of 100 mV/g will output 100 millivolts per g of acceleration. The scale factor is critical because errors in its value directly scale the sensor’s output, leading to proportional errors in the estimated motion. 
 - **Bias & bias stability / drift**: dominant long-term error; characterize across temperature and time. A gyroscope with poor bias stability might exhibit a 0.1°/s drift, leading to a 36° orientation error after just 10 minutes if uncorrected. 
@@ -1604,13 +1604,13 @@ In an IMU, tri-axial gyros integrate attitude, accelerometer readings are rotate
 - **Alignment & orthogonality**: small axis misalignments couple motions; include in calibration. For measurement of orientation, especially when it comes to stabilizing the platform in flight (drone) or while locomoting (humanoid), even minor misalignments can lead to significant cumulative errors. 
 - 
 
-**Calibration & usage notes.**
+* **Calibration & usage notes.**
 - **Six-position “1 g” check.** Place each axis alternately up/down to estimate per-axis bias and scale ($\lVert a\rVert\approx g$ at rest).  
 - **Ratiometric, low-noise readout.** Stable reference and clean analog path reduce noise; average multiple samples with care (filtering adds delay, Ch. 1.6).  
 - **Mounting & temperature.** Rigid mounting minimizes parasitics; allow warm-up and compensate temperature coefficients.  
 - **Gravity handling.** For motion estimation, subtract gravity using the best available attitude estimate before integration.
 
-**Key takeaway.**  
+* **Key takeaway.**  
 Accelerometers convert proof-mass deflection into acceleration, inherently sensing gravity as well as motion. Their usefulness in robotics hinges on proper range selection, noise/bias management, bandwidth/latency budgeting, and calibration, and on fusing with other sensors to prevent integrated drift.
 
 ---
@@ -1686,7 +1686,7 @@ Accelerometers convert proof-mass deflection into acceleration, inherently sensi
 </details>
 ---
 
-##### Practical selection and integration tips
+**Practical selection and integration tips**
 {: .no_toc }
 
 * **Match Range to Dynamics**: When selecting sensors for a robotic system, it is critical to ensure that the measurement range and bandwidth are appropriately matched to the dynamics of the robot’s motion. The full-scale range of the sensor should be chosen such that saturation is unlikely even during the most extreme maneuvers the robot might perform. For example, if a robot arm is expected to accelerate rapidly during high-speed tasks, the gyroscopes or accelerometers should have a range that accommodates the maximum angular velocity or linear acceleration without clipping, which would lead to loss of data and potential control instability.
@@ -1702,8 +1702,9 @@ Temperature variations can significantly affect sensor performance, particularly
 * **Why fusion is essential**
 All inertial measurements exhibit **drift** due to bias and noise. Drift causes orientation error; In practice, three orthogonal gyroscopes are often ganged together to measure angular velocity about all three axes (roll, pitch, and yaw), enabling the reconstruction of the robot’s full 3-D rotation. However, gyroscopes alone are insufficient for complete state estimation because they drift over time due to integration errors. To address this, gyroscopes are typically integrated with accelerometers in an **Inertial Measurement Unit (IMU)**. An IMU combines three orthogonal accelerometers (to measure linear acceleration and gravity) and three orthogonal gyroscopes (to measure angular velocity). The accelerometers provide a reference for gravity, which helps correct the drift in the gyroscopes’ orientation estimates.
 
-* **Notes for robots** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. \
-  ---
+* **Notes for robots** Pure mechanical gyrocompasses are bulky, need careful damping (often oil reservoirs), and are sensitive to vehicle motions and latitude corrections. They are now uncommon in mobile robots compared to optical or MEMS devices. 
+
+   ---
 
 <details markdown="1">
   <summary>Conceptual questions</summary>

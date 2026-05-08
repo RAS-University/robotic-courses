@@ -2992,7 +2992,7 @@ Environmental sensors allow a robot to perceive the physical and chemical proper
 
 ---
 
-#### Thermodynamic Sensing: How Robots Feel Heat
+**Thermodynamic Sensing: How Robots Feel Heat**
 
 {: .no_toc }
 
@@ -3127,7 +3127,7 @@ The diagram shows two dissimilar metal wires joined at the hot junction near a f
 
 ---
 
-#### Optical Sensing: Beyond the Camera
+**Optical Sensing: Beyond the Camera**
 
 {: .no_toc }
 
@@ -3274,7 +3274,7 @@ This built-in amplification is a huge advantage for simple robotics. A phototran
 
 ---
 
-#### Atmospheric Perception: Robotic Olfaction (Smell)
+**Atmospheric Perception: Robotic Olfaction (Smell)**
 
 {: .no_toc }
 
@@ -3410,7 +3410,7 @@ Often used in indoor autonomous robots to monitor carbon dioxide ($CO_2$) or in 
 
 ---
 
-#### Meteorological Perception: Weather and Altitude
+**Meteorological Perception: Weather and Altitude**
 
 {: .no_toc }
 
@@ -3712,7 +3712,7 @@ Odometry is the process of estimating a robot’s position, orientation, and vel
 
 One of the most common forms of odometry is wheel odometry. Consider a planar robot with two powered wheels mounted on a common axle, separated by track width $b=2d$ (so $d$ is the half-baseline). Let the right/left wheel **linear** speeds be $v_{r}, v_{\ell}$ (positive forward) and the corresponding incremental **travels** over a sample be $\Delta s_{r}, \Delta s_{\ell}$. The body’s instantaneous motion is a rigid twist about an *instantaneous center of curvature* (ICC) on the axle line.
 
-**Kinematic relations .** With body angular rate $\omega$ and ICC radius $R$ (signed, measured from the body center):
+* **Kinematic relations .** With body angular rate $\omega$ and ICC radius $R$ (signed, measured from the body center):
 $$
 \omega (R+d)=v_{\ell}, \qquad \omega (R-d)=v_{r}.
 $$
@@ -3732,7 +3732,7 @@ y(t) = \int V(t)\sin(\theta(t))\,dt, \qquad
 \theta(t) = \int \omega(t)\,dt .
 $$
 
-**From encoders to wheel travel.**  
+* **From encoders to wheel travel.**  
 Encoders report **counts** as the wheel (or motor) turns. Over one sample, let the right/left counts be $\Delta N_r,\ \Delta N_\ell$. If each **wheel** revolution produces $\text{CPR}$ (Counts Per Rotation) counts and the wheel radius is $r$, then
 
 $$
@@ -3760,7 +3760,7 @@ $$
 
 ---
 
-**Calibration & error sources (typical)**
+* **Calibration & error sources (typical)**
 {: .no_toc }
 - **Wheel radius / scale factor.** Misestimated radius scales $\Delta s_{\ell},\Delta s_{r}$ ⇒ linear drift.  
 - **Baseline $2d$.** Misestimated track width biases $\Delta\theta$ ⇒ heading drift.  
@@ -3772,11 +3772,11 @@ $$
 
 ---
 
-**Odometry in the estimation stack**
+* **Odometry in the estimation stack**
 {: .no_toc }
 Odometry provides a *high-rate, low-latency* motion prior for controllers and filters; drift is bounded by fusing with exteroceptive/global measurements (e.g., GPS outdoors, visual landmarks indoors) in extended Kalman filters or factor-graph optimizers. GPS–IMU fusion is a canonical example of complementary sensors combined via Kalman filtering. The same principle applies to wheel/IMU/vision fusion for terrestrial robots.
 
-**Key takeaway.**  
+* **Key takeaway.**  
 Odometry turns local actuator/IMU readings into an integrated pose estimate using a kinematic model. It is indispensable for *short-term* motion tracking and control, but uncorrected errors inevitably accumulate; calibration, careful time stamping, and sensor fusion are essential to maintain accuracy over distance.
 
 ---

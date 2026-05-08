@@ -1780,13 +1780,17 @@ All inertial measurements exhibit **drift** due to bias and noise. Drift causes 
 
 Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
+The rest of this section page gives only a coarse overview of sensors to measure forces. Please, refer to the courses on <a href"https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/force_perception.html>Force/Torque sensing</a> and <a href="https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/tactile_perception.html> tactile sensing</a> for detailed presentations of this type of sensing. 
+
 ---
 
 #### Measurement Location: From Effort to Contact
 {: .no_toc }
 
-* **Actuator effort (motor current).** In many electric drives, torque is approximately proportional to current, $\tau \approx k_t I$. This relationship is useful for fast inner-loop control, however, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
-* **Joint or wrist F/T sensors.** Multi-axis load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
+* **Actuator effort (motor current).** In many electric drives, torque produced by the motor can be inferred from the current. This linear or often nonlinear relationship is advantageous in that it does not require placement of an additional sensor to measure force. However, gearbox losses, friction, and compliance makes current an imperfect indicator of external contact forces at the output. 
+* **Joint or wrist F/T sensors.** The alternative is to place a sensor to measure the force produced by the robot. This can be done either by placing force/torque sensors, or tactile sensors.
+
+  load cells or flexure-based sensors mounted at the wrist or fingertip directly measure forces and moments with high bandwidth. With a known fingertip geometry, the contact point can also be inferred from the measured $[\mathbf{f},\ \boldsymbol{\tau}]$, a capability often referred to as *intrinsic tactile sensing*.
 
 
 ---
@@ -1794,9 +1798,9 @@ Force, torque, and strain sensing enable a robot to perceive its own interaction
 #### Actuator effort: motor current as a torque sensor
 {: .no_toc }
 
-In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor.
+In most electric drives, **electromagnetic torque** is proportional to **motor current**. This makes the drive itself a built-in torque sensor. The simplest way of representing this is through a linear relationship.
 
-**Core relation.**
+* **Linear approximation**
 For a motor with torque constant $k_t$,
 $$
 \tau_m \approx k_t I \quad \text{(SI units: } k_t[\mathrm{Nm/A]} \text{).}
@@ -1808,12 +1812,10 @@ $$
 where $\tau_f(\dot{q})$ captures friction and cogging effects, $J_{\text{refl}}$ is reflected inertia, and $q$ is the joint angle.
 
 **Why it is popular.**
-
 * Zero added mechanics or wiring; readings arrive at **drive rates** with minimal latency.
 * Sufficient for many inner-loop controllers, collision detection, and coarse force regulation.
 
 **Implementation notes.**
-
 * **Current measurement.** Shunt resistor (precise, adds burden voltage) or Hall-effect/isolated sensors (galvanic isolation, lower insertion loss).
 * **Calibration.** Identify $k_t$ from datasheet then verify under load; characterize $\tau_f(\dot{q})$ via slow sweeps; measure $\eta$ under representative speeds/loads.
 * **Limits and pitfalls.**

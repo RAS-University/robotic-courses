@@ -1323,15 +1323,20 @@ Position sensing provides joint/shaft angle and linear travel for feedback contr
 ---
 
 **Incremental encoders.**  
+
+Incremental encoders are typically used to estimate the rotation of a motor or of robot joint around its axis. The encoders measure the relative motion of the motor/shaft/link as it rotates. They track changes in position from a reference point (home position), which must be established during system initialization. 
+
+An incremental encoder is composed of an emitter (mounted on the shaft) and receiver (mounted on a static part) are used to detect movement. A each shaft rotation, the emitter and receiver come in contact. Each contact counts as an increment. Emitter/receiver pairs may be composed of light source (LED) and photodetector (for optical encoders) or Hall-effect/magnetoresistive sensors (for magnetic encoders). 
+
+Incremental encoders, typically, use a disc with evenly spaced slots or lines (for optical encoders) or magnetic poles (for magnetic encoders). 
+
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/encoder.png)
 ><sub>Sketch of the quadrature encoder disc, and output from photodetectors placed over each of the two pattern. The corresponding state changes are shown on the right</sub>
 
-Incremental encoders measure relative motion by generating a series of pulses as the shaft rotates. The position is obtained by **counting pulses** from a reference point.
-
 A typical incremental encoder produces two output signals, **Channel A** and **Channel B**, which are square waves shifted by 90° (in quadrature). By observing the phase relationship between these two signals, the direction of rotation can be determined:
 
-- If Channel A leads Channel B, the shaft is rotating in one direction.
-- If Channel B leads Channel A, the shaft is rotating in the opposite direction.
+- If Channel A leads Channel B, the shaft is rotating in one direction (clockwise).
+- If Channel B leads Channel A, the shaft is rotating in the opposite direction (anticlockwise).
 
 Each pair of transitions (rising and falling edges of A and B) defines a **state**. By cycling through four distinct states $(S_1, S_2, S_3, S_4)$, one complete quadrature period is formed. Counting all four edges per cycle provides **4× resolution** compared to a single channel.
 
@@ -1352,10 +1357,10 @@ Many incremental encoders also include an **Index (I)** signal, which generates 
 
 **Absolute encoders.**  
 
-Absolute encoders use typically a coded disc attached to the rotating shaft. The disc is divided into concentric tracks, each containing a pattern of opaque and transparent (or reflective) segments. Each track corresponds to a bit in the digital output word. As the shaft rotates, a light source (LED) and photodetectors (or optical sensors) read the pattern on each track, generating a unique binary code for every position.
+Absolute encoders use typically a coded disc attached to the rotating shaft. The disc is divided into concentric tracks, each containing a pattern of opaque and transparent (or reflective) segments. Each track corresponds to a bit in the digital output word. As the shaft rotates, a light source (LED) and photodetectors (or optical sensors) read the pattern on each track, generating a unique binary code for every position. We distinguishih between:
 
-Single-Turn Absolute Encoders: Provide a unique code for one full rotation (360°). The number of unique positions is determined by the resolution (e.g., 8-bit = 256 positions, 12-bit = 4096 positions).
-Multi-Turn Absolute Encoders: Include additional gears or battery-backed counters to track the number of full rotations, enabling position measurement beyond 360° (e.g., 16-bit for turns + 12-bit for position within a turn).
+- Single-Turn Absolute Encoders: Provide a unique code for one full rotation (360°). The number of unique positions is determined by the resolution (e.g., 8-bit = 256 positions, 12-bit = 4096 positions).
+- Multi-Turn Absolute Encoders: Include additional gears or battery-backed counters to track the number of full rotations, enabling position measurement beyond 360° (e.g., 16-bit for turns + 12-bit for position within a turn).
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/Absolute_encoder.png)
 ><sub>Each concentric track on the encoder disk represents one bit of resolution. Note that each track, starting from the inside of the disk, has double the number of light-and-dark bands than the previous track. The encoder shown here has 4 tracks, so has 4 bits of resolution and can measure 16 positions (2^4) for each rotation of the encoder. Source : https://www.linearmotiontips.com/when-is-encoder-resolution-specified-in-bits-and-what-does-that-tell-us/</sub>
@@ -1385,9 +1390,13 @@ To convert bits of resolution into the number of positions the encoder can detec
 
 **Take-home message**
 An absolute encoder  provides a unique digital code for each distinct position of its shaft, allowing it to determine the absolute angular position immediately upon power-up, without the need for homing or reference movements. In contrast, incremental encoders only provide relative position changes. Absolute encoders are hence advantageous in that they retain their position information even after power loss.  \
-----------------
+---
+-------------------------------------------------------------------------------------------------------------------------
 
 **Potentiometers.**  
+
+A potentiometer measures angular or linear displacement by varying resistance.  It is typically composed of a resistive element with a fixed resistance measured in Ohm (e.g., 1kΩ, 10kΩ, 100kΩ). A wiper (sliding contact) that moves along the resistive track. Unlike encoders, potentiometers provide analog output proportional to the mechanical position of their wiper (sliding contact).
+
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/poten.jpg)
 ><sub>A linear potentiometer: a wiper slides along a resistive track (A–C). The output at B is a fraction of the excitation proportional to displacement.</sub>
 

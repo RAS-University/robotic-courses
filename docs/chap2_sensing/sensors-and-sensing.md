@@ -1780,7 +1780,7 @@ All inertial measurements exhibit **drift** due to bias and noise. Drift causes 
 
 Force, torque, and strain sensing enable a robot to perceive its own interactions with the environment. These measurements close the loop for compliant control, grasp stability, slip detection, and safe physical human–robot interaction. In practice, measurements are combined from multiple points along the actuation chain: motor currents (effort), joint or wrist force–torque (F/T) sensors, and tactile sensors on the skin or fingertips. Each measurement location captures a different portion of the system’s mechanics and noise characteristics, making the intended application of the data the central consideration in sensor design.
 
-The rest of this section page gives only a coarse overview of sensors to measure forces. Please, refer to the courses on <a href"https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/force_perception.html>Force/Torque sensing</a> and <a href="https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/tactile_perception.html> tactile sensing</a> for detailed presentations of this type of sensing. 
+The rest of this section page gives only a coarse overview of sensors to measure forces. Please, refer to the courses on <a href"https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/force_perception.html>Force/Torque sensing</a> for detailed presentations of how to measure forces. 
 
 ---
 
@@ -1804,9 +1804,8 @@ $$
 $$
 The model can be extended to take into account cases when the motor torque is amplified by a gear ratio $g$ (output torque is $g$ times motor shaft torque) with an estimated efficiency $\eta$, and diminishes due to losses from friction and cogging effects $\tau_f(\dot{q})$ and reflected inertia, a$J_{\text{refl}}$ at the joint $q$.
 $$
-\tau_{\text{joint}} \approx \eta g k_t I - \tau_f(\dot{q}) - J_{\text{refl}} \ddot{q},
+\tau_{\text{joint}} \approx \eta g k_t I - \tau_f(\dot{q}) - J_{\text{refl}} \ddot{q}.
 $$
-where 
 
 **Why it is popular.**
 * Torque estimation via current measurement eliminates the need for extra sensors, mechanical modifications, or complex wiring. Data is acquired at drive rates, providing real-time feedback with minimal latency.
@@ -1928,15 +1927,6 @@ Tactile/force information flows neatly into manipulation tasks:
 3. What key advantage do capacitive tactile arrays have over piezoresistive arrays, and what common challenge do they introduce?
 4. How can a wrist or fingertip F/T sensor plus fingertip geometry estimate the contact point without a tactile array?
 5. In a fingertip skin that senses sub-surface strain, why is deconvolution or a mechanical model needed to estimate surface pressure?
-
----
-
-#### Further exploration (free resources)
-
-* Overview of tactile sensing in robotics: [Wikipedia – Tactile sensor](https://en.wikipedia.org/wiki/Tactile_sensor)
-* Manipulation and contact models: [MIT OCW – Underactuated Robotics (contact & manipulation lectures)](https://ocw.mit.edu)
-* Slip detection intuition: short demo talks on PVDF and accelerometer-based tactiles (search on YouTube for “robotic slip detection PVDF”). -->
-
 
 ---
 
@@ -2072,7 +2062,7 @@ This chapter introduces common exteroceptive sensor families, the physical princ
 
 Contact sensors measure the environment **through physical interaction**. Unlike cameras or rangefinders that observe at a distance, contact sensing becomes informative only when the robot **touches** something. This makes contact sensors especially important for tasks where “knowing by touching” is unavoidable, such as grasping an object reliably, detecting collisions, or walking on uncertain terrain.
 
-In robotics curricula, contact sensing is often discussed together with **force perception**, because many contact sensors ultimately aim to estimate contact forces, torques, pressure distributions, and slip events. The detailed sensor principles (resistive, capacitive, piezoelectric, optical tactile sensors), calibration procedures, and force-control use cases are covered in [Force Perception]({{ site.baseurl }}/docs/chap2_sensing/force_perception), so this section focuses on how contact sensing fits into exteroceptive perception.
+In robotics curricula, contact sensing is often discussed together with **force perception**, because many contact sensors ultimately aim to estimate contact forces, torques, pressure distributions, and slip events. The detailed sensor principles (resistive, capacitive, piezoelectric, optical tactile sensors), calibration procedures, and force-control use cases are covered in <a href"https://www.ieee-ras.org/ras-university/?ras_page=docs/chap2_sensing/tactile_perception.html>Tactile Perception</a> module, so this section focuses on how contact sensing fits into exteroceptive perception. 
 
 ![img-description]({{ site.baseurl }}/assets/images/new_sensors/touch_sensors.png){: width="500" }
 > <sub>Uses of tactile sensing in robotics. Source: Springer Handbook of Robotics, Fig. 28.1. </sub>
@@ -2215,17 +2205,6 @@ Contact sensing is often the “last meter” of perception: cameras and range s
   </button>
   <p id="ch3-contact-q5-feedback"></p>
 </form>
-
-</details>
-
----
-
-<details markdown="1">
-  <summary>Further exploration</summary>
-* [Chapter 2.3 : Force Perception]({{ site.baseurl }}/docs/chap2_sensing/force_perception)
-* [Tactile sensor](https://en.wikipedia.org/wiki/Tactile_sensor)
-* [Force sensor](https://en.wikipedia.org/wiki/Force_sensor)
-* [Force sensing resistor](https://en.wikipedia.org/wiki/Force-sensing_resistor)
 
 </details>
 
@@ -2908,7 +2887,7 @@ The IMU “bridges” between GNSS updates, and GNSS constrains long-term drift.
 ---
 
 <details markdown="1">
-  <summary>Chapter wrap-up conceptual questions</summary>
+  <summary>GNSS and Temperature/Humidity Sensing General Conceptual Questions</summary>
 
 <!-- Question 1 -->
 
@@ -3697,7 +3676,6 @@ The primary engineering constraint when using these sensors on a moving robot is
 
 </details>
 
----
 ---
 
 ### Odometry: Fusion of sensors for robot localisation 

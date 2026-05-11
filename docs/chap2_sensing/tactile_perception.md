@@ -252,6 +252,7 @@ section: 4
 
 - Read [Sensors and Sensing]({{ '/docs/chap2_sensing/new-sensors-for-robotics' | relative_url }}) page
 - Basics of electrical circuits (resistance, capacitance, voltage-divider, etc.)
+- Basics of optics (internal reflection)
 
 ## General Motivation
 
@@ -370,7 +371,7 @@ When an object presses onto the sensor surface, the applied pressure **locally**
        alt="Analog resistive strip sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 1: Schematic of single-strip resistive touch sensing
+      Figure 2: Schematic of single-strip resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -401,7 +402,7 @@ Similarly, panel (b) illustrates the second state where the roles are swapped.
        alt="Measurement procedure of single-strip resistive touch sensors">
   <figcaption>
     <sub><i>
-      Figure 2: Measurement procedure of single-strip resistive touch sensors. (a) Active x-layer, (b) Active y-layer 
+      Figure 3: Measurement procedure of single-strip resistive touch sensors. (a) Active x-layer, (b) Active y-layer 
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -417,7 +418,7 @@ Panels (b) and (c) show the equivalent circuits when the layers are alternatingl
        alt="Equivalent electrical circuit of single-strip resistive touch sensors">
   <figcaption>
     <sub><i>
-      Figure 3: Equivalent electrical circuit of single-strip resistive touch sensors. (a) Initial equivalent circuit during no touch, (b) Touch while active x-layer, (c) Touch while active y-layer
+      Figure 4: Equivalent electrical circuit of single-strip resistive touch sensors. (a) Initial equivalent circuit during no touch, (b) Touch while active x-layer, (c) Touch while active y-layer
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -659,7 +660,7 @@ where:
        alt="Multi-strip analog resistive sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 4: Schematic of multi-strip resistive touch sensing
+      Figure 5: Schematic of multi-strip resistive touch sensing
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
@@ -833,7 +834,7 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 5: Force Sensing Resistor (FSR)
+      Figure 6: Force Sensing Resistor (FSR)
     </i></sub>
   </figcaption>
 
@@ -1042,7 +1043,7 @@ The simplest capacitive tactile sensor can be modelled as a **parallel-plate cap
        alt="Parallel-plate capacitive tactile sensor schematic">
   <figcaption>
     <sub><i>
-      Figure 6: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 7: Parallel-plate capacitive sensor (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1098,7 +1099,7 @@ In the self-capacitance mode, there is only one electrode, instead of two as in 
        alt="Self-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 7: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 8: Self-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1115,7 +1116,7 @@ In the mutual-capacitance mode, the two electrodes are arranged orthogonally (X-
        alt="Mutual-capacitance touch sensing schematic">
   <figcaption>
     <sub><i>
-      Figure 8: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
+      Figure 9: Mutual-capacitance touch sensing (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1154,7 +1155,7 @@ An illustrative implementation of a capacitive tactile array is the system devel
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 9: Mutual-capacitance tactile sensing array
+      Figure 10: Mutual-capacitance tactile sensing array
     </i></sub>
   </figcaption>
 
@@ -1386,7 +1387,7 @@ A primary example of such a material is **Polyvinylidene Fluoride (PVDF)**, a hu
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 10: Charge accumulation in PVDF polymer under mechanical deformation
+      Figure 11: Charge accumulation in PVDF polymer under mechanical deformation
     </i></sub>
   </figcaption>
 
@@ -1404,7 +1405,7 @@ To create a functional tactile sensor, the piezoelectric material is integrated 
        alt="Schematic of a piezoelectric sensor construction">
   <figcaption>
     <sub><i>
-      Figure 11: Piezoelectric tactile sensing element 
+      Figure 12: Piezoelectric tactile sensing element 
       (<a href="https://iopscience.iop.org/article/10.1088/0964-1726/20/4/045009" target="_blank">Y R Wang et al 2011 Smart Mater. Struct.</a>)
     </i></sub>
   </figcaption>
@@ -1443,7 +1444,7 @@ In our simplified formula, we treat $d$ as a single value. However, in reality, 
            alt="Piezoelectric constant matrix and axes definition">
       <figcaption>
         <sub><i>
-          Figure 12: Definition of axes and piezoelectric constant tensor 
+          Figure 13: Definition of axes and piezoelectric constant tensor 
           (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5" target="_blank">Tactile Sensing Technologies, Springer</a>)
         </i></sub>
       </figcaption>
@@ -1496,7 +1497,6 @@ The design utilizes a multi-layered sensing unit integrated into the grasper's j
       <figcaption>
         <sub><i>
           (a) Endoscopic grasper with integrated piezoelectric sensor
-          (<a href="https://ieeexplore.ieee.org/document/861111" target="_blank">Dargahi et al.</a>)
         </i></sub>
       </figcaption>
     </div>
@@ -1507,7 +1507,6 @@ The design utilizes a multi-layered sensing unit integrated into the grasper's j
       <figcaption>
         <sub><i>
           (b) Schematic showing the sensor layers including silicon "teeth," PVDF film and electrodes
-          (<a href="https://ieeexplore.ieee.org/document/861111" target="_blank">Dargahi et al.</a>)
         </i></sub>
       </figcaption>
     </div>
@@ -1515,7 +1514,7 @@ The design utilizes a multi-layered sensing unit integrated into the grasper's j
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 13: Piezoelectric tactile sensor for an endoscopic grasper
+      Figure 14: Piezoelectric tactile sensor for an endoscopic grasper (<a href="https://ieeexplore.ieee.org/document/861111" target="_blank">Dargahi et al.</a>)
     </i></sub>
   </figcaption>
 
@@ -1529,33 +1528,24 @@ The sensor structure consists of a **silicon** top layer with a rigid tooth-like
   <a href="https://ieeexplore.ieee.org/document/861111" target="_blank" rel="noopener">Dargahi et al. (2000)</a>.
 </div>
 
-
-
-
-
-
-
-
-
-
 #### D) Optical Sensors
 
 We are going to have a look at two types of optical tactile sensors. First, sensors that measure a **change in light intensity** when the optical path is obstructed, then sensors that detect **changes in the light’s path** via internal reflection.
 
 <h4 class="section-title">
   <span class="section-label">Type A: </span>
-  Intensity Modulation
+  Light Intensity Variation Sensor
 </h4>
 
 The most straightforward form of optical sensing relies on measuring the intensity of light between an **emitter** and a **detector**. To implement such a sensor, the following components are needed:
 
--  **An Emitter:** Usually an infrared LED that injects light into the sensing area.
--  **A Detector:** A photodiode or phototransistor that senses the light coming from the LED.
--  **A Deformable Cover:** A mechanically flexible top layer (like silicone) that includes an internal to obstruct the light path.
+-  **Emitter:** Usually an infrared LED that injects light into the sensing area.
+-  **Detector:** A photodiode or phototransistor that senses the light coming from the LED.
+-  **Deformable cover:** A mechanically flexible layer (like silicone) that includes an internal structure to obstruct the light path.
 
-The **working principle** is simple: when an external force is applied, it mechanically deforms the silicone cover. This causes the internal **piston to move downward**, **obstructing** the light path between the LED and the photodiode. Depending on the **magnitude** of the applied force, the path is obstructed more or less, creating a measurable variation in light intensity. This variation is converted into a change in output voltage, making the voltage proportional to the applied force (similar behavior to other tactile sensors we have seen before).
+When an external force is applied, it mechanically deforms the elastic membrane cover. This causes the internal **piston to move downward**, **obstructing** the light path between the emitter and the detector. Depending on the **magnitude** of the applied force, the path is obstructed more or less, creating a measurable variation in light intensity. This variation is converted into a change in output voltage, making the **voltage proportional to the applied force** ($ V_{out} \propto F$), similar behavior as in the resistive tactile sensors seen earlier.
 
-This process is illustrated in the figure below:
+The working principle is illustrated in the figure below.
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/optical_intensity_sensor.png' }}"
@@ -1563,39 +1553,134 @@ This process is illustrated in the figure below:
        alt="Working principle of light intensity optical tactile sensor">
   <figcaption>
     <sub><i>
-      Figure 14: Working principle of a light intensity optical tactile sensor. (a) In the initial state, light travels freely from emitter to detector, (b) During contact, the piston obstructs the optical path which diminishes the received light intensity 
+      Figure 15: Working principle of a light intensity optical tactile sensor. (a) In the initial state, light travels freely from emitter to detector, (b) During contact, the piston obstructs the optical path which diminishes the received light intensity 
       (<a href="https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5" target="_blank">Tactile Sensing Technologies, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
 
-It is important to note that the **sensitivity** and **sensing range** of this type of sensor rely heavily on the mechanical properties of the cover material. For instance, a stiffer material will increase the force range but decrease the sensitivity to light touches, whereas a softer material will be more sensitive but saturate more quickly under heavy loads.
+It is important to note that the **sensitivity** and **sensing range** of this type of sensor rely heavily on the mechanical properties of the membrane material. For instance, a stiffer material will increase the force range but decrease the sensitivity to light touches, whereas a softer material will be more sensitive but saturate more quickly under heavy loads.
+
+The electrical circuit of such a sensor can be as simple as in the schematic below. 
+
+Where:  
+
+- **LED**: infrared emitter that provides the light source
+- **PD (Photo Diode)**: infrared detector that receives the light
+- **$R_{LED}$**: resistor used to fix the amount of light emitted by the LED
+- **$R_{PD}$**: resistor that converts the current drawn by the PD into a measurable output voltage ($V_{out}$)
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/optical_sensor_light_intensity_electrical_circuit.png' }}"
+       width="320px"
+       alt="Electrical circuit of an optical light intensity tactile sensor">
+  <figcaption>
+    <sub><i>
+      Figure 16: Electrical circuit of an optical light intensity tactile sensor, with an infrared LED emitter and a photodiode detector 
+      (<a href="https://ieeexplore.ieee.org/document/9071868" target="_blank">L. Hajshahvaladi, A. Amralizadeh et al., ICROM 2019</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
 <h4 class="section-title">
   <span class="section-label">Type B: </span>
-  Internal Reflection
+  Light Path Variation Sensor
 </h4>
 
-<!--
-To achieve higher resolution and human-like sensitivity, advanced sensors utilize the principle of **Frustrated Total Internal Reflection (FTIR)**. This method allows the robot to "see" the contact area through a camera or an array of detectors.
+A light path variation sensor is based on the optical phenomenon of **Total Internal Reflection** (TIR). For a quick reminder about TIR, have a look at the drop-down below.
 
-In the basic model shown in **Figure 5.9**, light is injected into the edge of a transparent plate, known as a waveguide.
-*   **The Waveguide:** The light stays trapped inside the plate, bouncing off the surfaces due to total internal reflection.
-*   **Frustration Mechanism:** A soft rubber sheet with small "feelers" sits just above the plate. When an object applies force, these feelers collapse and touch the plate.
-*   **Light Scattering:** At the exact points of contact, the internal reflection is "frustrated," causing light to scatter out of the plate. This creates bright patches that are captured by a camera.
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Reminder: Total internal reflection</span>
+  </summary>
 
-This principle can be expanded into a more complex, **hemispherical fingertip** model as seen in **Figures 5.10 and 1**. By using a dome-shaped waveguide, the sensor can mimic the structure of a human finger.
-*   **Three-Axis Detection:** Because the system uses a camera (CCD), it can track not only the brightness of the light (Normal Force) but also the **horizontal movement** of the light spots (Shear Force).
-*   **Centroid Tracking:** If an object slides, the internal rubber feelers shift, causing the center of the bright spots to move in the image data. This allows the robot to detect slippage and perform dexterous manipulation of slippery or flexible objects.
+  <div class="optional-window">
+    <p>
+      <strong>Total internal reflection</strong> is a phenomenon that occurs when light travels from a medium with a higher refractive index to one with a lower refractive index ($n_1 > n_2$). Similar to the principle used in optical fibers, the light remains trapped within the first medium if it strikes the interface at an angle larger than a specific <strong>critical angle</strong> ($\theta_c$) with respect to the normal. 
+    </p>
+    <p>
+      Mathematically, this occurs when $n_1 \sin \theta \geq n_2$. If this condition is met, the light is reflected back into the denser medium rather than being refracted.
+    </p>
 
+    <figure style="text-align: center;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/total_internal_reflection.jpg' }}"
+           width="600px"
+           alt="Physics of Total Internal Reflection">
+      <figcaption>
+        <sub><i>
+          Figure 17: Physics of refraction, the critical angle, and total internal reflection
+          (<a href="https://avantierinc.com/resources/knowledge-center/what-is-total-internal-reflection-tir/" target="_blank">Avantier</a>)
+        </i></sub>
+      </figcaption>
+    </figure>
+  </div>
+</details>
 
+Light is injected into the edge of a transparent plate (acrylic board), which acts as a **waveguide**. Inside this waveguide, the light remains trapped (TIR) because it is surrounded by air, which has a lower refractive index. A soft **rubber sheet** with an array of small feelers is placed above the waveguide. 
 
+When an object applies **force** to the rubber, these feelers collapse and make physical contact with the acrylic plate. This contact changes the refractive index at the interface (air is replaced by the rubber medium) which *frustrates* the internal reflection. At these exact points of contact, we now have **Frustrated Total Internal Reflection** (FTIR), causing light to scatter out of the waveguide. This creates bright patches of light that can be detected by an **optical sensor** (such as a CCD camera or photodiode array) placed beneath the waveguide. An illustration is shown below.
 
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/Light_Path_Variation_Sensor.png' }}"
+       width="500px"
+       alt="Working principle of an optical tactile sensor based on frustrated total internal reflection">
+  <figcaption>
+    <sub><i>
+      Figure 18: Light path variation optical tactile sensor based on the principle of total internal reflection 
+      (<a href="https://www.researchgate.net/publication/221787487_Optical_Three-Axis_Tactile_Sensor_for_Robotic_Fingers" target="_blank">M. Ohka, J. Takata et al.</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
+As **more force** is applied, the contact area between the rubber feelers and the waveguide increases. This causes more light to scatter, which the optical sensor perceives as a brighter patch. By calculating the **total brightness** of these patches, the system determines the **magnitude** of the normal force.  
 
-These sensors don't react to electromagnetic interference, which useful to special applications.
+This principle can be extended into a three-axis tactile sensor, also detecting **shear forces**. To do so, the flat waveguide is replaced by a **hemispherical waveguide**, which makes the sensor suitable to be integrated into a **robotic fingertip**.
 
--->
+As shown in panel (a) of the figure below, the fingertip utilizes an **acrylic dome** as the waveguide. Instead of a single contact point, several **sensing elements** (each containing an array of small **feelers**) are arranged along the curved surface. Same as before, the light is trapped inside this dome via TIR, until a force causes the feelers to touch the dome, scattering the light. These light signals are then redirected into a **CCD camera**, which observes the bright light patches.  
+
+By analyzing the image data, it is possible to determine the magnitude and direction of the force:
+
+- **Normal Force**: determined based on the total **brightness** of the light patches
+- **Shear Force**: determined by tracking the movement of the **centroids** of the light patches
+
+On panel (b) of the figure below, we can see an example in action. When a force is applied, the eight feelers of the tip appear to move to the left on the monitor.
+
+<figure style="text-align: center;">
+
+  <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/3Axis_waveguide_sensor1.png' }}"
+           width="350px"
+           alt="Hemispherical three-axis optical tactile sensor design">
+      <figcaption>
+        <sub><i>
+          (a) Design of the hemispherical tactile sensor integrated into a robotic fingertip
+        </i></sub>
+      </figcaption>
+    </div>
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/3Axis_waveguide_sensor2.png' }}"
+           width="350px"
+           alt="Working principle of three-axis force detection">
+      <figcaption>
+        <sub><i>
+          (b) Principle of three-axis force detection using a CCD camera and centroid tracking
+        </i></sub>
+      </figcaption>
+    </div>
+  </div>
+
+  <figcaption style="margin-top: 15px;">
+    <sub><i>
+      Figure 19: Hemispherical three-axis optical tactile sensor 
+      (<a href="https://ieeexplore.ieee.org/document/4543734" target="_blank">M. Ohka, N. Morisawa et al., ICRA 2008</a>)
+    </i></sub>
+  </figcaption>
+
+</figure>
+
+Optical tactile sensors don't react to **electromagnetic interference**, which can be useful in some applications.
+
 
 
 
@@ -1604,11 +1689,54 @@ These sensors don't react to electromagnetic interference, which useful to speci
 
 #### E) Magnetism-based Sensors
 
-<!-- tactile sensing 5.2.4 -->
+Magnetism-based tactile sensors operate by measuring changes in a magnetic field caused by the mechanical deformation of an elastomer.
+
+A magnetism-based tactile sensor consists of a permanent magnet that creates a constant magnetic field and a **Hall sensor** located below it. 
+
+The Hall sensor is a transducer that varies its output voltage in response to a magnetic field. It works based on the **Hall effect**: when a current-carrying conductor is placed in a magnetic field, the field exerts a transverse force on the charge carriers, which creates a measurable voltage (the Hall voltage) across the conductor. By measuring this voltage, the sensor can determine the strength of the magnetic flux density ($B$).
+
+<!--
+
+[Image of Hall effect principle]
+
+-->
+
+The working principle is based on the displacement of the magnet relative to the Hall sensor. When an external force is applied, the elastomer body deforms, which moves the permanent magnet. 
+
+The Hall sensor measures the resulting variation in the magnetic field. Because the magnetic field strength is mathematically related to the distance from the magnet, the sensor can translate these magnetic variations into force measurements. By using a 3-axis Hall sensor, it is possible to detect the magnet's movement in all directions, allowing the system to calculate a full three-axis force vector ($F_x$, $F_y$, $F_z$).
+
+This can be observed in the figure below:
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/magnetism_based_sensor_principle.png' }}"
+       width="600px"
+       alt="Working principle of magnetic field-based three-axis soft tactile sensor">
+  <figcaption>
+    <sub><i>
+      Figure 19: Working principle of magnetic field-based three-axis soft tactile sensor: (a) Schematic of the tactile sensor (unloaded); (b) Tactile sensor (normal force $F_z$ applied); (c) Tactile sensor (normal force $F_z$ and shear force $F_y$ applied) 
+      (<a href="https://www.mdpi.com/1424-8220/16/9/1356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+As with the optical tactile sensors, the **range and sensitivity** of this kind of sensor heavily rely on the mechanical properties of the used elastomer (such as its stiffness or Young's modulus). A softer elastomer will allow for higher sensitivity to small forces, while a stiffer material will be better suited for high-range force sensing.
+
+
+
+
+
+
+
+
+
+
+<!-- 
 
 #### F) Electrorheological / Magnetorheological
 
-<!-- tactile sensing 5.2.7 – 5.2.8 -->
+tactile sensing 5.2.7 – 5.2.8 
+
+-->
 
 ---
 

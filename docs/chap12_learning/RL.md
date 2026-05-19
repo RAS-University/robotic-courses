@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this Reinforcement Learning module, it’s helpful to have:
+To get the most out of this **Reinforcement Learning module**, it’s helpful to have:
 
 ---
 
@@ -44,6 +44,8 @@ To get the most out of this Reinforcement Learning module, it’s helpful to hav
 
 
 ## Credits
+
+This course page was created by **[Seif Labib](https://www.linkedin.com/in/seif-labib/), MSc in Robotics at EPFL**, under supervision of [Prof. Aude Billard](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en&oi=ao), and funded by **IEEE RAS** and **EPFL**.
 
 ## Ressources
 

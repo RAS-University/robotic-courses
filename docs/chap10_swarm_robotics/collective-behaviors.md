@@ -153,11 +153,398 @@ In these practical sessions we will cover some of these behaviors, focusing most
 
 ## Course Content
 
-### Getting started
+### Getting Started
 
-In this section you will find materials and first instructions on how to prepare your computer to run the practical lessons of the robotics course.
+#### 1. Download the laboratory package (All operating systems)
 
-A VirtualBox VM with the pre-installed software is provided in the following link. You can download it from and import it in your local installation of VirtualBox.
+You will need approximately **6 GB of free disk space**.
+
+Download the laboratory package from the following link:
+
+https://drive.google.com/file/d/1Cw6Fx7HD_i1BM6F-sqIGPoVTNxj-rSY_/view?usp=drive_link
+
+After downloading:
+
+1. Extract the compressed file anywhere on your computer.
+2. Once extracted, you should obtain a folder named:
+
+```text
+swarm_robotics_lab/
+```
+
+This folder already contains:
+
+- `docker-compose.yml`
+- All course materials
+- All practical exercises
+- The complete folder structure required for the course
+
+The structure should look similar to this:
+
+```text
+swarm_robotics_lab/
+├── docker-compose.yml
+└── course_materials/
+    └── swarm_robotics/
+        ├── sandbox/
+        ├── obstacle_avoidance/
+        ├── aggregation/
+        ├── pattern_formation/
+        └── foraging/
+```
+
+---
+
+#### 2. Installation instructions by operating system
+
+<div class="freading">
+<details>
+<summary><strong>🪟 Windows</strong></summary>
+<div markdown="1">
+
+<div class="note">
+<strong>Important:</strong> This environment has been tested on Windows 11.
+</div>
+
+##### Step 1 — Install Docker Desktop
+
+Docker is the software that will run the Ubuntu lab environment on your computer.
+
+You can install **Docker Desktop** in either of these ways:
+
+- From the **Microsoft Store** (recommended for beginners)
+- From the official Docker website:
+  https://www.docker.com/products/docker-desktop/
+
+During installation, Docker may ask to enable a Windows feature called **WSL2** (*Windows Subsystem for Linux*). This is normal. In most cases, Docker configures it automatically.
+
+After installation:
+
+1. Restart your computer if Windows requests it.
+2. Open the **Docker Desktop** application.
+3. Wait until Docker finishes starting.
+
+---
+
+##### Step 2 — Start the laboratory for the first time
+
+The first execution must be done from a terminal because Docker needs to download the full laboratory image.
+
+Open:
+
+- **PowerShell**, or
+- **Command Prompt (CMD)**
+
+Navigate to the `swarm_robotics_lab/` folder.
+
+For example:
+
+```powershell
+cd Desktop\swarm-robotics-lab
+```
+
+Your path may be different depending on where you created the folder.
+
+Run:
+
+```bash
+docker compose up
+```
+
+The first startup may take several minutes because Docker must download a large image.
+
+Wait until you see:
+
+```text
+ARGoS Swarm Robotics Lab — Ready
+```
+
+---
+
+##### Step 3 — Open the Ubuntu desktop
+
+Open the following URL in your web browser:
+
+```text
+http://localhost:6080/vnc.html
+```
+
+Click:
+
+```text
+Connect
+```
+
+When prompted for the password, enter:
+
+```text
+swarmbot
+```
+
+You should now see the Ubuntu desktop environment running inside your browser.
+
+---
+
+##### Step 4 — Daily usage after the first execution
+
+After the first setup, you usually do **not** need to use the terminal anymore.
+
+Instead:
+
+Open **Docker Desktop**
+Locate the container named:
+
+```text
+argos-swarm-lab
+```
+
+Click the ▶ Start button
+Open again:
+
+```text
+http://localhost:6080/vnc.html
+```
+
+---
+
+##### Step 5 — Running experiments
+
+Inside the Ubuntu desktop:
+
+Right-click on the desktop
+Select:
+
+```text
+Open Terminal Here
+```
+
+Verify that you are able to run an experiment by entering the following commands in the command line and see an interface similar to the image below:
+```bash
+cd ~/swarm_robotics/sandbox
+argos3 -c sandbox.argos
+```
+
+![Argos3 Simulation]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/argos_simulation.png)
+
+
+
+If the installation was successful, the ARGoS interface will spawn. If the interface displays correctly, you can close it by pressing the icon in the top right corner of the visualization window of the interface.
+
+---
+
+##### Troubleshooting
+
+**The browser says "connection refused"**
+
+Docker is probably still starting. Wait a few seconds and refresh the page.
+
+---
+
+**The simulation feels slow**
+
+Docker runs graphics in software mode. Close heavy applications running in the background.
+
+---
+
+**Accented characters (á, ñ, é) do not work**
+
+Inside Ubuntu:
+
+```text
+Applications → Settings → Keyboard → Layout
+```
+
+and add your preferred keyboard layout.
+
+</div>
+</details>
+</div>
+
+---
+
+<div class="freading">
+<details>
+<summary><strong>🐧 Linux </strong></summary>
+<div markdown="1">
+
+<div class="note">
+<strong>Important:</strong> The environment has been tested on Ubuntu 20.04.
+</div>
+
+##### Step 1 — Install Docker
+
+Open a terminal and install Docker:
+
+```bash
+sudo apt update
+sudo apt install docker.io docker-compose-plugin
+```
+
+---
+
+##### Step 2 — Enable Docker permissions
+
+Add your user to the Docker group:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Then restart your computer or log out and back in.
+
+This step is important. If you skip it, Docker commands may fail unless executed with `sudo`.
+
+---
+
+##### Step 3 — Verify the installation
+
+Run:
+
+```bash
+docker --version
+```
+
+and
+
+```bash
+docker compose version
+```
+
+Both commands should print version information without errors.
+
+---
+
+##### Step 4 — Start the laboratory
+
+Open a terminal inside the `swarm_robotics_lab/` directory and run:
+
+```bash
+docker compose up
+```
+
+The first startup downloads several gigabytes of data, so it may take a while.
+
+Wait until you see:
+
+```text
+ARGoS Swarm Robotics Lab — Ready
+```
+
+---
+
+##### Step 5 — Open the Ubuntu desktop
+
+Open the following URL in your browser:
+
+```text
+http://localhost:6080/vnc.html
+```
+
+Click:
+
+```text
+Connect
+```
+
+Password:
+
+```text
+swarmbot
+```
+
+You should now see the Ubuntu desktop environment.
+
+---
+
+##### Step 6 — Running experiments
+
+Inside the Ubuntu desktop:
+
+Right-click on the desktop
+Select:
+
+```text
+Open Terminal Here
+```
+
+Verify that you are able to run an experiment by entering the following commands in the command line and see an interface similar to the image below:
+```bash
+cd ~/swarm_robotics/sandbox
+argos3 -c sandbox.argos
+```
+
+![Argos3 Simulation]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/argos_simulation.png)
+
+
+---
+
+##### Daily usage
+
+Open a terminal inside the swarm_robotics_lab/ directory.
+
+To stop the laboratory:
+
+```bash
+docker stop argos-swarm-lab 
+```
+
+To start it again later:
+
+```bash
+docker start -ai argos-swarm-lab 
+```
+
+
+Your files inside `course_materials/` will remain safe.
+
+---
+
+##### Troubleshooting
+
+**Permission denied errors**
+
+This usually means the Docker group permissions were not applied correctly.
+
+Try:
+
+```bash
+newgrp docker
+```
+
+or restart your session.
+
+---
+
+**The browser page does not open**
+
+Check that the container is running:
+
+```bash
+docker compose ps
+```
+
+</div>
+</details>
+</div>
+
+---
+
+<div class="freading">
+<details>
+<summary><strong>🍎 macOS</strong></summary>
+<div markdown="1">
+
+<div class="note">
+<strong>Notice:</strong> The macOS installation guide is still under preparation and has not yet been fully tested.
+
+Support instructions for macOS will be added in a future update of the course materials.
+</div>
+
+</div>
+</details>
+</div>
+
+---
 
 ### Introduction
 
@@ -192,7 +579,7 @@ In this section, you find the resources you will mostly use during this part of 
 
 The foot-bot is a differential-drive wheeled robot specifically designed to conduct experiments with robot swarms. The robot is endowed with sensors and actuators that enable it to interact with other foot-bots and with the environment.
 
-![The foot-bot](../../assets/images/swarm-robotics/collective_behaviors/fbot.png)
+![The foot-bot]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/fbot.png)
 
 In this course, you will use the wheels of the robot to navigate the scenarios, the proximity sensors to detect objects near the robot, the light sensors to measure the intensity of ambiance light, the ground sensors to identify the color of the floor, the RGB LEDs to display color lights and the omnidirectional camera to perceive those color lights, and finally, the range-and-bearing system to locate and communicate with other robots in the surroundings.
 
@@ -231,7 +618,7 @@ table.sort(myprox, function(a,b) return a.value < b.value end)
 
 **Wheels**
 
-![Position of the wheels from a top-view perspective of the robot](../../assets/images/swarm-robotics/collective_behaviors/robot_wheels.png)
+![Position of the wheels from a top-view perspective of the robot]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/robot_wheels.png)
 
 You can move the robot by using the function `set_velocity(l,r)`---where `l` and `r` are the left and right wheel velocity, respectively. For instance, to move the robot forward at 5cm/s:
 
@@ -243,7 +630,7 @@ The distance between the two wheels in cm is given by `robot.wheels.axis_length`
 
 **Proximity sensors**
 
-![Position of the proximity sensors from a top-view perspective of the robot](../../assets/images/swarm-robotics/collective_behaviors/robot_proximity.png)
+![Position of the proximity sensors from a top-view perspective of the robot]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/robot_proximity.png)
 
 The robot has 24 proximity sensors equally distributed in a ring around the robot body. Each sensor has a range of 10cm and returns a reading composed of an `angle` in radians and a `value` in the range [0,1]. The value 0 corresponds to no object detected, while values > 0 mean that an object has been detected.
 
@@ -254,7 +641,7 @@ robot.proximity[1].value
 
 **Light sensors**
 
-![Position of the light sensors from a top-view perspective of the robot](../../assets/images/swarm-robotics/collective_behaviors/robot_light.png)
+![Position of the light sensors from a top-view perspective of the robot](https://dgarzonramos.github.io/robotics/robotics101/assets/images/robot_light.png)
 
 The robot has 24 light sensors equally distributed in a ring around its body. Each sensor reading is composed of an `angle` in radians and a `value` in the range [0,1]. The value 0 corresponds to no light detected; values > 0 increase as the robot gets closer to a light source.
 
@@ -265,7 +652,7 @@ robot.light[1].value
 
 **Ground sensors**
 
-![Position of the ground sensors from a top-view perspective of the robot](../../assets/images/swarm-robotics/collective_behaviors/robot_motor_ground.png)
+![Position of the ground sensors from a top-view perspective of the robot]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/robot_motor_ground.png)
 
 The ground sensors read the color of the floor in a gray-scale. Values range from 0 (black) to 1 (white).
 
@@ -301,7 +688,7 @@ robot.range_and_bearing.clear_data()
 
 **RGB LEDs**
 
-![Position of the RGB LEDs from a top-view perspective of the robot](../../assets/images/swarm-robotics/collective_behaviors/robot_leds.png)
+![Position of the RGB LEDs from a top-view perspective of the robot]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/robot_leds.png)
 
 The robot has a total of 13 RGB LEDs. 12 are arranged in a ring around the robot body, and one (the beacon) is positioned at the top. To set a single LED:
 
@@ -558,7 +945,7 @@ argos3 -c sandbox.argos
 
 At the beginning of the experiment, a foot-bots is randomly placed in a squared bounded arena.
 
-![Sandbox - the foot-bot](../../assets/images/swarm-robotics/collective_behaviors/argosinterface.png)
+![Sandbox - the foot-bot]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/argosinterface.png)
 
 <div class="assignment" markdown="1">
 
@@ -637,7 +1024,7 @@ argos3 -c obstacle_avoidance_scatter.argos
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a squared bounded arena that contains boxes that obstruct the movement of the robots. During the execution of the experiment, the robots must navigate through the arena avoiding possible collisions with the boxes and with other robots. The experiment will end when the robots can effectively navigate in the arena without colliding.
 
-[![Obstacle avoidance in a cluttered scenario](../../assets/images/swarm-robotics/collective_behaviors/rwm1.png)](https://youtu.be/bk9Ge-DW4-Y)
+[![Obstacle avoidance in a cluttered scenario]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/rwm1.png)](https://youtu.be/bk9Ge-DW4-Y)
 
 **Ballistic motion with in-place rotation**
 
@@ -687,6 +1074,17 @@ else
 end
 ```
 
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [rw_ballistic_rotation.lua]({{ site.baseurl }}/assets/lua/rw_ballistic_rotation.lua)
+
+</div>
+</details>
+</div>
+
 ---
 
 #### Exercise 2: Obstacle avoidance in an empty scenario
@@ -715,7 +1113,7 @@ Test first the control software you developed in Exercise 1. Do the robots show 
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a squared bounded arena that contains no obstacles. During the execution of the experiment, the robots must navigate the arena avoiding collisions, and in such a way that they uniformly cover space. The experiment will end when the robots can effectively navigate in the arena without colliding.
 
-[![Obstacle avoidance in an empty scenario](../../assets/images/swarm-robotics/collective_behaviors/rwm2.png)](https://youtu.be/mgojexDZnjs)
+[![Obstacle avoidance in an empty scenario]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/rwm2.png)](https://youtu.be/mgojexDZnjs)
 
 **Ballistic motion with repulsion forces**
 
@@ -768,6 +1166,17 @@ else
   SetFordwardVelocity()
 end
 ```
+
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [rw_repulsion_forces.lua]({{ site.baseurl }}/assets/lua/rw_repulsion_forces.lua)
+
+</div>
+</details>
+</div>
 
 <div class="freading">
 <details>
@@ -834,7 +1243,7 @@ argos3 -c aggregation_one_spot.argos
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a squared bounded arena with white floor. In the center of the arena, there is a black spot that indicates the region of interest on which the robots must aggregate. During the execution of the experiment, all the robots must step into the black spot. The experiment will end when all the robots are inside of the black spot.
 
-[![Aggregation in a region of interest](../../assets/images/swarm-robotics/collective_behaviors/agg1.png)](https://youtu.be/_IMzSqcsyY8)
+[![Aggregation in a region of interest]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/agg1.png)](https://youtu.be/_IMzSqcsyY8)
 
 **Individualistic aggregation**
 
@@ -867,6 +1276,17 @@ else
 end
 ```
 
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [agg_one_spot.lua]({{ site.baseurl }}/assets/lua/agg_one_spot.lua)
+
+</div>
+</details>
+</div>
+
 ---
 
 #### Exercise 2: Aggregation as implicit decision making
@@ -895,7 +1315,7 @@ Test first the control software you developed in Exercise 1. Do the robots aggre
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a squared bounded arena with white floor. In the arena, there are two black spots that indicate two possible regions of interest on which the robots must aggregate. During the execution of the experiment, the robots must aggregate in one out of the two spots. The experiment will end when at least 70% of the robots are aggregated in a single spot.
 
-[![Aggregation as implicit decision making](../../assets/images/swarm-robotics/collective_behaviors/agg2.png)](https://youtu.be/GuMfXMr4eL4)
+[![Aggregation as implicit decision making]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/agg2.png)](https://youtu.be/GuMfXMr4eL4)
 
 **Implicit communication**
 
@@ -936,6 +1356,17 @@ else
 end
 ```
 
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [agg_two_spots.lua]({{ site.baseurl }}/assets/lua/agg_two_spots.lua)
+
+</div>
+</details>
+</div>
+
 ---
 
 #### Exercise 3: Enhancing aggregation with taxis behaviors
@@ -960,7 +1391,7 @@ argos3 -c aggregation_two_spot.argos
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a squared bounded arena with white floor. In the arena, there are two black spots that indicate two possible regions of interest on which the robots must aggregate. During the execution of the experiment, the robots must aggregate in one out of the two spots. The experiment will end when at least 70% of the robots are aggregated in a single spot.
 
-[![Enhancing aggregation with taxis behaviors](../../assets/images/swarm-robotics/collective_behaviors/agg2.png)](https://youtu.be/MDQ0pXkGXAw)
+[![Enhancing aggregation with taxis behaviors]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/agg2.png)](https://youtu.be/MDQ0pXkGXAw)
 
 **Taxis behaviors**
 
@@ -1015,6 +1446,17 @@ else
   ObstacleAvoidance()
 end
 ```
+
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [agg_taxis.lua]({{ site.baseurl }}/assets/lua/agg_taxis.lua)
+
+</div>
+</details>
+</div>
 
 <div class="freading">
 <details>
@@ -1073,7 +1515,7 @@ argos3 -c pattern_formation.argos
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a rectangular bounded arena. During the execution of the experiment, the robots must position themselves so that the inner structure of the swarm can be appreciated as an hexagonal lattice. The experiment will end when all robots are formed and the lattice remains stable.
 
-[![Hexagonal pattern formation](../../assets/images/swarm-robotics/collective_behaviors/ptr1.png)](https://youtu.be/0JBMbHLiLRw)
+[![Hexagonal pattern formation]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/ptr1.png)](https://youtu.be/0JBMbHLiLRw)
 
 **Artificial potential fields**
 
@@ -1083,17 +1525,17 @@ In swarm robotics, researchers have widely used the Lennard-Jones potential to c
 
 The image below represents the Lennard-Jones potential and indicates the distribution of the forces with respect to the target distance.
 
-![Lennard-Jones potential](../../assets/images/swarm-robotics/collective_behaviors/lngraph.png)
+![Lennard-Jones potential]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/lngraph.png)
 
 In the graph above, _delta_ is the target distance to be maintained, _rho_ is the distance measured against the position of other robot, and _epsilon_ indicates the strength of the interaction.
 
 The potential is described by the expression,
 
-![Lennard-Jones equation](../../assets/images/swarm-robotics/collective_behaviors/lnp.png)
+![Lennard-Jones equation]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/lnp.png)
 
 The corresponding forces can be obtained after applying the firs derivative,
 
-![Forces equation](../../assets/images/swarm-robotics/collective_behaviors/lnf.png)
+![Forces equation]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/lnf.png)
 
 <div class="assignment" markdown="1">
 **Controller description** — You are provided with a [starting Lua script](https://dgarzonramos.github.io/robotics101/assets/docs/argos/pattern_formation/pattern_formation_start.lua) that contains a few constant declarations and functions that will facilitate the development of the control software. Your task is to develop the rest of the script. The basic control pseudocode is summarized below.
@@ -1124,6 +1566,17 @@ Velocity{l,r} = ComputeSpeedFromAngle(mov_dir)
 
 The function `ComputeSpeedFromAngle()` is provided and described in the starting script.
 
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [pf_hexagonal.lua]({{ site.baseurl }}/assets/lua/pf_hexagonal.lua)
+
+</div>
+</details>
+</div>
+
 ---
 
 #### Exercise 2: Circular pattern formation
@@ -1148,7 +1601,7 @@ argos3 -c pattern_formation.argos
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a rectangular bounded arena that contains one small red LED. During the execution of the experiment, the robots must position themselves so that the robot swarm forms a circular pattern around the red LED. The experiment will end when all robots are formed and the lattice remains stable.
 
-[![Circular pattern formation](../../assets/images/swarm-robotics/collective_behaviors/ptr1.png)](https://youtu.be/2wv5CGhiXhM)
+[![Circular pattern formation]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/ptr1.png)](https://youtu.be/2wv5CGhiXhM)
 
 <div class="assignment" markdown="1">
 **Controller description** — In this exercise, you can start from the code that you developed in the Exercise 1. Your task is to extend the script so that the robots form around the LED. The basic control pseudocode is summarized below. Bear in mind that the LEDs just display color signals, and such signals can be perceived only by the omnidirectional camera. Further information about how to use the LEDs and the omnidirectional camera is provided in the section [the foot-bot](#user-guide-the-foot-bot).
@@ -1177,6 +1630,17 @@ mov_dir = GetAngle(sum_force)
 
 **5 - Set the robot velocity**
 
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [pf_circular.lua]({{ site.baseurl }}/assets/lua/pf_circular.lua)
+
+</div>
+</details>
+</div>
+
 ---
 
 #### Exercise 3: Flocking
@@ -1201,7 +1665,7 @@ argos3 -c pattern_formation.argos
 
 At the beginning of the experiment, a swarm of foot-bots is randomly distributed in a rectangular bounded arena that contains one small red LED and one ambiance light source. During the execution of the experiment, the robots must position themselves so that the inner structure of the swarm can be appreciated as an hexagonal lattice. The experiment will end when all robots are formed and the lattice remains stable.
 
-[![Flocking](../../assets/images/swarm-robotics/collective_behaviors/ptr1.png)](https://youtu.be/GZSIG3vfhcA)
+[![Flocking]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/ptr1.png)](https://youtu.be/GZSIG3vfhcA)
 
 <div class="assignment" markdown="1">
 **Controller description** — In this exercise, you can start from the code that you developed in the Exercise 2. Your task is to extend the script so that the robots move towards the ambiance light source after they are formed around the LED. Note that you will need to design a _triggering condition_ that causes a behavior change in the robot: they need to stop being attracted to the LED and start being attracted to the ambiance light source. The basic control pseudocode to drive the robots towards the ambiance light source is summarized below.
@@ -1230,6 +1694,17 @@ mov_dir = GetAngle(sum_force)
 ```
 
 **5 - Set the robot velocity**
+
+<div class="freading">
+<details>
+<summary><strong>Proposed solution</strong></summary>
+<div markdown="1">
+
+Download the proposed solution for this exercise: [pf_flocking.lua]({{ site.baseurl }}/assets/lua/pf_flocking.lua)
+
+</div>
+</details>
+</div>
 
 <div class="freading">
 <details>
@@ -1294,7 +1769,7 @@ leds
 
 3 - The positions of the nest and the forbidden area is fixed, but the position of the food source can change from one experiment to another. The nest corresponds to the white area, the food source is the black spot, and the forbidden area is indicated dark shade of gray. See the figure below (top view of the arena).
 
-![Foraging with forbidden areas](../../assets/images/swarm-robotics/collective_behaviors/for1.png)
+![Foraging with forbidden areas]({{ site.baseurl }}/assets/images/swarm-robotics/collective_behaviors/for1.png)
 
 ---
 
@@ -1309,37 +1784,8 @@ ARGoS is configured to automatically dump data on a file `output.txt`. This file
 - ITEMS: Column indicating the number of items collected so far
 ```
 
-<div class="assignment" markdown="1">
-**Setting up the code** — Follow the steps below to prepare the code and run the experiment.
-</div>
 
-**1 - Prepare the code for the experiment**
-
-Enter the following commands in a terminal:
-
-```
-cd ~/swarm_robotics/foraging/
-mkdir build
-cd build
-cmake ../src
-make
-```
-
-**2 - Set the environment variable `ARGOS_PLUGIN_PATH`** to the path in which the `build/` directory is located.
-
-```
-export ARGOS_PLUGIN_PATH=$ARGOS_PLUGIN_PATH:$HOME/swarm_robotics/foraging/build/
-```
-
-**3 - Make the export persistent** (optional)
-
-You can also put this line into your `$HOME/.bashrc` file, so it will be automatically executed every time you open a terminal. You add the line by entering the following command.
-
-```
-echo 'export ARGOS_PLUGIN_PATH=$ARGOS_PLUGIN_PATH:$HOME/swarm_robotics/foraging/build/' >> ~/.bashrc
-```
-
-**4 - Run the experiment to check that everything is OK**
+**Run the experiment**
 
 ```
 cd ~/swarm_robotics/foraging/

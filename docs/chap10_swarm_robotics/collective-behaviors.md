@@ -1845,7 +1845,7 @@ This course page was created by [David Garzón Ramos](https://dgarzonramos.com),
 
 Section 10.1 Swarm Robotics is based on ideas and reserch developed by David Garzón Ramos in collaboration with researchers at **IRIDIA**, the Artificial Intelligence Laboratory of Université libre de Bruxelles (ULB), and the **Bristol Robotics Laboratory**, University of Bristol.
 
-Section 10.2 Practice on Collective Behaviors builds on the ideas an excercises developed by [Marco Dorigo](https://iridia.ulb.ac.be/~mdorigo/HomePageDorigo/index.php) and [Mauro Birattari](https://iridia.ulb.ac.be/~mbiro/home.html) in the [Swarm Intelligence](https://www.ulb.be/en/programme/info-h414) course of IRIDIA at ULB. Implementation of this course is credited to [Carlo Pinciroli](https://carlo.pinciroli.net), Head of **NEST Lab**, Worcester Polytechnic Institute.
+Section 10.2 Practice on Collective Behaviors builds on the ideas an excercises developed by [Marco Dorigo](https://iridia.ulb.ac.be/~mdorigo/HomePageDorigo/index.php) and [Mauro Birattari](https://iridia.ulb.ac.be/~mbiro/home.html) in the [Swarm Intelligence](https://www.ulb.be/en/programme/info-h414) course of IRIDIA at ULB. The original implementation of this excercises is credited to [Carlo Pinciroli](https://carlo.pinciroli.net), Head of **NEST Lab**, Worcester Polytechnic Institute.
 
 Section 10.3 Practice on Modular Design builds on the ideas an excercises developed by David Garzón Ramos and Mauro Birattari for AutoMoDe [TuttiFrutti](https://doi.org/10.3390/app10134654) and [Mandarina](https://doi.org/10.1002/aisy.202400332), with an interface designed by [Jonas Kuckling](https://jonaskuckling.eu), University of Konstanz. 
 

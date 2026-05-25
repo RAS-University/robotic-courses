@@ -171,7 +171,7 @@ article table td,
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Swarm Robotics
+# Swarm Robotics Practice - Modular Design
 
 <!-- bundle exec jekyll serve -->
 
@@ -180,17 +180,24 @@ article table td,
 
 ## Prerequisites
 
-To get the most out of this XXX module, it’s helpful to have:
+To get the most out of this Swarm Robotics module, it’s helpful to have prior knowdlege on basic mobile robotic systems and to have followed the prior content on Swarm Robotics and the Practical Session on programming collective behaviors. 
+
+This session requires you to assemble modular control software, therefore, basic programming skills are recommended. The practical session also requires you to manually tune the parameters of the software, for which basic understanding of optimization processes is useful but not mandatory.
+
+The tools required to develop the excercises are introduced in the material: Docker environments and the ARGoS simulator.
 
 ---
 
 ## General Motivation
 
-We are becoming increasingly familiar with robots that can perform tasks in a wide range of domains. Think, for example, of a lawn mower robot, an autonomous vacuum cleaner, or a flying drone for leisure photography. Today, these robots are mostly limited to operating as individual solutions. Soon, cooperation between robots will play a major role in transforming these solutions into large-scale robotics services. The problem is that programming robots to work together remains a challenging task that demands the expertise of skilled designers.
+Many of the collective behaviors explored in swarm robotics share common behavioral components. For example, robots may explore the environment by performing random walks, either because they aim to find their peers and aggregate in a single cluster, or because they are looking for regions of interst from which to forage. In this example, a similar building block for a exploration behavior can be used to compose different collective behaviors: aggregation or foraging. 
 
-In this chapter, we explore how swarm robotics has emerged as a field to help address this problem. First, we introduce key concepts and provide a context to the field. Then, we discuss the challenges of designing robot swarms and approaches to help in designing the coordinated collective behavior of robot swarms. The chapter ends with practical sessions on the design of typical swarm robotics collective behaviours.
+In the previous practical session, these behaviors were programmed manually with the goal of observing whether a given collective behavior would emerge when the robots followed certain rules. In this session, the problem is taken a step further. Instead of programming the robots directly, you are given a number of behavioral components that can be combined and tuned to produce control software for a variety of swarm robotics problems.
 
-Swarm robotics is a rapidly developing field and the goal of the material presented here is not to be comprehensive. Rather, it is to provide robotics enthusiasts and practitioners with sufficient bases to explore the field on their own. Ideas on how to improve this chapter are welcomed—please refer to the contact section by the end.
+This introduces you to the use of optimization-based processes for designing collective behaviors in robot swarms. Given a performance metric that describes a swarm mission, the goal is to find suitable control software for the robots that improves their performance. The challenge is not to observe a desired behavior, but rather to optimize the performance of the swarm. 
+
+This enginnering approach to swarm robotics focuses in designing good performing systems, and not much on the specifics of the behavior obtained. After experimenting with this manual optimization-based process, you will be ready to set up your own architectures and implement your own tuning methods (for example, [those based on heuristic optimization and reinforcement learning](https://doi.org/10.3389/frobt.2023.1134841)).
+
 
 ## Course Content
 
@@ -666,54 +673,59 @@ Support instructions for macOS will be added in a future update of the course ma
 
 ---
 
-### Running the software
-
-After the installation is completed, open a terminal inside the Docker container and run:
-
-```bash
-cd ~/sigsoft-swarms
-source argos3-env.sh
-```
-
-Start an experiment by replacing `ID` with the number of the mission you want to test:
-
-```bash
-bash start_experiment.sh ID
-```
-
-Then open the following URL in your browser:
-
-```text
-http://localhost:8088
-```
-
-This launches the AutoMoDe graphical interface that allows you to create probabilistic finite-state machines for the robots and execute ARGoS3 simulations.
-
----
-
-### Understanding the interface
-
-The interface allows you to:
-
-- Add and remove states
-- Create transitions between states
-- Modify behavior parameters
-- Execute simulations in ARGoS3
-- Evaluate swarm performance
-
-Each node represents a low-level robot behavior, while edges represent transition conditions between behaviors.
-
-Once you finish your design, click the **Exec** button to launch the simulation.
-
----
-
 ### Introduction
 
-The collective behavior of a robot swarm---and hence its ability to accomplish a particular mission---results from the interactions that the robots have with the environment and with their peers&nbsp;[\[1\]](#ref-1). Unfortunately, conceiving and implementing a collective behavior for a robot swarm is particularly challenging. The desired collective behavior for the robots is specified globally for the swarm, but the robots must be programmed individually. The challenge is that no generally applicable method exists to tell what an individual robot should do so that the desired collective behavior is obtained in the swarm&nbsp;[\[2\]](#ref-2).
+In this practical session, the students will use a modular approach to design control software for a swarm of 20 *e-puck* robots that must perform a set of missions in the ARGoS3 simulator. The missions require the robots to communicate, navigate the environment, react to events, and display spatial-organization properties. Below the e-puck that is used as a basis for the simulations.
 
-In this practical session, the students will use a modular approach to design control software for a swarm of 20 *e-puck* robots that must perform a set of missions. The missions require the robots to communicate, navigate the environment, react to events, and display spatial-organization properties.
+![The e-puck considered in the practical session]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/rmd.png)
+*Figure 1. The e-puck considered in the practical session, by [Garzón Ramos & Birattari](https://doi.org/10.3390/app10134654).* 
 
-The exercise is based on *TuttiFrutti*&nbsp;[\[3\]](#ref-3), a modular design method specialized in the realization of collective behaviors for robots that can display and perceive color signals. *TuttiFrutti* generates control software in the form of probabilistic finite-state machines that combine parametric software modules. In *TuttiFrutti*, the design process is conducted by an optimization algorithm that searches the space of possible control software for good-performing instances. Conversely, in this practical session, the students will take on the role of optimization agents, combining and tuning *TuttiFrutti*'s software modules to create good-performing control software for the robots. The goal of this practical session is therefore to demonstrate how parametric software modules can be combined in different ways to obtain a variety of collective behaviors with a robot swarm.
+<div class="freading">
+  <details>
+  <summary><strong>Read details</strong></summary> 
+  <div markdown="1">
+  The e-puck operates with the following sensing and actuation capabilities:
+
+  1. **Proximity sensors:** 8 sensors distributed around the chassis for obstacle detection.
+  2. **Ground sensors:** 3 sensors that distinguish between black, gray, and white floor surfaces.
+  3. **Range-and-bearing board:** estimates the number and aggregate relative position of neighboring robots within 0.5 m.
+  4. **Omnidirectional camera:** a 360° turret that detects colored lights (red, blue, green, cyan, magenta, and yellow) within 0.5 m and computes an aggregate direction vector for each color.
+  5. **Differential wheels:** two wheels that can drive the robot at speeds up to 0.12 m/s.
+  6. **RGB LEDs:** three LEDs on top of the robot that can display cyan, magenta, or yellow.
+
+  The walls of the arena in which the e-puck operates can display red, green, and blue.
+  </div>
+    </details>
+</div>
+
+---
+
+The exercise is based on *TuttiFrutti*&nbsp;[\[3\]](#ref-3), a modular design method specialized in the realization of collective behaviors for robots that can display and perceive color signals. *TuttiFrutti* generates control software in the form of probabilistic finite-state machines that combine parametric software modules. Below a simplified example of how a set of behavioral modules are executed in a robot.
+
+![A simplified probabilistic finite-state machine produced by TuttiFrutti]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/pfsm.png)
+*Figure 2. Simplified illustration of TuttiFrutti's software modules assembled into a probabilistic finite-state machine (PFSM) and the resulting behavior on an e-puck, by [Garzón Ramos et al](https://doi.org/10.1002/aisy.202400332).*
+
+<div class="freading">
+  <details>
+  <summary><strong>Read explanation</strong></summary> 
+  <div markdown="1">
+  1. The finite-state machine starts with the behavior **Explore (Exp)**, which in this case sets the e-puck's LEDs to display yellow while the robot moves randomly in the arena. 
+  2. The e-puck detects a robot on its left and turns right to avoid a collision. 
+  3. When the e-puck detects a region with a black floor, the transition **Black Floor (BF)** is activated, and the e-puck switches to the behavior **Color Elude (CE)**. 
+  4. The e-puck executes **Color Elude (CE)**, driving the robot away from the blue walls and changing its LEDs to display magenta.
+  5. The e-puck detects that other robots are displaying cyan with their LEDs, activating the transition **Color Detection (CD)** and switching to the behavior **Color Follow (CF)**. 
+  6. The e-puck executes **Color Follow (CF)**, moving toward other robots displaying cyan and changing its own LEDs to cyan as well.
+  7. The e-puck detects two neighboring robots within its perception range, activating the transition **Neighbor Count (NC)** and switching back to **Explore (Exp)**. 
+  8. The finite-state machine continues to operate until the mission ends.
+  </div>
+  </details>
+</div>
+
+---
+
+In *TuttiFrutti*, the design process is conducted by an optimization algorithm that searches the space of possible control software for good-performing instances. This means that an optimization algorithm selects a possible combination of behavior modules, tunes its parameters, evaluates the performance of the swarm in simulation, and then iterates the process until a training budget is exahusted.
+
+Conversely, in this practical session, the students will take on the role of optimization agents, combining and tuning *TuttiFrutti*'s software modules to create good-performing control software for the robots. The goal of this practical session is therefore to demonstrate how parametric software modules can be combined in different ways to obtain a variety of collective behaviors with a robot swarm.
 
 To perform the exercise, students are provided with a visualization tool&nbsp;[\[4\]](#ref-4) (i)&nbsp;to produce and manipulate finite-state machines, (ii)&nbsp;to visualize simulations&nbsp;[\[5\]](#ref-5) of the resulting collective behavior, and (iii)&nbsp;to compute the performance of the swarm in each mission.
 
@@ -827,6 +839,7 @@ You will experiment with a swarm of twenty *e-puck* robots that must perform sin
 The robots operate in an octagonal arena of $2.75\,\text{m}^{2}$ surrounded by RGB blocks---see the figure below. The robots are randomly positioned at the beginning of each experimental run. The RGB blocks are arranged in walls and each of them can possibly display a different color. The floor of the arena is gray with nine square patches, each measuring 25 cm on each side. One of the patches is white, and the other eight are black. In every mission, RGB blocks adjacent to black patches initially turn green, and afterward, they will randomly switch off with uniform probability. The remaining RGB blocks turn red or blue to inform the robots about the sub-mission to be executed.
 
 ![The experimental arena: blue state]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/arena-blue.png)
+
 ![The experimental arena: red state]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/arena-red.png)
 
 *The experimental arena. The pictures show examples of the two possible states of the arena. At the top, the RGB blocks of the walls display blue and all RGB blocks adjacent to a black patch are switched on, displaying green. At the bottom, the RGB blocks of the walls display red and some RGB blocks adjacent to a black patch have switched off, displaying no color. The robots are randomly positioned.*
@@ -1027,12 +1040,27 @@ Research Associate - University of Bristol
 
 ---
 
+## Contact
+
+Like robot swarms, the swarm robotics community thrives through collaboration. If you would like to contribute to this page, please do not hesitate to get in touch.
+
+```
+David Garzón Ramos
+University College Dublin
+david.garzon.ramos@ucd.ie
+```
+
+Feedback, erratas, bug reports, corrections, clarifications, extensions, and new content are all welcomed!
+
 ## Credits
 
-## Ressources
+This course page was created by [David Garzón Ramos](https://dgarzonramos.com), **LIMAR**, University College Dublin (UCD), and funded by **IEEE RAS** and a UCD Ad Astra Fellowship. The preparation of the material was assisted by [Juan B. Medina](https://www.zainullah.com/), PhD student at University College Dublin.
 
+Section 10.1 Swarm Robotics is based on ideas and reserch developed by David Garzón Ramos in collaboration with researchers at **IRIDIA**, the Artificial Intelligence Laboratory of Université libre de Bruxelles (ULB), and the **Bristol Robotics Laboratory**, University of Bristol.
 
+Section 10.2 Practice on Collective Behaviors builds on the ideas an excercises developed by [Marco Dorigo](https://iridia.ulb.ac.be/~mdorigo/HomePageDorigo/index.php) and [Mauro Birattari](https://iridia.ulb.ac.be/~mbiro/home.html) in the [Swarm Intelligence](https://www.ulb.be/en/programme/info-h414) course of IRIDIA at ULB. Implementation of solutions are credited to [Carlo Pinciroli](https://carlo.pinciroli.net), Head of **NEST Lab**, Worcester Polytechnic Institute.
 
+Section 10.3 Practice on Modular Design builds on the ideas an excercises developed by David Garzón Ramos and Mauro Birattari for AutoMoDe [TuttiFrutti](https://doi.org/10.3390/app10134654) and [Mandarina](https://doi.org/10.1002/aisy.202400332), with an interface designed by [Jonas Kuckling](https://jonaskuckling.eu), University of Konstanz. 
 
 ---
 

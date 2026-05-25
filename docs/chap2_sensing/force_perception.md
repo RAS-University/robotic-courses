@@ -404,7 +404,7 @@ This page is separated into the following sections:
 
 ---
 
-### Introduction to Wrench vector
+### Introduction to Wrench Vector
 
 Let us begin with a quick reminder of **forces** and **torques** (also called moments) we want to measure. Force is given in Newtons [N] and produces **linear** movement, whereas torque is given in Newton-meters [Nm] and produces **rotational** movement. They are both **vector** quantities defined in 3D space, meaning they can be decomposed into components of the orthonormal basis of $\mathbb{R}^3$ (x, y, and z axis).
 
@@ -556,7 +556,7 @@ Force-torque sensors are classified based on the number of axes (or degrees of f
   W = [F_x, F_y, F_z, M_x, M_y, M_z]^T \in \mathbb{R}^6
   $$
 
-#### Sensing Principle and Mechanical Implementation
+#### A) Sensing Principle and Mechanical Implementation
 
 The sensing principle of F/T sensors relies on detecting **strain** (deformation) in an elastic structure. When a force is applied, the elastic structure deforms and this deformation is converted into an electrical signal using strain gauges. By measuring the strain in the structure, the applied force can be determined using **Hooke’s law**. The detail of the mathematical model is shown later.
 
@@ -636,7 +636,7 @@ Below are examples of **elastic structures** used in F/T sensors:
 
   This design distributes the applied load through the structure, causing primarily axial strain (tension or compression) along the longitudinal axis of the limbs. **Strain gauges** are bonded on both sides (front and back) of the legs connecting the two platforms to measure the strain.
 
-#### Mathematical Model
+#### B) Mathematical Model
 
 From the electrical signal obtained from the strain gauges, we can determine the forces and torques acting on the sensor.
 
@@ -673,7 +673,7 @@ It is also possible to determine external forces and torques without embedding d
 
 Below, we have a look at two different approaches to estimate external forces using motor current: **model-based** and **model-free** (Neural Network–based).
 
-#### Approach A: Model-Based Estimation
+#### A) Model-Based Estimation
 
 This approach is called model-based, as it uses the **robot’s dynamics and kinematics** (= model) to compute the external force applied on the robot.  
 
@@ -1338,7 +1338,7 @@ Let's consider the same robotic arm as in the previous exercise. However this ti
 
 ---
 
-#### Approach B: Model-Free Estimation (Neural Network Based)
+#### B) Model-Free Estimation
 
 The second proposed approach is machine learning based and does **not rely on any physics equation**. Instead of using a model, the wrench vector $W \in \mathbb{R}^6$ is determined by a neural network (NN). To train the NN, this approach needs real-world data, that can be collected using an actual F/T sensor. Data is usually obtained through **learning from demonstration**, a method whereby an operator passively moves the robot to show how to perform a given task. Data on F/T perception are gathered as the robot makes various contacts with the environment, see course on <a href="https://www.ieee-ras.org/ras-university/?ras_page=docs/chap12_learning/LfD.html"> learning from demonstration</a>. 
 
@@ -1737,8 +1737,6 @@ This page used the following resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->
 
 - [Intrinsic sense of touch for intuitive physical human-robot interaction](https://www.science.org/stoken/author-tokens/ST-2065/full#) (M. Iskandar, A. Albu-Schäffer and A. Dietrich)
-
-- [Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://www.sciencedirect.com/science/article/pii/S0263224122003335) (O. Kanoun et al.)
 
 <!--  
 Initial comments:

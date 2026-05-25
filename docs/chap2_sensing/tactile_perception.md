@@ -321,10 +321,10 @@ This page is separated into the following sections:
   Overview of the main physical sensing principles.
 
 - **Section 2.4.3.2: Advanced Tactile Sensing**  
-  Presentation of flexible, stretchable and vision-based tactile sensors.
+  Presentation of flexible and stretchable tactile sensors.
 
 - **Section 2.4.3.3: Issues and Difficulties**  
-  Discussion of hardware challenges in large-scale sensor arrays.
+  Discussion of hardware challenges in large sensor arrays.
 
 ---
 
@@ -337,7 +337,11 @@ This section presents the following tactile sensing technologies:
 - Piezoelectric sensors  
 - Optical sensors  
 - Magnetism-based sensors  
-- Electrorheological / magnetorheological sensors  
+<!--
+- Vision-based sensors  
+-->
+
+<!-- - Electrorheological / magnetorheological sensors  -->
 
 Let's begin with **resistive tactile** sensors.
 
@@ -842,8 +846,6 @@ An example of piezoresistive tactile sensor is the *Force Sensing Resistor (FSR)
 
 These sensors are **low cost**, offer good sensitivity and have **simple electronics**, but their main drawback is the presence of **hysteresis**, meaning that the sensor does not follow the same resistance–pressure curve when the force increases as when it decreases.
 
-
-
 <details class="optional-details" markdown="1">
   <summary class="optional-btn">
     <span class="optional-label">Illustrative video about Force Sensing Resistors</span>
@@ -1039,7 +1041,7 @@ The simplest capacitive tactile sensor can be modelled as a **parallel-plate cap
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/parallel-plate-capacitor.png' }}"
-       width="320px"
+       width="300px"
        alt="Parallel-plate capacitive tactile sensor schematic">
   <figcaption>
     <sub><i>
@@ -1337,8 +1339,8 @@ By the way, most touch screens use the mutual-capacitance principle. Ever wonder
   </div>
 
   <p>
-    <!-- <em>Key points of the video:</em><br> -->
-
+    <em>Key points of the video:</em><br>
+    The video explains briefly the difference between resistive and capacitive touch screens. It explains why conductive objects, like a snack sausage, can activate the screen while insulating gloves cannot. Moreover, it explains why the activation becomes perturbed when water is on the screen.
   </p>
 
   </div>
@@ -1363,7 +1365,7 @@ A primary example of such a material is **Polyvinylidene Fluoride (PVDF)**, a hu
   <div style="display: flex; justify-content: center; gap: 20px;">
     <div style="flex: 1;">
       <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/piezoelectric_effect_pvdf_shrunk.jpg' }}"
-           width="300px"
+           width="260px"
            alt="Piezoelectric effect in PVDF when shrunk">
       <figcaption>
         <sub><i>
@@ -1374,7 +1376,7 @@ A primary example of such a material is **Polyvinylidene Fluoride (PVDF)**, a hu
     </div>
     <div style="flex: 1;">
       <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/piezoelectric_effect_pvdf_stretched.jpg' }}"
-           width="300px"
+           width="260px"
            alt="Piezoelectric effect in PVDF when stretched">
       <figcaption>
         <sub><i>
@@ -1401,7 +1403,7 @@ To create a functional tactile sensor, the piezoelectric material is integrated 
 
 <figure style="text-align: center;">
   <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/piezoelectric_sensor.png' }}"
-       width="360px"
+       width="300px"
        alt="Schematic of a piezoelectric sensor construction">
   <figcaption>
     <sub><i>
@@ -1650,7 +1652,7 @@ On panel (b) of the figure below, we can see an example in action. When a force 
   <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
     <div style="flex: 1;">
       <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/3Axis_waveguide_sensor1.png' }}"
-           width="350px"
+           width="300px"
            alt="Hemispherical three-axis optical tactile sensor design">
       <figcaption>
         <sub><i>
@@ -1660,7 +1662,7 @@ On panel (b) of the figure below, we can see an example in action. When a force 
     </div>
     <div style="flex: 1;">
       <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/3Axis_waveguide_sensor2.png' }}"
-           width="350px"
+           width="300px"
            alt="Working principle of three-axis force detection">
       <figcaption>
         <sub><i>
@@ -1687,50 +1689,144 @@ Optical tactile sensors don't react to **electromagnetic interference**, which c
 
 
 
-#### E) Magnetism-based Sensors
+#### E) Magnetism-Based Sensors
 
-Magnetism-based tactile sensors operate by measuring changes in a magnetic field caused by the mechanical deformation of an elastomer.
+Magnetism-based tactile sensors work by measuring changes in a magnetic field caused by the mechanical deformation of an elastomer.
 
-A magnetism-based tactile sensor consists of a permanent magnet that creates a constant magnetic field and a **Hall sensor** located below it. 
-
-The Hall sensor is a transducer that varies its output voltage in response to a magnetic field. It works based on the **Hall effect**: when a current-carrying conductor is placed in a magnetic field, the field exerts a transverse force on the charge carriers, which creates a measurable voltage (the Hall voltage) across the conductor. By measuring this voltage, the sensor can determine the strength of the magnetic flux density ($B$).
-
-<!--
-
-[Image of Hall effect principle]
-
--->
-
-The working principle is based on the displacement of the magnet relative to the Hall sensor. When an external force is applied, the elastomer body deforms, which moves the permanent magnet. 
-
-The Hall sensor measures the resulting variation in the magnetic field. Because the magnetic field strength is mathematically related to the distance from the magnet, the sensor can translate these magnetic variations into force measurements. By using a 3-axis Hall sensor, it is possible to detect the magnet's movement in all directions, allowing the system to calculate a full three-axis force vector ($F_x$, $F_y$, $F_z$).
-
-This can be observed in the figure below:
+The design of a magnetism-based tactile sensor usually consists of a permanent magnet, that creates a constant magnetic field, placed on top of a **Hall sensor**.
 
 <figure style="text-align: center;">
-  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/magnetism_based_sensor_principle.png' }}"
-       width="600px"
-       alt="Working principle of magnetic field-based three-axis soft tactile sensor">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/magnetism_based_sensor_design.png' }}"
+       width="300px"
+       alt="Design of a magnetism-based tactile sensor">
   <figcaption>
     <sub><i>
-      Figure 19: Working principle of magnetic field-based three-axis soft tactile sensor: (a) Schematic of the tactile sensor (unloaded); (b) Tactile sensor (normal force $F_z$ applied); (c) Tactile sensor (normal force $F_z$ and shear force $F_y$ applied) 
+      Figure 20: Structure of a magnetism-based tactile sensor, showing the permanent magnet (embedded in elastomer) and the Hall effect sensor at the base 
       (<a href="https://www.mdpi.com/1424-8220/16/9/1356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
     </i></sub>
   </figcaption>
 </figure>
 
+If needed, a quick reminder about the working principle of Hall sensors is in the drop-down below.
+
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Reminder: Hall sensor</span>
+  </summary>
+
+  <div class="optional-window">
+    <p>
+      The Hall sensor varies its output voltage in response to a magnetic field. It works based on the <strong>Hall effect</strong>: when a current-carrying conductor is placed in a magnetic field, the field exerts a transverse force on the charge carriers. This force pushes the electrons to one side of the conductor, creating a measurable voltage across it. This voltage is called the <strong>Hall voltage</strong>
+    </p>
+    <p>
+      The Hall voltage is <strong>perpendicular</strong> to the direction of the electrical current, aswell as the direction of the magnetic field ($B$). By measuring this voltage, the sensor can determine the strength of the magnetic flux density.
+    </p>
+
+    <p>
+      On the schematic below, we can observe a conductor with current flowing through it from left to right, generated by a battery. When a magnet is placed on top, the magnetic field causes the Hall voltage to appear perpendicular to the current, which is measurable via the two <strong>electrodes</strong> placed on both sides of the conductor.
+    </p>
+
+    <figure style="text-align: center;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/hall_effect.png' }}"
+           width="300px"
+           alt="The Hall Effect Principle">
+      <figcaption>
+        <sub><i>
+          Figure 21: Schematic of the Hall Effect showing the generation of voltage perpendicular to current and magnetic field
+          (<a href="https://www.electronics-tutorials.ws/electromagnetism/hall-effect.html" target="_blank">Electronics Tutorials</a>)
+        </i></sub>
+      </figcaption>
+    </figure>
+
+    <p>
+    </p>
+  </div>
+</details>
+
+The working principle is based on the **displacement** of the magnet relative to the Hall sensor. When an external force is applied, the elastomer body deforms, which moves the permanent magnet. 
+
+The Hall sensor basically acts as a proximity and displacement detector. When a normal force is applied, the magnet moves closer to the sensor, increasing the magnetic flux density and the resulting Hall voltage. When shear forces are applied, the magnet moves laterally. To track this 3D movement, sensors use an **array of Hall elements** (typically four) or an integrated **3D Hall chip**. By comparing the variations in magnetic field strength across these different elements, the system can determine the magnet's 3D position and calculate the force vector ($F_x$, $F_y$, $F_z$).
+
+An example of the sensor in action is shown in the figure below:
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/magnetism_based_sensor_in_action.png' }}"
+       width="400px"
+       alt="Magnetism-based tactile sensor in action">
+  <figcaption>
+    <sub><i>
+      Figure 22: Magnetism-based tactile sensor in action: the left panel illustrates the deformation under a pure normal force ($F_z$); the right panel shows the response to a transverse force causing lateral displacement of the magnet 
+      (<a href="https://www.mdpi.com/1424-8220/16/9/1356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+In summary, the applied force displaces the magnet, which changes the magnetic field acting on the Hall sensor. In equations, it looks like this:
+
+$$D = f_1(B)$$
+$$F = f_2(D)$$
+
+Where **$B$** is the magnetic flux density measured by the Hall sensor, **$D$** is the displacement of the magnet from its resting position and **$F$** is the external force applied to the sensor.
+
+The functions are determined by the following factors:
+* **$f_1$** is mainly determined by the **magnetic properties** of the permanent magnet and its **spatial distance** relative to the sensor.
+* **$f_2$** is mainly determined by the **mechanical properties** of the elastomer, such as its Young's modulus and the specific geometric design of the elastomer.
+
+Knowing $f_1$ and $f_2$, we can directly deduct the resulting force $F$ from the magnetic field:
+
+$$F = f_2(f_1(B))$$
+
 As with the optical tactile sensors, the **range and sensitivity** of this kind of sensor heavily rely on the mechanical properties of the used elastomer (such as its stiffness or Young's modulus). A softer elastomer will allow for higher sensitivity to small forces, while a stiffer material will be better suited for high-range force sensing.
 
+An example of magnetism-based tactile sensors can be found below.
+
+<details class="optional-details" markdown="1">
+  <summary class="optional-btn">
+    <span class="optional-label">Illustrative video about magnetic tactile sensors</span>
+  </summary>
+
+  <div class="optional-window"><br>
+
+  <div style="text-align: center;">
+    <iframe width="640" height="360"
+            src="https://www.youtube.com/embed/CmU8fq0Ivt8"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+  </div>
+  <div style="text-align: center;">
+      <sub><i>
+        Melexis magnetic tactile sensor demo (available on <a href="https://youtu.be/CmU8fq0Ivt8">YouTube</a>)
+      </i></sub>
+  </div>
+
+  <p>
+    <em>Key points of the video:</em><br>
+    This video shows a magnetic tactile sensor integrated into a robotic gripper. By measuring the 3D force vector, the robot can detect an object's orientation, calculate its center of gravity and manipulate it precisely.
+  </p>
+
+  </div>
+</details>
+
+
+<!--
+
+#### F) Vision-Based Sensors
+
+-> make link to vision course
+-> video from TEDX MIT, guy explains how his vision based tactile sensor works
+
+Finally, one more tactile sensing technology relies on **vision**. The design of such a sensor ressembles the *type B* optical tactile sensor, seen earlier.
+
+Now that we have seen different basic tactile sensing technologies, let’s take a closer look at some more advanced tactile sensors.
+
+-->
 
 
 
-
-
-
-
-
-
-<!-- 
+<!--
 
 #### F) Electrorheological / Magnetorheological
 
@@ -1742,104 +1838,341 @@ tactile sensing 5.2.7 – 5.2.8
 
 ### Advanced Tactile Sensing
 
-Now that we have seen different tactile sensing technologies, let’s take a closer look at some more advanced tactile sensors.
+Most tactile sensor technologies are rigid and limited to specific industrial tasks. However, there are applications where flexibility is predominant, such as **soft robotics**, **human-machine interfaces** and **wearable electronics**.
 
-When used in robotics, tactile sensors often need to cover broad areas. This can be challenging, as the surfaces where the sensors must be attached can have many different shapes (cylindrical, spherical, etc.). To cover these surfaces in the best possible way, tactile sensing grids need to be flexible (for cylindrical surfaces) or even stretchable (for spherical surfaces). The difference between flexible and stretchable lies in the fact that a flexible sensor can bend, whereas a stretchable sensor can both bend and expand (i.e. become longer). Below are some examples of flexible and stretchable tactile sensors.
+In these fields, sensors must act more like biological skin: protecting internal components while providing feedback during contact with humans or fragile objects. It is important to note that these *advanced* sensors do not necessarily rely on new physical principles. Their transduction (capacitive, resistive, etc.) remains the same as previously discussed. But instead, the advancement lies more in **materials science**, which allows these sensing elements to be integrated into flexible or stretchable substrates.
 
-Lastly, there also exist alternative ways to sense touch. One advanced tactile sensing technique makes use of vision. These vision-based tactile sensors are presented below.
+We distinguish sensors based on how they conform to the robot's body:
 
-#### A) Flexible Tactile Sensors
+- **Flexible sensors**: Designed to be **bendable**, allowing them to conform to simple curved surfaces like a robot’s forearm.
+- **Stretchable sensors**: Designed to both **bend and expand**, making them useful for covering moving joints, like a robotic elbow.
 
-<!-- Flexible tactile sensors are those that **bend** but do not undergo large tensile strain.  
+The development of such sensors is in part made possible by **additive manufacturing (3D printing)**, which allows the integration of sensing elements directly into soft structures.
 
--> stretchable (Review of Printable Flexible and Stretchable Tactile Sensors, Kumar et al.)
--> have a look at meta's fingertip tactile sensor
+Below, we explore examples of how these sensors are implemented.
 
-tactile sensing chapter 4.4.1 
+#### A) Flexible Capacitive Tactile Sensors
 
--->
+The design is based on a sandwich structure that uses common materials like paper and flexible polymers to create a capacitiv sensor capable of detecting pressure.
 
-#### B) Stretchable Tactile Sensors
+<h4 class="section-title">
+  Multi-Layer Design and Fabrication:
+</h4>
 
-<!-- Stretchable tactile sensors must withstand **large strain** (tens to hundreds of percent). 
+The sensor is fabricated through **all-inkjet-printing**, a manufacturing method that allows for a multi-layered structure where the sensing elements are deposited directly on the flexible substrates. The different layers are:
 
-tactile sensing chapter 4.4.3 
+- **Substrate:** A thin polyethylene naphthalate (PEN) film serves as the flexible base.
+- **Bottom Electrode:** A conductive ink made of **silver nanoparticles (AgNPs)** is printed directly onto the PEN to form the bottom electrode.
+- **Dielectric Layer:** A layer of **Ecoflex** silicone is coated over the bottom electrode to act as the dielectric medium.
+- **Spacer:** A piece of **paper** is tiled on top of the Ecoflex. It acts as a porous dielectric material that separates the electrodes and provides a stable surface for the second electrode.
+- **Top Electrode:** A second layer of conductive silver nanoparticles is printed on top of the paper.
+- **Encapsulation:** The entire device is sealed with another layer of Ecoflex to maintain flexibility and protect the components.
 
--->
+The manufacturing of these layers is shown in the figure below.
 
-#### C) Vision-Based Tactile Sensors
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/inkjet_printed_fabrication.png' }}"
+       width="600px"
+       alt="Manufacturing steps for an inkjet-printed capacitive sensor">
+  <figcaption>
+    <sub><i>
+      Figure 23: Step-by-step fabrication of the capacitive tactile sensor via 3D printing, showing the layering of PEN, silver electrodes, Ecoflex and paper 
+      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S. Fu, J. Tao, C. Pan et al., Advanced Materials</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
-<!--
--> make link to vision course
--> video from TEDX MIT, guy explains how his vision based tactile sensor works
+<h4 class="section-title">
+  Working Principle:
+</h4>
 
-vision used for force sensing, address this here: https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=8085141
--->
+The working principle is identical to the capacitive sensors we have seen earlier. When external pressure is applied, the **dielectric layers** (Ecoflex and paper) compress, reducing the distance between the top and bottom silver electrodes. This reduction in separation leads to an **increase** in the measured **capacitance**.
+
+As shown in the right plot of the figure below, the relative change in capacitance ($\Delta C/C_0$) is highly sensitive to the applied pressure. The bigger the applied pressure, the bigger the change in capacitance.
+
+<figure style="text-align: center;">
+
+  <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/capacitive_pressing.png' }}"
+           width="200px"
+           alt="Physical pressing of the capacitive sensor">
+      <figcaption>
+        <sub><i>
+          (a) Illustration of the sensor deformation under physical pressing
+        </i></sub>
+      </figcaption>
+    </div>
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/capacitive_pressure_plot.png' }}"
+           width="350px"
+           alt="Capacitance change plot">
+      <figcaption>
+        <sub><i>
+          (b) Relative capacitance change ($\Delta C/C_0$) as a function of applied pressure
+        </i></sub>
+      </figcaption>
+    </div>
+  </div>
+
+  <figcaption style="margin-top: 15px;">
+    <sub><i>
+      Figure 24: Flexible capacitive tactile sensor in action
+      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S. Fu, J. Tao, C. Pan et al., Advanced Materials</a>)
+    </i></sub>
+  </figcaption>
+
+</figure>
+
+<h4 class="section-title">
+  Sensing Arrays:
+</h4>
+
+These individual units can be scaled into a **flexible sensing arrays** using the same inkjet printing process.
+
+An example of usage of such a flexible sensing array would be the attachment directly to human skin, such as the back of the hand, to map pressure distribution (illustrated in the figure below). This could be useful for **human-machine interaction**, allowing a user to interact with a computer or **control a robotic system** through a skin-mounted interface that identifies the position and intensity of touch across a wide area.
+
+<figure style="text-align: center;">
+
+  <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/capacitive_array_design.png' }}"
+           width="350px"
+           alt="3D schematic of the sensing array">
+      <figcaption>
+        <sub><i>
+          (a) Schematic of the $4 \times 4$ pixel sensing array
+        </i></sub>
+      </figcaption>
+    </div>
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/capacitive_array_skin.png' }}"
+           width="200px"
+           alt="Flexible array mounted on skin">
+      <figcaption>
+        <sub><i>
+          (b) The flexible array mounted on the back of a human hand to detect contact
+        </i></sub>
+      </figcaption>
+    </div>
+  </div>
+
+  <figcaption style="margin-top: 15px;">
+    <sub><i>
+      Figure 25: Flexible capacitive tactile sensing array
+      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S. Fu, J. Tao, C. Pan et al., Advanced Materials</a>)
+    </i></sub>
+  </figcaption>
+
+</figure>
+
+#### B) Stretchable Resistive Tactile Sensor
+
+Now, we have a look at a **stretchable** resistive tactile sensor, in opposition to the flexible sensor seen above. Again, by using a multimaterial 3D printing approach, the sensing elements are directly integrated into a soft matrix that can conform to and move with human skin or soft robotic joints.
+
+<h4 class="section-title">
+  Multi-Layer Design and Fabrication:
+</h4>
+
+The layers are composed of:
+
+- **Base and isolating layers:** These are printed using a silicone ink which provides stretchability and electrical isolation.
+- **Electrodes:** The top and bottom electrodes are printed using a silver nanoparticle Ag/silicone ink. The concentration is chosen to balance electrical conductivity with mechanical stretchability.
+- **Sensor layer:** It is also printed using an Ag/silicone ink, but with a different concentration. The specific silver loading is near the *percolation threshold*, making the electrical properties of the layer very sensitive to physical deformation.
+- **Supporting layer:** An additional layer made of Pluronic ink is used during printing to support the top electrode and is later dissolved by immersing the sensor in water.
+
+The structure is printed from the bottom up in **eight sequential steps**, shown below:
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/stretchable_res_fabrication.png' }}"
+       width="700px"
+       alt="3D printing process of the stretchable tactile sensor">
+  <figcaption>
+    <sub><i>
+      Figure 26: 3D printing process of the stretchable capacitive tactile sensor, illustrating the layering of silicone and silver electrodes
+      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S. Guo, K. Qiu et al., Advanced Materials</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+<h4 class="section-title">
+  Working Principle:
+</h4>
+
+The sensor layer is printed as a 3D cylinder wall that connects the top and bottom electrodes. When the structure is **compressed**, the silver nanoparticles within the sensor layer are forced to pack more closely together. This increases the electrical **conduction** pathways, leading to a **decrease** in the electrical **resistance**. As a result, when a constant voltage is applied, the measured **current increases**.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/stretchable_res_structure.png' }}"
+       width="500px"
+       alt="Exploded view of the stretchable sensor structure">
+  <figcaption>
+    <sub><i>
+      Figure 27: Schematic of the strechable resistive tactile sensor: (a) Exploded view showing the layers; (b) Side view of the completed monolithic sensor 
+      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S. Guo, K. Qiu et al., Advanced Materials</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+<h4 class="section-title">
+  Application:
+</h4>
+
+Here is an example of how this type of sensor can be used in **wearable electronics**. By mounting it directly onto the wrist, it can monitor a human **pulse**. The small mechanical pressure exerted by the expansion of arteries during a heartbeat is enough to deform the sensor layer and change its resistance. In the left panel of the figure below, we can see how the sensor was mounted on the wrist, whereas on the right we can see plots of current changes monitored by the sensor, first in a sedentary state, then immediately after exercise.
+
+<figure style="text-align: center;">
+
+  <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/pulse_wrist.png' }}"
+           width="270px"
+           alt="Sensor mounted on wrist for pulse monitoring">
+      <figcaption>
+        <sub><i>
+          (a) Tactile sensor mounted above the radial artery
+        </i></sub>
+      </figcaption>
+    </div>
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/pulse_plot.png' }}"
+           width="430px"
+           alt="Current change signals of radial pulse">
+      <figcaption>
+        <sub><i>
+          (b) Pulse signals detected under sedentary and post-exercise states
+        </i></sub>
+      </figcaption>
+    </div>
+  </div>
+
+  <figcaption style="margin-top: 15px;">
+    <sub><i>
+      Figure 28: Stretchable resistive tactile sensor used for radial pulse monitoring
+      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S. Guo, K. Qiu et al., Advanced Materials</a>)
+    </i></sub>
+  </figcaption>
+
+</figure>
 
 ---
 
 ### Issues and Difficulties
 
-<!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) -->
-
-#### A) Wealth of Computation
-
-#### B) Wiring Complexity
-
-While integrating tactile sensors on a robot body, the wires that transmit the tactile data can be a big issue. The number of needed wires increases with the number of tactile sensors used. Often, the available space for wires is limited.
-
-<!--
-add challenges of electronics: wiring, data transfer, power consumption  
--> examples of how it is done today
--> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+<!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) 
+ multiplexing
 -->
 
+When used in robotics, tactile sensors often need to cover **broad areas**. This can be challenging as simply scaling up individual sensors creates significant hurdles in **physical integration** and also in **data processing**. To cover larger areas, tactile sensor arrays are formed out of hundreds of individual sensing elements, which leads to issues we are adressing below.
+
 <!--
-add challenges of electronics: wiring, data transfer, power consumption  
--> examples of how it is done today
--> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+
+#### A) Wiring Complexity
+
+When transitioning from a single tactile sensor to a large-area sensor array, the primary challenge is the **interconnection bottleneck**. Most tactile sensors require at least two wires to function. In a "brute-force" approach, a system with $n$ sensors would require $2n$ or $n+1$ wires (if sharing a ground). For a robot covered in thousands of sensors, this leads to a "cabling nightmare" where the thick, rigid bundles of wires prevent the robot from moving freely and are highly likely to break at high-stress points like **mechanical joints**.
+
+<h4 class="section-title">
+  Bus-based Architectures and Multiplexing
+</h4>
+
+To solve this, researchers use **bus-based architectures** where multiple sensors share the same physical wires. Instead of each sensor having a direct line to the controller, data is organized using **multiplexing** protocols. This allows the system to distinguish which sensor is "talking" at any given time.
+
+* **Time Division Multiplexing (TDM):** Sensors are read one after another in a very rapid sequence. The controller knows which sensor the data belongs to based on the specific "time slot" in which the signal arrives.
+* **Frequency Division Multiplexing (FDM):** Each sensor is assigned a unique frequency (or "pitch"). All sensors can send data simultaneously over the same wire, and the controller uses filters to separate the signals.
+
+<figure style="text-align: center;">
+  <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/bus_architecture_a.png' }}"
+           width="350px"
+           alt="Circuit diagram of bus-based sensor integration">
+      <figcaption>
+        <sub><i>
+          (a) Circuit schematic of a bus-based shared wiring system
+        </i></sub>
+      </figcaption>
+    </div>
+    <div style="flex: 1;">
+      <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/bus_architecture_b.png' }}"
+           width="300px"
+           alt="Micrograph of integrated sensor bus">
+      <figcaption>
+        <sub><i>
+          (b) Integrated sensor nodes sharing a common flexible bus
+        </i></sub>
+      </figcaption>
+    </div>
+  </div>
+  <figcaption style="margin-top: 15px;">
+    <sub><i>
+      Figure 29: Implementation of bus-based shared wiring to reduce interconnection complexity 
+      (<a href="https://engineering.purdue.edu/oxidemems/conferences/transducers2013/PDFs/Papers/685_0841.pdf" target="_blank">M. Makihata, M. Muroyama et al., Transducers 2013</a>)
+    </i></sub>
+  </figcaption>
+</figure>
+
+<h4 class="section-title">
+  Wireless Communication for Critical Joints
+</h4>
+
+In areas where mechanical rotation is extreme, such as the wrist or shoulder, even flexible wires may eventually fail due to fatigue. **Wireless communication** can bypass these critical regions entirely. By using **electromagnetic coils**, data can be transmitted via inductive coupling. This allows the signal to "jump" across a physical gap or a rotating joint without any mechanical connection, ensuring the robot maintains tactile feedback without the risk of wire breakage.
+
+<h4 class="section-title">
+  Local Modular Routing
+</h4>
+
+The most scalable solution involves **local modular routing**, often referred to as a "cellular" skin. Instead of every sensor communicating with the central "brain," sensors are organized into independent **modules (patches)**. 
+
+Each module contains its own local microcontroller that collects and processes data from the local "taxels" (tactile pixels). Because the complex wiring is handled entirely inside the small, local patch, only a single communication cable is needed to connect the entire patch to the rest of the robot. This hierarchical structure mimics the human peripheral nervous system, where local clusters of nerves process information before sending it to the spinal cord.
+
 -->
 
-<!-- 
+#### A) Wiring Complexity
+
+<!--
 tactile sensing chapter 4.4.5
 emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
+
+add challenges of electronics: wiring, data transfer, power consumption  
+-> examples of how it is done today
+-> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
 -->
 
-<!-- 
-### Expectations of Tactile Systems
+The most immediate problem with scaling is the physical connection between the sensors and the controller. A "brute-force" approach (where each sensor has its own dedicated wire) results in a massive, rigid bundle of cables.
 
-#### Task Related Requirements
+* **Physical Constraints:** These bundles make the robot stiff and heavy, hindering the very compliance and flexibility that soft robotics aims to achieve.
+* **Mechanical Reliability:** In moving joints, large wire bundles are prone to fatigue and breaking after repeated bending.
 
-The task that has to be executed by the robotic system defines what type of tactile sensor is implemented in it.
+**Proposed Solutions:**
+* **Bus-Based Architectures:** Instead of individual wires, sensors share a common communication bus, allowing hundreds of elements to send data over just a few shared lines.
+* **Modular Skin Patches:** Designing the skin as independent, modular "patches" allows for local routing within the patch, meaning only one main connection is needed to reach the robot's central system.
 
-The following expectations are specifically for humanoid applications -> make more general.
-These requirements are more general stuff about sensors, not specifically about tactile sensors
 
-#### Limited Space
 
-Tactile systems are most often placed in areas of the robot where space is limited, typically on a finger. Therefore, it is desirable to use multifunctional sensors, for example sensors that can detect not only tactile but also thermal properties.
+#### B) Big Data Management
 
-#### Spatial Resolution
+Processing signals from thousands of sensors at high frequencies can overwhelm a robot's central processing unit (CPU).
 
-The resolution of a tactile sensing array does not need to be the same across all locations. For example, a tactile sensor on a fingertip needs to be more sensitive than one on the shoulder and should therefore contain more elements in its sensing grid.
+* **Latency:** High data volume increases the time it takes for the robot to "feel" and react, which can be dangerous or inefficient during human-robot interaction.
+* **Energy Efficiency:** Constantly processing data from every single sensor—even those not currently in contact with anything—wastes significant battery power.
 
-#### Sensing Range and Directionality
+**Proposed Solutions:**
+* **Edge Computing (Local Processing):** Intelligence is distributed by embedding small microcontrollers directly into the skin patches to perform initial data filtering and calibration locally.
+* **Event-Driven Sensing:** Inspired by human biology, sensors only transmit data when a change (an "event") is detected, such as a new touch or a change in pressure. This keeps the communication network quiet when there is no interaction, drastically reducing the computational load.
 
-Depending on its application, a tactile sensor should be able to detect forces over a wide range. It should be capable of sensing both very light objects and heavier ones without being damaged. Moreover, the sensor should also be able to detect the direction of the applied force, providing a better understanding of the object being touched.
 
-#### Reaction Time
 
-When a tactile sensor is used for controlling a robot, it must provide feedback quickly in order to enable real-time reactions.
--->
+#### C) Power Management
 
-<!--
----
+As e-skin covers larger areas, the energy required to power thousands of sensors and their associated electronics grows.
 
-#### Challenges  
+* **Rigid Battery Conflict**: Traditional high-capacity batteries are rigid, heavy, and bulky, which compromises the flexibility and "softness" of the robotic system.
+* **Heat Dissipation**: High power consumption in dense arrays can generate heat, which may interfere with temperature-sensitive sensors or damage delicate soft materials.
 
-add the challenges that come with the sensor location (integrated into skin surfaces, adequate friction to handle objects securely, robust enough to survive repeated impacts, etc.)  
--> these are task related challenges (section 4 tactile sensing)
--->
+**Proposed Solutions:**
+* **Energy Harvesting**: Integrating flexible solar cells or triboelectric nanogenerators (TENGs) directly into the e-skin allows the robot to harvest energy from light or its own mechanical movements.
+* **Low-Power "Sleep" Modes**: Implementing architectures where sensors remain in a zero-power or ultra-low-power "sleep" mode until a physical contact is detected.
+
+
+
 
 ---
 
@@ -1854,25 +2187,8 @@ This page used the following resources:
 - [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5)
 
 ### Additional Resources
-<!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->
+<!-- List all the sources that could be relevant to a reader who would like to know more, including the page on haptics under Human-Robot Interaction chapter -->
 
 - [Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://www.sciencedirect.com/science/article/pii/S0263224122003335) (O. Kanoun et al.)
-
-<!--  
-Initial comments:
-
-For tactile sensors, emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
-
-Resources you can start with are: 
-https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5
-https://ieeexplore.ieee.org/abstract/document/5339133
-
-Focus on artificial sensors for robots here and use material on human skin and sensing for the haptics chapter. You can work on the two pages simultaneously if this helps.
-
-and then for more recent sensors:
-https://spj.science.org/doi/full/10.34133/2019/3018568
-
--->
-
 
 [Back to Top](#start)

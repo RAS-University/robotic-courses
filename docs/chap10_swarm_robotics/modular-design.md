@@ -196,27 +196,514 @@ Swarm robotics is a rapidly developing field and the goal of the material presen
 
 ### Getting started
 
-In this section you will find materials and first instructions on how to prepare your computer to run the practical lessons of the robotics course. Three options are available to install the required software.
+#### 1. Download the laboratory package (All operating systems)
 
-##### Docker users
+You will need approximately **8 GB of free disk space**.
 
-An installation script is available to install the software in the Docker files provided in the Summer School. To install the software for this session, open a terminal while running the Docker container and enter the following command:
+Download the laboratory package from the following link:
 
-```bash
-source /installation_scripts/day_5.sh
-```
+https://drive.google.com/file/d/1xqCiMZPd4pzFfCFxcel8zky25Dd0uPOl/view?usp=drive_link
 
-##### VirtualBox
+After downloading:
 
-A VirtualBox VM with the pre-installed software is provided in the shared Drive of the Summer School. You can download it from **Day 5 - Swarm Robotics**, and import it in your local installation of VirtualBox.
-
-##### Native installation
-
-Instructions for a native installation in Ubuntu 20.04 and Ubuntu 22.04 (experimental) are available in the session's repository:
+1. Extract the compressed file anywhere on your computer.
+2. Once extracted, you should obtain a folder named:
 
 ```text
-https://github.com/dagarzonr/sigsoft-swarms
+modular_design_lab/
 ```
+
+This folder already contains:
+
+- Docker configuration files
+- The swarm robotics experiments
+- The AutoMoDe interface
+- The ARGoS3 configurations
+- All required scripts and dependencies
+
+The structure should look similar to this:
+
+```text
+modular_design_lab/
+├── docker-compose.yml
+└── README.md/
+```
+
+---
+
+<!-- #### Supported operating systems
+
+<div class="note">
+<strong>Compatibility status</strong>
+
+- The environment has been tested on <strong>Ubuntu 20.04</strong>.
+- The environment has been tested on <strong>Windows 11</strong>.
+- macOS support is still under preparation.
+</div>
+
+--- -->
+
+
+#### 2. Installation instructions by operating system
+
+<div class="freading">
+<details>
+<summary><strong>🪟 Windows</strong></summary>
+<div markdown="1">
+
+<div class="note">
+<strong>Important:</strong> This environment has been tested on Windows 11.
+</div>
+
+##### Step 1 — Install Docker Desktop
+
+If you already install docker from previous practice, jump to Step 2.
+
+Docker is the software that will run the complete Ubuntu laboratory environment on your computer.
+
+You can install **Docker Desktop** in either of these ways:
+
+- From the **Microsoft Store** (recommended for beginners)
+- From the official Docker website:
+
+```text
+https://www.docker.com/products/docker-desktop/
+```
+
+During installation, Docker may ask to enable a Windows feature called **WSL2** (*Windows Subsystem for Linux*). This is normal. In most cases, Docker configures it automatically.
+
+After installation:
+
+Restart your computer if Windows requests it.
+Open the **Docker Desktop** application.
+Wait until Docker finishes starting.
+
+You should eventually see a message similar to:
+
+```text
+Engine running
+```
+
+inside Docker Desktop.
+
+---
+
+##### Step 2 — Start the laboratory for the first time
+
+The first execution must be done from a terminal because Docker needs to download the complete laboratory image.
+
+Open:
+
+- **PowerShell**, or
+- **Command Prompt (CMD)**
+
+Navigate to the `modular_design_lab/` folder.
+
+For example:
+
+```powershell
+cd Desktop\modular_design_lab
+```
+
+Your path may be different depending on where you extracted the files.
+
+Start the container:
+
+```bash
+docker compose up
+```
+
+The first startup may take several minutes because Docker must download a large image.
+
+Wait until the startup process finishes.
+
+---
+
+##### Step 3 — Open the Ubuntu desktop
+
+Open the following URL in your web browser:
+
+```text
+http://localhost:6080/vnc.html
+```
+
+Click:
+
+```text
+Connect
+```
+
+When prompted for the password, enter:
+
+```text
+swarmbot
+```
+
+You should now see the Ubuntu desktop environment running inside your browser.
+
+---
+
+##### Step 4 — Running experiments
+
+Verify that you are able to run an experiment by entering the following commands in the command.
+
+Open a terminal inside the Ubuntu desktop and move to the project directory:
+
+```bash
+cd ~/sigsoft-swarms
+```
+
+Load the ARGoS environment variables:
+
+```bash
+source argos3-env.sh
+```
+
+Start an experiment:
+
+```bash
+bash start_experiment.sh 1
+```
+
+Open the following URL in the Ubuntu browser:
+
+```text
+http://localhost:8088
+```
+
+You should now see the AutoMoDe interface similar to the image below.
+
+![Automode Interface Web]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/automode_interface.png)
+
+
+---
+
+##### Daily usage after the first execution
+
+After the first installation, you usually do **not** need to use the terminal to launch Docker again.
+
+Instead:
+
+Open **Docker Desktop**
+Locate the container named:
+
+```text
+sigsoft-swarms
+```
+
+Click the ▶ Start button
+
+You can then reconnect to the container terminal using:
+
+```bash
+docker exec -it sigsoft-swarms bash
+```
+
+---
+<!-- 
+##### Editing your files
+
+You can edit files directly from Windows using editors such as:
+
+- VS Code
+- Notepad++
+- Sublime Text
+
+The files are automatically synchronized with the Docker container.
+
+--- -->
+
+##### Troubleshooting
+
+**The browser says "connection refused"**
+
+The container may still be starting. Wait a few seconds and refresh the page.
+
+---
+
+**The installation script fails**
+
+Make sure you are running the command **inside the container**.
+
+---
+
+**Docker does not start**
+
+Restart Docker Desktop and verify that WSL2 is enabled.
+
+</div>
+</details>
+</div>
+
+---
+
+<div class="freading">
+<details>
+<summary><strong>🐧 Linux </strong></summary>
+<div markdown="1">
+
+<div class="note">
+<strong>Important:</strong> The environment has been tested on Ubuntu 20.04.
+</div>
+
+##### Step 1 — Install Docker
+
+If you already install docker from previous practice, jump to Step 4.
+
+Open a terminal and install Docker:
+
+```bash
+sudo apt update
+sudo apt install docker.io docker-compose-plugin
+```
+
+---
+
+##### Step 2 — Enable Docker permissions
+
+Add your user to the Docker group:
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Then restart your session or reboot your computer.
+
+If you skip this step, Docker commands may fail unless executed with `sudo`.
+
+---
+
+##### Step 3 — Verify the installation
+
+Run:
+
+```bash
+docker --version
+```
+
+and:
+
+```bash
+docker compose version
+```
+
+Both commands should print version information without errors.
+
+---Verify that you are able to run an experiment by entering the following commands in the command.
+
+Open a terminal inside the Ubuntu desktop and move to the project directory:
+
+```bash
+cd ~/sigsoft-swarms
+```
+
+Load the ARGoS environment variables:
+
+```bash
+source argos3-env.sh
+```
+
+Start an experiment:
+
+```bash
+bash start_experiment.sh 1
+```
+
+Open the following URL in the Ubuntu browser:
+
+```text
+http://localhost:8088
+```
+
+You should now see the AutoMoDe interface similar to the image below.
+
+![Automode Interface Web]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/automode_interface.png)
+
+
+##### Step 4 — Start the laboratory
+
+Open a terminal inside the `modular_design_lab/` directory and run:
+
+```bash
+docker compose up
+```
+
+The first startup may take several minutes because Docker must download the required images.
+
+---
+
+##### Step 5 — Open the Ubuntu desktop
+
+Open the following URL in your browser:
+
+```text
+http://localhost:6080/vnc.html
+```
+
+Click:
+
+```text
+Connect
+```
+
+Password:
+
+```text
+swarmbot
+```
+
+You should now see the Ubuntu desktop environment.
+
+---
+
+##### Step 6 — Running experiments
+
+Verify that you are able to run an experiment by entering the following commands in the command.
+
+Open a terminal inside the Ubuntu desktop and move to the project directory:
+
+```bash
+cd ~/sigsoft-swarms
+```
+
+Load the ARGoS environment variables:
+
+```bash
+source argos3-env.sh
+```
+
+Start an experiment:
+
+```bash
+bash start_experiment.sh 1
+```
+
+Open the following URL in the Ubuntu browser:
+
+```text
+http://localhost:8088
+```
+
+You should now see the AutoMoDe interface similar to the image below.
+
+![Automode Interface Web]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/automode_interface.png)
+
+---
+
+##### Daily usage
+
+Open a terminal inside the modular_design_lab/ directory.
+
+To stop the laboratory:
+
+```bash
+docker compose stop
+```
+
+To start it again later:
+
+```bash
+docker compose start
+```
+
+To completely remove the container:
+
+```bash
+docker compose down
+```
+
+Your files inside the project directory will remain safe.
+
+---
+
+
+##### Troubleshooting
+
+**Permission denied errors**
+
+The Docker permissions were probably not applied correctly.
+
+Try:
+
+```bash
+newgrp docker
+```
+
+or restart your session.
+
+---
+
+**The browser page does not open**
+
+Check that the container is running:
+
+```bash
+docker compose ps
+```
+
+---
+
+</div>
+</details>
+</div>
+
+---
+
+<div class="freading">
+<details>
+<summary><strong>🍎 macOS</strong></summary>
+<div markdown="1">
+
+<div class="note">
+<strong>Notice:</strong> The macOS installation guide is still under preparation and has not yet been fully tested.
+
+Support instructions for macOS will be added in a future update of the course materials.
+</div>
+
+</div>
+</details>
+</div>
+
+---
+
+### Running the software
+
+After the installation is completed, open a terminal inside the Docker container and run:
+
+```bash
+cd ~/sigsoft-swarms
+source argos3-env.sh
+```
+
+Start an experiment by replacing `ID` with the number of the mission you want to test:
+
+```bash
+bash start_experiment.sh ID
+```
+
+Then open the following URL in your browser:
+
+```text
+http://localhost:8088
+```
+
+This launches the AutoMoDe graphical interface that allows you to create probabilistic finite-state machines for the robots and execute ARGoS3 simulations.
+
+---
+
+### Understanding the interface
+
+The interface allows you to:
+
+- Add and remove states
+- Create transitions between states
+- Modify behavior parameters
+- Execute simulations in ARGoS3
+- Evaluate swarm performance
+
+Each node represents a low-level robot behavior, while edges represent transition conditions between behaviors.
+
+Once you finish your design, click the **Exec** button to launch the simulation.
 
 ---
 
@@ -255,7 +742,7 @@ http://localhost:8088
 
 This will spawn an interface that will allow you to create finite state-machines to program the robots and run simulations in ARGoS3---see the figure below.
 
-![Interface to design the control software for the robots](../../assets/images/swarm-robotics/modular_design/interface.png)
+![Interface to design the control software for the robots]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/interface.png)
 
 The interface allows you to add, remove, and reorganize nodes and edges in your finite state-machine. By clicking in a software module (either a node or an edge) you will have access to the parameters that can be modified in each case. For example, you can select the type of node and its functional parameters. When you are satisfied with your design, click on the *Exec* button to spawn the ARGoS3 simulator and play the simulation to observe the behavior of the robots.
 
@@ -339,8 +826,8 @@ You will experiment with a swarm of twenty *e-puck* robots that must perform sin
 
 The robots operate in an octagonal arena of $2.75\,\text{m}^{2}$ surrounded by RGB blocks---see the figure below. The robots are randomly positioned at the beginning of each experimental run. The RGB blocks are arranged in walls and each of them can possibly display a different color. The floor of the arena is gray with nine square patches, each measuring 25 cm on each side. One of the patches is white, and the other eight are black. In every mission, RGB blocks adjacent to black patches initially turn green, and afterward, they will randomly switch off with uniform probability. The remaining RGB blocks turn red or blue to inform the robots about the sub-mission to be executed.
 
-![The experimental arena: blue state](../../assets/images/swarm-robotics/modular_design/arena-blue.png)
-![The experimental arena: red state](../../assets/images/swarm-robotics/modular_design/arena-red.png)
+![The experimental arena: blue state]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/arena-blue.png)
+![The experimental arena: red state]({{ site.baseurl }}/assets/images/swarm-robotics/modular_design/arena-red.png)
 
 *The experimental arena. The pictures show examples of the two possible states of the arena. At the top, the RGB blocks of the walls display blue and all RGB blocks adjacent to a black patch are switched on, displaying green. At the bottom, the RGB blocks of the walls display red and some RGB blocks adjacent to a black patch have switched off, displaying no color. The robots are randomly positioned.*
 
@@ -470,6 +957,17 @@ In all cases, the robots must execute the two sub-missions, one after the other.
 | 21 | $m_{\text{S}5.\text{S}6}$ | $\text{S}5$ | <span class="sq blue"></span> $\rightleftarrows$ <span class="sq red"></span> | $\text{S}6$ |
 
 <p style="font-size:0.9em; color:#475569;"><em>Set of multi-criteria missions ($\text{M}$). The missions are paired combinations ($m_{\text{S}p.\text{S}q}$) of the six sub-missions ($\text{S}_{\{1,\cdots,6\}}$). In each combination, the colors blue and red characterize the sub-missions $\text{S}p$ (<span class="sq blue"></span>) and $\text{S}q$ (<span class="sq red"></span>). In a mission ($m_{\text{S}p.\text{S}q}$), the sub-missions $\text{S}p$ and $\text{S}q$ must be executed in sequence, but the order of the sequence ($\text{S}p$ <span class="sq blue"></span> $\rightleftarrows$ <span class="sq red"></span> $\text{S}q$) is randomly defined in every experimental run. $\text{S}p$ and $\text{S}q$ are executed during an equivalent period of time. The execution of a mission $m_{\text{S}p.\text{S}q}$ returns the score of the swarm with respect to $\text{S}p$ and $\text{S}q$, regardless of the order of the sequence.</em></p>
+
+<div class="freading">
+<details>
+<summary><strong>Proposed solutions</strong></summary>
+<div markdown="1">
+
+Proposed solutions for the missions in this session will be available soon.
+
+</div>
+</details>
+</div>
 
 ---
 

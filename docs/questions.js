@@ -1,3 +1,191 @@
+/** Shared feedback styling (works with .ds-feedback in custom / page CSS) */
+function applyFeedbackStyles(feedbackEl, state) {
+  if (!feedbackEl) return;
+  feedbackEl.classList.remove(
+    'ds-feedback--hint', 'ds-feedback--correct', 'ds-feedback--wrong', 'ds-feedback--partial'
+  );
+  feedbackEl.classList.add('ds-feedback');
+  if (state === 'correct') {
+    feedbackEl.classList.add('ds-feedback--correct', 'ds-attempted');
+  } else if (state === 'wrong') {
+    feedbackEl.classList.add('ds-feedback--wrong', 'ds-attempted');
+  } else if (state === 'partial') {
+    feedbackEl.classList.add('ds-feedback--partial', 'ds-attempted');
+  } else {
+    feedbackEl.classList.add('ds-feedback--hint');
+  }
+  feedbackEl.setAttribute('role', 'status');
+  feedbackEl.setAttribute('aria-live', 'polite');
+  if (typeof updateDSProgressBar === 'function') updateDSProgressBar();
+  if (
+    typeof persistDSFeedbackState === 'function' &&
+    !feedbackEl.hasAttribute('data-ds-restore') &&
+    (state === 'correct' || state === 'wrong' || state === 'partial')
+  ) {
+    persistDSFeedbackState(feedbackEl, state);
+  }
+}
+
+function getDSPageStorageKey() {
+  const page = document.querySelector('.ds-page[data-ds-storage-key]');
+  return page ? page.getAttribute('data-ds-storage-key') : null;
+}
+
+function persistDSFeedbackState(feedbackEl, state) {
+  const sk = getDSPageStorageKey();
+  if (!sk || !feedbackEl.id) return;
+  try {
+    const storageKey = `ds-feedback:${sk}`;
+    const raw = sessionStorage.getItem(storageKey);
+    const data = raw ? JSON.parse(raw) : {};
+    data[feedbackEl.id] = state;
+    sessionStorage.setItem(storageKey, JSON.stringify(data));
+  } catch (e) {
+    /* ignore quota / private mode */
+  }
+}
+
+function restoreDSFeedbackFromSession() {
+  const sk = getDSPageStorageKey();
+  if (!sk) return;
+  let data;
+  try {
+    const raw = sessionStorage.getItem(`ds-feedback:${sk}`);
+    if (!raw) return;
+    data = JSON.parse(raw);
+  } catch (e) {
+    return;
+  }
+  const msg =
+    'Result from this browser session — use Check again to refresh the full explanation.';
+  Object.entries(data).forEach(([id, state]) => {
+    if (!['correct', 'wrong', 'partial'].includes(state)) return;
+    const el = document.getElementById(id);
+    if (!el || !el.closest('.ds-page')) return;
+    el.setAttribute('data-ds-restore', '1');
+    el.textContent = msg;
+    applyFeedbackStyles(el, state);
+    el.removeAttribute('data-ds-restore');
+  });
+}
+
+function clearDSPageSessionProgress() {
+  const sk = getDSPageStorageKey();
+  if (!sk) return;
+  try {
+    sessionStorage.removeItem(`ds-feedback:${sk}`);
+  } catch (e) {
+    /* ignore */
+  }
+  window.location.reload();
+}
+
+/** Progress strip for pages with .ds-page (DS-planning, etc.) */
+function updateDSProgressBar() {
+  const page = document.querySelector('.ds-page');
+  const bar = document.getElementById('ds-progress-bar');
+  const label = document.getElementById('ds-progress-label');
+  const track = document.getElementById('ds-progress-track');
+  if (!page || !bar || !label) return;
+  const total =
+    page.querySelectorAll('.ds-quiz').length +
+    page.querySelectorAll('.ds-drag-game').length;
+  const attempted = page.querySelectorAll('.ds-feedback.ds-attempted').length;
+  const correct = page.querySelectorAll('.ds-feedback.ds-feedback--correct').length;
+  const pct = total ? Math.min(100, Math.round((attempted / total) * 100)) : 0;
+  bar.style.width = `${pct}%`;
+  label.textContent = `${attempted}/${total} checked · ${correct} correct`;
+  if (track) {
+    track.setAttribute('aria-valuenow', String(pct));
+    track.setAttribute('aria-valuemax', '100');
+  }
+}
+
+/** Jump to a random quiz or drag-and-drop block */
+function scrollToRandomInteractive() {
+  const page = document.querySelector('.ds-page');
+  if (!page) return;
+  const nodes = page.querySelectorAll('.ds-quiz, .ds-drag-game');
+  if (!nodes.length) return;
+  const el = nodes[Math.floor(Math.random() * nodes.length)];
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  el.classList.add('ds-highlight-flash');
+  setTimeout(() => el.classList.remove('ds-highlight-flash'), 1400);
+}
+
+/** Reveal a hidden hint block (id without #) */
+function revealDSBlock(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.hidden = false;
+  el.setAttribute('aria-hidden', 'false');
+  const btn = document.querySelector(`[data-ds-reveal-for="${id}"]`);
+  if (btn) btn.setAttribute('hidden', '');
+}
+
+/** Emoji prefixes for DS-planning “On this page” TOC (kramdown anchor ids) */
+const DS_PLANNING_TOC_EMOJI = {
+  '#start': '📘',
+  '#prerequisites': '📋',
+  '#general-motivation': '💡',
+  '#course-content': '📚',
+  '#dynamical-systemsbased-planning-overview': '📖',
+  '#motivation--programming-by-demonstration': '🎯',
+  '#classical-ds-models': '🔧',
+  '#benchmarks--tools': '📊',
+  '#stability': '⚖️',
+  '#lyapunov-stability': '📐',
+  '#contraction-theory': '📏',
+  '#diffeomorphic-mapping': '🔄',
+  '#diffeomorphic-mapping-for-ds': '🔀',
+  '#why-diffeomorphic-mapping--stabilityaccuracy-dilemma': '⚡',
+  '#theory-of-diffeomorphic-transformations-22': '📓',
+  '#how-to-build-a-diffeomorphic-mapping-for-ds': '🗺',
+  '#key-challenges': '❗',
+  '#state-of-the-art-approaches-to-training-the-mapping': '🚀',
+  '#fast-diffeomorphic-matching-fdm': '⚙️',
+  '#iterative-locally-weighted-matching': '🔁',
+  '#pseudo-code': '💻',
+  '#euclideanizing-flows-e-flow': '🌊',
+  '#learning-objective-from-demonstrations': '🎓',
+  '#kernelized-coupling-layers': '🧩',
+  '#imitation-flow': '💧',
+  '#model-formulation': '📝',
+  '#equivalent-dynamics-in-the-observation-space': '👁',
+  '#learning-algorithm': '🧠',
+  '#pseudo-code-1': '💻',
+  '#programming-exercise-for-classical-methods': '🧪',
+  '#tutroial-code-repository': '📦',
+  '#methods-list': '📑',
+  '#game-2--sort-statements-by-model-family': '🎲',
+  '#multi-select--stability-toolkit': '✅',
+  '#extra-quick-checks--bridge-to-fdm--code': '⏩',
+  '#code-structure-overview': '🗂',
+  '#getting-started': '▶️',
+  '#want-to-implement-a-real-project': '🛠️',
+  '#credits': '✨',
+  '#references': '🔗',
+};
+
+function applyDsPlanningTocEmojis() {
+  const panel = document.querySelector('.ds-toc-panel #markdown-toc');
+  if (!panel) return;
+  // Main TOC row links only (skip nested <a href="#ref…"> inside a title)
+  panel.querySelectorAll('a[id^="markdown-toc-"]').forEach((a) => {
+    if (a.querySelector('.ds-toc-emoji')) return;
+    const href = a.getAttribute('href');
+    const emoji = DS_PLANNING_TOC_EMOJI[href];
+    if (!emoji) return;
+    const span = document.createElement('span');
+    span.className = 'ds-toc-emoji';
+    span.setAttribute('aria-hidden', 'true');
+    span.textContent = `${emoji}\u00A0`;
+    const tocNum = a.querySelector('.toc-number');
+    if (tocNum) tocNum.parentNode.insertBefore(span, tocNum);
+    else a.insertBefore(span, a.firstChild);
+  });
+}
+
 // Generalized True/False checking function
 function checkTrueFalse(questionId, correctAnswer, correctMessage, incorrectMessage) {
   const options = document.getElementsByName(questionId);
@@ -14,16 +202,16 @@ function checkTrueFalse(questionId, correctAnswer, correctMessage, incorrectMess
 
   if (!selectedValue) {
     feedback.textContent = "Please select an option.";
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'hint');
     return;
   }
 
   if (selectedValue === correctAnswer) {
     feedback.textContent = correctMessage;
-    feedback.style.color = "green";
+    applyFeedbackStyles(feedback, 'correct');
   } else {
     feedback.textContent = incorrectMessage;
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'wrong');
   }
 }
 
@@ -40,13 +228,13 @@ function checkTrueFalse2(questionId, correctAnswer, correctMessage, incorrectMes
 
   if (!selectedValue) {
     feedback.textContent = "Please select an option.";
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'hint');
     return;
   }
 
   const ok = (selectedValue === correctAnswer);
   feedback.innerHTML = ok ? correctMessage : incorrectMessage;  // <-- use innerHTML
-  feedback.style.color = ok ? "green" : "red";
+  applyFeedbackStyles(feedback, ok ? 'correct' : 'wrong');
 
   // Re-typeset just this feedback node (MathJax v3)
   if (window.MathJax && MathJax.typesetPromise) {
@@ -82,16 +270,16 @@ function checkMCQ(questionId, correctAnswer, correctMessage, incorrectMessage) {
 
   if (!selectedValue) {
     feedback.textContent = "Please select an option.";
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'hint');
     return;
   }
 
   if (selectedValue === correctAnswer) {
     feedback.textContent = correctMessage;
-    feedback.style.color = "green";
+    applyFeedbackStyles(feedback, 'correct');
   } else {
     feedback.textContent = incorrectMessage;
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'wrong');
   }
 }
 
@@ -107,7 +295,7 @@ function checkMultipleTrueFalse(questionId, correctAnswers, correctMessage, inco
 
   if (selected.length === 0) {
     feedback.textContent = "Please select at least one option.";
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'hint');
     return;
   }
 
@@ -117,10 +305,10 @@ function checkMultipleTrueFalse(questionId, correctAnswers, correctMessage, inco
 
   if (allCorrect) {
     feedback.textContent = correctMessage;
-    feedback.style.color = "green";
+    applyFeedbackStyles(feedback, 'correct');
   } else {
     feedback.textContent = incorrectMessage;
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'wrong');
   }
 }
 
@@ -139,16 +327,16 @@ function checkMultipleTrueFalseRadio(questionId, answerMap, incorrectMessage) {
 
   if (!selected) {
     feedback.textContent = "Please select an option.";
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'hint');
     return;
   }
 
   if (answerMap[selected]) {
     feedback.textContent = answerMap[selected];
-    feedback.style.color = "green";
+    applyFeedbackStyles(feedback, 'correct');
   } else {
     feedback.textContent = incorrectMessage;
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'wrong');
   }
 }
 
@@ -177,7 +365,7 @@ function checkMultipleAnswers(questionId, correctAnswers, correctMessage, incorr
 
   if (selectedValues.length === 0) {
     feedback.innerHTML = "Please select at least one option.";
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'hint');
     return;
   }
 
@@ -186,65 +374,114 @@ function checkMultipleAnswers(questionId, correctAnswers, correctMessage, incorr
 
   if (correctCount === correctAnswers.length && incorrectCount === 0) {
     feedback.innerHTML = correctMessage; // All correct
-    feedback.style.color = "green";
+    applyFeedbackStyles(feedback, 'correct');
   } else if (correctCount > 0) {
     feedback.innerHTML = `<strong>Partially correct!</strong> You selected ${correctCount} out of ${correctAnswers.length} correct answers.`;
-    feedback.style.color = "orange"; // Partially correct
+    applyFeedbackStyles(feedback, 'partial');
   } else {
     feedback.innerHTML = incorrectMessage; // None correct
-    feedback.style.color = "red";
+    applyFeedbackStyles(feedback, 'wrong');
   }
 }
 
 // General drag-and-drop event handlers
 function allowDrop(ev) {
   ev.preventDefault();
+  const zone = ev.currentTarget;
+  if (zone && zone.classList && zone.classList.contains('drop-zone')) {
+    document.querySelectorAll('.drop-zone').forEach((z) => {
+      if (z !== zone) z.classList.remove('drop-zone--drag-over');
+    });
+    zone.classList.add('drop-zone--drag-over');
+  }
 }
 
 function drag(ev) {
   ev.dataTransfer.setData("id", ev.target.id);
+  if (ev.target.classList && ev.target.classList.contains('drag-item')) {
+    ev.target.classList.add('drag-item--dragging');
+  }
+}
+
+function dragEnd(ev) {
+  if (ev.target.classList && ev.target.classList.contains('drag-item')) {
+    ev.target.classList.remove('drag-item--dragging');
+  }
+  document.querySelectorAll('.drop-zone--drag-over').forEach((z) => z.classList.remove('drop-zone--drag-over'));
 }
 
 function drop(ev) {
   ev.preventDefault();
-  if (!ev.target.classList.contains("drop-zone")) return;
+  const zone = ev.target.closest ? ev.target.closest('.drop-zone') : null;
+  if (!zone) return;
 
   const draggedId = ev.dataTransfer.getData("id");
   const draggedElement = document.getElementById(draggedId);
 
-  if (draggedElement && ev.target !== draggedElement.parentElement) {
-    ev.target.appendChild(draggedElement);
+  if (draggedElement && zone !== draggedElement.parentElement) {
+    zone.appendChild(draggedElement);
   }
 }
 
 // Generalized function to check drag-and-drop answers
 function checkDragDropAnswer(correctMapping, feedbackId) {
+  document.querySelectorAll('.drop-zone').forEach((z) => {
+    z.classList.remove('drop-zone--ok', 'drop-zone--bad');
+  });
+  document.querySelectorAll('.drag-item').forEach((el) => {
+    el.classList.remove('drag-item--wrong-zone', 'drag-item--correct');
+  });
 
   let totalCorrect = 0;
   let totalItems = 0;
+  let allZonesPerfect = true;
 
-  // Calculate correct answers clearly for each zone
   for (const [zoneId, correctItems] of Object.entries(correctMapping)) {
-    const userItems = Array.from(document.querySelectorAll(`#${zoneId} .drag-item`)).map(e => e.id);
+    const zone = document.getElementById(zoneId);
+    const userItems = Array.from(document.querySelectorAll(`#${zoneId} .drag-item`)).map((e) => e.id);
     totalItems += correctItems.length;
 
-    correctItems.forEach(item => {
-      if (userItems.includes(item)) {
-        totalCorrect += 1;
+    correctItems.forEach((item) => {
+      if (userItems.includes(item)) totalCorrect += 1;
+    });
+
+    const wrongInZone = userItems.filter((id) => !correctItems.includes(id));
+    const missing = correctItems.filter((id) => !userItems.includes(id));
+    const zonePerfect =
+      wrongInZone.length === 0 &&
+      missing.length === 0 &&
+      userItems.length === correctItems.length;
+
+    if (!zonePerfect) allZonesPerfect = false;
+
+    if (zone) {
+      if (zonePerfect) zone.classList.add('drop-zone--ok');
+      else zone.classList.add('drop-zone--bad');
+    }
+    wrongInZone.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('drag-item--wrong-zone');
+    });
+    userItems.forEach((id) => {
+      if (correctItems.includes(id)) {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('drag-item--correct');
       }
     });
   }
 
   const feedback = document.getElementById(feedbackId);
+  if (!feedback) return;
 
-  if (totalCorrect === totalItems) {
-    feedback.textContent = `✅ Excellent! All answers (${totalCorrect}/${totalItems}) are correctly classified.`;
-    feedback.style.color = "green";
+  const allPerfect = allZonesPerfect && totalCorrect === totalItems && totalItems > 0;
+
+  if (allPerfect) {
+    feedback.textContent = `Excellent — all ${totalItems} items are in the right category.`;
+    applyFeedbackStyles(feedback, 'correct');
   } else {
-    feedback.textContent = `⚠️ You got ${totalCorrect}/${totalItems} correct. Keep trying!`;
-    feedback.style.color = "orange";
+    feedback.textContent = `Matched ${totalCorrect}/${totalItems} required placements. Remove distractors from the box or add missing features, then check again.`;
+    applyFeedbackStyles(feedback, 'partial');
   }
-
 }
 
 function checkDropdownAnswers(feedbackId) {
@@ -267,46 +504,24 @@ function checkDropdownAnswers(feedbackId) {
   const feedback = document.getElementById(feedbackId);
   if (feedback) {
     if (totalCorrect === totalQuestions) {
-      feedback.textContent = `✅ Excellent! All ${totalCorrect}/${totalQuestions} answers are correct.`;
-      feedback.style.color = "green";
+      feedback.textContent = `Excellent — all ${totalCorrect}/${totalQuestions} answers are correct.`;
+      applyFeedbackStyles(feedback, 'correct');
     } else {
-      feedback.textContent = `⚠️ You got ${totalCorrect}/${totalQuestions} correct. Try again!`;
-      feedback.style.color = "orange";
+      feedback.textContent = `You got ${totalCorrect}/${totalQuestions} correct. Try again!`;
+      applyFeedbackStyles(feedback, 'partial');
     }
   }
 }
 
 // Specific call for the Serial vs. Parallel Robot Question
 function checkRobotStructure() {
-  const correctMapping = {
-    "serial-zone": ["open-chain", "serially-linked"],
-    "parallel-zone": ["closed-chain"]
-  };
-
-  let totalCorrect = 0;
-  let totalItems = 0;
-
-  // Calculate correct answers clearly for each zone
-  for (const [zoneId, correctItems] of Object.entries(correctMapping)) {
-    const userItems = Array.from(document.querySelectorAll(`#${zoneId} .drag-item`)).map(e => e.id);
-    totalItems += correctItems.length;
-
-    correctItems.forEach(item => {
-      if (userItems.includes(item)) {
-        totalCorrect += 1;
-      }
-    });
-  }
-
-  const feedback = document.getElementById("robot-feedback");
-
-  if (totalCorrect === totalItems) {
-    feedback.textContent = `✅ Excellent! All answers (${totalCorrect}/${totalItems}) are correctly classified.`;
-    feedback.style.color = "green";
-  } else {
-    feedback.textContent = `⚠️ You got ${totalCorrect}/${totalItems} correct. Keep trying!`;
-    feedback.style.color = "orange";
-  }
+  checkDragDropAnswer(
+    {
+      "serial-zone": ["open-chain", "serially-linked"],
+      "parallel-zone": ["closed-chain"],
+    },
+    "robot-feedback"
+  );
 }
 
 
@@ -373,4 +588,16 @@ function checkCh1Hard() {
     fb = "🎉 All answers correct!<br>" + fb;
   }
   document.getElementById('ch1-hard-feedback').innerHTML = fb;
+}
+
+if (typeof document !== 'undefined') {
+  document.addEventListener('dragend', dragEnd, true);
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof restoreDSFeedbackFromSession === 'function') restoreDSFeedbackFromSession();
+    if (typeof updateDSProgressBar === 'function') updateDSProgressBar();
+    // After numbered-toc.js injects .toc-number, prepend emoji in DS-planning TOC
+    setTimeout(() => {
+      if (typeof applyDsPlanningTocEmojis === 'function') applyDsPlanningTocEmojis();
+    }, 0);
+  });
 }

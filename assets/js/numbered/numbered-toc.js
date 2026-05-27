@@ -38,11 +38,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Insert numbers into the generated markdown TOC only (avoid headings' inline anchor links)
     const tocContainer = wrapper.querySelector('#markdown-toc') || wrapper.querySelector('.markdown-toc');
+    // Only touch links inside the auto-generated TOC — never all # links (would break custom nav outlines)
     const tocLinks = tocContainer
         ? Array.from(tocContainer.querySelectorAll('a[href^="#"]'))
-        : Array.from(wrapper.querySelectorAll('a[href^="#"]'))
-            // exclude links that are the heading anchor (they usually have class "anchor-heading")
-            .filter(a => !a.classList.contains('anchor-heading'));
+        : [];
 
     tocLinks.forEach(a => {
         const href = (a.getAttribute('href') || '').slice(1);

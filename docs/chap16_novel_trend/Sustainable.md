@@ -39,6 +39,9 @@ The introduction explains the concept of Sustainability Robotics as an emerging 
 
 Through a forward-looking perspective, the animation envisions a future in which robots coexist with natural ecosystems in a regenerative and responsible way — using clean energy, repairing themselves, supporting biodiversity, and biodegrading safely at the end of their operational life. The introduction sets the stage for the course by encouraging students and researchers to develop a new generation of robotics technologies that are not only high-performing and intelligent, but also environmentally and socially sustainable.
 
+![Sustainability Robotics — Animation](https://youtu.be/Cc9VsGApEdk?si=TCEs7AR8VhalW8Gm)
+><sub>Sustainability Robotics. Animation. IEEE RAS University Course on Sustainability Robotics. YouTube video. Available at: https://youtu.be/Cc9VsGApEdk?si=TCEs7AR8VhalW8Gm</sub>
+
 ---
 
 ## Course Content
@@ -53,6 +56,9 @@ Through a forward-looking perspective, the animation envisions a future in which
 > - Environmental impact of modern technologies and e-waste growth
 > - Life-cycle approach in robotics inspired by biological systems
 > - Biodegradable soft robots and electronics-free systems for environmental applications
+
+![Introduction to Sustainability Robotics](https://youtu.be/aT5GHh-rIeA?si=oZYh0M6WKBqrU3DR)
+><sub>Introduction to Sustainability Robotics. Barbara Mazzolai, IIT. YouTube video. Available at: https://youtu.be/aT5GHh-rIeA?si=oZYh0M6WKBqrU3DR</sub>
 
 This introductory lesson presents the foundations of sustainability robotics, an emerging interdisciplinary field that combines sustainable robot design with the use of robotics to address environmental, social, and economic sustainability challenges. Barbara Mazzolai explains the origins of the concept of sustainability, the environmental impact of current technologies, and the need for a new generation of engineers capable of designing robots with a full life-cycle approach inspired by nature.
 
@@ -82,6 +88,8 @@ This lesson introduces the foundations of sustainability robotics as an emerging
 > - Robots improving existing sustainability processes (Level 1) to self-powering, self-repairing systems (Level 5)
 > - Sustainable robot manufacturing, circular design, and garbatrage concepts
 > - Circular economy principles in robotics
+
+> 📖 **Reading lesson:** The 5 Levels of Sustainable Robotics
 
 This lesson introduces the concept of the "Sustainability Levels for Robotics," a framework that helps classify how robotics technologies contribute to environmental sustainability. Inspired by the idea of autonomy levels in self-driving vehicles, the framework defines five progressive levels of sustainable robotics, ranging from robots that improve existing recycling processes to future systems capable of self-powering, self-repair, and circular operation. The lecture explores how sustainability in robotics must go beyond applications alone and include the full life cycle of robotic systems, including materials, energy consumption, manufacturing, maintenance, and end-of-life strategies.
 
@@ -122,6 +130,9 @@ Throughout the lecture, students are encouraged to think critically about sustai
 > - Edible pneumatic batteries for soft robotic actuation
 > - Applications in wildlife medication delivery, food monitoring, and sustainable robotics
 
+![Edible Batteries](https://youtu.be/Ei87ZhiTSBQ?si=pJQmlrDpu0mLPxl6)
+><sub>Edible batteries. Mario Caironi, IIT. YouTube video. Available at: https://youtu.be/Ei87ZhiTSBQ?si=pJQmlrDpu0mLPxl6</sub>
+
 This lesson introduces edible and biodegradable batteries as a novel approach to sustainable energy storage for robotics and electronics. Mario Caironi explains how edible electronics can reduce toxicity and electronic waste while enabling new applications in ingestible devices, food monitoring, and environmentally sustainable robotics.
 
 This lesson introduces edible and biodegradable batteries as a novel strategy for sustainable energy storage in robotics and electronics. The lecture explores how food-derived and non-toxic materials can be used to create safe energy storage systems for ingestible electronics, environmental sensing, and emerging robotic applications. Through several case studies, the lesson highlights how edible electronics can reduce toxicity and electronic waste while enabling entirely new technological scenarios.
@@ -153,6 +164,9 @@ This lesson introduces edible and biodegradable batteries as a novel strategy fo
 > - Biodegradable capacitors, resistors, transistors, and wireless devices
 > - Biodegradable glider robots, soft grippers, and multifunctional robotic systems
 > - Circular lifecycle approaches and compostable robotic devices
+
+![Biodegradable Electronics](https://youtu.be/VxYdhLghPgI?si=ojXzk0Mtj5RLlxLT)
+><sub>Electronics. Seung-Kyun Kang, Seoul University. YouTube video. Available at: https://youtu.be/VxYdhLghPgI?si=ojXzk0Mtj5RLlxLT</sub>
 
 This lesson explores the emerging field of biodegradable and transient electronics for sustainable robotics. It explains how conventional electronic materials contribute to growing e-waste problems and introduces biodegradable alternatives that can safely dissolve or decompose after use. The lecture presents the scientific foundations of transient electronics, including dissolvable silicon and biodegradable electronic materials, alongside real-world examples of soft robots, sensors, and robotic systems designed for environmentally responsible end-of-life disposal. The lecture also discusses the remaining technical challenges related to durability, multifunctionality, and circular material lifecycles.
 
@@ -191,6 +205,9 @@ The lecture concludes by emphasizing that sustainable robotics must consider the
 > - Embedded 3D printing and hydraulic biodegradable robotic grippers
 > - Biohybrid robotics using living skeletal muscle tissue
 > - Challenges in durability, scalability, and environmental sensitivity
+
+![Sustainable Actuators](https://youtu.be/qIFkt-VX398?si=C7QJWmGAI6M7Q-D3)
+><sub>Actuators. Vicky Webster-Wood, Carnegie Mellon University. YouTube video. Available at: https://youtu.be/qIFkt-VX398?si=C7QJWmGAI6M7Q-D3</sub>
 
 This lesson examines sustainable actuators for robotics, focusing on environmentally friendly alternatives to conventional motors, hydraulics, and pneumatic systems. It introduces biodegradable and biohybrid materials derived from natural sources such as seaweed, gelatin, chitin, plants, bacteria, and fungi. The lecture presents examples of sustainable actuator fabrication, including gelatin-based artificial muscles, alginate soft actuators, and biohybrid robotic systems powered by living muscle tissue. It also discusses the opportunities and challenges of creating robotic systems that are biodegradable, biocompatible, and suitable for environmentally sensitive applications.
 
@@ -236,6 +253,9 @@ Finally, the lecture discusses the main challenges facing sustainable actuators,
 > - Continual learning for long-term robotic adaptation
 > - Class, domain, and task incremental learning scenarios
 
+![Control, AI & Data](https://youtu.be/vJ-nYTS-1Rg?si=g0J2zJsNeddzLD1R)
+><sub>Control, AI & data. Egidio Falotico, SSSA. YouTube video. Available at: https://youtu.be/vJ-nYTS-1Rg?si=g0J2zJsNeddzLD1R</sub>
+
 This lesson examines the relationship between artificial intelligence, robot control, and data in sustainable robotics. Egidio Falotico discusses how AI-driven learning systems are transforming robotics while also introducing new challenges related to computation, adaptability, energy consumption, and long-term sustainability.
 
 This lesson examines how artificial intelligence, control systems, and data-driven learning are transforming modern robotics while introducing new sustainability challenges. The lecture discusses the transition from classical model-based robotics toward adaptive AI-driven systems capable of learning continuously in dynamic real-world environments. Particular attention is given to continual learning approaches that allow robots to adapt over time while reducing computational and energetic costs.
@@ -257,43 +277,6 @@ This lesson examines how artificial intelligence, control systems, and data-driv
 
 ---
 
-#### Sustainable Materials
-*Seppe Terryn, VUB*
-
-> - Smart and stimuli-responsive materials: hydrogels, elastomers, smart polymers
-> - Bio-inspired and biohybrid materials for safe human-robot interaction
-> - Self-healing and adaptive materials
-> - Biodegradable and sustainable materials: challenges in durability and scalability
-> - Multifunctional materials integrating sensing and actuation
-
-This talk explores the role of sustainable and bio-inspired materials in the development of next-generation soft robots. It examines how material selection influences robotic flexibility, adaptability, safety, and environmental impact. The lecture focuses on smart materials, hydrogels, elastomers, and biohybrid systems that enable robots to interact safely with humans and natural environments while supporting sustainability goals through biodegradability and low-impact fabrication.
-
-Materials play a fundamental role in robotics because they directly determine how robots move, deform, sense, and interact with their surroundings. Unlike traditional rigid robotic systems, soft robotics relies on compliant and adaptive materials that can safely operate in complex and delicate environments.
-
-This lecture introduces sustainable and bio-inspired materials used in soft robotics, including hydrogels, elastomers, smart polymers, and biodegradable compounds. The presentation explains how these materials can provide flexibility, environmental responsiveness, and multifunctionality within robotic systems. Particular attention is given to materials capable of changing their properties in response to external stimuli such as heat, humidity, pressure, or electricity.
-The lecture also explores biohybrid and nature-inspired materials that mimic biological structures and functions, enabling robots to achieve safer human interaction and greater adaptability. Fabrication techniques and challenges related to durability, scalability, and long-term reliability are discussed alongside applications in healthcare, wearable robotics, and environmental monitoring.
-The talk concludes by emphasizing the growing importance of material science in the development of sustainable robotic technologies that combine performance, safety, and environmental responsibility.
-
-**Main topics covered:**
-- Introduction to materials for soft and sustainable robotics
-- Differences between rigid and soft robotic materials
-- Mechanical properties of soft materials
-- Smart and stimuli-responsive materials
-- Hydrogels and elastomers for robotic applications
-- Bio-inspired and biohybrid materials
-- Self-healing and adaptive materials
-- Fabrication techniques for soft robotic systems
-- Biocompatibility and safe human-robot interaction
-- Biodegradable and sustainable materials
-- Challenges in durability and scalability
-- Applications in healthcare and wearable robotics
-- Environmental monitoring applications
-- Multifunctional materials integrating sensing and actuation
-
-> **Take-home message:** Materials are not simply structural components of robots: they actively shape robotic behavior, adaptability, and interaction with the environment. Sustainable and bio-inspired materials are enabling a new generation of soft robotic systems that are safer, multifunctional, environmentally responsible, and better integrated with both human and natural ecosystems.
-
----
-
 ### Conclusion
 
 #### Sustainability Applications of Robotic Systems: Underwater Robotics
@@ -304,6 +287,9 @@ The talk concludes by emphasizing the growing importance of material science in 
 > - Electronics-free fluidic actuation using bistable valves
 > - Rhythmic robotic movements without electronic controllers
 > - Applications in oceanography, ecology, environmental monitoring, and pollution assessment
+
+![Sustainability Applications: Underwater Robotics](https://youtu.be/016xUT64mlE?si=e_V_rdSRpx5NjarZ)
+><sub>Sustainability applications of robotic systems: underwater robotics. Cecilia Laschi, National University of Singapore. YouTube video. Available at: https://youtu.be/016xUT64mlE?si=e_V_rdSRpx5NjarZ</sub>
 
 This lesson explores sustainable underwater robotics inspired by marine organisms, particularly benthic species such as octopuses. Cecilia Laschi explains how soft robotics and electronics-free actuation systems can enable environmentally compatible robots capable of operating in sensitive underwater ecosystems while minimizing ecological impact.
 

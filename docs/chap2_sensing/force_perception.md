@@ -264,7 +264,7 @@ Robots are expected to interact closely and safely with humans as well as with t
 
 Same as humans, robots can perceive interaction forces at different levels. When lifting an object, humans first sense the **overall force**, such as its weight, then acquire more **fine-grained** information through touch, such as local pressure distribution. This distinction leads to the use of **force sensing** for global interaction forces and **tactile sensing** for localized contact information in robotics. On this page we will focus on force sensing, more about tactile sensing can be found [here]({{ '/docs/chap2_sensing/tactile_perception' | relative_url }}).  
 
-Force perception is almost always needed in interactions between a robot (active agent) and another active agent (human/robot). During these interactions, the robot continuously acts, perceives and **adapts in real time** based on the feedback it receives from the other agent. This enables, for example, safe operation of robots **around humans**: the robot can detect abnormal contact and **adjust its movement** to avoid harm. Have a look at the example below.
+Force perception is almost always needed in interactions between a robot and another active agent (human/robot). During these interactions, the robot continuously acts, perceives and **adapts in real time** based on the feedback it receives from the other agent. This enables, for example, safe operation of robots **around humans**: the robot can detect abnormal contact and **adjust its movement** to avoid harm. Have a look at the example below.
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -418,7 +418,7 @@ $$\text{Torque: } \mathbf{M} = (M_{x}, M_{y}, M_{z}) \in \mathbb{R}^3$$
   <figcaption>
     <sub><i>
       Figure 2: Forces and torques acting on sensor 
-      (<a href="https://link.springer.com/chapter/10.1007/978-981-99-1509-5_32">Proceedings of International Conference on Data, Electronics and Computing, Springer</a>)
+      (<a href="https://link.springer.com/chapter/10.1007/978-981-99-1509-5_32">ICDEC 2022, Springer</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -573,7 +573,7 @@ Below are examples of **elastic structures** used in F/T sensors:
   <figcaption>
     <sub><i>
       Figure 4: Cross-Beam force/torque sensor structure. (a) square base, (b) round base  
-      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al., in Mechanics Based Design of Structures and Machines (2025)</a>)
+      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer, M. Özin et al., Mechanics Based Design of Structures and Machines 2025</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -610,7 +610,7 @@ Below are examples of **elastic structures** used in F/T sensors:
   <figcaption style="margin-top: 8px;">
     <sub><i>
       Figure 5: Visualisation of the cross-beam structure deformation  
-      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer et al., in Mechanics Based Design of Structures and Machines (2025)</a>)
+      (<a href="https://doi.org/10.1080/15397734.2024.2382841">B. Sümer, M. Özin et al., Mechanics Based Design of Structures and Machines 2025</a>)
     </i></sub>
   </figcaption>
 
@@ -629,7 +629,7 @@ Below are examples of **elastic structures** used in F/T sensors:
   <figcaption>
     <sub><i>
       Figure 6: Example of monolithic Stewart platform structure  
-      (<a href="https://ieeexplore.ieee.org/document/7279538">K. Li, B. Pan et al.</a>)
+      (<a href="https://doi.org/10.1109/icinfa.2015.7279538">K. Li, B. Pan et al., ICInfA 2015</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -814,7 +814,7 @@ The contact may happen on a link or at the robot end-effector, and its location 
   <figcaption>
     <sub><i>
       Figure 7: External force applied on: (a) link, (b) end-effector 
-      (<a href="https://www.mdpi.com/1424-8220/19/11/2603">S. Yen et al.</a>)
+      (<a href="https://doi.org/10.3390/s19112603">S.-H. Yen , P.-C. Tang et al., Sensors 2019</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -836,7 +836,7 @@ In the figure below, we can see the **cartesian-space** referential at the botto
   <figcaption>
     <sub><i>
       Figure 8: Definition of the contact vector \(p_{i,c}\) in the joint-space of link i
-      (<a href="https://ieeexplore.ieee.org/document/6942848">E. Magrini, F. Flacco, A. De Luca</a>)
+      (<a href="https://doi.org/10.1109/IROS.2014.6942848">E. Magrini, F. Flacco and A. De Luca, IROS 2014</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -931,10 +931,12 @@ $$
 \Leftrightarrow W = (J_c^T(\theta))^{-1} \ \tau_{\text{ext}}
 $$
 
+<!-->
 <div class="note-window">
   <div class="window-title">Note</div>
-  This three-step approach is based on <a href="https://ieeexplore.ieee.org/document/6942848">Estimation of Contact Forces Using a Virtual Force Sensor</a> (E. Magrini, F. Flacco, A. De Luca).
+  This three-step approach is based on <a href="https://doi.org/10.1109/IROS.2014.6942848">Estimation of Contact Forces Using a Virtual Force Sensor, IROS 2014</a> (E. Magrini, F. Flacco and A. De Luca).
 </div>
+-->
 
 Let's check your understanding with two exercices.
 
@@ -954,7 +956,7 @@ An external force $F_{ext}$ is applied at the tool tip, denoted as the contact p
        alt="Contact scenario at the tool-tip">
   <figcaption>
     <sub><i>
-      Figure 9: External force applied at the tool tip (<a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
+      Figure 9: External force applied at the tool tip (modified from <a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1113,7 +1115,7 @@ Let's consider the same robotic arm as in the previous exercise. However this ti
        alt="Contact scenario on Link 2">
   <figcaption>
     <sub><i>
-      Figure 10: External force applied on link 2 (<a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
+      Figure 10: External force applied on link 2 (modified from <a href="https://www.bila-as.com/products/universal-robots/ur20/">Universal Robots, UR20</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1373,7 +1375,7 @@ An example of such a neural network is shown in the figure below.
   <figcaption>
     <sub><i>
       Figure 11: Neural network–based estimation of force and torque
-      (<a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a>)
+      (<a href="https://doi.org/10.1109/LRA.2023.3341770">S. Shan and Q.-C. Pham, LRA 2024</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1393,7 +1395,7 @@ The **performance** of this approach can be seen in the video below.
 <div style="text-align: center;">
     <sub><i>
       Neural-network based sensorless F/T estimation in action  
-      (from <a href="https://arxiv.org/html/2301.13413v2">S. Shan, Q. Pham</a> available on <a href="https://www.youtube.com/watch?v=spztx3GzPzc">YouTube</a>)
+      (from <a href="https://doi.org/10.1109/LRA.2023.3341770">S. Shan and Q.-C. Pham, LRA 2024</a> available on <a href="https://www.youtube.com/watch?v=spztx3GzPzc">YouTube</a>)
     </i></sub>
 </div>
 
@@ -1402,7 +1404,7 @@ In the first part, the end-effector of the robot gets in contact with a surface 
 
 <div class="note-window">
   <div class="window-title">Note</div>
-  This approach was taken from <a href="https://arxiv.org/html/2301.13413v2">Fine Robotic Manipulation without Force/Torque Sensor</a> (S. Shan, Q. Pham).
+  This approach was taken from <a href="https://doi.org/10.1109/LRA.2023.3341770">Fine Robotic Manipulation without Force/Torque Sensor</a> (S. Shan and Q.-C. Pham, LRA 2024).
 </div>
 
 For **additional information** and another example of sensorless F/T estimation, feel free to read the paper linked below.
@@ -1418,11 +1420,11 @@ For **additional information** and another example of sensorless F/T estimation,
       <strong>An illustrative video is provided by following the link.</strong>
     </p>
     <p>
-      <a href="https://www.science.org/stoken/author-tokens/ST-2065/full#" target="_blank" rel="noopener">
-        Intrinsic sense of touch for intuitive physical human–robot interaction
+      <a href="https://doi.org/10.1126/scirobotics.adn4008" target="_blank" rel="noopener">
+        Intrinsic sense of touch for intuitive physical human-robot interaction
       </a>
       <br>
-      <em>M. Iskandar, A. Albu-Schäffer and A. Dietrich</em>
+      <em>M. Iskandar et al., Sci. Robot. 2024</em>
     </p>
 
     <figure style="text-align: center;"> 
@@ -1432,18 +1434,16 @@ For **additional information** and another example of sensorless F/T estimation,
       <figcaption> 
         <sub><i> 
           Figure 12: Virtual buttons using sensorless force estimation. Top: Actual contact by finger, bottom: estimated contact 
-          (<a href="https://www.science.org/doi/10.1126/scirobotics.abn2789" target="_blank">M. Iskandar, A. Albu-Schäffer and A. Dietrich</a>) 
+          (<a href="https://doi.org/10.1126/scirobotics.adn4008" target="_blank">M. Iskandar et al., Sci. Robot. 2024</a>) 
         </i></sub> 
       </figcaption> 
     </figure>
-
   </div>
 
 </details>
 
----
-
 <!--
+---
 <div class="quiz-question-text">
   Programming exercise: Sensorless force estimation
 </div>
@@ -1504,11 +1504,11 @@ In the continuity of sensorless force estimation, interaction forces can also be
     </p>
 
     <p>
-      <a href="https://ieeexplore.ieee.org/document/8085141" target="_blank" rel="noopener">
+      <a href="https://doi.org/10.1109/TPAMI.2017.2759736" target="_blank" rel="noopener">
         Hand-Object Contact Force Estimation from Markerless Visual Tracking
       </a>
       <br>
-      <em>T. Pham, N. Kyriazis et al.</em>
+      <em>T.-H. Pham, N. Kyriazis et al., TPAMI 2017</em>
     </p>
 
     <figure style="text-align: center;">
@@ -1518,7 +1518,7 @@ In the continuity of sensorless force estimation, interaction forces can also be
       <figcaption>
         <sub><i>
           Figure 13: Interaction force estimation using visual tracking. Predicted forces are in red versus ground-truth measurements in grey.
-          (<a href="https://ieeexplore.ieee.org/document/8085141" target="_blank">T. Pham, N. Kyriazis et al.</a>)
+          (<a href="https://doi.org/10.1109/TPAMI.2017.2759736" target="_blank">T.-H. Pham, N. Kyriazis et al., TPAMI 2017</a>)
         </i></sub>
       </figcaption>
     </figure>
@@ -1534,7 +1534,7 @@ To conclude sensorless F/T estimation, here are its main advantages and disadvan
 | Reduced hardware complexity    | Dependence on training data (model-free approach)           |
 | Lower system cost              | Performance degrades in unmodeled or untrained situations   |
 
-Before moving on to tactile sensing, try the wrap-up quiz about force sensing below.
+Try the wrap-up quiz about force sensing below.
 
 <details class="quiz-details" markdown="1">
 <summary class="quiz-btn"><span class="quiz-label">Quiz</span></summary>
@@ -1727,24 +1727,23 @@ What is the most likely reason for this behavior? (single answer possible)
 
 This page was created by Mael Studer, under the supervision of Prof. Aude Billard and Prof. Ravinder Dahiya.
 
-This page used the following resources:
+The following resources were used:
 
 <!-- List all the sources that you used to create the page   -->
 
 - [Handbook of Robotics, Springer](https://link.springer.com/rwe/10.1007/978-3-540-30301-5_20) (Chapter 19. Force and Tactile Sensors)
 
+- [Force-Torque Sensing in Robotics](https://hdl.handle.net/11567/942466) (A. Chavez and F. Javier)
+
+- [Estimation of contact forces using a virtual force sensor](https://doi.org/10.1109/IROS.2014.6942848) (E. Magrini, F. Flacco and A. De Luca, IROS 2014)
+
+- [Tactile Sensing—From Humans to Humanoids](https://doi.org/10.1109/TRO.2009.2033627) (R. Dahiya, G. Metta et al., TRO 2010)
+
+- [Fine Robotic Manipulation Without Force/Torque Sensor](https://doi.org/10.1109/LRA.2023.3341770) (S. Shan and Q.-C. Pham, LRA 2024)
+
 ### Additional Resources
 <!-- List all the sources that could be relevant to a reader who would like to know more, including  the page on haptics under Human-Robot Interaction chapter -->
 
 - [Intrinsic sense of touch for intuitive physical human-robot interaction](https://www.science.org/stoken/author-tokens/ST-2065/full#) (M. Iskandar, A. Albu-Schäffer and A. Dietrich)
-
-<!--  
-Initial comments:
-
-Review means to perceive touch/force: list sensors from force measurement at joint versus along link, start with 3D force sensors and 6D force/torque sensors, move to tactile sensors (traditional rigid capacitive ones) to more advanced tactile sensors (bendable, stretchable and their applications), cover also new vision-based tactile sensors making a link to page on vision.
-
-Review how to make sense of information provided by these sensors. For F/T sensors, how to detect accurately the direction and amplitude of the force, frequency, precision, emphasize issues with location of the sensor (size and must usually be placed at tip of a robot end-effector, sometimes at joint) - cover also alternative means to infer force from current on motors.
-
--->
 
 [Back to Top](#start)

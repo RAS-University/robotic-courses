@@ -269,7 +269,7 @@ Below are two illustrations and explanations of the two main interaction categor
   </video>
   <div><sub><i>
     Robotic Hand manipulating a Champagne Glass
-    (<a href="https://ieeexplore.ieee.org/document/10146043">F. Khadivar, A. Billard, IEEE T-RO 2023</a>)
+    (<a href="https://doi.org/10.1109/TRO.2023.3280028">F. Khadivar and A. Billard, TRO 2023</a>)
   </i></sub></div>
 </div>
 
@@ -285,7 +285,7 @@ A robotic hand manipulates a **water-filled champagne glass**. As the hand tilts
   </video>
   <div><sub><i>
     Humanoid Robot performs Shape Detection
-    (<a href="https://ieeexplore.ieee.org/document/6907804">N. Sommer, M. Li, A. Billard, ICRA 2014</a>)
+    (<a href="https://doi.org/10.1109/ICRA.2014.6907804">N. Sommer, M. Li and A. Billard, ICRA 2014</a>)
   </i></sub></div>
 </div>
 
@@ -305,7 +305,7 @@ Now that we have seen in what situations robots need tactile feedback, we can di
   <figcaption>
     <sub><i>
       Figure 1: Location of tactile sensors on a robot arm
-      (<a href="https://actu.epfl.ch/news/robotic-hand-moves-objects-with-human-like-grasps/" target="_blank">ADAPT robotic hand, CREATE Lab EPFL</a>)
+      (<a href="https://doi.org/10.1038/s44172-025-00407-4" target="_blank">K. Junge and J. Hughes, Commun Eng 2025</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -337,9 +337,8 @@ This section presents the following tactile sensing technologies:
 - Piezoelectric sensors  
 - Optical sensors  
 - Magnetism-based sensors  
-<!--
-- Vision-based sensors  
--->
+
+<!-- - Vision-based sensors  -->
 
 <!-- - Electrorheological / magnetorheological sensors  -->
 
@@ -1076,11 +1075,11 @@ This change in capacitance is then converted into an **electrical output signal*
       In this paper, the authors provide an overview of the main <strong>electronic methods</strong> used to measure capacitance in capacitive sensors. They review classical and modern readout circuits that convert small capacitance changes into voltage, frequency or digital signals. Then they compare the different measurement approaches in terms of accuracy, complexity and robustness.  
     </p>
     <p>
-      <a href="https://www.sciencedirect.com/science/article/pii/S0263224122003335" target="_blank" rel="noopener">
+      <a href="https://doi.org/10.1016/j.measurement.2022.111067" target="_blank" rel="noopener">
         Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review
       </a>
       <br>
-      <em>O. Kanoun, A. Y. Kallel, A. Fendri</em>
+      <em>O. Kanoun, A. Kallel et al., Measurement 2022</em>
     </p>
   </div>
 </details>
@@ -1127,7 +1126,7 @@ When a conducting object presses on or approaches the sensor, it distorts the el
 
 The mutual capacitance type is usually used in tactile arrays, with multiple X and Y electrode lines. At each X–Y crossing a distinct sensing capacitor is formed. This configuration is suitable for high-resolution tactile skins capable of detecting **multiple simultaneous contacts**, making mutual capacitance attractive for larger tactile surfaces.
 
-An illustrative implementation of a capacitive tactile array is the system developed by <a href="https://www.researchgate.net/publication/3330095_A_Flexible_Polymer_Tactile_Sensor_Fabrication_and_Modular_Expandability_for_Large_Area_Deployment">Lee et al.</a>, as shown in the figure below. This sensor employs a tactile array with $16 \times 16$ sensing points. These individual tactile modules can be combined to cover larger areas of a robot’s body, as presented in panel (a).  
+An illustrative implementation of a capacitive tactile array is the system developed by <a href="https://doi.org/10.1109/JMEMS.2006.886021">Lee et al.</a>, as shown in the figure below. This sensor employs a tactile array with $16 \times 16$ sensing points. These individual tactile modules can be combined to cover larger areas of a robot’s body, as presented in panel (a).  
 
 <figure style="text-align: center;">
 
@@ -1138,8 +1137,7 @@ An illustrative implementation of a capacitive tactile array is the system devel
            alt="(a) Modular mutual-capacitance tactile array deployed on a robotic arm">
       <figcaption>
         <sub><i>
-          (a) Modular mutual-capacitance tactile array on robot arm  
-          (<a href="https://www.researchgate.net/publication/3330095_A_Flexible_Polymer_Tactile_Sensor_Fabrication_and_Modular_Expandability_for_Large_Area_Deployment">Lee et al.</a>)
+          (a) Modular mutual-capacitance tactile array on robot arm (<a href="https://doi.org/10.1109/JMEMS.2006.886021">H.-K. Lee, S.-I. Chang and E. Yoon, JMEMS 2006</a>)
         </i></sub>
       </figcaption>
     </div>
@@ -1149,7 +1147,7 @@ An illustrative implementation of a capacitive tactile array is the system devel
            alt="(b) Close-up views of the mutual-capacitance sensor grid">
       <figcaption>
         <sub><i>
-          (b) Close-up views of the mutual-capacitance sensor grid (<a href="https://www.researchgate.net/publication/3330095_A_Flexible_Polymer_Tactile_Sensor_Fabrication_and_Modular_Expandability_for_Large_Area_Deployment">Lee et al.</a>)
+          (b) Close-up views of the mutual-capacitance sensor grid (<a href="https://doi.org/10.1109/JMEMS.2006.886021">H.-K. Lee, S.-I. Chang and E. Yoon, JMEMS 2006</a>)
         </i></sub>
       </figcaption>
     </div>
@@ -1408,7 +1406,7 @@ To create a functional tactile sensor, the piezoelectric material is integrated 
   <figcaption>
     <sub><i>
       Figure 12: Piezoelectric tactile sensing element 
-      (<a href="https://iopscience.iop.org/article/10.1088/0964-1726/20/4/045009" target="_blank">Y R Wang et al 2011 Smart Mater. Struct.</a>)
+      (<a href="https://doi.org/10.1088/0964-1726/20/4/045009" target="_blank">Y. Wang, J. Zheng et al, Smart Mater. Struct. 2011</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1508,7 +1506,7 @@ The design utilizes a multi-layered sensing unit integrated into the grasper's j
            alt="Schematic of the micromachined sensor layers">
       <figcaption>
         <sub><i>
-          (b) Schematic showing the sensor layers including silicon "teeth," PVDF film and electrodes
+          (b) Schematic showing the sensor layers including silicon teeth, PVDF film and electrodes
         </i></sub>
       </figcaption>
     </div>
@@ -1516,19 +1514,13 @@ The design utilizes a multi-layered sensing unit integrated into the grasper's j
 
   <figcaption style="margin-top: 8px;">
     <sub><i>
-      Figure 14: Piezoelectric tactile sensor for an endoscopic grasper (<a href="https://ieeexplore.ieee.org/document/861111" target="_blank">Dargahi et al.</a>)
+      Figure 14: Piezoelectric tactile sensor for an endoscopic grasper (<a href="https://doi.org/10.1109/84.870059" target="_blank">J. Dargahi, M. Parameswaran and S. Payandeh, JMEMS 2000</a>)
     </i></sub>
   </figcaption>
 
 </figure>
 
 The sensor structure consists of a **silicon** top layer with a rigid tooth-like pattern that concentrates the force onto the **PVDF film**, as shown on panel (b) of the figure. The independent electrodes allow the system to distinguish between different contact points across the grasper's surface.
-
-<div class="note-window">
-  <div class="window-title">Note</div>
-  The design and implementation of the micromachined piezoelectric sensor for endoscopic surgery discussed above is based on the research by 
-  <a href="https://ieeexplore.ieee.org/document/861111" target="_blank" rel="noopener">Dargahi et al. (2000)</a>.
-</div>
 
 #### D) Optical Sensors
 
@@ -1579,7 +1571,7 @@ Where:
   <figcaption>
     <sub><i>
       Figure 16: Electrical circuit of an optical light intensity tactile sensor, with an infrared LED emitter and a photodiode detector 
-      (<a href="https://ieeexplore.ieee.org/document/9071868" target="_blank">L. Hajshahvaladi, A. Amralizadeh et al., ICROM 2019</a>)
+      (<a href="https://doi.org/10.1109/ICRoM48714.2019.9071868" target="_blank">L. Hajshahvaladi, A. Amralizadeh et al., ICRoM 2019</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1629,7 +1621,7 @@ When an object applies **force** to the rubber, these feelers collapse and make 
   <figcaption>
     <sub><i>
       Figure 18: Light path variation optical tactile sensor based on the principle of total internal reflection 
-      (<a href="https://www.researchgate.net/publication/221787487_Optical_Three-Axis_Tactile_Sensor_for_Robotic_Fingers" target="_blank">M. Ohka, J. Takata et al.</a>)
+      (<a href="https://doi.org/10.5772/6619" target="_blank">M. Ohka, J. Takata et al., InTech 2008</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1675,7 +1667,7 @@ On panel (b) of the figure below, we can see an example in action. When a force 
   <figcaption style="margin-top: 15px;">
     <sub><i>
       Figure 19: Hemispherical three-axis optical tactile sensor 
-      (<a href="https://ieeexplore.ieee.org/document/4543734" target="_blank">M. Ohka, N. Morisawa et al., ICRA 2008</a>)
+      (<a href="https://doi.org/10.1109/ROBOT.2008.4543734" target="_blank">M. Ohka, N. Morisawa et al., ICRA 2008</a>)
     </i></sub>
   </figcaption>
 
@@ -1702,7 +1694,7 @@ The design of a magnetism-based tactile sensor usually consists of a permanent m
   <figcaption>
     <sub><i>
       Figure 20: Structure of a magnetism-based tactile sensor, showing the permanent magnet (embedded in elastomer) and the Hall effect sensor at the base 
-      (<a href="https://www.mdpi.com/1424-8220/16/9/1356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
+      (<a href="https://doi.org/10.3390/s16091356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1756,7 +1748,7 @@ An example of the sensor in action is shown in the figure below:
   <figcaption>
     <sub><i>
       Figure 22: Magnetism-based tactile sensor in action: the left panel illustrates the deformation under a pure normal force ($F_z$); the right panel shows the response to a transverse force causing lateral displacement of the magnet 
-      (<a href="https://www.mdpi.com/1424-8220/16/9/1356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
+      (<a href="https://doi.org/10.3390/s16091356" target="_blank">H. Wang, G. De Boer et al., Sensors 2016</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1877,7 +1869,7 @@ The manufacturing of these layers is shown in the figure below.
   <figcaption>
     <sub><i>
       Figure 23: Step-by-step fabrication of the capacitive tactile sensor via 3D printing, showing the layering of PEN, silver electrodes, Ecoflex and paper 
-      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S. Fu, J. Tao, C. Pan et al., Advanced Materials</a>)
+      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S.Fu, J.Tao et al., Adv. Mater. Technol. 2019</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -1918,7 +1910,7 @@ As shown in the right plot of the figure below, the relative change in capacitan
   <figcaption style="margin-top: 15px;">
     <sub><i>
       Figure 24: Flexible capacitive tactile sensor in action
-      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S. Fu, J. Tao, C. Pan et al., Advanced Materials</a>)
+      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S.Fu, J.Tao et al., Adv. Mater. Technol. 2019</a>)
     </i></sub>
   </figcaption>
 
@@ -1960,7 +1952,7 @@ An example of usage of such a flexible sensing array would be the attachment dir
   <figcaption style="margin-top: 15px;">
     <sub><i>
       Figure 25: Flexible capacitive tactile sensing array
-      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S. Fu, J. Tao, C. Pan et al., Advanced Materials</a>)
+      (<a href="https://doi.org/10.1002/admt.201800703" target="_blank">S.Fu, J.Tao et al., Adv. Mater. Technol. 2019</a>)
     </i></sub>
   </figcaption>
 
@@ -1990,7 +1982,7 @@ The structure is printed from the bottom up in **eight sequential steps**, shown
   <figcaption>
     <sub><i>
       Figure 26: 3D printing process of the stretchable capacitive tactile sensor, illustrating the layering of silicone and silver electrodes
-      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S. Guo, K. Qiu et al., Advanced Materials</a>)
+      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S.-Z.Guo, K.Qiu et al., Adv. Mater. 2017</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -2008,7 +2000,7 @@ The sensor layer is printed as a 3D cylinder wall that connects the top and bott
   <figcaption>
     <sub><i>
       Figure 27: Schematic of the strechable resistive tactile sensor: (a) Exploded view showing the layers; (b) Side view of the completed monolithic sensor 
-      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S. Guo, K. Qiu et al., Advanced Materials</a>)
+      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S.-Z.Guo, K.Qiu et al., Adv. Mater. 2017</a>)
     </i></sub>
   </figcaption>
 </figure>
@@ -2047,7 +2039,7 @@ Here is an example of how this type of sensor can be used in **wearable electron
   <figcaption style="margin-top: 15px;">
     <sub><i>
       Figure 28: Stretchable resistive tactile sensor used for radial pulse monitoring
-      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S. Guo, K. Qiu et al., Advanced Materials</a>)
+      (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S.-Z.Guo, K.Qiu et al., Adv. Mater. 2017</a>)
     </i></sub>
   </figcaption>
 
@@ -2057,26 +2049,26 @@ Here is an example of how this type of sensor can be used in **wearable electron
 
 ### Issues and Difficulties
 
-<!--  tactile sensing chapter 4 (4.5 Electronics/Electrical requirements) 
- multiplexing
--->
-
 When used in robotics, tactile sensors often need to cover **broad areas**. This can be challenging as simply scaling up individual sensors creates significant hurdles in **physical integration** and also in **data processing**. To cover larger areas, tactile sensor arrays are formed out of hundreds of individual sensing elements, which leads to issues we are adressing below.
-
-<!--
 
 #### A) Wiring Complexity
 
-When transitioning from a single tactile sensor to a large-area sensor array, the primary challenge is the **interconnection bottleneck**. Most tactile sensors require at least two wires to function. In a "brute-force" approach, a system with $n$ sensors would require $2n$ or $n+1$ wires (if sharing a ground). For a robot covered in thousands of sensors, this leads to a "cabling nightmare" where the thick, rigid bundles of wires prevent the robot from moving freely and are highly likely to break at high-stress points like **mechanical joints**.
+<!--
+tactile sensing chapter 4.4.5
+emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
+
+add challenges of electronics: wiring, data transfer, power consumption  
+-> examples of how it is done today
+-> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+-->
+
+The most immediate problem with scaling is the **physical connection** between the sensors and the controller. In a *brute-force* approach, a system with $n$ sensors would require $2n$ or $n+1$ wires (if sharing a ground). For a robot covered in thousands of sensors, this leads to a huge amount of wires. These wire bundles make the robot stiff and can be source of problems in moving joints. How to reduce the number of wires?
 
 <h4 class="section-title">
-  Bus-based Architectures and Multiplexing
+  Bus-based Architectures
 </h4>
 
-To solve this, researchers use **bus-based architectures** where multiple sensors share the same physical wires. Instead of each sensor having a direct line to the controller, data is organized using **multiplexing** protocols. This allows the system to distinguish which sensor is "talking" at any given time.
-
-* **Time Division Multiplexing (TDM):** Sensors are read one after another in a very rapid sequence. The controller knows which sensor the data belongs to based on the specific "time slot" in which the signal arrives.
-* **Frequency Division Multiplexing (FDM):** Each sensor is assigned a unique frequency (or "pitch"). All sensors can send data simultaneously over the same wire, and the controller uses filters to separate the signals.
+A possible solution is to use **bus-based architectures**. Instead of each sensor having a direct line to the controller, multiple sensors share the same physical wires. Below is an example of multiple integrated sensors that share the same communication bus.
 
 <figure style="text-align: center;">
   <div style="display: flex; justify-content: center; gap: 20px; align-items: flex-end;">
@@ -2103,76 +2095,90 @@ To solve this, researchers use **bus-based architectures** where multiple sensor
   </div>
   <figcaption style="margin-top: 15px;">
     <sub><i>
-      Figure 29: Implementation of bus-based shared wiring to reduce interconnection complexity 
-      (<a href="https://engineering.purdue.edu/oxidemems/conferences/transducers2013/PDFs/Papers/685_0841.pdf" target="_blank">M. Makihata, M. Muroyama et al., Transducers 2013</a>)
+      Figure 29: Implementation of bus-based shared wiring to reduce wiring complexity 
+      (<a href="https://doi.org/10.1109/Transducers.2013.6627370" target="_blank">M. Makihata, M. Muroyama et al., Transducers 2013</a>)
     </i></sub>
   </figcaption>
 </figure>
 
-<h4 class="section-title">
-  Wireless Communication for Critical Joints
-</h4>
+The difficulty of this architecture lies in identifying which sensor the data on the bus is coming from. To solve this problem, various **multiplexing protocols** exist, like for example:
 
-In areas where mechanical rotation is extreme, such as the wrist or shoulder, even flexible wires may eventually fail due to fatigue. **Wireless communication** can bypass these critical regions entirely. By using **electromagnetic coils**, data can be transmitted via inductive coupling. This allows the signal to "jump" across a physical gap or a rotating joint without any mechanical connection, ensuring the robot maintains tactile feedback without the risk of wire breakage.
+- **Time Multiplexing:** Sensors are read one after another. The controller knows which sensor the data belongs to based on the specific time slot in which the signal arrives.
+
+- **Frequency Multiplexing:** Each sensor is assigned a unique frequency. All sensors can send data simultaneously over the same wire, and the controller uses filters to separate the signals.
 
 <h4 class="section-title">
   Local Modular Routing
 </h4>
 
-The most scalable solution involves **local modular routing**, often referred to as a "cellular" skin. Instead of every sensor communicating with the central "brain," sensors are organized into independent **modules (patches)**. 
+Another way of solving the wiring problem is through **local modular routing**. Instead of every sensor communicating directly with the central controller, sensors are organized into independent **modules**. 
 
-Each module contains its own local microcontroller that collects and processes data from the local "taxels" (tactile pixels). Because the complex wiring is handled entirely inside the small, local patch, only a single communication cable is needed to connect the entire patch to the rest of the robot. This hierarchical structure mimics the human peripheral nervous system, where local clusters of nerves process information before sending it to the spinal cord.
+This system is achieved by separating the architecture into **sensor modules** and a **main controller**. Each sensor module is connected directly to a specific sensor array to take local measurements. These modules contain their own microcontrollers that collect and process data from the local *taxels*. The main controller then manages a common bus that connects multiple sensor modules, reading the pre-processed data from each one.
 
--->
+Because the complex wiring is handled entirely inside the small, local patch, only a single communication cable is needed to connect the entire module to the rest of the robot. This hierarchical structure mimics the human peripheral nervous system, where local clusters of nerves process information before sending it to the spinal cord.
 
-#### A) Wiring Complexity
+Below is a schematic of such an architecture.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/modular_system_architecture.png' }}"
+       width="600px"
+       alt="Modular system architecture showing sensor modules and main controller">
+  <figcaption>
+    <sub><i>
+      Figure 30: Architecture of a modular tactile system
+      (<a href="https://doi.org/10.1109/IROS51168.2021.9635851" target="_blank">N. Fiedler, P. Ruppel et al., IROS 2021</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
 <!--
-tactile sensing chapter 4.4.5
-emphasize the wealth of computation, issues with electronic and cabling to tackle so much input, compute, etc. give examples of how this is computed today.
 
-add challenges of electronics: wiring, data transfer, power consumption  
--> examples of how it is done today
--> look at latest paper of Gordon Cheng (TUM) on humanoïd robot
+<h4 class="section-title">
+  Wireless Communication for Critical Joints
+</h4>
+
+Another way of solving the wiring problem is through **wireless communication**. In areas where mechanical rotation is extreme, such as the wrist or shoulder, wires may eventually fail due to fatigue. **Wireless communication** can bypass these critical regions entirely. By using **electromagnetic coils**, data can be transmitted via inductive coupling. This allows the signal to "jump" across a physical gap or a rotating joint without any mechanical connection, ensuring the robot maintains tactile feedback without the risk of wire breakage.
+
 -->
-
-The most immediate problem with scaling is the physical connection between the sensors and the controller. A "brute-force" approach (where each sensor has its own dedicated wire) results in a massive, rigid bundle of cables.
-
-* **Physical Constraints:** These bundles make the robot stiff and heavy, hindering the very compliance and flexibility that soft robotics aims to achieve.
-* **Mechanical Reliability:** In moving joints, large wire bundles are prone to fatigue and breaking after repeated bending.
-
-**Proposed Solutions:**
-* **Bus-Based Architectures:** Instead of individual wires, sensors share a common communication bus, allowing hundreds of elements to send data over just a few shared lines.
-* **Modular Skin Patches:** Designing the skin as independent, modular "patches" allows for local routing within the patch, meaning only one main connection is needed to reach the robot's central system.
-
-
 
 #### B) Big Data Management
 
-Processing signals from thousands of sensors at high frequencies can overwhelm a robot's central processing unit (CPU).
+As the number of sensing elements in an array increases, the volume of generated information increases as well and affects the robot's ability to interact with its environment in **real-time**.
 
-* **Latency:** High data volume increases the time it takes for the robot to "feel" and react, which can be dangerous or inefficient during human-robot interaction.
-* **Energy Efficiency:** Constantly processing data from every single sensor—even those not currently in contact with anything—wastes significant battery power.
+A primary cause of this problem is the way data is collected. In large sensor arrays, a **scanning algorithm** is typically used to read the sensor matrix, moving systematically from one end of the grid to the other (from left to right and top to bottom). Because each value is read one at a time, a significant **time latency** is introduced between the first and last sensor measurement, which makes it difficult for a robot to react instantaneously to a quick touch. The plot below illustrates this growing latency with an increasing number of sensors.
 
-**Proposed Solutions:**
-* **Edge Computing (Local Processing):** Intelligence is distributed by embedding small microcontrollers directly into the skin patches to perform initial data filtering and calibration locally.
-* **Event-Driven Sensing:** Inspired by human biology, sensors only transmit data when a change (an "event") is detected, such as a new touch or a change in pressure. This keeps the communication network quiet when there is no interaction, drastically reducing the computational load.
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}{{ '/assets/images/tactile_perception/scanning_latency.png' }}"
+       width="600px"
+       alt="Comparison of different data management and scanning strategies">
+  <figcaption>
+    <sub><i>
+      Figure 31: Graph showing the linear relationship between read-out speed (latency) and number of sensors of a tactile sensor array
+      (<a href="https://doi.org/10.1109/JPROC.2026.3660184" target="_blank">A. Slepyan, J. Chen and N. Thakor, Proceedings of the IEEE 2025</a>)
+    </i></sub>
+  </figcaption>
+</figure>
 
+Here are some solutions to address the data problem:
 
+- **Event-Driven Sensing:** This method replaces continuous scanning with *send-on-delta* logic. Sensors only transmit data when a significant change is detected, such as a new contact. This keeps the communication network quiet when there is no interaction and reduces the amount of data.
+
+- **Edge Computing** Instead of sending all raw data to the central controller, data processing is distributed to local microcontrollers. By filtering noise and only sending essential tactile features, the amount of data traveling through the main bus is minimized.
+
+- **Machine Learning Methods:** It is also possible to enhance tactile perception using AI algorithms, without needing additional tactile sensors. By combining strategically placed sensors with machine learning, the system can predict high-resolution tactile maps from a smaller amount of data.
 
 #### C) Power Management
 
-As e-skin covers larger areas, the energy required to power thousands of sensors and their associated electronics grows.
+A final challenge worth mentioning is the power consumption of large sensor arrays.
 
-* **Rigid Battery Conflict**: Traditional high-capacity batteries are rigid, heavy, and bulky, which compromises the flexibility and "softness" of the robotic system.
-* **Heat Dissipation**: High power consumption in dense arrays can generate heat, which may interfere with temperature-sensitive sensors or damage delicate soft materials.
+For example, in applications like **prosthetics**, it is not ideal to rely on large and heavy batteries. Batteries require frequent recharging, which limits the user's independence and the overall autonomy of the device.
 
-**Proposed Solutions:**
-* **Energy Harvesting**: Integrating flexible solar cells or triboelectric nanogenerators (TENGs) directly into the e-skin allows the robot to harvest energy from light or its own mechanical movements.
-* **Low-Power "Sleep" Modes**: Implementing architectures where sensors remain in a zero-power or ultra-low-power "sleep" mode until a physical contact is detected.
+Here are some paths that address these energy constraints:
 
+* **Energy-Autonomous Skin:** The idea is to integrate energy-harvesting materials directly into the sensor array. This includes using *tactile solar patches* that charge from light or *triboelectric nanogenerators* that convert the robot's own mechanical movements into electricity.
+* **Low-Power Sensors:** The idea is to develop new sensing materials that allow sensors to consume almost no power when they are not in active use.
 
-
+This concludes the tactile perception page.
 
 ---
 
@@ -2180,15 +2186,31 @@ As e-skin covers larger areas, the energy required to power thousands of sensors
 
 This page was created by Mael Studer, under the supervision of Prof. Aude Billard and Prof. Ravinder Dahiya.
 
-This page used the following resources:
+The following resources were used:
 
 <!-- List all the sources that you used to create the page   -->
 
 - [Tactile Sensing Technologies, Springer](https://link.springer.com/chapter/10.1007/978-94-007-0579-1_5)
 
+- [Design and Fabrication of a Low Cost Optical Tactile Sensor](https://doi.org/10.1109/ICRoM48714.2019.9071868) (L. Hajshahvaladi, A. Amralizadeh et al., ICRoM 2019)
+
+- [A robotic finger equipped with an optical three-axis tactile sensor](https://doi.org/10.1109/ROBOT.2008.4543734) (M. Ohka, N. Morisawa et al., ICRA 2008)
+
+- [Design Methodology for Magnetic Field-Based Soft Tri-Axis Tactile Sensors](https://doi.org/10.3390/s16091356) (H. Wang, G. De Boer et al., Sensors 2016)
+
+- [Fabrication of Large-Area Bimodal Sensors by All-Inkjet-Printing](https://doi.org/10.1002/admt.201800703) (S. Fu, J. Tao et al., Adv. Mater. Technol. 2019)
+
+- [3D Printed Stretchable Tactile Sensors](https://doi.org/10.1002/adma.201701218) (S.-Z. Guo, K. Qiu et al., Adv. Mater. 2017)
+
+- [Scalable Tactile Sensing Skins: Wiring and Data Management](https://doi.org/10.1109/JPROC.2026.3660184) (A. Slepyan, J. Chen and N. Thakor, Proceedings of the IEEE 2025)
+
+- [Large-Area Soft e-Skin: The Challenges Beyond Sensor Designs](https://doi.org/10.1109/JPROC.2019.2941366) (R. Dahiya et al., Proceedings of the IEEE 2019)
+
 ### Additional Resources
 <!-- List all the sources that could be relevant to a reader who would like to know more, including the page on haptics under Human-Robot Interaction chapter -->
 
-- [Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://www.sciencedirect.com/science/article/pii/S0263224122003335) (O. Kanoun et al.)
+- [Measurement Methods for Capacitances in the Range of 1 pF–1 nF: A Review](https://doi.org/10.1016/j.measurement.2022.111067) (O. Kanoun, A. Kallel et al., Measurement 2022)
+
+- [A Review of Printable Flexible and Stretchable Tactile Sensors](https://doi.org/10.34133/2019/3018568) (K. Kumar, P.-Y. Chen and H. Ren, Research 2019)
 
 [Back to Top](#start)

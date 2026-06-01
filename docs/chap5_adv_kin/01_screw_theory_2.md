@@ -1,5 +1,5 @@
 ---
-title: "5.1 Screw Theory Final"
+title: "5.1 Screw Theory"
 parent: "Chapter 5: Advanced Kinematics"
 has_children: false
 nav_order: 1
@@ -255,7 +255,7 @@ The following notations will be used throughout this chapter. They are fixed her
 - A scalar is written in standard italic form, for example $x \in \mathbb{R}$.
 - A vector is written in bold lowercase, for example $\mathbf{r}, \mathbf{v}, \mathbf{f}$.
 - A matrix is written in bold uppercase, for example $\mathbf{R}, \mathbf{J}, \mathbf{A}$.
-- A vector quantity that is traditionally denoted by a Greek letter is written in bold Greek, for example the angular velocity $\boldsymbol{\omega}$.
+- A vector quantity that is traditionally denoted by a Greek letter is written in bold Greek, for example the angular velocity $\mathbf{\omega}$.
 - Every six-dimensional entity made of two three-dimensional vectors is written as a stacked column vector.
 - The symbol $\phi$ denotes the (scalar) joint/motion parameter. For a revolute motion it is an angle; later it can itself be a function of time, $\phi=\phi(t)$.
 - A dot denotes a time derivative (e.g., $\dot{\phi}=d\phi/dt$), while $d(\cdot)/d\phi$ denotes differentiation with respect to the motion parameter.
@@ -270,40 +270,40 @@ We will use two reference frames:
 Whenever a vector (or screw) is expressed in coordinates of a particular frame, we indicate it with a **suffix** (a right superscript):
 
 - $^S\mathbf{a}$: the coordinate vector of $\mathbf{a}$ expressed in frame $\{S\}$
-- $\mathbf{a}^B$: the coordinate vector of $\mathbf{a}$ expressed in frame $\{B\}$
+- $^B\mathbf{a}$: the coordinate vector of $\mathbf{a}$ expressed in frame $\{B\}$
 
 The same convention applies to screws, twists, and wrenches:
 
-- $^S\mathcal{T},\ \mathcal{T}^B$ for a twist expressed in $\{S\}$ or $\{B\}$
-- $^S\mathcal{W},\ \mathcal{W}^B$ for a wrench expressed in $\{S\}$ or $\{B\}$
+- $^S\mathcal{T},\ ^B\mathcal{T}$ for a twist expressed in $\{S\}$ or $\{B\}$
+- $^S\mathcal{W},\ ^B\mathcal{W}$ for a wrench expressed in $\{S\}$ or $\{B\}$
 
 Homogeneous transformations and rotation matrices carry **frame indices as a prefix**. We write:
 
-- ${}^{S}\mathbf{R}_{B}\in SO(3)$ for the rotation that maps coordinates expressed in $\{B\}$ to coordinates expressed in $\{S\}$,
-- ${}^{S}\mathbf{H}_{B}\in SE(3)$ for the homogeneous transformation (pose) of frame $\{B\}$ relative to frame $\{S\}$.
+- $^S\mathbf{R}_{B}\in SO(3)$ rotation that maps coordinates expressed in $\{B\}$ to coordinates expressed in $\{S\}$,
+- $^S\mathbf{H}_{B}\in SE(3)$ for the homogeneous transformation (pose) of frame $\{B\}$ relative to frame $\{S\}$.
 
-Concretely, ${}^{S}\mathbf{R}_{B}$ means:
+Concretely, $^S\mathbf{R}_{B}$ means:
 
 $$
-^S\mathbf{a} = {}^{S}\mathbf{R}_{B}\,\mathbf{a}^B.
+^S\mathbf{a} = ^S\mathbf{R}_{B}\,\mathbf{a}^B.
 $$
 
-You can read ${}^{S}\mathbf{R}_{B}$ as "**from $B$ to $S$**": it takes coordinates expressed in $\{B\}$ and returns the same geometric vector expressed in $\{S\}$. (Equivalently, ${}^{B}\mathbf{R}_{S}=({}^{S}\mathbf{R}_{B})^T$ maps from $\{S\}$ to $\{B\}$.)
+You can read $^S\mathbf R_B$ as "**from $B$ to $S$**": it takes coordinates expressed in $\{B\}$ and returns the same geometric vector expressed in $\{S\}$. (Equivalently, $^B\mathbf R_S=(^S\mathbf R_B)^T$ maps from $\{S\}$ to $\{B\}$.)
 
-Unless otherwise stated, when we write $\mathbf{R}(\phi)$ in this section we mean ${}^{S}\mathbf{R}_{B}(\phi)$, and similarly $\mathbf{H}(\phi)$ means ${}^{S}\mathbf{H}_{B}(\phi)\in SE(3)$.
+Unless otherwise stated, when we write $\mathbf{R}(\phi)$ in this section we mean $^S\mathbf R_B(\phi)$, and similarly $\mathbf{H}(\phi)$ means $^S\mathbf H_B(\phi)\in SE(3)$.
 
 In a **serial arm**, we will additionally use a *family* of frames $\{0\},\{1\},\dots,\{n\}$ attached to bodies/links (with $\{0\}$ typically the base frame and $\{n\}$ an end-effector frame). The same prefix notation applies:
 
 - ${}^{i}\mathbf{H}_{j}$ is the pose of frame $\{j\}$ relative to frame $\{i\}$.
-- Composition: $.{}^{i}\mathbf{H}_{k} = {}^{i}\mathbf{H}_{j}\,{}^{j}\mathbf{H}_{k}$.
-- Inverse: ${}^{j}\mathbf{H}_{i} = ({}^{i}\mathbf{H}_{j})^{-1}$.
+- Composition: $^i\mathbf H_k = ^i\mathbf H_j$ $^j\mathbf H_k$.
+- Inverse: $^j\mathbf H_i = (^i\mathbf H_j)^{-1}$.
 
 #### Skew and screw operators
 
 We use two different "lift" operators:
 
 - For a 3D vector $\mathbf{a}\in\mathbb{R}^3$, its skew-symmetric matrix is written with a tilde, $\tilde{\mathbf{a}}\in\mathbb{R}^{3\times 3}$, defined by $\tilde{\mathbf{a}}\,\mathbf{b}=\mathbf{a}\times \mathbf{b}$.
-- For a twist/screw $\mathcal{T}=\begin{bmatrix}\boldsymbol{\omega}\\ \mathbf{v}\end{bmatrix}$, its $4\times 4$ matrix in $\mathfrak{se}(3)$ is written with a hat, $\hat{\mathcal{T}}$.
+- For a twist/screw $\mathcal{T}=\begin{bmatrix}\mathbf{\omega}\\ \mathbf{v}\end{bmatrix}$, its $4\times 4$ matrix in $\mathfrak{se}(3)$ is written with a hat, $\hat{\mathcal{T}}$.
 
 In addition, we will use the following symbols systematically:
 
@@ -315,7 +315,7 @@ In addition, we will use the following symbols systematically:
 - $\mathbf{f}$: a force vector
 - $\mathbf{m}$: a moment vector
 - $\mathbf{v}$: a linear velocity vector
-- $\boldsymbol{\omega}$: an angular velocity vector
+- $\mathbf{\omega}$: an angular velocity vector
 - $\mathbf{s}$: a unit direction vector along a screw axis
 - $\mathbf{r}_{OP}$: the position vector from point $O$ to point $P$
 - $\mathrm{span}\{\mathcal{S}_1,\dots,\mathcal{S}_k\}$: the subspace generated by the listed screws
@@ -335,7 +335,7 @@ When the screw represents motion, we write the twist as:
 $$
 \mathcal{T}=
 \begin{bmatrix}
-\boldsymbol{\omega} \\ <br>
+\mathbf{\omega} \\ <br>
 \mathbf{v}
 \end{bmatrix}
 $$
@@ -365,7 +365,7 @@ In particular, for a wrench and a twist, the pairing becomes:
 $$
 \mathcal{W} \odot \mathcal{T}
 =
-\mathbf{f}\cdot\mathbf{v} + \mathbf{m}\cdot\boldsymbol{\omega}.
+\mathbf{f}\cdot\mathbf{v} + \mathbf{m}\cdot\mathbf{\omega}.
 $$
 This scalar is the quantity that will later encode power and reciprocity. A recurring idea in this chapter is that two screws are reciprocal when their pairing is zero.
 
@@ -403,6 +403,245 @@ This scalar is the quantity that will later encode power and reciprocity. A recu
   <p id="q-st-n2-feedback"></p>
 </form>
 </div>
+
+### Directed Lines, Plücker Coordinates, and Screws
+
+Before introducing screw motion, it is useful to separate three closely related ideas:
+
+1. a **directed line**, which is only geometry,
+2. its **Plücker coordinates**, which are coordinates of that line,
+3. a **screw**, which is a Plücker line together with a pitch.
+
+#### Directed line
+
+A directed line in space is specified by two pieces of information:
+
+- a unit direction vector $\mathbf{s}$,
+- one point $P$ on the line, with position vector $\mathbf{p}$ from the origin $O$.
+
+Every point on the same line can be written as
+
+$$
+\mathbf{r}(\lambda)
+=
+\mathbf{p}+\lambda \mathbf{s},
+\qquad \lambda\in\mathbb{R}.
+$$
+
+The vector $\mathbf{s}$ gives the direction of the line, while $\lambda$ moves us along the line.
+
+#### Plücker coordinates of a line
+
+The same directed line can be represented by the pair
+
+$$
+\mathcal{L}
+=
+\begin{bmatrix}
+\mathbf{s} \\ <br>
+\mathbf{m}_O
+\end{bmatrix},
+\qquad
+\mathbf{m}_O = \mathbf{p}\times \mathbf{s}.
+$$
+
+Here, $\mathbf{m}_O$ is the **moment of the line about the origin**. It tells us where the line is located relative to the origin.
+
+This representation does not depend on which point $P$ is chosen on the line. If we choose another point
+
+$$
+\mathbf{p}'=\mathbf{p}+\lambda \mathbf{s},
+$$
+
+then
+
+$$
+\mathbf{p}'\times \mathbf{s}
+=
+(\mathbf{p}+\lambda\mathbf{s})\times\mathbf{s}
+=
+\mathbf{p}\times\mathbf{s}.
+$$
+
+So $\mathbf{m}_O$ is a property of the line, not of the particular point used to compute it.
+
+Because $\mathbf{m}_O=\mathbf{p}\times\mathbf{s}$, Plücker coordinates satisfy
+
+$$
+\mathbf{s}\cdot\mathbf{m}_O=0.
+$$
+
+Thus, a directed line can be encoded by a six-dimensional vector, but not every six-dimensional vector is a line. A valid line must satisfy the Plücker relation.
+
+#### Interactive session
+
+- Drag the circular handle at the end of the line to rotate the directed line.
+- Drag the line itself to translate it along its normal direction.
+- Use the sliders if you want finer control over the direction and position of the line.
+
+This interactive sketch works in the $x$-$y$ plane. The line represents the directed line $\mathcal{L}$, $\mathbf{s}$ is the unit direction of the line, and $P$ is a point on the line. The vector $\mathbf{p}$ is the position vector from the origin $O$ to the point $P$. The moment is updated from the current geometry using
+
+$$
+\mathbf{m}_O = \mathbf{p}\times \mathbf{s}.
+$$
+
+As you move the line, the Plücker coordinates update live:
+
+$$
+\mathcal{L}
+=
+\begin{bmatrix}
+\mathbf{s} \\
+\mathbf{m}_O
+\end{bmatrix}.
+$$
+
+<div id="temporary-plucker-demo"></div>
+<script src="/plucker_coordinates.js"></script>
+
+##### Quick quiz — Plücker coordinates
+
+<div class="mcq">
+<p><strong>Question: In the Plücker coordinates $\mathcal{L}=\begin{bmatrix}\mathbf{s}\\ \mathbf{m}_O\end{bmatrix}$, what does $\mathbf{m}_O$ represent?</strong></p>
+<form id="q-st-pl1">
+  <input type="radio" name="q-st-pl1" value="a"> The moment of the line about the origin<br>
+  <input type="radio" name="q-st-pl1" value="b"> The length of the direction vector $\mathbf{s}$<br>
+  <input type="radio" name="q-st-pl1" value="c"> The determinant of a rotation matrix<br>
+  <input type="radio" name="q-st-pl1" value="d"> The pitch of a screw<br>
+  <button type="button"
+    onclick="checkMCQ('q-st-pl1', 'a',
+      'Correct. The vector m_O is the moment of the directed line about the origin.',
+      'Incorrect. Correct answer: (a). The vector m_O is the moment of the line about the origin.')">
+    Check Answer
+  </button>
+  <p id="q-st-pl1-feedback"></p>
+</form>
+</div>
+
+<div class="mcq">
+<p><strong>Question: Why does choosing another point $\mathbf{p}'=\mathbf{p}+\lambda\mathbf{s}$ on the same line give the same $\mathbf{m}_O$?</strong></p>
+<form id="q-st-pl2">
+  <input type="radio" name="q-st-pl2" value="a"> Because $(\mathbf{p}+\lambda\mathbf{s})\times\mathbf{s}=\mathbf{p}\times\mathbf{s}$<br>
+  <input type="radio" name="q-st-pl2" value="b"> Because $\mathbf{s}\times\mathbf{s}$ is equal to $\mathbf{s}$<br>
+  <input type="radio" name="q-st-pl2" value="c"> Because $\mathbf{m}_O$ is always zero<br>
+  <input type="radio" name="q-st-pl2" value="d"> Because Plücker coordinates do not use a direction vector<br>
+  <button type="button"
+    onclick="checkMCQ('q-st-pl2', 'a',
+      'Correct. Since s cross s is zero, adding any multiple of s to p does not change p cross s.',
+      'Incorrect. Correct answer: (a). Adding a point displacement along the line does not change the moment.')">
+    Check Answer
+  </button>
+  <p id="q-st-pl2-feedback"></p>
+</form>
+</div>
+
+<div class="mcq">
+<p><strong>Question: Which condition must a valid Plücker line satisfy?</strong></p>
+<form id="q-st-pl3">
+  <input type="radio" name="q-st-pl3" value="a"> $\mathbf{s}\cdot\mathbf{m}_O=0$<br>
+  <input type="radio" name="q-st-pl3" value="b"> $\mathbf{s}\cdot\mathbf{m}_O=1$<br>
+  <input type="radio" name="q-st-pl3" value="c"> $\mathbf{s}=\mathbf{m}_O$<br>
+  <input type="radio" name="q-st-pl3" value="d"> $\mathbf{p}\times\mathbf{s}=\mathbf{0}$ for every line<br>
+  <button type="button"
+    onclick="checkMCQ('q-st-pl3', 'a',
+      'Correct. Since m_O = p cross s, it is perpendicular to s, so s dot m_O is zero.',
+      'Incorrect. Correct answer: (a). A valid Plucker line satisfies s dot m_O equals zero.')">
+    Check Answer
+  </button>
+  <p id="q-st-pl3-feedback"></p>
+</form>
+</div>
+
+#### From Plücker coordinates to screws
+
+A screw keeps the same axis geometry as a Plücker line, but adds a **pitch** $h$:
+
+$$
+\mathcal{S}
+=
+\begin{bmatrix}
+\mathbf{s} \\ <br>
+\mathbf{m}_O + h\mathbf{s}
+\end{bmatrix}.
+$$
+
+The first part $\mathbf{s}$ gives the screw axis direction. The term $\mathbf{m}_O=\mathbf{p}\times\mathbf{s}$ locates the axis in space. The additional term $h\mathbf{s}$ adds translation along the same axis.
+
+Special cases are important:
+
+- $h=0$: a zero-pitch screw, corresponding to a pure rotation about the axis,
+- $h\neq 0$: a finite-pitch screw, corresponding to rotation about the axis combined with translation along it,
+- $\mathbf{s}=\mathbf{0}$: a pure translation direction, treated as a limiting screw.
+
+For a general screw
+
+$$
+\mathcal{S}
+=
+\begin{bmatrix}
+\mathbf{x} \\ <br>
+\mathbf{y}
+\end{bmatrix},
+\qquad \mathbf{x}\neq\mathbf{0},
+$$
+
+the pitch can be recovered from
+
+$$
+h=
+\frac{\mathbf{x}\cdot\mathbf{y}}{\mathbf{x}\cdot\mathbf{x}}.
+$$
+
+The Plücker moment of the underlying axis is then
+
+$$
+\mathbf{m}_O
+=
+\mathbf{y}-h\mathbf{x},
+$$
+
+which satisfies
+
+$$
+\mathbf{x}\cdot\mathbf{m}_O=0.
+$$
+
+#### Interactive session — Point motion generated by a screw
+
+This interactive sketch shows how a point moves under a screw motion. The screw is represented by a long directed line with unit direction $\mathbf e$ and pitch $h$. A black point is initially placed at
+
+$$
+\mathbf p_0 =
+\begin{bmatrix}
+1\\
+2\\
+1
+\end{bmatrix}.
+$$
+
+When you press **Move point**, the point is transformed by the current screw. The orange curve shows the trace of the point.
+
+- If $h=0$, the motion is a pure rotation, corresponding to a revolute joint.
+- If $0<h<\infty$, the motion is a screw motion: rotation about the axis plus translation along the axis.
+- If $h=\infty$, the motion is a pure translation, corresponding to a prismatic joint.
+
+<div id="screw-point-motion-demo"></div>
+<script src="/screw_point_motion_demo.js"></script>
+
+#### Teaser: twists and wrenches
+
+A twist is a **motion screw with magnitude**. Its magnitude is the rate of motion, such as an angular velocity or translational velocity. A wrench is a **force screw with magnitude**. Its magnitude is the force or torque intensity.
+
+Therefore, twists and wrenches are not new geometric objects. They are screws used for two different physical purposes:
+
+$$
+\text{twist} = \text{motion screw},
+\qquad
+\text{wrench} = \text{force screw}.
+$$
+
+This is why the same six-dimensional language can later describe rigid-body velocities, joint axes, forces, moments, Jacobians, and singularities.
+
 
 ### Rotation, Exponentials, and Product of Exponentials
 
@@ -463,10 +702,10 @@ $$
 \mathbf{r}(\phi)
 $$
 
-<<!-- figure>
+<figure>
   <img src="/assets/images/screw_theory/rotation_planar.png" alt="Planar rotation with radius vector and tangent velocity" style="display: block; max-width: 100%; height: auto; margin: 1rem auto;" />
   <figcaption><strong>Figure:</strong> The linear velocity at a point is normal to axis of rotation and its position vector, and is obtained by scaling by the angular speed.</figcaption>
-</figure> -->
+</figure> 
 
 So even in this simple planar case, the motion is already written as a linear differential equation of the form
 
@@ -533,7 +772,7 @@ $$
 \frac{d\mathbf{R}(\phi)}{d\phi} = \tilde{\mathbf{n}}\,\mathbf{R}(\phi).
 $$
 
-This is the rotational differential equation with $\phi$ as the parameter. It says that the rate of change of orientation is produced by the infinitesimal rotation operator $\tilde{\mathbf{n}}$ acting on the current orientation. (Later, if $\phi=\phi(t)$, then $\boldsymbol{\omega}=\dot{\phi}\,\mathbf{n}$ and the usual time-based form is recovered.)
+This is the rotational differential equation with $\phi$ as the parameter. It says that the rate of change of orientation is produced by the infinitesimal rotation operator $\tilde{\mathbf{n}}$ acting on the current orientation. (Later, if $\phi=\phi(t)$, then $\mathbf{\omega}=\dot{\phi}\,\mathbf{n}$ and the usual time-based form is recovered.)
 
 If the axis is constant, this linear differential equation has the solution
 
@@ -655,12 +894,11 @@ $$
 
 So the exponential is not an abstract symbol only. It is the compact closed-form expression for the finite rotation generated by a rotation of angle $\phi$ about axis $\mathbf{n}$.
 
-<figure>
-  <div style="border: 1px solid #999; padding: 1.4rem; margin: 1rem 0; text-align: center; background: #fafafa; color: #555;">
-    Placeholder image: angular velocity vector generating an infinitesimal rotation and the corresponding finite rotation.
-  </div>
-  <figcaption><strong>Figure:</strong> Angular velocity acts as the generator of rotation. Integrating the rotation differential equation produces a finite rotation matrix through the exponential map.</figcaption>
-</figure>
+<div id="rotation-exp-demo"></div>
+<script src="/cuspidal_robots.js"></script>
+
+<div id="serial-3r-demo"></div>
+<script src="/serial_3r_robot.js"></script>
 
 ##### Quick quiz — matrix exponential
 <div class="mcq">
@@ -697,28 +935,28 @@ So the exponential is not an abstract symbol only. It is the compact closed-form
 </form>
 </div>
 
-#### From rotations to rigid motions
+### From rotations to rigid motions
 
 Rigid-body motion in space involves both orientation and position. We therefore move from the rotation group $SO(3)$ to the rigid-motion group $SE(3)$.
 
 A rigid motion is written as a homogeneous transformation
 
 $$
-{}^{S}\mathbf{H}_{B}(\phi)=
+^S\mathbf{H}_B(\phi)=
 \begin{bmatrix}
-{}^{S}\mathbf{R}_{B}(\phi) & {}^{S}\mathbf{p}_{B}(\phi) \\ <br>
+^S\mathbf{R}_B(\phi) & ^S\mathbf{p}_B(\phi) \\ <br>
 \mathbf{0}^T & 1
-\end{bmatrix} \in SE(3)
+\end{bmatrix}\in SE(3)
 $$
 
 Here $\phi$ plays the role of a scalar motion parameter (for a revolute motion it is an angle; for a prismatic motion it is a distance).
 
-Its motion per unit parameter $\phi$ is described by a twist
+Its motion per unit parameter $\phi$ from B to S is described by a twist
 
 $$
 \mathcal{T}=
 \begin{bmatrix}
-\boldsymbol{\omega} \\ <br>
+\mathbf{\omega} \\ <br>
 \mathbf{v}
 \end{bmatrix},
 $$
@@ -728,7 +966,7 @@ or equivalently by the matrix form
 $$
 \hat{\mathcal{T}} =
 \begin{bmatrix}
-\tilde{\boldsymbol{\omega}} & \mathbf{v} \\ <br>
+\tilde{\mathbf{\omega}} & \mathbf{v} \\ <br>
 \mathbf{0}^T & 0
 \end{bmatrix}
 $$
@@ -736,63 +974,86 @@ $$
 The rigid motion then satisfies the analogous differential equation
 
 $$
-\frac{d\,{}^{S}\mathbf{H}_{B}(\phi)}{d\phi} = \hat{\mathcal{T}}\,{}^{S}\mathbf{H}_{B}(\phi).
+\frac{d\,^S\mathbf H_B(\phi)}{d\phi} = \hat{\mathcal{T}}\,^S\mathbf H_B(\phi).
 $$
 
 #### Spatial and body-fixed twists (two equivalent descriptions)
 
-For kinematic analysis it is crucial to distinguish **how** a twist is represented.
+For kinematic analysis it is crucial to distinguish **which motion is described** and **where its coordinates are represented**.
 
-Given a time-parameterized motion ${}^{S}\mathbf{H}_{B}(t)$, we define:
+We use the notation $^A\mathcal T_{B/C}$ to mean the twist of frame $\{B\}$ relative to frame $\{C\}$, expressed in frame $\{A\}$. Thus, $B/C$ specifies the relative motion, while the left superscript specifies the coordinate frame.
 
-- the **spatial twist** (resolved in $\{S\}$):
+Given a time-parameterized motion $^S\mathbf H_B(t)$, the corresponding relative motion is the motion of $\{B\}$ with respect to $\{S\}$, denoted by $\mathcal T_{B/S}$.
+
+- the **spatial twist** (expressed in $\{S\}$):
 
 $$
-^{B}\hat{\mathcal{T}}^{S}
+^S\hat{\mathcal T}_{B/S}
 \;:=\;
-\dot{\,{}^{S}\mathbf{H}_{B}}\,
-({}^{S}\mathbf{H}_{B})^{-1},
+\dot{^S\mathbf H_B}\,
+(^S\mathbf H_B)^{-1},
 $$
 
-- the **body-fixed twist** (resolved in $\{B\}$):
+or equivalently,
 
 $$
-\hat{\mathcal{T}}
-\;:=\;
-({}^{S}\mathbf{H}_{B})^{-1}\,
-\dot{\,{}^{S}\mathbf{H}_{B}}.
+\dot{^S\mathbf H_B} = ^S\hat{\mathcal T}_{B/S} ^S\mathbf H_B.
 $$
 
-They describe the **same physical motion** but in different coordinates. The two representations are related by the Adjoint mapping:
+- the **body-fixed twist** (expressed in $\{B\}$):
 
 $$
-^{S}\mathcal{T}=\mathrm{Ad}_{({}^{S}\mathbf{H}_{B})}\,^{B}\mathcal{T},
-\qquad
-^{B}\mathcal{T}^{B}=\mathrm{Ad}_{({}^{S}\mathbf{H}_{B})^{-1}}\,^{S}\mathcal{T}.
+^B\hat{\mathcal T}_{B/S}
+\;=\;
+(^S\mathbf H_B)^{-1}\,
+\dot{^S\mathbf H_B},
 $$
 
-If the twist is constant, the solution is
+or equivalently,
 
 $$
-{}^{S}\mathbf{H}_{B}(\phi)=\exp(\hat{\mathcal{T}}\,\phi)\,{}^{S}\mathbf{H}_{B}(0).
+\dot{^S\mathbf H_B}
+=
+^S\mathbf H_B
+^B\hat{\mathcal T}_{B/S}.
+$$
+
+They describe the **same physical motion** of $\{B\}$ relative to $\{S\}$, but in different coordinates. The two representations are related by the Adjoint mapping:
+
+$$
+^S\mathcal T_{B/S} = \mathrm{Ad}_{(^S\mathbf H_B)} ^B\mathcal T_B
+$$
+
+$$
+^B\mathcal T_{B/S}
+=
+\mathrm{Ad}_{(^S\mathbf H_B)^{-1}}
+^S\mathcal T_B.
+$$
+
+If the spatial twist is constant, the solution is
+
+$$
+^S\mathbf H_B(\phi)
+=
+\exp(^S\hat{\mathcal T}_{B/S}\phi)
+^S\mathbf H_B(0).
 $$
 
 This is the finite version of a twist. In other words, a constant twist generates a finite **screw motion**. Rotation appears as a special case; pure translation appears as another limiting case; and the general case combines both in one unified object.
 
-<!-- <figure>
+<figure>
   <p align="center">
-    <img src="{{ '/assets/images/screw_theory/chasles_screw_motion.png' | relative_url }}"
-         alt="Screw axis in space with simultaneous rotation and translation along the axis"
-         width="350">
+    <img src="/assets/images/screw_theory/chasles_screw_motion.png" alt="Screw axis in space with simultaneous rotation and translation along the axis" style="display: block; max-width: 100%; height: auto; margin: 1rem auto;" />
   </p>
   <figcaption style="font-size:0.9em; color:#555; text-align:center; margin-top:6px;">
     <small>Figure: A constant twist generates a screw motion: the body rotates about an axis while translating along the same axis according to the pitch.</small>
   </figcaption>
-</figure> -->
+</figure>
 
 ##### Quick quiz — twists in $SE(3)$
 <div class="mcq">
-<p><strong>Question: What is stored in the twist $\mathcal{T}=\begin{bmatrix}\boldsymbol{\omega}\\ \mathbf{v}\end{bmatrix}$?</strong></p>
+<p><strong>Question: What is stored in the twist $\mathcal{T}=\begin{bmatrix}\mathbf{\omega}\\ \mathbf{v}\end{bmatrix}$?</strong></p>
 <form id="q-st-t1">
   <input type="radio" name="q-st-t1" value="a"> Angular and linear velocity components<br>
   <input type="radio" name="q-st-t1" value="b"> Mass and inertia only<br>
@@ -831,51 +1092,51 @@ Once a single joint motion is written as an exponential, a serial chain can be b
 
 #### Constructing joint screws from axis geometry (revolute / prismatic)
 
-To *use* the POE formula on an actual serial robot, we need the joint screw coordinates $\mathcal{S}_i$ as a 6-vector
-$
+To *use* the POE formula on an actual serial robot, we need the joint screw coordinates $\mathcal{Y}_i$ as a 6-vector
+$$
 \mathcal{S}_i=
-\begin{bmatrix}\boldsymbol{\omega}_i\\ \mathbf{v}_i\end{bmatrix}.
-$
+\begin{bmatrix}\mathbf{\omega}_i\\ \mathbf{v}_i\end{bmatrix}.
+$$
 
 In a chosen reference configuration (typically the home pose), and expressed in a chosen frame (often $\{S\}$):
 
-- **Revolute joint** about an axis with unit direction $\mathbf{s}$ passing through a point with position vector $\mathbf{q}$:
+- **Revolute joint** about an axis with unit direction $\mathbf{y}$ passing through a point with position vector $\mathbf{q}$:
 
   $$
-  \boldsymbol{\omega}=\mathbf{s},
+  \mathbf{\omega}=\mathbf{y},
   \qquad
-  \mathbf{v}=-\,\boldsymbol{\omega}\times \mathbf{q}.
+  \mathbf{v}=-\,\mathbf{\omega}\times \mathbf{q}.
   $$
 
-- **Prismatic joint** translating along unit direction $\mathbf{s}$:
+- **Prismatic joint** translating along unit direction $\mathbf{y}$:
   
   $$
-  \boldsymbol{\omega}=\mathbf{0},
+  \mathbf{\omega}=\mathbf{0},
   \qquad
-  \mathbf{v}=\mathbf{s}.
+  \mathbf{v}=\mathbf{y}.
   $$
 
-These formulas are the practical bridge between “axis in space” drawings and the algebraic $\exp(\hat{\mathcal{S}}_i q_i)$ factors used in POE.
+These formulas are the practical bridge between “axis in space” drawings and the algebraic $\exp(\hat{\mathcal{Y}}_i q_i)$ factors used in POE.
 
-Suppose joint $i$ is associated with a screw axis $\mathcal{S}_i$, expressed in a chosen reference configuration. If its joint variable is $q_i$, then the motion contributed by that joint is written as
+Suppose joint $i$ is associated with a screw axis $\mathcal{Y}_i$, expressed in a chosen reference configuration. If its joint variable is $q_i$, then the motion contributed by that joint is written as
 
 $$
-\exp(\hat{\mathcal{S}}_i\,q_i).
+\exp(\hat{\mathcal{Y}}_i\,q_i).
 $$
 
 For a serial manipulator with $n$ joints, the end-effector configuration can therefore be written as
 
 $$
-{}^{S}\mathbf{H}_{B}(q)
+^S\mathbf{H}_{B}(q)
 =
-\exp(\hat{\mathcal{S}}_1 q_1)
-\exp(\hat{\mathcal{S}}_2 q_2)
+\exp(\hat{\mathcal{Y}}_1 q_1)
+\exp(\hat{\mathcal{Y}}_2 q_2)
 \cdots
-\exp(\hat{\mathcal{S}}_n q_n)\,
+\exp(\hat{\mathcal{Y}}_n q_n)\,
 \mathbf{A},
 $$
 
-where $\mathbf{A}:={}^{S}\mathbf{H}_{B}(0)$ is the end-effector pose in the reference configuration.
+where $\mathbf{A}:=^S\mathbf{H}_{B}(0)$ is the end-effector pose in the reference configuration.
 
 This expression is called the **Product of Exponentials (POE)** formula. Each factor represents one joint screw acting on the body, and the complete forward kinematics is obtained by multiplying these finite joint motions in sequence.
 
@@ -887,9 +1148,9 @@ The conceptual advantage is important:
 
 ##### Quick quiz — POE and joint screws
 <div class="mcq">
-<p><strong>Question ST-POE1: For a revolute joint with unit axis $\mathbf{s}$ through point $\mathbf{q}$, what is the lower block $\mathbf{v}$ of its screw?</strong></p>
+<p><strong>Question: For a revolute joint with unit axis $\mathbf{s}$ through point $\mathbf{q}$, what is the lower block $\mathbf{v}$ of its screw?</strong></p>
 <form id="q-st-poe1">
-  <input type="radio" name="q-st-poe1" value="a"> $-\boldsymbol{\omega}\times\mathbf{q}$<br>
+  <input type="radio" name="q-st-poe1" value="a"> $-\mathbf{\omega}\times\mathbf{q}$<br>
   <input type="radio" name="q-st-poe1" value="b"> $\mathbf{0}$ for every revolute joint<br>
   <input type="radio" name="q-st-poe1" value="c"> $\mathbf{s}+\mathbf{q}$<br>
   <input type="radio" name="q-st-poe1" value="d"> $\det(\mathbf{R})\mathbf{s}$<br>
@@ -904,7 +1165,7 @@ The conceptual advantage is important:
 </div>
 
 <div class="mcq">
-<p><strong>Question ST-POE2: What is $\mathbf{A}$ in ${}^{S}\mathbf{H}_{B}(q)=\exp(\hat{\mathcal{S}}_1q_1)\cdots\exp(\hat{\mathcal{S}}_nq_n)\mathbf{A}$?</strong></p>
+<p><strong>Question: What is $\mathbf{A}$ in $^S\mathbf{H}_{B}(q)=\exp(\hat{\mathcal{Y}}_1q_1)\cdots\exp(\hat{\mathcal{Y}}_nq_n)\mathbf{A}$?</strong></p>
 <form id="q-st-poe2">
   <input type="radio" name="q-st-poe2" value="a"> The end-effector pose in the reference configuration<br>
   <input type="radio" name="q-st-poe2" value="b"> The first joint velocity<br>
@@ -932,19 +1193,19 @@ what is the end-effector twist?
 Consider a single joint motion
 
 $$
-{}^{S}\mathbf{H}_{B}(q)=\exp(\hat{\mathcal{S}}\,q)\,\mathbf{A},
+^S\mathbf{H}_{B}(q)=\exp(\hat{\mathcal{S}}\,q)\,\mathbf{A},
 $$
 
 where $\mathcal{S}$ is the joint screw (twist per unit $q$). If $q=q(t)$ then by differentiating
 
 $$
- \dot{\,{}^{S}\mathbf{H}_{B}}=\hat{\mathcal{S}}\,\dot{q}\,{}^{S}\mathbf{H}_{B}.
+ \dot{\,^S\mathbf{H}_{B}}=\hat{\mathcal{S}}\,\dot{q}\,^S\mathbf{H}_{B}.
 $$
 
 By definition, the **spatial** end-effector twist $\mathcal{T}_{EE}^S$ satisfies
 
 $$
-\dot{\,{}^{S}\mathbf{H}_{B}}=\hat{\mathcal{T}}_{EE}^S\,{}^{S}\mathbf{H}_{B},
+\dot{\,^S\mathbf{H}_{B}}=\hat{\mathcal{T}}_{EE}^S\,^S\mathbf{H}_{B},
 $$
 
 so for one joint,
@@ -959,10 +1220,10 @@ In other words, the "Jacobian" for a 1-DOF joint is just the screw itself.
 For convenience, define the cumulative transformation up to joint $i$ (the prefix frame index is explicit):
 
 $$
-{}^{S}\mathbf{H}_{i}(q)
+^S\mathbf{H}_{i}(q)
 :=
 \exp(\hat{\mathcal{S}}_1 q_1)\cdots \exp(\hat{\mathcal{S}}_i q_i),
-\qquad {}^{S}\mathbf{H}_{0}(q):=\mathbf{I}.
+\qquad ^S\mathbf{H}_{0}(q):=\mathbf{I}.
 $$
 
 Differentiating the product gives a sum of $n$ terms. Each term has the factor $\hat{\mathcal{S}}_i\,\dot{q}_i$ "inserted" at joint $i$ and then carried to the spatial frame by the previous joints. The result can be written compactly using the adjoint mapping:
@@ -972,17 +1233,17 @@ $$
 =
 \sum_{i=1}^n \mathcal{S}_i^S(q)\,\dot{q}_i,
 \qquad
-\mathcal{S}_i^S(q)=\mathrm{Ad}_{({}^{S}\mathbf{H}_{i-1}(q))}\,\mathcal{S}_i.
+\mathcal{S}_i^S(q)=\mathrm{Ad}_{(^S\mathbf{H}_{i-1}(q))}\,\mathcal{S}_i.
 $$
 
-For a homogeneous transform ${}^{S}\mathbf{H}_{B}=\begin{bmatrix}{}^{S}\mathbf{R}_{B} & {}^{S}\mathbf{p}_{B} \\ \mathbf{0}^T & 1\end{bmatrix}$, the adjoint is the $6\times 6$ matrix
+For a homogeneous transform $^S\mathbf{H}_{B}=\begin{bmatrix}^S\mathbf{R}_{B} & ^S\mathbf{p}_{B} \\ \mathbf{0}^T & 1\end{bmatrix}$, the adjoint is the $6\times 6$ matrix
 
 $$
-\mathrm{Ad}_{({}^{S}\mathbf{H}_{B})}
+\mathrm{Ad}_{(^S\mathbf{H}_{B})}
 =
 \begin{bmatrix}
-{}^{S}\mathbf{R}_{B} & \mathbf{0} \\
-\widetilde{\left({}^{S}\mathbf{p}_{B}\right)}\,{}^{S}\mathbf{R}_{B} & {}^{S}\mathbf{R}_{B}
+^S\mathbf{R}_{B} & \mathbf{0} \\
+\widetilde{\left(^S\mathbf{p}_{B}\right)}\,^S\mathbf{R}_{B} & ^S\mathbf{R}_{B}
 \end{bmatrix}.
 $$
 
@@ -1021,7 +1282,7 @@ $$
 </div>
 
 <div class="mcq">
-<p><strong>Question ST-J2: Why does the column $\mathcal{S}_i^S(q)$ use $\mathrm{Ad}_{({}^{S}\mathbf{H}_{i-1}(q))}$?</strong></p>
+<p><strong>Question ST-J2: Why does the column $\mathcal{S}_i^S(q)$ use $\mathrm{Ad}_{(^S\mathbf{H}_{i-1}(q))}$?</strong></p>
 <form id="q-st-j2">
   <input type="radio" name="q-st-j2" value="a"> To carry joint $i$'s screw through the preceding joint motions into the spatial frame<br>
   <input type="radio" name="q-st-j2" value="b"> To make the Jacobian independent of configuration<br>
@@ -1048,9 +1309,9 @@ $$
 The spatial and body Jacobians are equivalent descriptions and are related by the same Adjoint transformation that relates twist coordinates:
 
 $$
-\mathbf{J}^B(q)=\mathrm{Ad}_{({}^{S}\mathbf{H}_{B}(q))^{-1}}\,\mathbf{J}^S(q),
+\mathbf{J}^B(q)=\mathrm{Ad}_{(^S\mathbf{H}_{B}(q))^{-1}}\,\mathbf{J}^S(q),
 \qquad
-\mathbf{J}^S(q)=\mathrm{Ad}_{({}^{S}\mathbf{H}_{B}(q))}\,\mathbf{J}^B(q).
+\mathbf{J}^S(q)=\mathrm{Ad}_{(^S\mathbf{H}_{B}(q))}\,\mathbf{J}^B(q).
 $$
 
 This distinction (spatial vs body-fixed) is that: both are valid; you pick the one that makes the algebra and interpretation easiest.
@@ -1060,13 +1321,13 @@ This distinction (spatial vs body-fixed) is that: both are valid; you pick the o
 For iterative geometric IK, a standard construction is the **error transform**
 
 $$
-{}^{S}\mathbf{H}_{err} := ({}^{S}\mathbf{H}_{cur})^{-1}\,{}^{S}\mathbf{H}_{des}.
+^S\mathbf{H}_{err} := (^S\mathbf{H}_{cur})^{-1}\,^S\mathbf{H}_{des}.
 $$
 
 Its matrix logarithm lies in $\mathfrak{se}(3)$:
 
 $$
-\hat{\mathcal{T}}_{err} := \log\!\left({}^{S}\mathbf{H}_{err}\right),
+\hat{\mathcal{T}}_{err} := \log\!\left(^S\mathbf{H}_{err}\right),
 $$
 
 and the corresponding 6-vector (twist coordinates of the error) is what gets related to joint updates through a Jacobian (spatial or body, depending on convention).
@@ -1155,7 +1416,7 @@ In plain words: joint 2 produces the *same* instantaneous end-effector twist dir
 <p><strong>Question ST-S1: What is the algebraic condition for a serial manipulator singularity in this section?</strong></p>
 <form id="q-st-s1">
   <input type="radio" name="q-st-s1" value="a"> $\mathrm{rank}(\mathbf{J}^S(q)) < \min(6,n)$<br>
-  <input type="radio" name="q-st-s1" value="b"> $\det({}^{S}\mathbf{H}_{B})=0$ for every pose<br>
+  <input type="radio" name="q-st-s1" value="b"> $\det(^S\mathbf{H}_{B})=0$ for every pose<br>
   <input type="radio" name="q-st-s1" value="c"> Every joint variable equals zero<br>
   <input type="radio" name="q-st-s1" value="d"> The robot has at least one prismatic joint<br>
   <button type="button"
@@ -1193,7 +1454,7 @@ This viewpoint gives screw theory a direct kinematic meaning. A screw is no long
 
 In this section we established the core bridge between screw theory and robot kinematics:
 
-- A rigid-body instantaneous motion is a **twist** $\mathcal{T}=\begin{bmatrix}\boldsymbol{\omega}\\ \mathbf{v}\end{bmatrix}$, and a force system is a **wrench** $\mathcal{W}=\begin{bmatrix}\mathbf{f}\\ \mathbf{m}\end{bmatrix}$.
+- A rigid-body instantaneous motion is a **twist** $\mathcal{T}=\begin{bmatrix}\mathbf{\omega}\\ \mathbf{v}\end{bmatrix}$, and a force system is a **wrench** $\mathcal{W}=\begin{bmatrix}\mathbf{f}\\ \mathbf{m}\end{bmatrix}$.
 - Finite motions in $SO(3)$ and $SE(3)$ are obtained from instantaneous generators via the **matrix exponential**.
 - A serial robot's forward kinematics can be written with the **Product of Exponentials (POE)** formula using joint screws $\mathcal{S}_i$.
 - The end-effector twist is related to joint rates by $\mathcal{T}_{EE}^S=\mathbf{J}^S(q)\dot{\mathbf{q}}$, and the Jacobian is literally the joint screws stacked as columns.
@@ -1201,147 +1462,6 @@ In this section we established the core bridge between screw theory and robot ki
 
 In later sections we will emphasize that wrenches are also screws, and that twists and wrenches are connected through reciprocity. That connection will let us analyze constraints and singularities of **parallel robots** efficiently using the same screw-theoretic language.
 
-### Temporary
-
-#### How to use
-
-- Drag the circular handle at the end of the line to rotate the screw direction.
-- Drag the line itself to translate it along its normal direction.
-- Use the sliders if you want finer control over the rotation and translation.
-
-This interactive sketch works in the $x$-$y$ plane. The line represents the screw axis, $\mathbf{s}$ is the unit direction of the line, and $\overline{OA}$ is the perpendicular from the origin $O$ to the line. The moment is updated from the current geometry using the moment-generation rule
-$$
-\mathbf{m}_O = \mathbf{r}_{OA} \times \mathbf{s}.
-$$
-As you move the line, the current screw updates live.
-
-##### Quick quiz — interactive screw sketch
-<div class="mcq">
-<p><strong>Question: In the interactive sketch, what does dragging the line itself primarily change?</strong></p>
-<form id="q-st-d1">
-  <input type="radio" name="q-st-d1" value="a"> The signed offset of the line from the origin<br>
-  <input type="radio" name="q-st-d1" value="b"> The number of joints in the robot<br>
-  <input type="radio" name="q-st-d1" value="c"> The determinant of the rotation matrix<br>
-  <input type="radio" name="q-st-d1" value="d"> The definition of the cross product<br>
-  <button type="button"
-    onclick="checkMCQ('q-st-d1', 'a',
-      'Correct. Translating the line changes its offset and therefore the moment part.',
-      'Incorrect. Correct answer: (a). Dragging the line translates it along its normal direction.')">
-    Check Answer
-  </button>
-  <p id="q-st-d1-feedback"></p>
-</form>
-</div>
-
-<div class="mcq">
-<p><strong>Question: Why does the readout update $\mathbf{m}_O$ when the line moves?</strong></p>
-<form id="q-st-d2">
-  <input type="radio" name="q-st-d2" value="a"> Because $\mathbf{m}_O=\mathbf{r}_{OA}\times\mathbf{s}$ depends on the line direction and its offset from the origin.<br>
-  <input type="radio" name="q-st-d2" value="b"> Because $\mathbf{m}_O$ is always equal to $\mathbf{s}$.<br>
-  <input type="radio" name="q-st-d2" value="c"> Because the pitch is forced to infinity.<br>
-  <input type="radio" name="q-st-d2" value="d"> Because the Jacobian rank is displayed as a point coordinate.<br>
-  <button type="button"
-    onclick="checkMCQ('q-st-d2', 'a',
-      'Correct. The moment part is generated from the perpendicular position vector and the line direction.',
-      'Incorrect. Correct answer: (a). Moving the line changes the geometry used in r cross s.')">
-    Check Answer
-  </button>
-  <p id="q-st-d2-feedback"></p>
-</form>
-</div>
-
-<style>
-.temporary-screw-demo {
-  border: 1px solid #111;
-  background: #fff;
-  padding: 1rem;
-  margin: 1rem 0 1.5rem 0;
-}
-
-.temporary-screw-demo .demo-grid {
-  display: grid;
-  grid-template-columns: minmax(280px, 1.6fr) minmax(240px, 1fr);
-  gap: 1rem;
-  align-items: start;
-}
-
-.temporary-screw-demo svg {
-  width: 100%;
-  height: auto;
-  display: block;
-  border: 1px solid #111;
-  background: #fff;
-  touch-action: none;
-}
-
-.temporary-screw-demo .demo-panel {
-  border: 1px solid #111;
-  padding: 0.9rem;
-  background: #fff;
-}
-
-.temporary-screw-demo .control-row {
-  margin-bottom: 0.9rem;
-}
-
-.temporary-screw-demo label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.temporary-screw-demo input[type="range"] {
-  width: 100%;
-  accent-color: #111;
-}
-
-.temporary-screw-demo .readout {
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.95rem;
-  line-height: 1.5;
-  white-space: pre-line;
-}
-
-.temporary-screw-demo .hint {
-  font-size: 0.95rem;
-  margin: 0;
-}
-
-@media (max-width: 840px) {
-  .temporary-screw-demo .demo-grid {
-    grid-template-columns: 1fr;
-  }
-}
-</style>
-
-<div class="temporary-screw-demo">
-  <div class="demo-grid">
-    <div>
-      <svg id="temporary-screw-svg" viewBox="0 0 520 520" aria-label="Interactive screw sketch in the x-y plane">
-        <rect x="0" y="0" width="520" height="520" fill="#fff"></rect>
-        <g id="temporary-screw-scene"></g>
-      </svg>
-    </div>
-
-    <div class="demo-panel">
-      <div class="control-row">
-        <label for="temporary-screw-angle">Rotation of the line</label>
-        <input id="temporary-screw-angle" type="range" min="-180" max="180" value="30" step="1">
-      </div>
-
-      <div class="control-row">
-        <label for="temporary-screw-offset">Signed distance from the origin</label>
-        <input id="temporary-screw-offset" type="range" min="-140" max="140" value="70" step="1">
-      </div>
-
-      <p class="hint">
-        The line is parameterized by a direction vector $\mathbf{s}$ and a perpendicular offset from the origin. The point $A$ is the foot of the perpendicular from $O$ onto the line.
-      </p>
-
-      <div id="temporary-screw-readout" class="readout"></div>
-    </div>
-  </div>
-</div>
 
 ## Credits
 

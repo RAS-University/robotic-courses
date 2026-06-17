@@ -68,6 +68,8 @@ Imagine sending a rover to planet Mars, with the purpose of collecting rock samp
 
 In reinforcement learning however, the agent receives indirect supervision. It learns through receiving rewards (success) and penalties (failure) and must figure out the optimal path entirely on its own, just like a human learns how to walk, not falling over in `unseen` environments and places. Reinforcement Learning is the fundamental framework for teaching machines (robots) how to make a sequence of decisions & actions in complex, uncertain & unpredicted environments.
 
+In this chapter, we will build your expertise in robotic decision-making from the ground-up. We will begin with the mathematical foundations of decision-making in simplified, discrete environments. Once you understand how a robot evaluates its choices mathematically, we will transition to continuous spaces, the real-world physics where actual robots operate. Finally, we will explore advanced paradigms where the robot learns not from blind trial and error, but by observing human experts. By the end of this chapter, you will be well-equipped to engage in complex programming assignments and build autonomous agents. 
+
 ## Course Content
 
 ### RL Vocabulary

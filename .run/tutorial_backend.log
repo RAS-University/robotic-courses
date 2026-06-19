@@ -1,0 +1,462 @@
+INFO:     Started server process [1277966]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:56730 - "OPTIONS /api/run_v1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "POST /api/run_v1 HTTP/1.1" 200 OK
+/home/developer/miniconda3/envs/tutorial_ds_mapping/lib/python3.10/site-packages/torch/autograd/graph.py:865: UserWarning: CUDA initialization: Unexpected error from cudaGetDeviceCount(). Did you run some cuda functions before calling NumCudaDevices() that might have already set an error? Error 804: forward compatibility was attempted on non supported HW (Triggered internally at /home/conda/feedstock_root/build_artifacts/libtorch_1769685322817/work/c10/cuda/CUDAFunctions.cpp:119.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Using the rffn for coupling layer
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Training model ...
+    Epoch [5/100]: current loss is 0.11163919419050217, time elapsed 0.8495008945465088 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=0 HTTP/1.1" 200 OK
+    Epoch [10/100]: current loss is 0.06317150592803955, time elapsed 1.66455078125 second
+    Epoch [15/100]: current loss is 0.0435355007648468, time elapsed 2.591078281402588 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=30 HTTP/1.1" 200 OK
+    Epoch [20/100]: current loss is 0.027854396030306816, time elapsed 3.463266134262085 second
+    Epoch [25/100]: current loss is 0.014911259524524212, time elapsed 4.262129545211792 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=32 HTTP/1.1" 200 OK
+    Epoch [30/100]: current loss is 0.009241394698619843, time elapsed 5.058799505233765 second
+    Epoch [35/100]: current loss is 0.008063017390668392, time elapsed 5.913943529129028 second
+    Epoch [40/100]: current loss is 0.0065845465287566185, time elapsed 6.728847980499268 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=34 HTTP/1.1" 200 OK
+    Epoch [45/100]: current loss is 0.005265642423182726, time elapsed 7.535277366638184 second
+    Epoch [50/100]: current loss is 0.0040466017089784145, time elapsed 8.36280632019043 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=37 HTTP/1.1" 200 OK
+    Epoch [55/100]: current loss is 0.003358846763148904, time elapsed 9.311685562133789 second
+    Epoch [60/100]: current loss is 0.0032096265349537134, time elapsed 10.116676330566406 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=39 HTTP/1.1" 200 OK
+    Epoch [65/100]: current loss is 0.0025834827683866024, time elapsed 10.901801586151123 second
+    Epoch [70/100]: current loss is 0.0024710693396627903, time elapsed 11.722902774810791 second
+    Epoch [75/100]: current loss is 0.002417481504380703, time elapsed 12.490198612213135 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=41 HTTP/1.1" 200 OK
+    Epoch [80/100]: current loss is 0.002309939358383417, time elapsed 13.469538688659668 second
+    Epoch [85/100]: current loss is 0.0021712430752813816, time elapsed 14.305417537689209 second
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=44 HTTP/1.1" 200 OK
+    Epoch [90/100]: current loss is 0.0021758531220257282, time elapsed 15.13125491142273 second
+    Epoch [95/100]: current loss is 0.0029433323070406914, time elapsed 16.006659269332886 second
+    Epoch [100/100]: current loss is 0.0021792363841086626, time elapsed 16.755857706069946 second
+Training loss: 0.0022
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=46 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+/home/developer/miniconda3/envs/tutorial_ds_mapping/lib/python3.10/site-packages/torch/functional.py:505: UserWarning: torch.meshgrid: in an upcoming release, it will be required to pass the indexing argument. (Triggered internally at /home/conda/feedstock_root/build_artifacts/libtorch_1769685322817/work/aten/src/ATen/native/TensorShape.cpp:4381.)
+  return _VF.meshgrid(tensors, **kwargs)  # type: ignore[attr-defined]
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=50 HTTP/1.1" 200 OK
+=== Rollout metrics (learned vs expert) ===
+  Trajectories averaged: 7
+  Position RMSE (mean ± std): 0.078095 ± 0.0237796
+  Position MAE (mean):      0.0673694
+  Max pointwise error (mean over trajs): 0.131953
+  Endpoint L2 error (mean ± std): 0.0221422 ± 0.0261884
+  Path length ratio L_learned/L_expert (mean ± std): 0.995048 ± 0.0254546
+  Wall time (full pipeline, seconds): 36.1692
+=== End metrics ===
+
+INFO:     127.0.0.1:56736 - "GET /api/status/e753806123ef HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56736 - "GET /api/logs/e753806123ef?from=52 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "POST /api/run_v1 HTTP/1.1" 200 OK
+Using the rffn for coupling layer
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Training model ...
+    Epoch [5/100]: current loss is 0.12455040216445923, time elapsed 0.6897423267364502 second
+    Epoch [10/100]: current loss is 0.06943543255329132, time elapsed 1.4550983905792236 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=0 HTTP/1.1" 200 OK
+    Epoch [15/100]: current loss is 0.044434383511543274, time elapsed 2.2137529850006104 second
+    Epoch [20/100]: current loss is 0.02498200163245201, time elapsed 2.966886520385742 second
+    Epoch [25/100]: current loss is 0.011999203823506832, time elapsed 3.748908042907715 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=29 HTTP/1.1" 200 OK
+    Epoch [30/100]: current loss is 0.006388045381754637, time elapsed 4.518378257751465 second
+    Epoch [35/100]: current loss is 0.004724402446299791, time elapsed 5.4084632396698 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=32 HTTP/1.1" 200 OK
+    Epoch [40/100]: current loss is 0.0038458744529634714, time elapsed 6.240320682525635 second
+    Epoch [45/100]: current loss is 0.003187536494806409, time elapsed 7.023537874221802 second
+    Epoch [50/100]: current loss is 0.002971785608679056, time elapsed 7.823426723480225 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=34 HTTP/1.1" 200 OK
+    Epoch [55/100]: current loss is 0.0027331558521836996, time elapsed 8.662048578262329 second
+    Epoch [60/100]: current loss is 0.0023440758232027292, time elapsed 9.641722917556763 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=37 HTTP/1.1" 200 OK
+    Epoch [65/100]: current loss is 0.0019575704354792833, time elapsed 10.474593162536621 second
+    Epoch [70/100]: current loss is 0.001804303377866745, time elapsed 11.283076524734497 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=39 HTTP/1.1" 200 OK
+    Epoch [75/100]: current loss is 0.0016576808411628008, time elapsed 12.054338932037354 second
+    Epoch [80/100]: current loss is 0.001484260312281549, time elapsed 13.055459976196289 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=41 HTTP/1.1" 200 OK
+    Epoch [85/100]: current loss is 0.0013771426165476441, time elapsed 13.909347772598267 second
+    Epoch [90/100]: current loss is 0.00146034499630332, time elapsed 14.712190866470337 second
+    Epoch [95/100]: current loss is 0.001286218175664544, time elapsed 15.619205951690674 second
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=43 HTTP/1.1" 200 OK
+    Epoch [100/100]: current loss is 0.0012631358113139868, time elapsed 16.455540895462036 second
+Training loss: 0.0012
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=46 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+=== Rollout metrics (learned vs expert) ===
+  Trajectories averaged: 7
+  Position RMSE (mean ± std): 0.0594592 ± 0.0269388
+  Position MAE (mean):      0.0522437
+  Max pointwise error (mean over trajs): 0.101379
+  Endpoint L2 error (mean ± std): 0.0394184 ± 0.0401289
+  Path length ratio L_learned/L_expert (mean ± std): 0.92672 ± 0.0700904
+  Wall time (full pipeline, seconds): 36.8318
+=== End metrics ===
+
+INFO:     127.0.0.1:52932 - "GET /api/status/7da0e0a2759c HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52932 - "GET /api/logs/7da0e0a2759c?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48070 - "OPTIONS /api/run_v1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "POST /api/run_v1 HTTP/1.1" 200 OK
+Using the rffn for coupling layer
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Training model ...
+    Epoch [5/100]: current loss is 0.09637033939361572, time elapsed 0.7364771366119385 second
+    Epoch [10/100]: current loss is 0.05713542550802231, time elapsed 1.4044606685638428 second
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=0 HTTP/1.1" 200 OK
+    Epoch [15/100]: current loss is 0.03943760693073273, time elapsed 2.1178274154663086 second
+    Epoch [20/100]: current loss is 0.02529369294643402, time elapsed 2.9152097702026367 second
+    Epoch [25/100]: current loss is 0.014151129871606827, time elapsed 3.5347580909729004 second
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=29 HTTP/1.1" 200 OK
+    Epoch [30/100]: current loss is 0.008947455324232578, time elapsed 4.173419237136841 second
+    Epoch [35/100]: current loss is 0.007264615036547184, time elapsed 4.934023857116699 second
+    Epoch [40/100]: current loss is 0.005784918088465929, time elapsed 5.6933913230896 second
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=32 HTTP/1.1" 200 OK
+    Epoch [45/100]: current loss is 0.004916405770927668, time elapsed 6.3103883266448975 second
+    Epoch [50/100]: current loss is 0.0038143948186188936, time elapsed 6.899148464202881 second
+    Epoch [55/100]: current loss is 0.003479688661172986, time elapsed 7.56774115562439 second
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=35 HTTP/1.1" 200 OK
+    Epoch [60/100]: current loss is 0.003375717904418707, time elapsed 8.169422626495361 second
+    Epoch [65/100]: current loss is 0.0028514203149825335, time elapsed 8.883070707321167 second
+    Epoch [70/100]: current loss is 0.002690538763999939, time elapsed 9.485947370529175 second
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=38 HTTP/1.1" 200 OK
+    Epoch [75/100]: current loss is 0.0028283342253416777, time elapsed 10.115295648574829 second
+    Epoch [80/100]: current loss is 0.002778152236714959, time elapsed 10.788484811782837 second
+    Epoch [85/100]: current loss is 0.002318835584446788, time elapsed 11.395753383636475 second
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=41 HTTP/1.1" 200 OK
+    Epoch [90/100]: current loss is 0.0025803265161812305, time elapsed 11.992457866668701 second
+    Epoch [95/100]: current loss is 0.002489894162863493, time elapsed 12.712839603424072 second
+    Epoch [100/100]: current loss is 0.0024092078674584627, time elapsed 13.319285154342651 second
+Training loss: 0.0022
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=44 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+=== Rollout metrics (learned vs expert) ===
+  Trajectories averaged: 7
+  Position RMSE (mean ± std): 0.0790442 ± 0.0268408
+  Position MAE (mean):      0.0668228
+  Max pointwise error (mean over trajs): 0.137205
+  Endpoint L2 error (mean ± std): 0.0326679 ± 0.0284234
+  Path length ratio L_learned/L_expert (mean ± std): 0.995313 ± 0.0240376
+  Wall time (full pipeline, seconds): 32.1285
+=== End metrics ===
+
+INFO:     127.0.0.1:48072 - "GET /api/status/d1176adae516 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48072 - "GET /api/logs/d1176adae516?from=48 HTTP/1.1" 200 OK
+WARNING:  Invalid HTTP request received.
+INFO:     127.0.0.1:49518 - "GET / HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:34746 - "OPTIONS /api/run_v1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "POST /api/run_v1 HTTP/1.1" 200 OK
+Using the rffn for coupling layer
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Training model ...
+    Epoch [5/100]: current loss is 0.11694968491792679, time elapsed 0.6910159587860107 second
+    Epoch [10/100]: current loss is 0.0629582330584526, time elapsed 1.5243074893951416 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=0 HTTP/1.1" 200 OK
+    Epoch [15/100]: current loss is 0.04267631843686104, time elapsed 2.3023288249969482 second
+    Epoch [20/100]: current loss is 0.0265795961022377, time elapsed 3.019083261489868 second
+    Epoch [25/100]: current loss is 0.013960427604615688, time elapsed 3.701808452606201 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=29 HTTP/1.1" 200 OK
+    Epoch [30/100]: current loss is 0.009946639649569988, time elapsed 4.53348183631897 second
+    Epoch [35/100]: current loss is 0.008355815894901752, time elapsed 5.26896595954895 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=32 HTTP/1.1" 200 OK
+    Epoch [40/100]: current loss is 0.007136328145861626, time elapsed 5.9050774574279785 second
+    Epoch [45/100]: current loss is 0.006049832794815302, time elapsed 6.580840826034546 second
+    Epoch [50/100]: current loss is 0.004432361572980881, time elapsed 7.252940654754639 second
+    Epoch [55/100]: current loss is 0.0037846637424081564, time elapsed 7.992791175842285 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=34 HTTP/1.1" 200 OK
+    Epoch [60/100]: current loss is 0.0035159548278898, time elapsed 8.85910177230835 second
+    Epoch [65/100]: current loss is 0.002879359293729067, time elapsed 9.524657487869263 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=38 HTTP/1.1" 200 OK
+    Epoch [70/100]: current loss is 0.002824204508215189, time elapsed 10.18797516822815 second
+    Epoch [75/100]: current loss is 0.0031269213650375605, time elapsed 10.82803988456726 second
+    Epoch [80/100]: current loss is 0.0028626546263694763, time elapsed 11.495243072509766 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=40 HTTP/1.1" 200 OK
+    Epoch [85/100]: current loss is 0.0024014622904360294, time elapsed 12.260197639465332 second
+    Epoch [90/100]: current loss is 0.002451404696330428, time elapsed 12.944422960281372 second
+    Epoch [95/100]: current loss is 0.0022940407507121563, time elapsed 13.711931467056274 second
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=43 HTTP/1.1" 200 OK
+    Epoch [100/100]: current loss is 0.002230522222816944, time elapsed 14.412252187728882 second
+Training loss: 0.0022
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=46 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+=== Rollout metrics (learned vs expert) ===
+  Trajectories averaged: 7
+  Position RMSE (mean ± std): 0.0734727 ± 0.0253659
+  Position MAE (mean):      0.0632391
+  Max pointwise error (mean over trajs): 0.127341
+  Endpoint L2 error (mean ± std): 0.0246141 ± 0.0268804
+  Path length ratio L_learned/L_expert (mean ± std): 0.998923 ± 0.024474
+  Wall time (full pipeline, seconds): 31.6192
+=== End metrics ===
+
+INFO:     127.0.0.1:34762 - "GET /api/status/54a51a805375 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34762 - "GET /api/logs/54a51a805375?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52508 - "OPTIONS /api/run_v1 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "POST /api/run_v1 HTTP/1.1" 200 OK
+Using the rffn for coupling layer
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Using random fouier feature with bandwidth = 0.45.
+Initializing coupling layers as identity!
+Training model ...
+    Epoch [5/100]: current loss is 0.12808585166931152, time elapsed 0.7194101810455322 second
+    Epoch [10/100]: current loss is 0.0710160955786705, time elapsed 1.7981083393096924 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=0 HTTP/1.1" 200 OK
+    Epoch [15/100]: current loss is 0.04966044798493385, time elapsed 2.4709012508392334 second
+    Epoch [20/100]: current loss is 0.031176328659057617, time elapsed 3.168365478515625 second
+    Epoch [25/100]: current loss is 0.01797693409025669, time elapsed 4.010152339935303 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=29 HTTP/1.1" 200 OK
+    Epoch [30/100]: current loss is 0.009686565957963467, time elapsed 4.702928781509399 second
+    Epoch [35/100]: current loss is 0.005744965746998787, time elapsed 5.317633152008057 second
+    Epoch [40/100]: current loss is 0.005004091653972864, time elapsed 5.962675333023071 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=32 HTTP/1.1" 200 OK
+    Epoch [45/100]: current loss is 0.004377817735075951, time elapsed 6.643597364425659 second
+    Epoch [50/100]: current loss is 0.0034758129622787237, time elapsed 7.468132257461548 second
+    Epoch [55/100]: current loss is 0.0029252388048917055, time elapsed 8.157136917114258 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=35 HTTP/1.1" 200 OK
+    Epoch [60/100]: current loss is 0.0024149923119693995, time elapsed 8.825061798095703 second
+    Epoch [65/100]: current loss is 0.0020422209054231644, time elapsed 9.439367294311523 second
+    Epoch [70/100]: current loss is 0.0019664806313812733, time elapsed 10.112712621688843 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=38 HTTP/1.1" 200 OK
+    Epoch [75/100]: current loss is 0.001616506720893085, time elapsed 10.90404748916626 second
+    Epoch [80/100]: current loss is 0.0014411300653591752, time elapsed 11.574753522872925 second
+    Epoch [85/100]: current loss is 0.0013629704480990767, time elapsed 12.177246809005737 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=41 HTTP/1.1" 200 OK
+    Epoch [90/100]: current loss is 0.0014088839525356889, time elapsed 12.824942111968994 second
+    Epoch [95/100]: current loss is 0.0011799162020906806, time elapsed 13.490008115768433 second
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=44 HTTP/1.1" 200 OK
+    Epoch [100/100]: current loss is 0.0011237047147005796, time elapsed 14.266402959823608 second
+Training loss: 0.0011
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=46 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+=== Rollout metrics (learned vs expert) ===
+  Trajectories averaged: 7
+  Position RMSE (mean ± std): 0.0497195 ± 0.0183561
+  Position MAE (mean):      0.0443278
+  Max pointwise error (mean over trajs): 0.0830668
+  Endpoint L2 error (mean ± std): 0.0188831 ± 0.0270682
+  Path length ratio L_learned/L_expert (mean ± std): 0.955639 ± 0.0841851
+  Wall time (full pipeline, seconds): 31.3006
+=== End metrics ===
+
+INFO:     127.0.0.1:52512 - "GET /api/status/7f0ac97bf31b HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52512 - "GET /api/logs/7f0ac97bf31b?from=48 HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1277966]

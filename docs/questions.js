@@ -16,6 +16,20 @@ function applyFeedbackStyles(feedbackEl, state) {
   }
   feedbackEl.setAttribute('role', 'status');
   feedbackEl.setAttribute('aria-live', 'polite');
+  if (state === 'correct' && !feedbackEl.hasAttribute('data-ds-restore')) {
+    window.dispatchEvent(
+      new CustomEvent('ds-correct-answer', {
+        detail: { feedbackId: feedbackEl.id || null },
+      })
+    );
+  }
+  if (state === 'wrong' && !feedbackEl.hasAttribute('data-ds-restore')) {
+    window.dispatchEvent(
+      new CustomEvent('ds-wrong-answer', {
+        detail: { feedbackId: feedbackEl.id || null },
+      })
+    );
+  }
   if (typeof updateDSProgressBar === 'function') updateDSProgressBar();
   if (
     typeof persistDSFeedbackState === 'function' &&
@@ -589,6 +603,381 @@ function checkCh1Hard() {
   }
   document.getElementById('ch1-hard-feedback').innerHTML = fb;
 }
+
+/* ----------------------------------------------------------------------------
+ * Full-screen "Good Job!" celebration on correct answer.
+ * Listens to the `ds-correct-answer` event dispatched by applyFeedbackStyles().
+ * Self-contained: injects its own styles + DOM on first use.
+ * -------------------------------------------------------------------------- */
+(function setupDSGoodJobOverlay() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+  const STYLE_ID = 'ds-goodjob-style';
+  const OVERLAY_ID = 'ds-goodjob-overlay';
+  const DURATION_MS = 1800;
+  const CONFETTI_COUNT = 80;
+  const PRAISE_WORDS = [
+    'Good Job!', 'Awesome!', 'Well done!', 'Nice!', 'Perfect!',
+    'Superb!', 'Brilliant!', 'Excellent!', 'Fantastic!', 'Amazing!'
+  ];
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function injectStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = `
+      #${OVERLAY_ID} {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483646;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        background: radial-gradient(ellipse at center,
+                    rgba(79, 70, 229, 0.18) 0%,
+                    rgba(15, 23, 42, 0.55) 70%,
+                    rgba(15, 23, 42, 0.78) 100%);
+        opacity: 0;
+        transition: opacity 220ms ease-out;
+        overflow: hidden;
+      }
+      #${OVERLAY_ID}.ds-gj-show { opacity: 1; pointer-events: auto; }
+      #${OVERLAY_ID} .ds-gj-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                     "Helvetica Neue", Arial, sans-serif;
+        font-weight: 900;
+        font-size: clamp(3.5rem, 14vw, 11rem);
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: #fff;
+        text-shadow:
+          0 4px 0 #4338ca,
+          0 8px 24px rgba(79, 70, 229, 0.55),
+          0 16px 60px rgba(0, 0, 0, 0.35);
+        background: linear-gradient(135deg, #fde68a 0%, #f59e0b 35%, #ec4899 70%, #6366f1 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transform: scale(0.4) rotate(-8deg);
+        animation: dsGjPop 1.6s cubic-bezier(0.18, 1.3, 0.4, 1) forwards;
+        text-align: center;
+        padding: 0 1rem;
+        user-select: none;
+      }
+      #${OVERLAY_ID} .ds-gj-sub {
+        position: absolute;
+        bottom: 18%;
+        left: 0; right: 0;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: clamp(1rem, 2vw, 1.4rem);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.92);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: dsGjSubIn 0.6s ease-out 0.35s forwards;
+      }
+      #${OVERLAY_ID} .ds-gj-ring {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 30vmin;
+        height: 30vmin;
+        border: 4px solid rgba(255, 255, 255, 0.85);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0.9;
+        animation: dsGjRing 1.4s ease-out forwards;
+      }
+      #${OVERLAY_ID} .ds-gj-confetti {
+        position: absolute;
+        top: -20px;
+        width: 10px;
+        height: 16px;
+        border-radius: 2px;
+        opacity: 0;
+        animation: dsGjFall var(--ds-gj-dur, 1.8s) linear forwards;
+        animation-delay: var(--ds-gj-delay, 0s);
+        transform: translateY(-20px) rotate(0deg);
+      }
+      @keyframes dsGjPop {
+        0%   { transform: scale(0.3) rotate(-12deg); opacity: 0; filter: blur(8px); }
+        45%  { transform: scale(1.18) rotate(3deg);  opacity: 1; filter: blur(0); }
+        65%  { transform: scale(0.96) rotate(-1.5deg); }
+        100% { transform: scale(1) rotate(0deg); opacity: 1; }
+      }
+      @keyframes dsGjSubIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes dsGjRing {
+        0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0.9; }
+        100% { transform: translate(-50%, -50%) scale(3.4); opacity: 0; }
+      }
+      @keyframes dsGjFall {
+        0%   { transform: translateY(-20px) rotate(0deg);   opacity: 0; }
+        8%   { opacity: 1; }
+        100% { transform: translateY(110vh) rotate(720deg); opacity: 1; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #${OVERLAY_ID} .ds-gj-text,
+        #${OVERLAY_ID} .ds-gj-sub,
+        #${OVERLAY_ID} .ds-gj-ring,
+        #${OVERLAY_ID} .ds-gj-confetti { animation: none !important; }
+        #${OVERLAY_ID} .ds-gj-text { transform: none; opacity: 1; }
+        #${OVERLAY_ID} .ds-gj-sub  { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function buildConfetti(overlay) {
+    const colors = ['#f59e0b', '#ec4899', '#6366f1', '#10b981', '#ef4444',
+                    '#3b82f6', '#fde68a', '#a855f7'];
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < CONFETTI_COUNT; i++) {
+      const piece = document.createElement('span');
+      piece.className = 'ds-gj-confetti';
+      const left = Math.random() * 100;
+      const delay = Math.random() * 0.4;
+      const dur = 1.4 + Math.random() * 1.2;
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      const w = 6 + Math.random() * 8;
+      const h = 10 + Math.random() * 12;
+      piece.style.left = left + 'vw';
+      piece.style.background = color;
+      piece.style.width = w + 'px';
+      piece.style.height = h + 'px';
+      piece.style.setProperty('--ds-gj-delay', delay + 's');
+      piece.style.setProperty('--ds-gj-dur', dur + 's');
+      frag.appendChild(piece);
+    }
+    overlay.appendChild(frag);
+  }
+
+  let isShowing = false;
+  let hideTimer = null;
+
+  function showGoodJob() {
+    if (isShowing) return;
+    isShowing = true;
+    injectStyles();
+
+    const old = document.getElementById(OVERLAY_ID);
+    if (old) old.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = OVERLAY_ID;
+    overlay.setAttribute('role', 'status');
+    overlay.setAttribute('aria-live', 'polite');
+
+    const ring = document.createElement('div');
+    ring.className = 'ds-gj-ring';
+    overlay.appendChild(ring);
+
+    const text = document.createElement('div');
+    text.className = 'ds-gj-text';
+    text.textContent = PRAISE_WORDS[Math.floor(Math.random() * PRAISE_WORDS.length)];
+    overlay.appendChild(text);
+
+    const sub = document.createElement('div');
+    sub.className = 'ds-gj-sub';
+    sub.textContent = 'Correct answer · Keep going!';
+    overlay.appendChild(sub);
+
+    if (!prefersReducedMotion()) buildConfetti(overlay);
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('ds-gj-show'));
+
+    const dismiss = () => {
+      if (!overlay.isConnected) return;
+      overlay.classList.remove('ds-gj-show');
+      setTimeout(() => {
+        overlay.remove();
+        isShowing = false;
+      }, 260);
+    };
+
+    overlay.addEventListener('click', dismiss);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(dismiss, DURATION_MS);
+  }
+
+  window.addEventListener('ds-correct-answer', showGoodJob);
+})();
+
+/* ----------------------------------------------------------------------------
+ * Full-screen "Try Again!" animation on wrong answer.
+ * Listens to the `ds-wrong-answer` event dispatched by applyFeedbackStyles().
+ * Same pattern as the good-job overlay — friendly, encouraging tone.
+ * -------------------------------------------------------------------------- */
+(function setupDSTryAgainOverlay() {
+  if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+  const STYLE_ID = 'ds-tryagain-style';
+  const OVERLAY_ID = 'ds-tryagain-overlay';
+  const DURATION_MS = 1500;
+  const ENCOURAGEMENTS = [
+    'Try Again!', 'Not Quite!', 'Almost!', 'Keep Trying!',
+    'Give it Another Go!', 'So Close!', 'One More Try!', 'Don’t Give Up!'
+  ];
+
+  function prefersReducedMotion() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function injectStyles() {
+    if (document.getElementById(STYLE_ID)) return;
+    const style = document.createElement('style');
+    style.id = STYLE_ID;
+    style.textContent = `
+      #${OVERLAY_ID} {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483646;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: none;
+        background: radial-gradient(ellipse at center,
+                    rgba(239, 68, 68, 0.18) 0%,
+                    rgba(30, 10, 10, 0.55) 70%,
+                    rgba(15, 23, 42, 0.78) 100%);
+        opacity: 0;
+        transition: opacity 200ms ease-out;
+        overflow: hidden;
+      }
+      #${OVERLAY_ID}.ds-ta-show { opacity: 1; pointer-events: auto; }
+      #${OVERLAY_ID} .ds-ta-text {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                     "Helvetica Neue", Arial, sans-serif;
+        font-weight: 900;
+        font-size: clamp(3rem, 12vw, 9.5rem);
+        letter-spacing: -0.04em;
+        line-height: 1;
+        color: #fff;
+        text-shadow:
+          0 4px 0 #991b1b,
+          0 8px 24px rgba(239, 68, 68, 0.55),
+          0 16px 60px rgba(0, 0, 0, 0.4);
+        background: linear-gradient(135deg, #fca5a5 0%, #ef4444 40%, #f97316 75%, #fbbf24 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        transform: scale(0.5);
+        animation: dsTaShake 1.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) forwards;
+        text-align: center;
+        padding: 0 1rem;
+        user-select: none;
+      }
+      #${OVERLAY_ID} .ds-ta-sub {
+        position: absolute;
+        bottom: 18%;
+        left: 0; right: 0;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: clamp(1rem, 2vw, 1.4rem);
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.92);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        opacity: 0;
+        animation: dsTaSubIn 0.55s ease-out 0.3s forwards;
+      }
+      #${OVERLAY_ID} .ds-ta-cross {
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 28vmin;
+        height: 28vmin;
+        border: 5px solid rgba(252, 165, 165, 0.85);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0.2);
+        opacity: 0.95;
+        animation: dsTaRing 1.3s ease-out forwards;
+      }
+      @keyframes dsTaShake {
+        0%   { transform: scale(0.5) translateX(0);    opacity: 0; filter: blur(8px); }
+        20%  { transform: scale(1.15) translateX(-22px); opacity: 1; filter: blur(0); }
+        35%  { transform: scale(1.05) translateX(22px); }
+        50%  { transform: scale(1.05) translateX(-14px); }
+        65%  { transform: scale(1.02) translateX(14px); }
+        80%  { transform: scale(1) translateX(-6px); }
+        100% { transform: scale(1) translateX(0);     opacity: 1; }
+      }
+      @keyframes dsTaSubIn {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes dsTaRing {
+        0%   { transform: translate(-50%, -50%) scale(0.2); opacity: 0.95; border-color: rgba(252,165,165,0.95); }
+        100% { transform: translate(-50%, -50%) scale(3.2); opacity: 0; border-color: rgba(252,165,165,0); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #${OVERLAY_ID} .ds-ta-text,
+        #${OVERLAY_ID} .ds-ta-sub,
+        #${OVERLAY_ID} .ds-ta-cross { animation: none !important; }
+        #${OVERLAY_ID} .ds-ta-text { transform: none; opacity: 1; }
+        #${OVERLAY_ID} .ds-ta-sub  { opacity: 1; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  let isShowing = false;
+  let hideTimer = null;
+
+  function showTryAgain() {
+    if (isShowing) return;
+    isShowing = true;
+    injectStyles();
+
+    const old = document.getElementById(OVERLAY_ID);
+    if (old) old.remove();
+
+    const overlay = document.createElement('div');
+    overlay.id = OVERLAY_ID;
+    overlay.setAttribute('role', 'status');
+    overlay.setAttribute('aria-live', 'polite');
+
+    const ring = document.createElement('div');
+    ring.className = 'ds-ta-cross';
+    overlay.appendChild(ring);
+
+    const text = document.createElement('div');
+    text.className = 'ds-ta-text';
+    text.textContent = ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)];
+    overlay.appendChild(text);
+
+    const sub = document.createElement('div');
+    sub.className = 'ds-ta-sub';
+    sub.textContent = 'Not the right answer · Have another look!';
+    overlay.appendChild(sub);
+
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add('ds-ta-show'));
+
+    const dismiss = () => {
+      if (!overlay.isConnected) return;
+      overlay.classList.remove('ds-ta-show');
+      setTimeout(() => {
+        overlay.remove();
+        isShowing = false;
+      }, 240);
+    };
+
+    overlay.addEventListener('click', dismiss);
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(dismiss, DURATION_MS);
+  }
+
+  window.addEventListener('ds-wrong-answer', showTryAgain);
+})();
 
 if (typeof document !== 'undefined') {
   document.addEventListener('dragend', dragEnd, true);

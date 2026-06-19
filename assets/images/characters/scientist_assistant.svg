@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 220" role="img" aria-label="Animated scientist assistant">
+  <defs>
+    <linearGradient id="coatShade" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e8eef7"/>
+    </linearGradient>
+    <linearGradient id="hairShade" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#eceff5"/>
+      <stop offset="1" stop-color="#c7cfdb"/>
+    </linearGradient>
+    <filter id="softShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#0f172a" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  <style>
+    .body {
+      animation: bodyBob 1.9s ease-in-out infinite;
+      transform-origin: 50% 85%;
+      transform-box: fill-box;
+    }
+    .head {
+      animation: headTilt 2.4s ease-in-out infinite;
+      transform-origin: 50% 72%;
+      transform-box: fill-box;
+    }
+    .arm-left {
+      animation: armWave 2s ease-in-out 1;
+      transform-origin: 58px 103px;
+    }
+    .arm-right {
+      animation: none;
+      transform-origin: 121px 103px;
+    }
+    .leg-left {
+      animation: legStepLeft 2.2s ease-in-out infinite;
+      transform-origin: 75px 152px;
+    }
+    .leg-right {
+      animation: legStepRight 2.2s ease-in-out infinite;
+      transform-origin: 102px 152px;
+    }
+    .blink {
+      animation: blink 5.2s linear infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+    @keyframes bodyBob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
+    }
+    @keyframes headTilt {
+      0%, 100% { transform: rotate(0deg); }
+      40% { transform: rotate(2.2deg); }
+      70% { transform: rotate(-1.2deg); }
+    }
+    @keyframes armWave {
+      0%, 100% { transform: rotate(28deg); }
+      20% { transform: rotate(122deg); }
+      40% { transform: rotate(104deg); }
+      60% { transform: rotate(126deg); }
+      80% { transform: rotate(108deg); }
+    }
+    @keyframes armHold {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(-3deg); }
+    }
+    @keyframes legStepLeft {
+      0%, 100% { transform: rotate(1deg); }
+      50% { transform: rotate(-1deg); }
+    }
+    @keyframes legStepRight {
+      0%, 100% { transform: rotate(-1deg); }
+      50% { transform: rotate(1deg); }
+    }
+    @keyframes blink {
+      0%, 46%, 49%, 100% { transform: scaleY(1); }
+      47.5%, 48.5% { transform: scaleY(0.15); }
+    }
+  </style>
+
+  <ellipse cx="90" cy="205" rx="43" ry="9" fill="#d5deec" opacity="0.7"/>
+
+  <g class="body" filter="url(#softShadow)">
+    <g class="leg-left">
+      <rect x="68" y="151" width="14" height="38" rx="7" fill="#334155"/>
+      <ellipse cx="75" cy="191" rx="13" ry="5" fill="#111827"/>
+    </g>
+    <g class="leg-right">
+      <rect x="95" y="151" width="14" height="38" rx="7" fill="#334155"/>
+      <ellipse cx="102" cy="191" rx="13" ry="5" fill="#111827"/>
+    </g>
+
+    <g>
+      <rect x="63" y="84" width="54" height="74" rx="16" fill="url(#coatShade)" stroke="#cfd9e8" stroke-width="2"/>
+      <path d="M90 89 L103 156 L77 156 Z" fill="#f8fbff"/>
+      <rect x="79" y="98" width="22" height="40" rx="7" fill="#4f9df8"/>
+      <circle cx="91" cy="145" r="2.1" fill="#94a3b8"/>
+      <circle cx="91" cy="137" r="2.1" fill="#94a3b8"/>
+    </g>
+
+    <g class="arm-left">
+      <rect x="51" y="95" width="15" height="46" rx="8" fill="url(#coatShade)" stroke="#cfd9e8" stroke-width="1.5"/>
+      <circle cx="59" cy="142" r="7" fill="#f8cba6"/>
+    </g>
+
+    <g class="arm-right">
+      <rect x="113" y="95" width="15" height="44" rx="8" fill="url(#coatShade)" stroke="#cfd9e8" stroke-width="1.5"/>
+      <rect x="118" y="104" width="30" height="39" rx="4" fill="#f4d6a8" stroke="#d5b88a" stroke-width="1.6"/>
+      <path d="M123 112 h20 M123 118 h20 M123 124 h15" stroke="#8b6c42" stroke-width="1.6" stroke-linecap="round"/>
+      <circle cx="121" cy="138" r="6.8" fill="#f8cba6"/>
+    </g>
+  </g>
+
+  <g class="head">
+    <path d="M58 63 C58 41, 73 29, 91 29 C109 29, 123 41, 123 63 C123 57, 121 53, 118 50 C122 53, 126 56, 129 61 C126 47, 118 37, 110 33 C100 25, 84 24, 72 31 C65 35, 59 45, 58 55 C56 56, 54 59, 54 63 Z" fill="url(#hairShade)"/>
+    <ellipse cx="91" cy="72" rx="30" ry="28" fill="#f8cba6" stroke="#e6b58f" stroke-width="2"/>
+    <path d="M68 70 C74 63, 83 58, 92 58 C102 58, 111 62, 116 69" fill="none" stroke="#c98c63" stroke-width="2" opacity="0.5"/>
+
+    <g class="blink">
+      <ellipse cx="80" cy="72" rx="5.1" ry="4.6" fill="#0f172a"/>
+      <ellipse cx="101" cy="72" rx="5.1" ry="4.6" fill="#0f172a"/>
+    </g>
+    <circle cx="80" cy="71" r="2.6" fill="#f8fbff"/>
+    <circle cx="101" cy="71" r="2.6" fill="#f8fbff"/>
+
+    <ellipse cx="91" cy="79" rx="4" ry="6" fill="#edb38b"/>
+    <path d="M82 90 C86 95, 96 95, 100 90" fill="none" stroke="#a04a3a" stroke-width="2.3" stroke-linecap="round"/>
+    <circle cx="80" cy="72" r="11" fill="none" stroke="#607086" stroke-width="2"/>
+    <circle cx="101" cy="72" r="11" fill="none" stroke="#607086" stroke-width="2"/>
+    <path d="M91 72 H90" stroke="#607086" stroke-width="2"/>
+  </g>
+</svg>

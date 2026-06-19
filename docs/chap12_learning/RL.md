@@ -7,8 +7,8 @@ layout: numbered
 math: mathjax
 chapter: 12
 section: 2
-publish: false
-nav_exclude: true
+publish: true
+nav_exclude: false
 ---
 
 <!-- Link external JavaScript file -->

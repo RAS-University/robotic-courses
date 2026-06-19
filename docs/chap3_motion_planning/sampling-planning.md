@@ -142,7 +142,7 @@ One clever idea was to stop planning and start reacting. The Artificial Potentia
 
 <div class="note" markdown="1">
 <strong>Note.</strong>
-This approach is not purely sampling-based but rather a continuous one, as it relies on smooth potential functions to define motion. In practice, these continuous formulations become discretized once paths are numerically integrated, but their underlying principles remain continuous and dynamic. Such representations are generally more expressive, as they directly describe how motion evolves under forces instead of connecting isolated samples. Potential fields therefore mark the beginning of dynamical-systems–based methods, explored further in [Dynamical-Systems-Based Planning](DS-planning).
+This approach is not purely sampling-based but rather a continuous one, as it relies on smooth potential functions to define motion. In practice, these continuous formulations become discretized once paths are numerically integrated, but their underlying principles remain continuous and dynamic. Such representations are generally more expressive, as they directly describe how motion evolves under forces instead of connecting isolated samples. Potential fields therefore mark the beginning of dynamical-systems–based methods, explored further in the [Diffeomorphic Mapping for Dynamical Systems]({{ site.baseurl }}/docs/chap6_advanced_ctrl/diffeomorphic-mapping-for-ds) section (Chapter 6).
 
 </div>
 <div class="definition">

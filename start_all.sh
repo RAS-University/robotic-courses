@@ -8,6 +8,7 @@ BACKEND_PY="/home/developer/miniconda3/envs/tutorial_ds_mapping/bin/python"
 JEKYLL_PORT=4000
 FRONTEND_PORT=3000
 BACKEND_PORT=8000
+MAX_CONCURRENT_JOBS="${MAX_CONCURRENT_JOBS:-3}"
 
 RUN_DIR="$PROJECT_ROOT/.run"
 mkdir -p "$RUN_DIR"
@@ -54,8 +55,8 @@ start_tutorial_backend() {
     echo "[ERR] Missing Python env executable: $BACKEND_PY"
     return 1
   fi
-  echo "[..] Starting Tutorial backend on :$BACKEND_PORT"
-  nohup bash -lc "cd \"$TUTORIAL_ROOT\" && \"$BACKEND_PY\" backend/app.py" \
+  echo "[..] Starting Tutorial backend on :$BACKEND_PORT (${MAX_CONCURRENT_JOBS} workers, unlimited queue)"
+  nohup bash -lc "cd \"$TUTORIAL_ROOT\" && MAX_CONCURRENT_JOBS=\"$MAX_CONCURRENT_JOBS\" \"$BACKEND_PY\" backend/app.py" \
     > "$RUN_DIR/tutorial_backend.log" 2>&1 &
 }
 

@@ -4,6 +4,9 @@ theme: just-the-docs
 
 url: https://ras-university.github.io/robotic-courses/
 
+# Interactive DS mapping tutorial (Cloudflare tunnel). Override locally, e.g. http://127.0.0.1:3000
+tutorial_ds_url: "https://rk-university.org"
+
 aux_links:
   Template Repository: https://github.com/RAS-University/robotic-courses
 

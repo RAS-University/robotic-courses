@@ -2072,10 +2072,10 @@ The repository is organized into modular components that follow the stages outli
 
    <div class="ds-tutor-panel" markdown="0">
     <div class="ds-tutor-head">Tutorial_DS_mapping — Interactive Interface</div>
-    <iframe src="http://127.0.0.1:3000" title="Tutorial DS Mapping — interactive view and plots" loading="lazy"></iframe>
+    <iframe src="{{ site.tutorial_ds_url }}" title="Tutorial DS Mapping — interactive view and plots" loading="lazy" allow="fullscreen"></iframe>
      <div class="ds-tutor-foot">
-       <a href="http://127.0.0.1:3000" target="_blank" rel="noopener noreferrer">Open in full tab</a>
-      · Frontend URL: <code>http://127.0.0.1:3000</code>
+       <a href="{{ site.tutorial_ds_url }}" target="_blank" rel="noopener noreferrer">Open in full tab</a>
+      · Live tutorial: <a href="{{ site.tutorial_ds_url }}" target="_blank" rel="noopener noreferrer">{{ site.tutorial_ds_url }}</a>
      </div>
    </div>
 

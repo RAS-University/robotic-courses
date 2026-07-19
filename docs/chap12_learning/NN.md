@@ -314,7 +314,7 @@ To keep the example simple, we will use a neural network with **two input neuron
 
 <figure style="text-align: center;">
 <img src="{{ site.baseurl }}/assets/images/NN/backpropagation.png" alt="Example neural network used to illustrate backpropagation" width="600">
-<figcaption>Neural network used throughout the backpropagation example.</figcaption>
+<figcaption>Neural network used for example.</figcaption>
 </figure>
 
 Now that we have defined the problem, the next question is:
@@ -488,10 +488,10 @@ Effect of the learning rate on the convergence of gradient descent. A learning r
 Gradient descent tells us how to update the network's parameters:
 
 $$
-w \leftarrow w - \eta \frac{\partial \mathcal{L}}{\partial w}.
+w \leftarrow w-\eta\frac{\partial \mathcal{L}}{\partial w}.
 $$
 
-However, this equation assumes that we already know the gradient
+However, this update rule assumes that we already know the gradient
 
 $$
 \frac{\partial \mathcal{L}}{\partial w}.
@@ -501,16 +501,130 @@ This immediately raises an important question:
 
 > **How do we compute the gradient of the loss with respect to every weight in a neural network that may contain millions of parameters?**
 
-Computing these gradients one by one would be computationally infeasible. Instead, neural networks use an efficient algorithm called **backpropagation**, which computes the gradients for all the weights by propagating the prediction error backward through the network.
+Computing each gradient independently from the beginning would require repeating many of the same calculations and would therefore be extremely inefficient. Neural networks instead use an algorithm called **backpropagation**, which applies the chain rule systematically and reuses intermediate computations to calculate all the gradients efficiently.
 
-In the next section, we will see exactly how backpropagation works by applying it step by step to our robotics example.
+Let us return to the neural network introduced earlier:
+
+<figure style="text-align: center;">
+<img src="{{ site.baseurl }}/assets/images/NN/backpropagation.png" alt="Example neural network used to illustrate backpropagation" width="600">
+<figcaption>Neural network used throughout the backpropagation example.</figcaption>
+</figure>
+
+To understand the main idea, consider what happens when one weight in the first layer changes slightly.
+
+Suppose the weight changes by a small amount. This change affects the weighted sum computed by the hidden neuron connected to that weight. The hidden neuron's activation then changes, which influences the output neurons. Consequently, the predicted horizontal and vertical gripper movements may change. Because the prediction changes, the loss may also change.
+
+We can summarize this sequence as
+
+$$
+\text{weight}
+\rightarrow
+\text{hidden pre-activation}
+\rightarrow
+\text{hidden activation}
+\rightarrow
+\text{network outputs}
+\rightarrow
+\text{loss}.
+$$
+
+Therefore, a weight does not affect the loss in isolation. Its influence passes through a chain of intermediate computations. To determine the effect of the weight on the final loss, we must account for every step along this chain.
+
+This is precisely what the **chain rule** allows us to do.
+
+---
+
+##### Following One Weight Through the Network
+
+Suppose we want to compute the gradient of the loss with respect to the first-layer weight
+
+$$
+w_{12}^{(1)}.
+$$
+
+We use the convention that $w_{ij}^{(1)}$ represents the weight connecting input $x_i$ to hidden neuron $h_j$. Therefore, $w_{12}^{(1)}$ connects input $x_1$ to the second hidden neuron.
+
+Let the pre-activation of the second hidden neuron be
+
+$$
+z_2^{(1)}
+=
+w_{12}^{(1)}x_1
++
+w_{22}^{(1)}x_2
++
+b_2^{(1)},
+$$
+
+and let its activation be
+
+$$
+h_2=f\left(z_2^{(1)}\right).
+$$
+
+The weight $w_{12}^{(1)}$ first affects $z_2^{(1)}$, which in turn changes the activation $h_2$. The activation $h_2$ then contributes to both output neurons, which predict the horizontal and vertical movements of the gripper.
+
+$$
+\hat{y}_1
+= \text{predicted horizontal movemen,}
+$$
+
+$$
+\hat{y}_2
+= \text{predicted vertical movement.}$$
+
+The relevant paths through the network are therefore
+
+$$
+w_{12}^{(1)}
+\rightarrow
+z_2^{(1)}
+\rightarrow
+h_2
+\rightarrow
+\hat{y}_1
+\rightarrow
+\mathcal{L},
+$$
+
+and
+
+$$
+w_{12}^{(1)}
+\rightarrow
+z_2^{(1)}
+\rightarrow
+h_2
+\rightarrow
+\hat{y}_2
+\rightarrow
+\mathcal{L}.
+$$
+
+Because the hidden neuron affects both outputs, the total effect of $w_{12}^{(1)}$ on the loss is the sum of its effects through these two paths:
+
+$$\frac{\partial \mathcal{L}}{\partial w_{12}^{(1)}}=
+\left(
+\frac{\partial \mathcal{L}}{\partial \hat{y}_1}
+\frac{\partial \hat{y}_1}{\partial h_2}
++
+\frac{\partial \mathcal{L}}{\partial \hat{y}_2}
+\frac{\partial \hat{y}_2}{\partial h_2}
+\right) \cdot \frac{\partial h_2}{\partial z_2^{(1)}} \cdot \frac{\partial z_2^{(1)}}{\partial {w_{12}^{(1)}}}$$
+
+Although this expression may look complicated at first, each factor answers a simple question:
+
+- $\frac{\partial \hat{y}_1}{\partial h_2}$: How does the predicted horizontal movement change when the activation of the second hidden neuron changes?
+- $\frac{\partial \hat{y}_2}{\partial h_2}$: How does the predicted vertical movement change when the activation of the second hidden neuron changes?
+- $\frac{\partial h_2}{\partial z_2^{(1)}}$: How does the activation of the second hidden neuron change when its pre-activation changes?
+- $\frac{\partial z_2^{(1)}}{\partial w_{12}^{(1)}}$: How does the second hidden neuron's pre-activation change when the selected weight changes?
+
+Backpropagation evaluates these derivatives from the output of the network toward its input. It first determines how the loss depends on the predictions, then how the predictions depend on the hidden activations, and finally how the hidden activations depend on the weights.
+
+This backward order allows intermediate derivatives to be reused. As a result, backpropagation can efficiently compute the gradients of the loss with respect to every weight and bias in the network.
 
 
-
-
-
-
-
+x
 
 
 

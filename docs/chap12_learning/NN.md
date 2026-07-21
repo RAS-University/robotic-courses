@@ -331,7 +331,7 @@ Like every supervised learning algorithm, the network follows the same learning 
 
 In the following sections, we will go through each of these steps one by one.
 
-#### Step 1: Making a Prediction (Forward Pass)
+##### Step 1: Making a Prediction (Forward Pass)
 
 The first step in the learning cycle is to make a prediction. This process is called the **forward pass** because information flows from the input layer to the output layer.
 
@@ -371,7 +371,7 @@ Instead, modern neural networks typically use smooth and differentiable activati
 >
 > https://www.geeksforgeeks.org/machine-learning/activation-functions-neural-networks/
 
-#### Step 2: Measuring the Prediction Error
+##### Step 2: Measuring the Prediction Error
 
 In the previous step, our robot used the neural network to predict how the gripper should move. However, making a prediction is only half of the learning process. The network must also determine **how good that prediction is**.
 
@@ -422,7 +422,7 @@ The squared term has two important advantages. First, it ensures that the loss i
 Our objective during training is therefore to find the values of the weights and biases that minimize the loss. In other words, we want to adjust the network's parameters so that the predicted gripper movement becomes as close as possible to the desired movement.
 
 
-#### Step 3: Improving the Prediction (Gradient Descent)
+##### Step 3: Improving the Prediction (Gradient Descent)
 
 At this point, the network knows how wrong its prediction is. However, knowing that the prediction is incorrect is not enough, we also need a way to improve it.
 
@@ -483,7 +483,7 @@ Effect of the learning rate on the convergence of gradient descent. A learning r
 </figure>
 
 
-#### Step 4: Computing the Gradients (Backpropagation)
+##### Step 4: Computing the Gradients (Backpropagation)
 
 Gradient descent tells us how to update the network's parameters:
 
@@ -532,9 +532,7 @@ Therefore, a weight does not affect the loss in isolation. Its influence passes 
 
 This is precisely what the **chain rule** allows us to do.
 
----
-
-##### Following One Weight Through the Network
+###### Following One Weight Through the Network
 
 Suppose we want to compute the gradient of the loss with respect to the first-layer weight
 
@@ -623,8 +621,143 @@ Backpropagation evaluates these derivatives from the output of the network towar
 
 This backward order allows intermediate derivatives to be reused. As a result, backpropagation can efficiently compute the gradients of the loss with respect to every weight and bias in the network.
 
+#### Sequential Models
 
-x
+So far, we have focused on **feedforward neural networks**, in which information flows in one direction, from the input layer to the output layer. Each input is processed independently, and once the network produces an output, the computation ends. The network does not retain information about previously processed inputs.
+
+This approach works well when the inputs are independent. For example, when classifying an object in an image, the prediction can often be made using the current image alone. Previous observations are not required.
+
+However, many robotics tasks are inherently **sequential**. Consider a mobile robot navigating through a dynamic environment shared with pedestrians and other robots. To reach its destination safely, the robot must perceive nearby agents, estimate how they are moving, predict where they may move next, and use this information to plan a collision-free trajectory.
+
+A single camera image provides only a snapshot of the environment. Although visual cues may provide limited information about motion, reliably estimating a person’s velocity and direction generally requires multiple observations over time. By comparing consecutive images, the robot can determine how the person’s position is changing.
+
+By processing a **sequence of images**, the robot can: estimate the velocity and direction of nearby agents, predict their possible future trajectories, and continuously adjust its own motion to avoid collisions.
+
+Reasoning over time is important in many other robotics applications as well. A manipulation robot must remember the progress of an action, a legged robot must coordinate its movements across a locomotion cycle, and a collaborative robot must interpret how a human’s actions evolve over time.
+
+These tasks require models that can use information from previous observations while processing the current one. Such models are called **sequential models**. In the following sections, we introduce several important architectures for processing sequential data, including **Recurrent Neural Networks (RNNs)**, **Echo State Networks (ESNs)**, and **Long Short-Term Memory (LSTM)** networks.
+
+##### Recurrent Neural Networks (RNNs)
+
+A **Recurrent Neural Network (RNN)** is one of the fundamental neural network architectures for processing sequential data. Unlike a feedforward neural network, which processes each input independently, an RNN maintains an internal **memory**, which we refer to as the **context**. This context allows information from previous inputs to influence the network's current prediction.
+
+Figure X compares a feedforward neural network with an RNN. As shown in Figure Xb, an RNN extends the architecture of a feedforward neural network by introducing **recurrent connections** (shown in magenta). These recurrent connections carry the context from one time step to the next, enabling the network to remember previously processed information.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/rnn_vs_feedforward.png"
+       alt="Comparison between a feedforward neural network and a recurrent neural network"
+       width="900">
+  <figcaption>
+    <strong>Figure 1.</strong> Comparison of a feedforward neural network (left) and a recurrent neural network (right).
+  </figcaption>
+</figure>
+
+Although Figure 1 illustrates the recurrent connections, it does not show how the network processes an entire sequence. A more intuitive way to understand an RNN is to unroll it through time, as shown in Figure 2.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/rnn_unrolled.png"
+       alt="Unrolled recurrent neural network"
+       width="900">
+  <figcaption>
+    <strong>Figure 2.</strong> An unrolled view of an RNN. 
+  </figcaption>
+</figure>
+
+At each time step, the same network receives the current input together with the context propagated from the previous time step and produces an output. It then updates the context using the newly processed information and forwards it to the next time step.
+
+A natural question is: **where should the context come from, and where should it be fed back into the network?** Two of the earliest and most influential recurrent neural network architectures proposed different answers to this question: the **Elman network** and the **Jordan network**.
+
+As shown in **Figure 3**, the key difference between these two architectures lies in the source of the context.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/elman_vs_jordan.png"
+       alt="Comparison between Elman and Jordan recurrent neural network architectures"
+       width="900">
+  <figcaption>
+    <strong>Figure 3.</strong> Comparison of the Elman and Jordan recurrent neural network architectures.
+  </figcaption>
+</figure>
+
+In the **Elman network** (Figure 3a), the context is obtained from the **hidden layer**. After each time step, the hidden-layer activations are copied into the context units and passed to the next time step, where they are combined with the new input. Intuitively, the network remembers part of **what it was internally representing** at the previous step.
+
+In the **Jordan network** (Figure 3b), the context is instead obtained from the **output layer**. The output produced at one time step is stored in the context units and fed back into the hidden layer at the next time step. Intuitively, the network remembers **what it previously produced**.
+
+At first glance, the two architectures look very similar. However, the difference is subtle and meaningful.
+
+In a Jordan network, the feedback comes from the output, which is usually a more compact and task-specific representation. In other words, the network feeds back its previous prediction or decision.
+
+In an Elman network, the feedback comes from the hidden layer, before the final output is produced. The hidden activations can preserve a richer representation of the current input and its temporal context, including information that may not appear directly in the output.
+
+Although both architectures allow previous information to influence future predictions, the **Elman network** is generally more expressive because the hidden layer can contain more information than the final output. For this reason, many modern recurrent neural networks are conceptually closer to the Elman architecture, where the internal hidden representation is propagated through time and serves as the network's memory.
+
+
+###### A Robotics Example: Learning Multiple Manipulation Behaviors
+
+A good example of how recurrent neural networks can be used in robotics is presented in the paper *Dynamic and Interactive Generation of Object Handling Behaviors by a Small Humanoid Robot Using a Dynamic Neural Network Model* by Ito *et al.* (2006). The authors investigated whether a robot could learn multiple manipulation skills using a **single recurrent neural network** instead of designing a separate controller for each task. 
+
+The objective was not only for the robot to execute different manipulation behaviors, but also to **automatically select and switch between them** as the environment changed. Figure 4 illustrates two of the learned tasks. In the first task, the robot repeatedly rolls a ball between its two hands. In the second task, it grasps the ball, lifts it from the table, and then releases it. 
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/rnnpb_ball_behaviors.png"
+       alt="Humanoid robot learning two different ball manipulation behaviors"
+       width="900">
+  <figcaption>
+    <strong>Figure 4.</strong> Two manipulation behaviors learned by the humanoid robot: (a) rolling a ball and (b) lifting a ball. Adapted from Ito <em>et al.</em> (2006).
+  </figcaption>
+</figure>
+
+To solve this problem, the authors used a **Recurrent Neural Network with Parametric Bias (RNNPB)**. This architecture extends the **Jordan recurrent neural network** introduced in the previous section by adding a small set of additional neurons called **Parametric Bias (PB) units**. The recurrent feedback mechanism remains the same: the network's outputs are copied into the context units and fed back to the hidden layer at the next time step. The only structural difference is the addition of the PB units, which allow the network to represent different learned behavior patterns.
+
+Figure 5a shows the original RNNPB architecture presented in the paper during the learning phase. At first glance, the original diagram may appear complicated because many of the connections are omitted for clarity and several groups of neurons are shown simultaneously. Figure 5b presents the same architecture using the color convention introduced in the previous figures, making it easier to identify each component and understand how information flows through the network.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/rnnpb_original_and_colored.png"
+       alt="Original and colored representations of the RNNPB architecture"
+       width="1000">
+  <figcaption>
+    <strong>Figure 5.</strong> The RNNPB architecture during the learning phase: (a) the original architecture presented by Ito <em>et al.</em> (2006), and (b) a simplified colored representation. Blue nodes represent sensory and motor inputs, purple nodes represent Parametric Bias units, orange nodes represent hidden units, green nodes represent prediction outputs, and pink nodes represent recurrent context units.
+  </figcaption>
+</figure>
+
+After training, the network is used in the **interaction phase**, where the robot generates actions online while interacting with the object. At each time step, the RNNPB receives the robot’s current sensory information, including the observed position of the object and the measured joint angles of its arms. Together with the context carried from the previous time step and the current PB values, these inputs are processed to produce the motor command for the next time step, and a prediction of the next sensory state. You can see the network in Fingure 6.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/rnnpb_inference.png"
+       alt="Information flow through the RNNPB during the interaction phase"
+       width="900">
+  <figcaption>
+    <strong>Figure 6.</strong> Information flow through the RNNPB during inference. 
+  </figcaption>
+</figure>
+
+The predicted sensory state is then compared with the observation that the robot actually receives. Their difference produces a **prediction error**. This prediction error provides information about whether the behavior currently represented by the PB values is consistent with the ongoing interaction. When the prediction error remains small, the current PB values are appropriate, and the robot continues generating the same behavior. However, when the environment changes, the predicted and observed sensory sequences become different, causing the prediction error to increase.
+
+The network then adjusts the PB values to reduce this error. As the PB values move toward another region of the learned PB space, the motor sequence generated by the network gradually changes. In this way, the robot can recognize that the current interaction is better explained by another learned behavior and smoothly switch to that behavior.
+
+Figure 7 illustrates an interesting experiment performed after the network had been trained. Initially, the robot is executing the **ball-rolling behavior** learned during training. As shown in Figure 7a, the robot repeatedly rolls the ball between its two hands while continuously predicting the next sensory state and generating the corresponding motor commands.
+
+<figure style="text-align: center;">
+  <img src="{{ site.baseurl }}/assets/images/NN/rnnpb_behavior_transition.png"
+       alt="Transition from rolling to lifting behavior"
+       width="1000">
+  <figcaption>
+    <strong>Figure 7.</strong> Automatic transition between two learned behaviors. (a) The robot rolls the ball between its hands. (b) After the ball is stopped by a human, the robot gradually switches to the learned lifting behavior. Adapted from Ito <em>et al.</em> (2006).
+  </figcaption>
+</figure>
+
+During the rolling motion, the sequence of sensory observations matches what the network expects. As a result, the prediction error remains small, and the network continues generating motor commands corresponding to the rolling behavior.
+
+In the middle of the experiment, a human **interrupts the motion** by stopping the ball in front of the robot, as shown in Figure 6b. This changes the sensory observations dramatically. The network's prediction no longer matches the actual sensory input, causing the prediction error to increase.
+
+Rather than replaying the rolling motion, the network updates its **Parametric Bias (PB)** values to reduce the prediction error. As the PB values gradually move toward another learned region of the PB space, the generated motor commands also change. Consequently, the robot smoothly transitions from the **rolling behavior** to the **lifting behavior**, grasps the ball, and lifts it from the table.
+
+One of the most remarkable aspects of this experiment is that the robot was **never explicitly trained on this transition**. During training, the rolling and lifting motions were demonstrated as two independent behaviors. Nevertheless, the recurrent network was able to recognize that the current sensory sequence was no longer consistent with the rolling behavior and automatically generate the lifting behavior instead.
+
+This example demonstrates one of the key advantages of recurrent neural networks in robotics. Because the network continuously combines its **current sensory observations** with its **memory of previous observations**, it can generate actions that adapt smoothly to changes in the environment instead of simply replaying a predefined motion sequence.
+
+
+
+#### Deep Learning Applications
 
 
 

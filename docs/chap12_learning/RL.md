@@ -195,6 +195,9 @@ Practically computes the expected reward for taking a specific action $a$ in sta
 
 **Greedy Policy $\pi(s, a)$** can also be computed from the Action-Value Function for a given state/action couple $Q^{\pi}$ $\rightarrow \pi(s, a) = \underset{a}{\mathrm{max}}\space Q^{\pi}(s, a)$.
 
+
+The Action-Value & State-Value functions are mathematically (and logically) connected, as the optimal value of a state is simply the value of the best possible action you can take from that state: $V^{\star}(s) = \underset{a}{\mathrm{max}}Q^{\star}(s, a)$.
+
 #### **The Core Mathematics: Bellman Equation**
 
 A robot cannot evaluate an infinite number of possible futures to figure out what to do, the `Bellman Equation` breaks a complex infinite sequence of decisions into a simple, recursive two-step process: what happens right now, and what happens next. Concretely, it states that the 'value' of the rover's current location is equal to: 

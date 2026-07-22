@@ -234,6 +234,14 @@ Because the state and action space is finite in discrete RL, the Bellman Optimal
 
     - Where $\alpha$ is the learning rate. It determines to what extent newly acquired information overrides old information. A rate of 0 makes the robot learn nothing, while a rate of 1 makes it ONLY consider the most recent information
 
+#### **Exploration Vs Exploitation**
+
+For the robot to formulate a successfull policy in unknown terrain, you must program it to balance two conflicting goals:
+- **Exploitation (Risk-Averse)**: The robot uses its current knowledge to make the best known decisions, securing guaranteed rewards. However, if it *only* exploits, it might get permanently stuck in a local minimum, never realizing a much better path exists just over the hill.
+- **Exploration (Risk-Seeking)**: The robot deliberately tries new, untested actions to dicover more about the environment. While this can lead to penalties in the short term, it is the only way to find the absolute optimal policy.
+
+A common strategy to handle this is the **Epsilon-Greedy ($\epsilon$-greedy)** approach, where the robot mostly exploits its known best actions, but occasionally (with a small probability $\epsilon$) takes a completely random action to explore.
+
 ## Credits
 
 This course page was created by **[Seif Labib](https://www.linkedin.com/in/seif-labib/), MSc in Robotics at EPFL**, under supervision of [Prof. Aude Billard](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en&oi=ao), and funded by **IEEE RAS** and **EPFL**.

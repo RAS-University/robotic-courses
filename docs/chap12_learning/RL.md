@@ -68,6 +68,29 @@ Imagine sending a rover to planet Mars, with the purpose of collecting rock samp
 
 In reinforcement learning however, the agent receives indirect supervision. It learns through receiving rewards (success) and penalties (failure) and must figure out the optimal path entirely on its own, just like a human learns how to walk, not falling over in `unseen` environments and places. Reinforcement Learning is the fundamental framework for teaching machines (robots) how to make a sequence of decisions & actions in complex, uncertain & unpredicted environments.
 
+![RL for drones](https://www.youtube.com/watch?v=J1hv0MJghag)
+><sub>Example of what RL can be used for. All of this is done is simulation, which can be transferred to a real drone (this sim-to-real transfer will be covered in another [chapter](Sim-to-Real.md).)</sub>
+
+<details markdown="1">
+    <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: What task does Reinforcement Learning do as a branch of Machine Learning?</strong></p>
+<form id="q0-1">
+    <input type="radio" name="q0-1" value="A">Classification.<br>
+    <input type="radio" name="q0-1" value="B">Decision Making & Action Taking.<br>
+    <input type="radio" name="q0-1" value="C">Regression.<br>
+    <input type="radio" name="q0-1" value="D">Data Generation (GenAI).<br>
+    <button type="button"
+      onclick="checkTrueFalse('q0-1', 'B',
+      'Correct! Reinforcement Learning is for teaching robots to take sequences of actions.',
+      'Not quite. Reread the difference between different types of Machine Learning.')">
+      Check Answer
+    </button>
+    <p id="q0-1-feedback"></p>
+</form>
+</details>
+
 ## Course Content
 
 ### RL Vocabulary
@@ -114,6 +137,32 @@ $$P(s_{t+1} | a_{t}, s_{t}, s_{t-1}, ..., s_{0}) \approxeq P(s_{t+1} | a_{t}, s_
 - **Reward ($R_{ss'}^{a}$)**: The feedback for the robot. Finding a rock sample yields a positive reward, while falling into a lava pit yields a severe negative penalty. Like the environment, rewards may be also stochastic (eg., finding a rock has an average reward of 10, but can go up to 15 or down to 5). $\rightarrow R_{ss'}^{a} = p(r_{t+1} | a_{t}, s_{t}, s_{t+1})$ 
 - **Discount factor ($\gamma$)**: A value between 0 and 1 that determines if the robot is shortsighted (prioritizing immediate rewards) or rather farsighted (prioritizing long-term success).
 
+
+<details markdown="1">
+  <summary>Conceptual Questions</summary>
+
+<!-- Question 1 -->
+<p><strong>Question 1: An example of a set of states would be:</strong></p>
+<form id="q1-1">
+  <input type="checkbox" name="q1-1" value="A">On a chess grid of 3x3, being in one of the 9 places.<br>
+  <input type="checkbox" name="q1-1" value="B">Move right, left, up & down.<br>
+  <input type="checkbox" name="q1-1" value="C">Having collected 0, 1, 2, ... rocks.<br>
+  <input type="checkbox" name="q1-1" value="D">Prioritizing immediate gratification.<br>
+  <button type="button"
+    onclick="checkMultipleTrueFalseRadio(
+    'q1-1',
+    {
+    'A': 'Correct! Representing the world as a 2D 3x3 grid would mean that the finite set of states would be to be any of the 9 cells.',
+    'C': 'Correct! Taking actions (walking, gathering & storing rocks) would get you to navigate between the states of having [0, N] rocks.',
+    },
+    'Incorrect! Those are actions and not states where/how the robot would find itself.Prioritizing immediate gratification is decided by the discount factor $\\gamma$',
+    )">
+    Check Answer
+</button>
+<p id="q1-1-feedback"></p>
+</form>
+</details>
+
 #### **Optimal Policy $\pi(s, a)$**
 
 A policy is a mapping or rule that tells the robot exactly which action $a$ to take whenever it finds itself in any state $s$. Simply put, the strategy the robot follows.
@@ -145,6 +194,29 @@ $$Q^{\pi}(s, a) = E_{\pi}\left\{\sum_{k=0}^{\infty}\gamma^{k}r_{t+k+1} | s_{t}=s
 Practically computes the expected reward for taking a specific action $a$ in state $s$, and then following policy $\pi$ thereafter. Simply put, it tells the robot "how good" a specific action $a$ (ie., maneuver) is.
 
 **Greedy Policy $\pi(s, a)$** can also be computed from the Action-Value Function for a given state/action couple $Q^{\pi}$ $\rightarrow \pi(s, a) = \underset{a}{\mathrm{max}}\space Q^{\pi}(s, a)$.
+
+#### **The Core Mathematics: Bellman Equation**
+
+A robot cannot evaluate an infinite number of possible futures to figure out what to do, the `Bellman Equation` breaks a complex infinite sequence of decisions into a simple, recursive two-step process: what happens right now, and what happens next. Concretely, it states that the 'value' of the rover's current location is equal to: 
+  1. The immediate reward it gets for moving.
+  2. Plus the discounted value of the new location it ends up in.
+
+$$V^{\pi}(s) = \sum_{a}\pi(s, a) \sum_{s'}P^{a}_{ss'}[R^{a}_{ss'} + \gamma V^{\pi}(s')]$$
+
+  - $V^{\pi}(s)$ (The Value): The expected total long-term reward starting from state s and following policy $\pi$.
+  - $\sum_{a}\pi(s, a)$ (The Policy): The robot considers all possible actions a it can take from state s, weighted by the probability of taking them under its current policy.
+  - $\sum_{s'}P^{a}_{ss'}$ (Transition Probability): When the robot takes an action, the real world is messy (eg., wheels slipping). $P^{a}_{ss'}$ is the probability that taking action a in state s actually lands the robot in the desired next state s'.
+  - $R^{a}_{ss'}$ (The Immediate Reward): The immediate feedback received when transitioning from s to s'.
+  - $\gamma$ (The Discount Factor): If $\gamma$ = 0, the robot is entirely short-sighted and ONLY cares about immediate rewards. If $\gamma \rightarrow 1$, the robot is far-sighted and values long-term goals just as much as immediate ones.
+  - $V^{\pi}(s')$ (The Recursive Step): The value of the next state.
+
+The end goal of the Bellman Equation is to compute the *optimal policy* $V^{\star}(s)$.
+
+Instead of averaging over the actions the robot might take, the Optimality Equation assumes the robot will always aggressively choose the action that yields the maximum possible expected return: 
+$$V^{\star}(s) = \underset{a}{\mathrm{max}} \sum_{s'}P^{a}_{ss'}[R^{a}_{ss'} + \gamma V^{\star}(s')]$$
+
+Once the robot accurately computes $V^{\star}(s)$ for every state, finding the optimal policy is trivial: the robot simply looks at its neighboring states and always moves toward the one with the highest value.
+
 
 ## Credits
 

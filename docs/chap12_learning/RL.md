@@ -217,6 +217,16 @@ $$V^{\star}(s) = \underset{a}{\mathrm{max}} \sum_{s'}P^{a}_{ss'}[R^{a}_{ss'} + \
 
 Once the robot accurately computes $V^{\star}(s)$ for every state, finding the optimal policy is trivial: the robot simply looks at its neighboring states and always moves toward the one with the highest value.
 
+#### **Programming the Robot: The Algorithms**
+
+Because the state and action space is finite in discrete RL, the Bellman Optimality Equation represents a system of nonlinear equations. Different algorithms are used, depending on what the robot knows about its environment, to solve the Bellman Equation. 
+
+- Dynamic Programming (DP): If we possess a perfect mathematical model of the environment (the transition probabilities & rewards are fully known), we can solve the bellman equation explicitly using DP. This computes the absolute best path offline before the robot ever moves.
+- Monte Carlo (MC) Sampling: When the world is too hard to model mathematically, the robot must interact with it physically. In MC, the robot executes entire random episodes, records the sequence of rewards, and averages them to update the value of visited states.
+- Temporal-Difference (TD) Learning: A powerful hybrid approach. Like MC, the robot learns from raw physical experience. Like DP, it updates its knowledge at every single time step without having to wait for the episode to finish
+  - SARSA (on-Policy TD Control): The robot updates its Q-values based on the action it actually executes: 
+  $$Q(s, a) \leftarrow Q(s, a) + \alpha[r + \gamma Q(s', a') - Q(s, a)]$$
+  - Q-Learning (Off-Policy TD Control): A widely used algorithm where the robot continuously evaluates the maximum possible reward of the next state, leading to highly robust learning.
 
 ## Credits
 

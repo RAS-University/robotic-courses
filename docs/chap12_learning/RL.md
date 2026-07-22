@@ -227,6 +227,9 @@ Because the state and action space is finite in discrete RL, the Bellman Optimal
   - SARSA (on-Policy TD Control): The robot updates its Q-values based on the action it actually executes: 
   $$Q(s, a) \leftarrow Q(s, a) + \alpha[r + \gamma Q(s', a') - Q(s, a)]$$
   - Q-Learning (Off-Policy TD Control): A widely used algorithm where the robot continuously evaluates the maximum possible reward of the next state, leading to highly robust learning.
+  $$Q(s, a) \leftarrow Q(s, a) + \alpha[r + \gamma \underset{a'}{\mathrm{max}} Q(s', a') - Q(s, a)]$$
+
+    - Where $\alpha$ is the learning rate. It determines to what extent newly acquired information overrides old information. A rate of 0 makes the robot learn nothing, while a rate of 1 makes it ONLY consider the most recent information
 
 ## Credits
 

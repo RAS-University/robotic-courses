@@ -242,6 +242,13 @@ For the robot to formulate a successfull policy in unknown terrain, you must pro
 
 A common strategy to handle this is the **Epsilon-Greedy ($\epsilon$-greedy)** approach, where the robot mostly exploits its known best actions, but occasionally (with a small probability $\epsilon$) takes a completely random action to explore.
 
+#### **The Curse of Dimensionality (Why Discrete RL is Not enough)**
+
+Discrete RL works perfectly for simple grids and board games (like Tic-Tac-Toe). However, in physical robotics, standard discrete RL fails due to the **Curse of Dimensionality**. The computational costs explode as the number of states increases and the environment gets larger. For example, Backgammon has roughly $10^{20}$ states-storing a $Q$-value for every possible state would explode the system's memory. Real-world robots operate in a **Markov World that is continuous**. They rely on continuous variables (like joint angles, torques and velocities), and don't just move 'up' or 'down'. Discretizing a robot's smooth movement into a grid is difficult (possible however), but deciding on the exact granularity is even more difficult. A coarse grid makes the robot jerky and imprecise, while a fine grid results in billions of states that are impossible to compute.
+
+To acheive smooth, fluid robotic motion, we must move beyond discrete tables and enter the next phase of the course: **Continuous Reinforcement Learning**.
+
+
 ## Credits
 
 This course page was created by **[Seif Labib](https://www.linkedin.com/in/seif-labib/), MSc in Robotics at EPFL**, under supervision of [Prof. Aude Billard](https://scholar.google.com/citations?user=tM4JMcQAAAAJ&hl=en&oi=ao), and funded by **IEEE RAS** and **EPFL**.

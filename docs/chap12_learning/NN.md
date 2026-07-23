@@ -755,6 +755,123 @@ One of the most remarkable aspects of this experiment is that the robot was **ne
 
 This example demonstrates one of the key advantages of recurrent neural networks in robotics. Because the network continuously combines its **current sensory observations** with its **memory of previous observations**, it can generate actions that adapt smoothly to changes in the environment instead of simply replaying a predefined motion sequence.
 
+##### Echo State Networks (ESNs)
+
+Echo State Networks (ESNs) are another type of **recurrent neural network**, but they take a very different approach to learning.
+
+In a standard RNN, **every weight is trainable**. During training, the network must be unrolled through time, and gradients are propagated backward across every time step using **Backpropagation Through Time (BPTT)**. As sequences become longer, this process becomes computationally expensive and often suffers from unstable gradients.
+
+Echo State Networks were proposed as a way to avoid this costly training procedure. Instead of training the entire recurrent network, an ESN divides the model into two parts:
+- A **large recurrent network**, called the **reservoir**, whose weights are randomly initialized and **never updated**.
+- A small **readout layer**, whose job is to convert the reservoir's internal state into the desired output. Only this layer is trained.
+
+<figure class="figure">
+  <img src="/assets/images/NN/echo-state-network.png"
+       alt="Architecture of an Echo State Network">
+  <figcaption>
+    <strong>Figure 8.</strong> Architecture of an Echo State Network (ESN).
+  </figcaption>
+</figure>
+
+At first glance, this idea seems surprising. If the recurrent network never learns, **how can the model solve complex sequential tasks?**
+
+The key insight is that the reservoir does not need to learn specific behaviors. Instead, its purpose is to **transform the input sequence into a rich, high-dimensional dynamic representation** that preserves information about recent history. The readout layer then learns how to interpret these dynamics to produce the correct output.
+
+One of the most intuitive and famous ways to understand this idea is through the analogy of **throwing stones into a pond**.
+
+Imagine a calm pond with perfectly fixed physical laws. Every time you throw a stone into the water, it creates ripples that gradually spread outward and slowly disappear. The pond itself never changes, its physics remain exactly the same, but its surface continuously reflects the effects of recent events.
+
+Now imagine throwing another stone before the ripples from the first one have completely faded. The new waves interact with the old ones, producing a unique interference pattern. By observing the shape of the water at a particular moment, you could infer information about **when the stones were thrown, how large they were, and in what order they arrived**.
+
+The reservoir behaves in much the same way.
+
+Each new input perturbs the recurrent network, producing an evolving activation pattern. Since previous activations have not completely disappeared, the current reservoir state contains a mixture of both **present and past inputs**. In other words, the reservoir creates an **echo** of recent history—hence the name **Echo State Network**.
+
+The readout layer does not need to reconstruct the entire sequence. It only needs to learn how to interpret the current "ripples" inside the reservoir to generate the desired output. Since the reservoir remains unchanged during learning, training is much faster than in conventional recurrent neural networks.
+
+
+###### A Robotics Example: Predicting Tactile Forces
+
+A nice example of how Echo State Networks can be applied in robotics is presented in the paper *A Predictive Model for Tactile Force Estimation Using Audio-Tactile Data*.
+
+Imagine a robot holding a bottle that is partially filled with water. As the robot rotates the bottle to move it from one position to another, the water flows inside the container. Although the robot precisely controls its own motion, it cannot directly observe or control the motion of the liquid. The contents may be hidden because the bottle is opaque or because they are occluded by the robot's own gripper. Consequently, the robot cannot rely on vision to estimate how the liquid is moving.
+
+As the water moves, the mass distribution inside the bottle changes, causing the center of mass of the bottle-and-liquid system to shift. This continuously generates varying inertial forces and torques that act on the robot's hand. Unlike a solid object, whose mass distribution remains constant throughout manipulation, a partially filled bottle behaves as a dynamic system. A grasp that is stable at the beginning of the motion may become unstable a moment later as the liquid shifts inside the container. Therefore, the robot must continuously estimate how these internal dynamics affect the contact forces and adjust its grip accordingly. **Video 1** demonstrates this manipulation task, illustrating how the robot adapts its grip as the contents move inside the bottle.
+
+<div style="text-align: center;">
+    <video controls preload="metadata" playsinline style="width: 100%; max-width: 850px; height: auto;">
+        <source src="/assets/videos/NN/ESN_tactile_water.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p>
+        <strong>Video 1.</strong> Real-time robotic manipulation of a partially filled bottle. The robot predicts future tactile forces and adjusts its grip to maintain a stable grasp.
+    </p>
+</div>
+
+Now suppose we make the problem even more challenging. Instead of always manipulating a bottle filled with water, the robot is given bottles containing different materials, such as rice, gummies, or a thick slurry. Each material behaves differently. Water flows smoothly, rice moves as individual particles, gummies shift in larger chunks, while slurry moves much more slowly because of its high viscosity. Consequently, even when the robot performs exactly the same motion, the forces acting on the robotic hand evolve very differently depending on the material inside the bottle. **Video 2** demonstrates this challenge. A model trained only on water fails to accurately predict the tactile forces when the bottle is instead filled with rice, resulting in an unstable grasp. 
+
+<div style="text-align: center;">
+    <video controls preload="metadata" playsinline style="width: 100%; max-width: 850px; height: auto;">
+        <source src="/assets/videos/NN/ESN_tactile_rice_failure.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p>
+        <strong>Video 2.</strong> A model trained only on water fails to generalize when manipulating a bottle filled with rice. 
+    </p>
+</div>
+
+Rather than explicitly modeling the complex physics of every material, the robot can learn these dynamics directly from experience. By observing the recent history of tactile measurements, an Echo State Network learns the relationship between past tactile observations and the forces that will act on the robot in the near future. Because the reservoir naturally preserves information about previous measurements, it captures the temporal behavior of the moving contents while requiring only the output layer to be trained. As a result, the robot can anticipate changes in grasp stability and tighten or adjust its grip before the object becomes unstable or begins to slip.
+
+The experimental setup is shown in Figure 9. A **KUKA iiwa** robot arm equipped with an **Allegro robotic hand** repeatedly rotates bottles containing four different materials: **water, rice, gummies, and a high-viscosity slurry**. The hand is covered with a **Tekscan tactile sensor**, while a microphone is mounted close to the bottle. As the contents move, both touch and sound are recorded simultaneously.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/ESN_tactile_prediction_pipeline.png" alt="Overview of the tactile and audio prediction framework" width="900">
+    <p><strong>Figure 9.</strong> Overview of the tactile force prediction framework.</p>
+</div>
+
+Instead of using the raw tactile image directly, the pressure measurements are converted into two meaningful quantities for each region of the hand:
+- **Center of Pressure (CoP):** the location where the contact force is concentrated.
+- **Total Force:** the magnitude of the force acting on that region.
+
+Together, these values provide a compact description of how the object interacts with the robot throughout the manipulation. **Video 3** visualizes both the predicted and measured Center of Pressure and Total Force during the manipulation task, allowing you to compare the ESN's predictions with the actual tactile measurements.
+
+<div style="text-align: center;">
+    <video controls preload="metadata" playsinline style="width: 100%; max-width: 850px; height: auto;">
+        <source src="/assets/videos/NN/ESN_tactile_prediction.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p>
+        <strong>Video 3.</strong> Comparison between the predicted and measured Center of Pressure (CoP) and Total Force during bottle manipulation.
+    </p>
+</div>
+
+Since these measurements evolve continuously over time, they naturally form a time series. The ESN first observes a short sequence of tactile measurements to initialize its reservoir. This initialization phase allows the reservoir to encode the recent history of the interaction. Once initialized, the network predicts the tactile measurements for hundreds of future time steps without receiving any new sensor inputs. This open-loop prediction allows the robot to anticipate future contact forces rather than simply reacting to the current ones. 
+
+Touch is not the only clue available to the robot. As the contents move inside the bottle, they also generate distinctive sounds. Rice produces repeated impacts, water creates splashing noises, and each material leaves its own acoustic signature. These sounds reveal information about the internal motion that may not yet appear in the tactile measurements. **Video 4** demonstrates the acoustic signal recorded during the manipulation of a bottle filled with water, similar to what the robot hears through its onboard microphone.
+
+<div style="text-align: center;">
+    <video controls preload="metadata" playsinline style="width: 100%; max-width: 850px; height: auto;">
+        <source src="/assets/videos/NN/ESN_tactile_sound.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p>
+        <strong>Video 4.</strong> Audio recorded during the manipulation of a bottle filled with water. 
+    </p>
+</div>
+
+To exploit this additional information, a second ESN is trained using Mel spectrograms extracted from the recorded audio. This network predicts future tactile measurements based solely on sound. Its predictions are then combined with those of the tactile ESN, producing a multimodal prediction that is more accurate than using tactile sensing alone. 
+
+Together, the tactile and audio prediction pipelines shown in **Figure 9** illustrate how Echo State Networks can anticipate future contact forces during robotic manipulation. This example also highlights one of the main strengths of ESNs. Because only the output layer is trained, they provide an efficient way to model complex temporal dynamics while remaining computationally lightweight enough for real-time robotic applications.
+
+For a deeper understanding of the complete framework, **Video 5** explains the proposed method in detail. It presents the experimental procedure, the tactile and audio prediction pipelines, and several analyses of the model's performance.
+
+<div style="text-align: center;">
+    <video controls preload="metadata" playsinline style="width: 100%; max-width: 850px; height: auto;">
+        <source src="/assets/videos/NN/ESN-tactile_force.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p><strong>Video 5.</strong> Detailed explanation of the audio-tactile force prediction framework.</p>
+</div>
 
 
 #### Deep Learning Applications

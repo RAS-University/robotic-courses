@@ -13,6 +13,7 @@ nav_exclude: false
 
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>
+<script src="{{ '/assets/js/NN/youtube-trimmer.js' | relative_url }}"></script>
 
 <a name="top"></a>
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
@@ -872,6 +873,171 @@ For a deeper understanding of the complete framework, **Video 5** explains the p
     </video>
     <p><strong>Video 5.</strong> Detailed explanation of the audio-tactile force prediction framework.</p>
 </div>
+
+##### Long Short-Term Memory (LSTM)
+
+The simple RNN introduced an important idea: using a context vector to remember previous information. However, in practice, simple RNNs struggle to learn dependencies over long sequences.
+
+Imagine a mobile robot navigating through a building. At the beginning of the corridor, it observes an exit sign pointing left. Several seconds later, after passing many rooms and intersections, it finally reaches the end of the corridor where it must decide whether to turn left or right.
+
+Ideally, the network should remember the information from the exit sign until it reaches the intersection. Unfortunately, a simple RNN often forgets information that occurred many time steps earlier.
+
+The main reason is the vanishing gradient problem. During backpropagation through time, gradients are repeatedly multiplied by the recurrent weights and activation derivatives. As they propagate backwards through many time steps, these gradients often become extremely small, making it difficult for the network to update parameters based on information from the distant past. As a result, the network gradually loses long-term information and mainly relies on recent observations.
+
+To overcome this limitation, Long Short-Term Memory (LSTM) networks were introduced. Rather than using a single context vector as memory, an LSTM introduces a dedicated memory cell together with several gates that control what information should be stored, removed, or used.
+
+The key idea is simple:
+> Instead of trying to remember everything, the network learns **what to remember**, **what to forget**, and **when to use the stored information**.
+
+The overall architecture of an LSTM is shown in Figure 10.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/LSTM_architecture.png" alt="Architecture of a Long Short-Term Memory (LSTM) network" width="900">
+    <p><strong>Figure 10.</strong> Architecture of a Long Short-Term Memory (LSTM) network.</p>
+</div>
+
+Compared to a simple RNN, an LSTM contains a more sophisticated computational unit.
+
+In addition to the hidden state ($h_t$), each LSTM cell maintains another vector called the **cell state** ($C_t$). The cell state acts as a long-term memory that flows through the sequence with only small modifications at each time step.
+
+At first glance, the architecture in **Figure 10** may look complicated. However, it is actually built from a few simple operations that work together to update the cell state. To better understand how an LSTM works, we will break the architecture into smaller pieces and examine each component one at a time.
+
+Before diving into the details, let's first think about the problem at a high level.
+
+The goal of an LSTM is to decide **what information should be remembered and what information should be forgotten**. But how can a neural network make such decisions?
+
+Suppose we want the network to assign a score to every piece of information indicating how much of it should be kept. Ideally, this score should lie between **0** and **1**:
+
+- **0** means "completely discard this information."
+- **1** means "keep it unchanged."
+- Values between **0** and **1** mean "keep only part of it."
+
+A natural choice for producing such scores is the **sigmoid activation function**, whose output always lies between 0 and 1.
+
+Once the score has been computed, applying the decision is straightforward. We simply multiply the score by the information itself. If the gate outputs **1**, the information passes through unchanged. If it outputs **0**, the information is completely removed. Intermediate values preserve only a fraction of the information.
+
+This simple idea—using a **sigmoid activation to decide how much information should pass, followed by an element-wise multiplication to apply that decision**—is the fundamental building block of an LSTM.
+
+Now, let's think about the logic behind an LSTM.
+
+At every time step, we have two sources of information:
+
+- The **cell state** from the previous time step, which summarizes everything the network has remembered so far.
+- The **current input**, which contains new information that may or may not be important.
+
+Our goal is to combine these two sources into a new cell state that best represents the entire sequence up to the current time step.
+
+But not all old information should be kept, and not all new information should be stored. Instead, the network first decides **how much of the previous memory should be preserved** and **how much of the new information should be added**.
+
+Conceptually, the new cell state is computed as
+
+$$
+\text{new memory}
+=
+\text{kept old memory}
++
+\text{selected new information}.
+$$
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/LSTM_memory_update.png" alt="Updating the cell state in an LSTM" width="700">
+    <p><strong>Figure 11.</strong> The cell state is updated by combining two components: the preserved information from the previous cell state (blue, forget gate) and the selected new information extracted from the current input (orange, input gate). The resulting updated cell state (<em>C<sub>t</sub></em>) is highlighted in red, showing the final memory that is passed to the next time step.</p>
+</div>
+
+Mathematically, this idea can be expressed as
+
+$$
+C_t =
+\text{(how much to keep)} \times C_{t-1}
++
+\text{(how much to add)} \times \text{(new information)}.
+$$
+
+The first term preserves useful information from the previous memory while discarding information that is no longer relevant. This is the role of the **forget gate**.
+
+For example, suppose a warehouse robot is carrying a package to Shelf A. Halfway through its journey, it receives an update assigning the package to Shelf B instead. The previous destination is no longer useful. The forget gate learns to remove this outdated information from the memory so that future decisions are based only on the new destination.
+
+The second term extracts useful information from the current input and adds it to the memory. This is the role of the **input gate**. For instance, after receiving the new delivery destination (Shelf B), the robot should store this new information in its memory so that it can continue navigating toward the correct location.
+
+So far, we have described the update conceptually. In practice, the "how much to keep" and "how much to add" values are generated by sigmoid gates, while the "new information" is computed from the current input and the previous hidden state using a tanh activation:
+
+$$
+f_t=\sigma(W_f[h_{t-1},x_t]+b_f)
+$$
+
+$$
+i_t=\sigma(W_i[h_{t-1},x_t]+b_i)
+$$
+
+$$
+\tilde{C}_t=\tanh(W_c[h_{t-1},x_t]+b_c)
+$$
+
+Here,
+
+- $f_t$ determines how much of the previous cell state should be preserved.
+- $i_t$ determines how much of the candidate memory should be added.
+- $\tilde{C}_t$ is called the **candidate memory**. It contains new information extracted from the current input and the previous hidden state.
+
+Substituting these quantities into our conceptual equation gives the LSTM cell-state update rule:
+
+$$
+C_t = f_t \odot C_{t-1} + i_t \odot \tilde{C}_t,
+$$
+
+where $\odot$ denotes element-wise multiplication.
+
+Up to this point, we have updated the cell state, which serves as the long-term memory of the network. However, not all of this information needs to be exposed at every time step. Some information may be useful to keep internally for future decisions, while only a subset is needed to produce the current output.
+
+This is the role of the **output gate**, illustrated in **Figure 12**.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/LSTM_output_gate.png" alt="The output gate in an LSTM cell" width="700">
+    <p><strong>Figure 12.</strong> The output gate determines which information from the updated cell state is exposed as the hidden state. The cell state continues to the next time step, while the hidden state is passed to the next layer and the next time step.</p>
+</div>
+
+Similar to the other gates, the output gate first computes a value between 0 and 1 using a sigmoid activation:
+
+$$
+o_t=\sigma(W_o[h_{t-1},x_t]+b_o)
+$$
+
+This gate is then applied to the updated cell state to produce the hidden state:
+
+$$
+h_t=o_t\odot\tanh(C_t)
+$$
+
+Notice that the **cell state** ($C_t$) and the **hidden state** ($h_t$) have different roles. The cell state stores the network's long-term memory and is passed directly to the next time step. The hidden state, on the other hand, contains only the information that the LSTM chooses to reveal at the current time step. It is used to make predictions and is also passed to the next LSTM cell.
+
+One of the main advantages of this design is that the cell state is updated primarily through **additive operations** rather than repeated nonlinear transformations. As a result, gradients can propagate through many time steps much more easily during backpropagation. This significantly reduces the **vanishing gradient problem**, allowing LSTMs to learn long-term dependencies that are difficult for standard RNNs to capture.
+
+By separating **long-term memory** (the cell state) from the **information exposed to the rest of the network** (the hidden state), LSTMs can selectively remember, forget, and reveal information over long sequences. This ability has made LSTMs one of the most successful recurrent neural network architectures for sequential learning tasks, including speech recognition, language modeling, time-series forecasting, and many robotics applications such as robot navigation, motion prediction, and human-robot interaction.
+
+###### A Robotics Example: Human-Robot Handover
+One of the most common collaborative tasks in robotics is **object handover**, where a robot passes an object to a human or receives an object from them. Although this appears to be a simple task, successful handovers require the robot to continuously understand the human's intention and adapt its own motion accordingly.
+
+Imagine someone handing you a bottle of water. You do not wait until their hand completely stops before reaching for it. Instead, you continuously observe the motion of their arm, predict where they are moving, and adjust your own hand throughout the interaction. Humans perform this naturally, making the handover smooth and effortless.
+
+A robot should behave in the same way. However, making such predictions is challenging because the robot only observes a **partial motion**. During the first few moments, the human's movement may not clearly reveal the intended handover location. As more observations become available, the robot should continuously refine its prediction rather than committing to a single motion.
+
+In **"Collaborative Human-Robot Motion Generation using LSTM-RNN"** (Humanoids 2018), Zhao *et al.* proposed using an LSTM network to directly generate robot motions from observed human motions. Figure 13 illustrates the proposed architecture. The robot first uses an RGB-D camera to capture a 10-timestep sequence of human arm observations (where each timestep tracks the 3D positions of the palm and elbow). These sequential observations are fed into an LSTM network containing 50 LSTM units, which captures the temporal evolution of the human motion. The output from the LSTM network is then passed through a fully connected layer to predict a corresponding 10-timestep sequence of robot movements (where each timestep defines the 7 joint angles of the robot's arm). Instead of explicitly estimating the human's future trajectory or solving a complex inverse kinematics problem, the network learns to directly map human motions to appropriate robot motions.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/lstm_handover_architecture.png" alt="LSTM-based human-robot handover architecture" width="900">
+    <p><strong>Figure 13.</strong> LSTM-based architecture for human-robot handover.</p>
+</div>
+
+This sequence-to-sequence formulation allows the robot to continuously convert human movements into appropriate robot actions. Because the system runs continuously, it rapidly generates short, overlapping predictions of where the robot should move. By averaging these overlapping predictions together, the robot ensures its physical movements are fluid and smooth. As new observations become available, the LSTM updates its predictions, enabling responsive handovers even when the human changes speed or slightly adjusts their movement. Because the LSTM maintains an internal memory of previous observations, it can continuously update its prediction as the human changes direction or speed. As a result, the robot reacts smoothly instead of waiting until the human finishes moving. In the video below, you can see a performance comparison between this proposed method and a traditional baseline approach.
+
+<div style="text-align: center;">
+    <iframe class="youtube-trim" data-start="18" data-end="28" data-loop="true" width="735" height="413" src="https://www.youtube.com/embed/HactyuLZWgA?start=18&amp;enablejsapi=1" title="Collaborative human-robot motion generation video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+This example illustrates one of the greatest strengths of LSTMs in robotics. Many robotic tasks cannot be solved by looking at a single observation. Instead, the robot must understand how the current observation relates to everything that has happened previously. By maintaining an internal memory of the interaction, the LSTM enables the robot to infer human intentions and generate appropriate actions in real time.
+
+
+
 
 
 #### Deep Learning Applications

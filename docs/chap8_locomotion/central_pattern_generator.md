@@ -83,8 +83,18 @@ Before studying how Central Pattern Generators produce and coordinate rhythmic m
 
 
 In this lecture, we simplify a robotic leg as a planar mechanism composed of two rigid links connected by rotational joints. This model is simple enough to analyse mathematically while still capturing the main motion of the hip, knee, and foot.
+<div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
 
-> **Image slot 1:** Quadruped robot with one leg highlighted.
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot11.png' | relative_url }}"
+  alt="Quadruped leg"
+  style="width: 40%; height: auto;">
+
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot12.png' | relative_url }}"
+  alt="Quadruped leg"
+  style="width: 40%; height: auto;">
+</div>
 
 The objective is to understand how joint movements determine the position of the foot. This relationship is the starting point for controlling foot trajectories, applying forces to the ground, and eventually producing locomotion.
 
@@ -102,7 +112,8 @@ The number and arrangement of joints determine the leg's **degrees of freedom** 
 
 For a typical quadruped, each leg often contains three actuated joints. However, when studying motion in the sagittal plane, the leg can be simplified to two links and two rotational joints.
 
-> **Image slot 2:** Real quadruped leg beside its two-link planar approximation.
+![Quadruped leg]({{ '/assets/images/locomotion/Image_slot2.png' | relative_url }})
+
 
 This simplified model is commonly called a **double pendulum** or a **two-link manipulator**.
 
@@ -119,22 +130,23 @@ However, actuator properties will later influence:
 - how accurately torque can be controlled;
 - how the leg reacts to impacts;
 - how safely it interacts with the ground.
+<p style="text-align: center;">
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot4.png' | relative_url }}"
+  alt="Quadruped leg"
+  style="width: 40%; height: auto;">
+</p>
 
-> **Image slot 3:** Hip and knee actuators identified on a robotic leg.
-
-For now, we assume that the two joints can be commanded independently through the joint variables \(q_1\) and \(q_2\).
-
-
-
+For now, we assume that the two joints can be commanded independently through the joint variables $q_1$ and $q_2$.
 ### 4. The Planar Two-Link Leg
 
 The model contains:
 
-- two links of lengths \(l_1\) and \(l_2\);
+- two links of lengths $l_1$ and $l_2$;
 - a fixed hip joint;
 - a knee connecting the two links;
 - a foot located at the end of the second link;
-- two joint angles \(q_1\) and \(q_2\).
+- two joint angles $q_1$ and $q_2$.
 
 In the convention used here, both joint angles are measured with respect to the downward vertical direction.
 
@@ -146,7 +158,9 @@ The foot position in Cartesian space is written as:
 
 $$ \mathbf{p} = \begin{bmatrix} x \\ y \end{bmatrix}$$
 
-> **Image slot 4:** Annotated two-link leg showing \(q_1\), \(q_2\), \(l_1\), \(l_2\), the \(x\)-axis, the \(y\)-axis, the knee, and the foot.
+<p style="text-align: center;">
+!["2PlanarLeg"]({{ '/assets/images/locomotion/Image_slot3.png' | relative_url }})
+</p>
 
 This model creates two different descriptions of the same leg:
 
@@ -191,9 +205,6 @@ $$ \mathbf{p}=f(\mathbf{q}) $$
 
 In other words, once the joint angles are known, the position of the foot can be calculated.
 
-> **Image slot 5:** Several configurations of the leg with their corresponding foot positions.
-
-
 #### 5.2 Inverse Kinematics
 
 **Inverse kinematics** considers the opposite problem:
@@ -210,7 +221,12 @@ $$ (q_1,q_2) $$
 
 Unlike forward kinematics, the inverse problem may not have a unique solution. The same foot position can sometimes be reached using different leg configurations.
 
-> **Image slot 6:** Two different joint configurations reaching the same foot position.
+<p style="text-align: center;">
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot5.png' | relative_url }}"
+  alt="Quadruped leg">
+</p>
+
 
 Some desired positions may also be unreachable because of the finite lengths of the links. The set of all reachable foot positions defines the leg's **workspace**.
 
@@ -559,6 +575,11 @@ The kinematic and dynamic models allow us to compute the torques required to con
 - **joint space**, using joint angles and velocities;
 - **Cartesian space**, using the position, velocity, and force of the foot.
 
+<p style="text-align: center;">
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot10.png' | relative_url }}"
+  alt="Quadruped leg">
+</p>
 ---
 
 #### 7.1 The Jacobian
@@ -883,7 +904,18 @@ Inverse kinematics can be computed analytically or numerically.
 For a two-link mechanism, the solution can be derived geometrically using the cosine rule.
 
 Using the coordinate convention $(x,z)$ and relative joint angles $\theta_1$ and $\theta_2$:
+<div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
 
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot7.png' | relative_url }}"
+  alt="Quadruped leg"
+  style="width: 40%; height: auto;">
+
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot8.png' | relative_url }}"
+  alt="Quadruped leg"
+  style="width: 40%; height: auto;">
+</div>
 $$
 \theta_2
 =
@@ -920,6 +952,11 @@ Insert two different leg configurations reaching the same foot position.
 -->
 
 ##### Iterative Inverse Kinematics
+
+<img 
+  src="{{ '/assets/images/locomotion/Image_slot9.png' | relative_url }}"
+  alt="Quadruped leg">
+
 
 For more complex robots, inverse kinematics can be solved numerically.
 
@@ -1005,14 +1042,14 @@ Cartesian and force control answer:
 > **Which joint torques produce the desired Cartesian behaviour or contact force?**
 
 #### 7.5 Single leg hopping
-Single-leg hopping combines the control methods introduced previously. The leg must maintain a suitable configuration while generating a Cartesian force at the foot to push against the ground.
 
-<!-- IMAGE SLOT:
-Insert the single-leg hopping model showing:
-- joint torques tau_1 and tau_2;
-- vertical foot force F_z;
-- optional horizontal force F_x.
--->
+<p style="text-align: center;">
+ <img 
+   src="{{ '/assets/images/locomotion/Image_slot13.png' | relative_url }}"
+   alt="Quadruped leg">
+</p>
+
+Single-leg hopping combines the control methods introduced previously. The leg must maintain a suitable configuration while generating a Cartesian force at the foot to push against the ground.
 
 A hopping controller may combine:
 
@@ -1035,11 +1072,11 @@ $$
 
 For a vertical jump, the main command is the vertical force $F_z$. A single force pulse produces one jump, while a periodic force profile can produce continuous hopping.
 
-<!-- IMAGE SLOT:
-Insert a plot of:
-- a single vertical force pulse;
-- a periodic force profile for continuous hopping.
--->
+<p style="text-align: center;">
+ <img 
+   src="{{ '/assets/images/locomotion/Image_slot14.png' | relative_url }}"
+   alt="Quadruped leg">
+</p>
 
 The hopping behaviour depends on several controller parameters:
 
@@ -1061,6 +1098,121 @@ $$
 and selecting an objective, for example maximizing the jump height while respecting suitable parameter bounds.
 
 At the end of this section, you will implement and tune a single-leg hopping controller as an exercise.
+
+### Exercises
+<mark> #### Practical 1 : Modeling and Simulating a Two-Link Leg </mark>
+
+This practical consolidates the concepts introduced in this module:
+
+- forward kinematics;
+- kinetic and potential energy;
+- Lagrangian dynamics;
+- inertia, velocity-dependent, and gravity terms;
+- passive numerical simulation.
+
+##### Download the exercise files
+
+Download the complete exercise package, extract the ZIP file, and keep all files in the extracted folder.
+
+<a
+  href="{{ '/assets/files/locomotion/locomotion_practical1.zip' | relative_url }}"
+  download
+  style="
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #0075db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  ">
+  Download Practical 1
+</a>
+
+Your exercise folder should have the following structure:
+
+```text
+Exercise_1/
+├── locomotion_practical1.ipynb
+├── locomotion_practical1_solution.ipynb
+├── assertion_check.py
+└── requirements_legged_robotics.txt
+```
+
+---
+
+##### Environment setup
+
+###### 1. Create a Python environment
+
+Open a terminal in the folder containing the exercise files.
+
+**Windows Command Prompt**
+
+```bat
+py -m venv .venv
+.venv\Scripts\activate.bat
+```
+
+**macOS or Linux**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+###### 2. Install the required packages
+
+Run:
+
+```bash
+python -m pip install -r requirements_Ex1.txt
+```
+
+###### 3. Register the Jupyter kernel
+
+```bash
+python -m ipykernel install --user --name rasu-legged --display-name "(RAS U Locomotion)"
+```
+
+###### 4. Open the notebook
+
+**Using JupyterLab**
+
+```bash
+jupyter lab
+```
+
+Open:
+
+```text
+locomotion_practical1.ipynb
+```
+
+Then select the following kernel:
+
+```text
+Python (RAS U Legged)
+```
+
+**Using Visual Studio Code**
+
+1. Open `locomotion_practical1.ipynb`.
+2. Click the kernel selector in the top-right corner.
+3. Select **(RAS U Locomotion)**.
+4. You can start running cells.
+
+---
+
+##### Exercise instructions
+
+1. Replace only the expressions marked `TODO`.
+2. Run the validation cell immediately below each answer.
+3. A correct answer displays a check mark.
+4. An incorrect answer displays an assertion message.
+5. Restart the kernel and run all cells before finishing the practical.
+
+---
 
 ##  Module 2 : Model-based control quadruped
 ##  Module 3 : Advanced locomotion control : CPG

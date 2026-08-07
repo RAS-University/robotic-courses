@@ -593,7 +593,7 @@ Consistent deviations that bias measurements in a fixed direction. Averaging doe
 Zeroing and multi-point calibration (to remove bias and correct scale), improved mounting/alignment, temperature compensation, stable power, and appropriate warm-up time.
 
 > **Rule of thumb**  
-> Use **calibration** to remove *systematic* errors; use **filtering/averaging** to reduce *random* noise.
+> Use **calibration** to remove *systematic* errors; use **filtering/averaging** to reduce *random* noise but adding latency.
 
 <details markdown="1">
  <summary>Videos</summary>
@@ -1165,7 +1165,7 @@ Odometry turns local actuator/IMU readings into an integrated pose estimate usin
 ---
 
 <details markdown="1">
- <summary>Conceptual Quesetions</summary>
+ <summary>Conceptual Questions</summary>
 
   <p><strong>Question 1: </strong> What is the core idea of odometry?</p>
   <form id="ch2-odom-q1">
@@ -2451,6 +2451,12 @@ Where:
 * (c) is the speed of the signal (typically the speed of light for lasers or sound speed for ultrasonic),
 * (t) is the round-trip travel time of the signal.
 
+Another approach used by rangefinder is triangulation. A beam is emitted and its reflection to the obstacle is observed from the side, using a position sensitive device.
+
+![img-description]({{ site.baseurl }}/assets/images/new_sensors/triangulation.png)
+
+> <sub>Triangulation is the base for many sensors, from simple IR sensors to 3D consumer sensors like the Kinect</sub>
+
 The key advantage of rangefinders is their ability to provide **absolute distance measurements** directly, without requiring complex image processing or external references, making them well-suited for both indoor and outdoor navigation tasks.
 
 ---
@@ -2460,8 +2466,8 @@ The key advantage of rangefinders is their ability to provide **absolute distanc
 
 Rangefinders come in various technologies, each with its strengths and limitations. The most common types include:
 
-* **Ultrasonic Rangefinders:** Use sound waves to measure distances. They are widely used in robotics for short-range applications due to their low cost and simplicity.
-* **Infrared (IR) Rangefinders:** Measure distance using infrared light. They are compact, inexpensive, and often used in small robots and consumer devices.
+* **Ultrasonic Rangefinders:** Use sound waves to measure distances by time-of-flight. They are widely used in robotics for short-range applications due to their low cost and simplicity. They are slow.
+* **Infrared (IR) Rangefinders:** Measure distance using infrared light, often by triangulation. They are compact, inexpensive, and often used in small robots and consumer devices.
 * **Laser Rangefinders (LiDAR):** Use laser beams to measure distances with high precision and are widely used in autonomous vehicles and drones. They provide highly accurate 3D distance measurements and are often used in mapping and localization tasks.
 
 ---

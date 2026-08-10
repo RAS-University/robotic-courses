@@ -1036,8 +1036,85 @@ This sequence-to-sequence formulation allows the robot to continuously convert h
 
 This example illustrates one of the greatest strengths of LSTMs in robotics. Many robotic tasks cannot be solved by looking at a single observation. Instead, the robot must understand how the current observation relates to everything that has happened previously. By maintaining an internal memory of the interaction, the LSTM enables the robot to infer human intentions and generate appropriate actions in real time.
 
+##### Gated Recurrent Unit (GRU)
+
+Although LSTMs significantly improve the ability of recurrent neural networks to learn long-term dependencies, they achieve this using a relatively complex architecture consisting of a cell state and three gating mechanisms. This increased complexity also means more parameters to train and higher computational cost.
+
+The **Gated Recurrent Unit (GRU)**, was designed as a simpler alternative to the LSTM. The main idea is to retain the ability to learn long-term dependencies while reducing the number of parameters and simplifying the computations. In practice, GRUs often achieve performance comparable to LSTMs while training faster, making them attractive for applications where computational efficiency is important, such as real-time robotics and embedded systems. The overall architecture of a GRU is illustrated in **Figure 14**.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/gru-architecture.png" alt="Architecture of a Gated Recurrent Unit" width="900">
+    <p><strong>Figure 14.</strong> Architecture of a Gated Recurrent Unit (GRU).</p>
+</div>
+
+Unlike the LSTM, which maintains both a **cell state** ($C_t$) and a **hidden state** ($h_t$), the GRU keeps only a single hidden state, which serves as both the network's working representation and its long-term memory. It also reduces the number of gates from three to two:
+- **Reset gate** ($r_t$)
+- **Update gate** ($z_t$)
+
+The reset gate is computed as
+
+$$
+r_t=\sigma(W_r x_t+U_r h_{t-1}),
+$$
+
+where the values of the reset gate determine how much of the previous hidden state should be used when computing new information.
+
+Using the reset gate, the GRU computes a **candidate hidden state**
+
+$$
+\tilde h_t=\tanh\left(W_hx_t+U_h(r_t\odot h_{t-1})\right),
+$$
+
+which represents a proposal for what the new hidden state should become. Figure 15 illustrates how the reset gate influences the computation of the candidate hidden state.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/gru-reset-gate.png" alt="Computation of the candidate hidden state in a GRU." width="500">
+    <p><strong>Figure 15.</strong> Computation of the candidate hidden state.</p>
+</div>
+
+As shown in **Figure 15**, the reset gate is applied to the previous hidden state before the candidate hidden state is computed. In this way, the GRU can control how much information from the previous hidden state contributes to the candidate hidden state.
+
+If the reset gate is close to one, the previous hidden state contributes almost entirely to the candidate computation. Conversely, if the reset gate is close to zero, its contribution is largely suppressed, and the candidate hidden state depends primarily on the current input. This allows the network to ignore previous context when it is no longer relevant.
+
+Compared to an LSTM, this is an important difference. In an LSTM, the candidate cell state is computed as
+
+$$
+\tilde{C}_t=\tanh\left(W_c[h_{t-1},x_t]+b_c\right),
+$$
+
+where the previous hidden state always contributes to the candidate computation. In contrast, the GRU first uses the reset gate to determine how much of the previous hidden state should be used before computing the candidate hidden state.
+
+The update gate is computed as
+
+$$
+z_t=\sigma(W_zx_t+U_zh_{t-1}),
+$$
+
+and is used to determine how much of the previous hidden state should be preserved.
+
+The final hidden state is then computed as
+
+$$
+h_t=(1-z_t)\odot h_{t-1}+z_t\odot\tilde h_t,
+$$
+
+where the previous hidden state and the candidate hidden state are combined according to the value of the update gate. Figure 16 illustrates how the update gate controls the computation of the new hidden state.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/gru-update-gate.png" alt="Computation of the hidden state in a GRU." width="500">
+    <p><strong>Figure 16.</strong> Computation of the new hidden state.</p>
+</div>
+
+As shown in **Figure 16**, the update gate determines how much information should be taken from the previous hidden state and how much should come from the candidate hidden state. Unlike the reset gate, which influences how the candidate hidden state is computed, the update gate determines how the final hidden state is formed.
+
+If the update gate is close to zero, most of the previous hidden state is preserved, and only a small amount of the candidate hidden state is incorporated. Conversely, if the update gate is close to one, the candidate hidden state contributes more strongly, allowing the network to update its memory with new information. In this way, the update gate controls how quickly the hidden state adapts to new inputs while retaining useful information from previous time steps.
 
 
+If the update gate is close to one, the network largely preserves its previous memory. If it is close to zero, the candidate hidden state replaces most of the old memory. Therefore, the update gate effectively combines the roles of the forget gate and the input gate in an LSTM, while the reset gate provides an additional mechanism that allows the network to selectively ignore previous context when computing new information.
+
+Although GRUs do not explicitly maintain a separate cell state, the additive update of the hidden state allows information and gradients to propagate across many time steps, alleviating the vanishing gradient problem in much the same way as LSTMs.
+
+Overall, GRUs offer a favorable trade-off between model complexity and performance. They require fewer parameters, are computationally more efficient, and often achieve accuracy comparable to LSTMs, especially on moderately long sequences.
 
 
 #### Deep Learning Applications

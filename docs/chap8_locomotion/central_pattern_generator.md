@@ -1351,7 +1351,7 @@ $$
 where:
 
 - $\mathbf{B}(\mathbf{q}) \in \mathbb{R}^{2\times2}$ is the inertia matrix (symmetric, positive definite);
-- $\mathbf{C}(\mathbf{q},\dot{\mathbf{q}}) \in \mathbb{R}^{2}$ is a vector containing the velocity-dependent (Coriolis/centrifugal) torques — note it is written here directly as a vector, not as a matrix multiplying $\dot{\mathbf{q}}$;
+- $\mathbf{C}(\mathbf{q},\dot{\mathbf{q}}) \in \mathbb{R}^{2}$ is a vector containing the velocity-dependent (Coriolis/centrifugal) torques, written here directly as a vector, not as a matrix multiplying $\dot{\mathbf{q}}$;
 - $\mathbf{g}(\mathbf{q}) \in \mathbb{R}^{2}$ is the vector of gravitational torques;
 - $\boldsymbol{\tau} \in \mathbb{R}^{2}$ is the vector of actuator torques.
 
@@ -1660,7 +1660,7 @@ Download the complete exercise package, extract the ZIP file, and keep all files
 
 ```text
 Exercise_1/
-├── locomotion_practical1.ipynb            # the exercise notebook — fill in the TODOs
+├── locomotion_practical1.ipynb            # the exercise notebook, fill in the TODOs
 ├── locomotion_practical1_solution.ipynb   # reference solution
 ├── assertion_check.py                     # validation logic used by the notebook
 ├── requirements_Ex1.txt                   # Python dependencies
@@ -2674,7 +2674,7 @@ $$
 where:
 
 - $\mathbf{J}^{+} \in \mathbb{R}^{2\times2}$ is the Moore–Penrose pseudo-inverse;
-- $\alpha \in \mathbb{R}_{>0}$ is the (scalar) update step size — not to be confused with the geometric angle $\alpha$ shown in the analytical-IK figure above.
+- $\alpha \in \mathbb{R}_{>0}$ is the (scalar) update step size, not to be confused with the geometric angle $\alpha$ shown in the analytical-IK figure above.
 
 The procedure is repeated until:
 
@@ -3210,27 +3210,319 @@ Add these files alongside your existing `env/` folder:
 
 ```text
 Exercise_2/
-├── locomotion_practical2.py    # main exercise — fill in the TODOs
+├── locomotion_practical2.py    # main exercise, fill in the TODOs
 ├── check_hopping.py            # grading helper, run automatically at the end
 ├── requirements_Ex2.txt        # Python dependencies
 └── README.md                   # environment setup & step-by-step instructions
 ```
 
-`locomotion_practical2.py` is the exercise: design a force profile, add Cartesian PD control, and map both to joint torques so the leg hops — either once or continuously.
+`locomotion_practical2.py` is the exercise: design a force profile, add Cartesian PD control, and map both to joint torques so the leg hops, either once or continuously.
 
 **Full environment setup and instructions are in `README.md`** inside the downloaded package.
 
 </div>
 </details>
 
-##  Module 2 : Model-based control quadruped
+##  Module 2 : Gaits
+
+We now leave the single leg of Module 1 and look at the **whole animal or robot**: how its legs coordinate in time. This module introduces **gaits**, what they are, how to describe them quantitatively, and how they are classified.
+
+Before defining anything formally, it helps to simply watch the different gaits in action. The video below shows a dog walking, ambling, pacing and galloping, making the differences in footfall pattern easy to see at normal and slow-motion speed:
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/WrR3fVQ3W3s"
+    title="Demonstration of walk, trot, and gallop gaits"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Keep an eye on how many feet touch the ground at once, and how that changes between the slow walk and the faster gaits, this is exactly the footfall pattern the rest of this module will describe quantitatively.
+
+### 1. What is a gait?
+
+A **gait** is a cyclic pattern of leg coordination used by a legged animal or robot to move. It is defined mainly by the sequence and timing of **footfalls**: which foot touches the ground, and when, relative to the others.
+
+Different animals have different gait repertoires. Cats, dogs, and horses walk, trot, and gallop; elephants and giraffes mostly walk, pace, and gallop; humans walk or run, with variants such as power-walking, jogging, or skipping. The same body can therefore produce very different-looking motions purely by changing how the legs are phased with respect to one another, without changing the mechanical structure at all.
+
+This is a useful mental model to carry into robotics: a legged robot's "gait" is largely a **control choice** (a set of relative phases and contact timings between the legs), not a property of its hardware. The same quadruped robot can trot, pace, bound, or gallop simply by commanding a different coordination pattern.
+
+### 2. Gait terminology: cycles, phases, and duty factor
+
+To describe and compare gaits quantitatively we need a small vocabulary:
+
+- **Stride duration (or period):** the duration of one complete cycle of a limb, i.e. the time between two successive touch-downs of the same foot.
+- **Stance phase:** the part of the cycle during which the limb is in contact with the ground and (typically) bearing load.
+- **Swing phase:** the part of the cycle during which the limb is off the ground, moving forward to prepare the next touch-down.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/Image_slot35.gif' | relative_url }}"
+    alt="Animation of a single leg cycling through one stride, then replaying the same cycle with the stance phase highlighted, then again with the swing phase highlighted"
+    style="width: 55%; max-width: 380px; height: auto; border: 1px solid #e5e7eb; border-radius: 8px;">
+
+  <figcaption style="max-width: 500px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
+    <strong>Figure 9: One gait cycle, three ways to look at it.</strong> The same leg cycle repeats three times: first as a full stride (touch-down to touch-down), then with the stance phase highlighted in green, then with the swing phase highlighted in orange. The dots below the leg track which of the three the animation is currently illustrating.
+  </figcaption>
+
+</figure>
+
+- **Duty factor:** the fraction of the stride duration that a given limb spends in stance,
+
+$$
+\beta = \frac{\text{stance duration}}{\text{stride duration}} \in [0,1].
+$$
+
+A duty factor close to $1$ means the foot is almost always on the ground (slow, cautious walking); a duty factor below $0.5$ means the foot spends more time in the air than on the ground (running or bounding), which is why low duty factors are associated with flight phases and more dynamic gaits.
+
+### 3. Static versus dynamic stability
+
+A useful first distinction among gaits is whether they can, in principle, be frozen at any instant without the robot falling:
+
+- **Statically stable gaits:** the vertical projection of the center of mass (CoM) stays, at all times, inside the **support polygon**, the convex hull of the ground-contact points. A hexapod tripod gait or a slow quadruped crawl are typically statically stable: you could stop the robot mid-stride and it would not tip over.
+- **Dynamically stable gaits:** the CoM projection is only inside the support polygon *on average* over the cycle; at some instants it may lie outside it (or the support polygon may even be a single point or a line, as during a running flight phase). Trotting quadrupeds and running/hopping robots are dynamically stable, stability is a property of the whole trajectory, not of any single frozen instant.
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem auto;">
+
+  <figure style="margin: 0; text-align: center; max-width: 300px;">
+    <img
+      src="{{ '/assets/images/locomotion/Image_slot38.png' | relative_url }}"
+      alt="Tripod gait of a hexapod: three legs on the ground form a support triangle that contains the center of mass"
+      style="width: 100%; height: auto;">
+    <figcaption style="font-size: 0.85rem; color: #4b5563; margin-top: 0.3rem;">
+      <strong>Figure 10a: Statically stable.</strong> Filled circles are legs on the ground; open circles are legs in the air. The three grounded legs of this hexapod's tripod gait form a support triangle that contains the CoM projection (orange).
+    </figcaption>
+  </figure>
+
+  <figure style="margin: 0; text-align: center; max-width: 300px;">
+    <img
+      src="{{ '/assets/images/locomotion/Image_slot39.png' | relative_url }}"
+      alt="Trot gait of a quadruped: only two diagonal legs are on the ground, forming a line that does not contain the center of mass"
+      style="width: 100%; height: auto;">
+    <figcaption style="font-size: 0.85rem; color: #4b5563; margin-top: 0.3rem;">
+      <strong>Figure 10b: Dynamically stable.</strong> In a quadruped trot, only two diagonal legs touch the ground at once. Their "support polygon" degenerates to a line segment, which does not contain the CoM projection at this instant.
+    </figcaption>
+  </figure>
+
+</div>
+
+Static stability is easy to reason about and to guarantee, but it is inherently slow and energy-inefficient (the CoM must stay in a small polygon at all times, which restricts stride length and speed). Most fast, agile locomotion, animal or robotic, is dynamically, not statically, stable. This is precisely why Section 10 introduces dynamic stability criteria such as the Zero Moment Point and the capture point: static-stability reasoning alone cannot describe or guarantee stable trotting, running, or hopping.
+
+### 4. The Hildebrand classification of gaits
+
+The first systematic classification of quadruped gaits was proposed by Hildebrand (1965). It separates gaits into two families:
+
+- **Symmetric gaits:** the footfalls of a fore–hind pair are evenly spaced in time (e.g. walk, trot, pace).
+- **Asymmetric gaits:** they are not evenly spaced (e.g. gallop, bound).
+
+For **symmetric** gaits specifically, Hildebrand showed that just **two numbers** are enough to classify essentially any possible gait:
+
+1. **Duty factor** $\beta$ of a reference limb. By convention: $\beta > 0.5$ is called a **walking** gait, $\beta < 0.5$ a **running** gait. This is only a kinematic label, not a statement about speed or energetics, one can have a *walking trot* (duty factor above 0.5, as in a slow salamander trot) or a *running trot* (duty factor below 0.5, as in a fast horse trot).
+2. **Relative phase**, i.e. the percentage of the stride interval by which the fore-foot footfall lags the hind-foot footfall on the same side of the body.
+
+Plotting these two numbers against each other produces the classic Hildebrand diagram, in which named gaits (walking pace, walking trot, lateral-sequence walk, diagonal-sequence walk, running pace, running trot, …) occupy characteristic regions.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/Image_slot15.png' | relative_url }}"
+    alt="Hildebrand footfall diagrams for trot, pace, lateral-sequence walk, and gallop, with the LH/LF/RF/RH leg labeling convention">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 11: Hildebrand footfall diagrams.</strong> Grey blocks mark stance phases for each of the four legs (LH: left hind, LF: left front, RF: right front, RH: right hind) over one stride. Symmetric gaits (trot, pace, lateral-sequence walk) have the fore/hind footfalls of a side evenly spaced; the gallop, an asymmetric gait, does not.
+  </figcaption>
+
+</figure>
+
+**Why this matters beyond classification.** The same two numbers (duty factor, relative phase) are exactly the two parameters a Central Pattern Generator needs to *produce* a gait, this is the bridge to Module 3. A CPG network that lets you set a phase-lag matrix between oscillators and a duty-cycle shape is, in effect, implementing the Hildebrand parameterization in a dynamical system that can also transition smoothly between gaits as parameters are changed online, something a purely kinematic footfall table cannot do gracefully.
+
+### 5. Common quadruped gaits and beyond
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/Image_slot16.png' | relative_url }}"
+    alt="Duty-factor circle diagrams for lateral-sequence walk, diagonal-sequence walk, trot, pace, bound, rotary gallop, and transverse gallop">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 12: Symmetric and asymmetric quadruped gaits.</strong> Numbers give the fraction of the cycle at which each leg touches down, relative to the LH leg at $t=0$. Symmetric gaits sit above the dashed line; asymmetric gaits (bound, rotary gallop, transverse gallop) below it.
+  </figcaption>
+
+</figure>
+
+A few gaits are worth naming explicitly, since they recur throughout legged-robotics papers:
+
+- **Trot:** diagonal legs (e.g. LF+RH) move together, the other diagonal pair moves in the opposite half-cycle. The most commonly used quadruped robot gait because it is dynamically self-stabilizing and mechanically simple to coordinate (see Module 3).
+- **Pace:** legs on the same side move together (LF+LH, then RF+RH). Prone to inducing more roll/lateral swaying than trot.
+- **Bound:** front legs move together, hind legs move together, front and hind out of phase, used by e.g. rabbits and some quadruped robots for high-speed locomotion.
+- **Gallop (rotary/transverse):** an asymmetric gait with all four legs having distinct, unevenly-spaced phases; the fastest gait for most quadrupeds, and mechanically the most demanding to control and to actuate.
+
+Beyond mammals, **insect gaits** follow a related, but distinct, logic based on the number of legs that swing simultaneously rather than fore/hind coupling: a **metachronal wave** gait (only one leg in swing at a time, used at very low speeds), a **tetrapod gait** (up to two legs in swing simultaneously), and a **tripod gait** (three legs in swing simultaneously, the classic fast-insect gait, where the front-left, middle-right, and back-left legs swing together while the other triangle provides support). The tripod gait is directly relevant to hexapod robot design, since it is statically stable at every instant (three ground contacts always form a support triangle) while still allowing relatively fast locomotion.
+
+<details class="exercise-accordion" markdown="1">
+
+<summary>
+  <span>Quiz 1 : Gaits and duty factor</span>
+</summary>
+
+<div class="exercise-accordion-content" markdown="1">
+
+##### Question 1: Duty factor and gait type
+
+A quadruped robot leg is in stance for $0.65$ of the stride and in swing for the remaining $0.35$. According to the Hildebrand convention, is this a walking or a running gait for that limb?
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q1" value="a">
+  Walking gait, since duty factor $> 0.5$
+</label>
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q1" value="b">
+  Running gait, since duty factor $> 0.5$
+</label>
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q1" value="c">
+  Walking gait, since duty factor $< 0.5$
+</label>
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q1" value="d">
+  Cannot be determined from the duty factor alone
+</label>
+
+<br>
+
+<button
+  type="button"
+  onclick="checkMCQ(
+    'mod2-q1',
+    'a',
+    'Correct! Duty factor 0.65 &gt; 0.5, so by the Hildebrand convention this limb is walking (note this only characterizes the limb, not necessarily the whole-body gait name).',
+    'Incorrect. Remember: duty factor &gt; 0.5 means the foot spends more than half the cycle on the ground, which is the definition of a walking limb.'
+  )">
+  Check answer
+</button>
+
+<p id="mod2-q1-feedback"></p>
+
+---
+
+##### Question 2 (True/False): Statically vs. dynamically stable
+
+A trotting quadruped robot, where diagonal leg pairs alternate and only two feet are ever on the ground at once, is statically stable at every instant.
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q2" value="true"> True
+</label>
+<label style="display: block;">
+  <input type="radio" name="mod2-q2" value="false"> False
+</label>
+
+<br>
+
+<button
+  type="button"
+  onclick="checkTrueFalse(
+    'mod2-q2',
+    'false',
+    'Correct! With only two diagonal feet on the ground, the support polygon degenerates to a line segment; the CoM projection generally cannot be kept exactly on that segment at all times. Trotting is dynamically, not statically, stable.',
+    'Incorrect. With only two feet on the ground, the support polygon is a line segment, not a polygon that can contain the CoM projection at every instant, this is a dynamically stable gait.'
+  )">
+  Check answer
+</button>
+
+<p id="mod2-q2-feedback"></p>
+
+---
+
+##### Question 3: Symmetric vs. asymmetric
+
+Which of the following gaits is **asymmetric** in the Hildebrand sense?
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q3" value="a">
+  Trot
+</label>
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q3" value="b">
+  Pace
+</label>
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q3" value="c">
+  Gallop
+</label>
+
+<label style="display: block;">
+  <input type="radio" name="mod2-q3" value="d">
+  Lateral-sequence walk
+</label>
+
+<br>
+
+<button
+  type="button"
+  onclick="checkMCQ(
+    'mod2-q3',
+    'c',
+    'Correct! The gallop has unevenly spaced fore/hind footfalls, which is precisely the definition of an asymmetric gait.',
+    'Incorrect. Trot, pace, and lateral-sequence walk all have evenly spaced fore/hind footfalls (symmetric gaits); only the gallop does not.'
+  )">
+  Check answer
+</button>
+
+<p id="mod2-q3-feedback"></p>
+
+</div>
+</details>
+
+### 6. To conclude
+
+Everything in this module so far has been about describing and classifying gaits from the outside. The video below shows a real quadruped robot, the Stoch, executing several of the named gaits covered in Section 5, walk, trot, bound, and gallop, along with turning and live transitions between them:
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/Wxx9pwwTIL4"
+    title="Stoch quadruped robot demonstrating walk, trot, bound, and gallop gaits"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+*Source: Singla, Bhattacharya, Dholakiya et al., "Realizing Learned Quadruped Locomotion Behaviors through Kinematic Motion Primitives," ICRA 2019, IISc Bengaluru ([youtu.be/Wxx9pwwTIL4](https://youtu.be/Wxx9pwwTIL4)).*
+
+A single gait transition, in this case trot to gallop, is also worth watching in isolation. The clip below shows the MIT Cheetah accelerating to 22 km/h and shifting seamlessly from a trot into a gallop mid-run (in slow motion from about 1:20):
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/g9EOOdAicQU"
+    title="MIT Cheetah transitioning from a trot to a gallop"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+*Source: "MIT Cheetah runs at 22 km/h, gait transition from trot to gallop," MIT Biomimetic Robotics Lab ([youtube.com/watch?v=g9EOOdAicQU](https://www.youtube.com/watch?v=g9EOOdAicQU)).*
+
+Notice how each gait produces a visibly different footfall rhythm and body sway, exactly the duty factor and relative-phase differences formalized in the Hildebrand diagram of Section 4, and how the same robot body can shift from one gait to another without any change to its mechanical structure. Producing and switching between rhythms like these online, from a compact controller rather than a hand-tuned footfall table, is precisely the problem that Central Pattern Generators are built to solve, which is where Module 3 picks up.
+
 ##  Module 3 : Advanced locomotion control : CPG
 
 
 
 ## Credits
 
-Several figures and the iterative inverse-kinematics algorithm box (Figure 7) in this module are adapted from the **Legged Robots** course at EPFL, supervised by **Pr.Auke Ijspeert**. We thank him for making this material available.
+Several figures and the iterative inverse-kinematics algorithm box (Figure 7) in Module 1 are adapted from the **Legged Robots** course at EPFL, supervised by **Pr. Auke Ijspeert**. In Module 2, Figures 11 and 12 (Hildebrand footfall diagrams and common quadruped gaits) are likewise adapted from the **Legged Robots** course, specifically Lecture 2 ("Gaits, Models, Stability Criteria, and Locomotion Metrics") by **Pr. Auke Ijspeert**, whose gait diagrams originally follow Hildebrand (1965). Figures 9 and 10a–10b were created for this course. We thank Pr. Ijspeert for making this material available.
 
 ## Ressources
 

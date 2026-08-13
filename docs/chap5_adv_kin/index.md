@@ -3,13 +3,13 @@ title: "Chapter 5: Advanced Kinematics"
 parent: Robotics Advanced Topics I
 has_children: true
 nav_order: 5
-layout: numbered
+layout: default
 ---
 
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (In Progress)";
   font-size: 0.9em;
   color: #b39ddb;
 }

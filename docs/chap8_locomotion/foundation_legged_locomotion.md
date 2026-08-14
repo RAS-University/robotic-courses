@@ -1,5 +1,5 @@
 ---
-title: 8.1 Central Pattern Generator
+title: 8.1 Foundation of legged locomotion
 parent: "Chapter 8: Locomotion"
 has_children: false
 nav_order: 1
@@ -18,7 +18,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Central Pattern Generator 
+# Foundation of legged locomotion
 
 <!-- bundle exec jekyll serve -->
 <style>

@@ -109,6 +109,546 @@ ANYmal is a quadruped robot built for legged locomotion research. It walks, clim
 
 ---
 
+##  Module 0 : A brief history of legged robots
+
+Before we model a single leg, it is worth knowing where legged machines come from. Almost every design decision made in the rest of this course, how many legs, how many joints per leg, rigid or compliant links, which actuator technology, was already explored by the machines below. Their successes and their failures explain why modern quadrupeds look the way they do.
+
+Studying legged locomotion is far older than robotics: Aristotle (384-322 BC) already reasoned about the forces an animal pushes against in *De Motu Animalium*, and Eadweard Muybridge (1830-1904) settled long-running disputes about footfall sequences with the first systematic stop-motion photography of animals in motion, the direct ancestor of the footfall diagrams of Module 2.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;" >
+
+  <div style="width: 20%; min-width: 150px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_aristotle.png' | relative_url }}"
+        alt="Eighteenth-century engraved plate accompanying Aristotle's De Motu Animalium, showing a horse and geometric analyses of limb movement"
+        style="width: 100%; height: auto;">
+      <p><strong>(a) Aristotle, <em>De Motu Animalium</em></strong></p>
+  </div>
+
+  <div style="width: 52%; min-width: 260px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_muybridge.png' | relative_url }}"
+        alt="Muybridge stop-motion photographic sequence of a cat walking and running, four strips of successive frames"
+        style="width: 100%; height: auto;">
+      <p><strong>(b) Muybridge, <em>Animal Locomotion</em></strong></p>
+  </div>
+
+  </div>
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.1 : Two early studies of animal locomotion.</strong>
+    Nussbaum et al. (1985); Muybridge (1969).
+  </figcaption>
+
+</figure>
+
+What animals do so easily is negotiate terrain through **discrete footholds**: only a few viable contact points are needed, not a continuous path. That is the property that motivates legged machines, and the price is many degrees of freedom, non-linear dynamics, intermittent contact, and a permanent balance problem. The rest of this module is the history of paying that price with the technology available at the time.
+
+### 1. Milestones in the development of legged robots
+
+The table below, from Raibert's 1986 survey, is a compact map of the field's first 140 years. It is worth scanning once now and returning to as the rest of this module fills in the entries.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_milestones.png' | relative_url }}"
+    alt="Table listing milestones in the development of legged robots from 1850 to 1983, with year, author, and a short description of each machine"
+    style="width: 48%; max-width: 560px; height: auto;">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 0.2 : Milestones in the development of legged robots.</strong>
+  </figcaption>
+
+</figure>
+
+A few patterns are already visible in this list:
+
+- The earliest entries (Chebyshev 1850, Rygg 1893) are **pure mechanisms**: a linkage converts one rotational input into a walking motion. There is no control.
+- From the 1960s onward the entries split into **human-driven hydraulic machines** (Mosher 1968, Bucyrus-Erie 1969, Sutherland 1983) and **computer-controlled walkers** (Frank and McGhee 1968, McGhee 1977, Gurfinkel 1977).
+- Only around 1980 do entries about **dynamics and balance** appear (Kato 1980, Matsuoka 1980, Miura and Shimoyama 1981, Raibert), which is when legged robots stop merely stepping and start running.
+
+*References: Raibert, M. H. (1986). Legged Robots. Commun. ACM, 29(6), 499–514. [doi.org/10.1145/5948.5950](https://doi.org/10.1145/5948.5950) — Silva, M. F., & Tenreiro Machado, J. A. (2007). A Historical Perspective of Legged Robots. Journal of Vibration and Control, 13(9–10), 1447–1486. [doi.org/10.1177/1077546307078276](https://doi.org/10.1177/1077546307078276) — Bekey, G. A. (2005). Autonomous Robots: From Biological Inspiration to Implementation and Control. MIT Press.*
+
+### 2. Mechanisms without control : Rygg's mechanical horse, 1893
+
+L. A. Rygg patented a **human-powered mechanical horse** in 1893: pedals drove a gear train and linkages that converted the rider's rotational input into a quadruped walking motion. There was no actuator and no controller, the gait was entirely encoded in the geometry of the linkage. It is not clear that the machine was ever constructed.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_rygg.png' | relative_url }}"
+    alt="Patent drawing of L. A. Rygg's mechanical horse of 1893, showing the quadruped frame, the rider position, and the gear-and-linkage transmission"
+    style="width: 38%; max-width: 440px; height: auto;">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 0.3 : The Mechanical Horse, patented by L. A. Rygg, 1893 (US patent 491,927).</strong>
+  </figcaption>
+
+</figure>
+
+This is the extreme end of a trade-off you will meet repeatedly: **put the gait in the mechanism, or put it in the controller.** Rygg's design is 100% mechanism. Modern quadrupeds sit at the other end, with the mechanism reduced to a simple articulated leg and the gait generated in software, which is precisely what Central Pattern Generators do in Module 3.
+
+<!-- VIDEO SLOT:
+No footage exists for Rygg's mechanical horse (it was most likely never built).
+If you find or produce an animation of the linkage, embed it here:
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    title="TITLE"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+-->
+
+### 3. Human in the loop : the GE walking truck, 1968
+
+Ralph Mosher's quadruped at General Electric (also known as the **Cybernetic Anthropomorphous Machine**, CAM) was a four-legged, hydraulically actuated vehicle about 3 m tall and weighing over a tonne. The driver controlled it with four handles and pedals **hydraulically coupled** to the four legs: the operator's own limbs generated the coordination pattern, and force feedback let him feel the ground through the machine.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_ge_truck.png' | relative_url }}"
+    alt="Photograph of the General Electric quadruped walking truck of 1968 climbing over stacked wooden beams, with the human driver visible in the open cab"
+    style="width: 48%; max-width: 560px; height: auto;">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 0.4 : The GE walking truck (Ralph Mosher, General Electric, ~1968).</strong>
+    Photograph courtesy of the General Electric Research and Development Center, reproduced in Raibert (1986).
+  </figcaption>
+
+</figure>
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/ZMGCFLEYakM"
+    title="GE Walking Truck - Cybernetic Anthropomorphous Machine (CAM)"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Note two things in the footage: the machine really does cross obstacles no wheeled vehicle of its era could, and the driver is visibly exhausted after a few minutes. **Coordinating four legs is hard enough that a trained human cannot sustain it**, which is exactly the argument for automating it.
+
+*Source: "GE Walking Truck – Cybernetic Anthropomorphous Machine (CAM) 1969," YouTube ([youtube.com/watch?v=ZMGCFLEYakM](https://www.youtube.com/watch?v=ZMGCFLEYakM)).*
+
+### 4. The first computer-controlled walkers
+
+#### 4.1 McGhee's hexapods, 1970–1980
+
+Robert McGhee's group at Ohio State University built a series of **hexapods** driven by electric motors through worm gears. The OSU hexapod (1976) was the first machine whose leg coordination was **entirely digital**, with on-board sensing: strain gauges on the legs, contact sensors to stop the descent of a foot, and a gyroscope to hold the chassis attitude constant.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_osu_hexapod.png' | relative_url }}"
+    alt="Photograph of the 1976 Ohio State University hexapod walking machine in a laboratory, six legs with worm-gear actuators and on-board electronics"
+    style="width: 52%; max-width: 620px; height: auto;">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 0.5 : The OSU hexapod (Ohio State University, McGhee, 1976).</strong>
+    Legs of 40 + 50 cm; 18 actuators using worm gears; fully digital coordination.
+  </figcaption>
+
+</figure>
+
+Six legs are a deliberate choice here: with six legs a machine can always keep three feet down in a **statically stable tripod**, so balance is a geometric constraint rather than a dynamics problem. Much of the difficulty of quadruped and biped control disappears, at the cost of weight, actuator count, and speed. You will see the formal version of this argument in Module 2, under static versus dynamic stability.
+
+<!-- VIDEO SLOT:
+Add a video of the OSU hexapod here if you find suitable footage.
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/VIDEO_ID"
+    title="TITLE"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+-->
+
+*Further reading: [cyberneticzoo.com/walking-machines/1976-osu-hexapod-mcghee-american/](http://cyberneticzoo.com/walking-machines/1976-osu-hexapod-mcghee-american/)*
+
+#### 4.2 The Adaptive Suspension Vehicle, 1984
+
+Also from McGhee's group at Ohio State, the **Adaptive Suspension Vehicle (ASV)** was a 2'700 kg hydraulically actuated hexapod capable of carrying a human operator over rough terrain. Each leg is a **pantograph**: a planar linkage that decouples the vertical and horizontal motion of the foot, so that a simple actuator command maps onto a simple foot displacement. This is mechanical design used to *simplify the control problem*, the same philosophy as Rygg's linkage, but now combined with a computer.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_asv.png' | relative_url }}"
+    alt="Photograph of the Adaptive Suspension Vehicle, a large six-legged hydraulic walking machine with pantograph legs, standing in a workshop"
+    style="width: 52%; max-width: 620px; height: auto;">
+
+  <figcaption style="max-width: 750px; margin: 0.5rem auto;">
+    <strong>Figure 0.6 : The Adaptive Suspension Vehicle (McGhee and Waldron, Ohio State University, 1984).</strong>
+    2'700 kg, hydraulic actuation, six pantograph legs, carries a human operator.
+  </figcaption>
+
+</figure>
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/DIiD1JimBXQ"
+    title="OSU Adaptive Suspension Vehicle"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Watch the machine cross uneven outdoor terrain: the body glides almost horizontally while the legs absorb the terrain profile underneath. **Decoupling body motion from foot placement** is still the objective of every modern quadruped controller.
+
+*Source: "OSU Adaptive Suspension Vehicle," YouTube ([youtube.com/watch?v=DIiD1JimBXQ](https://www.youtube.com/watch?v=DIiD1JimBXQ)).*
+
+#### 4.3 Odetics, 1980s
+
+Odetics, a company in California, built the **ODEX** series of hexapods for the inspection of power plants. The design objective was different from the ASV's: instead of open terrain, ODEX had to move **inside man-made structures**, including narrow passages, which is why the legs fold radially around a central column and the whole machine can change its footprint. It could be fitted with a manipulator, and despite weighing only about 300 lb (roughly 135 kg) it could carry loads far heavier than itself.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: flex-end;
+    flex-wrap: wrap;" >
+
+  <div style="width: 27%; min-width: 200px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_odex_standing.png' | relative_url }}"
+        alt="Odetics ODEX hexapod robot standing with its six legs folded radially around a central cylindrical body topped by a spherical sensor dome"
+        style="width: 100%; height: auto;">
+      <p><strong>(a) ODEX, radial leg arrangement</strong></p>
+  </div>
+
+  <div style="width: 45%; min-width: 260px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_odex_truck.png' | relative_url }}"
+        alt="Photograph of ODEX I walking with an alternating tripod gait while carrying a 600 pound payload, next to a pickup truck for scale"
+        style="width: 100%; height: auto;">
+      <p><strong>(b) ODEX I carrying a payload</strong></p>
+  </div>
+
+  </div>
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.7 : The Odetics ODEX hexapod, designed for inspection inside man-made structures.</strong>
+    (b) ODEX I walking with an alternating tripod gait while carrying a 600 pound payload on its head.
+  </figcaption>
+
+</figure>
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/U9wZAjS1TKU"
+    title="Odex Functionoid 6-legged mobile robot (1984)"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+*Source: "Odex 'Functionoid' 6-legged mobile robot (1984)," YouTube ([youtube.com/watch?v=U9wZAjS1TKU](https://www.youtube.com/watch?v=U9wZAjS1TKU)).*
+
+*Reference: Bartholet, S. J. (1987). The Evolution of Odetics Walking Machine Technology. In Mobile Robots I (Vol. 0727, pp. 25–32). SPIE. [doi.org/10.1117/12.937781](https://doi.org/10.1117/12.937781)*
+
+### 5. Bipeds : Waseda University, 1967 – now
+
+While Ohio State was adding legs to buy static stability, Ichiro Kato's group at Waseda University in Japan went the other way and tackled the hardest case: **two legs**. The WL (Waseda Leg) series began in 1967 with pneumatically actuated pedipulators and evolved through decades into the WABIAN humanoids. Waseda is where **quasi-dynamic walking**, and much of the ZMP-based balance theory that dominated humanoid robotics for thirty years, was developed.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;" >
+
+  <div style="width: 58%; min-width: 300px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_waseda_early.png' | relative_url }}"
+        alt="Three black and white photographs of early Waseda biped machines: a pneumatic pedipulator, and two early WL series walking robots with external cabling"
+        style="width: 100%; height: auto;">
+      <p><strong>(a) Early WL-series machines</strong></p>
+  </div>
+
+  <div style="width: 22%; min-width: 160px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_wabian.png' | relative_url }}"
+        alt="Colour photograph of the WABIAN humanoid robot from Waseda University walking, seen from behind"
+        style="width: 100%; height: auto;">
+      <p><strong>(b) WABIAN</strong></p>
+  </div>
+
+  </div>
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.8 : Fifty years of biped robots at Waseda University: the WL and WABIAN families.</strong>
+  </figcaption>
+
+</figure>
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/n0oL1sHAKwE"
+    title="Robots of Waseda: WABOT-1"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+WABOT-1 (1973), built on the WL legs, is generally considered the first full-scale anthropomorphic robot. The walking is slow and flat-footed: the robot moves its centre of mass carefully from one support polygon to the next so that it is **statically stable at every instant**. Compare this to the Raibert machines in the next section, which are almost never statically stable and rely entirely on their dynamics.
+
+*Source: "Robots of Waseda: WABOT-1," YouTube ([youtube.com/watch?v=n0oL1sHAKwE](https://www.youtube.com/watch?v=n0oL1sHAKwE)).*
+
+*Reference: Lim, H., & Takanishi, A. (2007). Biped walking robots created at Waseda University: WL and WABIAN family. Philosophical Transactions of the Royal Society A, 365(1850), 49–64. See also [humanoid.waseda.ac.jp/booklet/kato_4.html](http://www.humanoid.waseda.ac.jp/booklet/kato_4.html)*
+
+### 6. Dynamic locomotion : Raibert's machines, 1980–1990
+
+Marc Raibert, first at Carnegie Mellon and then at the famous **MIT Leg Laboratory**, produced the decisive break with static walking. His machines hop and run: they spend most of the cycle in flight or on a single foot, and they are stable only in the sense that the *cycle* is stable, never the instantaneous posture.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;" >
+
+  <div style="width: 32%; min-width: 200px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_raibert_hopper.png' | relative_url }}"
+        alt="Photograph of Raibert's 3D one-leg hopping machine, a single telescopic leg with a body frame and gimbal"
+        style="width: 100%; height: auto;">
+      <p><strong>(a) 3D one-leg hopper</strong></p>
+  </div>
+
+  <div style="width: 46%; min-width: 260px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_raibert_quadruped.png' | relative_url }}"
+        alt="Photograph of Raibert's four-legged running machine with telescopic legs and hydraulic actuation"
+        style="width: 100%; height: auto;">
+      <p><strong>(b) Four-legged running machine</strong></p>
+  </div>
+
+  </div>
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.9 : Raibert's legged machines (CMU and the MIT Leg Laboratory, 1980–1990).</strong>
+  </figcaption>
+
+</figure>
+
+Raibert's celebrated result is that running can be controlled by **three nearly decoupled loops**: one regulating hopping height (energy injected during stance), one regulating forward speed (through where the foot is placed at touch-down), and one regulating body attitude (through hip torque during stance). A behaviour that looks impossibly complex reduces to three simple regulators, because the mechanics do most of the work.
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/XFXj81mvInc"
+    title="Robots from MIT's Leg Lab"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Many of these ideas went on to found **Boston Dynamics**, and we will return to these machines later in the course when we study force control and dynamic gaits.
+
+*Source: "Robots from MIT's Leg Lab," YouTube ([youtube.com/watch?v=XFXj81mvInc](https://www.youtube.com/watch?v=XFXj81mvInc)).*
+
+*Reference: Raibert, M. H. (1986). Legged Robots. Commun. ACM, 29(6), 499–514. [doi.org/10.1145/5948.5950](https://doi.org/10.1145/5948.5950)*
+
+### 7. Passive walkers : locomotion (almost) for free, 1990 – now
+
+Tad McGeer's work on **passive dynamic walking** made the opposite point to Raibert's, and made it just as forcefully. A carefully proportioned pair of legs placed on a shallow slope will walk down it in a **stable periodic gait with no motors, no sensors, no controller and no battery**: gravity supplies the energy and the natural pendulum dynamics of the limbs supply the coordination.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: flex-end;
+    flex-wrap: wrap;" >
+
+  <div style="width: 32%; min-width: 200px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_mcgeer.png' | relative_url }}"
+        alt="Photograph of McGeer's passive dynamic walker, an unpowered pair of jointed legs with curved feet standing on a slope"
+        style="width: 100%; height: auto;">
+      <p><strong>(a) McGeer's passive walker</strong></p>
+  </div>
+
+  <div style="width: 30%; min-width: 190px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_cornell_ranger.png' | relative_url }}"
+        alt="Photograph of the Cornell Ranger, a four-legged minimally actuated walking robot with thin legs and orange handles on top"
+        style="width: 100%; height: auto;">
+      <p><strong>(b) Cornell Ranger, 2011</strong></p>
+  </div>
+
+  </div>
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.10 : Passive dynamic walking and its descendants.</strong>
+  </figcaption>
+
+</figure>
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/e2Q2Lx8O6Cg"
+    title="Passive dynamic walking robot with knees (Collins, Wisse, Ruina)"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Walking without control and without a battery. This is the three-dimensional passive-dynamic walker with two legs and knees of Collins, Wisse and Ruina.
+
+*Source: "Steve Collins' Passive Dynamic Robot," YouTube ([youtube.com/watch?v=e2Q2Lx8O6Cg](https://www.youtube.com/watch?v=e2Q2Lx8O6Cg)).*
+
+Adding a minimal amount of actuation to a passive design, just enough to replace the energy lost at foot impact, gives extraordinarily efficient walkers. The **Cornell Ranger** walked 40.5 miles (about 65 km) non-stop on a single battery charge in 2011.
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/rJ56d1UTlKQ"
+    title="Cornell Ranger 2011 - Marathon Walking Robot"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+*Source: "Cornell Ranger 2011 – Marathon Walking Robot," YouTube ([youtube.com/watch?v=rJ56d1UTlKQ](https://www.youtube.com/watch?v=rJ56d1UTlKQ)).*
+
+The lesson to carry into the rest of the course is that **the body is part of the controller**. Link lengths, mass distribution, foot shape and compliance are not fixed constraints to be compensated for, they are design variables that determine how much work the controller has to do. This is exactly the perspective behind the CPG approach in Module 3: an oscillator that entrains with the natural dynamics of the body, rather than a trajectory imposed on it.
+
+*Reference: McGeer, T. (1990). Passive dynamic walking. International Journal of Robotics Research, 9(2), 62–82. — Collins, S. H., Wisse, M., & Ruina, A. (2001). A Three-Dimensional Passive-Dynamic Walking Robot with Two Legs and Knees. International Journal of Robotics Research, 20(2), 607–615.*
+
+### 8. Sprawling quadrupeds : the TITAN series, 1976 – now
+
+Shigeo Hirose's laboratory at the Tokyo Institute of Technology has produced the **TITAN** series of quadrupeds for nearly fifty years, and is known for exceptionally creative mechanical design. Its machines typically use a **sprawling posture**, with the legs extending sideways from the body as in a reptile rather than beneath it as in a mammal. The sprawling posture lowers the centre of mass and widens the support polygon, which buys stability, at the cost of larger joint torques to hold the body up.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <div style="
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    align-items: center;
+    flex-wrap: wrap;" >
+
+  <div style="width: 30%; min-width: 190px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_titan8.png' | relative_url }}"
+        alt="Photograph of the TITAN-VIII quadruped robot with its three joints per leg labelled"
+        style="width: 100%; height: auto;">
+      <p><strong>(a) TITAN-VIII (1996)</strong></p>
+  </div>
+
+  <div style="width: 52%; min-width: 280px;">
+      <img
+        src="{{ '/assets/images/locomotion/history/hist_titan13.png' | relative_url }}"
+        alt="Photograph of the TITAN-XIII lightweight sprawling quadruped robot standing on grass"
+        style="width: 100%; height: auto;">
+      <p><strong>(b) TITAN-XIII (2013)</strong></p>
+  </div>
+
+  </div>
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.11 : The TITAN quadrupeds of Hirose's laboratory, Tokyo Institute of Technology.</strong>
+  </figcaption>
+
+</figure>
+
+<div style="text-align: center;">
+  <iframe
+    width="700"
+    height="394"
+    src="https://www.youtube.com/embed/xuSAidTF5Jk"
+    title="TITAN-XIII : Sprawling-type Quadruped Robot"
+    frameborder="0"
+    allowfullscreen>
+  </iframe>
+</div>
+
+*Source: "TITAN-XIII : Sprawling-type Quadruped Robot," YouTube ([youtube.com/watch?v=xuSAidTF5Jk](https://www.youtube.com/watch?v=xuSAidTF5Jk)).*
+
+*References: Arikawa, K., & Hirose, S. (1996). Development of quadruped walking robot TITAN-VIII. IROS '96, Vol. 1, 208–214. [doi.org/10.1109/IROS.1996.570670](https://doi.org/10.1109/IROS.1996.570670) — Kitano, S., Hirose, S., Endo, G., & Fukushima, E. F. (2013). Development of lightweight sprawling-type quadruped robot TITAN-XIII and its dynamic walking. IROS 2013, 6025–6030.*
+
+### 9. Legged robots today
+
+Legged robots left the laboratory in the last fifteen years. The figure below collects some of the platforms that are, or were, commercially available.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_commercial.png' | relative_url }}"
+    alt="Collage of commercial legged robots: Asimo and Qrio humanoids, Aibo, Rhex, Minitaur, ANYmal, A1 and Laikago quadrupeds, Cassie biped, Vision 60 and Spot quadrupeds"
+    style="width: 85%; max-width: 900px; height: auto;">
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.12 : Some commercial legged robots.</strong>
+  </figcaption>
+
+</figure>
+
+Humanoids in particular have gone from a handful of research platforms to a crowded commercial field in only a few years.
+
+<figure style="margin: 1.5rem auto; text-align: center;">
+
+  <img
+    src="{{ '/assets/images/locomotion/history/hist_humanoids.png' | relative_url }}"
+    alt="Collage of humanoid robots from Wabian and Asimo through HRP2, Atlas, Nao, to recent commercial humanoids including Figure AI, Unitree G1, Tesla Optimus, Digit, Apollo and Agibot A2"
+    style="width: 92%; max-width: 950px; height: auto;">
+
+  <figcaption style="max-width: 850px; margin: 0.5rem auto;">
+    <strong>Figure 0.13 : Great progress in humanoid robots.</strong>
+  </figcaption>
+
+</figure>
+
+The **ANYmal** robot shown in the Course overview above belongs to this generation, and it is the platform whose behaviour this course sets out to explain.
+
+### 10. What this history tells us
+
+Four threads run through everything above, and each one becomes a technical topic later in the course:
+
+- **Mechanism versus controller.** Rygg's linkage, the ASV's pantographs and McGeer's passive walkers all put intelligence in the hardware; Raibert's machines and modern quadrupeds put it in software. Real designs sit somewhere in between, and where they sit determines how hard the control problem is. This is why Module 1 starts by building an explicit **model** of the leg.
+- **Static versus dynamic stability.** Hexapods keep three feet down and never fall; running machines are almost never in equilibrium and are stable only over a whole cycle. Module 2 makes this distinction precise.
+- **Actuation sets the envelope.** Hydraulics gave the ASV and BigDog their power, electric motors gave the OSU hexapod its controllability, and modern series-elastic and direct-drive actuators gave ANYmal and the MIT Cheetah their ability to survive impacts. Section 3 of Module 1 returns to this.
+- **Coordination is the hard part.** The GE truck failed not for lack of power but because a human could not coordinate four legs for long. Generating and adapting that coordination automatically is the subject of Module 3 and of Central Pattern Generators.
+
+With that context in place, we can now start from the smallest useful unit: a single leg.
+
+---
+
 ## Module 1 : Foundation of legged locomotion
 
 ### 1. Introduction :
@@ -3516,15 +4056,17 @@ A single gait transition, in this case trot to gallop, is also worth watching in
 
 Notice how each gait produces a visibly different footfall rhythm and body sway, exactly the duty factor and relative-phase differences formalized in the Hildebrand diagram of Section 4, and how the same robot body can shift from one gait to another without any change to its mechanical structure. Producing and switching between rhythms like these online, from a compact controller rather than a hand-tuned footfall table, is precisely the problem that Central Pattern Generators are built to solve, which is where Module 3 picks up.
 
-##  Module 3 : Advanced locomotion control : CPG
-
 
 
 ## Credits
 
-Several figures and the iterative inverse-kinematics algorithm box (Figure 7) in Module 1 are adapted from the **Legged Robots** course at EPFL, supervised by **Pr. Auke Ijspeert**. In Module 2, Figures 11 and 12 (Hildebrand footfall diagrams and common quadruped gaits) are likewise adapted from the **Legged Robots** course, specifically Lecture 2 ("Gaits, Models, Stability Criteria, and Locomotion Metrics") by **Pr. Auke Ijspeert**, whose gait diagrams originally follow Hildebrand (1965). Figures 9 and 10a–10b were created for this course. We thank Pr. Ijspeert for making this material available.
+**Module 0 — History of legged robots.** Figures 0.1 to 0.13 are taken from Lecture 1 ("History of legged robots, Mechanical structure, Actuation") of the **Legged Robots** course at EPFL by **Pr. Auke Ijspeert**, and are themselves reproduced there from the original sources cited alongside each figure: Muybridge (1887); the General Electric Research and Development Center (~1968); McGhee & Frank (1968); McGhee & Waldron (1984); Bartholet (1987) for the Odetics ODEX; Lim & Takanishi (2007) for the Waseda robots; Raibert (1986) for the MIT/CMU hoppers; McGeer (1990) for passive-dynamic walking; Arikawa & Hirose (1996) for the TITAN series; and Kitano et al. (2013) / Rygg's 1893 US patent 491,927. The videos embedded in Module 0 are sourced from YouTube and linked individually beneath each player (GE Walking Truck, OSU Adaptive Suspension Vehicle, Odetics ODEX, Waseda WABOT, MIT Leg Lab, Steve Collins passive walker, Cornell Ranger, TITAN-XIII).
 
-## Ressources
+**Module 1 — Foundation of legged locomotion.** Figures 1–8 (the planar two-link leg model, actuation comparison, forward/inverse kinematics, Jacobian, and the simulated hopping leg) are adapted from the **Legged Robots** course at EPFL, supervised by **Pr. Auke Ijspeert**. The iterative inverse-kinematics algorithm (Figure 7) follows the presentation in that course. The opening video (five gaits of the Icelandic horse, Figure 0 of Module 1) is sourced from YouTube (2017). The ANYmal parkour video in the course overview is sourced from ETH Zürich / Rudin et al., "ANYmal Parkour: Learning Agile Navigation for Quadrupedal Robots," *Science Robotics*, 2023.
+
+**Module 2 — Gaits.** The animated GIF (Figure 9) was created for this course. Figures 10a and 10b (tripod-gait and trot-gait stability diagrams) were also created for this course. Figures 11 and 12 (Hildebrand footfall diagrams and common quadruped gaits, including the phase-diagram notation) are adapted from Lecture 2 ("Gaits, Models, Stability Criteria, and Locomotion Metrics") of the **Legged Robots** course by **Pr. Auke Ijspeert**, following the original classification of Hildebrand (1965). The two videos in the conclusion (dog gaits: Stoch quadruped, ICRA 2019, IISc Bengaluru; and the MIT Cheetah trot-to-gallop transition, MIT Biomimetic Robotics Lab) are sourced from YouTube and linked beneath each player.
+
+We thank **Pr. Auke Ijspeert** (EPFL Biorobotics Laboratory) for making the Legged Robots course material available, and **Guillaume Bellegarda** (EPFL) for the single-leg PyBullet environment used in Practicals 1 and 2.
 
 
 

@@ -86,8 +86,8 @@ The rest of this chapter will introduce simplified models and stability tools th
 
 We will do three things, in this order:
 
-1. Make "is the robot stable?" into a precise, computable question, first for the simple case where the robot barely moves (**static stability margin**), then for the general dynamic case (**Center of Pressure**, **Zero Moment Point**, **capture point / Divergent Component of Motion**, and **Poincaré / return-map analysis**).
-2. Go deep into the two template models introduced qualitatively just below, the **Linear Inverted Pendulum (LIP)** and the **Spring-Loaded Inverse Pendulum (SLIP)**, since several of the stability criteria above are derived directly from them.
+1. Go deep into the two template models introduced qualitatively just below, the **Linear Inverted Pendulum (LIP)** and the **Spring-Loaded Inverted Pendulum (SLIP)**, since several of the stability criteria below are derived directly from them.
+2. Make "is the robot stable?" into a precise, computable question, first for the simple case where the robot barely moves (**static stability margin**), then for the general dynamic case (**Center of Pressure**, **Zero Moment Point**, **capture point / Divergent Component of Motion**, and **Poincaré / return-map analysis**).
 3. Introduce **locomotion metrics** (Cost of Transport, Froude number) that let us compare how *well* a gait performs, not just whether it is stable.
 
 
@@ -146,7 +146,7 @@ A particularly important class of model for this page is the **template model**:
 
 **What walking and running actually look like, mechanically.** If you put a walking person on a force plate, the vertical ground reaction force traces a characteristic **double-hump** ("camel-back") shape over each step, with a brief dip in the middle. That dip coincides with **double support**: a short window where both feet are on the ground at once, momentarily forming a closed kinematic chain between the two legs. If you do the same for running, the vertical force instead shows a **single, smooth peak** per step, and there is no double-support window at all, the body is briefly airborne between steps (a flight phase) rather than always in contact with the ground.
 
-The center of mass tells the same story from a different angle. During walking, its kinetic and gravitational potential energy rise and fall **out of phase**: as the body vaults forward and upward over the stance leg it slows down (kinetic energy converts to potential energy), then it speeds up again as it falls back down (potential converts back to kinetic), almost exactly like a playground swing exchanging height for speed. During running, kinetic and potential energy instead rise and fall **in phase**: the body is simultaneously fastest and lowest at mid-stance, and simultaneously slowest and highest during flight. Energy is not being exchanged with gravity here; it is being stored and returned elastically, in tendons, muscles, and the leg's effective compliance, then released again on the way back up.
+The center of mass tells the same story from a different angle. During walking, its kinetic and gravitational potential energy rise and fall **out of phase**: as the body vaults forward and upward over the stance leg it slows down (kinetic energy converts to potential energy), then it speeds up again as it falls back down (potential converts back to kinetic), almost exactly like a playground swing exchanging height for speed. During running, kinetic and potential energy instead rise and fall **in phase**: both reach their minimum at the same instant, at mid-stance, where the body is simultaneously at its lowest *and* at its slowest, and both recover together as the leg re-extends and throws it back up into flight. Energy is not being exchanged with gravity here; while the body drops and slows, the missing energy is stored elastically, in tendons, muscles, and the leg's effective compliance, and it is returned on the way back up.
 
 These two energy signatures are exactly what the two template models below are built to reproduce:
 
@@ -155,7 +155,9 @@ These two energy signatures are exactly what the two template models below are b
 
 A striking empirical fact motivates taking these crude pictures seriously: despite enormous differences in size, mass, and number of legs, walking and running animals across the board, humans, dogs, birds, insects, even simulated and physical robots, reuse essentially the same two energy-exchange strategies. The detailed anatomy barely matters for predicting the center-of-mass trajectory; what matters is which of the two strategies (pendulum-like vaulting, or spring-like bouncing) the gait is using.
 
-One more asymmetry is worth flagging early, since it explains why the rest of this page treats walking and running differently: **modeling running is mathematically easier than modeling walking**, precisely because of that double-support phase. Once both feet share the ground at the same time, the two legs form a closed kinematic chain, and the equations of motion become correspondingly more involved. Running never has this problem, at every instant, at most one foot is on the ground, so there is no closed chain to account for. This is part of the reason the walking model (the LIP, Section 2) needs a further simplifying assumption that the running model (the SLIP, Section 3) does not.
+One more asymmetry is worth flagging early, since it shapes how the rest of this page treats the two gaits. At the level of the **full multi-body robot**, walking is the more awkward problem, and double support is the reason: once both feet share the ground at the same time, the two legs close a kinematic chain, and the equations of motion become correspondingly more involved. Bipedal running never has this problem, at every instant at most one foot is on the ground, so there is no closed chain to account for.
+
+At the level of the **template models**, however, the difficulty is inverted, and it is worth knowing this in advance so that the next two sections do not come as a surprise. The LIP buys an exact, closed-form solution, but only by paying for it with an extra assumption that walking does not actually obey: a constant center-of-mass height (Section 8.2.2.2). The SLIP refuses that concession, keeping a compliant leg and a freely varying height, and pays a different price: its equations are nonlinear and have to be integrated numerically (Section 8.2.2.3). Neither model is simply "easier" than the other, they trade realism against solvability in opposite directions.
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem auto;">
 
@@ -193,7 +195,7 @@ One more asymmetry is worth flagging early, since it explains why the rest of th
 
 </div>
 
-The rest of this page turns these two pictures, and the informal static/dynamic stability distinction from 8.1, into precise, computable tools. We start with stability, since it needs the least new machinery, then build up the two template models in depth, since the more advanced stability criteria (capture point, return maps) are defined *in terms of* those models.
+The rest of this page turns these two pictures, and the informal static/dynamic stability distinction from 8.1, into precise, computable tools. We build up the two template models in depth first, because the more advanced stability criteria (capture point, return maps) are defined *in terms of* those models, and only then turn to the stability criteria themselves.
 
 
 Before moving on to the main models of walking and running, here is a video giving an quick introduction of these models :
@@ -218,9 +220,9 @@ Before moving on to the main models of walking and running, here is a video givi
 
 ### The Linear Inverted Pendulum (LIP)
 
-The inverted-pendulum picture of walking from Section 1 is, as it stands, a **nonlinear** dynamical system, and the reason is worth being precise about. If the leg were a rigid rod of fixed length, the point mass would be constrained to a circular arc, its height would rise and fall as it swings, and the equation of motion would be the classic pendulum equation with its $\sin$ term, which has no closed-form solution.
+The inverted-pendulum picture of walking from Section 8.2.2.1 is, as it stands, a **nonlinear** dynamical system, and the reason is worth being precise about. If the leg were a rigid rod of fixed length, the point mass would be constrained to a circular arc, its height would rise and fall as it swings, and the equation of motion would be the classic pendulum equation with its $\sin$ term, which has no solution in elementary functions.
 
-Kajita and Tani (1991) proposed a simplification that removes exactly that difficulty. It trades a little realism for an **exact, closed-form solution**, and that solution is what makes real-time footstep planning possible; it is also the model from which the capture point of Section 6 is derived.
+Kajita and Tani (1991) proposed a simplification that removes exactly that difficulty. It trades a little realism for an **exact, closed-form solution**, and that solution is what makes real-time footstep planning possible; it is also the model from which the capture point of Section 8.2.3.3 is derived.
 
 #### The modelling assumption
 
@@ -247,7 +249,7 @@ Note carefully what this implies: **the pendulum length $l$ is not a constant**.
     style="width: 42%; max-width: 300px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 9: Forces in the 2D Linear Inverted Pendulum.</strong> The mass sits at constant height $z = z\_0$, at horizontal position $x$, on a telescopic leg tilted by $\alpha$ from the vertical. The leg pushes along its own axis with force $\mathbf{F}\_p$ (red, up the leg); gravity $\mathbf{F}\_g$ pulls straight down. Their resultant $\mathbf{F}$ (blue) is purely horizontal, of magnitude $F\_x$, because the vertical components must cancel to hold the height constant. Direction of movement is to the right. Adapted from the Legged Robots course (EPFL).
+    <strong>Figure 3: Forces in the 2D Linear Inverted Pendulum.</strong> The mass sits at constant height $z = z\_0$, at horizontal position $x$, on a telescopic leg tilted by $\alpha$ from the vertical. The leg pushes along its own axis with force $\mathbf{F}\_p$ (red, up the leg); gravity $\mathbf{F}\_g$ pulls straight down. Their resultant $\mathbf{F}$ (blue) is purely horizontal, of magnitude $F\_x$, because the vertical components must cancel to hold the height constant. Direction of movement is to the right. Adapted from the Legged Robots course (EPFL).
   </figcaption>
 
 </figure>
@@ -278,7 +280,7 @@ $$
 
 Here $\tan\alpha$ appears for a simple geometric reason: the vertical component of the leg force must equal $mg$, and the horizontal component is related to it by the leg's tilt, so the ratio horizontal-to-vertical is exactly $\tan\alpha$.
 
-**Step 3: convert the angle into a position.** This is the step that produces the linearity. From the geometry of Section 2.1, dividing $x = l\sin\alpha$ by $z\_0 = l\cos\alpha$ makes the unknown length $l$ cancel:
+**Step 3: convert the angle into a position.** This is the step that produces the linearity. From the geometry set out in the modelling assumption above, dividing $x = l\sin\alpha$ by $z\_0 = l\cos\alpha$ makes the unknown length $l$ cancel:
 
 $$
 \tan\alpha = \frac{x}{z\_0}.
@@ -332,7 +334,7 @@ $$
     style="width: 42%; max-width: 300px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 10: The LIP in motion, and its closed-form trajectory.</strong> The point mass $m$ travels horizontally at the constant height $z\_0$, while the telescopic leg pivots about the fixed support point $x\_{base}$ and lengthens as it tilts. Successive snapshots (grey to black) show the mass at increasing $x(t)$; gravity $g$ acts downward throughout. Because $x(t)$ is known analytically, the whole future trajectory can be predicted from the current state and the chosen $x\_{base}$. Adapted from the Legged Robots course (EPFL).
+    <strong>Figure 4: The LIP in motion, and its closed-form trajectory.</strong> The point mass $m$ travels horizontally at the constant height $z\_0$, while the telescopic leg pivots about the fixed support point $x\_{base}$ and lengthens as it tilts. Successive snapshots (grey to black) show the mass at increasing $x(t)$; gravity $g$ acts downward throughout. Because $x(t)$ is known analytically, the whole future trajectory can be predicted from the current state and the chosen $x\_{base}$. Adapted from the Legged Robots course (EPFL).
   </figcaption>
 
 </figure>
@@ -341,18 +343,18 @@ We thus have a **closed-form (i.e. analytical) solution that predicts the forwar
 
 #### Consequences and limitations
 
-**The growing exponential is the important one.** The term $B e^{\omega t}$ means that, left uncontrolled, the LIP is an **unstable** system: unless $B$ happens to be exactly zero, any small horizontal offset from directly above the foot grows without bound. This is not a defect of the model, it is the honest statement that standing and walking are fundamentally unstable balancing acts, held up by continually choosing where to put the next foot rather than by any passive equilibrium. That instability is the entire reason footstep planning exists, and the form of $B$ is precisely what the capture point of Section 6 exploits.
+**The growing exponential is the important one.** The term $B e^{\omega t}$ means that, left uncontrolled, the LIP is an **unstable** system: unless $B$ happens to be exactly zero, any small horizontal offset from directly above the foot grows without bound. This is not a defect of the model, it is the honest statement that standing and walking are fundamentally unstable balancing acts, held up by continually choosing where to put the next foot rather than by any passive equilibrium. That instability is the entire reason footstep planning exists, and the form of $B$ is precisely what the capture point of Section 8.2.3.3 exploits.
 
 **It is fast enough to run online.** Because $x(t)$ is available in closed form, many real biped robots use the LIP for **online footstep planning**: from the current CoM state, the controller solves analytically for where the next foot must land to achieve a desired future state, at control-loop rates.
 
 **The cost is a crouch.** Keeping $z\_0$ genuinely constant is not free: a real robot must actively enforce it, and the only way to have vertical travel available in both directions is to walk with **bent, crouched knees**. This is why classical ZMP-and-LIP humanoids have their distinctive, slightly seated gait. It looks markedly non-human, and it is not energy-efficient, since the legs must continuously support the body against gravity without ever locking straight. Recovering a more natural, more efficient gait is one of the motivations for the richer models and methods in 8.3.
 
-**A connection worth noticing.** Compare the equation of motion above with the simplified ZMP formula from Section 5.2, $x\_{ZMP} = x - (z\_0/g)\ddot{x}$. Substituting $\ddot{x} = (g/z\_0)(x - x\_{base})$ into it gives $x\_{ZMP} = x\_{base}$ exactly. In other words, **in the LIP the ZMP sits precisely at the support point**: the two models are the same statement viewed from opposite ends, one solving for the motion given the foot, the other solving for the foot given the motion.
+**A connection worth noticing.** Compare the equation of motion above with the simplified ZMP formula from Section 8.2.3.2, $x\_{ZMP} = x - (z\_0/g)\ddot{x}$. Substituting $\ddot{x} = (g/z\_0)(x - x\_{base})$ into it gives $x\_{ZMP} = x\_{base}$ exactly. In other words, **in the LIP the ZMP sits precisely at the support point**: the two models are the same statement viewed from opposite ends, one solving for the motion given the foot, the other solving for the foot given the motion.
 
 <details class="exercise-accordion" markdown="1">
 
 <summary>
-  <span>Exercise 3 (pen &amp; paper) : LIP trajectory prediction</span>
+  <span>Exercise 1 (pen &amp; paper) : LIP trajectory prediction</span>
 </summary>
 
 <div class="exercise-accordion-content" markdown="1">
@@ -362,7 +364,7 @@ A biped's CoM is held at a constant height $z\_0 = 0.5\text{ m}$, with $g = 9.81
 ##### Question 1 (Numeric): The characteristic frequency
 
 <p>
-$\omega = \sqrt{g/z\_0}$ (rad/s, 2 decimals): <input type="text" id="ex3-omega" size="8">
+$\omega = \sqrt{g/z\_0}$ (rad/s, 2 decimals): <input type="text" id="ex1-omega" size="8">
 </p>
 
 ##### Question 2 (Numeric): Position at $t = 0.2\text{ s}$
@@ -370,24 +372,24 @@ $\omega = \sqrt{g/z\_0}$ (rad/s, 2 decimals): <input type="text" id="ex3-omega" 
 Using your value of $\omega$ (or a recomputed one), find $A$ and $B$ from the boxed formula above, then evaluate $x(t) = Ae^{-\omega t} + Be^{\omega t} + x\_{base}$ at $t = 0.2\text{ s}$. A calculator is expected here.
 
 <p>
-$x(0.2)$ (m, 3 decimals): <input type="text" id="ex3-x" size="8">
+$x(0.2)$ (m, 3 decimals): <input type="text" id="ex1-x" size="8">
 </p>
 
 <br>
 
-<button type="button" onclick="checkEx3()">Check answers</button>
-<p id="ex3-feedback"></p>
+<button type="button" onclick="checkEx1()">Check answers</button>
+<p id="ex1-feedback"></p>
 
 <script>
-function checkEx3() {
+function checkEx1() {
   const g = 9.81, z0 = 0.5, x0 = 0.05, xd0 = 0.1, xbase = 0, t = 0.2;
   const trueOmega = Math.sqrt(g / z0);
   const A = (-xd0/trueOmega + x0 - xbase) / 2;
   const B = (xd0/trueOmega + x0 - xbase) / 2;
   const trueX = A*Math.exp(-trueOmega*t) + B*Math.exp(trueOmega*t) + xbase;
 
-  const uOmega = parseFloat(document.getElementById('ex3-omega').value);
-  const uX = parseFloat(document.getElementById('ex3-x').value);
+  const uOmega = parseFloat(document.getElementById('ex1-omega').value);
+  const uX = parseFloat(document.getElementById('ex1-x').value);
   const okOmega = approxEqual(uOmega, trueOmega, 0.05, 0.02);
   const okX = approxEqual(uX, trueX, 0.005, 0.08);
 
@@ -395,7 +397,7 @@ function checkEx3() {
   msgs.push(okOmega ? ("✅ ω correct (≈ " + trueOmega.toFixed(2) + " rad/s).") : ("❌ ω off. Expected ≈ " + trueOmega.toFixed(2) + " rad/s."));
   msgs.push(okX ? ("✅ x(0.2) correct (≈ " + trueX.toFixed(3) + " m).") : ("❌ x(0.2) off. Expected ≈ " + trueX.toFixed(3) + " m (A ≈ " + A.toFixed(4) + ", B ≈ " + B.toFixed(4) + ")."));
 
-  const feedback = document.getElementById('ex3-feedback');
+  const feedback = document.getElementById('ex1-feedback');
   feedback.innerHTML = msgs.join("<br>");
   feedback.style.color = (okOmega && okX) ? "green" : "orange";
 }
@@ -418,7 +420,7 @@ Compute $\omega$ first, then plug it into the formulas for $A$ and $B$ before ev
 
 ### The Spring-Loaded Inverted Pendulum (SLIP)
 
-The LIP captured walking by making the leg a rigid, telescopic strut. Running is a different mechanical problem: as we saw in Section 1, its energy signature is elastic, not pendular, and it has a flight phase during which no foot touches the ground at all. The **Spring-Loaded Inverted Pendulum (SLIP)** is the template model for exactly that regime, and it is built by replacing the LIP's rigid strut with a **spring**.
+The LIP captured walking by making the leg a rigid, telescopic strut. Running is a different mechanical problem: as we saw in Section 8.2.2.1, its energy signature is elastic, not pendular, and it has a flight phase during which no foot touches the ground at all. The **Spring-Loaded Inverted Pendulum (SLIP)** is the template model for exactly that regime, and it is built by replacing the LIP's rigid strut with a **spring**.
 
 #### Predictive validity and biological relevance
 
@@ -437,7 +439,7 @@ and it does so for running animals **with different numbers of legs**. A two-leg
     style="width: 75%; max-width: 560px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 11: The SLIP as a universal running template.</strong> Human, dog, cockroach and crab all collapse onto the same template: a point mass bouncing on one effective leg-spring, producing a single-peaked vertical force and a biphasic fore-aft force. Filled and open circles mark which legs are on the ground at each instant. Adapted from Holmes, Full, Koditschek &amp; Guckenheimer (2006), via the Legged Robots course (EPFL).
+    <strong>Figure 5: The SLIP as a universal running template.</strong> Human, dog, cockroach and crab all collapse onto the same template: a point mass bouncing on one effective leg-spring, producing a single-peaked vertical force and a biphasic fore-aft force. Filled and open circles mark which legs are on the ground at each instant. Adapted from Holmes, Full, Koditschek &amp; Guckenheimer (2006), via the Legged Robots course (EPFL).
   </figcaption>
 
 </figure>
@@ -456,7 +458,7 @@ Because of this, the SLIP is used both as a **descriptive tool in biomechanics**
     style="width: 85%; max-width: 640px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 12: One SLIP stride, and all of its symbols.</strong> During <strong>flight</strong> the mass follows a ballistic arc with the leg held at the fixed angle of attack $\alpha\_0$. At touch-down the <strong>stance</strong> phase begins: the spring compresses to its minimum at mid-stance and re-extends, sweeping the leg through the angle $\Delta\varphi$, before take-off returns the mass to flight. Adapted from Geyer et al. (2004), via the Legged Robots course (EPFL).
+    <strong>Figure 6: One SLIP stride, and all of its symbols.</strong> During <strong>flight</strong> the mass follows a ballistic arc with the leg held at the fixed angle of attack $\alpha\_0$. At touch-down the <strong>stance</strong> phase begins: the spring compresses to its minimum at mid-stance and re-extends, sweeping the leg through the angle $\Delta\varphi$, before take-off returns the mass to flight. Adapted from Geyer et al. (2004), via the Legged Robots course (EPFL).
   </figcaption>
 
 </figure>
@@ -494,7 +496,7 @@ Five assumptions define the model, and each has a consequence worth naming:
     style="width: 42%; max-width: 300px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 13: Forces during the SLIP stance phase.</strong> The mass sits at $(x, y)$, carried on a leg-spring whose rest length is $L\_0$. The compressed spring pushes along the leg axis with force $\mathbf{F}\_s$ (red, up the leg), while gravity $\mathbf{F}\_g$ pulls straight down. Movement is to the right. Note the angle convention: $\alpha\_0$ is measured from the left, and $\varphi$ from the right. Adapted from the Legged Robots course (EPFL).
+    <strong>Figure 7: Forces during the SLIP stance phase.</strong> The mass sits at $(x, y)$, carried on a leg-spring whose rest length is $L\_0$. The compressed spring pushes along the leg axis with force $\mathbf{F}\_s$ (red, up the leg), while gravity $\mathbf{F}\_g$ pulls straight down. Movement is to the right. Note the angle convention: $\alpha\_0$ is measured from the left, and $\varphi$ from the right. Adapted from the Legged Robots course (EPFL).
   </figcaption>
 
 </figure>
@@ -537,7 +539,7 @@ $$
 
 Both read naturally once you picture the leg. **Touch-down** happens when the falling mass drops low enough that a leg held at angle $\alpha\_0$ would reach the ground, and the height of the foot-end of such a leg is exactly $L\_0\sin\alpha\_0$. **Take-off** happens when the spring, measured from the planted foot at the origin, has re-extended back to its rest length $L\_0$; beyond that it would have to pull the mass down, which a leg cannot do, so contact is released.
 
-This makes the SLIP a **hybrid dynamical system**: continuous dynamics within each phase, punctuated by discrete switches. That structure is exactly why Section 7's Poincaré/return-map machinery is the right tool for analyzing its stability.
+This makes the SLIP a **hybrid dynamical system**: continuous dynamics within each phase, punctuated by discrete switches. That structure is exactly why Section 8.2.3.4's Poincaré/return-map machinery is the right tool for analyzing its stability.
 
 #### Design parameters and degrees of freedom
 
@@ -567,7 +569,7 @@ This is checked numerically, by the simplest possible method: **count how many s
     style="width: 48%; max-width: 360px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 14: The self-stabilization region of the SLIP.</strong> Steps survived before falling (darker means more steps) as a function of leg stiffness $k\_{LEG}$ and angle of attack $\alpha\_0$, at $v\_{x,0} = 5$ m/s. Self-stable hopping exists only in a narrow band, and the arrows mark its boundary. Circles are measurements from real human running, which fall inside the band. Adapted from Seyfarth, Geyer, Günther &amp; Blickhan (2002), via the Legged Robots course (EPFL).
+    <strong>Figure 8: The self-stabilization region of the SLIP.</strong> Steps survived before falling (darker means more steps) as a function of leg stiffness $k\_{LEG}$ and angle of attack $\alpha\_0$, at $v\_{x,0} = 5$ m/s. Self-stable hopping exists only in a narrow band, and the arrows mark its boundary. Circles are measurements from real human running, which fall inside the band. Adapted from Seyfarth, Geyer, Günther &amp; Blickhan (2002), via the Legged Robots course (EPFL).
   </figcaption>
 
 </figure>
@@ -619,7 +621,7 @@ Here is also a video for a simulation of the SLIP model :
 <details class="exercise-accordion" markdown="1">
 
 <summary>
-  <span>Exercise 4 (pen &amp; paper) : Working with the SLIP equations</span>
+  <span>Exercise 2 (pen &amp; paper) : Working with the SLIP equations</span>
 </summary>
 
 <div class="exercise-accordion-content" markdown="1">
@@ -631,10 +633,10 @@ A SLIP-modeled runner has leg rest length $L\_0 = 1.0\text{ m}$, angle of attack
 At a given instant during descent, the mass is at height $y = 0.85\text{ m}$. Using the touch-down condition $y \le L\_0 \sin\alpha\_0$, is the leg currently in stance or in flight?
 
 <label style="display: block;">
-  <input type="radio" name="ex5-phase" value="stance"> Stance (already touched down)
+  <input type="radio" name="ex2-phase" value="stance"> Stance (already touched down)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex5-phase" value="flight"> Flight (not yet touched down)
+  <input type="radio" name="ex2-phase" value="flight"> Flight (not yet touched down)
 </label>
 
 ##### Question 2 (Numeric): Spring force
@@ -642,32 +644,32 @@ At a given instant during descent, the mass is at height $y = 0.85\text{ m}$. Us
 At another instant, the leg is compressed to a radial length $r = 0.92\text{ m}$. Compute the magnitude of the spring force $F\_s = k(L\_0 - r)$.
 
 <p>
-$F\_s$ (N): <input type="text" id="ex5-fs" size="8">
+$F\_s$ (N): <input type="text" id="ex2-fs" size="8">
 </p>
 
 <br>
 
-<button type="button" onclick="checkEx5()">Check answers</button>
-<p id="ex5-feedback"></p>
+<button type="button" onclick="checkEx2()">Check answers</button>
+<p id="ex2-feedback"></p>
 
 <script>
-function checkEx5() {
+function checkEx2() {
   const L0 = 1.0, alpha0 = 70 * Math.PI / 180, k = 6000, y = 0.85, r = 0.92;
   const threshold = L0 * Math.sin(alpha0);
   const truePhase = (y <= threshold) ? 'stance' : 'flight';
   const trueFs = k * (L0 - r);
 
-  const phaseChoice = document.querySelector('input[name="ex5-phase"]:checked');
+  const phaseChoice = document.querySelector('input[name="ex2-phase"]:checked');
   const okPhase = phaseChoice && phaseChoice.value === truePhase;
 
-  const uFs = parseFloat(document.getElementById('ex5-fs').value);
+  const uFs = parseFloat(document.getElementById('ex2-fs').value);
   const okFs = approxEqual(uFs, trueFs, 5, 0.05);
 
   let msgs = [];
   msgs.push(okPhase ? ("✅ Correct: with L0 sin(α0) ≈ " + threshold.toFixed(3) + " m and y = 0.85 m, the leg is in " + truePhase + ".") : ("❌ Not quite. L0 sin(α0) ≈ " + threshold.toFixed(3) + " m; compare that to y = 0.85 m."));
   msgs.push(okFs ? ("✅ Spring force correct (≈ " + trueFs.toFixed(0) + " N).") : ("❌ Spring force off. Expected ≈ " + trueFs.toFixed(0) + " N."));
 
-  const feedback = document.getElementById('ex5-feedback');
+  const feedback = document.getElementById('ex2-feedback');
   feedback.innerHTML = msgs.join("<br>");
   feedback.style.color = (okPhase && okFs) ? "green" : "orange";
 }
@@ -677,67 +679,6 @@ function checkEx5() {
 </details>
 
 ---
-
----
-
-<details class="exercise-accordion" markdown="1">
-
-<summary>
-  <span>Programming Exercise 3 : LIP Footstep Planning and DCM Balance Control</span>
-</summary>
-
-<div class="exercise-accordion-content" markdown="1">
-
-This practical consolidates the core ideas of this section:
-
-- implementing the **LIP closed-form solution** to propagate the CoM state exactly, one timestep at a time;
-- observing the **growing exponential instability** when no footstep correction is applied;
-- implementing the **Divergent Component of Motion (DCM)** and using it to plan footsteps that bring the robot to a controlled stop;
-- visualising all of the above in a live **PyBullet** simulation with a telescopic leg, footstep markers, and a real-time DCM indicator.
-
-##### Download the exercise files
-
-Download the complete exercise package, extract the ZIP file, and keep all files in the same folder.
-
-<a
-  href="{{ '/assets/files/locomotion/stability_practical3.zip' | relative_url }}"
-  download
-  style="
-    display: inline-block;
-    padding: 10px 16px;
-    background-color: #0075db;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-  ">
-  Download Practical 3
-</a>
-
-##### What's in the package
-
-```text
-Exercise1_stability/
-├── Exercise_LIP.py                  # exercise, fill in the three TODOs
-├── Solution_LIP.py                  # reference solution
-├── lip_env.py                       # LIP PyBullet environment (do not modify)
-├── requirements.txt                 # Python dependencies
-└── README.md                        # environment setup & step-by-step instructions
-```
-
-`Exercise_LIP` contains three functions to complete:
-
-| TODO | Function | Concept |
-|---|---|---|
-| 1 | `lip_next_state` | LIP closed-form solution (Section 8.2.1) |
-| 2 | `compute_dcm` | Divergent Component of Motion (Section 8.3.3) |
-| 3 | `dcm_footstep_target` | Instantaneous capture-point rule (Section 8.3.3) |
-
-**Full environment setup and instructions are in `README.md`** inside the downloaded package.
-
-</div>
-</details>
-
 
 ## Stability criteria
 
@@ -759,7 +700,7 @@ where $\mathcal{P}$ is the support polygon and $\partial \mathcal{P}$ is its bou
     style="width: 55%; max-width: 460px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto;">
-    <strong>Figure 3: Static stability margin.</strong> Filled circles are legs on the ground, open circles are legs in the air; the support polygon (red) is the convex hull of the grounded feet, and the margin (purple) is the shortest distance from the CoM projection (orange) to its boundary.
+    <strong>Figure 9: Static stability margin.</strong> Filled circles are legs on the ground, open circles are legs in the air; the support polygon (red) is the convex hull of the grounded feet, and the margin (purple) is the shortest distance from the CoM projection (orange) to its boundary.
   </figcaption>
 
   <p style="max-width: 700px; margin: 0.4rem auto; font-size: 0.85rem; color: #6b7280;">
@@ -773,7 +714,7 @@ A larger margin means the robot can absorb a larger disturbance before tipping, 
 <details class="exercise-accordion" markdown="1">
 
 <summary>
-  <span>Exercise 1 (pen &amp; paper) : Computing a static stability margin</span>
+  <span>Exercise 3 (pen &amp; paper) : Computing a static stability margin</span>
 </summary>
 
 <div class="exercise-accordion-content" markdown="1">
@@ -789,48 +730,48 @@ $$
 ##### Question 1 (Numeric): The margin
 
 <p>
-Static stability margin (m, 2 decimals): <input type="text" id="ex1-margin" size="8">
+Static stability margin (m, 2 decimals): <input type="text" id="ex3-margin" size="8">
 </p>
 
 ##### Question 2: Which edge is closest?
 
 <label style="display: block;">
-  <input type="radio" name="ex1-edge" value="a"> The left edge ($x = -0.3$)
+  <input type="radio" name="ex3-edge" value="a"> The left edge ($x = -0.3$)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex1-edge" value="b"> The right edge ($x = 0.3$)
+  <input type="radio" name="ex3-edge" value="b"> The right edge ($x = 0.3$)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex1-edge" value="c"> The bottom edge ($y = -0.2$)
+  <input type="radio" name="ex3-edge" value="c"> The bottom edge ($y = -0.2$)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex1-edge" value="d"> The top edge ($y = 0.2$)
+  <input type="radio" name="ex3-edge" value="d"> The top edge ($y = 0.2$)
 </label>
 
 <br>
 
-<button type="button" onclick="checkEx1()">Check answers</button>
-<p id="ex1-feedback"></p>
+<button type="button" onclick="checkEx3()">Check answers</button>
+<p id="ex3-feedback"></p>
 
 <script>
-function checkEx1() {
+function checkEx3() {
   const xmin=-0.3, xmax=0.3, ymin=-0.2, ymax=0.2, xc=0.1, yc=0.05;
   const dists = {a: xc-xmin, b: xmax-xc, c: yc-ymin, d: ymax-yc};
   let closest = 'a';
   for (const k in dists) { if (dists[k] < dists[closest]) closest = k; }
   const trueMargin = dists[closest];
 
-  const uMargin = parseFloat(document.getElementById('ex1-margin').value);
+  const uMargin = parseFloat(document.getElementById('ex3-margin').value);
   const okMargin = approxEqual(uMargin, trueMargin, 0.01, 0.05);
 
-  const edgeChoice = document.querySelector('input[name="ex1-edge"]:checked');
+  const edgeChoice = document.querySelector('input[name="ex3-edge"]:checked');
   const okEdge = edgeChoice && edgeChoice.value === closest;
 
   let msgs = [];
   msgs.push(okMargin ? ("✅ Margin correct (≈ " + trueMargin.toFixed(2) + " m).") : ("❌ Margin off. Expected ≈ " + trueMargin.toFixed(2) + " m."));
   msgs.push(okEdge ? "✅ Correct edge." : "❌ Not quite, recompute all four distances and take the minimum.");
 
-  const feedback = document.getElementById('ex1-feedback');
+  const feedback = document.getElementById('ex3-feedback');
   feedback.innerHTML = msgs.join("<br>");
   feedback.style.color = (okMargin && okEdge) ? "green" : "orange";
 }
@@ -853,12 +794,19 @@ $$
 \mathbf{CoP} = \frac{\sum\_i F\_i\, \mathbf{X}\_i}{\sum\_i F\_i},
 $$
 
-a force-weighted average of the sensor positions $\mathbf{X}\_i$. The CoP coincides with the CoM projection only when the robot is standing still; once the robot accelerates, the two separate. A more serious limitation: the CoP is only defined *while contact exists*, and is mathematically undefined the moment it would leave the support polygon, exactly the situation we most want to detect.
+a force-weighted average of the sensor positions $\mathbf{X}\_i$. The CoP coincides with the CoM projection only when the robot is standing still; once the robot accelerates, the two separate.
+
+Two limitations follow directly from that definition, and they are different from one another:
+
+- **The CoP exists only while contact does.** During a flight phase every $F\_i$ is zero, the denominator $\sum\_i F\_i$ vanishes, and the expression is simply undefined. So the CoP has nothing to say about running or hopping between footfalls.
+- **The CoP can never leave the support polygon.** Because the ground can only push and never pull, every $F\_i \ge 0$, so the CoP is a weighted average of points of the contact area with non-negative weights, and such an average is always inside the convex hull of those points. No manoeuvre, however violent, can push it out; it saturates at the edge of the foot instead.
+
+The second limitation is the one that matters here. It means the CoP can never, on its own, tell you that the robot is about to tip, exactly the situation we most want to detect. That is the gap the Zero Moment Point is built to fill, and we return to this point in detail once it is defined.
 
 <details class="exercise-accordion" markdown="1">
 
 <summary>
-  <span>Exercise 2 (pen &amp; paper) : Computing a Center of Pressure</span>
+  <span>Exercise 4 (pen &amp; paper) : Computing a Center of Pressure</span>
 </summary>
 
 <div class="exercise-accordion-content" markdown="1">
@@ -873,37 +821,37 @@ A robot's foot has four load sensors, at the corners of a $1\text{ m} \times 1\t
     style="width: 50%; max-width: 340px; height: auto;">
 
   <figcaption style="max-width: 550px; margin: 0.4rem auto; font-size: 0.85rem; color: #6b7280;">
-    <strong>Figure 4: Setup for Exercise 2.</strong> The four sensors $F\_1$&ndash;$F\_4$ sit at the corners of the square; arrow length is proportional to each sensor's reading. The CoP is the force-weighted average of the four corner positions, it is not marked here since finding it is the point of the exercise.
+    <strong>Figure 10: Setup for Exercise 4.</strong> The four sensors $F\_1$&ndash;$F\_4$ sit at the corners of the square; arrow length is proportional to each sensor's reading. The CoP is the force-weighted average of the four corner positions, it is not marked here since finding it is the point of the exercise.
   </figcaption>
 
 </figure>
 
 <p>
-$\text{CoP}\_x$ (m, 2 decimals): <input type="text" id="ex2-copx" size="8">
+$\text{CoP}\_x$ (m, 2 decimals): <input type="text" id="ex4-copx" size="8">
 </p>
 <p>
-$\text{CoP}\_y$ (m, 2 decimals): <input type="text" id="ex2-copy" size="8">
+$\text{CoP}\_y$ (m, 2 decimals): <input type="text" id="ex4-copy" size="8">
 </p>
 
 <br>
 
-<button type="button" onclick="checkEx2()">Check answers</button>
-<p id="ex2-feedback"></p>
+<button type="button" onclick="checkEx4()">Check answers</button>
+<p id="ex4-feedback"></p>
 
 <script>
-function checkEx2() {
+function checkEx4() {
   const X = [[0,0],[1,0],[0,1],[1,1]];
   const F = [50,70,30,50];
   const sumF = F.reduce((a,b)=>a+b,0);
   const trueX = X.reduce((acc,p,i)=>acc+p[0]*F[i],0) / sumF;
   const trueY = X.reduce((acc,p,i)=>acc+p[1]*F[i],0) / sumF;
 
-  const ux = parseFloat(document.getElementById('ex2-copx').value);
-  const uy = parseFloat(document.getElementById('ex2-copy').value);
+  const ux = parseFloat(document.getElementById('ex4-copx').value);
+  const uy = parseFloat(document.getElementById('ex4-copy').value);
   const okX = approxEqual(ux, trueX, 0.02, 0.05);
   const okY = approxEqual(uy, trueY, 0.02, 0.05);
 
-  const feedback = document.getElementById('ex2-feedback');
+  const feedback = document.getElementById('ex4-feedback');
   feedback.innerHTML =
     (okX ? "✅ CoP_x correct (≈ " + trueX.toFixed(2) + " m). " : "❌ CoP_x off, expected ≈ " + trueX.toFixed(2) + " m. ") + "<br>" +
     (okY ? "✅ CoP_y correct (≈ " + trueY.toFixed(2) + " m)." : "❌ CoP_y off, expected ≈ " + trueY.toFixed(2) + " m.");
@@ -922,7 +870,7 @@ Before defining it, we need to be precise about two things that are easy to glos
 
 ##### What counts as the support polygon?
 
-In Section 4 the legs were idealized as *points*, so the support polygon was the convex hull of a handful of contact points. A biped with real, flat feet is different: each foot touches the ground over a whole **surface**, not a point. The support polygon is therefore the convex hull of the entire **contact area**:
+In Section 8.2.3.1 the legs were idealized as *points*, so the support polygon was the convex hull of a handful of contact points. A biped with real, flat feet is different: each foot touches the ground over a whole **surface**, not a point. The support polygon is therefore the convex hull of the entire **contact area**:
 
 - **Single support** (one foot on the ground): the support polygon is the outline of that foot's sole. Even standing on one foot, you have a real polygon to work with, roughly 25 cm by 10 cm for an adult human, which is precisely why you can lean slightly without falling.
 - **Double support** (both feet on the ground): the support polygon is the convex hull of *both* soles, and this crucially **includes the empty gap between the feet**. Nothing is touching the floor in that gap, but the ground reaction forces from the two feet can combine to produce a resultant that acts anywhere in the hull, so it counts as support.
@@ -935,16 +883,16 @@ In Section 4 the legs were idealized as *points*, so the support polygon was the
     style="width: 85%; max-width: 620px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 5: The support polygon for a biped (top view).</strong> Left: in single support it is the sole of the stance foot alone. Right: in double support it is the convex hull of both soles, which includes the gap between the feet even though nothing touches the ground there.
+    <strong>Figure 11: The support polygon for a biped (top view).</strong> Left: in single support it is the sole of the stance foot alone. Right: in double support it is the convex hull of both soles, which includes the gap between the feet even though nothing touches the ground there.
   </figcaption>
 
 </figure>
 
-This also explains a limitation that will matter in 8.3: a robot with **point feet** (or a quadruped in a two-leg trot phase) has a support polygon that degenerates to a point or a line segment. A region with zero area cannot "contain" anything, so the ZMP criterion becomes vacuous, and those robots need the different tools we meet in Sections 5 and 7.
+This also explains a limitation that will matter in 8.3: a robot with **point feet** (or a quadruped in a two-leg trot phase) has a support polygon that degenerates to a point or a line segment. A region with zero area cannot "contain" anything, so the ZMP criterion becomes vacuous, and those robots need the different tools we meet in Sections 8.2.3.3 and 8.2.3.4.
 
 ##### "Zero moment" of what, exactly?
 
-Pick any point on the ground. Add up the moments (torques) that every force acting on the robot produces about that point: gravity on each link, the inertial reaction of each accelerating link, and the ground reaction forces. The result is a moment **vector** $\mathbf{M}$ with three components, and the two kinds of component mean very different things:
+Pick any point on the ground. Add up the moments (torques) that **gravity and inertia** produce about that point: the weight of each link, and the inertial term of each link that is accelerating or rotating. (The ground reaction forces are deliberately *not* in this list; we come back to why in a moment.) The result is a moment **vector** $\mathbf{M}$ with three components, and the two kinds of component mean very different things:
 
 - The two **horizontal** components, $M\_x$ and $M\_y$, are **tipping moments**. They rotate the robot about a horizontal axis lying in the ground plane, pitching it forward/backward or rolling it sideways. These are the dangerous ones, this is what falling over *is*.
 - The **vertical** component, $M\_z$, is a **yaw moment**: it spins the robot about the vertical axis, like pivoting on your heel. Unpleasant, perhaps, but it does not tip you over, so the criterion deliberately ignores it.
@@ -959,7 +907,7 @@ The **Zero Moment Point is the unique point on the ground where the two horizont
     style="width: 75%; max-width: 560px; height: auto;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 6: What "zero moment" means.</strong> Computing the net moment about different ground points gives different answers. About point A the robot has a net moment tipping it one way, about point B the other way; somewhere between them lies the single point where the horizontal moment is exactly zero. That point is the ZMP.
+    <strong>Figure 12: What "zero moment" means.</strong> Computing the net moment about different ground points gives different answers. About point A the robot has a net moment tipping it one way, about point B the other way; somewhere between them lies the single point where the horizontal moment is exactly zero. That point is the ZMP.
   </figcaption>
 
 </figure>
@@ -987,10 +935,10 @@ $$
 
 Reading the four terms:
 
-1. $\mathbf{r}\_i \times m\_i\mathbf{a}\_i$: the moment produced by link $i$'s **inertial reaction**. A link being accelerated resists with a force $m\_i\mathbf{a}\_i$ (d'Alembert's principle); the cross product with the lever arm $\mathbf{r}\_i$ turns that force into a moment. This is the term that makes the criterion *dynamic* rather than static.
+1. $\mathbf{r}\_i \times m\_i\mathbf{a}\_i$: the moment of link $i$'s **inertial term** $m\_i\mathbf{a}\_i$, the net force needed to accelerate it; the cross product with the lever arm $\mathbf{r}\_i$ turns that force into a moment. This is the term that makes the criterion *dynamic* rather than static.
 2. $\mathbf{I}\_i\boldsymbol{\alpha}\_i$: the moment required to **angularly accelerate** the link, i.e. to make it spin up or slow its rotation. A swinging leg or a rotating torso contributes here.
 3. $\boldsymbol{\omega}\_i \times \mathbf{I}\_i\boldsymbol{\omega}\_i$: the **gyroscopic** term, which appears whenever an already-rotating rigid body has a non-symmetric inertia tensor. It is usually small for slow walking and often neglected in practice, but it is part of the exact expression.
-4. $-\mathbf{r}\_i \times m\_i\mathbf{g}$: the moment produced by the link's **weight**. This is the only term that survives if the robot stands perfectly still, which is why the ZMP reduces to the CoM projection at standstill.
+4. $-\mathbf{r}\_i \times m\_i\mathbf{g}$: *minus* the moment of the link's **weight** $m\_i\mathbf{g}$. Terms (1) and (4) are best read together, since they combine into $\mathbf{r}\_i \times m\_i(\mathbf{a}\_i - \mathbf{g})$, the moment of the *effective* force on the link. This pair is all that survives if the robot stands perfectly still (every $\mathbf{a}\_i = 0$), which is why the ZMP reduces to the CoM projection at standstill.
 
 The defining condition is that the horizontal part of this vector vanishes:
 
@@ -1000,7 +948,9 @@ $$
 M\_x = 0 \;\text{ and }\; M\_y = 0 .
 $$
 
-The $M\_z$ entry is left free, that is the yaw component we agreed to ignore. So this is a system of **two scalar equations in two scalar unknowns**, $p\_{ZMP,x}$ and $p\_{ZMP,y}$ (the third coordinate is fixed at $z = 0$, since the ZMP is by definition a point on the ground). Given the robot's current state and a dynamic model, it always has a solution.
+The $M\_z$ entry is left free, that is the yaw component we agreed to ignore. So this is a system of **two scalar equations in two scalar unknowns**, $p\_{ZMP,x}$ and $p\_{ZMP,y}$ (the third coordinate is fixed at $z = 0$, since the ZMP is by definition a point on the ground). Given the robot's current state and a dynamic model, it has a unique solution whenever the net vertical force is non-zero, that is, whenever the robot is actually in contact with the ground.
+
+**Where did the ground reaction forces go?** They were never needed. Newton's and Euler's laws say that the contact wrench and the gravity-plus-inertia wrench are equal and opposite, so the moment the ground exerts about any point is exactly the negative of the sum written above. Requiring one to have no horizontal component is therefore the *same* condition as requiring it of the other, and the two standard definitions of the ZMP, "the ground point where the contact forces exert no tipping moment" and "the ground point where gravity and inertia exert no tipping moment", pick out the same point. The version above is the useful one in practice, because it can be evaluated from the robot's planned state alone, **before** the motion is executed and before any contact force exists to measure.
 
 ##### A far more usable form
 
@@ -1022,25 +972,25 @@ Read that last equation carefully, it is the single most useful sentence in this
 
 > **The ZMP is the CoM's ground projection, shifted opposite to the CoM's horizontal acceleration.**
 
-Stand still ($\ddot{x} = 0$) and the ZMP sits exactly under your CoM. Accelerate forward ($\ddot{x} > 0$) and the ZMP shifts *backward*, toward your heels. Brake ($\ddot{x} < 0$) and it shifts forward, toward your toes, which is exactly why you pitch onto your toes when you stop abruptly. We will meet this same equation again in Section 2, where it turns out to be the LIP model in disguise.
+Stand still ($\ddot{x} = 0$) and the ZMP sits exactly under your CoM. Accelerate forward ($\ddot{x} > 0$) and the ZMP shifts *backward*, toward your heels. Brake ($\ddot{x} < 0$) and it shifts forward, toward your toes, which is exactly why you pitch onto your toes when you stop abruptly. We already met this equation in Section 8.2.2.2, where it is the LIP model in disguise.
 
 ##### The stability rule, and what it really means
 
 > **Locomotion is dynamically stable, in the sense of not tipping, if the ZMP stays inside the support polygon over time.**
 
-Now for the subtlety that trips most people up, and that is worth stating plainly.
+Now for the subtlety that trips most people up. It rests on the CoP limitation we met earlier, which is worth restating here in its proper place.
 
-**The CoP can never leave the support polygon.** The ground can only *push*, never pull, on the robot's feet, a property called **unilateral contact**. Since the CoP is a force-weighted average of push-only contact forces, it is mathematically forced to lie inside the convex hull of the contact area. There is no physical mechanism that could place it outside.
+**The CoP can never leave the support polygon.** The ground can only *push*, never pull, on the robot's feet, a property called **unilateral contact**, and a weighted average of push-only forces is mathematically forced to lie inside the convex hull of the contact area. There is no physical mechanism that could place it outside. **The computed ZMP is under no such constraint**: it is the solution of an equation, not an average of measured forces, and nothing prevents that solution from landing off the foot.
 
 So what happens if you compute the ZMP for some planned motion and the formula returns a point *outside* the foot? It means the motion you planned would require the ground to pull down on the robot somewhere outside the support polygon, in order to supply the moment that would keep it from tipping. The ground cannot do that. What happens instead is that the real CoP saturates at the edge of the foot, an unbalanced tipping moment remains, and **the robot rotates about that edge**. In the literature this out-of-polygon solution is called a **fictitious ZMP** (FZMP): a useful number, because how far outside it lands tells you the direction and severity of the impending tip, but not a physically realized point.
 
-Two honest caveats. First, tipping is not the same as falling: a robot whose ZMP briefly exits the support polygon may still recover by taking a step, which is exactly what the capture point of Section 6 formalizes. Second, this whole criterion presumes a foot is on the ground, so it says nothing at all about the flight phase of a running or hopping robot; Section 7 provides the right tool there.
+Two honest caveats. First, tipping is not the same as falling: a robot whose ZMP briefly exits the support polygon may still recover by taking a step, which is exactly what the capture point of Section 8.2.3.3 formalizes. Second, this whole criterion presumes a foot is on the ground, so it says nothing at all about the flight phase of a running or hopping robot; Section 8.2.3.4 provides the right tool there.
 
 ##### What *can* leave the support polygon
 
 If the CoP cannot leave, what does dynamic walking actually look like? The answer is that the quantity free to wander outside is the **ground projection of the center of mass**.
 
-This is the essential difference between the static criterion of Section 4 and the dynamic one here. Static stability demanded that the CoM projection stay inside the support polygon. Dynamic stability makes no such demand: the CoM projection may be well outside the feet, as long as the robot is accelerating in the right way to keep the *ZMP* inside.
+This is the essential difference between the static criterion of Section 8.2.3.1 and the dynamic one here. Static stability demanded that the CoM projection stay inside the support polygon. Dynamic stability makes no such demand: the CoM projection may be well outside the feet, as long as the robot is accelerating in the right way to keep the *ZMP* inside.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -1050,7 +1000,7 @@ This is the essential difference between the static criterion of Section 4 and t
     style="width: 60%; max-width: 460px; height: auto; border: 1px solid #e5e7eb; border-radius: 8px;">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto; font-size: 0.9rem; color: #4b5563;">
-    <strong>Figure 7: The CoM projection may leave the support polygon; the ZMP may not.</strong> As the body leans and accelerates forward, its CoM projection (orange) crosses outside the foot, which would be an immediate fall by the static criterion of Section 4. The ZMP (purple) stays inside the foot throughout, so no tipping moment develops and the motion is dynamically stable.
+    <strong>Figure 13: The CoM projection may leave the support polygon; the ZMP may not.</strong> As the body leans and accelerates forward, its CoM projection (orange) crosses outside the foot, which would be an immediate fall by the static criterion of Section 8.2.3.1. The ZMP (purple) stays inside the foot throughout, so no tipping moment develops and the motion is dynamically stable.
   </figcaption>
 
 </figure>
@@ -1064,7 +1014,7 @@ A sprinter at the blocks is the extreme case: the body is pitched far forward, t
     alt="ZMP trajectory staying inside successive footprint polygons during a biped turning walk">
 
   <figcaption style="max-width: 700px; margin: 0.5rem auto;">
-    <strong>Figure 8: A planned ZMP trajectory.</strong> As the biped walks and turns, the reference ZMP trajectory (red) is designed to stay inside each successive support polygon (dashed), the classical ZMP-based approach to generating a walking pattern (Kajita et al., 2003).
+    <strong>Figure 14: A planned ZMP trajectory.</strong> As the biped walks and turns, the reference ZMP trajectory (red) is designed to stay inside each successive support polygon (dashed), the classical ZMP-based approach to generating a walking pattern (Kajita et al., 2003).
   </figcaption>
 
 </figure>
@@ -1198,7 +1148,7 @@ According to the ZMP criterion, when is a biped's locomotion considered (dynamic
     'mod3-q3',
     'a',
     'Correct! The rule is about the ZMP staying inside the support polygon over time, not about the CoM position or the ZMP being centered.',
-    'Incorrect. Re-read the boxed stability rule in Section 5.2.'
+    'Incorrect. Re-read the boxed stability rule in Section 8.2.3.2.'
   )">
   Check answer
 </button>
@@ -1212,7 +1162,7 @@ According to the ZMP criterion, when is a biped's locomotion considered (dynamic
 
 ### Capture point and the Divergent Component of Motion (DCM)
 
-We now return to walking, and to the LIP. The ZMP of Section 5 tells you whether you are *currently* tipping, and the LIP of Section 2 tells you how the CoM will move once a foot is planted. Neither answers the question a balance controller actually faces after a push: **where should I put the next foot?** This section derives the answer, and it falls directly out of the LIP's closed-form solution.
+We now return to walking, and to the LIP. The ZMP of Section 8.2.3.2 tells you whether you are *currently* tipping, and the LIP of Section 8.2.2.2 tells you how the CoM will move once a foot is planted. Neither answers the question a balance controller actually faces after a push: **where should I put the next foot?** This section derives the answer, and it falls directly out of the LIP's closed-form solution.
 
 #### Capturability: the qualitative notion
 
@@ -1243,7 +1193,7 @@ Notice that this is a strictly stronger notion than the ZMP criterion. The ZMP t
 
 #### Change of variables: decoupling the LIP dynamics
 
-Recall the 2D LIP equation of motion derived in Section 2, with the support point at $x\_{base}$:
+Recall the 2D LIP equation of motion derived in Section 8.2.2.2, with the support point at $x\_{base}$:
 
 $$
 \ddot{x}(t) = \frac{g}{z\_0}\bigl(x(t) - x\_{base}\bigr),
@@ -1272,7 +1222,7 @@ This decomposition is the whole point of the change of variables, and the two ha
 - **The divergent component.** The variable $\xi$ is the **Divergent Component of Motion (DCM)**. Its equation has a *positive* coefficient $+\omega$, so $\xi$ is **pushed away** from $x\_{base}$, growing exponentially. This is the unstable part of the LIP, isolated into a single scalar.
 - **The convergent component.** The variable $x$ has a *negative* coefficient $-\omega$, so the CoM is **attracted to** $\xi$, converging exponentially toward it. This is the stable part.
 
-The instability we identified in Section 2, the growing exponential $Be^{\omega t}$, has now been cleanly separated out. All of the divergence lives in $\xi$, and none of it lives in $x$. That is what makes this change of variables so useful: instead of controlling a second-order unstable system, we need only steer one scalar quantity.
+The instability we identified in Section 8.2.2.2, the growing exponential $Be^{\omega t}$, has now been cleanly separated out. All of the divergence lives in $\xi$, and none of it lives in $x$. That is what makes this change of variables so useful: instead of controlling a second-order unstable system, we need only steer one scalar quantity.
 
 #### The instantaneous capture point
 
@@ -1326,7 +1276,7 @@ At some instant, a LIP-modeled biped has $\omega = 4.43\text{ rad/s}$, $x = 0.06
 ##### Question 1 (Numeric): The DCM
 
 <p>
-$\xi = x + \dot{x}/\omega$ (m, 3 decimals): <input type="text" id="ex4-xi" size="8">
+$\xi = x + \dot{x}/\omega$ (m, 3 decimals): <input type="text" id="ex5-xi" size="8">
 </p>
 
 ##### Question 2: Where to place the next foot
@@ -1334,42 +1284,100 @@ $\xi = x + \dot{x}/\omega$ (m, 3 decimals): <input type="text" id="ex4-xi" size=
 If the controller wants the robot to come to a **complete stop** with the very next step, where should it place $x\_{base}$?
 
 <label style="display: block;">
-  <input type="radio" name="ex4-step" value="a"> At $x\_{base} = 0$ (the current support foot's position)
+  <input type="radio" name="ex5-step" value="a"> At $x\_{base} = 0$ (the current support foot's position)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex4-step" value="b"> At $x\_{base} = x$ (directly under the current CoM)
+  <input type="radio" name="ex5-step" value="b"> At $x\_{base} = x$ (directly under the current CoM)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex4-step" value="c"> At $x\_{base} = \xi$ (the current DCM)
+  <input type="radio" name="ex5-step" value="c"> At $x\_{base} = \xi$ (the current DCM)
 </label>
 <label style="display: block;">
-  <input type="radio" name="ex4-step" value="d"> As far forward as kinematically possible
+  <input type="radio" name="ex5-step" value="d"> As far forward as kinematically possible
 </label>
 
 <br>
 
-<button type="button" onclick="checkEx4()">Check answers</button>
-<p id="ex4-feedback"></p>
+<button type="button" onclick="checkEx5()">Check answers</button>
+<p id="ex5-feedback"></p>
 
 <script>
-function checkEx4() {
+function checkEx5() {
   const omega = 4.43, x = 0.06, xd = 0.15;
   const trueXi = x + xd/omega;
-  const uXi = parseFloat(document.getElementById('ex4-xi').value);
+  const uXi = parseFloat(document.getElementById('ex5-xi').value);
   const okXi = approxEqual(uXi, trueXi, 0.003, 0.05);
 
-  const stepChoice = document.querySelector('input[name="ex4-step"]:checked');
+  const stepChoice = document.querySelector('input[name="ex5-step"]:checked');
   const okStep = stepChoice && stepChoice.value === 'c';
 
   let msgs = [];
   msgs.push(okXi ? ("✅ ξ correct (≈ " + trueXi.toFixed(3) + " m).") : ("❌ ξ off. Expected ≈ " + trueXi.toFixed(3) + " m."));
-  msgs.push(okStep ? "✅ Correct: stepping exactly to ξ brings ẋ to zero at touch-down." : "❌ Not quite, re-read the definition of the DCM as the instantaneous capture point.");
+  msgs.push(okStep ? "✅ Correct: stepping exactly to ξ freezes the DCM (ξ̇ = 0). The CoM then converges to ξ and its velocity decays to zero — asymptotically, not at the instant of touch-down." : "❌ Not quite, re-read the definition of the DCM as the instantaneous capture point.");
 
-  const feedback = document.getElementById('ex4-feedback');
+  const feedback = document.getElementById('ex5-feedback');
   feedback.innerHTML = msgs.join("<br>");
   feedback.style.color = (okXi && okStep) ? "green" : "orange";
 }
 </script>
+
+</div>
+</details>
+
+<details class="exercise-accordion" markdown="1">
+
+<summary>
+  <span>Programming Exercise 3 : LIP Footstep Planning and DCM Balance Control</span>
+</summary>
+
+<div class="exercise-accordion-content" markdown="1">
+
+This practical consolidates the core ideas of Sections 8.2.2.2 (the LIP) and 8.2.3.3 (the DCM):
+
+- implementing the **LIP closed-form solution** to propagate the CoM state exactly, one timestep at a time;
+- observing the **growing exponential instability** when no footstep correction is applied;
+- implementing the **Divergent Component of Motion (DCM)** and using it to plan footsteps that bring the robot to a controlled stop;
+- visualising all of the above in a live **PyBullet** simulation with a telescopic leg, footstep markers, and a real-time DCM indicator.
+
+##### Download the exercise files
+
+Download the complete exercise package, extract the ZIP file, and keep all files in the same folder.
+
+<a
+  href="{{ '/assets/downloads/locomotion/Exercise1_stability.zip' | relative_url }}"
+  download
+  style="
+    display: inline-block;
+    padding: 10px 16px;
+    background-color: #0075db;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+  ">
+  Download Practical 3
+</a>
+
+##### What's in the package
+
+```text
+Exercise1_stability/
+├── Exercise_LIP.py                  # exercise, fill in the three TODOs
+├── Solution_LIP.py                  # reference solution
+├── lip_env.py                       # LIP PyBullet environment (do not modify)
+├── requirements.txt                 # Python dependencies
+└── README.md                        # environment setup & step-by-step instructions
+```
+
+`Exercise_LIP` contains three functions to complete:
+
+| TODO | Function | Concept |
+|---|---|---|
+| 1 | `lip_next_state` | LIP closed-form solution (Section 8.2.2.2) |
+| 2 | `compute_dcm` | Divergent Component of Motion (Section 8.2.3.3) |
+| 3 | `dcm_footstep_target` | Instantaneous capture-point rule (Section 8.2.3.3) |
+
+**Full environment setup and instructions are in `README.md`** inside the downloaded package.
 
 </div>
 </details>
@@ -1481,7 +1489,7 @@ Left with a fixed support point $x\_{base}$ and no corrective foot placement, th
 
 ### Poincaré maps and return-map analysis
 
-The criteria of Sections 3 and 6 evaluate stability at a single instant, or over a single step. For strongly dynamic, cyclic gaits such as hopping and running, that is the wrong timescale. A hopping robot is never "in equilibrium" at any instant, yet it may nonetheless repeat the same motion indefinitely. What we want to know is whether the **cycle as a whole** repeats, and whether small disturbances shrink or grow from one cycle to the next. This is a question about periodic orbits, and the tool for it comes from nonlinear dynamics.
+The criteria of Sections 8.2.3.2 and 8.2.3.3 evaluate stability at a single instant, or over a single step. For strongly dynamic, cyclic gaits such as hopping and running, that is the wrong timescale. A hopping robot is never "in equilibrium" at any instant, yet it may nonetheless repeat the same motion indefinitely. What we want to know is whether the **cycle as a whole** repeats, and whether small disturbances shrink or grow from one cycle to the next. This is a question about periodic orbits, and the tool for it comes from nonlinear dynamics.
 
 #### Poincaré maps: reducing a continuous flow to a discrete map
 
@@ -1557,7 +1565,7 @@ $$
 y\_{i+1} = y\_i = y^\*\_{APEX} .
 $$
 
-This is precisely the fixed-point condition $P(\mathbf{x}^\*) = \mathbf{x}^\*$ from Section 7.1, specialised to the apex-height section. It guarantees that a periodic gait *exists*, but says nothing about whether the system would return to it after a disturbance.
+This is precisely the fixed-point condition $P(\mathbf{x}^\*) = \mathbf{x}^\*$ from the construction above, specialised to the apex-height section. It guarantees that a periodic gait *exists*, but says nothing about whether the system would return to it after a disturbance.
 
 **Condition 2: deviations must diminish step by step.** The slope of the return map, evaluated at the fixed point, must have magnitude less than one:
 
@@ -1577,9 +1585,9 @@ The basin of attraction is the set of initial apex heights that eventually conve
 
 #### Application: the return map of the SLIP model
 
-We can now make quantitative the "steps to fall" experiment of Section 3.7.
+We can now make quantitative the "steps to fall" experiment of Section 8.2.2.3.
 
-For the SLIP model, the return map $y\_{i+1}(y\_i)$ is a function defined for **a given set of open parameters** $(v\_0, \alpha\_0, k)$. It is **obtained numerically**, by integrating the differential equations of the SLIP model derived in Section 3.4 through one complete step, from one apex to the next. Once computed, it can be used to generate the entire series of apex heights from any initial condition $y\_0$.
+For the SLIP model, the return map $y\_{i+1}(y\_i)$ is a function defined for **a given set of open parameters** $(v\_0, \alpha\_0, k)$. It is **obtained numerically**, by integrating the differential equations of the SLIP model derived in Section 8.2.2.3 through one complete step, from one apex to the next. Once computed, it can be used to generate the entire series of apex heights from any initial condition $y\_0$.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -1596,7 +1604,7 @@ For the SLIP model, the return map $y\_{i+1}(y\_i)$ is a function defined for **
 
 The figure is read as follows. The intersection of the return-map curve with the diagonal $y\_{i+1} = y\_i$ locates the fixed point, satisfying Condition 1. The curve crosses the diagonal from above with a shallow slope, so the magnitude of $dy\_{i+1}/dy\_i$ there is below one, satisfying Condition 2. Consequently the staircase construction starting from an arbitrary $y\_0$ marches inward and converges to $y\_\infty$: the fixed point is a **stable attractor**, and the SLIP settles into steady hopping without any active control.
 
-This is the analytical content behind the shaded region of Figure 14: for each $(k, \alpha\_0)$ pair in that plot, one may construct the corresponding return map and test the two conditions. The band of self-stable parameters is exactly the set for which both hold.
+This is the analytical content behind the shaded region of Figure 8: for each $(k, \alpha\_0)$ pair in that plot, one may construct the corresponding return map and test the two conditions. The band of self-stable parameters is exactly the set for which both hold.
 
 More broadly, return-map analysis is the standard tool for any strictly periodic, impact-driven legged system, including passive-dynamic walkers, and it reappears in 8.3 within the hybrid-zero-dynamics framework for underactuated bipeds.
 
@@ -1708,7 +1716,7 @@ For any choice of leg stiffness $k$ and angle of attack $\alpha\_0$, the SLIP mo
   onclick="checkTrueFalse(
     'mod3-slip-q2',
     'false',
-    'Correct! Self-stabilization only occurs for specific (k, alpha0) combinations, as shown by the numerical stability region in Figure 14.',
+    'Correct! Self-stabilization only occurs for specific (k, alpha0) combinations, as shown by the numerical stability region in Figure 8.',
     'Incorrect. Self-stabilization is not automatic: it only holds within a specific region of (k, alpha0) parameter space, found numerically via the return map.'
   )">
   Check answer
@@ -1746,8 +1754,6 @@ For a periodic hopping motion analyzed with a return map $y\_{i+1}(y\_i)$, the m
 
 </div>
 </details>
-
----
 
 ---
 
@@ -1802,7 +1808,7 @@ Two structural trends are visible in the figure. Within each mode of locomotion,
 
 The **Froude number** is a dimensionless measure of *speed*, which allows **dynamically similar gaits to be compared between small and large animals or robots**. A mouse and an elephant trot at very different absolute speeds; the Froude number identifies when they are nonetheless doing mechanically equivalent things.
 
-It is derived from the inverted-pendulum picture of Section 1: modelling the stance leg as an inverted pendulum, the CoM traverses a circular arc centred at the foot, and the Froude number is the ratio of the centripetal force required for that arc to the weight of the system:
+It is derived from the inverted-pendulum picture of Section 8.2.2.1: modelling the stance leg as an inverted pendulum, the CoM traverses a circular arc centred at the foot, and the Froude number is the ratio of the centripetal force required for that arc to the weight of the system:
 
 $$
 \text{Fr} = \frac{\text{centripetal force}}{\text{gravitational force}}
@@ -1962,7 +1968,7 @@ A Froude number well above 1 is typically associated with walking gaits rather t
 
 ## Credits
 
-Figures 8–20 on this page are adapted from the **Legged Robots** course at EPFL, Lecture 2 ("Gaits, Models, Stability Criteria, and Locomotion Metrics") by **Pr. Auke Ijspeert**, with several figures within that lecture itself originally sourced from Holmes, Full, Koditschek & Guckenheimer (2006), Geyer et al. (2004), Seyfarth, Geyer, Günther & Blickhan (2002), Kajita & Tani (1991), Kajita et al. (2003), Kajita & Espiau (2008), Pratt, Carff, Drakunov & Goswami (2006), Strogatz (1994), and Seok et al. (2013), as credited individually in each figure caption. Figures 1–7 (the inverted-pendulum and spring-mass pictures, the static stability margin, the Center of Pressure setup, the biped support polygon, the zero-moment illustration, and the CoM/ZMP animation) were created for this course; Figure 3 follows the definition of McGhee & Frank (1968). We thank Pr. Ijspeert for making this material available.
+Figures 3–8 and 14–20 on this page are adapted from the **Legged Robots** course at EPFL, Lecture 2 ("Gaits, Models, Stability Criteria, and Locomotion Metrics") by **Pr. Auke Ijspeert**, with several figures within that lecture itself originally sourced from Holmes, Full, Koditschek & Guckenheimer (2006), Geyer et al. (2004), Seyfarth, Geyer, Günther & Blickhan (2002), Kajita & Tani (1991), Kajita et al. (2003), Kajita & Espiau (2008), Pratt, Carff, Drakunov & Goswami (2006), Strogatz (1994), and Seok et al. (2013), as credited individually in each figure caption. Figures 1, 2 and 9–13 (the inverted-pendulum and spring-mass pictures, the static stability margin, the Center of Pressure setup, the biped support polygon, the zero-moment illustration, and the CoM/ZMP animation) were created for this course; Figure 9 follows the definition of McGhee & Frank (1968). We thank Pr. Ijspeert for making this material available.
 
 ## Ressources
 

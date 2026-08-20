@@ -2182,7 +2182,7 @@ This practical consolidates the concepts introduced in this section:
 Download the complete exercise package, extract the ZIP file, and keep all files in the extracted folder.
 
 <a
-  href="{{ '/assets/files/locomotion/locomotion_practical1.zip' | relative_url }}"
+  href="{{ '/assets/downloads/locomotion/Exercise1.zip' | relative_url }}"
   download
   style="
     display: inline-block;
@@ -3730,7 +3730,7 @@ This practical consolidates the concepts introduced in this section:
 Download the complete exercise package, extract the ZIP file, and keep all files in the extracted folder.
 
 <a
-  href="{{ '/assets/files/locomotion/locomotion_practical2.zip' | relative_url }}"
+  href="{{ '/assets/downloads/locomotion/Exercise2.zip' | relative_url }}"
   download
   style="
     display: inline-block;

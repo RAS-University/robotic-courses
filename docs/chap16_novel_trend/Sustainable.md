@@ -268,7 +268,7 @@ This lesson explores underwater robotics from a sustainability perspective, focu
 
 ---
 
-# Quiz 
+## Quiz 
 
 <p><strong>Question 1:</strong> What is an actuator?</p>
 <form id="sus-q1">

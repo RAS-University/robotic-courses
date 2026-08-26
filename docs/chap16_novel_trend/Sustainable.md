@@ -270,69 +270,149 @@ This lesson explores underwater robotics from a sustainability perspective, focu
 
 # Quiz 
 
-## Question 1
-What is an actuator?
-- [X] The component in a robot that enables them to move
-- [ ] The robot’s control system
-- [ ] The person programming the robot
+<p><strong>Question 1:</strong> What is an actuator?</p>
+<form id="sus-q1">
+  <input type="radio" name="sus-q1" value="A"> The component in a robot that enables it to move<br>
+  <input type="radio" name="sus-q1" value="B"> The robot’s control system<br>
+  <input type="radio" name="sus-q1" value="C"> The person programming the robot<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q1', 'A',
+      '✅ Correct! An actuator converts energy into motion.',
+      '❌ Not quite. Think about which component makes the robot move.')">
+    Check Answer
+  </button>
+  <p id="sus-q1-feedback"></p>
+</form>
 
-## Question 2
-Which of the following are examples of sustainable actuators?
-- [X] Gelatin PneuNet
-- [ ] DC motor
-- [X] Skeletal muscle
-- [ ] Silicone artificial muscle
+<p><strong>Question 2:</strong> Which of the following are examples of sustainable actuators? (Select all that apply)</p>
+<form id="sus-q2">
+  <input type="checkbox" name="sus-q2" value="A"> Gelatin PneuNet<br>
+  <input type="checkbox" name="sus-q2" value="B"> DC motor<br>
+  <input type="checkbox" name="sus-q2" value="C"> Skeletal muscle<br>
+  <input type="checkbox" name="sus-q2" value="D"> Silicone artificial muscle<br>
+  <button type="button"
+    onclick="checkMultipleAnswers('sus-q2', ['A', 'C'],
+      '✅ Correct! Gelatin PneuNets and skeletal muscle are both examples of sustainable actuators.',
+      '❌ Not quite. Consider which actuators are biodegradable or biologically derived.')">
+    Check Answer
+  </button>
+  <p id="sus-q2-feedback"></p>
+</form>
 
-## Question 3
-True or False: Sustainable actuators can only be made out of soft materials.
-- [ ] True
-- [X] False
+<p><strong>Question 3:</strong> Sustainable actuators can only be made out of soft materials.</p>
+<form id="sus-q3">
+  <input type="radio" name="sus-q3" value="True"> True<br>
+  <input type="radio" name="sus-q3" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q3', 'False',
+      '✅ Correct! Sustainable actuators are not limited to soft materials.',
+      '❌ Not quite. Sustainable actuators can be made from a variety of materials, not only soft ones.')">
+    Check Answer
+  </button>
+  <p id="sus-q3-feedback"></p>
+</form>
 
-## Question 4
-True or False: The source of connective tissue, skin, and bones as sustainable actuator is gelatine.
-- [X] True
-- [ ] False
+<p><strong>Question 4:</strong> The source of connective tissue, skin, and bones as sustainable actuator is gelatin.</p>
+<form id="sus-q4">
+  <input type="radio" name="sus-q4" value="True"> True<br>
+  <input type="radio" name="sus-q4" value="False"> False<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q4', 'True',
+      '✅ Correct! Gelatin is derived from collagen, the source of connective tissue, skin, and bones.',
+      '❌ Not quite. Gelatin comes from collagen found in these tissues.')">
+    Check Answer
+  </button>
+  <p id="sus-q4-feedback"></p>
+</form>
 
-## Question 5
-Which of the following are common steps in the fabrication of skeletal muscle actuators?
-- [X] Casting or printing a muscle-based bioink
-- [X] Culturing the actuator in growth media for the cells to proliferate
-- [X] Differentiating the actuator to allow it to mature and form myotubes
-- [X] Exercising the actuator
+<p><strong>Question 5:</strong> Which of the following are common steps in the fabrication of skeletal muscle actuators? (Select all that apply)</p>
+<form id="sus-q5">
+  <input type="checkbox" name="sus-q5" value="A"> Casting or printing a muscle-based bioink<br>
+  <input type="checkbox" name="sus-q5" value="B"> Culturing the actuator in growth media for the cells to proliferate<br>
+  <input type="checkbox" name="sus-q5" value="C"> Differentiating the actuator to allow it to mature and form myotubes<br>
+  <input type="checkbox" name="sus-q5" value="D"> Exercising the actuator<br>
+  <button type="button"
+    onclick="checkMultipleAnswers('sus-q5', ['A', 'B', 'C', 'D'],
+      '✅ Correct! All four are common steps in fabricating skeletal muscle actuators.',
+      '❌ Not quite. Review the fabrication process of skeletal muscle actuators.')">
+    Check Answer
+  </button>
+  <p id="sus-q5-feedback"></p>
+</form>
 
-## Question 6
-What is a biohybrid actuator?
-- [ ] An actuator made from non-living bioderived materials
-- [X] An actuator made from living biological materials
-- [ ] An actuator inspired by biology and built using synthetic materials
+<p><strong>Question 6:</strong> What is a biohybrid actuator?</p>
+<form id="sus-q6">
+  <input type="radio" name="sus-q6" value="A"> An actuator made from non-living bioderived materials<br>
+  <input type="radio" name="sus-q6" value="B"> An actuator made from living biological materials<br>
+  <input type="radio" name="sus-q6" value="C"> An actuator inspired by biology and built using synthetic materials<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q6', 'B',
+      '✅ Correct! A biohybrid actuator integrates living biological materials.',
+      '❌ Not quite. The “biohybrid” term refers to living materials.')">
+    Check Answer
+  </button>
+  <p id="sus-q6-feedback"></p>
+</form>
 
-## Question 7
-“Redox couple”, in the context of an electrochemical battery, is:
-- [ ] A couple of molecules that are used to fabricate the anode of the battery
-- [X] A couple of molecules with different redox properties, necessary to realize the anode and the cathode
-- [ ] A couple of materials that can transport charge within the battery
-- [ ] None of the above
+<p><strong>Question 7:</strong> “Redox couple”, in the context of an electrochemical battery, is:</p>
+<form id="sus-q7">
+  <input type="radio" name="sus-q7" value="A"> A couple of molecules that are used to fabricate the anode of the battery<br>
+  <input type="radio" name="sus-q7" value="B"> A couple of molecules with different redox properties, necessary to realize the anode and the cathode<br>
+  <input type="radio" name="sus-q7" value="C"> A couple of materials that can transport charge within the battery<br>
+  <input type="radio" name="sus-q7" value="D"> None of the above<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q7', 'B',
+      '✅ Correct! A redox couple has different redox properties for the anode and cathode.',
+      '❌ Not quite. Think about the complementary redox roles of the anode and cathode.')">
+    Check Answer
+  </button>
+  <p id="sus-q7-feedback"></p>
+</form>
 
-## Question 8
-Edible electronics aims at:
-- [ ] Producing electronics that can monitor personal diets
-- [X] Creating safe-to-ingest smart pills
-- [ ] Preserving perishable food
-- [ ] Use high-performance silicon electronics encapsulate within ingestible pills
+<p><strong>Question 8:</strong> Edible electronics aims at:</p>
+<form id="sus-q8">
+  <input type="radio" name="sus-q8" value="A"> Producing electronics that can monitor personal diets<br>
+  <input type="radio" name="sus-q8" value="B"> Creating safe-to-ingest smart pills<br>
+  <input type="radio" name="sus-q8" value="C"> Preserving perishable food<br>
+  <input type="radio" name="sus-q8" value="D"> Use high-performance silicon electronics encapsulated within ingestible pills<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q8', 'B',
+      '✅ Correct! Edible electronics aims at creating safe-to-ingest smart pills.',
+      '❌ Not quite. Consider the key goal of safe ingestion.')">
+    Check Answer
+  </button>
+  <p id="sus-q8-feedback"></p>
+</form>
 
-## Question 9
-Electrochemical batteries, with respect to other electrochemical storage devices, have the advantage of:
-- [ ] Offering lower environmental impact
-- [ ] Providing a more compact power source
-- [ ] Exploiting rare earth materials
-- [X] Offering well defined output voltages and high energy density
+<p><strong>Question 9:</strong> Electrochemical batteries, with respect to other electrochemical storage devices, have the advantage of:</p>
+<form id="sus-q9">
+  <input type="radio" name="sus-q9" value="A"> Offering lower environmental impact<br>
+  <input type="radio" name="sus-q9" value="B"> Providing a more compact power source<br>
+  <input type="radio" name="sus-q9" value="C"> Exploiting rare earth materials<br>
+  <input type="radio" name="sus-q9" value="D"> Offering well defined output voltages and high energy density<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q9', 'D',
+      '✅ Correct! Electrochemical batteries offer well-defined output voltages and high energy density.',
+      '❌ Not quite. Consider the characteristic electrical advantages of batteries.')">
+    Check Answer
+  </button>
+  <p id="sus-q9-feedback"></p>
+</form>
 
-## Question 10
-Are there examples of truly edible electronic components?
-- [X] Yes: the chocolate electrochemical battery prepared in a professional kitchen
-- [ ] Yes: many examples of edible sensors, circuits, power sources, prepared in the lab
-- [ ] No: the research is still in progress
-- [ ] No: it is not possible
+<p><strong>Question 10:</strong> Are there examples of truly edible electronic components?</p>
+<form id="sus-q10">
+  <input type="radio" name="sus-q10" value="A"> Yes: the chocolate electrochemical battery prepared in a professional kitchen<br>
+  <input type="radio" name="sus-q10" value="B"> Yes: many examples of edible sensors, circuits, power sources, prepared in the lab<br>
+  <input type="radio" name="sus-q10" value="C"> No: the research is still in progress<br>
+  <input type="radio" name="sus-q10" value="D"> No: it is not possible<br>
+  <button type="button"
+    onclick="checkTrueFalse('sus-q10', 'A',
+      '✅ Correct! The chocolate electrochemical battery is an example of a truly edible component.',
+      '❌ Not quite. Think about the fully edible demonstrations that have been realized.')">
+    Check Answer
+  </button>
+  <p id="sus-q10-feedback"></p>
+</form>
 
 ---
 

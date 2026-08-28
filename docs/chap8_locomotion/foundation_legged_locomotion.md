@@ -72,11 +72,11 @@ nav_exclude: true
 
 To get the most out of this Central Pattern Generator module, it’s helpful to have:
 
-- Basic proficiency in **Python programming**
-- Familiarity with fundamental concepts in **robotics, kinematics, and dynamics**
-- Basic knowledge of **linear algebra, differential equations, and feedback control**
+- Basic proficiency in Python programming
+- Familiarity with fundamental concepts in robotics, kinematics, and dynamics
+- Basic knowledge of linear algebra, differential equations, and feedback control
 
-Previous coursework in **robot control**, or **model predictive control** is recommended but not mandatory.
+Previous coursework in robot control, or model predictive control is recommended but not mandatory.
 
 Students without this background can still follow the course, provided they are prepared to review the necessary programming and control concepts when needed.
 
@@ -149,7 +149,7 @@ Studying legged locomotion is far older than robotics: Aristotle (384-322 BC) al
 
 </figure>
 
-What animals do so easily is negotiate terrain through **discrete footholds**: only a few viable contact points are needed, not a continuous path. That is the property that motivates legged machines, and the price is many degrees of freedom, non-linear dynamics, intermittent contact, and a permanent balance problem. The rest of this module is the history of paying that price with the technology available at the time.
+What animals do so easily is negotiate terrain through discrete footholds: only a few viable contact points are needed, not a continuous path. That is the property that motivates legged machines, and the price is many degrees of freedom, non-linear dynamics, intermittent contact, and a permanent balance problem. The rest of this module is the history of paying that price with the technology available at the time.
 
 ### 1. Milestones in the development of legged robots
 
@@ -170,15 +170,15 @@ The table below, from Raibert's 1986 survey, is a compact map of the field's fir
 
 A few patterns are already visible in this list:
 
-- The earliest entries (Chebyshev 1850, Rygg 1893) are **pure mechanisms**: a linkage converts one rotational input into a walking motion. There is no control.
-- From the 1960s onward the entries split into **human-driven hydraulic machines** (Mosher 1968, Bucyrus-Erie 1969, Sutherland 1983) and **computer-controlled walkers** (Frank and McGhee 1968, McGhee 1977, Gurfinkel 1977).
-- Only around 1980 do entries about **dynamics and balance** appear (Kato 1980, Matsuoka 1980, Miura and Shimoyama 1981, Raibert), which is when legged robots stop merely stepping and start running.
+- The earliest entries (Chebyshev 1850, Rygg 1893) are pure mechanisms: a linkage converts one rotational input into a walking motion. There is no control.
+- From the 1960s onward the entries split into human-driven hydraulic machines (Mosher 1968, Bucyrus-Erie 1969, Sutherland 1983) and computer-controlled walkers (Frank and McGhee 1968, McGhee 1977, Gurfinkel 1977).
+- Only around 1980 do entries about dynamics and balance appear (Kato 1980, Matsuoka 1980, Miura and Shimoyama 1981, Raibert), which is when legged robots stop merely stepping and start running.
 
 *References: Raibert, M. H. (1986). Legged Robots. Commun. ACM, 29(6), 499–514. [doi.org/10.1145/5948.5950](https://doi.org/10.1145/5948.5950) — Silva, M. F., & Tenreiro Machado, J. A. (2007). A Historical Perspective of Legged Robots. Journal of Vibration and Control, 13(9–10), 1447–1486. [doi.org/10.1177/1077546307078276](https://doi.org/10.1177/1077546307078276) — Bekey, G. A. (2005). Autonomous Robots: From Biological Inspiration to Implementation and Control. MIT Press.*
 
 ### 2. Mechanisms without control : Rygg's mechanical horse, 1893
 
-L. A. Rygg patented a **human-powered mechanical horse** in 1893: pedals drove a gear train and linkages that converted the rider's rotational input into a quadruped walking motion. There was no actuator and no controller, the gait was entirely encoded in the geometry of the linkage. It is not clear that the machine was ever constructed.
+L. A. Rygg patented a human-powered mechanical horse in 1893: pedals drove a gear train and linkages that converted the rider's rotational input into a quadruped walking motion. There was no actuator and no controller, the gait was entirely encoded in the geometry of the linkage. It is not clear that the machine was ever constructed.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -193,7 +193,7 @@ L. A. Rygg patented a **human-powered mechanical horse** in 1893: pedals drove a
 
 </figure>
 
-This is the extreme end of a trade-off you will meet repeatedly: **put the gait in the mechanism, or put it in the controller.** Rygg's design is 100% mechanism. Modern quadrupeds sit at the other end, with the mechanism reduced to a simple articulated leg and the gait generated in software, which is precisely what Central Pattern Generators do in Module 3.
+This is the extreme end of a trade-off you will meet repeatedly: put the gait in the mechanism, or put it in the controller. Rygg's design is 100% mechanism. Modern quadrupeds sit at the other end, with the mechanism reduced to a simple articulated leg and the gait generated in software, which is precisely what Central Pattern Generators do in Module 3.
 
 <!-- VIDEO SLOT:
 No footage exists for Rygg's mechanical horse (it was most likely never built).
@@ -213,7 +213,7 @@ If you find or produce an animation of the linkage, embed it here:
 
 ### 3. Human in the loop : the GE walking truck, 1968
 
-Ralph Mosher's quadruped at General Electric (also known as the **Cybernetic Anthropomorphous Machine**, CAM) was a four-legged, hydraulically actuated vehicle about 3 m tall and weighing over a tonne. The driver controlled it with four handles and pedals **hydraulically coupled** to the four legs: the operator's own limbs generated the coordination pattern, and force feedback let him feel the ground through the machine.
+Ralph Mosher's quadruped at General Electric (also known as the **Cybernetic Anthropomorphous Machine**, CAM) was a four-legged, hydraulically actuated vehicle about 3 m tall and weighing over a tonne. The driver controlled it with four handles and pedals hydraulically coupled to the four legs: the operator's own limbs generated the coordination pattern, and force feedback let him feel the ground through the machine.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -240,7 +240,7 @@ Ralph Mosher's quadruped at General Electric (also known as the **Cybernetic Ant
   </iframe>
 </div>
 
-Note two things in the footage: the machine really does cross obstacles no wheeled vehicle of its era could, and the driver is visibly exhausted after a few minutes. **Coordinating four legs is hard enough that a trained human cannot sustain it**, which is exactly the argument for automating it.
+Note two things in the footage: the machine really does cross obstacles no wheeled vehicle of its era could, and the driver is visibly exhausted after a few minutes. Coordinating four legs is hard enough that a trained human cannot sustain it, which is exactly the argument for automating it.
 
 *Source: "GE Walking Truck – Cybernetic Anthropomorphous Machine (CAM) 1969," YouTube ([youtube.com/watch?v=ZMGCFLEYakM](https://www.youtube.com/watch?v=ZMGCFLEYakM)).*
 
@@ -248,7 +248,7 @@ Note two things in the footage: the machine really does cross obstacles no wheel
 
 #### 4.1 McGhee's hexapods, 1970–1980
 
-Robert McGhee's group at Ohio State University built a series of **hexapods** driven by electric motors through worm gears. The OSU hexapod (1976) was the first machine whose leg coordination was **entirely digital**, with on-board sensing: strain gauges on the legs, contact sensors to stop the descent of a foot, and a gyroscope to hold the chassis attitude constant.
+Robert McGhee's group at Ohio State University built a series of **hexapods** driven by electric motors through worm gears. The OSU hexapod (1976) was the first machine whose leg coordination was entirely digital, with on-board sensing: strain gauges on the legs, contact sensors to stop the descent of a foot, and a gyroscope to hold the chassis attitude constant.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -264,7 +264,7 @@ Robert McGhee's group at Ohio State University built a series of **hexapods** dr
 
 </figure>
 
-Six legs are a deliberate choice here: with six legs a machine can always keep three feet down in a **statically stable tripod**, so balance is a geometric constraint rather than a dynamics problem. Much of the difficulty of quadruped and biped control disappears, at the cost of weight, actuator count, and speed. You will see the formal version of this argument in Module 2, under static versus dynamic stability.
+Six legs are a deliberate choice here: with six legs a machine can always keep three feet down in a statically stable tripod, so balance is a geometric constraint rather than a dynamics problem. Much of the difficulty of quadruped and biped control disappears, at the cost of weight, actuator count, and speed. You will see the formal version of this argument in Module 2, under static versus dynamic stability.
 
 <!-- VIDEO SLOT:
 Add a video of the OSU hexapod here if you find suitable footage.
@@ -312,13 +312,13 @@ Also from McGhee's group at Ohio State, the **Adaptive Suspension Vehicle (ASV)*
   </iframe>
 </div>
 
-Watch the machine cross uneven outdoor terrain: the body glides almost horizontally while the legs absorb the terrain profile underneath. **Decoupling body motion from foot placement** is still the objective of every modern quadruped controller.
+Watch the machine cross uneven outdoor terrain: the body glides almost horizontally while the legs absorb the terrain profile underneath. Decoupling body motion from foot placement is still the objective of every modern quadruped controller.
 
 *Source: "OSU Adaptive Suspension Vehicle," YouTube ([youtube.com/watch?v=DIiD1JimBXQ](https://www.youtube.com/watch?v=DIiD1JimBXQ)).*
 
 #### 4.3 Odetics, 1980s
 
-Odetics, a company in California, built the **ODEX** series of hexapods for the inspection of power plants. The design objective was different from the ASV's: instead of open terrain, ODEX had to move **inside man-made structures**, including narrow passages, which is why the legs fold radially around a central column and the whole machine can change its footprint. It could be fitted with a manipulator, and despite weighing only about 300 lb (roughly 135 kg) it could carry loads far heavier than itself.
+Odetics, a company in California, built the **ODEX** series of hexapods for the inspection of power plants. The design objective was different from the ASV's: instead of open terrain, ODEX had to move inside man-made structures, including narrow passages, which is why the legs fold radially around a central column and the whole machine can change its footprint. It could be fitted with a manipulator, and despite weighing only about 300 lb (roughly 135 kg) it could carry loads far heavier than itself.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -371,7 +371,7 @@ Odetics, a company in California, built the **ODEX** series of hexapods for the 
 
 ### 5. Bipeds : Waseda University, 1967 – now
 
-While Ohio State was adding legs to buy static stability, Ichiro Kato's group at Waseda University in Japan went the other way and tackled the hardest case: **two legs**. The WL (Waseda Leg) series began in 1967 with pneumatically actuated pedipulators and evolved through decades into the WABIAN humanoids. Waseda is where **quasi-dynamic walking**, and much of the ZMP-based balance theory that dominated humanoid robotics for thirty years, was developed.
+While Ohio State was adding legs to buy static stability, Ichiro Kato's group at Waseda University in Japan went the other way and tackled the hardest case: two legs. The WL (Waseda Leg) series began in 1967 with pneumatically actuated pedipulators and evolved through decades into the WABIAN humanoids. Waseda is where **quasi-dynamic walking**, and much of the ZMP-based balance theory that dominated humanoid robotics for thirty years, was developed.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -417,7 +417,7 @@ While Ohio State was adding legs to buy static stability, Ichiro Kato's group at
   </iframe>
 </div>
 
-WABOT-1 (1973), built on the WL legs, is generally considered the first full-scale anthropomorphic robot. The walking is slow and flat-footed: the robot moves its centre of mass carefully from one support polygon to the next so that it is **statically stable at every instant**. Compare this to the Raibert machines in the next section, which are almost never statically stable and rely entirely on their dynamics.
+WABOT-1 (1973), built on the WL legs, is generally considered the first full-scale anthropomorphic robot. The walking is slow and flat-footed: the robot moves its centre of mass carefully from one support polygon to the next so that it is statically stable at every instant. Compare this to the Raibert machines in the next section, which are almost never statically stable and rely entirely on their dynamics.
 
 *Source: "Robots of Waseda: WABOT-1," YouTube ([youtube.com/watch?v=n0oL1sHAKwE](https://www.youtube.com/watch?v=n0oL1sHAKwE)).*
 
@@ -460,7 +460,7 @@ Marc Raibert, first at Carnegie Mellon and then at the famous **MIT Leg Laborato
 
 </figure>
 
-Raibert's celebrated result is that running can be controlled by **three nearly decoupled loops**: one regulating hopping height (energy injected during stance), one regulating forward speed (through where the foot is placed at touch-down), and one regulating body attitude (through hip torque during stance). A behaviour that looks impossibly complex reduces to three simple regulators, because the mechanics do most of the work.
+Raibert's celebrated result is that running can be controlled by three nearly decoupled loops: one regulating hopping height (energy injected during stance), one regulating forward speed (through where the foot is placed at touch-down), and one regulating body attitude (through hip torque during stance). A behaviour that looks impossibly complex reduces to three simple regulators, because the mechanics do most of the work.
 
 <div style="text-align: center;">
   <iframe
@@ -481,7 +481,7 @@ Many of these ideas went on to found **Boston Dynamics**, and we will return to 
 
 ### 7. Passive walkers : locomotion (almost) for free, 1990 – now
 
-Tad McGeer's work on **passive dynamic walking** made the opposite point to Raibert's, and made it just as forcefully. A carefully proportioned pair of legs placed on a shallow slope will walk down it in a **stable periodic gait with no motors, no sensors, no controller and no battery**: gravity supplies the energy and the natural pendulum dynamics of the limbs supply the coordination.
+Tad McGeer's work on **passive dynamic walking** made the opposite point to Raibert's, and made it just as forcefully. A carefully proportioned pair of legs placed on a shallow slope will walk down it in a stable periodic gait with no motors, no sensors, no controller and no battery: gravity supplies the energy and the natural pendulum dynamics of the limbs supply the coordination.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -546,7 +546,7 @@ Adding a minimal amount of actuation to a passive design, just enough to replace
 
 *Source: "Cornell Ranger 2011 – Marathon Walking Robot," YouTube ([youtube.com/watch?v=rJ56d1UTlKQ](https://www.youtube.com/watch?v=rJ56d1UTlKQ)).*
 
-The lesson to carry into the rest of the course is that **the body is part of the controller**. Link lengths, mass distribution, foot shape and compliance are not fixed constraints to be compensated for, they are design variables that determine how much work the controller has to do. This is exactly the perspective behind the CPG approach in Module 3: an oscillator that entrains with the natural dynamics of the body, rather than a trajectory imposed on it.
+The lesson to carry into the rest of the course is that the body is part of the controller. Link lengths, mass distribution, foot shape and compliance are not fixed constraints to be compensated for, they are design variables that determine how much work the controller has to do. This is exactly the perspective behind the CPG approach in Module 3: an oscillator that entrains with the natural dynamics of the body, rather than a trajectory imposed on it.
 
 *Reference: McGeer, T. (1990). Passive dynamic walking. International Journal of Robotics Research, 9(2), 62–82. — Collins, S. H., Wisse, M., & Ruina, A. (2001). A Three-Dimensional Passive-Dynamic Walking Robot with Two Legs and Knees. International Journal of Robotics Research, 20(2), 607–615.*
 
@@ -640,7 +640,7 @@ The **ANYmal** robot shown in the Course overview above belongs to this generati
 
 Four threads run through everything above, and each one becomes a technical topic later in the course:
 
-- **Mechanism versus controller.** Rygg's linkage, the ASV's pantographs and McGeer's passive walkers all put intelligence in the hardware; Raibert's machines and modern quadrupeds put it in software. Real designs sit somewhere in between, and where they sit determines how hard the control problem is. This is why Module 1 starts by building an explicit **model** of the leg.
+- **Mechanism versus controller.** Rygg's linkage, the ASV's pantographs and McGeer's passive walkers all put intelligence in the hardware; Raibert's machines and modern quadrupeds put it in software. Real designs sit somewhere in between, and where they sit determines how hard the control problem is. This is why Module 1 starts by building an explicit model of the leg.
 - **Static versus dynamic stability.** Hexapods keep three feet down and never fall; running machines are almost never in equilibrium and are stable only over a whole cycle. Module 2 makes this distinction precise.
 - **Actuation sets the envelope.** Hydraulics gave the ASV and BigDog their power, electric motors gave the OSU hexapod its controllability, and modern series-elastic and direct-drive actuators gave ANYmal and the MIT Cheetah their ability to survive impacts. Section 3 of Module 1 returns to this.
 - **Coordination is the hard part.** The GE truck failed not for lack of power but because a human could not coordinate four legs for long. Generating and adapting that coordination automatically is the subject of Module 3 and of Central Pattern Generators.
@@ -1060,7 +1060,7 @@ q_1=30^\circ,
 q_2=-30^\circ.
 $$
 
-Both $q_1$ and $q_2$ are **absolute link orientations** measured relative to the downward vertical direction.
+Both $q_1$ and $q_2$ are absolute link orientations measured relative to the downward vertical direction.
 
 The joint angular velocities are
 
@@ -1840,7 +1840,7 @@ Examples include:
 
 Forward and inverse kinematics provide the geometric foundation for these operations.
 
-Kinematics describes how the joint angles determine the position and velocity of the leg. **Dynamics** describes how forces and joint torques produce motion.
+Kinematics describes how the joint angles determine the position and velocity of the leg. Dynamics describes how forces and joint torques produce motion.
 
 For the two-link leg, the joint variables are:
 
@@ -3765,7 +3765,7 @@ Exercise_2/
 
 ##  Module 2 : Gaits
 
-We now leave the single leg of Module 1 and look at the **whole animal or robot**: how its legs coordinate in time. This module introduces **gaits**, what they are, how to describe them quantitatively, and how they are classified.
+We now leave the single leg of Module 1 and look at the whole animal or robot: how its legs coordinate in time. This module introduces **gaits**, what they are, how to describe them quantitatively, and how they are classified.
 
 Before defining anything formally, it helps to simply watch the different gaits in action. The video below shows a dog walking, ambling, pacing and galloping, making the differences in footfall pattern easy to see at normal and slow-motion speed:
 
@@ -3784,11 +3784,11 @@ Keep an eye on how many feet touch the ground at once, and how that changes betw
 
 ### 1. What is a gait?
 
-A **gait** is a cyclic pattern of leg coordination used by a legged animal or robot to move. It is defined mainly by the sequence and timing of **footfalls**: which foot touches the ground, and when, relative to the others.
+A **gait** is a cyclic pattern of leg coordination used by a legged animal or robot to move. It is defined mainly by the sequence and timing of footfalls: which foot touches the ground, and when, relative to the others.
 
 Different animals have different gait repertoires. Cats, dogs, and horses walk, trot, and gallop; elephants and giraffes mostly walk, pace, and gallop; humans walk or run, with variants such as power-walking, jogging, or skipping. The same body can therefore produce very different-looking motions purely by changing how the legs are phased with respect to one another, without changing the mechanical structure at all.
 
-This is a useful mental model to carry into robotics: a legged robot's "gait" is largely a **control choice** (a set of relative phases and contact timings between the legs), not a property of its hardware. The same quadruped robot can trot, pace, bound, or gallop simply by commanding a different coordination pattern.
+This is a useful mental model to carry into robotics: a legged robot's "gait" is largely a control choice (a set of relative phases and contact timings between the legs), not a property of its hardware. The same quadruped robot can trot, pace, bound, or gallop simply by commanding a different coordination pattern.
 
 ### 2. Gait terminology: cycles, phases, and duty factor
 
@@ -3859,9 +3859,9 @@ The first systematic classification of quadruped gaits was proposed by Hildebran
 - **Symmetric gaits:** the footfalls of a fore–hind pair are evenly spaced in time (e.g. walk, trot, pace).
 - **Asymmetric gaits:** they are not evenly spaced (e.g. gallop, bound).
 
-For **symmetric** gaits specifically, Hildebrand showed that just **two numbers** are enough to classify essentially any possible gait:
+For **symmetric** gaits specifically, Hildebrand showed that just two numbers are enough to classify essentially any possible gait:
 
-1. **Duty factor** $\beta$ of a reference limb. By convention: $\beta > 0.5$ is called a **walking** gait, $\beta < 0.5$ a **running** gait. This is only a kinematic label, not a statement about speed or energetics, one can have a *walking trot* (duty factor above 0.5, as in a slow salamander trot) or a *running trot* (duty factor below 0.5, as in a fast horse trot).
+1. **Duty factor** $\beta$ of a reference limb. By convention: $\beta > 0.5$ is called a walking gait, $\beta < 0.5$ a running gait. This is only a kinematic label, not a statement about speed or energetics, one can have a *walking trot* (duty factor above 0.5, as in a slow salamander trot) or a *running trot* (duty factor below 0.5, as in a fast horse trot).
 2. **Relative phase**, i.e. the percentage of the stride interval by which the fore-foot footfall lags the hind-foot footfall on the same side of the body.
 
 Plotting these two numbers against each other produces the classic Hildebrand diagram, in which named gaits (walking pace, walking trot, lateral-sequence walk, diagonal-sequence walk, running pace, running trot, …) occupy characteristic regions.
@@ -3901,7 +3901,7 @@ A few gaits are worth naming explicitly, since they recur throughout legged-robo
 - **Bound:** front legs move together, hind legs move together, front and hind out of phase, used by e.g. rabbits and some quadruped robots for high-speed locomotion.
 - **Gallop (rotary/transverse):** an asymmetric gait with all four legs having distinct, unevenly-spaced phases; the fastest gait for most quadrupeds, and mechanically the most demanding to control and to actuate.
 
-Beyond mammals, **insect gaits** follow a related, but distinct, logic based on the number of legs that swing simultaneously rather than fore/hind coupling: a **metachronal wave** gait (only one leg in swing at a time, used at very low speeds), a **tetrapod gait** (up to two legs in swing simultaneously), and a **tripod gait** (three legs in swing simultaneously, the classic fast-insect gait, where the front-left, middle-right, and back-left legs swing together while the other triangle provides support). The tripod gait is directly relevant to hexapod robot design, since it is statically stable at every instant (three ground contacts always form a support triangle) while still allowing relatively fast locomotion.
+Beyond mammals, insect gaits follow a related, but distinct, logic based on the number of legs that swing simultaneously rather than fore/hind coupling: a **metachronal wave** gait (only one leg in swing at a time, used at very low speeds), a **tetrapod gait** (up to two legs in swing simultaneously), and a **tripod gait** (three legs in swing simultaneously, the classic fast-insect gait, where the front-left, middle-right, and back-left legs swing together while the other triangle provides support). The tripod gait is directly relevant to hexapod robot design, since it is statically stable at every instant (three ground contacts always form a support triangle) while still allowing relatively fast locomotion.
 
 <details class="exercise-accordion" markdown="1">
 

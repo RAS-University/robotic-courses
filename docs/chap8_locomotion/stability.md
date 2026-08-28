@@ -87,11 +87,11 @@ The rest of this chapter will introduce simplified models and stability tools th
 We will do three things, in this order:
 
 1. Go deep into the two template models introduced qualitatively just below, the **Linear Inverted Pendulum (LIP)** and the **Spring-Loaded Inverted Pendulum (SLIP)**, since several of the stability criteria below are derived directly from them.
-2. Make "is the robot stable?" into a precise, computable question, first for the simple case where the robot barely moves (**static stability margin**), then for the general dynamic case (**Center of Pressure**, **Zero Moment Point**, **capture point / Divergent Component of Motion**, and **Poincaré / return-map analysis**).
-3. Introduce **locomotion metrics** (Cost of Transport, Froude number) that let us compare how *well* a gait performs, not just whether it is stable.
+2. Make "is the robot stable?" into a precise, computable question, first for the simple case where the robot barely moves (static stability margin), then for the general dynamic case (**Center of Pressure**, **Zero Moment Point**, capture point / Divergent Component of Motion, and Poincaré / return-map analysis).
+3. Introduce locomotion metrics (Cost of Transport, Froude number) that let us compare how *well* a gait performs, not just whether it is stable.
 
 
-Dynamic walking, running, jumping, disturbance recovery and rapid changes of motion may look very different, but they all rely on the same fundamental challenge: **controlling the motion of the robot while continuously managing balance and interaction with the ground**. The following video offers a glimpse of what modern legged robots are capable of
+Dynamic walking, running, jumping, disturbance recovery and rapid changes of motion may look very different, but they all rely on the same fundamental challenge: controlling the motion of the robot while continuously managing balance and interaction with the ground. The following video offers a glimpse of what modern legged robots are capable of
 
 <div style="text-align: center; margin: 1.5rem auto;">
 
@@ -114,7 +114,7 @@ This page is more mathematical than 8.1, so before diving in, here is the notati
 <div class="notation-box" markdown="1">
 
 - $m$: total mass of the robot (kg); $g$: gravitational acceleration (m/s²)
-- $\mathbf{p} = (x, y)$ or $(x,y,z)$: a position vector; a **projection** of a 3D point onto the ground plane is written the same way, with the vertical coordinate dropped
+- $\mathbf{p} = (x, y)$ or $(x,y,z)$: a position vector; a projection of a 3D point onto the ground plane is written the same way, with the vertical coordinate dropped
 - $\mathbf{CoM}$: the robot's center of mass; "the CoM projection" means its vertical projection onto the ground
 - $F\_i$: the (vertical) ground reaction force measured at contact point $i$
 - $\dot{x}, \ddot{x}$: first and second time derivatives of $x$ (velocity, acceleration), as already used in 8.1
@@ -136,28 +136,28 @@ New symbols are also re-introduced in words the first time they appear in each s
 
 Kinematic and dynamic models are used throughout the legged-robot development pipeline, not only inside the final controller:
 
-- to decide and design the **mechanical structure** of the robot (degrees of freedom, mass distribution, actuator sizing);
-- to build **physics-based simulators** for testing controllers before deployment;
-- inside **model-based controllers**, for footstep placement and balance control (the subject of 8.3);
-- inside **optimization-based approaches**, e.g. trajectory optimization and model predictive control;
-- for **post-processing**, i.e. characterizing and comparing locomotion properties after an experiment or a simulation run.
+- to decide and design the mechanical structure of the robot (degrees of freedom, mass distribution, actuator sizing);
+- to build physics-based simulators for testing controllers before deployment;
+- inside model-based controllers, for footstep placement and balance control (the subject of 8.3);
+- inside optimization-based approaches, e.g. trajectory optimization and model predictive control;
+- for post-processing, i.e. characterizing and comparing locomotion properties after an experiment or a simulation run.
 
 A particularly important class of model for this page is the **template model**: a deliberately simplified dynamic model, often with just one point mass and one massless leg, that discards most of the robot's real complexity but still reproduces its dominant dynamic behavior. Where does that idea come from? It comes directly from looking at measured ground reaction forces.
 
-**What walking and running actually look like, mechanically.** If you put a walking person on a force plate, the vertical ground reaction force traces a characteristic **double-hump** ("camel-back") shape over each step, with a brief dip in the middle. That dip coincides with **double support**: a short window where both feet are on the ground at once, momentarily forming a closed kinematic chain between the two legs. If you do the same for running, the vertical force instead shows a **single, smooth peak** per step, and there is no double-support window at all, the body is briefly airborne between steps (a flight phase) rather than always in contact with the ground.
+**What walking and running actually look like, mechanically.** If you put a walking person on a force plate, the vertical ground reaction force traces a characteristic double-hump ("camel-back") shape over each step, with a brief dip in the middle. That dip coincides with double support: a short window where both feet are on the ground at once, momentarily forming a closed kinematic chain between the two legs. If you do the same for running, the vertical force instead shows a single, smooth peak per step, and there is no double-support window at all, the body is briefly airborne between steps (a flight phase) rather than always in contact with the ground.
 
-The center of mass tells the same story from a different angle. During walking, its kinetic and gravitational potential energy rise and fall **out of phase**: as the body vaults forward and upward over the stance leg it slows down (kinetic energy converts to potential energy), then it speeds up again as it falls back down (potential converts back to kinetic), almost exactly like a playground swing exchanging height for speed. During running, kinetic and potential energy instead rise and fall **in phase**: both reach their minimum at the same instant, at mid-stance, where the body is simultaneously at its lowest *and* at its slowest, and both recover together as the leg re-extends and throws it back up into flight. Energy is not being exchanged with gravity here; while the body drops and slows, the missing energy is stored elastically, in tendons, muscles, and the leg's effective compliance, and it is returned on the way back up.
+The center of mass tells the same story from a different angle. During walking, its kinetic and gravitational potential energy rise and fall out of phase: as the body vaults forward and upward over the stance leg it slows down (kinetic energy converts to potential energy), then it speeds up again as it falls back down (potential converts back to kinetic), almost exactly like a playground swing exchanging height for speed. During running, kinetic and potential energy instead rise and fall in phase: both reach their minimum at the same instant, at mid-stance, where the body is simultaneously at its lowest *and* at its slowest, and both recover together as the leg re-extends and throws it back up into flight. Energy is not being exchanged with gravity here; while the body drops and slows, the missing energy is stored elastically, in tendons, muscles, and the leg's effective compliance, and it is returned on the way back up.
 
 These two energy signatures are exactly what the two template models below are built to reproduce:
 
-- The **inverted pendulum** picture treats the stance leg as a rigid, massless strut that the point-mass body vaults over. Because a pendulum naturally exchanges kinetic and potential energy as it swings, this single mechanical idea reproduces walking's out-of-phase energy signature and its camel-back vertical force, without needing any muscles, springs, or control to be added by hand.
-- The **spring-mass** picture instead treats the stance leg as a linear spring: the point mass bounces on it, storing elastic energy as the spring compresses on impact and returning it as the spring extends on lift-off. This reproduces running's in-phase energy signature and its single-peaked vertical force just as directly.
+- The inverted pendulum picture treats the stance leg as a rigid, massless strut that the point-mass body vaults over. Because a pendulum naturally exchanges kinetic and potential energy as it swings, this single mechanical idea reproduces walking's out-of-phase energy signature and its camel-back vertical force, without needing any muscles, springs, or control to be added by hand.
+- The spring-mass picture instead treats the stance leg as a linear spring: the point mass bounces on it, storing elastic energy as the spring compresses on impact and returning it as the spring extends on lift-off. This reproduces running's in-phase energy signature and its single-peaked vertical force just as directly.
 
 A striking empirical fact motivates taking these crude pictures seriously: despite enormous differences in size, mass, and number of legs, walking and running animals across the board, humans, dogs, birds, insects, even simulated and physical robots, reuse essentially the same two energy-exchange strategies. The detailed anatomy barely matters for predicting the center-of-mass trajectory; what matters is which of the two strategies (pendulum-like vaulting, or spring-like bouncing) the gait is using.
 
-One more asymmetry is worth flagging early, since it shapes how the rest of this page treats the two gaits. At the level of the **full multi-body robot**, walking is the more awkward problem, and double support is the reason: once both feet share the ground at the same time, the two legs close a kinematic chain, and the equations of motion become correspondingly more involved. Bipedal running never has this problem, at every instant at most one foot is on the ground, so there is no closed chain to account for.
+One more asymmetry is worth flagging early, since it shapes how the rest of this page treats the two gaits. At the level of the full multi-body robot, walking is the more awkward problem, and double support is the reason: once both feet share the ground at the same time, the two legs close a kinematic chain, and the equations of motion become correspondingly more involved. Bipedal running never has this problem, at every instant at most one foot is on the ground, so there is no closed chain to account for.
 
-At the level of the **template models**, however, the difficulty is inverted, and it is worth knowing this in advance so that the next two sections do not come as a surprise. The LIP buys an exact, closed-form solution, but only by paying for it with an extra assumption that walking does not actually obey: a constant center-of-mass height (Section 8.2.2.2). The SLIP refuses that concession, keeping a compliant leg and a freely varying height, and pays a different price: its equations are nonlinear and have to be integrated numerically (Section 8.2.2.3). Neither model is simply "easier" than the other, they trade realism against solvability in opposite directions.
+At the level of the template models, however, the difficulty is inverted, and it is worth knowing this in advance so that the next two sections do not come as a surprise. The LIP buys an exact, closed-form solution, but only by paying for it with an extra assumption that walking does not actually obey: a constant center-of-mass height (Section 8.2.2.2). The SLIP refuses that concession, keeping a compliant leg and a freely varying height, and pays a different price: its equations are nonlinear and have to be integrated numerically (Section 8.2.2.3). Neither model is simply "easier" than the other, they trade realism against solvability in opposite directions.
 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem; margin: 1.5rem auto;">
 
@@ -220,9 +220,9 @@ Before moving on to the main models of walking and running, here is a video givi
 
 ### The Linear Inverted Pendulum (LIP)
 
-The inverted-pendulum picture of walking from Section 8.2.2.1 is, as it stands, a **nonlinear** dynamical system, and the reason is worth being precise about. If the leg were a rigid rod of fixed length, the point mass would be constrained to a circular arc, its height would rise and fall as it swings, and the equation of motion would be the classic pendulum equation with its $\sin$ term, which has no solution in elementary functions.
+The inverted-pendulum picture of walking from Section 8.2.2.1 is, as it stands, a nonlinear dynamical system, and the reason is worth being precise about. If the leg were a rigid rod of fixed length, the point mass would be constrained to a circular arc, its height would rise and fall as it swings, and the equation of motion would be the classic pendulum equation with its $\sin$ term, which has no solution in elementary functions.
 
-Kajita and Tani (1991) proposed a simplification that removes exactly that difficulty. It trades a little realism for an **exact, closed-form solution**, and that solution is what makes real-time footstep planning possible; it is also the model from which the capture point of Section 8.2.3.3 is derived.
+Kajita and Tani (1991) proposed a simplification that removes exactly that difficulty. It trades a little realism for an exact, closed-form solution, and that solution is what makes real-time footstep planning possible; it is also the model from which the capture point of Section 8.2.3.3 is derived.
 
 #### The modelling assumption
 
@@ -237,7 +237,7 @@ $$
 x = l \sin\alpha, \qquad z = z\_0 = l \cos\alpha .
 $$
 
-Note carefully what this implies: **the pendulum length $l$ is not a constant**. It is $l = z\_0 / \cos\alpha$, growing as the leg tilts away from vertical. That is the price paid for the constant height, and it is why the leg is drawn as a telescopic strut rather than a rigid rod.
+Note carefully what this implies: the pendulum length $l$ is not a constant. It is $l = z\_0 / \cos\alpha$, growing as the leg tilts away from vertical. That is the price paid for the constant height, and it is why the leg is drawn as a telescopic strut rather than a rigid rod.
 
 #### Derivation of the equation of motion
 
@@ -286,7 +286,7 @@ $$
 \tan\alpha = \frac{x}{z\_0}.
 $$
 
-The constant height has turned a trigonometric function of the angle into a **linear function of the horizontal position**.
+The constant height has turned a trigonometric function of the angle into a linear function of the horizontal position.
 
 **Step 4: assemble.** Newton's second law along $x$ reads $\ddot{x} = F\_x / m$. Substituting $F\_x = mg\tan\alpha$ and then $\tan\alpha = x/z\_0$:
 
@@ -339,17 +339,17 @@ $$
 
 </figure>
 
-We thus have a **closed-form (i.e. analytical) solution that predicts the forward movement of the center of mass**. No numerical integration is needed: given where the CoM is and how fast it is going right now, and given where we decide to put the foot, we can evaluate $x(t)$ at any future time directly.
+We thus have a closed-form (i.e. analytical) solution that predicts the forward movement of the center of mass. No numerical integration is needed: given where the CoM is and how fast it is going right now, and given where we decide to put the foot, we can evaluate $x(t)$ at any future time directly.
 
 #### Consequences and limitations
 
-**The growing exponential is the important one.** The term $B e^{\omega t}$ means that, left uncontrolled, the LIP is an **unstable** system: unless $B$ happens to be exactly zero, any small horizontal offset from directly above the foot grows without bound. This is not a defect of the model, it is the honest statement that standing and walking are fundamentally unstable balancing acts, held up by continually choosing where to put the next foot rather than by any passive equilibrium. That instability is the entire reason footstep planning exists, and the form of $B$ is precisely what the capture point of Section 8.2.3.3 exploits.
+**The growing exponential is the important one.** The term $B e^{\omega t}$ means that, left uncontrolled, the LIP is an unstable system: unless $B$ happens to be exactly zero, any small horizontal offset from directly above the foot grows without bound. This is not a defect of the model, it is the honest statement that standing and walking are fundamentally unstable balancing acts, held up by continually choosing where to put the next foot rather than by any passive equilibrium. That instability is the entire reason footstep planning exists, and the form of $B$ is precisely what the capture point of Section 8.2.3.3 exploits.
 
-**It is fast enough to run online.** Because $x(t)$ is available in closed form, many real biped robots use the LIP for **online footstep planning**: from the current CoM state, the controller solves analytically for where the next foot must land to achieve a desired future state, at control-loop rates.
+**It is fast enough to run online.** Because $x(t)$ is available in closed form, many real biped robots use the LIP for online footstep planning: from the current CoM state, the controller solves analytically for where the next foot must land to achieve a desired future state, at control-loop rates.
 
-**The cost is a crouch.** Keeping $z\_0$ genuinely constant is not free: a real robot must actively enforce it, and the only way to have vertical travel available in both directions is to walk with **bent, crouched knees**. This is why classical ZMP-and-LIP humanoids have their distinctive, slightly seated gait. It looks markedly non-human, and it is not energy-efficient, since the legs must continuously support the body against gravity without ever locking straight. Recovering a more natural, more efficient gait is one of the motivations for the richer models and methods in 8.3.
+**The cost is a crouch.** Keeping $z\_0$ genuinely constant is not free: a real robot must actively enforce it, and the only way to have vertical travel available in both directions is to walk with bent, crouched knees. This is why classical ZMP-and-LIP humanoids have their distinctive, slightly seated gait. It looks markedly non-human, and it is not energy-efficient, since the legs must continuously support the body against gravity without ever locking straight. Recovering a more natural, more efficient gait is one of the motivations for the richer models and methods in 8.3.
 
-**A connection worth noticing.** Compare the equation of motion above with the simplified ZMP formula from Section 8.2.3.2, $x\_{ZMP} = x - (z\_0/g)\ddot{x}$. Substituting $\ddot{x} = (g/z\_0)(x - x\_{base})$ into it gives $x\_{ZMP} = x\_{base}$ exactly. In other words, **in the LIP the ZMP sits precisely at the support point**: the two models are the same statement viewed from opposite ends, one solving for the motion given the foot, the other solving for the foot given the motion.
+**A connection worth noticing.** Compare the equation of motion above with the simplified ZMP formula from Section 8.2.3.2, $x\_{ZMP} = x - (z\_0/g)\ddot{x}$. Substituting $\ddot{x} = (g/z\_0)(x - x\_{base})$ into it gives $x\_{ZMP} = x\_{base}$ exactly. In other words, in the LIP the ZMP sits precisely at the support point: the two models are the same statement viewed from opposite ends, one solving for the motion given the foot, the other solving for the foot given the motion.
 
 <details class="exercise-accordion" markdown="1">
 
@@ -420,16 +420,16 @@ Compute $\omega$ first, then plug it into the formulas for $A$ and $B$ before ev
 
 ### The Spring-Loaded Inverted Pendulum (SLIP)
 
-The LIP captured walking by making the leg a rigid, telescopic strut. Running is a different mechanical problem: as we saw in Section 8.2.2.1, its energy signature is elastic, not pendular, and it has a flight phase during which no foot touches the ground at all. The **Spring-Loaded Inverted Pendulum (SLIP)** is the template model for exactly that regime, and it is built by replacing the LIP's rigid strut with a **spring**.
+The LIP captured walking by making the leg a rigid, telescopic strut. Running is a different mechanical problem: as we saw in Section 8.2.2.1, its energy signature is elastic, not pendular, and it has a flight phase during which no foot touches the ground at all. The Spring-Loaded Inverted Pendulum (SLIP) is the template model for exactly that regime, and it is built by replacing the LIP's rigid strut with a spring.
 
 #### Predictive validity and biological relevance
 
 Before the equations, it is worth knowing how much this crude model buys. The SLIP is a well-known model that predicts correctly:
 
-- the **ground reaction forces** measured under running animals, and
-- the **center of mass trajectories** they follow,
+- the ground reaction forces measured under running animals, and
+- the center of mass trajectories they follow,
 
-and it does so for running animals **with different numbers of legs**. A two-legged human, a four-legged dog, a six-legged cockroach and an eight-legged crab do not resemble one another anatomically, yet when running, each behaves as though it were bouncing on a single effective leg-spring, producing the same single-humped vertical force and the same biphasic fore-aft force.
+and it does so for running animals with different numbers of legs. A two-legged human, a four-legged dog, a six-legged cockroach and an eight-legged crab do not resemble one another anatomically, yet when running, each behaves as though it were bouncing on a single effective leg-spring, producing the same single-humped vertical force and the same biphasic fore-aft force.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -444,7 +444,7 @@ and it does so for running animals **with different numbers of legs**. A two-leg
 
 </figure>
 
-Because of this, the SLIP is used both as a **descriptive tool in biomechanics**, giving a convenient base to explore the dynamics of running systems, and as a **design tool in robotics**: it underlies the controllers of hopping and running machines, most famously Marc Raibert's **Virtual Leg control**, which we return to in 8.3.
+Because of this, the SLIP is used both as a descriptive tool in biomechanics, giving a convenient base to explore the dynamics of running systems, and as a design tool in robotics: it underlies the controllers of hopping and running machines, most famously Marc Raibert's Virtual Leg control, which we return to in 8.3.
 
 #### Model definition and notation
 
@@ -484,7 +484,7 @@ Five assumptions define the model, and each has a consequence worth naming:
 2. **The leg touches the ground with a constant angle of attack $\alpha\_0$.** Every touch-down happens at the same leg angle, regardless of what happened on previous steps.
 3. **During stance, the leg angle changes naturally with the motion.** Once the foot is planted, nothing steers the leg: $\varphi$ evolves purely as a consequence of the dynamics.
 4. **During flight, the angle of attack is reset to $\alpha\_0$.** Note what this quietly requires in practice: on a real hopping robot, resetting the leg to a precise angle in mid-air is an active control task, and it needs a good controller. The "passive" model conceals a real actuation requirement.
-5. **Friction and other non-conservative forces are neglected**, so the system is **energy conservative**. No energy is lost at touch-down or dissipated in the spring, and none is injected during stance. This is why the SLIP can hop forever without any actuator doing work, and it is also why the self-stability discussed below is genuinely mechanical rather than a control artifact.
+5. **Friction and other non-conservative forces are neglected**, so the system is energy conservative. No energy is lost at touch-down or dissipated in the spring, and none is injected during stance. This is why the SLIP can hop forever without any actuator doing work, and it is also why the self-stability discussed below is genuinely mechanical rather than a control artifact.
 
 #### Equations of motion: Newton-Euler formulation
 
@@ -509,7 +509,7 @@ F\_{s,x} = k\,\Delta x = k\bigl(L\_0\cos\varphi - x\bigr),
 F\_{s,y} = k\,\Delta y = k\bigl(L\_0\sin\varphi - y\bigr).
 $$
 
-Dividing by $m$ and adding gravity to the vertical equation gives the **stance-phase** dynamics:
+Dividing by $m$ and adding gravity to the vertical equation gives the stance-phase dynamics:
 
 $$
 \ddot{x} = \frac{k}{m}\bigl(L\_0\cos\varphi - x\bigr),
@@ -521,7 +521,7 @@ $$
 
 This is the decisive contrast with the LIP. There, the constant-height trick turned $\tan\alpha$ into $x/z\_0$ and produced a linear equation with a closed-form solution. Here no such trick is available: $\cos\varphi$ and $\sin\varphi$ depend on where the mass currently is, so the right-hand sides are genuinely nonlinear in $x$ and $y$. There is no analytical solution to write down; you integrate numerically and see what happens. That is the price of admitting a compliant leg and a varying CoM height.
 
-During **flight**, there is no ground contact and therefore no spring force at all, so the mass is simply a projectile:
+During flight, there is no ground contact and therefore no spring force at all, so the mass is simply a projectile:
 
 $$
 \ddot{x} = 0, \qquad \ddot{y} = -g .
@@ -529,7 +529,7 @@ $$
 
 #### Hybrid dynamics and phase-transition conditions
 
-The two sets of equations above are stitched together by **geometric switching conditions**, evaluated at each instant:
+The two sets of equations above are stitched together by geometric switching conditions, evaluated at each instant:
 
 $$
 \underbrace{y \le L\_0\sin\alpha\_0}\_{\text{touch-down: flight} \,\rightarrow\, \text{stance}},
@@ -537,7 +537,7 @@ $$
 \underbrace{\sqrt{x^2+y^2} \ge L\_0}\_{\text{take-off: stance} \,\rightarrow\, \text{flight}} .
 $$
 
-Both read naturally once you picture the leg. **Touch-down** happens when the falling mass drops low enough that a leg held at angle $\alpha\_0$ would reach the ground, and the height of the foot-end of such a leg is exactly $L\_0\sin\alpha\_0$. **Take-off** happens when the spring, measured from the planted foot at the origin, has re-extended back to its rest length $L\_0$; beyond that it would have to pull the mass down, which a leg cannot do, so contact is released.
+Both read naturally once you picture the leg. Touch-down happens when the falling mass drops low enough that a leg held at angle $\alpha\_0$ would reach the ground, and the height of the foot-end of such a leg is exactly $L\_0\sin\alpha\_0$. Take-off happens when the spring, measured from the planted foot at the origin, has re-extended back to its rest length $L\_0$; beyond that it would have to pull the mass down, which a leg cannot do, so contact is released.
 
 This makes the SLIP a **hybrid dynamical system**: continuous dynamics within each phase, punctuated by discrete switches. That structure is exactly why Section 8.2.3.4's Poincaré/return-map machinery is the right tool for analyzing its stability.
 
@@ -557,9 +557,9 @@ The entire behaviour of the model, whether it hops steadily forever or tumbles a
 
 #### Passive self-stabilisation and parameter sensitivity
 
-Here is the result that made the SLIP influential. For suitable combinations of $k$ and $\alpha\_0$, repeated hopping is **self-stabilizing**: small perturbations to the apex height die out over successive steps *with no active feedback control whatsoever*. The mechanics alone reject the disturbance. Recall from assumption 5 that the model is energy-conservative, so this is not damping, it is the geometry of the touch-down and take-off conditions doing the work.
+Here is the result that made the SLIP influential. For suitable combinations of $k$ and $\alpha\_0$, repeated hopping is self-stabilizing: small perturbations to the apex height die out over successive steps *with no active feedback control whatsoever*. The mechanics alone reject the disturbance. Recall from assumption 5 that the model is energy-conservative, so this is not damping, it is the geometry of the touch-down and take-off conditions doing the work.
 
-This is checked numerically, by the simplest possible method: **count how many steps the model completes before falling**, for each pair $(k, \alpha\_0)$, and plot the result.
+This is checked numerically, by the simplest possible method: count how many steps the model completes before falling, for each pair $(k, \alpha\_0)$, and plot the result.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -574,7 +574,7 @@ This is checked numerically, by the simplest possible method: **count how many s
 
 </figure>
 
-Two things to read off this figure. First, **self-stability is not automatic**: for a given leg stiffness $k\_{LEG}$, the angle of attack $\alpha\_0$ must be chosen carefully, and most of the parameter plane corresponds to falling within a few steps. Second, and more strikingly, **real human running data land inside the stable band**, which is a strong argument that this two-parameter template really does capture something the biological system is also doing.
+Two things to read off this figure. First, self-stability is not automatic: for a given leg stiffness $k\_{LEG}$, the angle of attack $\alpha\_0$ must be chosen carefully, and most of the parameter plane corresponds to falling within a few steps. Second, and more strikingly, real human running data land inside the stable band, which is a strong argument that this two-parameter template really does capture something the biological system is also doing.
 
 The practical consequence for robotics closes the loop back to assumption 4: since $\alpha\_0$ must be held accurately for self-stability to appear, a real hopping robot needs a controller that sets the angle of attack during each flight phase. This is precisely what Raibert's Virtual Leg control does, and why a model with no controller at all still tells us what the controller must achieve.
 
@@ -684,13 +684,13 @@ function checkEx2() {
 
 ### The static stability margin
 
-A gait is called **statically stable** if the vertical projection of the center of mass (CoM) stays inside the **support polygon**, the convex hull of the ground-contact points, at every instant. This is a useful first test, but it is only a yes/no test: it does not say *how* stable the robot is, only whether it currently is, and it implicitly assumes the robot moves slowly enough that inertial effects can be neglected (quasi-static motion). The **magnitude of the static stability margin** (McGhee & Frank, 1968) turns this into a number: it is the shortest distance from the CoM projection to the boundary of the support polygon.
+A gait is called **statically stable** if the vertical projection of the center of mass (CoM) stays inside the **support polygon**, the convex hull of the ground-contact points, at every instant. This is a useful first test, but it is only a yes/no test: it does not say *how* stable the robot is, only whether it currently is, and it implicitly assumes the robot moves slowly enough that inertial effects can be neglected (quasi-static motion). The magnitude of the static stability margin (McGhee & Frank, 1968) turns this into a number: it is the shortest distance from the CoM projection to the boundary of the support polygon.
 
 $$
 \text{margin} = \min\_{\mathbf{q} \in \partial \mathcal{P}} \; \lVert \mathbf{CoM}\_{proj} - \mathbf{q} \rVert,
 $$
 
-where $\mathcal{P}$ is the support polygon and $\partial \mathcal{P}$ is its boundary. By convention, the margin is taken **positive** when the CoM projection is inside $\mathcal{P}$, and **negative** once it has left the polygon, at which point the robot is, by this criterion, falling. McGhee and Frank originally introduced this quantity for statically stable quadruped and hexapod *creeping gaits*, walking patterns slow enough that at least three (for a hexapod) or three-plus (for a quadruped, momentarily) feet stay on the ground at all times, precisely so the support polygon never degenerates to a line or a point.
+where $\mathcal{P}$ is the support polygon and $\partial \mathcal{P}$ is its boundary. By convention, the margin is taken positive when the CoM projection is inside $\mathcal{P}$, and negative once it has left the polygon, at which point the robot is, by this criterion, falling. McGhee and Frank originally introduced this quantity for statically stable quadruped and hexapod *creeping gaits*, walking patterns slow enough that at least three (for a hexapod) or three-plus (for a quadruped, momentarily) feet stay on the ground at all times, precisely so the support polygon never degenerates to a line or a point.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -788,7 +788,7 @@ The static stability margin only makes sense while the robot is (approximately) 
 
 #### Center of Pressure (CoP)
 
-The **Center of Pressure** is the point of application of the resultant ground reaction force, and can be measured directly from foot load sensors or a force plate:
+The Center of Pressure is the point of application of the resultant ground reaction force, and can be measured directly from foot load sensors or a force plate:
 
 $$
 \mathbf{CoP} = \frac{\sum\_i F\_i\, \mathbf{X}\_i}{\sum\_i F\_i},
@@ -864,16 +864,16 @@ function checkEx4() {
 
 #### The Zero Moment Point (ZMP)
 
-The CoP tells us where the ground is pushing *right now*, from sensor readings. But a planner needs to answer a different question, **before** the robot moves: *if I command this motion, will the robot tip over?* The **Zero Moment Point** (Vukobratović, 1969; Kajita & Espiau, 2008) answers exactly that, and it is the single most widely used dynamic stability criterion in biped robotics.
+The CoP tells us where the ground is pushing *right now*, from sensor readings. But a planner needs to answer a different question, before the robot moves: *if I command this motion, will the robot tip over?* The Zero Moment Point (Vukobratović, 1969; Kajita & Espiau, 2008) answers exactly that, and it is the single most widely used dynamic stability criterion in biped robotics.
 
 Before defining it, we need to be precise about two things that are easy to gloss over: what the support polygon actually is here, and what "zero moment" is a statement about.
 
 ##### What counts as the support polygon?
 
-In Section 8.2.3.1 the legs were idealized as *points*, so the support polygon was the convex hull of a handful of contact points. A biped with real, flat feet is different: each foot touches the ground over a whole **surface**, not a point. The support polygon is therefore the convex hull of the entire **contact area**:
+In Section 8.2.3.1 the legs were idealized as *points*, so the support polygon was the convex hull of a handful of contact points. A biped with real, flat feet is different: each foot touches the ground over a whole surface, not a point. The support polygon is therefore the convex hull of the entire contact area:
 
 - **Single support** (one foot on the ground): the support polygon is the outline of that foot's sole. Even standing on one foot, you have a real polygon to work with, roughly 25 cm by 10 cm for an adult human, which is precisely why you can lean slightly without falling.
-- **Double support** (both feet on the ground): the support polygon is the convex hull of *both* soles, and this crucially **includes the empty gap between the feet**. Nothing is touching the floor in that gap, but the ground reaction forces from the two feet can combine to produce a resultant that acts anywhere in the hull, so it counts as support.
+- **Double support** (both feet on the ground): the support polygon is the convex hull of *both* soles, and this crucially includes the empty gap between the feet. Nothing is touching the floor in that gap, but the ground reaction forces from the two feet can combine to produce a resultant that acts anywhere in the hull, so it counts as support.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -888,16 +888,16 @@ In Section 8.2.3.1 the legs were idealized as *points*, so the support polygon w
 
 </figure>
 
-This also explains a limitation that will matter in 8.3: a robot with **point feet** (or a quadruped in a two-leg trot phase) has a support polygon that degenerates to a point or a line segment. A region with zero area cannot "contain" anything, so the ZMP criterion becomes vacuous, and those robots need the different tools we meet in Sections 8.2.3.3 and 8.2.3.4.
+This also explains a limitation that will matter in 8.3: a robot with point feet (or a quadruped in a two-leg trot phase) has a support polygon that degenerates to a point or a line segment. A region with zero area cannot "contain" anything, so the ZMP criterion becomes vacuous, and those robots need the different tools we meet in Sections 8.2.3.3 and 8.2.3.4.
 
 ##### "Zero moment" of what, exactly?
 
-Pick any point on the ground. Add up the moments (torques) that **gravity and inertia** produce about that point: the weight of each link, and the inertial term of each link that is accelerating or rotating. (The ground reaction forces are deliberately *not* in this list; we come back to why in a moment.) The result is a moment **vector** $\mathbf{M}$ with three components, and the two kinds of component mean very different things:
+Pick any point on the ground. Add up the moments (torques) that gravity and inertia produce about that point: the weight of each link, and the inertial term of each link that is accelerating or rotating. (The ground reaction forces are deliberately *not* in this list; we come back to why in a moment.) The result is a moment vector $\mathbf{M}$ with three components, and the two kinds of component mean very different things:
 
-- The two **horizontal** components, $M\_x$ and $M\_y$, are **tipping moments**. They rotate the robot about a horizontal axis lying in the ground plane, pitching it forward/backward or rolling it sideways. These are the dangerous ones, this is what falling over *is*.
-- The **vertical** component, $M\_z$, is a **yaw moment**: it spins the robot about the vertical axis, like pivoting on your heel. Unpleasant, perhaps, but it does not tip you over, so the criterion deliberately ignores it.
+- The two horizontal components, $M\_x$ and $M\_y$, are tipping moments. They rotate the robot about a horizontal axis lying in the ground plane, pitching it forward/backward or rolling it sideways. These are the dangerous ones, this is what falling over *is*.
+- The vertical component, $M\_z$, is a yaw moment: it spins the robot about the vertical axis, like pivoting on your heel. Unpleasant, perhaps, but it does not tip you over, so the criterion deliberately ignores it.
 
-The **Zero Moment Point is the unique point on the ground where the two horizontal (tipping) components vanish.** That is the whole idea: the ZMP is the point about which the robot has no tendency to tip, and the vertical component is allowed to be anything.
+The Zero Moment Point is the unique point on the ground where the two horizontal (tipping) components vanish. That is the whole idea: the ZMP is the point about which the robot has no tendency to tip, and the vertical component is allowed to be anything.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -935,10 +935,10 @@ $$
 
 Reading the four terms:
 
-1. $\mathbf{r}\_i \times m\_i\mathbf{a}\_i$: the moment of link $i$'s **inertial term** $m\_i\mathbf{a}\_i$, the net force needed to accelerate it; the cross product with the lever arm $\mathbf{r}\_i$ turns that force into a moment. This is the term that makes the criterion *dynamic* rather than static.
-2. $\mathbf{I}\_i\boldsymbol{\alpha}\_i$: the moment required to **angularly accelerate** the link, i.e. to make it spin up or slow its rotation. A swinging leg or a rotating torso contributes here.
-3. $\boldsymbol{\omega}\_i \times \mathbf{I}\_i\boldsymbol{\omega}\_i$: the **gyroscopic** term, which appears whenever an already-rotating rigid body has a non-symmetric inertia tensor. It is usually small for slow walking and often neglected in practice, but it is part of the exact expression.
-4. $-\mathbf{r}\_i \times m\_i\mathbf{g}$: *minus* the moment of the link's **weight** $m\_i\mathbf{g}$. Terms (1) and (4) are best read together, since they combine into $\mathbf{r}\_i \times m\_i(\mathbf{a}\_i - \mathbf{g})$, the moment of the *effective* force on the link. This pair is all that survives if the robot stands perfectly still (every $\mathbf{a}\_i = 0$), which is why the ZMP reduces to the CoM projection at standstill.
+1. $\mathbf{r}\_i \times m\_i\mathbf{a}\_i$: the moment of link $i$'s inertial term $m\_i\mathbf{a}\_i$, the net force needed to accelerate it; the cross product with the lever arm $\mathbf{r}\_i$ turns that force into a moment. This is the term that makes the criterion *dynamic* rather than static.
+2. $\mathbf{I}\_i\boldsymbol{\alpha}\_i$: the moment required to angularly accelerate the link, i.e. to make it spin up or slow its rotation. A swinging leg or a rotating torso contributes here.
+3. $\boldsymbol{\omega}\_i \times \mathbf{I}\_i\boldsymbol{\omega}\_i$: the gyroscopic term, which appears whenever an already-rotating rigid body has a non-symmetric inertia tensor. It is usually small for slow walking and often neglected in practice, but it is part of the exact expression.
+4. $-\mathbf{r}\_i \times m\_i\mathbf{g}$: *minus* the moment of the link's weight $m\_i\mathbf{g}$. Terms (1) and (4) are best read together, since they combine into $\mathbf{r}\_i \times m\_i(\mathbf{a}\_i - \mathbf{g})$, the moment of the *effective* force on the link. This pair is all that survives if the robot stands perfectly still (every $\mathbf{a}\_i = 0$), which is why the ZMP reduces to the CoM projection at standstill.
 
 The defining condition is that the horizontal part of this vector vanishes:
 
@@ -948,9 +948,9 @@ $$
 M\_x = 0 \;\text{ and }\; M\_y = 0 .
 $$
 
-The $M\_z$ entry is left free, that is the yaw component we agreed to ignore. So this is a system of **two scalar equations in two scalar unknowns**, $p\_{ZMP,x}$ and $p\_{ZMP,y}$ (the third coordinate is fixed at $z = 0$, since the ZMP is by definition a point on the ground). Given the robot's current state and a dynamic model, it has a unique solution whenever the net vertical force is non-zero, that is, whenever the robot is actually in contact with the ground.
+The $M\_z$ entry is left free, that is the yaw component we agreed to ignore. So this is a system of two scalar equations in two scalar unknowns, $p\_{ZMP,x}$ and $p\_{ZMP,y}$ (the third coordinate is fixed at $z = 0$, since the ZMP is by definition a point on the ground). Given the robot's current state and a dynamic model, it has a unique solution whenever the net vertical force is non-zero, that is, whenever the robot is actually in contact with the ground.
 
-**Where did the ground reaction forces go?** They were never needed. Newton's and Euler's laws say that the contact wrench and the gravity-plus-inertia wrench are equal and opposite, so the moment the ground exerts about any point is exactly the negative of the sum written above. Requiring one to have no horizontal component is therefore the *same* condition as requiring it of the other, and the two standard definitions of the ZMP, "the ground point where the contact forces exert no tipping moment" and "the ground point where gravity and inertia exert no tipping moment", pick out the same point. The version above is the useful one in practice, because it can be evaluated from the robot's planned state alone, **before** the motion is executed and before any contact force exists to measure.
+**Where did the ground reaction forces go?** They were never needed. Newton's and Euler's laws say that the contact wrench and the gravity-plus-inertia wrench are equal and opposite, so the moment the ground exerts about any point is exactly the negative of the sum written above. Requiring one to have no horizontal component is therefore the *same* condition as requiring it of the other, and the two standard definitions of the ZMP, "the ground point where the contact forces exert no tipping moment" and "the ground point where gravity and inertia exert no tipping moment", pick out the same point. The version above is the useful one in practice, because it can be evaluated from the robot's planned state alone, before the motion is executed and before any contact force exists to measure.
 
 ##### A far more usable form
 
@@ -980,15 +980,15 @@ Stand still ($\ddot{x} = 0$) and the ZMP sits exactly under your CoM. Accelerate
 
 Now for the subtlety that trips most people up. It rests on the CoP limitation we met earlier, which is worth restating here in its proper place.
 
-**The CoP can never leave the support polygon.** The ground can only *push*, never pull, on the robot's feet, a property called **unilateral contact**, and a weighted average of push-only forces is mathematically forced to lie inside the convex hull of the contact area. There is no physical mechanism that could place it outside. **The computed ZMP is under no such constraint**: it is the solution of an equation, not an average of measured forces, and nothing prevents that solution from landing off the foot.
+**The CoP can never leave the support polygon.** The ground can only *push*, never pull, on the robot's feet, a property called **unilateral contact**, and a weighted average of push-only forces is mathematically forced to lie inside the convex hull of the contact area. There is no physical mechanism that could place it outside. The computed ZMP is under no such constraint: it is the solution of an equation, not an average of measured forces, and nothing prevents that solution from landing off the foot.
 
-So what happens if you compute the ZMP for some planned motion and the formula returns a point *outside* the foot? It means the motion you planned would require the ground to pull down on the robot somewhere outside the support polygon, in order to supply the moment that would keep it from tipping. The ground cannot do that. What happens instead is that the real CoP saturates at the edge of the foot, an unbalanced tipping moment remains, and **the robot rotates about that edge**. In the literature this out-of-polygon solution is called a **fictitious ZMP** (FZMP): a useful number, because how far outside it lands tells you the direction and severity of the impending tip, but not a physically realized point.
+So what happens if you compute the ZMP for some planned motion and the formula returns a point *outside* the foot? It means the motion you planned would require the ground to pull down on the robot somewhere outside the support polygon, in order to supply the moment that would keep it from tipping. The ground cannot do that. What happens instead is that the real CoP saturates at the edge of the foot, an unbalanced tipping moment remains, and the robot rotates about that edge. In the literature this out-of-polygon solution is called a **fictitious ZMP** (FZMP): a useful number, because how far outside it lands tells you the direction and severity of the impending tip, but not a physically realized point.
 
 Two honest caveats. First, tipping is not the same as falling: a robot whose ZMP briefly exits the support polygon may still recover by taking a step, which is exactly what the capture point of Section 8.2.3.3 formalizes. Second, this whole criterion presumes a foot is on the ground, so it says nothing at all about the flight phase of a running or hopping robot; Section 8.2.3.4 provides the right tool there.
 
 ##### What *can* leave the support polygon
 
-If the CoP cannot leave, what does dynamic walking actually look like? The answer is that the quantity free to wander outside is the **ground projection of the center of mass**.
+If the CoP cannot leave, what does dynamic walking actually look like? The answer is that the quantity free to wander outside is the ground projection of the center of mass.
 
 This is the essential difference between the static criterion of Section 8.2.3.1 and the dynamic one here. Static stability demanded that the CoM projection stay inside the support polygon. Dynamic stability makes no such demand: the CoM projection may be well outside the feet, as long as the robot is accelerating in the right way to keep the *ZMP* inside.
 
@@ -1035,7 +1035,7 @@ Finally, a note on terminology: there is real, long-running disagreement in the 
 
 ##### Question 1: Sign convention of the static margin
 
-By convention, what does a **negative** static stability margin mean?
+By convention, what does a negative static stability margin mean?
 
 <label style="display: block;">
   <input type="radio" name="mod3-q1" value="a"> The CoM projection is exactly on the boundary of the support polygon
@@ -1162,13 +1162,13 @@ According to the ZMP criterion, when is a biped's locomotion considered (dynamic
 
 ### Capture point and the Divergent Component of Motion (DCM)
 
-We now return to walking, and to the LIP. The ZMP of Section 8.2.3.2 tells you whether you are *currently* tipping, and the LIP of Section 8.2.2.2 tells you how the CoM will move once a foot is planted. Neither answers the question a balance controller actually faces after a push: **where should I put the next foot?** This section derives the answer, and it falls directly out of the LIP's closed-form solution.
+We now return to walking, and to the LIP. The ZMP of Section 8.2.3.2 tells you whether you are *currently* tipping, and the LIP of Section 8.2.2.2 tells you how the CoM will move once a foot is planted. Neither answers the question a balance controller actually faces after a push: where should I put the next foot? This section derives the answer, and it falls directly out of the LIP's closed-form solution.
 
 #### Capturability: the qualitative notion
 
 We begin with the concept, before the algebra.
 
-> A **capture point** is a point on the ground where the robot could step **in order to come to a complete stop**. The **capture region** is the set of all such points.
+> A **capture point** is a point on the ground where the robot could step in order to come to a complete stop. The **capture region** is the set of all such points.
 
 This definition, due to Pratt, Carff, Drakunov and Goswami (2006), reframes balance as a reachability question. Rather than asking "am I stable?", it asks "is there somewhere I could put my foot that would let me stop?" Comparing the capture region against two other regions on the ground then yields three qualitatively different situations:
 
@@ -1201,7 +1201,7 @@ $$
 \omega = \sqrt{\frac{g}{z\_0}} .
 $$
 
-This is one second-order equation. The key analytical step is to introduce a **new state variable**, conventionally written with the lower-case Greek letter $\xi$ (xi):
+This is one second-order equation. The key analytical step is to introduce a new state variable, conventionally written with the lower-case Greek letter $\xi$ (xi):
 
 $$
 \boxed{\;\xi = x + \frac{\dot{x}}{\omega}\;}
@@ -1209,7 +1209,7 @@ $$
 
 The variable $\xi$ has the units of a position: it is the current CoM position, offset by the current CoM velocity scaled by the characteristic time $1/\omega$. Loosely, it is "where the CoM is heading", a position extrapolated forward from the present state.
 
-With this substitution, the single second-order equation splits into **two first-order linear differential equations**:
+With this substitution, the single second-order equation splits into two first-order linear differential equations:
 
 $$
 \underbrace{\dot{\xi} = \omega\bigl(\xi - x\_{base}\bigr)}\_{\textbf{divergent component}},
@@ -1219,8 +1219,8 @@ $$
 
 This decomposition is the whole point of the change of variables, and the two halves behave in opposite ways:
 
-- **The divergent component.** The variable $\xi$ is the **Divergent Component of Motion (DCM)**. Its equation has a *positive* coefficient $+\omega$, so $\xi$ is **pushed away** from $x\_{base}$, growing exponentially. This is the unstable part of the LIP, isolated into a single scalar.
-- **The convergent component.** The variable $x$ has a *negative* coefficient $-\omega$, so the CoM is **attracted to** $\xi$, converging exponentially toward it. This is the stable part.
+- **The divergent component.** The variable $\xi$ is the **Divergent Component of Motion (DCM)**. Its equation has a *positive* coefficient $+\omega$, so $\xi$ is pushed away from $x\_{base}$, growing exponentially. This is the unstable part of the LIP, isolated into a single scalar.
+- **The convergent component.** The variable $x$ has a *negative* coefficient $-\omega$, so the CoM is attracted to $\xi$, converging exponentially toward it. This is the stable part.
 
 The instability we identified in Section 8.2.2.2, the growing exponential $Be^{\omega t}$, has now been cleanly separated out. All of the divergence lives in $\xi$, and none of it lives in $x$. That is what makes this change of variables so useful: instead of controlling a second-order unstable system, we need only steer one scalar quantity.
 
@@ -1232,13 +1232,13 @@ $$
 \dot{\xi} = \omega\bigl(\xi - x\_{base}\bigr) .
 $$
 
-The support point $x\_{base}$ is not a fact of nature; it is a **control input**, chosen by deciding where to step. And this equation says that if we choose
+The support point $x\_{base}$ is not a fact of nature; it is a control input, chosen by deciding where to step. And this equation says that if we choose
 
 $$
 x\_{base} = \xi ,
 $$
 
-then $\dot\xi = 0$: the DCM stops moving. With $\xi$ frozen, the convergent equation $\dot{x} = -\omega(x - \xi)$ drives the CoM smoothly to $\xi$ and holds it there, so the CoM velocity decays to zero. **The pendulum stops.**
+then $\dot\xi = 0$: the DCM stops moving. With $\xi$ frozen, the convergent equation $\dot{x} = -\omega(x - \xi)$ drives the CoM smoothly to $\xi$ and holds it there, so the CoM velocity decays to zero. The pendulum stops.
 
 > **The DCM is the instantaneous capture point.** Stepping to the current value of $\xi$ brings the robot to rest.
 
@@ -1255,11 +1255,11 @@ then $\dot\xi = 0$: the DCM stops moving. With $\xi$ frozen, the convergent equa
 
 </figure>
 
-This is why the DCM is worth monitoring continuously during walking. It converts balance control into a concrete, computable instruction: evaluate $\xi = x + \dot{x}/\omega$ from the current state, and **plan the footsteps, that is, the successive values of $x\_{base}$, to bring the CoM where you want it and to prevent falling**. Choosing $x\_{base} = \xi$ stops the robot; choosing $x\_{base}$ short of $\xi$ leaves residual forward motion, which is precisely what you want when the goal is to keep walking rather than to halt.
+This is why the DCM is worth monitoring continuously during walking. It converts balance control into a concrete, computable instruction: evaluate $\xi = x + \dot{x}/\omega$ from the current state, and plan the footsteps, that is, the successive values of $x\_{base}$, to bring the CoM where you want it and to prevent falling. Choosing $x\_{base} = \xi$ stops the robot; choosing $x\_{base}$ short of $\xi$ leaves residual forward motion, which is precisely what you want when the goal is to keep walking rather than to halt.
 
 #### Terminology and further reading
 
-The same quantity appears in the literature under several names, which is worth knowing when reading papers. It is called the **Divergent Component of Motion (DCM)**, and equivalently the **extrapolated center of mass (XCoM)**, the latter term being more common in the biomechanics literature on human balance. Both refer to $\xi = x + \dot{x}/\omega$.
+The same quantity appears in the literature under several names, which is worth knowing when reading papers. It is called the Divergent Component of Motion (DCM), and equivalently the **extrapolated center of mass (XCoM)**, the latter term being more common in the biomechanics literature on human balance. Both refer to $\xi = x + \dot{x}/\omega$.
 
 The DCM formulation underpins a family of modern biped balance controllers; Takenaka, Matsumoto and Yoshiike (2009) developed it for real-time walking pattern generation, and Englsberger et al. (2014) extended it to handle continuous leg forces during double support and heel-to-toe transitions. We will see in 8.3 how these ideas are embedded inside complete control architectures.
 
@@ -1281,7 +1281,7 @@ $\xi = x + \dot{x}/\omega$ (m, 3 decimals): <input type="text" id="ex5-xi" size=
 
 ##### Question 2: Where to place the next foot
 
-If the controller wants the robot to come to a **complete stop** with the very next step, where should it place $x\_{base}$?
+If the controller wants the robot to come to a complete stop with the very next step, where should it place $x\_{base}$?
 
 <label style="display: block;">
   <input type="radio" name="ex5-step" value="a"> At $x\_{base} = 0$ (the current support foot's position)
@@ -1334,10 +1334,10 @@ function checkEx5() {
 
 This practical consolidates the core ideas of Sections 8.2.2.2 (the LIP) and 8.2.3.3 (the DCM):
 
-- implementing the **LIP closed-form solution** to propagate the CoM state exactly, one timestep at a time;
-- observing the **growing exponential instability** when no footstep correction is applied;
-- implementing the **Divergent Component of Motion (DCM)** and using it to plan footsteps that bring the robot to a controlled stop;
-- visualising all of the above in a live **PyBullet** simulation with a telescopic leg, footstep markers, and a real-time DCM indicator.
+- implementing the LIP closed-form solution to propagate the CoM state exactly, one timestep at a time;
+- observing the growing exponential instability when no footstep correction is applied;
+- implementing the Divergent Component of Motion (DCM) and using it to plan footsteps that bring the robot to a controlled stop;
+- visualising all of the above in a live PyBullet simulation with a telescopic leg, footstep markers, and a real-time DCM indicator.
 
 ##### Download the exercise files
 
@@ -1489,7 +1489,7 @@ Left with a fixed support point $x\_{base}$ and no corrective foot placement, th
 
 ### Poincaré maps and return-map analysis
 
-The criteria of Sections 8.2.3.2 and 8.2.3.3 evaluate stability at a single instant, or over a single step. For strongly dynamic, cyclic gaits such as hopping and running, that is the wrong timescale. A hopping robot is never "in equilibrium" at any instant, yet it may nonetheless repeat the same motion indefinitely. What we want to know is whether the **cycle as a whole** repeats, and whether small disturbances shrink or grow from one cycle to the next. This is a question about periodic orbits, and the tool for it comes from nonlinear dynamics.
+The criteria of Sections 8.2.3.2 and 8.2.3.3 evaluate stability at a single instant, or over a single step. For strongly dynamic, cyclic gaits such as hopping and running, that is the wrong timescale. A hopping robot is never "in equilibrium" at any instant, yet it may nonetheless repeat the same motion indefinitely. What we want to know is whether the cycle as a whole repeats, and whether small disturbances shrink or grow from one cycle to the next. This is a question about periodic orbits, and the tool for it comes from nonlinear dynamics.
 
 #### Poincaré maps: reducing a continuous flow to a discrete map
 
@@ -1520,19 +1520,19 @@ $$
 
 </figure>
 
-The value of this construction lies in what it does to the notion of a periodic orbit. Suppose $\mathbf{x}^\*$ is a **fixed point** of $P$, that is $P(\mathbf{x}^\*) = \mathbf{x}^\*$. Then a trajectory starting at $\mathbf{x}^\*$ returns to $\mathbf{x}^\*$ after some time $T$, and is therefore **a closed orbit** of the original system $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x})$. Moreover, by examining the behaviour of $P$ near that fixed point, we can determine the **stability** of the closed orbit.
+The value of this construction lies in what it does to the notion of a periodic orbit. Suppose $\mathbf{x}^\*$ is a **fixed point** of $P$, that is $P(\mathbf{x}^\*) = \mathbf{x}^\*$. Then a trajectory starting at $\mathbf{x}^\*$ returns to $\mathbf{x}^\*$ after some time $T$, and is therefore a closed orbit of the original system $\dot{\mathbf{x}} = \mathbf{f}(\mathbf{x})$. Moreover, by examining the behaviour of $P$ near that fixed point, we can determine the stability of the closed orbit.
 
 > **The Poincaré map converts problems about closed orbits, which are difficult, into problems about fixed points of a mapping, which are easier in principle.**
 
-Two properties are worth recording explicitly. First, this construction produces a **discrete dynamical system whose state space is one dimension smaller** than the original continuous system, which is a substantial simplification. Second, there is a practical catch: it is typically **impossible to find a formula for $P$** analytically. In legged locomotion this is not an obstacle, because we obtain $P$ numerically instead.
+Two properties are worth recording explicitly. First, this construction produces a discrete dynamical system whose state space is one dimension smaller than the original continuous system, which is a substantial simplification. Second, there is a practical catch: it is typically impossible to find a formula for $P$ analytically. In legged locomotion this is not an obstacle, because we obtain $P$ numerically instead.
 
 #### The return map and the choice of section
 
 The **return map** is the particular kind of Poincaré map we use here. The methodology is:
 
-> To analyse stability, look at a particular recurring **event**, and investigate **how repetitive it is** and **how it reacts after perturbations**.
+> To analyse stability, look at a particular recurring event, and investigate how repetitive it is and how it reacts after perturbations.
 
-For a hopping or running system, the natural choice of event, and hence of surface of section, is the **apex height**: the maxima of the height $y$, reached once per step at the top of each flight phase. The return map then investigates how this apex height changes from step to step, that is, it is the function
+For a hopping or running system, the natural choice of event, and hence of surface of section, is the apex height: the maxima of the height $y$, reached once per step at the top of each flight phase. The return map then investigates how this apex height changes from step to step, that is, it is the function
 
 $$
 y\_{i+1} = P(y\_i)
@@ -1557,7 +1557,7 @@ Sampling once per step is what makes the comparison meaningful. Within a single 
 
 #### Conditions for a stable periodic gait
 
-The system converges to stable hopping when **two conditions** are met.
+The system converges to stable hopping when two conditions are met.
 
 **Condition 1: the solution is periodic.** There must exist a steady-state apex height $y^\*\_{APEX}$ that maps to itself:
 
@@ -1587,7 +1587,7 @@ The basin of attraction is the set of initial apex heights that eventually conve
 
 We can now make quantitative the "steps to fall" experiment of Section 8.2.2.3.
 
-For the SLIP model, the return map $y\_{i+1}(y\_i)$ is a function defined for **a given set of open parameters** $(v\_0, \alpha\_0, k)$. It is **obtained numerically**, by integrating the differential equations of the SLIP model derived in Section 8.2.2.3 through one complete step, from one apex to the next. Once computed, it can be used to generate the entire series of apex heights from any initial condition $y\_0$.
+For the SLIP model, the return map $y\_{i+1}(y\_i)$ is a function defined for a given set of open parameters $(v\_0, \alpha\_0, k)$. It is obtained numerically, by integrating the differential equations of the SLIP model derived in Section 8.2.2.3 through one complete step, from one apex to the next. Once computed, it can be used to generate the entire series of apex heights from any initial condition $y\_0$.
 
 <figure style="margin: 1.5rem auto; text-align: center;">
 
@@ -1602,7 +1602,7 @@ For the SLIP model, the return map $y\_{i+1}(y\_i)$ is a function defined for **
 
 </figure>
 
-The figure is read as follows. The intersection of the return-map curve with the diagonal $y\_{i+1} = y\_i$ locates the fixed point, satisfying Condition 1. The curve crosses the diagonal from above with a shallow slope, so the magnitude of $dy\_{i+1}/dy\_i$ there is below one, satisfying Condition 2. Consequently the staircase construction starting from an arbitrary $y\_0$ marches inward and converges to $y\_\infty$: the fixed point is a **stable attractor**, and the SLIP settles into steady hopping without any active control.
+The figure is read as follows. The intersection of the return-map curve with the diagonal $y\_{i+1} = y\_i$ locates the fixed point, satisfying Condition 1. The curve crosses the diagonal from above with a shallow slope, so the magnitude of $dy\_{i+1}/dy\_i$ there is below one, satisfying Condition 2. Consequently the staircase construction starting from an arbitrary $y\_0$ marches inward and converges to $y\_\infty$: the fixed point is a stable attractor, and the SLIP settles into steady hopping without any active control.
 
 This is the analytical content behind the shaded region of Figure 8: for each $(k, \alpha\_0)$ pair in that plot, one may construct the corresponding return map and test the two conditions. The band of self-stable parameters is exactly the set for which both hold.
 
@@ -1728,7 +1728,7 @@ For any choice of leg stiffness $k$ and angle of attack $\alpha\_0$, the SLIP mo
 
 ##### Question 3 (True/False): Return-map stability condition
 
-For a periodic hopping motion analyzed with a return map $y\_{i+1}(y\_i)$, the motion is stable if the magnitude of the slope of the return map at the fixed point is **greater than** 1.
+For a periodic hopping motion analyzed with a return map $y\_{i+1}(y\_i)$, the motion is stable if the magnitude of the slope of the return map at the fixed point is greater than 1.
 
 <label style="display: block;">
   <input type="radio" name="mod3-slip-q3" value="true"> True
@@ -1761,7 +1761,7 @@ For a periodic hopping motion analyzed with a return map $y\_{i+1}(y\_i)$, the m
 
 Stability criteria establish *whether* a gait works. They say nothing about *how well* it works. This final section introduces two dimensionless metrics that make performance comparable across machines of different sizes, and between robots and animals.
 
-Both are **dimensionless by construction**, which is the property that makes such comparisons legitimate: a quantity carrying units of joules or metres per second cannot meaningfully be compared between a 9 kg robot and a horse, whereas a pure number can.
+Both are dimensionless by construction, which is the property that makes such comparisons legitimate: a quantity carrying units of joules or metres per second cannot meaningfully be compared between a 9 kg robot and a horse, whereas a pure number can.
 
 ### Cost of Transport
 
@@ -1775,7 +1775,7 @@ $$
 
 where $E$ is the energy consumed (J), $P$ is power (W), $m$ is mass (kg), $g$ is gravitational acceleration (m/s²), $d$ is distance travelled (m) and $v$ is speed (m/s). The two forms are equivalent, the first being convenient when total energy over a trial is measured, the second when instantaneous power draw is logged.
 
-The normalising quantity $mgd$ is the work required to lift the system's own weight through the distance travelled, so the CoT expresses energy expenditure as a multiple of that reference. **Lower values indicate greater efficiency.**
+The normalising quantity $mgd$ is the work required to lift the system's own weight through the distance travelled, so the CoT expresses energy expenditure as a multiple of that reference. Lower values indicate greater efficiency.
 
 Some reference values, which are worth committing to memory as anchors:
 
@@ -1802,11 +1802,11 @@ The spread across this table is nearly two orders of magnitude, and it is instru
 
 </figure>
 
-Two structural trends are visible in the figure. Within each mode of locomotion, CoT **decreases with body mass**, so larger systems are intrinsically more economical per unit weight. Across modes, **swimming is cheapest, flying intermediate, and terrestrial locomotion most expensive** at a given mass, reflecting the energy repeatedly spent accelerating and decelerating limbs and supporting the body against gravity.
+Two structural trends are visible in the figure. Within each mode of locomotion, CoT decreases with body mass, so larger systems are intrinsically more economical per unit weight. Across modes, swimming is cheapest, flying intermediate, and terrestrial locomotion most expensive at a given mass, reflecting the energy repeatedly spent accelerating and decelerating limbs and supporting the body against gravity.
 
 ### Froude number
 
-The **Froude number** is a dimensionless measure of *speed*, which allows **dynamically similar gaits to be compared between small and large animals or robots**. A mouse and an elephant trot at very different absolute speeds; the Froude number identifies when they are nonetheless doing mechanically equivalent things.
+The **Froude number** is a dimensionless measure of *speed*, which allows dynamically similar gaits to be compared between small and large animals or robots. A mouse and an elephant trot at very different absolute speeds; the Froude number identifies when they are nonetheless doing mechanically equivalent things.
 
 It is derived from the inverted-pendulum picture of Section 8.2.2.1: modelling the stance leg as an inverted pendulum, the CoM traverses a circular arc centred at the foot, and the Froude number is the ratio of the centripetal force required for that arc to the weight of the system:
 
@@ -1824,7 +1824,7 @@ $$
 
 The interpretive rule of thumb is:
 
-> $\text{Fr} < 1$ corresponds to **walking** gaits, and $\text{Fr} > 1$ to **running** gaits.
+> $\text{Fr} < 1$ corresponds to walking gaits, and $\text{Fr} > 1$ to running gaits.
 
 The reasoning behind the threshold is mechanical, not conventional. Vaulting over a straight stance leg requires a centripetal force directed toward the foot, and gravity is the only source of it. When $\text{Fr} > 1$ the required centripetal force exceeds what gravity can supply, so the CoM cannot follow the arc: contact is lost and a flight phase appears, which is the defining feature of running. Alexander (1984) uses this to compare gait transitions across a wide range of species, finding that animals of very different sizes switch gait near comparable Froude numbers.
 

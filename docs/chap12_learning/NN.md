@@ -203,16 +203,282 @@ This idea is closely related to Braitenberg vehicles—simple robots whose behav
 
 ##### **Application: Principal Component Analysis (PCA)**
 
-A more mathematical application of Hebbian learning is its connection to **Principal Component Analysis (PCA)** — a technique for finding the most important directions of variation in a dataset.
+A more mathematical application of Hebbian learning is its connection to **Principal Component Analysis (PCA)**. PCA is a technique for finding the directions along which a dataset varies the most. These directions are called **principal components**, and they can be used to represent high-dimensional data using a smaller number of informative features.
 
-Oja's rule (1982) is a normalized variant of Hebbian learning:
+To understand the connection with Hebbian learning, consider a single linear neuron receiving an input vector $x$:
 
-$$\Delta w_i = \eta \cdot y \cdot (x_i - y \cdot w_i)$$
+$$
+y = \mathbf{w}^T\mathbf{x}
+$$
 
-Where $y = \sum_i w_i x_i$ is the neuron's output. The extra term $-\eta \cdot y^2 \cdot w_i$ prevents the weights from growing indefinitely. Remarkably, a single neuron trained with Oja's rule converges to the **first principal component** of the input data — the direction that captures the most variance. This is a beautiful result: a simple, local, biologically plausible learning rule naturally discovers the most informative structure in the data.
+The weight vector $w$ determines the direction in the input space that the neuron is looking at, while the output ($y$) tells us how strongly the current input lies along that direction.
 
-In robotics, PCA via Hebbian learning has been used for dimensionality reduction in sensory processing, for example, compressing high-dimensional 
-camera inputs into a compact representation that retains the most useful information for navigation or object recognition.
+Now recall the Hebbian learning rule:
+
+$$
+\Delta \mathbf{w} = \alpha y\mathbf{x}
+$$
+
+Whenever an input pattern produces a large output, the neuron strengthens its weights in the direction of that input. Therefore, directions that occur repeatedly and produce large activations reinforce themselves more strongly.
+
+If the input data are centered around zero, the directions that repeatedly produce the largest activations are precisely the directions along which the data have the largest variance. As a result, repeated Hebbian updates gradually rotate the weight vector toward the **first principal component** of the dataset.
+
+This gives an interesting interpretation of PCA:
+
+> Instead of explicitly computing the covariance matrix and performing an eigendecomposition, a Hebbian neuron can gradually **learn the dominant principal direction from streaming data**.
+
+This is particularly interesting because classical PCA is typically computed from a complete dataset, whereas Hebbian learning can update the principal direction incrementally as new observations arrive.
+
+<details markdown="1"><summary>mathematical proof of Weight Convergence to Principal Components in Hebbian Learning</summary>
+
+**Step 1: Discrete Hebbian Update & Linear Output**
+
+Consider a linear neuron with input vector \\(\mathbf{x} = [x_1, x_2, \dots, x_n]^T\\) and weight vector \\(\mathbf{w} = [w_1, w_2, \dots, w_n]^T\\). The output activation \\(y\\) is computed as the inner product:
+\\[y = \sum_{k=1}^n w_k x_k = \mathbf{w}^T \mathbf{x}\\]
+
+According to the classical Hebbian learning rule, the discrete weight update \\(\Delta w_i\\) is proportional to the simultaneous co-activation of input \\(x_i\\) and output \\(y\\):
+\\[\Delta w_i = \alpha \cdot x_i \cdot y\\]
+
+Substituting the linear output \\(y = \sum_k w_k x_k\\) directly into the update rule yields:
+\\[\Delta w_i = \alpha \cdot x_i \left( \sum_{k=1}^n w_k x_k \right) = \alpha \sum_{k=1}^n w_k x_i x_k\\]
+
+**Step 2: Continuous Time Limit (\\(\Delta t \to 0\\)) & Ensemble Correlation Matrix**
+
+To transition from discrete pattern updates to a continuous dynamical system, set the learning rate proportional to a small time step (\\(\alpha = \Delta t\\)). Dividing by \\(\Delta t\\) gives the rate of change per time interval:
+\\[\frac{\Delta w_i}{\Delta t} = \sum_{k=1}^n w_k x_i x_k\\]
+
+Taking the continuous limit as \\(\Delta t \to 0\\) converts the discrete difference ratio into a continuous derivative \\(\frac{dw_i}{dt}\\):
+\\[\frac{dw_i}{dt} \propto \sum_{k=1}^n w_k x_i x_k\\]
+
+When the network processes a continuous stream of zero-mean input patterns over time, we take the ensemble expectation \\(E[x_i x_k]\\) across all patterns. This defines the **input correlation/covariance matrix** \\(\mathbf{C} = E[\mathbf{x} \mathbf{x}^T]\\).
+
+Writing this system of differential equations in full matrix form yields:
+\\[\frac{d}{dt}\mathbf{w}(t) \propto \mathbf{C} \mathbf{w}(t)\\]
+
+**Step 3: Eigen-Decomposition of the Correlation Matrix \\(\mathbf{C}\\)**
+
+Because the correlation matrix \\(\mathbf{C}\\) is real and symmetric, linear algebra guarantees that it possesses an orthonormal set of **eigenvectors** \\(\{\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n\}\\) and associated real **eigenvalues** \\(\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_n \ge 0\\), satisfying:
+\\[\mathbf{C} \mathbf{v}_k = \lambda_k \mathbf{v}_k\\]
+
+Because these eigenvectors form a complete coordinate basis for the input space, any weight vector \\(\mathbf{w}(t)\\) at time \\(t\\) can be expressed as a linear combination of these eigenvectors:
+\\[\mathbf{w}(t) = \sum_{k=1}^n a_k(t) \mathbf{v}_k\\]
+
+where \\(a_k(t)\\) represents the scalar projection (coordinate) of the weight vector along eigenvector direction \\(\mathbf{v}_k\\).
+
+**Step 4: Matrix Scaling & Isolating Eigenvector Coordinates**
+
+Substituting the eigenvector expansion \\(\mathbf{w}(t) = \sum_k a_k(t) \mathbf{v}_k\\) into the matrix differential equation \\(\frac{d}{dt}\mathbf{w}(t) = c \mathbf{C} \mathbf{w}(t)\\) (where \\(c > 0\\) is a positive constant incorporating learning rate) gives:
+\\[\sum_{k=1}^n \frac{d a_k(t)}{dt} \mathbf{v}_k = c \mathbf{C} \left( \sum_{k=1}^n a_k(t) \mathbf{v}_k \right)\\]
+
+Distributing matrix \\(\mathbf{C}\\) inside the sum and applying the identity \\(\mathbf{C} \mathbf{v}_k = \lambda_k \mathbf{v}_k\\):
+\\[\sum_{k=1}^n \frac{d a_k(t)}{dt} \mathbf{v}_k = c \sum_{k=1}^n a_k(t) \lambda_k \mathbf{v}_k\\]
+
+Since the eigenvectors \\(\mathbf{v}_k\\) are linearly independent basis vectors, we can equate coefficients along each individual direction \\(\mathbf{v}_k\\):
+\\[\frac{d a_k(t)}{dt} = c \lambda_k a_k(t)\\]
+
+**Step 5: Solving the Calculus Differential Equation**
+
+The isolated coordinate equation \\(\frac{d a_k(t)}{dt} = c \lambda_k a_k(t)\\) is a first-order linear ordinary differential equation. We solve it via **separation of variables**:
+
+1. **Separate variables**:
+   \\[\frac{1}{a_k(t)} \, d a_k(t) = c \lambda_k \, dt\\]
+
+2. **Integrate both sides**:
+   \\[\int \frac{1}{a_k(t)} \, d a_k(t) = \int c \lambda_k \, dt \implies \ln|a_k(t)| = c \lambda_k t + K\\]
+
+3. **Exponentiate both sides**:
+   \\[a_k(t) = e^{c \lambda_k t + K} = e^K \cdot e^{c \lambda_k t}\\]
+
+4. **Apply initial condition \\(a_k(0)\\) at \\(t = 0\\)**:
+   \\[a_k(t) = a_k(0) e^{c \lambda_k t}\\]
+
+**Step 6: The Exponential "Drowning Out" Effect (1st Principal Component)**
+
+To observe which direction dominates over time, examine the ratio between the coordinate \\(a_1(t)\\) along the largest eigenvalue \\(\lambda_1\\) and any coordinate \\(a_k(t)\\) along a smaller eigenvalue \\(\lambda_k\\) (where \\(\lambda_1 > \lambda_k\\)):
+\\[\frac{a_1(t)}{a_k(t)} = \frac{a_1(0) e^{c \lambda_1 t}}{a_k(0) e^{c \lambda_k t}} = \frac{a_1(0)}{a_k(0)} e^{c (\lambda_1 - \lambda_k) t}\\]
+
+Because \\(\lambda_1 > \lambda_k\\), the term \\((\lambda_1 - \lambda_k)\\) is strictly positive. As \\(t \to \infty\\):
+\\[\lim_{t \to \infty} e^{c (\lambda_1 - \lambda_k) t} = \infty \implies \frac{a_1(t)}{a_k(t)} \to \infty\\]
+
+The exponential growth along \\(\lambda_1\\) outpaces all other components, **drowning out** the secondary directions. Consequently, assuming that the initial weight vector has a non-zero component along \\(\mathbf{v}_1\\), the **direction** of the Hebbian weight vector becomes increasingly dominated by \\(\mathbf{v}_1\\).
+
+Because \\(\mathbf{v}_1\\) is the eigenvector associated with the largest eigenvalue \\(\lambda_1\\), it corresponds to the direction of maximum variance in the input data. Therefore, \\(\mathbf{v}_1\\) is the **1st Principal Component**.
+
+However, although the direction of the weight vector approaches the 1st Principal Component, its magnitude continues to grow without bound. Therefore, classical Hebbian learning can identify the principal direction, but it does not produce stable weights. A normalization or weight-decay mechanism is required to prevent unlimited weight growth.
+
+
+**Step 7: Stabilizing Norm Growth via Oja’s Rule**
+
+To prevent unbounded weight explosion while preserving alignment with the 1st Principal Component, Erkki Oja formulated a rule that maximizes variance \\(J(\mathbf{w}) = \mathbf{w}^T \mathbf{C} \mathbf{w}\\) subject to a unit length constraint \\(\mathbf{w}^T \mathbf{w} = 1\\).
+
+Oja's discrete weight update includes a subtractive weight decay term \\(-y^2 w_i\\):
+\\[\Delta w_i = \alpha \left( x_i y - y^2 w_i \right)\\]
+
+Taking the continuous limit across input ensemble expectations yields the continuous matrix differential equation:
+\\[\frac{d}{dt} \mathbf{w}(t) = \mathbf{C} \mathbf{w}(t) - \left( \mathbf{w}(t)^T \mathbf{C} \mathbf{w}(t) \right) \mathbf{w}(t)\\]
+
+Decomposing \\(\mathbf{w}(t) = \sum_k a_k(t) \mathbf{v}_k\\) into eigenvector coordinates isolates the modified rate of change for each coordinate \\(a_k(t)\\):
+\\[\frac{d a_k(t)}{dt} = \lambda_k a_k(t) - \left( \sum_{m=1}^n \lambda_m a_m(t)^2 \right) a_k(t)\\]
+
+1. Equilibrium of the 1st Principal Component (\\(a_1\\))
+As \\(a_1(t)\\) drowns out secondary components (\\(a_m(t) \approx 0\\) for \\(m \ge 2\\)), the feedback sum simplifies to \\(\sum_m \lambda_m a_m^2 \approx \lambda_1 a_1^2\\). Setting \\(\frac{d a_1(t)}{dt} = 0\\) at steady state:
+\\[\lambda_1 a_1 - \lambda_1 a_1^3 = 0 \implies \lambda_1 a_1 (1 - a_1^2) = 0\\]
+
+For non-zero weights and positive variance (\\(\lambda_1 > 0\\)), the steady-state coordinate settles at:
+\\[a_1 = 1\\]
+
+2. Suppression of Secondary Components (\\(a_k\\) for \\(k \ge 2\\))
+Once \\(a_1 = 1\\), the feedback sum equals \\(\lambda_1\\). Substituting this into the differential equation for secondary components \\(a_k(t)\\) (\\(k \ge 2\\)) gives:
+\\[\frac{d a_k(t)}{dt} = \lambda_k a_k(t) - \lambda_1 a_k(t) = (\lambda_k - \lambda_1) a_k(t)\\]
+
+Since \\(\lambda_1 > \lambda_k\\), the term \\((\lambda_k - \lambda_1)\\) is strictly negative, forcing every secondary component \\(a_k(t)\\) to **decay exponentially to \\(0\\)**.
+
+3. Convergence Result
+At stability, the weight vector coordinate representation simplifies to:
+\\[\mathbf{w} = 1 \cdot \mathbf{v}_1 + 0 \cdot \mathbf{v}_2 + \dots + 0 \cdot \mathbf{v}_n = \mathbf{v}_1\\]
+
+Thus, Oja's rule bounds the weight vector at **unit norm** (\\(\|\mathbf{w}\| = 1\\)) while guaranteeing convergence to the **1st Principal Component**.
+
+</details>
+
+We found that after convergence, the learned weight vector becomes aligned with the first principal component:
+
+$$
+\mathbf{w} \approx \mathbf{v}_1
+$$
+
+Therefore, for a new centered input $\mathbf{x}$, the output of the learned neuron is
+
+$$
+y = \mathbf{w}^T\mathbf{x}
+$$
+
+and, since $\mathbf{w} \approx \mathbf{v}_1$,
+
+$$
+y \approx \mathbf{v}_1^T\mathbf{x}.
+$$
+
+This is exactly the **projection of the input onto the first principal component**.
+
+In other words, the **weight vector learns the principal direction**, while the **neuron output gives the coordinate of the input along that direction**. Therefore, the neuron is not only discovering the first principal component; it is also transforming each high-dimensional input into a **one-dimensional feature** that represents its position along the direction of greatest variation.
+
+For example, imagine that each input contains measurements from $n$ correlated sensors:
+
+$$
+\mathbf{x} = [x_1,x_2,\dots,x_n]^T.
+$$
+
+Instead of keeping all $n$ sensor measurements, the neuron can represent them using a single value:
+
+$$
+y = \mathbf{w}^T\mathbf{x}.
+$$
+
+This value preserves the variation of the data along its most important direction. In this way, the original $n$-dimensional input is reduced to a **one-dimensional representation**.
+
+This is the basic idea behind **dimensionality reduction using PCA**.
+
+
+##### **Application: Auto-Associative Memories**
+
+In many applications, we would like a system to store patterns and retrieve them later. There are two fundamentally different ways in which information can be retrieved from memory: address-based retrieval and content-addressable retrieval.
+
+In conventional computer memory, information is stored at a specific numerical address. To retrieve the information, the system must know the correct address. For example, if a piece of information is stored at memory location 10110, the computer retrieves it by explicitly accessing that location. If the address is incorrect, a completely different piece of information may be returned.
+
+An auto-associative memory, on the other hand, does not require an explicit address. Instead, the content of the input itself acts as the cue for retrieval. The system compares the presented input implicitly with the patterns stored in its connections and tries to recover the stored pattern that best matches it. This makes auto-associative memories especially useful for pattern completion and noise removal. A stored pattern does not need to be presented perfectly. Even if part of the pattern is missing or corrupted by noise, the network may still recover the original pattern.
+
+For example, as shown in Figure X, the network first learns and stores patterns representing different digits, such as 1 and 2. Later, the network may receive an incomplete or noisy version of one of these digits. The initial input does not need to be exactly the same as the stored pattern.
+
+The network then repeatedly updates its internal state. Because the stored patterns correspond to stable states of the network, the noisy input gradually moves toward the stored pattern that it most closely resembles.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/auto-associative-mems.png" alt="Auto-associative memory and pattern retrieval" width="700">
+    <p><strong>Figure x.</strong> Auto-associative memory and pattern retrieval.</p>
+</div>
+
+The **Hopfield network** is a recurrent artificial neural network designed to function as an **auto-associative memory**. It uses ideas from **Hebbian learning** to store patterns in the strengths of the connections between neurons.
+
+- A Hopfield network consists of simple **binary or bipolar neurons**, typically with states $ x_i \in \{-1,+1\}.$
+
+- The neurons are connected through **symmetric bidirectional weights**, meaning that the connection from neuron $i$ to neuron $j$ has the same strength as the connection from neuron $j$ to neuron $i$ ($w_{ij}=w_{ji}.$) 
+
+- The network also has **no self-connections**, so a neuron does not directly feed its own state back to itself ($w_{ii}=0.$)
+
+- Typically, a Hopfield network is **fully connected**, meaning that every neuron is connected to every other neuron. Therefore, for a network with $K$ neurons, the weight matrix has size $ K \times K.$ However, because $w_{ij}=w_{ji}$ and $w_{ii}=0$, the network does **not** have $K^2$ independent connection weights. The number of unique connections is $\frac{K(K-1)}{2}.$
+
+
+###### **Learning Phase**
+
+The first step in using a Hopfield network as an auto-associative memory is to **store the desired patterns in the network weights**.
+
+During learning, each pattern is presented to the network, and the connections between neurons are updated according to a Hebbian learning rule. Neurons that have the same activity reinforce their connection, while neurons with opposite activities weaken their connection.
+
+The following animation illustrates how the weights of a Hopfield network are updated as different patterns are presented to the network.
+
+
+<div style="text-align: center;">
+    <video controls preload="metadata" playsinline style="width: 100%; max-width: 850px; height: auto;">
+        <source src="/assets/videos/NN/Hopfield_learning_example.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <p>
+        <strong>Video X.</strong> Learning phase of a Hopfield network.** As each pattern is presented, the pairwise connections between neurons are updated according to the Hebbian learning rule. By combining the contributions of all training patterns, the final weight matrix stores the patterns as stable states of the network.
+    </p>
+</div>
+
+###### **Retrieval Phase**
+
+After the patterns have been stored in the network weights, the Hopfield network can be used to **retrieve a stored pattern from a noisy or incomplete input**.
+
+During retrieval, the noisy input is used as the initial state of the network. The neurons then repeatedly update their states based on the states of the other neurons and the learned connection weights. Ideally, these updates gradually transform the noisy input into one of the patterns stored during the learning phase.
+
+But why should these repeated updates move the network toward a stored pattern rather than changing its state forever?
+
+To understand this, it is useful to think about the Hopfield network in terms of an **energy landscape**.
+
+A Hopfield network assigns an **energy** to every possible state of the network. For a network with symmetric weights and no self-connections, the energy of a state $\mathbf{x}$ can be written as
+
+$$
+E(\mathbf{x})
+=
+-\frac{1}{2}
+\sum_i
+\sum_j
+w_{ij}x_i x_j.
+$$
+
+Each possible configuration of the neurons corresponds to a point in this energy landscape.
+
+During learning, we would like the stored patterns to become **low-energy stable states**, or local minima of the energy function.
+
+<div style="text-align: center;">
+    <img src="/assets/images/NN/hopfield-energy-landscape.png" alt="Energy landscape of a Hopfield network" width="700">
+    <p><strong>Figure x.</strong> Energy landscape of a Hopfield network. Stored patterns correspond to local minima of the energy function, and during retrieval the network state evolves toward one of these stable memories.</p>
+</div>
+
+In the figure above, the two stored patterns $\boldsymbol{\xi}^1$ and $\boldsymbol{\xi}^2$ are represented by two valleys in the energy landscape. These valleys correspond to **memories stored by the network**.
+
+Suppose we initialize the network with a noisy version of $\boldsymbol{\xi}^1$. The initial state will usually not lie exactly at the bottom of the valley. As the neurons update their states, the energy of the network decreases and the state moves down the energy landscape:
+
+$$
+\tilde{\mathbf{x}}
+\rightarrow
+\mathbf{x}(1)
+\rightarrow
+\mathbf{x}(2)
+\rightarrow
+\cdots
+\rightarrow
+\boldsymbol{\xi}^1.
+$$
+
+Eventually, the network reaches a local minimum where changing a neuron no longer decreases the energy. At this point, the network has reached a **stable state**.
+
+Therefore, we can think of retrieval as allowing the network state to **fall into the closest energy valley**.
+
+
+
 
 #### Anti-Hebbian Learning
 While Hebbian learning strengthens connections between neurons that fire together, Anti-Hebbian learning (often referred to as lateral inhibition) does the exact opposite. By doing that we want to decorrelate inputs and reduce redundancy. By removing redundant information, the network maximizes the amount of unique information it can process and transmit. Anti-Hebbian learning is naturally self-limiting and does not require the artificial "weight decay" bounds that standard Hebbian networks need to prevent weights from expanding infinitely. Because, The weights stop changing as soon as the outputs are successfully decorrelated.
@@ -1115,6 +1381,49 @@ If the update gate is close to one, the network largely preserves its previous m
 Although GRUs do not explicitly maintain a separate cell state, the additive update of the hidden state allows information and gradients to propagate across many time steps, alleviating the vanishing gradient problem in much the same way as LSTMs.
 
 Overall, GRUs offer a favorable trade-off between model complexity and performance. They require fewer parameters, are computationally more efficient, and often achieve accuracy comparable to LSTMs, especially on moderately long sequences.
+
+###### Robotics Application: Predicting Human Motion for Human–Robot Interaction
+
+As discussed in the previous LSTM example, one of the fundamental challenges in **human–robot interaction** is enabling robots to anticipate how people will move in the near future. Rather than simply reacting after a person has completed an action, a collaborative robot should be able to predict human motion and adapt its own behavior accordingly. By anticipating future human motion, robots can produce smoother, safer, and more natural interactions. This ability is essential for many applications, including object handovers, collaborative manufacturing, dancing, and social robots interacting naturally with humans.
+
+An interesting example of this idea is presented by Gui *et al.* in **"Teaching Robots to Predict Human Motion"** (IROS 2018). In this work, a **Pepper** robot observes a person's recent movements, predicts how the person will move during the next second, and then demonstrates the predicted motion itself.
+
+Figure 17 shows two examples of this process: a discussion action in the top row and a greeting action in the bottom row. In the first two columns, Pepper observes and mimics the person's motion. In the third column, the robot's vision is blocked, preventing it from observing the person's subsequent movements. From this point onward, Pepper demonstrates the future motion predicted by the model, as shown in the remaining columns.
+
+<div style="text-align: center;">
+
+  <img src="/assets/images/NN/gru_example.png" alt="Demonstration of human motion prediction using the Pepper robot." width="800">
+
+  <p><strong>Figure 17.</strong> Demonstration of human motion prediction using the Pepper robot.</p>
+
+</div>
+
+But how can the robot predict what the person will do next? After processing the camera images and obtaining the person's **3D skeleton** for each frame, this motion information is fed into the neural network. Rather than making a prediction from a single pose, the network receives a **sequence of previously observed poses**. In this work, the model observes approximately **2 seconds of human motion (50 frames)** and predicts the following **1 second of motion (25 frames)**.
+
+If we think about this prediction process logically, we can divide it into two main tasks. First, the network needs to **understand what has happened during the observed motion**. Then, based on this information, it needs to **generate how the motion is likely to continue in the future**. This naturally leads to an **encoder–decoder architecture**.
+
+An encoder–decoder architecture consists of two separate networks with different roles. The **encoder** processes the observed human motion one pose at a time and gradually summarizes the motion history into an internal representation. In other words, it tries to capture useful information about how the person's body has been moving over time. The **decoder** then uses this representation, together with a seed motion, to generate the future motion sequence.
+
+The seed motion provides the decoder with an initial motion from which it can start generating the future sequence. After generating the first prediction, the decoder uses its own output as the input for the next time step. This process continues until the complete future sequence has been generated. Both the encoder and decoder are implemented using **GRUs**. This autoregressive process allows the model to produce a continuous future trajectory rather than a collection of independent poses.
+
+The authors chose **GRUs instead of LSTMs** because GRUs are computationally less expensive. In their implementation, both the encoder and decoder consist of a **single GRU layer with a hidden size of 1,024**. The authors also found that a single GRU layer performed better than multi-layer GRUs for this task and was easier to train while reducing the risk of overfitting.
+
+However, there is an important problem with this type of prediction. Since each predicted pose is used as the input for predicting the next pose, a small error in one prediction can affect all subsequent predictions. As this process continues, these errors can accumulate, causing the generated motion to gradually become unrealistic.
+
+To address this problem, the authors introduce another network called a **discriminator**. Instead of checking only whether each individual predicted pose is close to the ground truth, the discriminator examines the **entire predicted motion sequence** and determines whether it looks like a real, smooth, and human-like motion.
+
+We can think of the predictor and discriminator as two opponents that are trained together. The **predictor** tries to generate realistic future motion that can fool the discriminator, while the **discriminator** tries to distinguish between real human motion and motion generated by the predictor. Through this competition, the predictor gradually learns to generate more realistic motion sequences. This type of architecture is known as a **Generative Adversarial Network (GAN)**.
+
+For now, this basic understanding of GANs is enough: one network generates predictions, while another network evaluates whether those predictions resemble real human motion.
+
+It is important to note that **the discriminator is used only during training**. Once the model has been trained, the robot performs motion prediction using only the encoder–decoder GRU. Therefore, the discriminator improves the quality of the learned predictions without adding additional computational cost during inference. **Figure 18** provides an overview of the complete method, showing the difference between the training and inference stages.
+
+<div style="text-align: center;">
+  <img src="/assets/images/NN/gru_example_architecture.png" alt="Overview of the human motion prediction framework. " width="800">
+  <p><strong>Figure 18.</strong> Overview of the human motion prediction framework. </p>
+</div>
+
+This example illustrates why recurrent neural networks—and particularly GRUs—are well suited for robotics applications involving sequential data. By maintaining a memory of recent observations, the network can reason about motion over time and generate realistic future trajectories, enabling more natural and proactive human–robot interaction.
 
 
 #### Deep Learning Applications

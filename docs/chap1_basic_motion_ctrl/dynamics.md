@@ -798,7 +798,7 @@ Where:
 #### Physical Interpretation
 
 - The **effective mass** at the robot’s **end-effector** changes with direction and configuration.  
-- When you push the robot's end-effector by hand, it doesn’t behave like a point mass —  
+- When you push the robot's end-effector by hand, it doesn’t behave like a point mass, 
   the **force and acceleration directions are not necessarily aligned**.
 - This is because the inertia felt at the end-effector is **anisotropic** (depends on direction) and **configuration-dependent**.
 
@@ -2716,6 +2716,261 @@ Real joints use **actuators + transmissions** whose own dynamics can dominate th
 </details>
 
 ---
+
+## Programming
+
+### Exercise 1: Forward Dynamics Simulation Loop
+
+> **Prerequisites:** Complete [Kinematics Exercise 1](kinematics#exercise-1-dobot-pick-and-place-forward-kinematics) first and make sure Webots is installed.
+
+In the kinematics exercise, you controlled the Dobot by giving it **target joint positions**.  
+Here you go one level deeper: apply **joint torques** and let the dynamics equations decide how the robot moves:
+
+$$
+\ddot{\theta} = M(\theta)^{-1}\left(\tau - c(\theta,\dot{\theta}) - g(\theta)\right)
+$$
+
+#### Step 1: Setup your environment
+
+1. 📁 [Download the `dobot_dynamics` folder]({{ site.baseurl }}/assets/downloads/dynamics/dobot_dynamics.zip)
+2. Extract the downloaded `.zip` file.
+3. Launch Webots → **File → Open World**
+4. Navigate to `dobot_dynamics/worlds/` and select `dobot.wbt`
+
+#### Step 2: Let's start coding!
+
+Once opened, your Dobot will appear exactly as in the kinematics exercise.
+
+Open `dobot_dynamics/controllers/dobot_dynamics/dobot_dynamics.py` and complete all `COMPLETE THIS LINE OF CODE` sections:
+
+- **`mass_matrix()`** : the 2×2 inertia matrix $M(\theta)$ from Exercise 1(f)
+- **`bias_torque()`** : Coriolis, centripetal and gravity terms $c(\theta,\dot{\theta}) + g(\theta)$
+- **`total_energy()`** : total mechanical energy $E = K + P$ for validation
+- **`run()`** : choose the torque input $\tau$
+
+> *If the Python file isn't open, select the robot in the scene tree (left panel), right-click → **Edit controller**.*
+
+Press `CTRL+S` to save, then **▶️ Play** to start the simulation.
+
+**Validation questions:**
+1. With `tau = np.zeros(2)`, does total energy stay constant? What causes drift if any?
+2. Apply `tau = np.array([0.5, 0.0])` : which joint moves and why?
+3. Set `M[0,1] = M[1,0] = 100` (wrong coupling). What happens and why?
+
+**Good luck and have fun!**
+
+<details markdown="1">
+  <summary>Solution</summary>
+
+After attempting the exercise, download the solution to compare:
+
+📁 [Solution : dobot_dynamics.py]({{ site.baseurl }}/assets/downloads/dynamics/dobot_dynamics_solution.py)
+
+</details>
+
+
+### Exercise 2: Task-Space Mass Ellipse
+
+> **Prerequisites:** Complete Exercise 10 in the mathematical section first, then come back here.
+
+In Exercise 10 you derived $\Lambda(\theta) = J^{-T}M(\theta)J^{-1}$ by hand.  
+Here you implement it in Python and see it visually, then deliberately break $M(\theta)$ to observe what goes wrong.
+
+#### Step 1: Setup your environment
+
+1. 📁 [Download `mass_matrix.py`]({{ site.baseurl }}/assets/downloads/dynamics/mass_matrix.py)
+2. Open `mass_matrix.py` in VS Code.
+3. Install dependencies if needed:
+```bash
+pip install numpy matplotlib
+```
+5. Run the script:
+```bash
+python mass_matrix.py
+```
+
+#### Step 2: Let's start coding!
+
+Complete all `COMPLETE THIS LINE OF CODE` sections:
+
+- **`jacobian(theta)`** : differentiate $x_2 = \theta_2\cos\theta_1$ and $y_2 = \theta_2\sin\theta_1$
+- **`mass_matrix(theta)`** : diagonal $M(\theta)$ from Exercise 1(f)
+- **`task_space_mass(theta)`** : $\Lambda = J^{-T}MJ^{-1}$ from the Task-Space Dynamics section
+- **`mass_matrix_asymmetric(theta)`** : break symmetry by modifying $M[0,1]$
+
+Once complete, the script automatically saves **5 plots** in the same folder:
+
+Use these plots to answer the conceptual questions below.
+
+**Good luck and have fun!**
+
+<details markdown="1">
+  <summary>Solution</summary>
+
+After attempting the exercise, download the solution to compare:
+
+📁 [Solution : mass_matrix_solution.py]({{ site.baseurl }}/assets/downloads/dynamics/mass_matrix_solution.py)
+
+</details>
+<details markdown="1">
+<summary>Conceptual Questions : Mass_matrix</summary>
+
+<!-- ─── Part 1 questions ─── -->
+
+<!-- Question 1 -->
+<p><strong>Question 1: For θ₁=0, as θ₂ → 0, what happens to the f_y component of the force ellipse?</strong></p>
+<form id="ell-q1">
+  <input type="radio" name="ell-q1" value="A"> It stays constant because the mass matrix is diagonal<br>
+  <input type="radio" name="ell-q1" value="B"> It shrinks to zero because the arm becomes lighter<br>
+  <input type="radio" name="ell-q1" value="C"> It grows to infinity because the moment arm about joint 1 vanishes<br>
+  <input type="radio" name="ell-q1" value="D"> It equals f_x because the ellipse becomes a circle<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q1', 'C',
+      'Correct! As θ₂→0 the end-effector approaches joint 1. A force in f_y creates almost no torque about joint 1 (moment arm → 0), so an enormous force is needed to produce any tangential acceleration.',
+      'Not quite. Think about what happens to the lever arm about joint 1 as the arm fully retracts.')">
+    Check Answer
+  </button>
+  <p id="ell-q1-feedback"></p>
+</form>
+
+<!-- Question 2 -->
+<p><strong>Question 2: As θ₂ → ∞ with θ₁=0, what shape does the force ellipse approach?</strong></p>
+<form id="ell-q2">
+  <input type="radio" name="ell-q2" value="A"> A very elongated ellipse because inertia about joint 1 grows without bound<br>
+  <input type="radio" name="ell-q2" value="B"> A straight line because joint 2 becomes the dominant direction<br>
+  <input type="radio" name="ell-q2" value="C"> A circle of radius m₁+m₂ because both masses contribute equally<br>
+  <input type="radio" name="ell-q2" value="D"> A circle of radius m₂ because the end-effector feels like a point mass m₂ in every direction<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q2', 'D',
+      'Correct! As θ₂→∞ the term (k+m₂θ₂²)/θ₂² → m₂. Both diagonal entries of Λ approach m₂, so the ellipse becomes a circle — the end-effector feels like a point mass m₂ in every direction.',
+      'Not quite. Look at what happens to the bottom-right entry of Λ as θ₂ grows very large.')">
+    Check Answer
+  </button>
+  <p id="ell-q2-feedback"></p>
+</form>
+
+<!-- Question 3 -->
+<p><strong>Question 3: With θ₂ fixed, what happens to the force ellipse when θ₁ changes?</strong></p>
+<form id="ell-q3">
+  <input type="radio" name="ell-q3" value="A"> The shape changes because the mass distribution along the arm changes<br>
+  <input type="radio" name="ell-q3" value="B"> The ellipse rotates by the same angle as θ₁ but keeps the same shape<br>
+  <input type="radio" name="ell-q3" value="C"> Both shape and orientation change because Λ depends on both θ₁ and θ₂<br>
+  <input type="radio" name="ell-q3" value="D"> Nothing changes because Λ only depends on θ₂<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q3', 'B',
+      'Correct! θ₁ only rotates the whole arm in the plane without changing how mass is distributed along it. The shape of Λ stays identical but its orientation rotates with θ₁.',
+      'Not quite. Think about what θ₁ physically does — does it change the mass distribution along the arm or just the arm orientation in space?')">
+    Check Answer
+  </button>
+  <p id="ell-q3-feedback"></p>
+</form>
+
+<!-- ─── Bug 1 questions ─── -->
+
+<hr>
+<p><em>The next three questions refer to what you observed in your plots.</em></p>
+
+<!-- Question 4 -->
+<p><strong>Question 4: Comparing the correct and wrong ellipses in <code>part2_bug1.png</code>, which statement is true?</strong></p>
+<form id="ell-q4">
+  <input type="radio" name="ell-q4" value="A"> The wrong ellipse has a completely different shape and is rotated relative to the correct one<br>
+  <input type="radio" name="ell-q4" value="B"> The wrong ellipse has the same shape as the correct one but is 10× smaller<br>
+  <input type="radio" name="ell-q4" value="C"> The wrong ellipse grows larger than the correct one at high θ₂<br>
+  <input type="radio" name="ell-q4" value="D"> The wrong ellipse matches the correct one exactly at θ₂=0<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q4', 'B',
+      'Correct! Since Λ = J⁻ᵀMJ⁻¹, scaling M by 0.1 scales Λ by 0.1 too. The shape is identical but the ellipse shrinks by √0.1 in every direction.',
+      'Not quite. Think about how a scalar factor on M propagates through Λ = J⁻ᵀMJ⁻¹.')">
+    Check Answer
+  </button>
+  <p id="ell-q4-feedback"></p>
+</form>
+
+<!-- Question 5 -->
+<p><strong>Question 5: What is the practical consequence for a controller using this wrong Λ?</strong></p>
+<form id="ell-q5">
+  <input type="radio" name="ell-q5" value="A"> The robot becomes immediately unstable and oscillates wildly<br>
+  <input type="radio" name="ell-q5" value="B"> The robot moves faster than expected because it underestimates resistance<br>
+  <input type="radio" name="ell-q5" value="C"> The controller applies 10× too little force everywhere, causing the robot to lag behind its desired trajectory at every configuration<br>
+  <input type="radio" name="ell-q5" value="D"> Nothing changes because the Jacobian compensates for the scaling<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q5', 'C',
+      'Correct! A controller computes F = Λ * a_desired. If Λ is 10× too small, F is 10× too small, the robot systematically underperforms everywhere, not just at one configuration.',
+      'Not quite. Think about F = Λ * a_desired — if Λ is scaled by 0.1, what happens to the computed force F?')">
+    Check Answer
+  </button>
+  <p id="ell-q5-feedback"></p>
+</form>
+
+<!-- ─── Bug 2 questions ─── -->
+
+<!-- Question 6 -->
+<p><strong>Question 6: Looking at <code>part2_bug2.png</code>, at which value of θ₂ are the correct and wrong ellipses closest to each other?</strong></p>
+<form id="ell-q6">
+  <input type="radio" name="ell-q6" value="A"> θ₂ = 0.5, because the ellipse is smallest there<br>
+  <input type="radio" name="ell-q6" value="B"> θ₂ = 1.0, because the frozen M equals the correct M exactly at that configuration<br>
+  <input type="radio" name="ell-q6" value="C"> θ₂ = 3.0, because the ellipse has stabilised by then<br>
+  <input type="radio" name="ell-q6" value="D"> They are never close because freezing M always introduces a large error<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q6', 'B',
+      'Correct! The frozen mass matrix uses θ₂=1 always. At θ₂=1 the frozen M equals the correct M exactly — so the ellipses overlap. The further θ₂ moves from 1, the more the controller diverges from reality.',
+      'Not quite. The frozen matrix is fixed at θ₂=1 — at exactly which θ₂ does the frozen value equal the true value?')">
+    Check Answer
+  </button>
+  <p id="ell-q6-feedback"></p>
+</form>
+
+<!-- Question 7 -->
+<p><strong>Question 7: What does this bug teach about the mass matrix?</strong></p>
+<form id="ell-q7">
+  <input type="radio" name="ell-q7" value="A"> The mass matrix can be treated as a constant without loss of accuracy<br>
+  <input type="radio" name="ell-q7" value="B"> The mass matrix only matters at the home configuration<br>
+  <input type="radio" name="ell-q7" value="C"> The mass matrix must be recomputed at every configuration because it depends on joint positions<br>
+  <input type="radio" name="ell-q7" value="D"> The mass matrix only changes when the robot accelerates<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q7', 'C',
+      'Correct! M(θ) is configuration-dependent — M[0,0] = I1 + I2 + m1*L1² + m2*θ2² changes with every joint position. A controller that freezes M at one configuration will apply increasingly wrong forces as the robot moves away from that configuration.',
+      'Not quite. Look at how M[0,0] depends on θ₂ — does it stay constant as the robot moves?')">
+    Check Answer
+  </button>
+  <p id="ell-q7-feedback"></p>
+</form>
+
+<!-- ─── Bug 3 questions ─── -->
+
+<!-- Question 8 -->
+<p><strong>Question 8: What do you observe in <code>part2_bug3.png</code> when M[0,1] ≠ M[1,0]?</strong></p>
+<form id="ell-q8">
+  <input type="radio" name="ell-q8" value="A"> The ellipse rotates 90° compared to the correct one<br>
+  <input type="radio" name="ell-q8" value="B"> The ellipse becomes elongated in the f_x direction only<br>
+  <input type="radio" name="ell-q8" value="C"> The plot shows "invalid Λ (not PD)" because the eigenvalues are no longer guaranteed to be real and positive<br>
+  <input type="radio" name="ell-q8" value="D"> The ellipse doubles in size because the extra term adds inertia<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q8', 'C',
+      'Correct! The spectral theorem guarantees real eigenvalues only for symmetric matrices. Breaking symmetry can produce complex eigenvalues — the ellipse semi-axes are no longer real, so the ellipse cannot be drawn.',
+      'Not quite. Think about what the spectral theorem says: which property of M guarantees real eigenvalues?')">
+    Check Answer
+  </button>
+  <p id="ell-q8-feedback"></p>
+</form>
+
+<!-- Question 9 -->
+<p><strong>Question 9: Why must the mass matrix always be symmetric?</strong></p>
+<form id="ell-q9">
+  <input type="radio" name="ell-q9" value="A"> Because it is defined as M = JᵀJ and all matrices of that form are symmetric<br>
+  <input type="radio" name="ell-q9" value="B"> Because kinetic energy K = ½θ̇ᵀMθ̇ must be a real scalar, which requires M to be symmetric and positive definite<br>
+  <input type="radio" name="ell-q9" value="C"> Because Webots requires symmetric matrices for simulation<br>
+  <input type="radio" name="ell-q9" value="D"> Because the Jacobian is always square<br>
+  <button type="button"
+    onclick="checkTrueFalse2('ell-q9', 'B',
+      'Correct! The mass matrix comes from the kinetic energy K = ½θ̇ᵀMθ̇. For K to be a real positive scalar for any motion, M must be symmetric (so K = Kᵀ is trivially satisfied) and positive definite (so K > 0 whenever the robot is moving).',
+      'Not quite. Think about where M comes from — it is derived from the kinetic energy expression. What does K = ½θ̇ᵀMθ̇ require of M?')">
+    Check Answer
+  </button>
+  <p id="ell-q9-feedback"></p>
+</form>
+
+</details>
 
 ## Mathematical Development Questions
 

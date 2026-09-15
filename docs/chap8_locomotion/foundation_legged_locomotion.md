@@ -70,12 +70,12 @@ nav_exclude: true
 
 ### Prerequisites
 
-To get the most out of this Central Pattern Generator module, it’s helpful to have:
+To get the most out of this Central Pattern Generator module, it is expected that you have:
 
-- Basic proficiency in Python programming
-- Familiarity with fundamental concepts in robotics, kinematics, and dynamics
 - Basic knowledge of linear algebra, differential equations, and feedback control
-
+- Familiarity with fundamental concepts in robotics, kinematics, and dynamics [Robotics Foundation Courses](https://www.ieee-ras.org/ras-university/?ras_page=docs/robotic_foundation_chap0-3)
+- Basic proficiency in Python programming
+  
 Previous coursework in robot control, or model predictive control is recommended but not mandatory.
 
 Students without this background can still follow the course, provided they are prepared to review the necessary programming and control concepts when needed.

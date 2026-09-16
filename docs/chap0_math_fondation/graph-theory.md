@@ -2,7 +2,7 @@
 title: "Chapter 0.2 Graph Theory"
 parent: "Chapter 0: Mathematical Foundation"
 has_children: false
-nav_order: 1
+nav_order: 3
 layout: numbered
 math: mathjax
 chapter: 0

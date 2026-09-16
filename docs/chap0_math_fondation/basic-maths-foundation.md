@@ -9,25 +9,7 @@ section: 0
 publish: true
 ---
 
-# Mathematical Foundation
-
-Robotics heavily relies on a robust mathematical foundation. To succeed in this course, familiarity with the following areas is recommended:
-
-- **Trigonometry**: Fundamental for analyzing angles, rotations, and transformations in robotic systems.
-
-- **Linear Algebra**: Essential for understanding robotic motion, kinematics, and system modeling.
-
-- **Calculus**: Used extensively for analyzing dynamics, motion planning, and control.
-
-- **Probability and Statistics**: Critical for interpreting sensor data, uncertainty modeling, and robotics perception.
-
-- **Optimization**: Important for control strategies, path planning, and decision-making in robotics. You can find a brief introduction to optimization in the [Optimization chapter](https://www.ieee-ras.org/ras-university/?ras_page=docs/chap0_math_fondation/optimization.html).
-
-This section provides brief overviews and key concepts from these mathematical fields to refresh your knowledge and support your learning experience.
-
-
----
-To start your journey in these topics, we recommend exploring the following resources:
+Here are a few external resources to refresh your memory on basic trigonometry, linear algebra, calculus and probabilistic: all of which are mathematical concepts fundamental to robotics:
 
 ### Supervised Online Course:
 
@@ -69,7 +51,6 @@ To start your journey in these topics, we recommend exploring the following reso
   <summary>Useful chapters for us:</summary>
 
 </details>
-
 
 
 ### In-depth Theory and Practice:

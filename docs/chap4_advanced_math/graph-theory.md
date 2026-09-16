@@ -1,12 +1,14 @@
 ---
-title: 4.1 Graph Theory
-parent: "Chapter 4: Advanced Mathematical Foundations"
+title: "Chapter 0.2 Graph Theory"
+parent: "Chapter 0: Mathematical Foundation"
 has_children: false
 nav_order: 1
 layout: numbered
 math: mathjax
-chapter: 4
-section: 1
+chapter: 0
+section: 2
+publish: true
+
 ---
 <style>
 .algorithm {

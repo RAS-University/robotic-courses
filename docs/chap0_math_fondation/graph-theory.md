@@ -1,5 +1,5 @@
 ---
-title: "Chapter 0.2 Graph Theory"
+title: "0.2 Graph Theory"
 parent: "Chapter 0: Mathematical Foundation"
 has_children: false
 nav_order: 3

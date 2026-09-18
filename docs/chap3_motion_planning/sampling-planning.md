@@ -1,12 +1,12 @@
 ---
-title: 3.1 Sampling-Based Planning
+title: 3.2 Sampling-Based Planning
 parent: "Chapter 3: Motion Planning and Navigation"
-nav_order: 1
+nav_order: 2
 layout: numbered
 has_children: false
 math: mathjax
 chapter: 3
-section: 1
+section: 2
 ---
 <style>
 .algorithm {

@@ -23,3 +23,7 @@ Gemfile.lock
 
 # .tmp folder
 .tmp/
+
+# Personal source PDFs and notes
+_personal_resources/
+_personal_reources/

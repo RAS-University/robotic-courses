@@ -54,8 +54,14 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 ## Prerequisites
 
 - [Graph definitions, representations, traversal and search](../chap4_advanced_math/graph-theory) — Section 4.1. **Everything this section says about graphs, adjacency representations, BFS/DFS, Dijkstra and A\* is defined and analysed there**; here we only use those tools and show what they mean for a robot.
-- [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — enough to know what a *pose* is, and what holonomic and non-holonomic mean.
+- [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — enough to know what a configuration space is.
 - Basic notions of low-level motion control (path following).
+
+<div class="definition" markdown="1">
+<strong>Definition.</strong> A robot is <strong>holonomic</strong> if it can move instantaneously in any direction of its configuration space: it can change each of its degrees of freedom independently, and the number of degrees of freedom it can control equals the number it has. An omnidirectional platform that can slide sideways is an example.
+
+A robot is <strong>non-holonomic</strong> if some instantaneous motions are impossible even though every pose can eventually be reached. A car or a differential-drive robot cannot slide sideways, so it has to manoeuvre, for example by parallel parking, to get there.
+</div>
 
 ---
 
@@ -382,7 +388,7 @@ and derives an artificial force field from its negative gradient:
 
 \[
 F(q) = -\nabla U(q) = -\nabla U_{\text{att}}(q) - \nabla U_{\text{rep}}(q)
-= \begin{bmatrix} \dfrac{\partial U}{\partial x} \\[6pt] \dfrac{\partial U}{\partial y} \end{bmatrix}
+= -\begin{bmatrix} \dfrac{\partial U}{\partial x} \\[6pt] \dfrac{\partial U}{\partial y} \end{bmatrix}
 \]
 
 The individual fields must be <strong>differentiable</strong>, so that the gradient exists everywhere the robot may go. A common choice is a quadratic attractor towards the goal and a repulsive term with a finite radius of influence $d_0$ around each obstacle.
@@ -406,7 +412,7 @@ The individual fields must be <strong>differentiable</strong>, so that the gradi
           style="border:1px solid #ddd; border-radius:6px; max-width:700px;">
   </iframe>
   <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
-    <strong>Figure 15.</strong>  — drag the robot (green square), the goal (red square) or the obstacles to see it react live. Every point carries a direction of motion, which is what makes the method usable online without any global search.
+    <strong>Figure 15.</strong> Drag the robot (green square), the goal (red square) or the obstacles to see the impact live. Every point carries a direction of motion, which is what makes the method usable online without any global search.
     <br><sub>Interactive demo: EPFL Mobile Robots course, via <a href="https://calerga.ch/projects/epfl/mobots/18/nav-potfield.html" target="_blank" rel="noopener">calerga.ch</a></sub>
   </figcaption>
 </figure>
@@ -420,9 +426,6 @@ The individual fields must be <strong>differentiable</strong>, so that the gradi
 - ✅ Can be used **offline** to draw a complete path that is then followed by a low-level controller.
 - ✅ Can be used **online**, computing only the force at the current pose and controlling the robot accordingly — the same code then serves as a local obstacle-avoidance layer.
 
-<div class="note" markdown="1">
-Potential fields are the bridge between this section and the rest of the chapter. They are the first method here that does not discretise anything: motion is defined by a continuous vector field rather than by a sequence of graph edges. Pushed further — replacing the hand-designed field by one <em>learned</em> from demonstrations, and adding formal stability guarantees so that local minima can no longer trap the robot — this idea becomes <a href="DS-planning">Dynamical-Systems-Based Planning</a> (Section 3.4).
-</div>
 
 ---
 
@@ -444,7 +447,7 @@ Potential fields are the bridge between this section and the rest of the chapter
 Every method in this section shares two assumptions that are easy to miss because they are never stated: the world is **two-dimensional**, and the map is **given**. Lift either one and the picture changes.
 
 - **Lift the dimension.** A grid is affordable in 2D and hopeless beyond it. Discretising each joint of a 7-degree-of-freedom arm into a mere 100 steps already yields $100^7 = 10^{14}$ cells — a graph no computer will build, let alone search. This is the *curse of dimensionality*, and it is what makes [Sampling-Based Planning](sampling-planning) (Section 3.2) necessary: rather than enumerating the free space, sample it.
-- **Lift the discretisation.** Potential fields showed that a continuous vector field can generate motion without any graph. Making such fields stable, learnable and robust to perturbation is [Dynamical-Systems-Based Planning](DS-planning) (Section 3.4).
+- **Lift the discretisation.** Potential fields showed that a continuous vector field can generate motion without any graph.
 - **Lift the map.** All of the above assumed one. Building it while using it is **SLAM** (Section 3.5).
 
 ---
@@ -503,7 +506,7 @@ A robot moves on a $5 \times 7$ grid (rows $0..4$, columns $0..6$), 4-connected,
        alt="A 5 by 7 grid with the start S at (2,0), the goal G at (2,6), and a 3 by 3 sand region in the middle covering rows 1-3 and columns 2-4."
        width="65%">
   <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
-    <strong>Figure.</strong> The grid for this exercise: start $S$ and goal $G$ sit on row 2, and the sand region (rows 1–3, columns 2–4) blocks the direct route between them.
+    <strong>Figure 16.</strong> The grid for this exercise: start $S$ and goal $G$ sit on row 2, and the sand region (rows 1–3, columns 2–4) blocks the direct route between them.
   </figcaption>
 </figure>
 
@@ -609,7 +612,7 @@ A point robot is at $q$, the goal is at $q_g$, and two circular obstacles of equ
        alt="Robot q and goal q_g on a horizontal axis, with two equal circular obstacles placed symmetrically above and below the axis, leaving a gap between them."
        width="65%">
   <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
-    <strong>Figure.</strong> The setup for this exercise: $q$ and $q_g$ lie on the axis of symmetry, and the two obstacles leave a gap the robot could fit through.
+    <strong>Figure 17.</strong> The setup for this exercise: $q$ and $q_g$ lie on the axis of symmetry, and the two obstacles leave a gap the robot could fit through.
   </figcaption>
 </figure>
 
@@ -627,7 +630,7 @@ A point robot is at $q$, the goal is at $q_g$, and two circular obstacles of equ
 
 3. Fundamental. Any smooth potential with several repulsive sources will generically have critical points other than the goal; a field guaranteed to have a single minimum is a *navigation function*, and constructing one requires global knowledge of the free space — which is exactly what the potential field method was trying to avoid.
 
-4. **(a)** Add a random or rotational perturbation to escape the minimum: cheap, but it destroys any guarantee and can undo progress. **(b)** Use the potential field only as a *local* layer under a global planner that has a graph: robust, at the cost of needing a map and a planning step — which is the architecture described at the beginning of this section. A third route is to reshape the dynamics so that obstacles are circumvented rather than repelled, which is the subject of [Dynamical-Systems-Based Planning](DS-planning).
+4. **(a)** Add a random or rotational perturbation to escape the minimum: cheap, but it destroys any guarantee and can undo progress. **(b)** Use the potential field only as a *local* layer under a global planner that has a graph: robust, at the cost of needing a map and a planning step — which is the architecture described at the beginning of this section. A third route is to reshape the dynamics so that obstacles are circumvented rather than repelled.
 
 </details>
 

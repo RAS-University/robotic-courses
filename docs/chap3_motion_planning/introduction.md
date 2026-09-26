@@ -54,8 +54,8 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 ## Prerequisites
 
 - [Graph definitions, representations, traversal and search](../chap4_advanced_math/graph-theory) — Section 4.1. **Everything this section says about graphs, adjacency representations, BFS/DFS, Dijkstra and A\* is defined and analysed there**; here we only use those tools and show what they mean for a robot.
-- [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — enough to know what a configuration space is.
-- Basic notions of low-level motion control (path following).
+- [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — necessary to understand complexity of motion planning for robotic manipulators.
+- Basic notions of low-level [close-loop motion control](../chap1_basic_motion_ctrl/Closeloop&PID.html), enough to understand how once one has planned a motion path, one can ensure that the robot tracks the path. 
 
 <div class="definition" markdown="1">
 <strong>Definition.</strong> A robot is <strong>holonomic</strong> if it can move instantaneously in any direction of its configuration space: it can change each of its degrees of freedom independently, and the number of degrees of freedom it can control equals the number it has. An omnidirectional platform that can slide sideways is an example.
@@ -69,7 +69,7 @@ A robot is <strong>non-holonomic</strong> if some instantaneous motions are impo
 
 You already use a motion planner several times a week. When you ask your phone how to get from the campus to the train station, it does not reason about asphalt, pedestrians or traffic lights: it reduces the city to a set of **intersections** and the **road segments** that connect them, attaches a number to each segment — travel time, distance, energy — and looks for the cheapest chain of segments between where you are and where you want to be. The answer it gives you is a *plan*; turning that plan into steering-wheel angles is somebody else's job, and in the car that somebody is you.
 
-A mobile robot faces exactly the same problem, minus the driver. A warehouse robot that must fetch a shelf sees a floor plan in which some squares are free and some are occupied; adjacent free squares are connected by feasible moves; some zones are slower than others and get a higher weight. A vacuum cleaner, a delivery robot, a planetary rover and a robot arm reaching into a cluttered box are all, at bottom, asking the same question:
+A mobile robot faces exactly the same problem, minus the driver. A warehouse robot that must fetch a shelf sees a floor plan in which some squares are free and some are occupied; adjacent free squares are connected by feasible moves; some zones are slower than others and get a higher weight. Motion planning applies to all robots, whether on wheels, legs, or flying. A vacuum cleaner, a drone transporting blood samples from one place to another, and a robot arm reaching into a cluttered box are all, at bottom, asking the same question:
 
 > *Given what I know about the world, what sequence of motions takes me from where I am to where I want to be without hitting anything?*
 
@@ -364,7 +364,7 @@ Note that this brings us full circle: the grid we used to introduce Dijkstra was
 
 ---
 
-## Approach 3 — An exemple without Graph: Potential Fields
+## Approach 3 — An example without Graph: Potential Fields
 
 A third possible approach abandons the graph entirely. The robot is treated as a particle under the influence of an artificial potential field: the **goal generates an attractive force**, and the **obstacles generate repulsive forces**. At every location, the direction obtained by the addition of all forces, is taken as the most promising direction of motion.
 

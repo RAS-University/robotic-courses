@@ -27,7 +27,7 @@ layout: default
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished" data-release="{{ section.release | default: 'Summer 2026' }}">{{ section.title }} </span>
+  <span class="unfinished" data-release="{{ section.release | default: 'Fall 2026' }}">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}

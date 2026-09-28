@@ -39,7 +39,7 @@ To get the most out of this Haptics for Virtual Reality, Teleoperation and Prost
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 <!--  

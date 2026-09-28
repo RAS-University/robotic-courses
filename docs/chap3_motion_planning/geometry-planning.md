@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Course Content
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 ## Credits
 

@@ -105,7 +105,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 <!-- Sections without chapters (e.g. Trendy Research Areas): list the topics directly -->
 {% if chapter.has_children != true %}
 - {% if chapter.publish == false %}
-  <span class="unfinished" data-release="{{ chapter.release | default: 'Summer 2026' }}">{{ chapter.title }} </span>
+  <span class="unfinished" data-release="{{ chapter.release | default: 'Fall 2026' }}">{{ chapter.title }} </span>
   {% else %}
   [{{ chapter.title }}]({{ chapter.url }})
   {% endif %}
@@ -118,7 +118,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 {% assign sections = site.pages | where: "parent", parent.title | sort: "section" %}
 {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished" data-release="{{ section.release | default: 'Summer 2026' }}">{{ section.title }} </span>
+  <span class="unfinished" data-release="{{ section.release | default: 'Fall 2026' }}">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}
@@ -131,7 +131,7 @@ If you are already a robotics expert—or an expert in another field simply curi
         {% assign sections = site.pages | where: "parent", chapter.title | sort: "section" %}
         {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished" data-release="{{ section.release | default: 'Summer 2026' }}">{{ section.title }} </span>
+  <span class="unfinished" data-release="{{ section.release | default: 'Fall 2026' }}">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}

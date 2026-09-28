@@ -1,5 +1,5 @@
 ---
-title: 0.0 Mathematical Foundation
+title: 0.0 Basics Maths
 parent: "Chapter 0: Mathematical Foundation"
 layout: numbered
 math: mathjax

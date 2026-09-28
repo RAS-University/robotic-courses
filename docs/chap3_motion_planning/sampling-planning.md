@@ -1,12 +1,12 @@
 ---
-title: 3.1 Sampling-Based Planning
+title: 3.2 Sampling-Based Planning
 parent: "Chapter 3: Motion Planning and Navigation"
-nav_order: 1
+nav_order: 2
 layout: numbered
 has_children: false
 math: mathjax
 chapter: 3
-section: 1
+section: 2
 ---
 <style>
 .algorithm {
@@ -71,7 +71,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 ---
 
 ## Prerequisites
-- [Basic probability theory](../mathematical-foundation)
+- [Basic probability theory](../chap0_math_fondation/basic-maths-foundation)
 - [Robot kinematics and configuration space](../kinematics)
 - [Graph search algorithms](../chap0_math_fondation/graph-theory)
 <!-- - Collision checking in robot environments -->

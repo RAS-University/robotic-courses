@@ -1,5 +1,5 @@
 ---
-title: "Chapter 0: Mathematical Foundation"
+title: "Chapter 0: Math Basics"
 parent: "Robotics Foundation"
 has_children: true
 nav_order: 0
@@ -26,7 +26,7 @@ section: 3
   }
 </style>
 
-# Chapter 0: Mathematical Foundation
+# Chapter 0: Math Basics
 
 # Mathematical Foundation
 

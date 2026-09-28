@@ -1,6 +1,5 @@
 ---
 title: 3.3 Geometry Planing
-parent: "Chapter 3: Motion Planning and Navigation"
 nav_order: 3
 layout: numbered
 has_children: false

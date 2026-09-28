@@ -1,12 +1,10 @@
 ---
-title: 15.2 Educational Robotics
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: Educational Robotics
+parent: "Robotic Application Domains"
 has_children: false
-nav_order: 2
-layout: numbered
+nav_order: 5
+layout: default
 math: mathjax
-chapter: 15
-section: 2
 publish: false
 nav_exclude: true
 ---

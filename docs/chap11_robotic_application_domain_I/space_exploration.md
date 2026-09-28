@@ -1,12 +1,10 @@
 ---
-title: 11.3 Space Exploration
-parent: "Chapter 11: Robotic Application Domains Part - I"
+title: Space Exploration
+parent: "Robotic Application Domains"
 has_children: false
 nav_order: 3
-layout: numbered
+layout: default
 math: mathjax
-chapter: 11
-section: 3
 publish: false
 nav_exclude: true
 ---

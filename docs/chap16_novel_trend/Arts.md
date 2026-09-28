@@ -1,12 +1,10 @@
 ---
-title: 16.3 Robotics and Arts
-parent: "Chapter 16: Novel Trendy Research Areas in Robotics"
+title: Robotics and Arts
+parent: "Trendy Research Areas"
 has_children: false
 nav_order: 3
-layout: numbered
+layout: default
 math: mathjax
-chapter: 16
-section: 3
 publish: false
 nav_exclude: true
 ---

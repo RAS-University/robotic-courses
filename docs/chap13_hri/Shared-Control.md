@@ -1,11 +1,11 @@
 ---
-title: 13.4 Shared-Control
-parent: "Chapter 13: Human-Robot Interaction"
+title: 12.4 Shared-Control
+parent: "Chapter 12: Human-Robot Interaction"
 has_children: false
 nav_order: 4
 layout: numbered
 math: mathjax
-chapter: 13
+chapter: 12
 section: 4
 publish: false
 nav_exclude: true

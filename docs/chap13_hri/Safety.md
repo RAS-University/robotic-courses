@@ -1,11 +1,11 @@
 ---
-title: 13.3 Safety in Design and Control
-parent: "Chapter 13: Human-Robot Interaction"
+title: 12.3 Safety in Design and Control
+parent: "Chapter 12: Human-Robot Interaction"
 has_children: false
 nav_order: 3
 layout: numbered
 math: mathjax
-chapter: 13
+chapter: 12
 section: 3
 publish: false
 nav_exclude: true

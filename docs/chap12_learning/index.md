@@ -1,8 +1,8 @@
 ---
-title: "Chapter 12: Robot Learning"
-parent: "Robotics Advanced Topics II"
+title: "Chapter 11: Robot Learning"
+parent: "Robotics Advanced Topics"
 has_children: true
-nav_order: 12
+nav_order: 11
 layout: default
 ---
 
@@ -24,7 +24,7 @@ layout: default
   }
 </style>
 
-# Chapter 12: Robot Learning
+# Chapter 11: Robot Learning
 
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}

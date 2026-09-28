@@ -1,6 +1,6 @@
 ---
 title: "Chapter 4: Advanced Mathematical Foundations"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 4
 layout: default

@@ -43,7 +43,7 @@ layout: default
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in " attr(data-release) ")";
   font-size: 0.9em;
   color: #b39ddb;
 }
@@ -85,7 +85,7 @@ Explore the structured robotics courses below, designed to guide you from fundam
 
 **Background/Prerequisites**: The RAS University assumes that you have an undergraduate-level training in mathematics. This includes knowledge of calculus, linear algrebra, probabilitis and statistics. 
 
-If you are new to robotics, we recommend starting with Chapter 1 and progressing through the chapters in order. If you already have some background in the field, you may skip ahead to Advanced Topics I and II and explore the areas that interest you most. Each course begins with a list of prerequisites to help you determine whether you have the necessary foundation to follow along effectively. 
+If you are new to robotics, we recommend starting with Chapter 1 and progressing through the chapters in order. If you already have some background in the field, you may skip ahead to Advanced Topics and explore the areas that interest you most. Each course begins with a list of prerequisites to help you determine whether you have the necessary foundation to follow along effectively. 
 If you are already a robotics expert—or an expert in another field simply curious about the future of robotics—this course may not be the best fit. However, stay tuned: we will soon be launching an Executive Robotics Course Series designed specifically for you.
 
 
@@ -102,8 +102,15 @@ If you are already a robotics expert—or an expert in another field simply curi
 
   {% for chapter in chapters %}
 
+<!-- Sections without chapters (e.g. Trendy Research Areas): list the topics directly -->
+{% if chapter.has_children != true %}
+- {% if chapter.publish == false %}
+  <span class="unfinished" data-release="{{ chapter.release | default: 'Summer 2026' }}">{{ chapter.title }} </span>
+  {% else %}
+  [{{ chapter.title }}]({{ chapter.url }})
+  {% endif %}
 <!-- Special case: Chapter 9 has intermediate layers -->
-{% if chapter.title == "Chapter 9: Aerial Robotics" %}
+{% elsif chapter.title == "Chapter 9: Aerial Robotics" %}
 ### {{ chapter.title }}
 {% assign parents = site.pages | where: "parent", chapter.title | sort: "nav_order" %}
 {% for parent in parents %}
@@ -111,7 +118,7 @@ If you are already a robotics expert—or an expert in another field simply curi
 {% assign sections = site.pages | where: "parent", parent.title | sort: "section" %}
 {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} </span>
+  <span class="unfinished" data-release="{{ section.release | default: 'Summer 2026' }}">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}
@@ -124,7 +131,7 @@ If you are already a robotics expert—or an expert in another field simply curi
         {% assign sections = site.pages | where: "parent", chapter.title | sort: "section" %}
         {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} </span>
+  <span class="unfinished" data-release="{{ section.release | default: 'Summer 2026' }}">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}

@@ -1,11 +1,11 @@
 ---
-title: 12.6 Constraint Learning
-parent: "Chapter 12: Robot Learning"
+title: 11.6 Constraint Learning
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 6
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 6
 publish: false
 nav_exclude: true

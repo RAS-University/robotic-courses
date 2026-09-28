@@ -1,11 +1,11 @@
 ---
-title: 12.2 Reinforcement Learning
-parent: "Chapter 12: Robot Learning"
+title: 11.2 Reinforcement Learning
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 2
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 2
 publish: false
 nav_exclude: true

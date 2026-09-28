@@ -1,12 +1,10 @@
 ---
-title: 10.1 Swarm Robotics chap 1
-parent: "Chapter 10: Swarm Robotics"
+title: Ethics in Robotics
+parent: "Trendy Research Areas"
 has_children: false
-nav_order: 1
-layout: numbered
+nav_order: 4
+layout: default
 math: mathjax
-chapter: 10
-section: 1
 publish: false
 nav_exclude: true
 ---
@@ -18,7 +16,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Swarm Robotics chap 1
+# Ethics in Robotics 
 
 <!-- bundle exec jekyll serve -->
 
@@ -27,7 +25,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this XXX module, it’s helpful to have:
+To get the most out of this Ethics in Robotics module, it’s helpful to have:
 
 ---
 

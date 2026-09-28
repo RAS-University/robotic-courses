@@ -1,11 +1,11 @@
 ---
-title: 12.7 Transfer Learning
-parent: "Chapter 12: Robot Learning"
+title: 11.7 Transfer Learning
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 7
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 7
 publish: false
 nav_exclude: true

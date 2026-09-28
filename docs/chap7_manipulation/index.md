@@ -1,6 +1,6 @@
 ---
 title: "Chapter 7: Manipulation"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 7
 layout: default

@@ -1,11 +1,11 @@
 ---
-title: 14.4 Hybrid Design
-parent: "Chapter 14: Soft Robotics"
+title: 13.4 Hybrid Design
+parent: "Chapter 13: Soft Robotics"
 has_children: false
 nav_order: 4
 layout: numbered
 math: mathjax
-chapter: 14
+chapter: 13
 section: 4
 publish: false
 nav_exclude: true

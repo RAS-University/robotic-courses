@@ -1,12 +1,10 @@
 ---
-title: 11.1 Humanoids
-parent: "Chapter 11: Robotic Application Domains Part - I"
+title: Humanoids
+parent: "Robotic Application Domains"
 has_children: false
 nav_order: 1
-layout: numbered
+layout: default
 math: mathjax
-chapter: 11
-section: 1
 publish: false
 nav_exclude: true
 ---

@@ -1,11 +1,11 @@
 ---
-title: 12.4 Sim-to-Real and Back
-parent: "Chapter 12: Robot Learning"
+title: 11.4 Sim-to-Real and Back
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 4
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 4
 publish: false
 nav_exclude: true

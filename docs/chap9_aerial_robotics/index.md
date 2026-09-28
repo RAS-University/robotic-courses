@@ -1,6 +1,6 @@
 ---
 title: "Chapter 9: Aerial Robotics"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 9
 layout: default

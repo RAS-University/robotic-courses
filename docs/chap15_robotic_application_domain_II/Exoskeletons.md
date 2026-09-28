@@ -1,12 +1,10 @@
 ---
-title: 15.1 Exoskeletons
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: Exoskeletons
+parent: "Robotic Application Domains"
 has_children: false
-nav_order: 1
-layout: numbered
+nav_order: 4
+layout: default
 math: mathjax
-chapter: 15
-section: 1
 publish: false
 nav_exclude: true
 ---

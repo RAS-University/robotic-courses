@@ -1,11 +1,11 @@
 ---
-title: 12.3 End-to-End Learning
-parent: "Chapter 12: Robot Learning"
+title: 11.3 End-to-End Learning
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 3
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 3
 publish: false
 nav_exclude: true

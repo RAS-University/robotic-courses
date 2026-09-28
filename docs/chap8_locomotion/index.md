@@ -1,6 +1,6 @@
 ---
 title: "Chapter 8: Locomotion"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 8
 layout: default

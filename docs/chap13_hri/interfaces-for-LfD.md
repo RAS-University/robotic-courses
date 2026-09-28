@@ -1,11 +1,11 @@
 ---
-title: 13.1 Interfaces for Learning from Human Demonstrations
-parent: "Chapter 13: Human-Robot Interaction"
+title: 12.1 Interfaces for Learning from Human Demonstrations
+parent: "Chapter 12: Human-Robot Interaction"
 has_children: false
 nav_order: 1
 layout: numbered
 math: mathjax
-chapter: 13
+chapter: 12
 section: 1
 ---
 

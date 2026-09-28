@@ -1,11 +1,11 @@
 ---
-title: 14.2 Design and Fabrication
-parent: "Chapter 14: Soft Robotics"
+title: 13.2 Design and Fabrication
+parent: "Chapter 13: Soft Robotics"
 has_children: false
 nav_order: 2
 layout: numbered
 math: mathjax
-chapter: 14
+chapter: 13
 section: 2
 publish: false
 nav_exclude: true

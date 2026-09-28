@@ -1,11 +1,11 @@
 ---
-title: 12.1 Learning from Demonstrations
-parent: "Chapter 12: Robot Learning"
+title: 11.1 Learning from Demonstrations
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 1
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 1
 ---
 <!-- Link external JavaScript file -->

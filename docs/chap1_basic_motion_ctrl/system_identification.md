@@ -1,6 +1,5 @@
 ---
 title: 1.3 System Identification
-parent: "Chapter 1: Basics of Motion Control"
 layout: numbered
 math: mathjax
 nav_order: 3

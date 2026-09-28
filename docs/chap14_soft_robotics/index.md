@@ -1,8 +1,8 @@
 ---
-title: "Chapter 14: Soft Robotics"
-parent: "Robotics Advanced Topics II"
+title: "Chapter 13: Soft Robotics"
+parent: "Robotics Advanced Topics"
 has_children: true
-nav_order: 14
+nav_order: 13
 layout: default
 ---
 
@@ -24,7 +24,7 @@ layout: default
   }
 </style>
 
-# Chapter 14: Soft Robotics
+# Chapter 13: Soft Robotics
 
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}

@@ -1,11 +1,11 @@
 ---
-title: 13.2 Haptics for Virtual Reality, Teleoperation and Prostheses
-parent: "Chapter 13: Human-Robot Interaction"
+title: 12.2 Haptics for Virtual Reality, Teleoperation and Prostheses
+parent: "Chapter 12: Human-Robot Interaction"
 has_children: false
 nav_order: 2
 layout: numbered
 math: mathjax
-chapter: 13
+chapter: 12
 section: 2
 publish: false
 nav_exclude: true

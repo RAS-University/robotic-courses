@@ -53,7 +53,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 ## Prerequisites
 
-- [Graph definitions, representations, traversal and search](../chap4_advanced_math/graph-theory) — Section 4.1. **Everything this section says about graphs, adjacency representations, BFS/DFS, Dijkstra and A\* is defined and analysed there**; here we only use those tools and show what they mean for a robot.
+- [Graph definitions, representations, traversal and search](../chap0_math_fondation/graph-theory) — Section 0.2. **Everything this section says about graphs, adjacency representations, BFS/DFS, Dijkstra and A\* is defined and analysed there**; here we only use those tools and show what they mean for a robot.
 - [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — necessary to understand complexity of motion planning for robotic manipulators.
 - Basic notions of low-level [close-loop motion control](../chap1_basic_motion_ctrl/Closeloop&PID.html), enough to understand how once one has planned a motion path, one can ensure that the robot tracks the path. 
 
@@ -161,7 +161,7 @@ Everything that follows is a variation on one simple idea used to illustrate the
 - **Approach 2 — Cell decomposition.** Cut the space into cells, label each cell free or occupied, and connect adjacent free cells into a connectivity graph (exact decomposition, quadtrees, occupancy grids).
 - **Approach 3 — No graph at all.** Define a continuous field over the space whose gradient points towards the goal (potential fields), and let the robot follow it.
 
-In the first two cases the planning problem becomes a **graph search problem**, and it is exactly the graph search problem defined in [Section 4.1](../chap4_advanced_math/graph-theory): a weighted graph $G = (V, E)$, a source, a target, and a cost to minimise. This is worth stating plainly, because it is the single most useful idea in the chapter:
+In the first two cases the planning problem becomes a **graph search problem**, and it is exactly the graph search problem defined in [Section 0.2](../chap0_math_fondation/graph-theory): a weighted graph $G = (V, E)$, a source, a target, and a cost to minimise. This is worth stating plainly, because it is the single most useful idea in the chapter:
 
 <div class="note" markdown="1">
 <strong>Whatever representation you choose, you transpose it into a graph and then you search the graph.</strong> Changing the representation changes the <em>vertices</em>, the <em>edges</em> and the <em>weights</em> — not the search.
@@ -171,7 +171,7 @@ In the first two cases the planning problem becomes a **graph search problem**, 
 
 ## Searching the Graph
 
-Once the problem is a graph, it is searched with the standard algorithms — breadth-first, depth-first, Dijkstra, A\* — and their definitions, correctness and complexity all belong to [Section 4.1](../chap4_advanced_math/graph-theory). What is specific to robotics is not the algorithms themselves but two implementation choices built on top of them: how the costs are designed, and how the search is adapted to the vehicle.
+Once the problem is a graph, it is searched with the standard algorithms — breadth-first, depth-first, Dijkstra, A\* — and their definitions, correctness and complexity all belong to [Section 0.2](../chap0_math_fondation/graph-theory). What is specific to robotics is not the algorithms themselves but two implementation choices built on top of them: how the costs are designed, and how the search is adapted to the vehicle.
 
 **Cost design.** On a grid, giving every cell the same cost turns Dijkstra into a simple wavefront expansion: a ripple that spreads outward from the start, one step at a time, until it reaches the goal, and the shortest path is then read off by walking downhill from the goal to the start. Real floors are rarely uniform, though — sand, water, gravel, a crowded corridor all cost more to cross than open pavement. Raising the cost of the difficult cells is enough; the search itself does not change, only the numbers written on the cells do.
 
@@ -226,7 +226,7 @@ The construction turns the map into an ordinary graph — start, goal and corner
        alt="The visibility graph redrawn as an abstract graph with vertices S, A, B, C, D, E, F, H, G."
        width="45%">
   <figcaption style="text-align:center; margin-top:6px; color:#555; font-size:0.9em;">
-    <strong>Figure 5.</strong> The same visibility graph as Figure 4, redrawn as an abstract graph. At this point the geometry has disappeared and <a href="../chap4_advanced_math/graph-theory">Section 4.1</a> takes over.
+    <strong>Figure 5.</strong> The same visibility graph as Figure 4, redrawn as an abstract graph. At this point the geometry has disappeared and <a href="../chap0_math_fondation/graph-theory">Section 0.2</a> takes over.
   </figcaption>
 </figure>
 
@@ -241,7 +241,7 @@ The edges now carry meaningful, unequal weights: the **real Euclidean length** o
   </figcaption>
 </figure>
 
-Finding the shortest path is then a matter of running Dijkstra (Section 4.1) on this weighted graph, from $S$ to $G$.
+Finding the shortest path is then a matter of running Dijkstra (Section 0.2) on this weighted graph, from $S$ to $G$.
 
 <figure style="text-align:center;">
   <img src="{{ '/assets/images/motion_planning_intro/visibility-graph-dijkstra.png' | relative_url }}"
@@ -302,7 +302,7 @@ For each point of the free space, compute its distance to the nearest obstacle �
 Instead of drawing roads, cut the free space into pieces. The recipe is always the same:
 
 1. Divide the free space into simple, connected regions called **cells**.
-2. Determine which open cells are **adjacent**, and build the **connectivity graph** — an ordinary graph in the sense of [Section 4.1](../chap4_advanced_math/graph-theory), whose vertices are cells rather than places.
+2. Determine which open cells are **adjacent**, and build the **connectivity graph** — an ordinary graph in the sense of [Section 0.2](../chap0_math_fondation/graph-theory), whose vertices are cells rather than places.
 3. Find the cells containing the start and the goal, and search the connectivity graph for a path between them.
 4. From the sequence of cells, compute a trajectory *inside* each cell — for instance by passing through the midpoints of the cell boundaries, or by a sequence of line-following movements.
 
@@ -357,7 +357,7 @@ The simplest option of all, and by far the most used: cover the map with a regul
 </figure>
 
 - ❌ **Narrow passageways can be lost** ⇒ may not be complete. A gap that the robot could physically fit through disappears if it is smaller than one cell.
-- ✅ Extremely simple path planning algorithms — such as **wavefront expansion**, which is exactly constant-cost Dijkstra ([Section 4.1](../chap4_advanced_math/graph-theory)) — can be applied directly ⇒ computationally efficient.
+- ✅ Extremely simple path planning algorithms — such as **wavefront expansion**, which is exactly constant-cost Dijkstra ([Section 0.2](../chap0_math_fondation/graph-theory)) — can be applied directly ⇒ computationally efficient.
 - ✅ Directly compatible with the way sensors build maps: turning a range reading into an update of the grid is simple — mark the cell it falls in as occupied, and the cells along the way as free — with no geometric fitting required, which is why the occupancy grid is the representation of choice in **SLAM** (Section 3.5).
 
 Note that this brings us full circle: the grid we used to introduce Dijkstra was itself a cell decomposition. The grid is not "the map", it is *one representation choice among several*, and its resolution is a trade-off between completeness and cost.

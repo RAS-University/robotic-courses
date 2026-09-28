@@ -1,8 +1,8 @@
 ---
-title: "Chapter 13: Human-Robot Interaction"
-parent: "Robotics Advanced Topics II"
+title: "Chapter 12: Human-Robot Interaction"
+parent: "Robotics Advanced Topics"
 has_children: true
-nav_order: 13
+nav_order: 12
 layout: default
 ---
 
@@ -10,7 +10,7 @@ layout: default
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in Fall 2026)";
   font-size: 0.9em;
   color: #b39ddb;
 }
@@ -24,7 +24,7 @@ layout: default
   }
 </style>
 
-# Chapter 13: Human-Robot Interaction
+# Chapter 12: Human-Robot Interaction
 
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}

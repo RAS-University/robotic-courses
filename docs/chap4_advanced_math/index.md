@@ -1,6 +1,6 @@
 ---
 title: "Chapter 4: Advanced Mathematical Foundations"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 4
 layout: default
@@ -8,7 +8,7 @@ layout: default
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in Fall 2026)";
   font-size: 0.9em;
   color: #b39ddb;
 }

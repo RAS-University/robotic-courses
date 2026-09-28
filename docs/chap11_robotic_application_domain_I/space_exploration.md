@@ -1,12 +1,10 @@
 ---
-title: 11.3 Space Exploration
-parent: "Chapter 11: Robotic Application Domains Part - I"
+title: Space Exploration
+parent: "Robotic Application Domains"
 has_children: false
 nav_order: 3
-layout: numbered
+layout: default
 math: mathjax
-chapter: 11
-section: 3
 publish: false
 nav_exclude: true
 ---
@@ -39,7 +37,7 @@ To get the most out of this Space Exploration module, it’s helpful to have:
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

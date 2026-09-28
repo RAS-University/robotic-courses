@@ -1,12 +1,10 @@
 ---
-title: 15.1 Exoskeletons
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: Exoskeletons
+parent: "Robotic Application Domains"
 has_children: false
-nav_order: 1
-layout: numbered
+nav_order: 4
+layout: default
 math: mathjax
-chapter: 15
-section: 1
 publish: false
 nav_exclude: true
 ---
@@ -39,7 +37,7 @@ To get the most out of this Exoskeletons module, it’s helpful to have:
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

@@ -1,12 +1,10 @@
 ---
-title: 15.4 Micro-Robotics
-parent: "Chapter 15: Robotic Application Domains Part - II"
+title: Micro-Robotics
+parent: "Robotic Application Domains"
 has_children: false
-nav_order: 4
-layout: numbered
+nav_order: 7
+layout: default
 math: mathjax
-chapter: 15
-section: 4
 publish: false
 nav_exclude: true
 ---
@@ -39,7 +37,7 @@ To get the most out of this Micro-Robotics module, it’s helpful to have:
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

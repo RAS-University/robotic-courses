@@ -1,6 +1,6 @@
 ---
 title: "0.1 Optimization"
-parent: "Chapter 0: Mathematical Foundation"
+parent: "Chapter 0: Math Basics"
 layout: numbered
 nav_order: 2
 chapter: 0

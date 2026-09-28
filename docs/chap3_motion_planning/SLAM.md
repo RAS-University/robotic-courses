@@ -1,14 +1,15 @@
 ---
-title: 3.5 Simultaneous Localization and Mapping (SLAM)
+title: 3.4 Simultaneous Localization and Mapping (SLAM)
 parent: "Chapter 3: Motion Planning and Navigation"
-nav_order: 5
+nav_order: 4
 layout: numbered
 has_children: false
 math: mathjax
 chapter: 3
-section: 5
+section: 4
 publish: false
 nav_exclude: true
+release: "Fall 2026"
 ---
 
 <!-- Link external JavaScript file -->
@@ -39,7 +40,7 @@ To get the most out of this Simultaneous Localization and Mapping (SLAM) module,
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

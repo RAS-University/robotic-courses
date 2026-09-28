@@ -1,14 +1,15 @@
 ---
-title: 3.4 DS-planning
+title: 3.3 DS-planning
 parent: "Chapter 3: Motion Planning and Navigation"
-nav_order: 4
+nav_order: 3
 layout: numbered
 has_children: false
 math: mathjax
 chapter: 3
-section: 4
+section: 3
 publish: false
 nav_exclude: true
+release: "Fall 2026"
 ---
 <!-- Link external JavaScript file -->
 <script src="../questions.js"></script>

@@ -1,6 +1,6 @@
 ---
 title: "0.2 Graph Theory"
-parent: "Chapter 0: Mathematical Foundation"
+parent: "Chapter 0: Math Basics"
 has_children: false
 nav_order: 3
 layout: numbered

@@ -1,12 +1,10 @@
 ---
-title: 16.1 Supernumerary Limbs
-parent: "Chapter 16: Novel Trendy Research Areas in Robotics"
+title: Supernumerary Limbs
+parent: "Trendy Research Areas"
 has_children: false
 nav_order: 1
-layout: numbered
+layout: default
 math: mathjax
-chapter: 16
-section: 1
 publish: false
 nav_exclude: true
 ---
@@ -39,7 +37,7 @@ To get the most out of this Supernumerary Limbs module, it’s helpful to have:
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

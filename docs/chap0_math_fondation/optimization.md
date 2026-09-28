@@ -1,8 +1,11 @@
 ---
-title: Optimization
-parent: Mathematical Foundation, Courses
-nav_order: 1  
-layout: default
+title: "0.1 Optimization"
+parent: "Chapter 0: Mathematical Foundation"
+layout: numbered
+nav_order: 2
+chapter: 0
+section: 1
+publish: true
 author: Julian Ruiz Rodriguez (EPFL)
 ---
 

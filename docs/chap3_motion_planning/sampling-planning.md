@@ -1,12 +1,12 @@
 ---
-title: 3.1 Sampling-Based Planning
+title: 3.2 Sampling-Based Planning
 parent: "Chapter 3: Motion Planning and Navigation"
-nav_order: 1
+nav_order: 2
 layout: numbered
 has_children: false
 math: mathjax
 chapter: 3
-section: 1
+section: 2
 ---
 <style>
 .algorithm {
@@ -71,9 +71,9 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 ---
 
 ## Prerequisites
-- [Basic probability theory](../mathematical-foundation)
+- [Basic probability theory](../chap0_math_fondation/basic-maths-foundation)
 - [Robot kinematics and configuration space](../kinematics)
-- [Graph search algorithms](../advanced_math/graph-theory)
+- [Graph search algorithms](../chap0_math_fondation/graph-theory)
 <!-- - Collision checking in robot environments -->
 
 ---
@@ -207,7 +207,7 @@ Its complexity is described as `O(E + V log V)`, meaning its runtime depends on 
 The process of Dijkstra's algorithm meticulously expanding outward from the start node is demonstrated in the visualization below:
 ![Dijkstra's shortest path]({{ '/assets/images/sampling_based_planning/dijkstra.gif' | relative_url }})
 
-(For a formal treatment of other graph properties and search algorithms, please refer to the upcoming chapter on [Graph Theory in the Advanced Mathematical Foundations section](../advanced_math/graph-theory))
+(For a formal treatment of other graph properties and search algorithms, please refer to the [Graph Theory chapter in the Mathematical Foundation section](../chap0_math_fondation/graph-theory))
 
 #### Final step: The Limits of Grids and the Curse of Dimensionality
 

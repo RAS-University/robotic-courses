@@ -254,7 +254,7 @@ section: 3
 <!-- ⚠️ Adapt in the end ⚠️ -->
 
 - Read [Kinematics]({{ '/docs/chap1_basic_motion_ctrl/kinematics' | relative_url }}) and [Dynamics]({{ '/docs/chap1_basic_motion_ctrl/dynamics' | relative_url }})
-- Read [Sensors and Sensing]({{ '/docs/chap2_sensing/new-sensors-for-robotics' | relative_url }}) page
+- Read [Sensors and Sensing]({{ '/docs/chap2_sensing/sensors-and-sensing' | relative_url }}) page
 - Basics of electrical circuits (resistance, capacitance, voltage-divider, etc.)
 - Basics of mechanics (Hooke's Law, stress-strain curve, etc.)
 
@@ -327,7 +327,7 @@ A **humanoid robot** explores different objects by moving its fingers along thei
 
 $\Rightarrow$ Interaction between a robot (active agent) and another active agent (human/robot).
 
-During reaction interactions, the robot continuously acts, perceives and **adapts in real time** based on the feedback it receives from the other agent. This enables, for example, safe operation of robots **around humans**: the robot can detect abnormal contact and **adjust its movement** to avoid harm. In the field of **haptics** and more specifically **teleoperation**, touch also allows humans to guide robots while receiving force feedback. More on haptics can be found on the dedicated page ([click here]({{ '/docs/chap12_hri/haptics-for-robotics' | relative_url }})).  
+During reaction interactions, the robot continuously acts, perceives and **adapts in real time** based on the feedback it receives from the other agent. This enables, for example, safe operation of robots **around humans**: the robot can detect abnormal contact and **adjust its movement** to avoid harm. In the field of **haptics** and more specifically **teleoperation**, touch also allows humans to guide robots while receiving force feedback. More on haptics can be found on the dedicated page ([click here]({{ '/docs/chap13_hri/haptics-for-robotics' | relative_url }})).  
 
 <div style="text-align: center;">
   <video width="640" controls>
@@ -345,7 +345,7 @@ A robotic hand is shown holding continuous contact with a fake human arm. The **
 
 ---
 
-As you can imagine, force perception is used in many areas. From biomedical robotics such as [surgical robots]({{ '/docs/chap14_robotic_application_domain_II/surgical' | relative_url }}), to rehabilitation systems like [exoskeletons]({{ '/docs/chap14_robotic_application_domain_II/Exoskeletons' | relative_url }}) and [humanoid robots]({{ '/docs/chap10_robotic_application_domain_I/humanoids' | relative_url }}).
+As you can imagine, force perception is used in many areas. From biomedical robotics such as [surgical robots]({{ '/docs/chap15_robotic_application_domain_II/surgical' | relative_url }}), to rehabilitation systems like [exoskeletons]({{ '/docs/chap15_robotic_application_domain_II/Exoskeletons' | relative_url }}) and [humanoid robots]({{ '/docs/chap11_robotic_application_domain_I/humanoids' | relative_url }}).
 
 Before moving on, try the quiz below.
 

@@ -59,7 +59,7 @@ section: 1
 
 ## General Motivation
 [
-Learning from demonstration](https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfD) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *[correspondence problem](https://ras-university.github.io/robotic-courses/docs/chap11_learning/LfD#challenges-of-learning-from-demonstration)*. To solve this discrepancy between the human body and the robot body, we need **interfaces**. This course gives a brief overview of the various popular interfaces, underlying in each case the pros and cons of each interface.
+Learning from demonstration](https://ras-university.github.io/robotic-courses/docs/chap12_learning/LfD) is a method to transmit skills to robots so they can perform different tasks. While it seems easy, teaching robots to do tasks we, as humans, do easily is not so trivial. This is because our bodies differ from robots' bodies. This is known as the *[correspondence problem](https://ras-university.github.io/robotic-courses/docs/chap12_learning/LfD#challenges-of-learning-from-demonstration)*. To solve this discrepancy between the human body and the robot body, we need **interfaces**. This course gives a brief overview of the various popular interfaces, underlying in each case the pros and cons of each interface.
 
 ## Course Content
 

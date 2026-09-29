@@ -1,5 +1,5 @@
 ---
-title: 1.3 Close-loop Control and PID
+title: 1.3 Close-loop Control
 parent: "Chapter 1: Basics of Motion Control"
 layout: numbered
 math: mathjax

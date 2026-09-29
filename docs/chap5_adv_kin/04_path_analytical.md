@@ -1,5 +1,5 @@
 ---
-title: 5.4 Conformal Geometric Algebra
+title: 5.4 Path Planning with Analytical Guarantees 
 parent: "Chapter 5: Advanced Kinematics"
 has_children: false
 nav_order: 4
@@ -18,7 +18,7 @@ nav_exclude: true
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
 
-# Conformal Geometric Algebra 
+# Path Planning with Analytical Guarantees  
 
 <!-- bundle exec jekyll serve -->
 
@@ -27,7 +27,7 @@ nav_exclude: true
 
 ## Prerequisites
 
-To get the most out of this Conformal Geometric Algebra module, it’s helpful to have:
+To get the most out of this Path Planning with Analytical Guarantees  module, it’s helpful to have:
 
 ---
 

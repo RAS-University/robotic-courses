@@ -1,14 +1,14 @@
 ---
-title: "5.1 Singularity analysis"
+title: "5.2 Singularity analysis"
 parent: "Chapter 5: Advanced Kinematics"
 has_children: false
-nav_order: 1
+nav_order: 2
 layout: numbered
 math: mathjax
 chapter: 5
-section: 1
-publish: false
-nav_exclude: true
+section: 2
+publish: true
+nav_exclude: false
 ---
 <a name="top"></a>
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>

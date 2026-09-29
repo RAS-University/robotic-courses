@@ -38,6 +38,8 @@ nav_order: 1
 
 - [Swarm Robotics]({{ '/docs/chap10_swarm_robotics/' | relative_url }}) (Robotics Advanced Topics, Chapter 10)
 - [Sustainable Robotics]({{ '/docs/chap16_novel_trend/Sustainable' | relative_url }}) (Trendy Research Areas)
+- [Screw Theory]({{ '/docs/chap5_adv_kin/01_screw_theory' | relative_url }}) (Robotics Advanced Topics, Chapter 5)
+- [Singularity Analysis]({{ '/docs/chap5_adv_kin/02_singularity_analysis' | relative_url }}) (Robotics Advanced Topics, Chapter 5)
 
 ---
 

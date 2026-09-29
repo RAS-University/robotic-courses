@@ -55,7 +55,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 - [Graph definitions, representations, traversal and search](../chap0_math_fondation/graph-theory) — Section 0.2. **Everything this section says about graphs, adjacency representations, BFS/DFS, Dijkstra and A\* is defined and analysed there**; here we only use those tools and show what they mean for a robot.
 - [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — necessary to understand complexity of motion planning for robotic manipulators.
-- Basic notions of low-level [close-loop motion control](../chap1_basic_motion_ctrl/Closeloop&PID.html), enough to understand how once one has planned a motion path, one can ensure that the robot tracks the path. 
+- Basic notions of low-level [close-loop motion control](../chap1_basic_motion_ctrl/Closeloop.html), enough to understand how once one has planned a motion path, one can ensure that the robot tracks the path. 
 
 <div class="definition" markdown="1">
 <strong>Definition.</strong> A robot is <strong>holonomic</strong> if it can move instantaneously in any direction of its configuration space: it can change each of its degrees of freedom independently, and the number of degrees of freedom it can control equals the number it has. An omnidirectional platform that can slide sideways is an example.

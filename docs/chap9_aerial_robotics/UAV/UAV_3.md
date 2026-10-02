@@ -5,7 +5,8 @@ layout: default
 nav_order: 3
 chapter: 9
 section: 3
-publish: true
+publish: false
+nav_exclude: true
 ---
 
 <script src="../../questions.js"></script>

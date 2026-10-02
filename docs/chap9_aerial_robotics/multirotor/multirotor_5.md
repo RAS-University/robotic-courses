@@ -12,9 +12,9 @@ nav_exclude: true
 
 <link rel="stylesheet" href="../styles.css">
 
-<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_4" id="go-to-previous" title="Go to Previous Chapter">⬅​</a>
+<!-- <a href="/docs/aerial_robotics/multirotor/multirotor_4" id="go-to-previous" title="Go to Previous Chapter">⬅​</a> -->
 
-<a href="/docs/chap9_aerial_robotics/multirotor/multirotor_6" id="go-to-next" title="Go to Next Chapter">➡​</a>
+<!-- <a href="/docs/aerial_robotics/multirotor/multirotor_6" id="go-to-next" title="Go to Next Chapter">➡​</a> -->
 
 # Multirotor Drones: Chapter 4
 
@@ -52,8 +52,21 @@ challenges
 
 ### Credits:
 <!-- List all the sources that you used to create the page   -->
+This course page was created by **Lisa Romana Schneider, MSc in Robotics at EPFL**, and funded by **IEEE RAS** and **EPFL**.
+
+This course page is partly based on the Aerial Robotics class taught by [Prof. Dario Floreano](https://people.epfl.ch/dario.floreano) at EPFL (Ecole Polytéchnique Fédérale de Lausanne).
 
 ### Additional Resources:
 <!-- List all the sources that could be relevant to a reader who would like to know more, including   -->
+[Introduction to Multicopter Design and Control (Quan Quan)](https://link.springer.com/book/10.1007/978-981-10-3382-7)- Textbook offering a systematic overview over multicopters from basic design guidelines to high-level control. 
 
 
+<div class="page-navigation">
+  <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_4"
+     id="go-to-previous"
+     title="Go to Previous Chapter">⬅</a>
+
+  <a href="/docs/chap9_aerial_robotics/multirotor/multirotor_6"
+     id="go-to-next"
+     title="Go to Next Chapter">➡</a>
+</div>

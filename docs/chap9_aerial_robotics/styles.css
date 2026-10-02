@@ -1,51 +1,45 @@
-#go-to-next {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
+.page-navigation {
+  display: flex;
+  justify-content: space-between; /* ← key line */
+  align-items: center;
+  margin-top: 3rem;
+}
 
-#go-to-next:hover {
-    opacity: 1;
-  }
-
+/* shared button styles */
+#go-to-next,
 #go-to-previous {
-    position: fixed;
-    bottom: 100px;
-    right: 30px;
-    background-color:rgb(0, 0, 0); /* Green background */
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 50%;
-    font-size: 30px;
-    cursor: pointer;
-    text-decoration: none;
-    z-index: 1000;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
+  background-color: black;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50%;
+  font-size: 30px;
+  cursor: pointer;
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
 
+#go-to-next:hover,
 #go-to-previous:hover {
-    opacity: 1;
-  }
+  opacity: 1;
+}
 
-.note-box {
-    background-color: #f0f0f0; /* Light gray background */
-    border-left: 4px solid #999; /* Solid gray bar on the left */
-    padding: 1em; /* Space inside the box */
-    margin: 1.5em 0; /* Space outside the box (top/bottom) */
-    font-size: 0.95em; /* Slightly smaller text */
-    color: #333; /* Dark gray text color */
-    border-radius: 4px; /* Slightly rounded corners */
+
+.answer-box {
+  transition: all 0.3s ease;
+  font-family: sans-serif;
+  line-height: 1.5;
+  color: #333;
+}
+
+button {
+  padding: 8px 16px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #e0e0e0;
 }

@@ -1,10 +1,10 @@
 ---
-title: 9.5 Modeling & Dynamics
+title: 9.6 Modeling & Dynamics
 parent: "Multirotor Drones"
 layout: default
-nav_order: 5
+nav_order: 6
 chapter: 9
-section: 5
+section: 6
 publish: false
 nav_exclude: true
 ---

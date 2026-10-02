@@ -1,12 +1,12 @@
 ---
-title: 9.12 Vision for UAVs
+title: 9.13 Vision for UAVs
 parent: "Aerial Robotics"
 has_children: false
-nav_order: 12
+nav_order: 13
 layout: numbered
 math: mathjax
 chapter: 9
-section: 12
+section: 13
 publish: false
 nav_exclude: true
 ---

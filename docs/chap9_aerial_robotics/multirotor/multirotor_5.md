@@ -1,10 +1,10 @@
 ---
-title: 9.7 Measurement Model and State Estimation
+title: 9.8 Measurement Model and State Estimation
 parent: "Multirotor Drones"
 layout: default
-nav_order: 7
+nav_order: 8
 chapter: 9
-section: 7
+section: 8
 publish: false
 nav_exclude: true
 ---

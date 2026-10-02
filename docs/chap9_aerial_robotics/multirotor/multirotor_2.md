@@ -1,10 +1,10 @@
 ---
-title: 9.4 System Architecture
+title: 9.5 System Architecture
 parent: "Multirotor Drones"
 layout: default
-nav_order: 4
+nav_order: 5
 chapter: 9
-section: 4
+section: 5
 publish: false
 nav_exclude: true
 ---

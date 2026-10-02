@@ -1,10 +1,10 @@
 ---
-title: 9.8 Trajectory Generation & Planning
+title: 9.9 Trajectory Generation & Planning
 parent: "Multirotor Drones"
 layout: default
-nav_order: 8
+nav_order: 9
 chapter: 9
-section: 8
+section: 9
 publish: false
 nav_exclude: true
 ---

@@ -1,10 +1,10 @@
 ---
-title: "9.3 Mathematical Tools"
+title: "9.4 Mathematical Tools"
 parent: "Multirotor Drones"
 layout: default
-nav_order: 3
+nav_order: 4
 chapter: 9
-section: 3
+section: 4
 publish: false
 nav_exclude: true
 ---

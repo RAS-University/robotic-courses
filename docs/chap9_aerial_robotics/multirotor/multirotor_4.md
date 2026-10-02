@@ -1,10 +1,10 @@
 ---
-title: 9.6 Control & Allocation
+title: 9.7 Control & Allocation
 parent: "Multirotor Drones"
 layout: default
-nav_order: 6
+nav_order: 7
 chapter: 9
-section: 6
+section: 7
 publish: false
 nav_exclude: true
 ---

@@ -1,10 +1,10 @@
 ---
-title: 9.9 Advanced Control (MPC)
+title: 9.10 Advanced Control (MPC)
 parent: "Multirotor Drones"
 layout: default
-nav_order: 9
+nav_order: 10
 chapter: 9
-section: 9
+section: 10
 publish: false
 nav_exclude: true
 toc: true             # <--- ENABLE TOC GENERATION

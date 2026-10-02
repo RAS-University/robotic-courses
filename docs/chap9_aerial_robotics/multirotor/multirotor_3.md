@@ -1,12 +1,12 @@
 ---
-title: 9.6 Modeling & Dynamics
+title: 9.5 Modeling & Dynamics
 parent: "Multirotor Drones"
 layout: default
-nav_order: 6
+nav_order: 5
 chapter: 9
-section: 6
-publish: true
-nav_exclude: false
+section: 5
+publish: false
+nav_exclude: true
 ---
 <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 

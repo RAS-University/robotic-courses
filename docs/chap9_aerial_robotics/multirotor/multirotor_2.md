@@ -1,12 +1,12 @@
 ---
-title: 9.5 System Architecture
+title: 9.4 System Architecture
 parent: "Multirotor Drones"
 layout: default
-nav_order: 5
+nav_order: 4
 chapter: 9
-section: 5
-publish: true
-nav_exclude: false
+section: 4
+publish: false
+nav_exclude: true
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

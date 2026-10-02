@@ -1,12 +1,12 @@
 ---
-title: 9.12 Collective
+title: 9.11 Collective
 parent: "Aerial Robotics"
 has_children: false
-nav_order: 12
+nav_order: 11
 layout: numbered
 math: mathjax
 chapter: 9
-section: 12
+section: 11
 publish: false
 nav_exclude: true
 ---

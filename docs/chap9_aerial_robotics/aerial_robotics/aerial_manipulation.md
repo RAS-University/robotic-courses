@@ -1,12 +1,12 @@
 ---
-title: 9.11 Aerial Manipulation
+title: 9.10 Aerial Manipulation
 parent: "Aerial Robotics"
 has_children: false
-nav_order: 11
+nav_order: 10
 layout: numbered
 math: mathjax
 chapter: 9
-section: 11
+section: 10
 publish: false
 nav_exclude: true
 ---

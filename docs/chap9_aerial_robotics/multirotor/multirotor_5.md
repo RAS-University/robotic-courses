@@ -1,12 +1,12 @@
 ---
-title: 9.8 Measurement Model and State Estimation
+title: 9.7 Measurement Model and State Estimation
 parent: "Multirotor Drones"
 layout: default
-nav_order: 8
+nav_order: 7
 chapter: 9
-section: 8
-publish: true
-nav_exclude: false
+section: 7
+publish: false
+nav_exclude: true
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

@@ -1,12 +1,12 @@
 ---
-title: 9.9 Trajectory Generation & Planning
+title: 9.8 Trajectory Generation & Planning
 parent: "Multirotor Drones"
 layout: default
-nav_order: 9
+nav_order: 8
 chapter: 9
-section: 9
-publish: true
-nav_exclude: false
+section: 8
+publish: false
+nav_exclude: true
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

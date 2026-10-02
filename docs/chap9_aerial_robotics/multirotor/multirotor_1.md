@@ -1,12 +1,12 @@
 ---
-title: "9.4 Mathematical Tools"
+title: "9.3 Mathematical Tools"
 parent: "Multirotor Drones"
 layout: default
-nav_order: 4
+nav_order: 3
 chapter: 9
-section: 4
-publish: true
-nav_exclude: false
+section: 3
+publish: false
+nav_exclude: true
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

@@ -1,12 +1,12 @@
 ---
-title: 9.7 Control & Allocation
+title: 9.6 Control & Allocation
 parent: "Multirotor Drones"
 layout: default
-nav_order: 7
+nav_order: 6
 chapter: 9
-section: 7
-publish: true
-nav_exclude: false
+section: 6
+publish: false
+nav_exclude: true
 ---
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 

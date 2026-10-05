@@ -324,7 +324,10 @@ This page is separated into the following sections:
 - **Section 2.4.3.2: Advanced Tactile Sensing**  
   Presentation of flexible and stretchable tactile sensors.
 
-- **Section 2.4.3.3: Issues and Difficulties**  
+- **Section 2.4.3.3: Comparison of Tactile Sensing Technologies**
+  Comparative overview of the covered sensing technologies.
+
+- **Section 2.4.3.4: Difficulties of Tactile Sensing**  
   Discussion of hardware challenges in large sensor arrays.
 
 ---
@@ -1442,7 +1445,7 @@ In our simplified formula, we treat $d$ as a single value and $F$ as a uniaxial 
       <figcaption>
         <sub><i>
           Figure 13: Mechanical stress notations
-          (<a href="https://doi.org/10.13140/RG.2.2.12355.40484" target="_blank">Goyal Chaitanya (2017)</a>)
+          (<a href="https://doi.org/10.13140/RG.2.2.12355.40484" target="_blank">Goyal Chaitanya, 2017</a>)
         </i></sub>
       </figcaption>
     </figure>
@@ -1630,7 +1633,7 @@ The sensor structure consists of a **silicon** top layer with a rigid tooth-like
     'piezo-dyn-q1',
     'option2',
     {
-      option1: 'Option A assumes output voltage directly tracks force. However, piezoelectric sensors generate voltage in response to changes in force ($\frac{\mathrm{d}F}{\mathrm{d}t}$). Because the force decays after the initial spike, the sensor detects this decreasing pressure as a negative change, causing the output voltage to undershoot below zero rather than returning directly to zero.',
+      option1: 'Option A assumes output voltage directly tracks force. However, piezoelectric sensors generate voltage in response to changes in force ($\\frac{\\mathrm{d}F}{\\mathrm{d}t}$). Because the force decays after the initial spike, the sensor detects this decreasing pressure as a negative change, causing the output voltage to undershoot below zero rather than returning directly to zero.',
       option2: 'The initial positive voltage peak corresponds to a rapid compression ($+F$). Under a constant static load the voltage decays to $0\\text{ V}$. Finallly, releasing the force relaxes the film, producing a negative voltage spike.',
       option3: 'The release of the first force step would produce a second negative voltage spike, resulting in a different voltage signal structure.',
       option4: 'A sinusoidal force would generate a sine wave voltage output, rather than decaying to $0\\text{ V}$.'
@@ -2046,7 +2049,7 @@ The design of a magnetism-based tactile sensor usually consists of a permanent m
   </figcaption>
 </figure>
 
-If needed, a quick reminder about the working principle of Hall sensors is in the drop-down below.
+A quick reminder about Hall sensors can be found in the drop-down below.
 
 <details class="optional-details" markdown="1">
   <summary class="optional-btn">
@@ -2082,9 +2085,9 @@ If needed, a quick reminder about the working principle of Hall sensors is in th
   </div>
 </details>
 
-The working principle is based on the **displacement** of the magnet relative to the Hall sensor. When an external force is applied, the elastomer body deforms, which moves the permanent magnet. 
+Magnetism-based tactile sensors operate based on the **displacement** of the magnet relative to the Hall sensor. When an external force is applied, the elastomer body deforms, which moves the permanent magnet. 
 
-The Hall sensor basically acts as a proximity and displacement detector. When a normal force is applied, the magnet moves closer to the sensor, increasing the magnetic flux density and the resulting Hall voltage. When shear forces are applied, the magnet moves laterally. To track this 3D movement, sensors use an **array of Hall elements** (typically four) or an integrated **3D Hall chip**. By comparing the variations in magnetic field strength across these different elements, the system can determine the magnet's 3D position and calculate the force vector ($F_x$, $F_y$, $F_z$).
+The Hall sensor basically acts as a proximity and displacement detector. When a normal force is applied, the magnet moves closer to the sensor, increasing the magnetic flux density and the resulting Hall voltage. When shear forces are applied, the magnet moves laterally. To track this 3D movement, sensors use an **array of Hall elements** or an integrated **3D Hall chip**. By comparing the variations in magnetic field strength across these different elements, the system can determine the magnet's 3D position and calculate the force vector ($F_x$, $F_y$, $F_z$).
 
 An example of the sensor in action is shown in the figure below:
 
@@ -2108,20 +2111,20 @@ $$F = f_2(D)$$
 Where **$B$** is the magnetic flux density measured by the Hall sensor, **$D$** is the displacement of the magnet from its resting position and **$F$** is the external force applied to the sensor.
 
 The functions are determined by the following factors:
-* **$f_1$** is mainly determined by the **magnetic properties** of the permanent magnet and its **spatial distance** relative to the sensor.
-* **$f_2$** is mainly determined by the **mechanical properties** of the elastomer, such as its Young's modulus and the specific geometric design of the elastomer.
+* **$f_1$** is determined by the **magnetic properties** of the permanent magnet and its **spatial distance** relative to the sensor.
+* **$f_2$** is determined by the **mechanical properties** of the elastomer, such as its Young's modulus and the specific geometric design of the elastomer.
 
 Knowing $f_1$ and $f_2$, we can directly deduct the resulting force $F$ from the magnetic field:
 
 $$F = f_2(f_1(B))$$
 
-As with the optical tactile sensors, the **range and sensitivity** of this kind of sensor heavily rely on the mechanical properties of the used elastomer (such as its stiffness or Young's modulus). A softer elastomer will allow for higher sensitivity to small forces, while a stiffer material will be better suited for high-range force sensing.
+As with the optical tactile sensors, the **range and sensitivity** of this kind of sensor rely on the mechanical properties of the used elastomer (such as its stiffness or Young's modulus). A softer elastomer will allow for higher sensitivity to small forces, while a stiffer material will be better suited for high-range force sensing.
 
 An example of magnetism-based tactile sensors can be found below.
 
 <details class="optional-details" markdown="1">
   <summary class="optional-btn">
-    <span class="optional-label">Illustrative video about magnetic tactile sensors</span>
+    <span class="optional-label">Complement: Magnetic tactile sensors in action</span>
   </summary>
 
   <div class="optional-window"><br>
@@ -2149,76 +2152,38 @@ An example of magnetism-based tactile sensors can be found below.
   </div>
 </details>
 
-
-
-
-
-
-
-
-
-<!--
-
-<details class="optional-details" markdown="1">
-  <summary class="optional-btn">
-    <span class="optional-label">Going deeper: 1D Transduction Model</span>
-  </summary>
-
-  <div class="optional-window">
-    <p>
-      To quantitatively determine the contact force from a Hall sensor readout, we model the two-stage transduction chain:
-    </p>
-
-    <p>
-      \[ F \xrightarrow{f_2} D \xrightarrow{f_1} \Delta V_H \]
-    </p>
-
-    <p>
-      <strong>1. Mechanical Stage (\(f_2\)):</strong> Assuming linear elastic deformation of the silicone dome along the normal direction, the relationship between applied force \(F\) and magnet displacement \(D\) is modeled using Hooke's Law:
-      \[ F = k \cdot D \]
-      where \(k\) is the equivalent mechanical stiffness of the elastomer dome (\(\text{N/mm}\)).
-    </p>
-
-    <p>
-      <strong>2. Magnetic / Hall Stage (\(f_1\)):</strong> Near the resting operating point, the change in magnetic flux density and the resulting Hall voltage variation (\(\Delta V_H\)) are proportional to the displacement \(D\):
-      \[ \Delta V_H = S_H \cdot D \]
-      where \(S_H\) is the magnetic sensitivity factor of the Hall-magnet pair (\(\text{V/mm}\)).
-    </p>
-
-    <p>
-      Combining both stages yields the overall direct relation:
-      \[ F = \frac{k}{S_H} \Delta V_H \]
-    </p>
-
-  </div>
-</details>
-
 ---
 
 <div class="quiz-question-text">
   Exercise: Force Estimation with a Magnetism-Based Tactile Sensor
 </div>
 
-A calibrated magnetism-based tactile sensor has an elastomer dome with stiffness \(k = 2.5\ \text{N/mm}\). The internal Hall sensor assembly has a sensitivity of \(S_H = 0.5\ \text{V/mm}\) relative to the permanent magnet's displacement.
+<p>
+  For this exercise, we consider the following linear relationships:
+</p>
+
+<p style="text-align: center;">
+  \[ \Delta D = \frac{1}{S_B} \cdot \Delta B \quad \text{and} \quad \Delta F = K_E \cdot \Delta D \]
+</p>
+
+<p>
+  Consider a calibrated sensor where the elastomer has a stiffness of \(K_E = 2.5\\ \text{N/mm}\) and the magnetic assembly has a sensitivity factor of \(S_B = 15\\ \text{mT/mm}\).
+</p>
 
 <div style="margin-left: 1.2em;">
   <p>
-    <strong>1)</strong> During contact, the Hall sensor records a voltage change of \(\Delta V_H = 1.2\ \text{V}\).<br>
-    Compute the displacement \(D\) of the magnet and the corresponding normal force \(F\).
+    <strong>1)</strong> During contact, the sensor records a magnetic flux density change of \(\Delta B = 36\\ \text{mT}\).<br>
+    Compute the displacement variation \(\Delta D\) of the magnet and the corresponding normal force variation \(\Delta F\).
   </p>
   <p>
-    <strong>2)</strong> A normal contact force of \(F = 8.0\ \text{N}\) is applied.<br>
-    Compute the expected voltage variation \(\Delta V_H\) measured by the Hall sensor.
+    <strong>2)</strong> A normal contact force variation of \(\Delta F = 8\\ \text{N}\) is applied.<br>
+    Compute the expected variation in magnetic flux density \(\Delta B\).
   </p>
   <p>
-    <strong>3)</strong> The elastomer is replaced by a stiffer material with double the stiffness (\(k' = 2k = 5.0\ \text{N/mm}\)), while keeping the same magnet and Hall chip (\(S_H = 0.5\ \text{V/mm}\)).<br>
-    What will be the measured voltage variation \(\Delta V_H'\) when the same \(8.0\ \text{N}\) force is applied?
-  </p>
-  <p>
-    <em>Hint:</em> Recall the two-step chain: \(D = \frac{\Delta V_H}{S_H}\) and \(F = k \cdot D\).
+    <strong>3)</strong> The elastomer is replaced by a stiffer material with double the stiffness (\(K_E' = 2 K_E = 5\\ \text{N/mm}\)).<br>
+    What will be the measured magnetic flux density change \(\Delta B'\) when the same \(\Delta F = 8\\ \text{N}\) force variation is applied?
   </p>
 </div>
-
 
 <details class="solution-details" markdown="1">
   <summary class="solution-btn">
@@ -2227,105 +2192,80 @@ A calibrated magnetism-based tactile sensor has an elastomer dome with stiffness
 
   <div class="solution-window">
 
-  <p><strong>1) Compute displacement and contact force</strong></p>
+  <p><strong>1) Compute displacement variation and contact force variation</strong></p>
 
   <p>
-    First, determine the displacement \(D\) from the measured Hall voltage change:
-  </p>
-  <p>
     \[
-    D = \frac{\Delta V_H}{S_H} = \frac{1.2\ \text{V}}{0.5\ \text{V/mm}} = \boxed{2.4\ \text{mm}}
+    \Delta D = \frac{1}{S_B} \cdot \Delta B = \frac{36}{15} = \boxed{2.4\\ \text{mm}}
     \]
   </p>
 
   <p>
-    Next, compute the normal force \(F\) using the mechanical stiffness \(k\):
-  </p>
-  <p>
     \[
-    F = k \cdot D = 2.5\ \text{N/mm} \times 2.4\ \text{mm} = \boxed{6.0\ \text{N}}
+    \Delta F = K_E \cdot \Delta D = 2.5 \times 2.4 = \boxed{6\\ \text{N}}
     \]
   </p>
 
   <p>
     <strong>Answer:</strong>
-    The magnet is displaced by \(D = 2.4\ \text{mm}\), corresponding to an applied force of \(F = 6.0\ \text{N}\).
+    The magnet displacement variation is \(\Delta D = 2.4\\ \text{mm}\), corresponding to an applied contact force variation of \(\Delta F = 6\\ \text{N}\).
   </p>
 
   <hr>
 
-  <p><strong>2) Predict the output voltage variation for \(F = 8.0\ \text{N}\)</strong></p>
+  <p><strong>2) Predict the magnetic flux density variation</strong></p>
 
   <p>
-    First, find the compression distance of the elastomer under an \(8.0\ \text{N}\) load:
+    Combining the two relations:
   </p>
   <p>
     \[
-    D = \frac{F}{k} = \frac{8.0\ \text{N}}{2.5\ \text{N/mm}} = 3.2\ \text{mm}
+    \Delta F = K_E \cdot \Delta D = K_E \cdot \left(\frac{1}{S_B} \cdot \Delta B\right) \implies \Delta B = \frac{S_B}{K_E} \cdot \Delta F
     \]
   </p>
 
   <p>
-    Now calculate the resulting Hall voltage change:
+    Substituting the given values:
   </p>
   <p>
     \[
-    \Delta V_H = S_H \cdot D = 0.5\ \text{V/mm} \times 3.2\ \text{mm} = \boxed{1.6\ \text{V}}
+    \Delta B = \frac{15}{2.5} \times 8 = \boxed{48\\ \text{mT}}
     \]
   </p>
 
   <p>
     <strong>Answer:</strong>
-    The expected voltage variation is \(\Delta V_H = 1.6\ \text{V}\).
+    The expected magnetic flux density variation is \(\Delta B = 48\\ \text{mT}\).
   </p>
 
   <hr>
 
-  <p><strong>3) Response with a stiffer elastomer membrane (\(k' = 5.0\ \text{N/mm}\))</strong></p>
+  <p><strong>3) Response with a stiffer elastomer membrane</strong></p>
 
   <p>
-    Under the doubled stiffness, the displacement caused by the same \(8.0\ \text{N}\) force is halved:
+    Using the combined formula with the new stiffness \(K_E'\):
   </p>
   <p>
     \[
-    D' = \frac{F}{k'} = \frac{8.0\ \text{N}}{5.0\ \text{N/mm}} = 1.6\ \text{mm}
-    \]
-  </p>
-
-  <p>
-    The resulting voltage variation is:
-  </p>
-  <p>
-    \[
-    \Delta V_H' = S_H \cdot D' = 0.5\ \text{V/mm} \times 1.6\ \text{mm} = \boxed{0.8\ \text{V}}
+    \Delta B' = \frac{S_B}{K_E'} \cdot \Delta F = \frac{15}{5} \times 8 = \boxed{24\\ \text{mT}}
     \]
   </p>
 
   <p>
     <strong>Answer:</strong>
-    The measured voltage change is \(\Delta V_H' = 0.8\ \text{V}\). Doubling the elastomer stiffness halves the sensor's voltage sensitivity to contact forces.
+    The measured magnetic flux density change is \(\Delta B' = 24\\ \text{mT}\). Doubling the stiffness halves the sensor's variation in magnetic flux density for a given applied force.
   </p>
 
   </div>
 </details>
 
-
-
--->
-
-
-
-
-
-
-
 ---
 
 ### Advanced Tactile Sensing
 
-Most tactile sensor technologies are rigid and limited to specific industrial tasks. However, there are applications where flexibility is predominant, such as **soft robotics**, **human-machine interfaces** and **wearable electronics**.
+Most tactile sensor technologies are rigid and limited to specific industrial tasks. However, there are applications where flexibility is needed, such as **soft robotics**, **human-machine interfaces** and **wearable electronics**.
 
-In these fields, sensors must act more like biological skin: protecting internal components while providing feedback during contact with humans or fragile objects. It is important to note that these *advanced* sensors do not necessarily rely on new physical principles. Their transduction (capacitive, resistive, etc.) remains the same as previously discussed. But instead, the advancement lies more in **materials science**, which allows these sensing elements to be integrated into flexible or stretchable substrates.
+In these fields, sensors must act more like biological skin: protecting internal components while providing feedback during contact with humans or fragile objects. It is important to note that these advanced sensors do not necessarily rely on new physical principles. Their transduction (capacitive, resistive, etc.) remains the same as previously discussed. But instead, the advancement lies more in **materials science**, which allows these sensing elements to be integrated into flexible or stretchable substrates.
 
 We distinguish sensors based on how they conform to the robot's body:
 
@@ -2373,7 +2313,7 @@ The manufacturing of these layers is shown in the figure below.
 
 The working principle is identical to the capacitive sensors we have seen earlier. When external pressure is applied, the **dielectric layers** (Ecoflex and paper) compress, reducing the distance between the top and bottom silver electrodes. This reduction in separation leads to an **increase** in the measured **capacitance**.
 
-As shown in the right plot of the figure below, the relative change in capacitance ($\Delta C/C_0$) is highly sensitive to the applied pressure. The bigger the applied pressure, the bigger the change in capacitance.
+As shown in the right plot of the figure below, the relative change in capacitance ($\Delta C/C_0$) is sensitive to the applied pressure. The bigger the applied pressure, the bigger the change in capacitance.
 
 <figure style="text-align: center;">
 
@@ -2413,7 +2353,7 @@ As shown in the right plot of the figure below, the relative change in capacitan
   Sensing Arrays:
 </h4>
 
-These individual units can be scaled into a **flexible sensing arrays** using the same inkjet printing process.
+These individual units can be scaled into a **flexible sensing array** using the same inkjet printing process.
 
 An example of usage of such a flexible sensing array would be the attachment directly to human skin, such as the back of the hand, to map pressure distribution (illustrated in the figure below). This could be useful for **human-machine interaction**, allowing a user to interact with a computer or **control a robotic system** through a skin-mounted interface that identifies the position and intensity of touch across a wide area.
 
@@ -2453,7 +2393,7 @@ An example of usage of such a flexible sensing array would be the attachment dir
 
 #### B) Stretchable Resistive Tactile Sensor
 
-Now, we have a look at a **stretchable** resistive tactile sensor, in opposition to the flexible sensor seen above. Again, by using a multimaterial 3D printing approach, the sensing elements are directly integrated into a soft matrix that can conform to and move with human skin or soft robotic joints.
+Now, let's have a look at a **stretchable** resistive tactile sensor, in opposition to the flexible sensor seen above. Again, by using a multimaterial 3D printing approach, the sensing elements are directly integrated into a soft matrix that can conform to and move with human skin or soft robotic joints.
 
 <h4 class="section-title">
   Multi-Layer Design and Fabrication:
@@ -2474,7 +2414,7 @@ The structure is printed from the bottom up in **eight sequential steps**, shown
        alt="3D printing process of the stretchable tactile sensor">
   <figcaption>
     <sub><i>
-      Figure 26: 3D printing process of the stretchable capacitive tactile sensor, illustrating the layering of silicone and silver electrodes
+      Figure 26: 3D printing process of the stretchable resistive tactile sensor, illustrating the layering of silicone and silver electrodes
       (<a href="https://doi.org/10.1002/adma.201701218" target="_blank">S.-Z.Guo, K.Qiu et al., Adv. Mater. 2017</a>)
     </i></sub>
   </figcaption>
@@ -2540,7 +2480,38 @@ Here is an example of how this type of sensor can be used in **wearable electron
 
 ---
 
-### Issues and Difficulties
+### Comparison of Tactile Sensing Technologies
+
+Each tactile sensing technology comes with trade-offs, which must be considered for a given robotic application. The table below summarizes the operating principles, measured signals, advantages ($+$) and limitations ($-$) of the sensing technologies covered on this page.
+
+| Technology | Physical Principle | Output Signal | $+$ | $-$ |
+| :--- | :--- | :--- | :--- | :--- |
+| **Resistive (Contact Localization)** | Mechanical contact between two resistive sheets separated by spacers | $V_{x,\text{out}}$, $V_{y,\text{out}}$ | • Direct coordinate calculation of touch location<br>• Multi-strip variant enables simultaneous multi-touch detection and contact width estimation | • High wiring complexity and longer scanning times for multi-strip arrays |
+| **Piezoresistive / FSR** | Mechanical deformation of conductive rubber, polymers, or gels changes electrical resistance | $\Delta R$ | • Low cost<br>• Simple readout electronics (voltage divider) | • Hysteresis (loading and unloading curves differ)<br>• Cannot cleanly measure dynamic slip |
+| **Capacitive** | Mechanical compression of a dielectric ($C \propto \frac{1}{d}$) | $\Delta C$ | • Can measure static touch and pressure<br>• Mutual-capacitance arrays enable multi-touch imaging | • Susceptible to parasitic capacitance and environmental disturbances (e.g. water on surface)<br>• Mutual capacitance requires conductive objects |
+
+
+<!--
+| **Piezoelectric** | Charge generation ($+Q, -Q$) via molecular dipole displacement in crystalline/polymer lattice (PVDF) under stress | $V(t) \approx \frac{d}{C} F$ (self-generated voltage) | • **Active transducer** (generates charge directly, requires no external excitation current)<br>• Ideal for **dynamic sensing**: high-frequency vibrations, slip onset, and surface texture scanning | • **Charge decays to zero under static load**: cannot measure steady weight or prolonged static clamping forces<br>• Outputs voltage only during changes in force ($\frac{dF}{dt}$) |
+| **Optical: Light Intensity Variation** | Moving internal piston mechanically obstructs the optical path between LED emitter and photodiode | $V_{\text{out}} \propto F$ | • Simple construction and electrical circuitry<br>• **Immune to electromagnetic interference (EMI)**<br>• Sensitivity and force range can be tuned by selecting membrane stiffness | • Soft membranes saturate quickly at high loads ($V_{\max}$)<br>• Stiff membranes reduce sensitivity to light touches |
+| **Optical: Light Path Variation** | Rubber feelers contact waveguide, frustrating total internal reflection and scattering light to a CCD camera | Spot brightness ($F_z$) & centroid displacement ($F_x, F_y$) | • **Immune to electromagnetic interference (EMI)**<br>• Measures 3D force vectors (normal force via brightness, shear force via centroid tracking)<br>• Well-suited for hemispherical robotic fingertips | • Requires optical routing (acrylic dome/waveguide, camera housing), making it physically bulkier than thin-film sensors |
+| **Magnetism-Based** | Applied force displaces an embedded permanent magnet relative to an underlying Hall sensor | $\Delta B$ (magnetic flux density) or Hall voltage $\Delta V_H$ | • Full 3D force vector measurement ($F_x, F_y, F_z$) using 3D Hall chips or arrays<br>• Non-contact magnetic transduction inside an elastic dome reduces mechanical wear<br>• Tunable sensitivity and range via elastomer stiffness ($K_E$) | • Susceptible to external magnetic disturbances or nearby ferromagnetic objects<br>• Trade-off: softer elastomers increase sensitivity but reduce maximum force range |
+| **Advanced Flexible & Stretchable Skins** | Conductive nanoparticle inks (AgNPs) printed on flexible (PEN) or stretchable (silicone) matrices | $\Delta C/C_0$ (capacitive) or $\Delta R / \Delta I$ (resistive) | • Conforms to robot bodies like biological skin<br>• **Flexible**: bendable around single-curvature surfaces (forearms, torso)<br>• **Stretchable**: bendable and expandable over articulating joints (elbows, knuckles)<br>• Fabricated via additive manufacturing / 3D printing | • Stretchable matrices subject to mechanical hysteresis and complex multi-axis strain coupling<br>• Multi-step printing processes and sacrificial layer removal (Pluronic ink) required |
+
+
+-->
+
+
+
+
+
+
+
+
+
+---
+
+### Difficulties of Tactile Sensing
 
 When used in robotics, tactile sensors often need to cover **broad areas**. This can be challenging as simply scaling up individual sensors creates significant hurdles in **physical integration** and also in **data processing**. To cover larger areas, tactile sensor arrays are formed out of hundreds of individual sensing elements, which leads to issues we are adressing below.
 

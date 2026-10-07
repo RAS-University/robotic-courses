@@ -1,0 +1,50 @@
+{%- comment -%}
+LaTeX macros of the CGA pages (5.5.x). MathJax 3 keeps \def'd macros for the whole page,
+so this hidden block must come before the first formula that uses them.
+{%- endcomment -%}
+<div style="display:none">
+{% raw %}$$
+\def\bm#1{{\boldsymbol{#1}}}
+\def\vec#1{{\boldsymbol{#1}}}
+\def\abs#1{{\left|#1\right|}}
+\def\norm#1{{\left\|#1\right\|}}
+\def\inverse#1{{#1^{-1}}}
+\def\ga#1{{\mathbb{G}_{#1}}}
+\def\cga{{\mathbb{G}_{4,1}}}
+\def\qcga{{\mathbb{G}_{9,6}}}
+\def\algebra#1{{\mathbb{#1}}}
+\def\group#1{{\mathcal{#1}}}
+\def\versor{V}
+\def\bivector{B}
+\def\translator{T}
+\def\motor{M}
+\def\rotor{R}
+\def\dilator{D}
+\def\hyperbolic{H}
+\def\rigid{M}
+\def\similarity{S}
+\def\conformal{C}
+\def\cliffordgroup{{\mathcal{C}}}
+\def\point{P}
+\def\line{L}
+\def\normal{N}
+\def\plane{E}
+\def\circle{C}
+\def\sphere{S}
+\def\gae#1{{\boldsymbol{e}_{#1}}}
+\def\inner{{\cdot}}
+\def\outer{{\wedge}}
+\def\ei{{\vec{e}_\infty}}
+\def\eo{{\vec{e}_o}}
+\def\grade#1#2{{\left\langle#1\right\rangle_{#2}}}
+\def\dual#1{{#1^*}}
+\def\reverse#1{{\widetilde{#1}}}
+\def\adjoint#1#2{{#1 #2 \reverse{#1}}}
+\def\meet{{\vee}}
+\def\sandwich#1#2{{#1 #2 \reverse{#1}}}
+\def\motortangent{{T_M \mathcal{M}}}
+\def\ret{{\text{Ret}}}
+\def\twist{{\mathcal{V}}}
+\def\wrench{{\mathcal{W}}}
+$${% endraw %}
+</div>

@@ -11,6 +11,8 @@ plugins:
   - jekyll-spaceship
 
 include:
+  - _lib
+  - _book.js
   - assets
 
 nav_order: 1

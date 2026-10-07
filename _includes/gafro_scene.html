@@ -1,0 +1,60 @@
+{%- comment -%}
+Embed a gafrojs scene (assets/js/gafrojs/scenes/<slug>.js, synced by _tools/sync_gafrojs.py).
+
+  {% include gafro_scene.html slug="primitive-gallery" caption="Drag the points." %}
+
+Parameters: slug (required), height (px, default 420), caption (optional, markdown not processed).
+The import map is emitted once per page; all scenes on a page share one WASM instance and
+start only when scrolled into view.
+{%- endcomment -%}
+{%- assign gafro_height = include.height | default: 420 -%}
+{%- unless gafro_scene_bootstrapped -%}
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+</script>
+<style>
+.gafro-scene { margin: 1.5rem auto; max-width: 720px; }
+.gafro-scene .gafro-view { width: 100%; border-radius: 8px; overflow: hidden; background: #fafafa; position: relative; }
+.gafro-scene .gafro-controls { font-size: 0.85em; margin-top: 0.4rem; }
+.gafro-scene figcaption { font-size: 0.85em; color: #555; margin-top: 0.3rem; }
+.gafro-scene .gafro-status { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #888; font-size: 0.9em; }
+</style>
+<script type="module">
+const base = '{{ "/assets/js/gafrojs" | relative_url }}';
+let gafro;
+async function mount(fig) {
+  const view = fig.querySelector('.gafro-view');
+  const status = fig.querySelector('.gafro-status');
+  try {
+    gafro ??= import(`${base}/runtime/load.js?v=42`).then((m) => m.loadGafroModule());
+    const [{ Viewer }, { build }, g] = await Promise.all([
+      import(`${base}/runtime/viewer.js?v=42`),
+      import(`${base}/scenes/${fig.dataset.slug}.js?v=42`),
+      gafro,
+    ]);
+    status.remove();
+    const viewer = new Viewer(view, { cameraPosition: [1.7, 1.7, 1.35] });
+    viewer.start();
+    await build(g, viewer, { controls: fig.querySelector('.gafro-controls') });
+  } catch (err) {
+    console.error(err);
+    status.textContent = 'This interactive scene could not be loaded: ' + (err.message || err);
+  }
+}
+const seen = new IntersectionObserver((entries) => {
+  for (const e of entries) if (e.isIntersecting) { seen.unobserve(e.target); mount(e.target); }
+}, { rootMargin: '200px' });
+const watch = () => document.querySelectorAll('figure.gafro-scene').forEach((f) => seen.observe(f));
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watch); else watch();
+</script>
+{%- assign gafro_scene_bootstrapped = true -%}
+{%- endunless %}
+<figure class="gafro-scene" data-slug="{{ include.slug }}">
+<div class="gafro-view" style="height:{{ gafro_height }}px"><div class="gafro-status">loading interactive scene…</div></div>
+<div class="gafro-controls"></div>
+{%- if include.caption %}
+<figcaption>{{ include.caption }}</figcaption>
+{%- endif %}
+</figure>

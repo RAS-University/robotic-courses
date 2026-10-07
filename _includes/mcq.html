@@ -1,0 +1,31 @@
+{%- comment -%}
+Single-answer quiz question, checked by checkMCQ() from docs/chap5_adv_kin/questions.js.
+
+  {% include mcq.html id="q-cga-1" q="Question, $math$ allowed"
+     options="first ;; second ;; third" answer="2" explain="Shown when correct (plain text)." %}
+
+options are separated by " ;; ", answer is the 1-based index of the correct option.
+Parameter values must not contain a pipe character, which breaks the include tag; use ‖x‖ for norms.
+The quiz styling and questions.js are emitted once per page.
+{%- endcomment -%}
+{%- unless mcq_bootstrapped -%}
+<style>
+.mcq { border:1px solid #e5e7eb; border-radius:8px; padding:1rem; margin:1rem 0; }
+.mcq label { display:block; cursor:pointer; margin:0.25rem 0; }
+.mcq button { border:0; padding:0.5rem 0.8rem; border-radius:6px; background:#111827; color:white; margin-top:0.5rem; }
+.mcq [id$="-feedback"] { margin:0.5rem 0 0; font-weight:600; }
+</style>
+<script src="{{ '/docs/chap5_adv_kin/questions.js' | relative_url }}"></script>
+{%- assign mcq_bootstrapped = true -%}
+{%- endunless %}
+<div class="mcq">
+<p><strong>{{ include.q }}</strong></p>
+<form id="{{ include.id }}" data-answer="{{ include.answer }}" data-ok="Correct. {{ include.explain | escape }}">
+{%- assign mcq_options = include.options | split: " ;; " -%}
+{%- for option in mcq_options %}
+<label><input type="radio" name="{{ include.id }}" value="{{ forloop.index }}"> {{ option | strip }}</label>
+{%- endfor %}
+<button type="button" onclick="checkMCQ(this.form.id, this.form.dataset.answer, this.form.dataset.ok, 'Not quite, try again!')">Check Answer</button>
+<p id="{{ include.id }}-feedback"></p>
+</form>
+</div>

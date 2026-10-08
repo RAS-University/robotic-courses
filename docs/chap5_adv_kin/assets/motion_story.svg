@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+<title id="title">Three ways to move a cup</title><desc id="desc">A sliding cup, a turning cup, and a cup turning and advancing along a screw axis.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#137d92"/></marker><g id="cup"><path d="M-29-30H29L25 28Q0 42-25 28Z" fill="#8bc8cc" stroke="#137d92" stroke-width="3"/><ellipse cx="0" cy="-30" rx="29" ry="8" fill="#eff8f8" stroke="#137d92" stroke-width="3"/><path d="M29-19C59-27 58 25 27 16" fill="none" stroke="#137d92" stroke-width="7"/><circle cx="21" cy="5" r="4" fill="#d4751a"/></g></defs>
+<rect width="900" height="300" rx="14" fill="#f3f7fa"/>
+<g font-family="system-ui,sans-serif" fill="#233e51" text-anchor="middle">
+<text x="150" y="38" font-size="21" font-weight="650">Slide</text><text x="450" y="38" font-size="21" font-weight="650">Turn</text><text x="750" y="38" font-size="21" font-weight="650">Turn and advance</text>
+<path d="M300 65V265M600 65V265" stroke="#c4d3dd"/>
+<g transform="translate(95 155)" opacity=".25"><use href="#cup"/></g><use href="#cup" transform="translate(205 155)"/><path d="M115 95H205" stroke="#137d92" stroke-width="3" marker-end="url(#arrow)"/>
+<use href="#cup" transform="translate(450 155)"/><path d="M401 185A66 46 0 1 1 501 185" fill="none" stroke="#137d92" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M745 232V62" stroke="#137d92" stroke-width="2" stroke-dasharray="5 5"/><path d="M720 224C792 220 792 188 720 184C655 180 655 149 720 145C792 141 792 110 720 106" fill="none" stroke="#d4751a" stroke-width="3" marker-end="url(#arrow)"/><use href="#cup" transform="translate(780 125) scale(.8)"/>
+<text x="150" y="271" font-size="17">Position changes</text><text x="450" y="271" font-size="17">Orientation changes</text><text x="750" y="271" font-size="17">One axis links both</text>
+</g></svg>

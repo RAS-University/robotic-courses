@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+<title id="title">A hinge distinguishes driving forces from reciprocal forces</title><desc id="desc">Top view: a tangential force at the handle produces hinge torque; a force directed toward the hinge has zero hinge-axis torque.</desc>
+<defs><marker id="force" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#913f84"/></marker><marker id="velocity" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#d4751a"/></marker></defs>
+<rect width="900" height="300" rx="14" fill="#f3f7fa"/>
+<g font-family="system-ui,sans-serif" fill="#233e51" text-anchor="middle">
+<text x="225" y="36" font-size="21" font-weight="650">Tangential push</text><text x="675" y="36" font-size="21" font-weight="650">Push toward the hinge</text><path d="M450 55V280" stroke="#c4d3dd"/>
+<path d="M100 190L343 190M550 190L793 190" stroke="#bcccad" stroke-width="18"/>
+<circle cx="100" cy="190" r="10" fill="#137d92"/><circle cx="550" cy="190" r="10" fill="#137d92"/>
+<circle cx="330" cy="190" r="5" fill="#233e51"/><circle cx="780" cy="190" r="5" fill="#233e51"/>
+<path d="M330 184V82" stroke="#913f84" stroke-width="4" marker-end="url(#force)"/><path d="M349 184V109" stroke="#d4751a" stroke-width="3" marker-end="url(#velocity)"/>
+<path d="M770 190H641" stroke="#913f84" stroke-width="4" marker-end="url(#force)"/><path d="M794 180V109" stroke="#d4751a" stroke-width="3" marker-end="url(#velocity)"/>
+<text x="311" y="73" font-size="18" fill="#913f84">f</text><text x="369" y="105" font-size="18" fill="#d4751a">ṙ</text><text x="702" y="169" font-size="18" fill="#913f84">f</text><text x="815" y="105" font-size="18" fill="#d4751a">ṙ</text>
+<text x="100" y="221" font-size="17">hinge O</text><text x="550" y="221" font-size="17">hinge O</text>
+<text x="225" y="266" font-size="19">m_z ≠ 0 · W ⊙ V can be nonzero</text><text x="675" y="266" font-size="19">m_z = 0 · W ⊙ V = 0</text>
+</g></svg>

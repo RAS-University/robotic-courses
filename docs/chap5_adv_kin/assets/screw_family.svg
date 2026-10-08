@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 440" role="img" aria-labelledby="title desc">
+<title id="title">From a line to screws, twists, and wrenches</title><desc id="desc">Line geometry in Plücker coordinates plus pitch gives a normalized screw. Scaling by an angular rate gives a twist; scaling by a force magnitude gives a wrench.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#456375"/></marker></defs>
+<rect width="900" height="440" rx="14" fill="#f3f7fa"/>
+<g font-family="system-ui,sans-serif" text-anchor="middle" fill="#233e51">
+<rect x="45" y="30" width="470" height="83" rx="10" fill="#e4f1f3" stroke="#137d92"/><text x="280" y="62" font-size="21" font-weight="650">Directed line · Plücker coordinates</text><text x="280" y="92" font-size="20">[ e ; p × e ],  |e| = 1</text>
+<rect x="615" y="30" width="225" height="83" rx="10" fill="#fcf1df" stroke="#d4751a"/><text x="727" y="64" font-size="21" font-weight="650">Pitch h</text><text x="727" y="92" font-size="19">adds h e</text>
+<path d="M280 115V151H450V174M727 115V151H450" fill="none" stroke="#456375" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="215" y="177" width="470" height="82" rx="10" fill="#e8edf4" stroke="#456375"/><text x="450" y="207" font-size="21" font-weight="650">Normalized screw geometry</text><text x="450" y="238" font-size="21">X = [ e ; p × e + h e ]</text>
+<path d="M450 259V289H232V323M450 289H677V323" fill="none" stroke="#456375" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="228" y="310" font-size="17">× angular rate φ̇</text><text x="675" y="310" font-size="17">× force magnitude f₀</text>
+<rect x="45" y="329" width="375" height="79" rx="10" fill="#fcf1df" stroke="#d4751a"/><text x="232" y="360" font-size="21" font-weight="650">Twist · motion</text><text x="232" y="391" font-size="21">V = [ ω ; v ] = φ̇ X</text>
+<rect x="490" y="329" width="375" height="79" rx="10" fill="#f1e7f1" stroke="#913f84"/><text x="677" y="360" font-size="21" font-weight="650">Wrench · force system</text><text x="677" y="391" font-size="21">W = [ f ; m ] = f₀ X</text>
+</g></svg>

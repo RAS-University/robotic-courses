@@ -1,0 +1,93 @@
+Screw Theory, Explained — assets and implementation
+
+All new files are contained in docs/chap5_adv_kin. The existing lecture and
+its notation have been preserved. Serve the generated Jekyll site over HTTP;
+ES modules, fetch, and loaders cannot run directly from file:// URLs.
+
+Lecture source: screw_theory_explained.md
+Interactions: screw_theory_explained.js (lazy lab initialization)
+Shared 3D helpers: screw_theory_scene.js
+FANUC viewer: screw_theory_fanuc.js
+Numerical operations: screw_theory_math.js
+Quizzes: screw_theory_quizzes.js (independent of WebGL)
+Styles: screw_theory_explained.css (scoped st- classes)
+
+Teaching references:
+/home/durghy/Documents/Projects/Teaching/ENG_654/eng-654/
+  lectures_main/lectures/lecture_02.html
+  lectures_main/js/viz/poeUrdfPlayground.js
+  lectures_main/js/viz/threeUtils.js
+The new viewers follow the scene kit, z-up robotics world, frame display,
+controls, and live readout approach of these examples. They use official
+loaders, rather than the source course's custom binary-STL parser.
+
+FANUC model:
+The complete fanuc_crx10ia_support folder was copied byte-for-byte from
+ENG_654's lectures_main/assets/models/fanuc_crx10ia_support, including its
+crx10ial.urdf and all eight STL files. Seven main-chain visual meshes are used
+at runtime; base_link_short.stl is retained as supplied. Mesh bounds were
+inspected and are compatible with metres. URDF visual origins and scale are
+applied separately from joint transforms. The URDF was not modified.
+package:// mesh references resolve to the copied filename in this folder.
+The viewer uses base_link and link_6/flange, not the fixed base/tool0 branches.
+The supplied folder did not include a separate model license or attribution
+file; its source and original package names are recorded here.
+
+Asset exploration:
+The supplied ENG_654 assets contain 68 STL meshes and 7 Collada DAE meshes,
+including FANUC, ABB, and other robot models. No .blend, .obj, or .glb source
+assets were found there. FANUC STLs are used for the actual robot; unrelated
+ABB DAEs were not copied into a FANUC example.
+assets/cup.glb is an original z-up teaching asset made from Three.js
+LatheGeometry, TorusGeometry, and SphereGeometry and exported with the
+library's GLTFExporter. Its orange dot makes orientation observable.
+assets/door_panel.obj is an original 0.9 m x 1.8 m x 0.045 m teaching asset,
+with its ideal hinge along local z. The interactive handle is at radius
+0.85 m and height 0.9 m. Both assets can be imported into Blender for editing.
+The three explanatory SVGs are original vector diagrams for this lecture.
+
+Libraries:
+Three.js 0.186.0, MIT; its license is in vendor/three/LICENSE.
+An installed official Three.js distribution supplied the build, OrbitControls,
+STLLoader, OBJLoader, GLTFLoader, and their relative module dependencies.
+All required Three.js modules are local and use the page's import map.
+The existing Jekyll math processor supplies MathJax in the normal site build.
+
+Behavior:
+All animation starts paused and requires Play or Animate assembly. Offscreen
+scenes do not render. FANUC column assembly can continue while its matrix is
+visible below the canvas; it pauses when the entire lab is offscreen or the
+browser tab is hidden. Its timer is cleared on pause and scene disposal.
+Scenes initialize as they approach the viewport and resize through
+ResizeObserver. OrbitControls handles orbiting, zooming, panning, touch,
+and keyboard panning. No custom camera/gesture controls are implemented.
+Resource cleanup runs on page exit; normal browser back/forward caching is
+preserved. Worked values and fallback descriptions accompany every lab.
+
+Conventions:
+V = [omega; v], W = [f; m], X = [xi; eta].
+Frame superscript is the expression frame; right subscript identifies the body.
+The power pairing is f dot v + m dot omega, not the ordinary six-vector dot
+product. Force-first wrenches and angular-first twists transform with the
+same numerical adjoint under this mixed pairing.
+3J4 is 6 x 4. Determinant comparisons keep body 6 as the target.
+Numerical matrices in screw_theory_math.js are row-major; conversion to
+Three.js occurs through Matrix4.set. Angles enter the math in radians.
+
+FANUC Jacobian laboratory:
+Current joint origins and directions come from the actual URDF pose chain.
+Each revolute screw is built as [e; p cross e] in the selected expression
+frame and checked against the transported home screw. Empty column slots
+are unrevealed values, not zero columns. Axis colors identify matrix columns.
+Switching expression frames leaves the pose and physical point velocity
+unchanged; a side-by-side comparison splits the adjoint into rotation and
+origin correction. The pose controls retain the original PoE exploration.
+
+Reading the sessions:
+All eleven labs include static color/shape keys and native, expandable
+symbol-and-unit glossaries in the lecture Markdown. These remain readable
+if WebGL or a model cannot load. On initialization the key moves below the
+primary controls (below the assembly buttons for FANUC). Frame-axis colors
+are explained separately from physical vectors and the six FANUC joint
+colors. Arrow scales, fixed motion rates, ghost objects, overlapping markers,
+rounded readouts, and empty matrix slots are explained alongside the scene.

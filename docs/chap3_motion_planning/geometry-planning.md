@@ -1,6 +1,5 @@
 ---
 title: 3.3 Geometry Planing
-parent: "Chapter 3: Motion Planning and Navigation"
 nav_order: 3
 layout: numbered
 has_children: false
@@ -28,7 +27,7 @@ nav_exclude: true
 
 ## Course Content
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 ## Credits
 

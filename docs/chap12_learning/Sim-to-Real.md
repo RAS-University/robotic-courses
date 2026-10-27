@@ -1,11 +1,11 @@
 ---
-title: 12.4 Sim-to-Real and Back
-parent: "Chapter 12: Robot Learning"
+title: 11.4 Sim-to-Real and Back
+parent: "Chapter 11: Robot Learning"
 has_children: false
 nav_order: 4
 layout: numbered
 math: mathjax
-chapter: 12
+chapter: 11
 section: 4
 publish: false
 nav_exclude: true
@@ -39,7 +39,7 @@ To get the most out of this Sim-to-Real and Back module, it’s helpful to have:
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

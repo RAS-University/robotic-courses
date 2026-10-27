@@ -1,6 +1,6 @@
 ---
 title: "Chapter 8: Locomotion"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 8
 layout: default
@@ -10,7 +10,7 @@ layout: default
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in Fall 2026)";
   font-size: 0.9em;
   color: #b39ddb;
 }

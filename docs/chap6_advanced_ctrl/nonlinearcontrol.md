@@ -2023,7 +2023,7 @@ We can now state the Lyapunov's direct method theorem, which provides sufficient
     </figure>
   </div>
 
-  In the control theory of linear systems, we often use proportional (P), proportional-derivative (PD), or proportional-integral-derivative (PID) controllers to regulate the position of the robot's joints (see course on <a href="Closeloop&PID">closed loop control</a>). Here we will focus on a PD controller, which is commonly used for its simplicity and effectiveness in many applications. The PD controller can be expressed as:
+  In the control theory of linear systems, we often use proportional (P), proportional-derivative (PD), or proportional-integral-derivative (PID) controllers to regulate the position of the robot's joints (see course on <a href="../chap1_basic_motion_ctrl/Closeloop.html">closed loop control</a>). Here we will focus on a PD controller, which is commonly used for its simplicity and effectiveness in many applications. The PD controller can be expressed as:
   <div>
   \[
     \tau = -K_p (q - q_d) - K_d \dot{q} \tag{4.3}\label{eq:PD_controller}

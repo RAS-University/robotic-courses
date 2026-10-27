@@ -1,8 +1,8 @@
 ---
-title: "Chapter 16: Novel Trendy Research Areas in Robotics"
-parent: "Robotics Advanced Topics II"
+title: "Trendy Research Areas"
+parent: Courses
 has_children: true
-nav_order: 16
+nav_order: 3
 layout: default
 ---
 
@@ -10,7 +10,7 @@ layout: default
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in Fall 2026)";
   font-size: 0.9em;
   color: #b39ddb;
 }
@@ -24,9 +24,9 @@ layout: default
   }
 </style>
 
-# Chapter 16: Novel Trendy Research Areas in Robotics
+# Trendy Research Areas
 
-{% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
+{% assign sections = site.pages | where: "parent", page.title | sort: "nav_order" %}
 {% for section in sections %}
 - {% if section.publish == false %}
   <span class="unfinished">{{ section.title }} </span>

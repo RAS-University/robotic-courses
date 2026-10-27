@@ -1,15 +1,15 @@
 ---
 title: "Chapter 5: Advanced Kinematics"
-parent: Robotics Advanced Topics I
+parent: "Robotics Advanced Topics"
 has_children: true
 nav_order: 5
-layout: numbered
+layout: default
 ---
 
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in Fall 2026)";
   font-size: 0.9em;
   color: #b39ddb;
 }

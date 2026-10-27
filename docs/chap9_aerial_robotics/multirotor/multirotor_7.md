@@ -11,7 +11,6 @@ toc: true             # <--- ENABLE TOC GENERATION
 toc_label: On This Page # <--- Custom title for the sidebar
 # math: mathjax
 ---
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
 <link rel="stylesheet" href="../styles.css">
 

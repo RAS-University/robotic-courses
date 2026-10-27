@@ -25,4 +25,5 @@ The project maintainer merges `develop` into `main` when changes are ready to go
 
 ## Deployment
 
-Every branch is built and served automatically by [docker_ras_webserver](https://github.com/RAS-University/docker_ras_webserver) at `/<branch>/` (slashes become dashes, e.g. `feature/chap3` → `/feature-chap3/`), about a minute after each push. `main` is the public site.
+- **Public site:** every push to `main` is deployed to [GitHub Pages](https://ras-university.github.io/robotic-courses/) by `.github/workflows/pages.yml`. The [IEEE RAS University page](https://www.ieee-ras.org/ras-university/) loads its content from there, so don't remove that workflow or disable Pages.
+- **Branch previews:** every branch is built and served by [docker_ras_webserver](https://github.com/RAS-University/docker_ras_webserver) at `/<branch>/` (slashes become dashes, e.g. `feature/chap3` → `/feature-chap3/`), about a minute after each push.

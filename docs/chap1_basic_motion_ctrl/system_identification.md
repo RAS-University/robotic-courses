@@ -1,6 +1,5 @@
 ---
 title: 1.3 System Identification
-parent: "Chapter 1: Basics of Motion Control"
 layout: numbered
 math: mathjax
 nav_order: 3
@@ -38,7 +37,7 @@ To get the most out of this System Identification module, it’s helpful to have
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

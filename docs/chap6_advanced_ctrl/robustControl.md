@@ -39,7 +39,7 @@ To get the most out of this Robust Control module, it’s helpful to have:
 ### General Concepts
 
 
-# **This page is currently under construction and will be published in summer 2026.**
+# **This page is currently under construction and will be published in fall 2026.**
 
 
 

@@ -8,7 +8,7 @@ layout: default
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in " attr(data-release) ")";
   font-size: 0.9em;
   color: #b39ddb;
 }
@@ -27,7 +27,7 @@ layout: default
 {% assign sections = site.pages | where: "parent", page.title | sort: "section" %}
 {% for section in sections %}
 - {% if section.publish == false %}
-  <span class="unfinished">{{ section.title }} </span>
+  <span class="unfinished" data-release="{{ section.release | default: 'Fall 2026' }}">{{ section.title }} </span>
   {% else %}
   [{{ section.title }}]({{ section.url }})
   {% endif %}

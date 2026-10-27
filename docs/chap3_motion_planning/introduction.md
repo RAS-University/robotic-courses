@@ -55,7 +55,7 @@ code.k { background:#f3f4f6; padding:0.1rem 0.3rem; border-radius:4px; }
 
 - [Graph definitions, representations, traversal and search](../chap0_math_fondation/graph-theory) — Section 0.2. **Everything this section says about graphs, adjacency representations, BFS/DFS, Dijkstra and A\* is defined and analysed there**; here we only use those tools and show what they mean for a robot.
 - [Robot kinematics and configuration space](../chap1_basic_motion_ctrl/kinematics) — necessary to understand complexity of motion planning for robotic manipulators.
-- Basic notions of low-level [close-loop motion control](../chap1_basic_motion_ctrl/Closeloop&PID.html), enough to understand how once one has planned a motion path, one can ensure that the robot tracks the path. 
+- Basic notions of low-level [close-loop motion control](../chap1_basic_motion_ctrl/Closeloop.html), enough to understand how once one has planned a motion path, one can ensure that the robot tracks the path. 
 
 <div class="definition" markdown="1">
 <strong>Definition.</strong> A robot is <strong>holonomic</strong> if it can move instantaneously in any direction of its configuration space: it can change each of its degrees of freedom independently, and the number of degrees of freedom it can control equals the number it has. An omnidirectional platform that can slide sideways is an example.
@@ -75,7 +75,7 @@ A mobile robot faces exactly the same problem, minus the driver. A warehouse rob
 
 What makes this a *robotics* problem rather than a graph-theory exercise is that the graph does not exist in advance. The world is continuous; the robot has a shape, a size and kinematic constraints; the map is incomplete and partly wrong. **The real design decision is how to turn a continuous, cluttered, physical space into a discrete structure that an algorithm can search** — and different answers to that question give the different families of planners presented in this chapter.
 
-This section is the entry point to the chapter. It presents the classical, low-dimensional way of approaching the problem: build a graph that captures the connectivity of the free space, then search it. It is deliberately concrete — 2D maps, polygonal obstacles, grids you can draw on paper — because it makes the vocabulary (completeness, optimality, road map, cell decomposition, cost) tangible. The methods presented here are still the ones running inside most cleaning robots and warehouse fleets. They also run out of steam in a very specific and instructive way, which is precisely what motivates [Sampling-Based Planning](sampling-planning) (Section 3.2) and the continuous, reactive formulations of [Dynamical-Systems-Based Planning](DS-planning) (Section 3.4).
+This section is the entry point to the chapter. It presents the classical, low-dimensional way of approaching the problem: build a graph that captures the connectivity of the free space, then search it. It is deliberately concrete — 2D maps, polygonal obstacles, grids you can draw on paper — because it makes the vocabulary (completeness, optimality, road map, cell decomposition, cost) tangible. The methods presented here are still the ones running inside most cleaning robots and warehouse fleets. They also run out of steam in a very specific and instructive way, which is precisely what motivates [Sampling-Based Planning](sampling-planning) (Section 3.2) and the continuous, reactive formulations of [Dynamical-Systems-Based Planning](DS-planning) (Section 3.3).
 
 ---
 
@@ -139,7 +139,7 @@ To get a first grip on the problem, picture the simplest possible version of a m
 When you drive to the station, your phone supplies 1–3, and you implement 4 and 5 as driver. An autonomous robot has to supply all five itself.
 
 <div class="note" markdown="1">
-Keep this skeleton as a checklist for the rest of the chapter. The classical methods below — road maps, cell decompositions, potential fields — are all answers to block 3 alone, under the naive assumptions just stated. Relaxing those assumptions is exactly what the later sections do: [Sampling-Based Planning](sampling-planning) (Section 3.2) scales block 3 to robots with many degrees of freedom; [Dynamical-Systems-Based Planning](DS-planning) (Section 3.4) folds blocks 3 and 4 into a single continuous process instead of plan-then-follow; and <strong>SLAM</strong> (Section 3.5) removes the assumption that block 1, the map, is given at all.
+Keep this skeleton as a checklist for the rest of the chapter. The classical methods below — road maps, cell decompositions, potential fields — are all answers to block 3 alone, under the naive assumptions just stated. Relaxing those assumptions is exactly what the later sections do: [Sampling-Based Planning](sampling-planning) (Section 3.2) scales block 3 to robots with many degrees of freedom; [Dynamical-Systems-Based Planning](DS-planning) (Section 3.3) folds blocks 3 and 4 into a single continuous process instead of plan-then-follow; and <strong>SLAM</strong> (Section 3.4) removes the assumption that block 1, the map, is given at all.
 </div>
 
 ---
@@ -358,7 +358,7 @@ The simplest option of all, and by far the most used: cover the map with a regul
 
 - ❌ **Narrow passageways can be lost** ⇒ may not be complete. A gap that the robot could physically fit through disappears if it is smaller than one cell.
 - ✅ Extremely simple path planning algorithms — such as **wavefront expansion**, which is exactly constant-cost Dijkstra ([Section 0.2](../chap0_math_fondation/graph-theory)) — can be applied directly ⇒ computationally efficient.
-- ✅ Directly compatible with the way sensors build maps: turning a range reading into an update of the grid is simple — mark the cell it falls in as occupied, and the cells along the way as free — with no geometric fitting required, which is why the occupancy grid is the representation of choice in **SLAM** (Section 3.5).
+- ✅ Directly compatible with the way sensors build maps: turning a range reading into an update of the grid is simple — mark the cell it falls in as occupied, and the cells along the way as free — with no geometric fitting required, which is why the occupancy grid is the representation of choice in **SLAM** (Section 3.4).
 
 Note that this brings us full circle: the grid we used to introduce Dijkstra was itself a cell decomposition. The grid is not "the map", it is *one representation choice among several*, and its resolution is a trade-off between completeness and cost.
 
@@ -448,7 +448,7 @@ Every method in this section shares two assumptions that are easy to miss becaus
 
 - **Lift the dimension.** A grid is affordable in 2D and hopeless beyond it. Discretising each joint of a 7-degree-of-freedom arm into a mere 100 steps already yields $100^7 = 10^{14}$ cells — a graph no computer will build, let alone search. This is the *curse of dimensionality*, and it is what makes [Sampling-Based Planning](sampling-planning) (Section 3.2) necessary: rather than enumerating the free space, sample it.
 - **Lift the discretisation.** Potential fields showed that a continuous vector field can generate motion without any graph.
-- **Lift the map.** All of the above assumed one. Building it while using it is **SLAM** (Section 3.5).
+- **Lift the map.** All of the above assumed one. Building it while using it is **SLAM** (Section 3.4).
 
 ---
 

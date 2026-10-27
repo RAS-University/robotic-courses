@@ -32,6 +32,17 @@ nav_order: 1
 
 <a href="#top" id="back-to-top" title="Back to Top">🔝​</a>
 
+# 📢 News
+
+**September 2026 — New courses released:**
+
+- [Swarm Robotics]({{ '/docs/chap10_swarm_robotics/' | relative_url }}) (Robotics Advanced Topics, Chapter 10)
+- [Sustainable Robotics]({{ '/docs/chap16_novel_trend/Sustainable' | relative_url }}) (Trendy Research Areas)
+- [Screw Theory]({{ '/docs/chap5_adv_kin/01_screw_theory' | relative_url }}) (Robotics Advanced Topics, Chapter 5)
+- [Singularity Analysis]({{ '/docs/chap5_adv_kin/02_singularity_analysis' | relative_url }}) (Robotics Advanced Topics, Chapter 5)
+
+---
+
 # Welcome to the IEEE Robotics and Automation University (RAS-U)
 
 The RAS-U provides a structured and comprehensive course on robotics for self-learners. The course covers fundamental and advanced topics and applications in robotics.

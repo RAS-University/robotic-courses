@@ -1,97 +1,29 @@
 # Robotics Course Website
 
-This project uses the [Just the Docs](https://just-the-docs.github.io/just-the-docs/) Jekyll theme to build and host a free robotics course website on GitHub Pages.
+Source of the RAS University robotics course website, built with [Jekyll](https://jekyllrb.com/) and the [Just the Docs](https://just-the-docs.com/) theme.
 
----
+## Run locally
 
-## 🚀 How to Run This Site Locally
+Requires Ruby 3.x and Bundler (`gem install bundler`).
 
-Follow these steps to install, build, and preview the site on your computer.
-
-### 1. Install Prerequisites
-
-Make sure you have:
-
-- **Ruby** (version 3.x preferred)  
-- **Bundler** and **Jekyll** gems
-
-If you don't have them:
-
-```bash
-# Install bundler and jekyll
-gem install bundler jekyll
-```
-
-### 2. Clone the Repository
 ```bash
 git clone https://github.com/RAS-University/robotic-courses
-```
-
-### 3. Install the Required Gems
-
-Make sure you're inside the project folder (where the Gemfile is).
-
-```bash
+cd robotic-courses
 bundle install
+bundle exec jekyll serve
 ```
 
-### 4. Serve the Site Locally
-   
-```bash
-bundle exec jekyll serve 
-```
-if get error like: "Address already in use - bind(2) for 127.0.0.1:4000 (Errno::EADDRINUSE)"
-```bash
-bundle exec jekyll serve --port 4004
-```
+Open http://localhost:4000. If the port is taken, add `--port 4004`.
 
-## Development Workflow
+## Contributing
 
-This repository uses a **branch-based workflow** to manage development and deployment. Follow these steps to contribute safely:
+1. Branch off `develop`: `git checkout develop && git pull && git checkout -b feature/<name>`
+2. Commit, push, and open a pull request to `develop`.
+3. Delete your branch once it's merged.
 
+The project maintainer merges `develop` into `main` when changes are ready to go live.
 
-### Branching Diagram
-feature/... → develop → main → Live Site
+## Deployment
 
-### 1. Create a feature branch
-Whenever you start working on a new feature or chapter, create a branch off `develop`. Use descriptive names for your branches:
-
-```bash
-git checkout develop
-git pull origin develop
-git checkout -b feature/BRANCHE_NAME
-```
-Example branch names:
-- `feature/chap1` – work on chapter 1
-
-### 2. Work on Your Feature
-Make your changes locally.
-
-### 3.Merge Your Feature Branch into develop
-
-Once your feature is ready:
-
-```bash
-git checkout develop
-git pull origin develop
-git merge feature/chap1
-git push origin develop
-```
-
-
-**!! Resolve any conflicts before pushing. !!**
-
-### 4. Update main and Deploy
-
-After the develop branch has accumulated the changes for deployment:
-
-```bash
-git checkout main
-git pull origin main
-git merge develop
-git push origin main
-```
-
-The website is automatically built and deployed from main.
-
-Only merge into main when changes are ready to go live.
+- **Public site:** every push to `main` is deployed to [GitHub Pages](https://ras-university.github.io/robotic-courses/) by `.github/workflows/pages.yml`. The [IEEE RAS University page](https://www.ieee-ras.org/ras-university/) loads its content from there, so don't remove that workflow or disable Pages.
+- **Branch previews:** every branch is built and served by [docker_ras_webserver](https://github.com/RAS-University/docker_ras_webserver) at `/<branch>/` (slashes become dashes, e.g. `feature/chap3` → `/feature-chap3/`), about a minute after each push.

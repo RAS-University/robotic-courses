@@ -8,28 +8,8 @@ section: 6
 publish: false
 nav_exclude: true
 ---
-<!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 
-<script type="text/javascript">
-    MathJax = {
-        tex: {
-            tags: 'ams', // Enables automatic numbering
-            useLabelIds: true // Enables referencing with labels
-        }
-    };
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  TeX: {
-    equationNumbers: {
-      autoNumber: "AMS"
-    },
-    extensions: ["AMSmath.js", "AMSsymbols.js"]
-  }
-});
-</script>
 
 
 <link rel="stylesheet" href="../styles.css">

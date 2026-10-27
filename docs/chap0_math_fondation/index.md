@@ -1,5 +1,5 @@
 ---
-title: "Chapter 0: Mathematical Foundation"
+title: "Chapter 0: Math Basics"
 parent: "Robotics Foundation"
 has_children: true
 nav_order: 0
@@ -12,7 +12,7 @@ section: 3
 <style>
   .unfinished { color: #b39ddb; }
   .unfinished::after {
-  content: " (Release in Summer 2026)";
+  content: " (Release in Fall 2026)";
   font-size: 0.9em;
   color: #b39ddb;
 }
@@ -26,7 +26,7 @@ section: 3
   }
 </style>
 
-# Chapter 0: Mathematical Foundation
+# Chapter 0: Math Basics
 
 # Mathematical Foundation
 

@@ -1,6 +1,6 @@
 ---
-title: 0.0 Mathematical Foundation
-parent: "Chapter 0: Mathematical Foundation"
+title: 0.0 Math Basics
+parent: "Chapter 0: Math Basics"
 layout: numbered
 math: mathjax
 nav_order: 1
